@@ -14,7 +14,6 @@ use Sandertv\BlockSniper\shapes\SphereShape;
 class EventListener implements Listener {
     
     public function __construct(Loader $owner) {
-        parent::__construct($owner);
         $this->owner = $owner;
     }
     
