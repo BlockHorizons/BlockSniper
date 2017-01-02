@@ -22,7 +22,7 @@ class SphereShape extends BaseShape {
         if(!isset($center)) {
             $this->center = new Vector3(0, 0, 0);
         }
-        if(!isset($block)) {
+        if(!isset($blocks)) {
             $this->blocks = ["Air"];
         }
     }
@@ -52,8 +52,8 @@ class SphereShape extends BaseShape {
                     $zs = ($targetZ - $z) * ($targetZ - $z);
                     if($xs + $ys + $zs < $radiusSquared) {
                         $randomBlock = Item::fromString($this->blocks[array_rand($this->blocks)])->getBlock();
-                        if($randomBlock->getId() !== null) {
-                            $this->level->setBlock(new Vector3($x, $y, $z), $randomBlock, true, false);
+                        if($randomBlock->getId() !== 0) {
+                            $this->level->setBlock(new Vector3($x, $y, $z), $randomBlock, false, false);
                             return true;
                         }
                     }
