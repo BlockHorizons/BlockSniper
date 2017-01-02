@@ -59,7 +59,7 @@ class SnipeCommand extends BaseCommand {
             
             case "TYPE_SPHERE":
             case "TYPE_BALL":
-                $sphere = new SphereShape($sender->getLevel(), $args[1], $center, array_slice($args, 2));
+                $sphere = new SphereShape($sender->getLevel(), $args[1], $center, explode(",", $args[2]));
                 if(!$sender->hasPermission($sphere->getPermission())) {
                     $sender->sendMessage(TF::RED . "[Warning] You do not have permission to use this shape.");
                 }
