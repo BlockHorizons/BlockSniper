@@ -24,7 +24,7 @@ class SnipeCommand extends BaseCommand {
      * @return boolean
      */
     public function execute(CommandSender $sender, $commandLabel, array $args) {
-        if(!$this->testPermission()) {
+        if(!$this->testPermission($sender)) {
             return false;
         }
         
