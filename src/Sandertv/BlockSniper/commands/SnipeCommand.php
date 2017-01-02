@@ -66,10 +66,12 @@ class SnipeCommand extends BaseCommand {
                     $sender->sendMessage(TF::RED . "[Warning] That radius is too big. Please set a radius of 10 or smaller.");
                     return true;
                 }
-                $sphere->fillShape();
+                if(!$sphere->fillShape()) {
+                    $sender->sendMessage(TF::RED . "[Warning] Invalid block given.");
+                    return true;
+                }
                 $sender->sendMessage(TF::GREEN . "Succesfully launched a sphere at the location looked at.");
         }
-        
         return true;
     }
 }

@@ -4,6 +4,7 @@ namespace Sandertv\BlockSniper;
 
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat as TF;
+use pocketmine\utils\Config;
 
 class Loader extends PluginBase {
     

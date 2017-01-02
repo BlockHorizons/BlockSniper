@@ -90,12 +90,12 @@ class SphereShape extends BaseShape {
         $this->center = $center;
     }
     
-    public function getBlock(): Block {
-        return $this->block;
+    public function getBlocks(): array {
+        return $this->blocks;
     }
     
-    public function setBlock(Block $block) {
-        $this->block = $block;
+    public function setBlocks(array $blocks) {
+        $this->blocks = $blocks;
     }
 
     public function getLevel(): Level {
