@@ -33,12 +33,12 @@ class SnipeCommand extends BaseCommand {
             return true;
         }
         
-        if(!isset($args[2])) {
+        if(count($args) < 3) {
             return false;
         }
         
         $type = ("TYPE_" . strtoupper($args[0]));
-        if(!defined(BaseShape::$type)) {
+        if(!defined("BaseShape::$type")) {
             $sender->sendMessage(TF::RED . "[Warning] That is not a valid type.");
             return true;
         }
