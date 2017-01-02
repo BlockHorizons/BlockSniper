@@ -9,6 +9,7 @@ use Sandertv\BlockSniper\commands\BaseCommand;
 use pocketmine\Player;
 use Sandertv\BlockSniper\shapes\CuboidShape;
 use Sandertv\BlockSniper\shapes\SphereShape;
+use Sandertv\BlockSniper\shapes\OverlayShape;
 
 class BrushWandCommand extends BaseCommand {
     
@@ -68,6 +69,17 @@ class BrushWandCommand extends BaseCommand {
                 $sphere = new SphereShape($sender->getLevel());
                 if(!$sender->hasPermission($sphere->getPermission())) {
                     $sender->sendMessage(TF::RED . "[Warning] You do not have permission to use the Sphere shape.");
+                    return true;
+                }
+                
+                $sender->sendMessage(TF::GREEN . "Brush wand has been enabled.");
+                $this->getPlugin()->enableBrushWand($sender, $type, $args[1], $args[2]);
+                break;
+                
+            case "TYPE_OVERLAY":
+                $overlay = new OverlayShape($sender->getLevel());
+                if(!$sender->hasPermission($overlay->getPermission())) {
+                    $sender->sendMessage(TF::RED . "[Warning] You do not have permission to use the Overlay shape.");
                     return true;
                 }
                 

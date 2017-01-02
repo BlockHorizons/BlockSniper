@@ -5,6 +5,7 @@ namespace Sandertv\BlockSniper;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat as TF;
 use pocketmine\utils\Config;
+use pocketmine\math\Vector3;
 use Sandertv\BlockSniper\commands\SnipeCommand;
 use pocketmine\Player;
 use Sandertv\BlockSniper\commands\BrushWandCommand;

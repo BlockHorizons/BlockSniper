@@ -7,9 +7,9 @@ use pocketmine\utils\TextFormat as TF;
 use Sandertv\BlockSniper\Loader;
 use Sandertv\BlockSniper\commands\BaseCommand;
 use pocketmine\Player;
-use Sandertv\BlockSniper\shapes\BaseShape;
 use Sandertv\BlockSniper\shapes\CuboidShape;
 use Sandertv\BlockSniper\shapes\SphereShape;
+use Sandertv\BlockSniper\shapes\OverlayShape;
 
 class SnipeCommand extends BaseCommand {
     
@@ -84,6 +84,19 @@ class SnipeCommand extends BaseCommand {
                     return true;
                 }
                 $sender->sendMessage(TF::GREEN . "Succesfully launched a sphere at the location looked at.");
+                break;
+                
+            case "TYPE_OVERLAY":
+                $overlay = new OverlayShape($sender->getLevel(), $args[1], $center, explode(",", $args[2]));
+                if(!$sender->hasPermission($overlay->getPermission())) {
+                    $sender->sendMessage(TF::RED . "[Warning] You do not have permission to use the Overlay shape.");
+                    return true;
+                }
+                if(!$overlay->fillShape()) {
+                    $sender->sendMessage(TF::RED . "[Warning] Invalid block given.");
+                    return true;
+                }
+                $sender->sendMessage(TF::GREEN . "Succesfully launched an overlay at the location looked at.");
                 break;
                 
             default:

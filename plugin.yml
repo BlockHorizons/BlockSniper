@@ -17,6 +17,9 @@ permissions:
                     blocksniper.command.snipe:
                         default: op
                         description: "Allows access to the snipe command."
+                    blocksniper.command.brushwand:
+                        default: op
+                        description: "Allows access to the brush wand command."
             blocksniper.shape:
                 default: false
                 description: "Allows access to all BlockSniper shapes."
@@ -24,4 +27,10 @@ permissions:
                     blocksniper.shape.sphere:
                         default: op
                         description: "Allows access to the sphere shape."
+                    blocksniper.shape.cuboid:
+                        default: op
+                        description: "Allows access to the cuboid shape."
+                    blocksniper.shape.overlay:
+                        default: op
+                        description: "Allows access to the overlay shape."
 ...

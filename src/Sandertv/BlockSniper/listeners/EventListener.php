@@ -57,6 +57,19 @@ class EventListener implements Listener {
                 }
                 $player->sendPopup(TF::GREEN . "Succesfully launched a sphere at the location looked at.");
                 break;
+                
+            case "TYPE_OVERLAY":
+                $overlay = new OverlayShape($player->getLevel(), $brushwand["radius"], $center, explode(",", $brushwand["blocks"]));
+                if(!$player->hasPermission($overlay->getPermission())) {
+                    $player->sendMessage(TF::RED . "[Warning] You do not have permission to use the Overlay shape.");
+                    break;
+                }
+                if(!$overlay->fillShape()) {
+                    $player->sendMessage(TF::RED . "[Warning] Invalid block given.");
+                    break;
+                }
+                $player->sendPopup(TF::GREEN . "Succesfully launched an overlay at the location looked at.");
+                break;
         }
     }
     

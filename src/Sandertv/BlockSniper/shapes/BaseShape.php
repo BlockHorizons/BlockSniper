@@ -2,15 +2,14 @@
 
 namespace Sandertv\BlockSniper\shapes;
 
-use pocketmine\math\Vector3;
-
 abstract class BaseShape {
 
     const MAX_WORLD_HEIGHT = 256;
     const MIN_WORLD_HEIGHT = 0;
     
-    const TYPE_CUBOID = 1, TYPE_CUBE = 1;
-    const TYPE_SPHERE = 2, TYPE_BALL = 2;
+    const TYPE_CUBOID = 0, TYPE_CUBE = 0;
+    const TYPE_SPHERE = 1, TYPE_BALL = 1;
+    const TYPE_OVERLAY = 2;
     
     public abstract function getName(): string;
     
