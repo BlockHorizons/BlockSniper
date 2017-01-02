@@ -54,13 +54,15 @@ class SphereShape extends BaseShape {
                         $randomBlock = Item::fromString($this->blocks[array_rand($this->blocks)])->getBlock();
                         if($randomBlock->getId() !== 0) {
                             $this->level->setBlock(new Vector3($x, $y, $z), $randomBlock, false, false);
-                            return true;
                         }
                     }
                 }
             }
         }
-        return false;
+        if($randomBlock === Block::AIR && $randomBlock->getId() === 0) {
+            return false;
+        }
+        return true;
     }
 
     public function getName(): string {
