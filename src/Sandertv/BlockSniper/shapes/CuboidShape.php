@@ -12,7 +12,6 @@ use pocketmine\item\Item;
 class CuboidShape extends BaseShape {
     
     public function __construct(Level $level, float $radius = null, Vector3 $center = null, array $blocks = []) {
-        parent::__construct($level);
         $this->level = $level;
         if(!isset($radius)) {
             $this->radius = 0;
