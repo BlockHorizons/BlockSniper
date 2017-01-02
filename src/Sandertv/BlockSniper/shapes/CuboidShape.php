@@ -9,7 +9,7 @@ use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\item\Item;
 
-class SphereShape extends BaseShape {
+class CuboidShape extends BaseShape {
     
     public function __construct(BaseShape $owner, Level $level, float $radius = null, Vector3 $center = null, array $blocks = []) {
         parent::__construct($owner);

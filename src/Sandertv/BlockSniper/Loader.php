@@ -5,6 +5,7 @@ namespace Sandertv\BlockSniper;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat as TF;
 use pocketmine\utils\Config;
+use Sandertv\BlockSniper\commands\SnipeCommand;
 
 class Loader extends PluginBase {
     
@@ -19,6 +20,7 @@ class Loader extends PluginBase {
         $this->saveResource("settings.yml");
         $this->settings = new Config($this->getDataFolder() . "settings.yml", Config::YAML);
         
+        $this->getServer()->getCommandMap()->register("snipe", new SnipeCommand($this));
     }
     
     
