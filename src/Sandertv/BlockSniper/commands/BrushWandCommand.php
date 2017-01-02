@@ -53,7 +53,7 @@ class BrushWandCommand extends BaseCommand {
         switch($type) {
             case "TYPE_CUBE":
             case "TYPE_CUBOID":
-                $cube = new CuboidShape($sender->getLevel(), $args[1], $center, explode(",", $args[2]));
+                $cube = new CuboidShape($sender->getLevel());
                 if(!$sender->hasPermission($cube->getPermission())) {
                     $sender->sendMessage(TF::RED . "[Warning] You do not have permission to use the Cube shape.");
                     return true;
@@ -65,7 +65,7 @@ class BrushWandCommand extends BaseCommand {
             
             case "TYPE_SPHERE":
             case "TYPE_BALL":
-                $sphere = new SphereShape($sender->getLevel(), $args[1], $center, explode(",", $args[2]));
+                $sphere = new SphereShape($sender->getLevel()));
                 if(!$sender->hasPermission($sphere->getPermission())) {
                     $sender->sendMessage(TF::RED . "[Warning] You do not have permission to use the Sphere shape.");
                     return true;
