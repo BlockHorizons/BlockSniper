@@ -59,6 +59,7 @@ class Loader extends PluginBase {
      */
     public function disableBrushWand(Player $player) {
         unset($this->brushwand[$player->getName()]);
+        $player->sendMessage(TF::YELLOW . "Brush wand disabled.");
     }
     
     /**
