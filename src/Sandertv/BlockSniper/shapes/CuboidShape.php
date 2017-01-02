@@ -13,6 +13,9 @@ class CuboidShape extends BaseShape {
     
     public function __construct(Level $level, float $radius = null, Vector3 $center = null, array $blocks = []) {
         $this->level = $level;
+        $this->radius = $radius;
+        $this->center = $center;
+        $this->blocks = $blocks;
         if(!isset($radius)) {
             $this->radius = 0;
         }
