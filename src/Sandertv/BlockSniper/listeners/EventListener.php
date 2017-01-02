@@ -10,6 +10,7 @@ use pocketmine\event\player\PlayerQuitEvent;
 use Sandertv\BlockSniper\Loader;
 use Sandertv\BlockSniper\shapes\CuboidShape;
 use Sandertv\BlockSniper\shapes\SphereShape;
+use Sandertv\BlockSniper\shapes\OverlayShape;
 
 class EventListener implements Listener {
     
