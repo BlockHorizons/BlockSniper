@@ -25,9 +25,10 @@ class EventListener implements Listener {
     public function onBrush(PlayerInteractEvent $event) {
         $player = $event->getPlayer();
         if(!$this->getOwner()->hasBrushWandEnabled($player)) {
-           return; 
+            echo("Wand NOT enabled.");
+            return; 
         }
-        
+        echo("Wand enabled");
         $brushwand = $this->getOwner()->getBrushWand($player);
         $center = $player->getTargetBlock(100);
         
@@ -48,6 +49,7 @@ class EventListener implements Listener {
             
             case "TYPE_SPHERE":
             case "TYPE_BALL":
+                echo("Sphere selected");
                 $sphere = new SphereShape($player->getLevel(), $brushwand["radius"], $center, explode(",", $brushwand["blocks"]));
                 if(!$sender->hasPermission($sphere->getPermission())) {
                     $sender->sendMessage(TF::RED . "[Warning] You do not have permission to use the Sphere shape.");
