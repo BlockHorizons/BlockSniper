@@ -37,7 +37,9 @@ class BrushWandCommand extends BaseCommand {
         if(strtolower($args[0]) === "off") {
             $sender->sendMessage(TF::GREEN . "Brush wand disabled.");
             $this->getPlugin()->disableBrushWand($sender);
+            return true;
         }
+        
         if(!is_numeric($args[1])) {
             $sender->sendMessage(TF::RED . "[Warning] The radius should be numeric.");
             return true;
