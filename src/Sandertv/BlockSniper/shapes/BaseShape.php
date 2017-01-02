@@ -16,5 +16,5 @@ abstract class BaseShape {
     
     public abstract function getPermission(): string;
     
-    public abstract function fillShape(array $blocks, Vector3 $center, float $radius): bool;
+    public abstract function fillShape(): bool;
 }
