@@ -11,11 +11,13 @@ If you do decide to compile a phar file yourself to benefit from the latest feat
 ## What is this?
 BlockSniper is an advanced world editing tool, based on the idea of VoxelSniper from minecraft PC softwares.
 BlockSniper allows you to edit your world on a long range, with several different types. The types are as follows:
-> Cuboid    > Spawn a cube in your world
+> Cuboid    > Spawn a cube on the target location
 >
-> Sphere    > Spawn a sphere in your world
+> Sphere    > Spawn a sphere on the target location
 >
 > Overlay   > Overlay blocks with a different type
+>
+> Layer     > Lay a thin layer of blocks on the target location
 >
 > More coming soon!
 
@@ -88,4 +90,10 @@ A full list of permissions can be found in the plugin.yml file. Here they are:
 >                        default: op
 >
 >                        description: Allows access to the overlay shape.
+>
+>                    blocksniper.shape.layer:
+>
+>                        default: op
+>
+>                        description: Allows access to the layer shape.
 

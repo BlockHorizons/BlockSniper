@@ -33,4 +33,7 @@ permissions:
                     blocksniper.shape.overlay:
                         default: op
                         description: "Allows access to the overlay shape."
+                    blocksniper.shape.layer:
+                        default: op
+                        description: "Allows access to the layer shape."
 ...

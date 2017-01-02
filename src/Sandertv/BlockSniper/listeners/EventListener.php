@@ -11,6 +11,7 @@ use Sandertv\BlockSniper\Loader;
 use Sandertv\BlockSniper\shapes\CuboidShape;
 use Sandertv\BlockSniper\shapes\SphereShape;
 use Sandertv\BlockSniper\shapes\OverlayShape;
+use Sandertv\BlockSniper\shapes\LayerShape;
 
 class EventListener implements Listener {
     
@@ -29,6 +30,10 @@ class EventListener implements Listener {
         }
         $brushwand = $this->getOwner()->getBrushWand($player);
         $center = $player->getTargetBlock(100);
+        if(!$center) {
+            $player->sendMessage(TF::RED . "[Warning] Could not find a valid target block.");
+            return;
+        }
         
         switch($brushwand["type"]) {
             case "TYPE_CUBE":
@@ -70,6 +75,20 @@ class EventListener implements Listener {
                     break;
                 }
                 $player->sendPopup(TF::GREEN . "Succesfully launched an overlay at the location looked at.");
+                break;
+                
+            case "TYPE_FLAT_LAYER":
+            case "TYPE_LAYER":
+                $layer = new LayerShape($player->getLevel(), $brushwand["radius"], $center, explode(",", $brushwand["blocks"]));
+                if(!$player->hasPermission($layer->getPermission())) {
+                    $player->sendMessage(TF::RED . "[Warning] You do not have permission to use the Layer shape.");
+                    break;
+                }
+                if(!$layer->fillShape()) {
+                    $player->sendMessage(TF::RED . "[Warning] Invalid block given.");
+                    break;
+                }
+                $player->sendPopup(TF::GREEN . "Succesfully launched a layer at the location looked at.");
                 break;
         }
     }

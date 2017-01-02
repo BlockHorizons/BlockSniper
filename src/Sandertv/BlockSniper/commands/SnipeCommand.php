@@ -10,6 +10,7 @@ use pocketmine\Player;
 use Sandertv\BlockSniper\shapes\CuboidShape;
 use Sandertv\BlockSniper\shapes\SphereShape;
 use Sandertv\BlockSniper\shapes\OverlayShape;
+use Sandertv\BlockSniper\shapes\LayerShape;
 
 class SnipeCommand extends BaseCommand {
     
@@ -97,6 +98,20 @@ class SnipeCommand extends BaseCommand {
                     return true;
                 }
                 $sender->sendMessage(TF::GREEN . "Succesfully launched an overlay at the location looked at.");
+                break;
+                
+            case "TYPE_FLAT_LAYER":
+            case "TYPE_LAYER":
+                $layer = new LayerShape($sender->getLevel(), $args[1], $center, explode(",", $args[2]));
+                if(!$sender->hasPermission($layer->getPermission())) {
+                    $sender->sendMessage(TF::RED . "[Warning] You do not have permission to use the Layer shape.");
+                    return true;
+                }
+                if(!$layer->fillShape()) {
+                    $sender->sendMessage(TF::RED . "[Warning] Invalid block given.");
+                    return true;
+                }
+                $sender->sendMessage(TF::GREEN . "Succesfully launched a layer at the location looked at.");
                 break;
                 
             default:

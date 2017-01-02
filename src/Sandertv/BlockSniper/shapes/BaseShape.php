@@ -10,6 +10,7 @@ abstract class BaseShape {
     const TYPE_CUBOID = 0, TYPE_CUBE = 0;
     const TYPE_SPHERE = 1, TYPE_BALL = 1;
     const TYPE_OVERLAY = 2;
+    const TYPE_LAYER = 3, TYPE_FLAT_LAYER = 3;
     
     public abstract function getName(): string;
     
