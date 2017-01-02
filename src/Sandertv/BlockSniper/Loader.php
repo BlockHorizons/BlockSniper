@@ -8,6 +8,7 @@ use pocketmine\utils\Config;
 use Sandertv\BlockSniper\commands\SnipeCommand;
 use pocketmine\Player;
 use Sandertv\BlockSniper\commands\BrushWandCommand;
+use Sandertv\BlockSniper\listeners\EventListener;
 
 class Loader extends PluginBase {
     
@@ -25,6 +26,8 @@ class Loader extends PluginBase {
         
         $this->getServer()->getCommandMap()->register("snipe", new SnipeCommand($this));
         $this->getServer()->getCommandMap()->register("brushwand", new BrushWandCommand($this));
+        
+        $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
     }
     
     
