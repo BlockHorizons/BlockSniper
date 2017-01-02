@@ -43,7 +43,7 @@ class CuboidShape extends BaseShape {
         $maxZ = $targetZ + $this->radius;
         
         for($x = $minX; $x <= $maxX; $x++) {
-            for($y = $minY; $x <= $maxY; $y++) {
+            for($y = $minY; $y <= $maxY; $y++) {
                 for($z = $minZ; $z <= $maxZ; $z++) {
                     $randomName = $this->blocks[array_rand($this->blocks)];
                     $randomBlock = Item::fromString($randomName)->getBlock();

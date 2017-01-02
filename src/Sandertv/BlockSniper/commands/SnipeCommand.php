@@ -66,8 +66,9 @@ class SnipeCommand extends BaseCommand {
                 }
                 if(!$cube->fillShape()) {
                     $sender->sendMessage(TF::RED . "[Warning] Invalid block given.");
+                    return true;
                 }
-                $sender->sendMessage(TF::GREEN . "Succesfully launched a sphere at the location looked at.");
+                $sender->sendMessage(TF::GREEN . "Succesfully launched a cube at the location looked at.");
                 break;
             
             case "TYPE_SPHERE":
