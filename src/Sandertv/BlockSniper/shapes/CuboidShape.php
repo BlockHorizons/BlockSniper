@@ -53,7 +53,7 @@ class CuboidShape extends BaseShape {
                 }
             }
         }
-        if($randomBlock->getId() === Block::AIR && strtolower($randomName) !== "air") {
+        if($randomBlock === Block::AIR && strtolower($randomName) !== "air") {
             return false;
         }
         return true;
