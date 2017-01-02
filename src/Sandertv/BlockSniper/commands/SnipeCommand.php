@@ -7,11 +7,12 @@ use pocketmine\utils\TextFormat as TF;
 use Sandertv\BlockSniper\Loader;
 use pocketmine\Player;
 use Sandertv\BlockSniper\shapes\BaseShape;
+use Sandertv\BlockSniper\shapes\SphereShape;
 
 class SnipeCommand extends BaseCommand {
     
     public function __construct(Loader $owner) {
-        parent::__construct($owner, "snipe", "Snipe a small cluster of blocks at the location you're looking", "<type> <radius>", ["shoot", "launch"]);
+        parent::__construct($owner, "snipe", "Snipe a small cluster of blocks at the location you're looking", "<type> <radius> <block(s)>", ["shoot", "launch"]);
         $this->setPermission("blocksniper.command.snipe");
     }
     
@@ -28,17 +29,17 @@ class SnipeCommand extends BaseCommand {
         
         if(!$sender instanceof Player) {
             $this->sendConsoleError($sender);
-            return;
+            return true;
         }
         
-        if(!isset($args[1])) {
+        if(!isset($args[2])) {
             return false;
         }
         
         $type = ("TYPE_" . strtoupper($args[0]));
         if(!defined(BaseShape::$type)) {
             $sender->sendMessage(TF::RED . "[Warning] That is not a valid type.");
-            return;
+            return true;
         }
         
         if(!is_numeric($args[1])) {
@@ -48,15 +49,25 @@ class SnipeCommand extends BaseCommand {
         $center = $sender->getTargetBlock(100);
         if(!$center) {
             $sender->sendMessage(TF::RED . "[Warning] No target block could be found.");
+            return true;
         }
         
         switch($type) {
             case "TYPE_CUBE":
                 // TODO
                 break;
+            
             case "TYPE_SPHERE":
-                // TODO
-                break;
+                $sphere = new SphereShape($this, $sender->getLevel(), $args[1], $center, array_slice($args, 2));
+                if(!$sender->hasPermission($sphere->getPermission())) {
+                    $sender->sendMessage(TF::RED . "[Warning] You do not have permission to use this shape.");
+                }
+                if($args[1] > 10) {
+                    $sender->sendMessage(TF::RED . "[Warning] That radius is too big. Please set a radius of 10 or smaller.");
+                    return true;
+                }
+                $sphere->fillShape();
+                $sender->sendMessage(TF::GREEN . "Succesfully launched a sphere at the location looked at.");
         }
         
         return true;
