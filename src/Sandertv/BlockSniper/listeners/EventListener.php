@@ -3,7 +3,7 @@
 namespace Sandertv\BlockSniper\listeners;
 
 use pocketmine\event\Listener;
-use pocketmine\Player;
+use pocketmine\utils\TextFormat as TF;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerItemHeldEvent;
 use pocketmine\event\player\PlayerQuitEvent;
@@ -41,7 +41,7 @@ class EventListener implements Listener {
                     $player->sendMessage(TF::RED . "[Warning] Invalid block given.");
                     break;
                 }
-                $player->sendMessage(TF::GREEN . "Succesfully launched a cube at the location looked at.");
+                $player->sendPopup(TF::GREEN . "Succesfully launched a cube at the location looked at.");
                 break;
             
             case "TYPE_SPHERE":
@@ -55,7 +55,7 @@ class EventListener implements Listener {
                     $player->sendMessage(TF::RED . "[Warning] Invalid block given.");
                     break;
                 }
-                $player->sendMessage(TF::GREEN . "Succesfully launched a sphere at the location looked at.");
+                $player->sendPopup(TF::GREEN . "Succesfully launched a sphere at the location looked at.");
                 break;
         }
     }
