@@ -70,7 +70,7 @@ class BrushWandCommand extends BaseCommand {
                 }
                 
                 $sender->sendMessage(TF::GREEN . "Brush wand has been enabled.");
-                $this->getPlugin()->enableBrushWand($sender, $type, $args[1], $args[2])
+                $this->getPlugin()->enableBrushWand($sender, $type, $args[1], $args[2]);
                 break;
                 
             default:
