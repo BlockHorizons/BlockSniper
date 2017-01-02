@@ -9,7 +9,7 @@ use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\item\Item;
 
-class SphereShape extends BaseShape {
+class OverlayShape extends BaseShape {
     
     public function __construct(Level $level, float $radius = 0, Vector3 $center = null, array $blocks = []) {
         $this->level = $level;
