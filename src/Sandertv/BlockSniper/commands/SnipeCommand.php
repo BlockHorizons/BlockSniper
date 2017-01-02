@@ -34,14 +34,11 @@ class SnipeCommand extends BaseCommand {
         }
         
         if(count($args) < 3) {
-            return false;
+            $sender->sendMessage(TF::RED . "[Usage] /snipe <type> <radius> <block(s)>");
+            return true;
         }
         
         $type = ("TYPE_" . strtoupper($args[0]));
-        if(!defined("BaseShape::$type")) {
-            $sender->sendMessage(TF::RED . "[Warning] That is not a valid type.");
-            return true;
-        }
         
         if(!is_numeric($args[1])) {
             $sender->sendMessage(TF::RED . "[Warning] The radius should be numeric.");
@@ -55,10 +52,12 @@ class SnipeCommand extends BaseCommand {
         
         switch($type) {
             case "TYPE_CUBE":
+            case "TYPE_CUBOID":
                 // TODO
                 break;
             
             case "TYPE_SPHERE":
+            case "TYPE_BALL":
                 $sphere = new SphereShape($this, $sender->getLevel(), $args[1], $center, array_slice($args, 2));
                 if(!$sender->hasPermission($sphere->getPermission())) {
                     $sender->sendMessage(TF::RED . "[Warning] You do not have permission to use this shape.");
@@ -72,6 +71,10 @@ class SnipeCommand extends BaseCommand {
                     return true;
                 }
                 $sender->sendMessage(TF::GREEN . "Succesfully launched a sphere at the location looked at.");
+                break;
+                
+            default:
+                $sender->sendMessage(TF::RED . "[Warning] Please provide a valid shape.");
         }
         return true;
     }
