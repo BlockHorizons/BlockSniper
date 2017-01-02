@@ -80,6 +80,8 @@ class EventListener implements Listener {
     }
     
     public function onPlayerQuit(PlayerQuitEvent $event) {
-        $this->onItemSwitch();
+        if($this->getOwner()->hasBrushWandEnabled($event->getPlayer())) {
+            $this->getOwner()->disableBrushWand($event->getPlayer());
+        }
     }
 }

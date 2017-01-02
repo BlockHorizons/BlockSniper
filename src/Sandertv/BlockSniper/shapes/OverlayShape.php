@@ -53,11 +53,23 @@ class OverlayShape extends BaseShape {
                             $block->getSide(Block::SIDE_WEST),
                             $block->getSide(Block::SIDE_EAST)
                         ];
+                        $valid = true;
+                        foreach($this->blocks as $possibleBlock) {
+                            if(is_numeric($possibleBlock)) {
+                                if($block->getId() === $possibleBlock) {
+                                    $valid = false;
+                                }
+                            } else {
+                                if($block->getId() === Item::fromString($possibleBlock)->getId()) {
+                                    $valid = false;
+                                }
+                            }
+                        }
                         foreach($directions as $direction) {
-                            if($this->level->getBlock($direction)->getId() === Item::AIR) {
+                            if($this->level->getBlock($direction)->getId() === Item::AIR && $valid) {
                                 $randomName = $this->blocks[array_rand($this->blocks)];
                                 $randomBlock = is_numeric($randomName) ? Item::get($randomName)->getBlock() : Item::fromString($randomName)->getBlock();
-                                if($randomBlock !== 0 || strtolower($randomName) === "air" && $block->getId() !== $randomBlock->getId()) {
+                                if(($randomBlock !== 0 || strtolower($randomName) === "air") && $block->getId() !== $randomBlock->getId()) {
                                     $this->level->setBlock($direction, $randomBlock, false, false);
                                 }
                             }
