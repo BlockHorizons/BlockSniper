@@ -33,36 +33,36 @@ class EventListener implements Listener {
             case "TYPE_CUBE":
             case "TYPE_CUBOID":
                 $cube = new CuboidShape($player->getLevel(), $brushwand["radius"], $center, explode(",", $brushwand["blocks"]));
-                if(!$sender->hasPermission($cube->getPermission())) {
-                    $sender->sendMessage(TF::RED . "[Warning] You do not have permission to use the Cube shape.");
+                if(!$player->hasPermission($cube->getPermission())) {
+                    $player->sendMessage(TF::RED . "[Warning] You do not have permission to use the Cube shape.");
                     break;
                 }
                 if(!$cube->fillShape()) {
-                    $sender->sendMessage(TF::RED . "[Warning] Invalid block given.");
+                    $player->sendMessage(TF::RED . "[Warning] Invalid block given.");
                     break;
                 }
-                $sender->sendMessage(TF::GREEN . "Succesfully launched a cube at the location looked at.");
+                $player->sendMessage(TF::GREEN . "Succesfully launched a cube at the location looked at.");
                 break;
             
             case "TYPE_SPHERE":
             case "TYPE_BALL":
                 $sphere = new SphereShape($player->getLevel(), $brushwand["radius"], $center, explode(",", $brushwand["blocks"]));
-                if(!$sender->hasPermission($sphere->getPermission())) {
-                    $sender->sendMessage(TF::RED . "[Warning] You do not have permission to use the Sphere shape.");
+                if(!$player->hasPermission($sphere->getPermission())) {
+                    $player->sendMessage(TF::RED . "[Warning] You do not have permission to use the Sphere shape.");
                     break;
                 }
                 if(!$sphere->fillShape()) {
-                    $sender->sendMessage(TF::RED . "[Warning] Invalid block given.");
+                    $player->sendMessage(TF::RED . "[Warning] Invalid block given.");
                     break;
                 }
-                $sender->sendMessage(TF::GREEN . "Succesfully launched a sphere at the location looked at.");
+                $player->sendMessage(TF::GREEN . "Succesfully launched a sphere at the location looked at.");
                 break;
         }
     }
     
     public function onItemSwitch(PlayerItemHeldEvent $event) {
         if($this->getOwner()->hasBrushWandEnabled($event->getPlayer())) {
-            $this->getOwner()->disableBrushWand($sender);
+            $this->getOwner()->disableBrushWand($event->getPlayer());
         }
     }
     
