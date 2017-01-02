@@ -5,6 +5,7 @@ namespace Sandertv\BlockSniper\commands;
 use pocketmine\command\CommandSender;
 use pocketmine\utils\TextFormat as TF;
 use Sandertv\BlockSniper\Loader;
+use Sandertv\BlockSniper\commands\BaseCommand;
 use pocketmine\Player;
 use Sandertv\BlockSniper\shapes\BaseShape;
 use Sandertv\BlockSniper\shapes\SphereShape;
