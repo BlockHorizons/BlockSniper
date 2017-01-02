@@ -1,2 +1,27 @@
-## YAML Template.
 ---
+name: "BlockSniper"
+version: 0.0.1
+api: 2.1.0
+author: "Sandertv"
+main: Sandertv\BlockSniper\Loader
+
+permissions:
+    blocksniper:
+        default: false
+        description: "Allows access to all BlockSniper features."
+        children:
+            blocksniper.command:
+                default: false
+                description: "Allows access to all BlockSniper command features."
+                children:
+                    blocksniper.command.snipe:
+                        default: op
+                        description: "Allows access to the snipe command."
+            blocksniper.shape:
+                default: false
+                description: "Allows access to all BlockSniper shapes."
+                children:
+                    blocksniper.shape.sphere:
+                        default: op
+                        description: "Allows access to the sphere shape."
+...
