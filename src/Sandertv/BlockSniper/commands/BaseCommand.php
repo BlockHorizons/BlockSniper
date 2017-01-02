@@ -29,4 +29,8 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand 
     public function sendConsoleError(CommandSender $sender) {
         $sender->sendMessage(TF::RED . "[Warning] You can't execute this command using console.");
     }
+    
+    public function sendNoPermission(CommandSender $sender) {
+        $sender->sendMessage(TF::RED . "[Warning] You don't have permission to execute this command.");
+    }
 }

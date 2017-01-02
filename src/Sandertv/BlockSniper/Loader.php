@@ -6,9 +6,12 @@ use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat as TF;
 use pocketmine\utils\Config;
 use Sandertv\BlockSniper\commands\SnipeCommand;
+use pocketmine\Player;
+use Sandertv\BlockSniper\commands\BrushWandCommand;
 
 class Loader extends PluginBase {
     
+    public $brushwand = [];
     
     public function onEnable() {
         
@@ -21,6 +24,7 @@ class Loader extends PluginBase {
         $this->settings = new Config($this->getDataFolder() . "settings.yml", Config::YAML);
         
         $this->getServer()->getCommandMap()->register("snipe", new SnipeCommand($this));
+        $this->getServer()->getCommandMap()->register("brushwand", new BrushWandCommand($this));
     }
     
     
@@ -28,6 +32,44 @@ class Loader extends PluginBase {
         
         $this->getLogger()->info(TF::RED . "BlockSniper has been disabled");
         
+    }
+    
+    /**
+     * @param Player $player
+     * @param string $type
+     * @param int $radius
+     * @param string $blocks
+     */
+    public function enableBrushWand(Player $player, string $type, int $radius, string $blocks) {
+        $this->brushwand[$player->getName()] = ["type" => $type,
+                                                "radius" => $radius,
+                                                "blocks" => $blocks];
+    }
+    
+    /**
+     * @param Player $player
+     * @return array
+     */
+    public function getBrushWand(Player $player) {
+        return $this->brushwand[$player->getName()];
+    }
+    
+    /**
+     * @param Player $player
+     */
+    public function disableBrushWand(Player $player) {
+        unset($this->brushwand[$player->getName()]);
+    }
+    
+    /**
+     * @param Player $player
+     * @return boolean
+     */
+    public function hasBrushWandEnabled(Player $player): bool {
+        if(isset($this->brushwand[$player->getName()])) {
+            return true;
+        }
+        return false;
     }
     
 }
