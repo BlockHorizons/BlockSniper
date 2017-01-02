@@ -24,7 +24,7 @@ BlockSniper has several commands to edit your world. The commands work as follow
 > /snipe <type> <radius> <block(s)> : Snipe an edit type at the location you're looking at.
 >
 > Additional blocks can be added by sepparating them with a comma.
->
+>>
 > /brushwand <type> <radius> <block(s)> : Set a wand with an edit type to shoot everytime you hold your finger on the screen or interact.
 >
 > Additional blocks can here too be added by sepparating them with a comma.
@@ -33,6 +33,7 @@ BlockSniper has several commands to edit your world. The commands work as follow
 A full list of permissions can be found in the plugin.yml file. Here they are:
 
 >permissions:
+
 >    blocksniper:
 
 >        default: false
