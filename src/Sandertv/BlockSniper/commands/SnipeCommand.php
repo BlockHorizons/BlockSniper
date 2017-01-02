@@ -42,6 +42,7 @@ class SnipeCommand extends BaseCommand {
         
         if(!is_numeric($args[1])) {
             $sender->sendMessage(TF::RED . "[Warning] The radius should be numeric.");
+            return true;
         }
         
         $center = $sender->getTargetBlock(100);
@@ -75,7 +76,8 @@ class SnipeCommand extends BaseCommand {
                 
             default:
                 $sender->sendMessage(TF::RED . "[Warning] Please provide a valid shape.");
+                return true;
         }
-        return true;
+        return false;
     }
 }
