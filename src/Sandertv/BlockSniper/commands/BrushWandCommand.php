@@ -65,7 +65,7 @@ class BrushWandCommand extends BaseCommand {
             
             case "TYPE_SPHERE":
             case "TYPE_BALL":
-                $sphere = new SphereShape($sender->getLevel()));
+                $sphere = new SphereShape($sender->getLevel());
                 if(!$sender->hasPermission($sphere->getPermission())) {
                     $sender->sendMessage(TF::RED . "[Warning] You do not have permission to use the Sphere shape.");
                     return true;
