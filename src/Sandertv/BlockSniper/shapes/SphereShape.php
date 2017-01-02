@@ -53,14 +53,14 @@ class SphereShape extends BaseShape {
                     if($xs + $ys + $zs < $radiusSquared) {
                         $randomName = $this->blocks[array_rand($this->blocks)];
                         $randomBlock = Item::fromString($randomName)->getBlock();
-                        if($randomBlock->getId() !== 0 && strtolower($randomName) !== "air") {
+                        if($randomBlock->getId() !== 0 || strtolower($randomName) === "air") {
                             $this->level->setBlock(new Vector3($x, $y, $z), $randomBlock, false, false);
                         }
                     }
                 }
             }
         }
-        if($randomBlock === Block::AIR && $randomBlock->getId() === 0) {
+        if($randomBlock->getId() === Block::AIR && strtolower($randomName) !== "air") {
             return false;
         }
         return true;
