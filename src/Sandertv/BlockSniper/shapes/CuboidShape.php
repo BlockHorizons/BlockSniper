@@ -31,7 +31,29 @@ class CuboidShape extends BaseShape {
         $targetX = $this->center->x;
         $targetY = $this->center->y;
         $targetZ = $this->center->z;
-        return false;
+        
+        $minX = $targetX - $this->radius;
+        $minY = $targetY - $this->radius;
+        $minZ = $targetZ - $this->radius;
+        $maxX = $targetX + $this->radius;
+        $maxY = $targetY + $this->radius;
+        $maxZ = $targetZ + $this->radius;
+        
+        for($x = $minX; $x <= $maxX; $x++) {
+            for($y = $minY; $x <= $maxY; $y++) {
+                for($z = $minZ; $z <= $maxZ; $z++) {
+                    $randomName = $this->blocks[array_rand($this->blocks)];
+                    $randomBlock = Item::fromString($randomName)->getBlock();
+                    if($randomBlock->getId() !== 0 && strtolower($randomName) !== "air") {
+                        $this->level->setBlock(new Vector3($x, $y, $z), $randomBlock, false, false);
+                    }
+                }
+            }
+        }
+        if($randomBlock === Block::AIR && $randomBlock->getId() === 0) {
+            return false;
+        }
+        return true;
     }
 
     public function getName(): string {

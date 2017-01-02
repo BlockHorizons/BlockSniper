@@ -51,8 +51,9 @@ class SphereShape extends BaseShape {
                 for($z = $maxZ; $z >= $minZ; $z--) {
                     $zs = ($targetZ - $z) * ($targetZ - $z);
                     if($xs + $ys + $zs < $radiusSquared) {
-                        $randomBlock = Item::fromString($this->blocks[array_rand($this->blocks)])->getBlock();
-                        if($randomBlock->getId() !== 0) {
+                        $randomName = $this->blocks[array_rand($this->blocks)];
+                        $randomBlock = Item::fromString($randomName)->getBlock();
+                        if($randomBlock->getId() !== 0 && strtolower($randomName) !== "air") {
                             $this->level->setBlock(new Vector3($x, $y, $z), $randomBlock, false, false);
                         }
                     }
