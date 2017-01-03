@@ -15,9 +15,7 @@ class LayerType extends BaseShape {
         $this->radius = $radius;
         $this->center = $center;
         $this->blocks = $blocks;
-        if(!isset($radius)) {
-            $this->radius = 0;
-        }
+
         if(!isset($center)) {
             $this->center = new Vector3(0, 0, 0);
         }
