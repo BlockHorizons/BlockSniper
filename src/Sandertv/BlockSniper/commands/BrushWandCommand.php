@@ -7,10 +7,10 @@ use pocketmine\utils\TextFormat as TF;
 use Sandertv\BlockSniper\Loader;
 use Sandertv\BlockSniper\commands\BaseCommand;
 use pocketmine\Player;
-use Sandertv\BlockSniper\shapes\CuboidShape;
-use Sandertv\BlockSniper\shapes\SphereShape;
-use Sandertv\BlockSniper\shapes\OverlayShape;
-use Sandertv\BlockSniper\shapes\LayerShape;
+use Sandertv\BlockSniper\brush\shapes\CuboidShape;
+use Sandertv\BlockSniper\brush\shapes\SphereShape;
+use Sandertv\BlockSniper\brush\types\OverlayType;
+use Sandertv\BlockSniper\brush\types\LayerType;
 
 class BrushWandCommand extends BaseCommand {
     
@@ -47,7 +47,7 @@ class BrushWandCommand extends BaseCommand {
             return true;
         }
         
-        if($args[1] > 10) { // TODO: Make this configurable
+        if($args[1] > 10) { // TODO: Make this configurable.
             $sender->sendMessage(TF::RED . "[Warning] That radius is too big. Please set a radius of 10 or smaller.");
             return true;
         }
@@ -55,54 +55,34 @@ class BrushWandCommand extends BaseCommand {
         switch($type) {
             case "TYPE_CUBE":
             case "TYPE_CUBOID":
-                $cube = new CuboidShape($sender->getLevel());
-                if(!$sender->hasPermission($cube->getPermission())) {
-                    $sender->sendMessage(TF::RED . "[Warning] You do not have permission to use the Cube shape.");
-                    return true;
-                }
-                
-                $sender->sendMessage(TF::GREEN . "Brush wand has been enabled.");
-                $this->getPlugin()->enableBrushWand($sender, $type, $args[1], $args[2]);
+                $shape = new CuboidShape($sender->getLevel());
                 break;
             
             case "TYPE_SPHERE":
             case "TYPE_BALL":
-                $sphere = new SphereShape($sender->getLevel());
-                if(!$sender->hasPermission($sphere->getPermission())) {
-                    $sender->sendMessage(TF::RED . "[Warning] You do not have permission to use the Sphere shape.");
-                    return true;
-                }
-                
-                $sender->sendMessage(TF::GREEN . "Brush wand has been enabled.");
-                $this->getPlugin()->enableBrushWand($sender, $type, $args[1], $args[2]);
+                $shape = new SphereShape($sender->getLevel());
                 break;
                 
             case "TYPE_OVERLAY":
-                $overlay = new OverlayShape($sender->getLevel());
-                if(!$sender->hasPermission($overlay->getPermission())) {
-                    $sender->sendMessage(TF::RED . "[Warning] You do not have permission to use the Overlay shape.");
-                    return true;
-                }
-                
-                $sender->sendMessage(TF::GREEN . "Brush wand has been enabled.");
-                $this->getPlugin()->enableBrushWand($sender, $type, $args[1], $args[2]);
+                $shape = new OverlayType($sender->getLevel());
                 break;
                 
             case "TYPE_FLAT_LAYER":
             case "TYPE_LAYER":
-                $layer = new LayerShape($sender->getLevel());
-                if(!$sender->hasPermission($layer->getPermission())) {
-                    $sender->sendMessage(TF::RED . "[Warning] You do not have permission to use the Layer shape.");
-                    return true;
-                }
-                
-                $sender->sendMessage(TF::GREEN . "Brush wand has been enabled.");
-                $this->getPlugin()->enableBrushWand($sender, $type, $args[1], $args[2]);
+                $shape = new LayerType($sender->getLevel());
                 break;
-                
+            
             default:
-                $sender->sendMessage(TF::RED . "[Warning] Please provide a valid shape.");
+                $sender->sendMessage(TF::RED . "[Warning] Shape not found.");
                 return true;
         }
+        
+        if(!$sender->hasPermission($shape->getPermission())) {
+            $sender->sendMessage(TF::RED . "[Warning] You do not have permission to use this type.");
+            return true;
+        }
+        $sender->sendMessage(TF::GREEN . "Brush wand has been enabled.");
+        $this->getPlugin()->enableBrushWand($sender, $type, $args[1], $args[2]);
+        return true;
     }
 }

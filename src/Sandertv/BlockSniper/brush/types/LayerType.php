@@ -1,14 +1,14 @@
 <?php
 
-namespace Sandertv\BlockSniper\shapes;
+namespace Sandertv\BlockSniper\brush\types;
 
-use Sandertv\BlockSniper\shapes\BaseShape;
+use Sandertv\BlockSniper\brush\BaseShape;
 use pocketmine\math\Vector3;
 use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\item\Item;
 
-class LayerShape extends BaseShape {
+class LayerType extends BaseShape {
     
     public function __construct(Level $level, float $radius = null, Vector3 $center = null, array $blocks = []) {
         $this->level = $level;

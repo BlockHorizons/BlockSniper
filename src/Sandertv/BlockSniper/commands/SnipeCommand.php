@@ -7,10 +7,10 @@ use pocketmine\utils\TextFormat as TF;
 use Sandertv\BlockSniper\Loader;
 use Sandertv\BlockSniper\commands\BaseCommand;
 use pocketmine\Player;
-use Sandertv\BlockSniper\shapes\CuboidShape;
-use Sandertv\BlockSniper\shapes\SphereShape;
-use Sandertv\BlockSniper\shapes\OverlayShape;
-use Sandertv\BlockSniper\shapes\LayerShape;
+use Sandertv\BlockSniper\brush\shapes\CuboidShape;
+use Sandertv\BlockSniper\brush\shapes\SphereShape;
+use Sandertv\BlockSniper\brush\types\OverlayType;
+use Sandertv\BlockSniper\brush\types\LayerType;
 
 class SnipeCommand extends BaseCommand {
     
@@ -47,7 +47,7 @@ class SnipeCommand extends BaseCommand {
             return true;
         }
         
-        if($args[1] > 10) { // TODO: Make this configurable
+        if($args[1] > 10) { // TODO: Make this configurable.
             $sender->sendMessage(TF::RED . "[Warning] That radius is too big. Please set a radius of 10 or smaller.");
             return true;
         }
@@ -61,63 +61,39 @@ class SnipeCommand extends BaseCommand {
         switch($type) {
             case "TYPE_CUBE":
             case "TYPE_CUBOID":
-                $cube = new CuboidShape($sender->getLevel(), $args[1], $center, explode(",", $args[2]));
-                if(!$sender->hasPermission($cube->getPermission())) {
-                    $sender->sendMessage(TF::RED . "[Warning] You do not have permission to use the Cube shape.");
-                    return true;
-                }
-                if(!$cube->fillShape()) {
-                    $sender->sendMessage(TF::RED . "[Warning] Invalid block given.");
-                    return true;
-                }
-                $sender->sendMessage(TF::GREEN . "Succesfully launched a cube at the location looked at.");
+                $shape = new CuboidShape($sender->getLevel(), $args[1], $center, explode(",", $args[2]));
                 break;
-            
+                
             case "TYPE_SPHERE":
             case "TYPE_BALL":
-                $sphere = new SphereShape($sender->getLevel(), $args[1], $center, explode(",", $args[2]));
-                if(!$sender->hasPermission($sphere->getPermission())) {
-                    $sender->sendMessage(TF::RED . "[Warning] You do not have permission to use the Sphere shape.");
-                    return true;
-                }
-                if(!$sphere->fillShape()) {
-                    $sender->sendMessage(TF::RED . "[Warning] Invalid block given.");
-                    return true;
-                }
-                $sender->sendMessage(TF::GREEN . "Succesfully launched a sphere at the location looked at.");
+                $shape = new SphereShape($sender->getLevel(), $args[1], $center, explode(",", $args[2]));
                 break;
                 
             case "TYPE_OVERLAY":
-                $overlay = new OverlayShape($sender->getLevel(), $args[1], $center, explode(",", $args[2]));
-                if(!$sender->hasPermission($overlay->getPermission())) {
-                    $sender->sendMessage(TF::RED . "[Warning] You do not have permission to use the Overlay shape.");
-                    return true;
-                }
-                if(!$overlay->fillShape()) {
-                    $sender->sendMessage(TF::RED . "[Warning] Invalid block given.");
-                    return true;
-                }
-                $sender->sendMessage(TF::GREEN . "Succesfully launched an overlay at the location looked at.");
+                $shape = new OverlayType($sender->getLevel(), $args[1], $center, explode(",", $args[2]));
                 break;
                 
             case "TYPE_FLAT_LAYER":
             case "TYPE_LAYER":
-                $layer = new LayerShape($sender->getLevel(), $args[1], $center, explode(",", $args[2]));
-                if(!$sender->hasPermission($layer->getPermission())) {
-                    $sender->sendMessage(TF::RED . "[Warning] You do not have permission to use the Layer shape.");
-                    return true;
-                }
-                if(!$layer->fillShape()) {
-                    $sender->sendMessage(TF::RED . "[Warning] Invalid block given.");
-                    return true;
-                }
-                $sender->sendMessage(TF::GREEN . "Succesfully launched a layer at the location looked at.");
+                $shape = new LayerType($sender->getLevel(), $args[1], $center, explode(",", $args[2]));
                 break;
-                
+            
             default:
-                $sender->sendMessage(TF::RED . "[Warning] Please provide a valid shape.");
+                $sender->sendMessage(TF::RED . "[Warning] Shape not found.");
                 return true;
         }
-        return false;
+        
+        if(!$sender->hasPermission($shape->getPermission())) {
+            $sender->sendMessage(TF::RED . "[Warning] You don't have permission to use this type.");
+            return true;
+        }
+        
+        if(!$shape->fillShape()) {
+            $sender->sendMessage(TF::RED . "[Warning] Invalid block given.");
+            return true;
+        }
+        
+        $sender->sendMessage(TF::GREEN . "Succesfully launched a(n) " . $args[0] . " at the location looked at.");
+        return true;
     }
 }

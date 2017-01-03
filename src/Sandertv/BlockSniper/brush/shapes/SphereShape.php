@@ -1,8 +1,8 @@
 <?php
 
-namespace Sandertv\BlockSniper\shapes;
+namespace Sandertv\BlockSniper\brush\shapes;
 
-use Sandertv\BlockSniper\shapes\BaseShape;
+use Sandertv\BlockSniper\brush\BaseShape;
 use pocketmine\math\Vector3;
 use pocketmine\math\Math;
 use pocketmine\block\Block;

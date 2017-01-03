@@ -8,10 +8,10 @@ use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerItemHeldEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use Sandertv\BlockSniper\Loader;
-use Sandertv\BlockSniper\shapes\CuboidShape;
-use Sandertv\BlockSniper\shapes\SphereShape;
-use Sandertv\BlockSniper\shapes\OverlayShape;
-use Sandertv\BlockSniper\shapes\LayerShape;
+use Sandertv\BlockSniper\brush\shapes\CuboidShape;
+use Sandertv\BlockSniper\brush\shapes\SphereShape;
+use Sandertv\BlockSniper\brush\types\OverlayType;
+use Sandertv\BlockSniper\brush\types\LayerType;
 
 class EventListener implements Listener {
     
@@ -38,59 +38,36 @@ class EventListener implements Listener {
         switch($brushwand["type"]) {
             case "TYPE_CUBE":
             case "TYPE_CUBOID":
-                $cube = new CuboidShape($player->getLevel(), $brushwand["radius"], $center, explode(",", $brushwand["blocks"]));
-                if(!$player->hasPermission($cube->getPermission())) {
-                    $player->sendMessage(TF::RED . "[Warning] You do not have permission to use the Cube shape.");
-                    break;
-                }
-                if(!$cube->fillShape()) {
-                    $player->sendMessage(TF::RED . "[Warning] Invalid block given.");
-                    break;
-                }
-                $player->sendPopup(TF::GREEN . "Succesfully launched a cube at the location looked at.");
+                $shape = new CuboidShape($player->getLevel(), $brushwand["radius"], $center, explode(",", $brushwand["blocks"]));
                 break;
             
             case "TYPE_SPHERE":
             case "TYPE_BALL":
-                $sphere = new SphereShape($player->getLevel(), $brushwand["radius"], $center, explode(",", $brushwand["blocks"]));
-                if(!$player->hasPermission($sphere->getPermission())) {
-                    $player->sendMessage(TF::RED . "[Warning] You do not have permission to use the Sphere shape.");
-                    break;
-                }
-                if(!$sphere->fillShape()) {
-                    $player->sendMessage(TF::RED . "[Warning] Invalid block given.");
-                    break;
-                }
-                $player->sendPopup(TF::GREEN . "Succesfully launched a sphere at the location looked at.");
+                $shape = new SphereShape($player->getLevel(), $brushwand["radius"], $center, explode(",", $brushwand["blocks"]));
                 break;
                 
             case "TYPE_OVERLAY":
-                $overlay = new OverlayShape($player->getLevel(), $brushwand["radius"], $center, explode(",", $brushwand["blocks"]));
-                if(!$player->hasPermission($overlay->getPermission())) {
-                    $player->sendMessage(TF::RED . "[Warning] You do not have permission to use the Overlay shape.");
-                    break;
-                }
-                if(!$overlay->fillShape()) {
-                    $player->sendMessage(TF::RED . "[Warning] Invalid block given.");
-                    break;
-                }
-                $player->sendPopup(TF::GREEN . "Succesfully launched an overlay at the location looked at.");
+                $shape = new OverlayType($player->getLevel(), $brushwand["radius"], $center, explode(",", $brushwand["blocks"]));
                 break;
                 
             case "TYPE_FLAT_LAYER":
             case "TYPE_LAYER":
-                $layer = new LayerShape($player->getLevel(), $brushwand["radius"], $center, explode(",", $brushwand["blocks"]));
-                if(!$player->hasPermission($layer->getPermission())) {
-                    $player->sendMessage(TF::RED . "[Warning] You do not have permission to use the Layer shape.");
-                    break;
-                }
-                if(!$layer->fillShape()) {
-                    $player->sendMessage(TF::RED . "[Warning] Invalid block given.");
-                    break;
-                }
-                $player->sendPopup(TF::GREEN . "Succesfully launched a layer at the location looked at.");
+                $shape = new LayerType($player->getLevel(), $brushwand["radius"], $center, explode(",", $brushwand["blocks"]));
                 break;
         }
+        
+        if(!$player->hasPermission($shape->getPermission())) {
+            $player->sendMessage(TF::RED . "[Warning] You do not have permission to use this shape.");
+            return true;
+        }
+        
+        if(!$shape->fillShape()) {
+            $player->sendMessage(TF::RED . "[Warning] Invalid block given.");
+            return true;
+        }
+        
+        $player->sendPopup(TF::GREEN . "Succesfully launched the shape at the location looked at.");
+        return true;
     }
     
     public function onItemSwitch(PlayerItemHeldEvent $event) {
