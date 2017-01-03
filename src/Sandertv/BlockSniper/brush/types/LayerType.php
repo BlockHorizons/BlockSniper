@@ -40,11 +40,11 @@ class LayerType extends BaseShape {
         
         for($x = $minX; $x <= $maxX; $x++) {
             for($z = $minZ; $z <= $maxZ; $z++) {
+                $randomName = $this->blocks[array_rand($this->blocks)];
+                $randomBlock = is_numeric($randomName) ? Item::get($randomName)->getBlock() : Item::fromString($randomName)->getBlock();
                 if(($x * $x) + ($z * $z) <= $radiusSquared) {
-                    $randomName = $this->blocks[array_rand($this->blocks)];
-                    $randomBlock = is_numeric($randomName) ? Item::get($randomName)->getBlock() : Item::fromString($randomName)->getBlock();
                     if($randomBlock->getId() !== 0 || strtolower($randomName) === "air") {
-                        $this->level->setBlock(new Vector3($x, $targetY, $z), $randomBlock, false, false);
+                        $this->level->setBlock(new Vector3($x, $targetY + 1, $z), $randomBlock, false, false);
                     }
                 }
             }
