@@ -1,6 +1,6 @@
 <?php
 
-namespace Sandertv\BlockSniper\shapes;
+namespace Sandertv\BlockSniper\brush;
 
 abstract class BaseShape {
 
