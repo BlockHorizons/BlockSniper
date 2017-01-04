@@ -71,7 +71,7 @@ class BrushWandCommand extends BaseCommand {
                 $shape = new CylinderStandingShape($sender->getLevel());
                 break;
                 
-            case "REPLACE":
+            case "TYPE_REPLACE":
                 $shape = new ReplaceType($sender->getLevel());
                 break;
             
