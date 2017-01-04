@@ -9,6 +9,7 @@ use Sandertv\BlockSniper\commands\BaseCommand;
 use pocketmine\Player;
 use Sandertv\BlockSniper\brush\shapes\CuboidShape;
 use Sandertv\BlockSniper\brush\shapes\SphereShape;
+use Sandertv\BlockSniper\brush\shapes\CylinderStandingShape;
 use Sandertv\BlockSniper\brush\types\OverlayType;
 use Sandertv\BlockSniper\brush\types\LayerType;
 
@@ -61,6 +62,12 @@ class BrushWandCommand extends BaseCommand {
             case "TYPE_SPHERE":
             case "TYPE_BALL":
                 $shape = new SphereShape($sender->getLevel());
+                break;
+                
+            case "TYPE_CYLINDER":
+            case "TYPE_CYLINDER_STANDING":
+            case "TYPE_STANDING_CYLINDER":
+                $shape = new CylinderStandingShape($sender->getLevel());
                 break;
                 
             case "TYPE_OVERLAY":

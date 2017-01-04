@@ -1,6 +1,6 @@
 <?php
 
-namespace Sandertv\BlockSniper\brush\types;
+namespace Sandertv\BlockSniper\brush\shapes;
 
 use Sandertv\BlockSniper\brush\BaseShape;
 use pocketmine\math\Vector3;
@@ -8,11 +8,12 @@ use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\item\Item;
 
-class LayerType extends BaseShape {
+class CylinderStandingShape extends BaseShape {
     
-    public function __construct(Level $level, float $radius = null, Vector3 $center = null, array $blocks = []) {
+    public function __construct(Level $level, float $radius = null, int $height = null, Vector3 $center = null, array $blocks = []) {
         $this->level = $level;
         $this->radius = $radius;
+        $this->height = $height;
         $this->center = $center;
         $this->blocks = $blocks;
 
@@ -35,18 +36,22 @@ class LayerType extends BaseShape {
         
         $minX = $targetX - $this->radius;
         $minZ = $targetZ - $this->radius;
+        $minY = $targetY - $this->height;
         $maxX = $targetX + $this->radius;
         $maxZ = $targetZ + $this->radius;
+        $maxY = $targetY + $this->height;
         
         $valid = false;
         for($x = $minX; $x <= $maxX; $x++) {
             for($z = $minZ; $z <= $maxZ; $z++) {
-                $randomName = $this->blocks[array_rand($this->blocks)];
-                $randomBlock = is_numeric($randomName) ? Item::get($randomName)->getBlock() : Item::fromString($randomName)->getBlock();
-                if(pow($targetX - $x, 2) + pow($targetZ - $z, 2) <= $radiusSquared) {
-                    if($randomBlock->getId() !== 0 || strtolower($randomName) === "air") {
-                        $this->level->setBlock(new Vector3($x, $targetY + 1, $z), $randomBlock, false, false);
-                        $valid = true;
+                for($y = $minY; $y <= $maxY; $y++) {
+                    $randomName = $this->blocks[array_rand($this->blocks)];
+                    $randomBlock = is_numeric($randomName) ? Item::get($randomName)->getBlock() : Item::fromString($randomName)->getBlock();
+                    if(pow($targetX - $x, 2) + pow($targetZ - $z, 2) <= $radiusSquared) {
+                        if($randomBlock->getId() !== 0 || strtolower($randomName) === "air") {
+                            $this->level->setBlock(new Vector3($x, $y, $z), $randomBlock, false, false);
+                            $valid = true;
+                        }
                     }
                 }
             }
@@ -61,11 +66,11 @@ class LayerType extends BaseShape {
     }
 
     public function getName(): string {
-        return "Layer";
+        return "Standing Cylinder";
     }
     
     public function getPermission(): string {
-        return "blocksniper.type.layer";
+        return "blocksniper.shape.cylinderstanding";
     }
     
     public function getApproximateBlocks(): int {
@@ -99,5 +104,12 @@ class LayerType extends BaseShape {
     public function getLevel(): Level {
         return $this->level;
     }
+    
+    public function setHeight(int $height) {
+        $this->height = $height;
+    }
+    
+    public function getHeight(): int {
+        return $this->height;
+    }
 }
-

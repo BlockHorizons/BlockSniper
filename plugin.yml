@@ -20,6 +20,16 @@ permissions:
                     blocksniper.command.brushwand:
                         default: op
                         description: "Allows access to the brush wand command."
+            blocksniper.type:
+                default: false
+                description: "Allows access to all BlockSniper types."
+                children:
+                    blocksniper.type.overlay:
+                        default: op
+                        description: "Allows access to the overlay type."
+                    blocksniper.type.layer:
+                        default: op
+                        description: "Allows access to the layer type."
             blocksniper.shape:
                 default: false
                 description: "Allows access to all BlockSniper shapes."
@@ -30,10 +40,7 @@ permissions:
                     blocksniper.shape.cuboid:
                         default: op
                         description: "Allows access to the cuboid shape."
-                    blocksniper.shape.overlay:
+                    blocksniper.shape.standingcylinder:
                         default: op
-                        description: "Allows access to the overlay shape."
-                    blocksniper.shape.layer:
-                        default: op
-                        description: "Allows access to the layer shape."
+                        description: "Allows access to the standing cylinder shape."
 ...

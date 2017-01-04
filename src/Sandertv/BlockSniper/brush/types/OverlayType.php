@@ -89,7 +89,7 @@ class OverlayType extends BaseShape {
     }
     
     public function getPermission(): string {
-        return "blocksniper.shape.overlay";
+        return "blocksniper.type.overlay";
     }
     
     public function getApproximateBlocks(): int {

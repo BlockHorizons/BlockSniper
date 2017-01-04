@@ -10,6 +10,7 @@ use pocketmine\event\player\PlayerQuitEvent;
 use Sandertv\BlockSniper\Loader;
 use Sandertv\BlockSniper\brush\shapes\CuboidShape;
 use Sandertv\BlockSniper\brush\shapes\SphereShape;
+use Sandertv\BlockSniper\brush\shapes\CylinderStandingShape;
 use Sandertv\BlockSniper\brush\types\OverlayType;
 use Sandertv\BlockSniper\brush\types\LayerType;
 
@@ -49,6 +50,20 @@ class EventListener implements Listener {
             case "TYPE_OVERLAY":
                 $shape = new OverlayType($player->getLevel(), $brushwand["radius"], $center, explode(",", $brushwand["blocks"]));
                 break;
+
+            case "TYPE_CYLINDER":
+            case "TYPE_CYLINDER_STANDING":
+            case "TYPE_STANDING_CYLINDER":
+                if(strpos(strtolower($args[1]), "x") === false) {
+                    $sender->sendMessage(TF::RED . "[Usage] /snipe cylinder <radiusXheight> <block(s)>");
+                    return true;
+                }
+                $sizes = explode("x", $brushwand["radius"]);
+                $radius = $sizes[0];
+                $height = $sizes[1];
+                $shape = new CylinderStandingShape($player->getLevel(), $radius, $height, $center, explode(",", $brushwand["blocks"]));
+                break;
+                
                 
             case "TYPE_FLAT_LAYER":
             case "TYPE_LAYER":

@@ -9,6 +9,7 @@ use Sandertv\BlockSniper\commands\BaseCommand;
 use pocketmine\Player;
 use Sandertv\BlockSniper\brush\shapes\CuboidShape;
 use Sandertv\BlockSniper\brush\shapes\SphereShape;
+use Sandertv\BlockSniper\brush\shapes\CylinderStandingShape;
 use Sandertv\BlockSniper\brush\types\OverlayType;
 use Sandertv\BlockSniper\brush\types\LayerType;
 
@@ -42,7 +43,7 @@ class SnipeCommand extends BaseCommand {
         
         $type = ("TYPE_" . strtoupper($args[0]));
         
-        if(!is_numeric($args[1])) {
+        if(!is_numeric($args[1]) && $type !== "TYPE_CYLINDER" && $type !== "TYPE_STANDING_CYLINDER" && $type !== "TYPE_CYLINDER_STANDING") {
             $sender->sendMessage(TF::RED . "[Warning] The radius should be numeric.");
             return true;
         }
@@ -68,6 +69,19 @@ class SnipeCommand extends BaseCommand {
             case "TYPE_BALL":
                 $shape = new SphereShape($sender->getLevel(), $args[1], $center, explode(",", $args[2]));
                 break;
+            
+            case "TYPE_CYLINDER":
+            case "TYPE_CYLINDER_STANDING":
+            case "TYPE_STANDING_CYLINDER":
+                if(strpos(strtolower($args[1]), "x") === false) {
+                    $sender->sendMessage(TF::RED . "[Usage] /snipe cylinder <radiusXheight> <block(s)>");
+                    return true;
+                }
+                $sizes = explode("x", $args[1]);
+                $radius = $sizes[0];
+                $height = $sizes[1];
+                $shape = new CylinderStandingShape($sender->getLevel(), $radius, $height, $center, explode(",", $args[2]));
+                break;
                 
             case "TYPE_OVERLAY":
                 $shape = new OverlayType($sender->getLevel(), $args[1], $center, explode(",", $args[2]));
@@ -79,7 +93,7 @@ class SnipeCommand extends BaseCommand {
                 break;
             
             default:
-                $sender->sendMessage(TF::RED . "[Warning] Shape not found.");
+                $sender->sendMessage(TF::RED . "[Warning] Type not found.");
                 return true;
         }
         
