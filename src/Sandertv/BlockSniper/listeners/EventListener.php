@@ -13,6 +13,7 @@ use Sandertv\BlockSniper\brush\shapes\SphereShape;
 use Sandertv\BlockSniper\brush\shapes\CylinderStandingShape;
 use Sandertv\BlockSniper\brush\types\OverlayType;
 use Sandertv\BlockSniper\brush\types\LayerType;
+use Sandertv\BlockSniper\brush\types\ReplaceType;
 
 class EventListener implements Listener {
     

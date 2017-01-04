@@ -11,7 +11,7 @@ use pocketmine\item\Item;
 
 class ReplaceType extends BaseShape {
     
-    public function __construct(Level $level, float $radius = null, Vector3 $center = null, $block = 0, array $replacements = []) {
+    public function __construct(Level $level, float $radius = null, Vector3 $center = null, $block = null, array $replacements = []) {
         $this->level = $level;
         $this->radius = $radius;
         $this->center = $center;
