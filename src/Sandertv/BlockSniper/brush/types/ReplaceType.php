@@ -47,7 +47,7 @@ class ReplaceType extends BaseShape {
                     $toBeReplaced = is_numeric($this->block) ? Item::get($this->block)->getBlock() : Item::fromString($this->block)->getBlock();
                     $randomName = $this->replacements[array_rand($this->replacements)];
                     $randomBlock = is_numeric($randomName) ? Item::get($randomName)->getBlock() : Item::fromString($randomName)->getBlock();
-                    if($randomBlock->getId() !== 0 || strtolower($randomName) === "air" && $this->level->getBlock(new Vector3($x, $y, $z))->getId() === $toBeReplaced->getId()) {
+                    if(($randomBlock->getId() !== 0 || strtolower($randomName) === "air") && $this->level->getBlock(new Vector3($x, $y, $z))->getId() === $toBeReplaced->getId()) {
                         $this->level->setBlock(new Vector3($x, $y, $z), $randomBlock, false, false);
                     }
                 }

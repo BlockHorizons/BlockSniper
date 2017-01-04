@@ -57,7 +57,7 @@ class EventListener implements Listener {
                     $sender->sendMessage(TF::RED . "[Usage] /snipe replace <radius> <block to replace> <replacement>");
                     return true;
                 }
-                $shape = new ReplaceType($sender->getLevel(), $brushwand["radius"], $center, $brushwand["blocks"], explode(",", $brushwand["additionalData"]));
+                $shape = new ReplaceType($player->getLevel(), $brushwand["radius"], $center, $brushwand["blocks"], explode(",", $brushwand["additionalData"]));
                 break;
                 
             case "TYPE_CYLINDER":
