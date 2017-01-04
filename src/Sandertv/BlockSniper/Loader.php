@@ -43,10 +43,12 @@ class Loader extends PluginBase {
      * @param string $type
      * @param int $radius
      * @param string $blocks
+     * @param $data = null
      */
-    public function enableBrushWand(Player $player, string $type, int $radius, string $blocks) {
+    public function enableBrushWand(Player $player, string $type, int $radius, string $blocks, $data = null) {
         $this->brushwand[$player->getName()] = ["type" => $type,
                                                 "radius" => $radius,
+                                                "additionalData" => $data,
                                                 "blocks" => $blocks];
     }
     

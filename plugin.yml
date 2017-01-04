@@ -29,7 +29,10 @@ permissions:
                         description: "Allows access to the overlay type."
                     blocksniper.type.layer:
                         default: op
-                        description: "Allows access to the layer type."
+                        description: "Allows access to the layer type"
+                    blocksniper.type.replace:
+                        default: op
+                        description: "Allows access to the replace type"
             blocksniper.shape:
                 default: false
                 description: "Allows access to all BlockSniper shapes."

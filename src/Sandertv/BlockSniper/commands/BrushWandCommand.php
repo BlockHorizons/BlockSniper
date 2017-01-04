@@ -12,6 +12,7 @@ use Sandertv\BlockSniper\brush\shapes\SphereShape;
 use Sandertv\BlockSniper\brush\shapes\CylinderStandingShape;
 use Sandertv\BlockSniper\brush\types\OverlayType;
 use Sandertv\BlockSniper\brush\types\LayerType;
+use Sandertv\BlockSniper\brush\types\ReplaceType;
 
 class BrushWandCommand extends BaseCommand {
     
@@ -31,7 +32,7 @@ class BrushWandCommand extends BaseCommand {
             return true;
         }
         
-        if(count($args) < 3 || count($args) > 3) {
+        if(count($args) < 3 || count($args) > 4) {
             $sender->sendMessage(TF::RED . "[Usage] /brushwand <type> <radius> <block(s)>");
             return true;
         }
@@ -43,7 +44,7 @@ class BrushWandCommand extends BaseCommand {
             return true;
         }
         
-        if(!is_numeric($args[1])) {
+        if(!is_numeric($args[1])  && $type !== "TYPE_CYLINDER" && $type !== "TYPE_STANDING_CYLINDER" && $type !== "TYPE_CYLINDER_STANDING") {
             $sender->sendMessage(TF::RED . "[Warning] The radius should be numeric.");
             return true;
         }
@@ -70,6 +71,10 @@ class BrushWandCommand extends BaseCommand {
                 $shape = new CylinderStandingShape($sender->getLevel());
                 break;
                 
+            case "REPLACE":
+                $shape = new ReplaceType($sender->getLevel());
+                break;
+            
             case "TYPE_OVERLAY":
                 $shape = new OverlayType($sender->getLevel());
                 break;
@@ -89,7 +94,7 @@ class BrushWandCommand extends BaseCommand {
             return true;
         }
         $sender->sendMessage(TF::GREEN . "Brush wand has been enabled.");
-        $this->getPlugin()->enableBrushWand($sender, $type, $args[1], $args[2]);
+        $this->getPlugin()->enableBrushWand($sender, $type, $args[1], $args[2], isset($args[3]) ? $args[3] : null);
         return true;
     }
 }

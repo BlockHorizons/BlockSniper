@@ -12,6 +12,7 @@ use Sandertv\BlockSniper\brush\shapes\SphereShape;
 use Sandertv\BlockSniper\brush\shapes\CylinderStandingShape;
 use Sandertv\BlockSniper\brush\types\OverlayType;
 use Sandertv\BlockSniper\brush\types\LayerType;
+use Sandertv\BlockSniper\brush\types\ReplaceType;
 
 class SnipeCommand extends BaseCommand {
     
@@ -36,7 +37,7 @@ class SnipeCommand extends BaseCommand {
             return true;
         }
         
-        if(count($args) < 3 || count($args) > 3) {
+        if(count($args) < 3 || count($args) > 4) {
             $sender->sendMessage(TF::RED . "[Usage] /snipe <type> <radius> <block(s)>");
             return true;
         }
@@ -70,6 +71,14 @@ class SnipeCommand extends BaseCommand {
                 $shape = new SphereShape($sender->getLevel(), $args[1], $center, explode(",", $args[2]));
                 break;
             
+            case "TYPE_REPLACE":
+                if(!isset($args[3])) {
+                    $sender->sendMessage(TF::RED . "[Usage] /snipe replace <radius> <block to replace> <replacement>");
+                    return true;
+                }
+                $shape = new ReplaceType($sender->getLevel(), $args[1], $center, $args[2], explode(",", $args[3]));
+                break;
+                
             case "TYPE_CYLINDER":
             case "TYPE_CYLINDER_STANDING":
             case "TYPE_STANDING_CYLINDER":
