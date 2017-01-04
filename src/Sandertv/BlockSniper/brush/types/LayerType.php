@@ -38,13 +38,15 @@ class LayerType extends BaseShape {
         $maxX = $targetX + $this->radius;
         $maxZ = $targetZ + $this->radius;
         
+        $valid = false;
         for($x = $minX; $x <= $maxX; $x++) {
             for($z = $minZ; $z <= $maxZ; $z++) {
                 $randomName = $this->blocks[array_rand($this->blocks)];
                 $randomBlock = is_numeric($randomName) ? Item::get($randomName)->getBlock() : Item::fromString($randomName)->getBlock();
-                if(($x * $x) + ($z * $z) <= $radiusSquared) {
+                if(pow($targetX - $x, 2) + pow($targetZ - $z, 2) <= $radiusSquared) {
                     if($randomBlock->getId() !== 0 || strtolower($randomName) === "air") {
                         $this->level->setBlock(new Vector3($x, $targetY + 1, $z), $randomBlock, false, false);
+                        $valid = true;
                     }
                 }
             }
@@ -52,7 +54,10 @@ class LayerType extends BaseShape {
         if($randomBlock === Block::AIR && strtolower($randomName) !== "air") {
             return false;
         }
-        return true;
+        if($valid) {
+            return true;
+        }
+        return false;
     }
 
     public function getName(): string {

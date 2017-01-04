@@ -58,7 +58,7 @@ class SnipeCommand extends BaseCommand {
             return true;
         }
         
-        switch($type) {
+        switch($type) {   
             case "TYPE_CUBE":
             case "TYPE_CUBOID":
                 $shape = new CuboidShape($sender->getLevel(), $args[1], $center, explode(",", $args[2]));
