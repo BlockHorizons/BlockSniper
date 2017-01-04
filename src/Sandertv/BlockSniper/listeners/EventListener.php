@@ -8,6 +8,10 @@ use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerItemHeldEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use Sandertv\BlockSniper\Loader;
+use Sandertv\BlockSniper\events\TypeCreateEvent;
+use Sandertv\BlockSniper\events\ShapeCreateEvent;
+use Sandertv\BlockSniper\brush\BaseShape;
+use Sandertv\BlockSniper\brush\BaseType;
 use Sandertv\BlockSniper\brush\shapes\CuboidShape;
 use Sandertv\BlockSniper\brush\shapes\SphereShape;
 use Sandertv\BlockSniper\brush\shapes\CylinderStandingShape;
@@ -83,6 +87,12 @@ class EventListener implements Listener {
         if(!$player->hasPermission($shape->getPermission())) {
             $player->sendMessage(TF::RED . "[Warning] You do not have permission to use this shape.");
             return true;
+        }
+        
+        if($shape instanceof BaseType) {
+            $this->getOwner()->getServer()->getPluginManager()->callEvent(new TypeCreateEvent($this->getOwner()));
+        } elseif($shape instanceof BaseShape) {
+            $this->getOwner()->getServer()->getPluginManager()->callEvent(new ShapeCreateEvent($this->getOwner()));
         }
         
         if(!$shape->fillShape()) {

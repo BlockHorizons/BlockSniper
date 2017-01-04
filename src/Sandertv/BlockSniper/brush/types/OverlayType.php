@@ -2,14 +2,14 @@
 
 namespace Sandertv\BlockSniper\brush\types;
 
-use Sandertv\BlockSniper\brush\BaseShape;
+use Sandertv\BlockSniper\brush\BaseType;
 use pocketmine\math\Vector3;
 use pocketmine\math\Math;
 use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\item\Item;
 
-class OverlayType extends BaseShape {
+class OverlayType extends BaseType {
     
     public function __construct(Level $level, float $radius = 0, Vector3 $center = null, array $blocks = []) {
         $this->level = $level;

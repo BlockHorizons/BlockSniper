@@ -7,6 +7,10 @@ use pocketmine\utils\TextFormat as TF;
 use Sandertv\BlockSniper\Loader;
 use Sandertv\BlockSniper\commands\BaseCommand;
 use pocketmine\Player;
+use Sandertv\BlockSniper\events\TypeCreateEvent;
+use Sandertv\BlockSniper\events\ShapeCreateEvent;
+use Sandertv\BlockSniper\brush\BaseShape;
+use Sandertv\BlockSniper\brush\BaseType;
 use Sandertv\BlockSniper\brush\shapes\CuboidShape;
 use Sandertv\BlockSniper\brush\shapes\SphereShape;
 use Sandertv\BlockSniper\brush\shapes\CylinderStandingShape;
@@ -109,6 +113,12 @@ class SnipeCommand extends BaseCommand {
         if(!$sender->hasPermission($shape->getPermission())) {
             $sender->sendMessage(TF::RED . "[Warning] You don't have permission to use this type.");
             return true;
+        }
+        
+        if($shape instanceof BaseType) {
+            $this->getPlugin()->getServer()->getPluginManager()->callEvent(new TypeCreateEvent($this->getPlugin()));
+        } elseif($shape instanceof BaseShape) {
+            $this->getPlugin()->getServer()->getPluginManager()->callEvent(new ShapeCreateEvent($this->getPlugin()));
         }
         
         if(!$shape->fillShape()) {
