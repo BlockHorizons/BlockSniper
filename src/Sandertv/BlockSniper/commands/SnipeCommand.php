@@ -17,6 +17,7 @@ use Sandertv\BlockSniper\brush\shapes\CylinderStandingShape;
 use Sandertv\BlockSniper\brush\types\OverlayType;
 use Sandertv\BlockSniper\brush\types\LayerType;
 use Sandertv\BlockSniper\brush\types\ReplaceType;
+use Sandertv\BlockSniper\brush\types\FlattenType;
 
 class SnipeCommand extends BaseCommand {
     
@@ -81,6 +82,11 @@ class SnipeCommand extends BaseCommand {
                     return true;
                 }
                 $shape = new ReplaceType($sender->getLevel(), $args[1], $center, $args[2], explode(",", $args[3]));
+                break;
+                
+            case "TYPE_FLATTEN":
+            case "TYPE_EQUALIZE":
+                $shape = new FlattenType($sender->getLevel(), $args[1], $center, explode(",", $args[2]));
                 break;
                 
             case "TYPE_CYLINDER":

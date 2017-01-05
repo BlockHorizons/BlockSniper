@@ -16,6 +16,7 @@ abstract class BaseType {
     const TYPE_OVERLAY = 1;
     const TYPE_LAYER = 2, TYPE_FLAT_LAYER = 2;
     const TYPE_REPLACE = 3;
+    const TYPE_FLATTEN = 4, TYPE_EQUALIZE = 4;
     
     public abstract function getName(): string;
     

@@ -18,6 +18,7 @@ use Sandertv\BlockSniper\brush\shapes\CylinderStandingShape;
 use Sandertv\BlockSniper\brush\types\OverlayType;
 use Sandertv\BlockSniper\brush\types\LayerType;
 use Sandertv\BlockSniper\brush\types\ReplaceType;
+use Sandertv\BlockSniper\brush\types\FlattenType;
 
 class EventListener implements Listener {
     
@@ -81,6 +82,11 @@ class EventListener implements Listener {
             case "TYPE_FLAT_LAYER":
             case "TYPE_LAYER":
                 $shape = new LayerType($player->getLevel(), $brushwand["radius"], $center, explode(",", $brushwand["blocks"]));
+                break;
+            
+            case "TYPE_FLATTEN":
+            case "TYPE_EQUALIZE":
+                $shape = new FlattenType($player->getLevel(), $brushwand["radius"], $center, explode(",", $brushwand["blocks"]));
                 break;
         }
         

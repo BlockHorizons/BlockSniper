@@ -13,6 +13,7 @@ use Sandertv\BlockSniper\brush\shapes\CylinderStandingShape;
 use Sandertv\BlockSniper\brush\types\OverlayType;
 use Sandertv\BlockSniper\brush\types\LayerType;
 use Sandertv\BlockSniper\brush\types\ReplaceType;
+use Sandertv\BlockSniper\brush\types\FlattenType;
 
 class BrushWandCommand extends BaseCommand {
     
@@ -77,6 +78,11 @@ class BrushWandCommand extends BaseCommand {
             
             case "TYPE_OVERLAY":
                 $shape = new OverlayType($sender->getLevel());
+                break;
+            
+            case "TYPE_FLATTEN":
+            case "TYPE_EQUALIZE":
+                $shape = new FlattenType($sender->getLevel());
                 break;
                 
             case "TYPE_FLAT_LAYER":
