@@ -68,7 +68,7 @@ class EventListener implements Listener {
             case "TYPE_CYLINDER_STANDING":
             case "TYPE_STANDING_CYLINDER":
                 if(strpos(strtolower($args[1]), "x") === false) {
-                    $sender->sendMessage(TF::RED . "[Usage] /snipe cylinder <radiusXheight> <block(s)>");
+                    $player->sendMessage(TF::RED . "[Usage] /snipe cylinder <radiusXheight> <block(s)>");
                     return true;
                 }
                 $sizes = explode("x", $brushwand["radius"]);
@@ -90,9 +90,9 @@ class EventListener implements Listener {
         }
         
         if($shape instanceof BaseType) {
-            $this->getOwner()->getServer()->getPluginManager()->callEvent(new TypeCreateEvent($this->getOwner()));
+            $this->getOwner()->getServer()->getPluginManager()->callEvent(new TypeCreateEvent($shape));
         } elseif($shape instanceof BaseShape) {
-            $this->getOwner()->getServer()->getPluginManager()->callEvent(new ShapeCreateEvent($this->getOwner()));
+            $this->getOwner()->getServer()->getPluginManager()->callEvent(new ShapeCreateEvent($shape));
         }
         
         if(!$shape->fillShape()) {

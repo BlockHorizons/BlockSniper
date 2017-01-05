@@ -116,9 +116,9 @@ class SnipeCommand extends BaseCommand {
         }
         
         if($shape instanceof BaseType) {
-            $this->getPlugin()->getServer()->getPluginManager()->callEvent(new TypeCreateEvent($this->getPlugin()));
+            $this->getPlugin()->getServer()->getPluginManager()->callEvent(new TypeCreateEvent($shape));
         } elseif($shape instanceof BaseShape) {
-            $this->getPlugin()->getServer()->getPluginManager()->callEvent(new ShapeCreateEvent($this->getPlugin()));
+            $this->getPlugin()->getServer()->getPluginManager()->callEvent(new ShapeCreateEvent($shape));
         }
         
         if(!$shape->fillShape()) {
