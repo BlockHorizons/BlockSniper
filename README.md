@@ -1,5 +1,6 @@
 # BlockSniper
 An innovative new world editing tool, made for PocketMine-MP: A MCPE server software written in PHP.
+For detailed information, check out the [Website.](http://blocksniper.tk/)
 
 ## Development!
 BlockSniper is currently under heavy development. Stable releases will be drafted at [Releases](https://github.com/Sandertv/BlockSniper/releases).
