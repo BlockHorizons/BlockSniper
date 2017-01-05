@@ -38,7 +38,7 @@ class FlattenType extends BaseShape {
         $minY = $targetY - 5;
         $maxX = $targetX + $this->radius;
         $maxZ = $targetZ + $this->radius;
-        $maxY = $targetY + $targetY;
+        $maxY = $targetY;
         
         $valid = false;
         for($x = $minX; $x <= $maxX; $x++) {
