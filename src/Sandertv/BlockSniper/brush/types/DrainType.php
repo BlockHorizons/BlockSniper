@@ -33,7 +33,7 @@ class DrainType extends BaseType {
         $minX = Math::floorFloat($targetX - $this->radius);
         $maxX = Math::floorFloat($targetX + $this->radius) + 1;
         $minY = max(Math::floorFloat($targetY - $this->radius), 0);
-        $maxY = min(Math::floorFloat($targetY + $this->radius) + 1, BaseShape::MAX_WORLD_HEIGHT);
+        $maxY = min(Math::floorFloat($targetY + $this->radius) + 1, BaseType::MAX_WORLD_HEIGHT);
         $minZ = Math::floorFloat($targetZ - $this->radius);
         $maxZ = Math::floorFloat($targetZ + $this->radius) + 1;
 
