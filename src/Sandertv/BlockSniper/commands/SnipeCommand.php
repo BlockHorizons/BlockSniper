@@ -91,7 +91,7 @@ class SnipeCommand extends BaseCommand {
                 break;
             
             case "TYPE_DRAIN":
-                $shape = new DrainType($sender->getLevel(), $args[1], $center, $explode(",", $args[2]));
+                $shape = new DrainType($sender->getLevel(), $args[1], $center, explode(",", $args[2]));
                 break;
                 
             case "TYPE_CYLINDER":

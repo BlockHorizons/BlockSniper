@@ -19,6 +19,7 @@ use Sandertv\BlockSniper\brush\types\OverlayType;
 use Sandertv\BlockSniper\brush\types\LayerType;
 use Sandertv\BlockSniper\brush\types\ReplaceType;
 use Sandertv\BlockSniper\brush\types\FlattenType;
+use Sandertv\BlockSniper\brush\types\DrainType;
 
 class EventListener implements Listener {
     
