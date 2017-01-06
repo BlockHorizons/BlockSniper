@@ -28,7 +28,7 @@ class OverlayType extends BaseType {
     /**
      * @return bool
      */
-    public function fillShape(): bool {;
+    public function fillShape(): bool {
         $targetX = $this->center->x;
         $targetY = $this->center->y;
         $targetZ = $this->center->z;

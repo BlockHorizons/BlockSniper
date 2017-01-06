@@ -2,13 +2,13 @@
 
 namespace Sandertv\BlockSniper\brush\types;
 
-use Sandertv\BlockSniper\brush\BaseShape;
+use Sandertv\BlockSniper\brush\BaseType;
 use pocketmine\math\Vector3;
 use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\item\Item;
 
-class FlattenType extends BaseShape {
+class FlattenType extends BaseType {
     
     public function __construct(Level $level, float $radius = null, Vector3 $center = null, array $blocks = []) {
         $this->level = $level;

@@ -14,6 +14,7 @@ use Sandertv\BlockSniper\brush\types\OverlayType;
 use Sandertv\BlockSniper\brush\types\LayerType;
 use Sandertv\BlockSniper\brush\types\ReplaceType;
 use Sandertv\BlockSniper\brush\types\FlattenType;
+use Sandertv\BlockSniper\brush\types\DrainType;
 
 class BrushWandCommand extends BaseCommand {
     
@@ -33,7 +34,7 @@ class BrushWandCommand extends BaseCommand {
             return true;
         }
         
-        if(count($args) < 3 || count($args) > 4) {
+        if((count($args) < 3 || count($args) > 4) && strtolower($args[0]) !== "drain") {
             $sender->sendMessage(TF::RED . "[Usage] /brushwand <type> <radius> <block(s)>");
             return true;
         }
@@ -45,7 +46,7 @@ class BrushWandCommand extends BaseCommand {
             return true;
         }
         
-        if(!is_numeric($args[1])  && $type !== "TYPE_CYLINDER" && $type !== "TYPE_STANDING_CYLINDER" && $type !== "TYPE_CYLINDER_STANDING") {
+        if(!is_numeric($args[1])  && $type !== "TYPE_CYLINDER" && $type !== "TYPE_STANDING_CYLINDER") {
             $sender->sendMessage(TF::RED . "[Warning] The radius should be numeric.");
             return true;
         }
@@ -67,13 +68,16 @@ class BrushWandCommand extends BaseCommand {
                 break;
                 
             case "TYPE_CYLINDER":
-            case "TYPE_CYLINDER_STANDING":
             case "TYPE_STANDING_CYLINDER":
                 $shape = new CylinderStandingShape($sender->getLevel());
                 break;
                 
             case "TYPE_REPLACE":
                 $shape = new ReplaceType($sender->getLevel());
+                break;
+            
+            case "TYPE_DRAIN":
+                $shape = new DrainType($sender->getLevel());
                 break;
             
             case "TYPE_OVERLAY":

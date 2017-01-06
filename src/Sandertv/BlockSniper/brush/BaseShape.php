@@ -15,7 +15,7 @@ abstract class BaseShape {
     
     const SHAPE_CUBOID = 0, SHAPE_CUBE = 0;
     const SHAPE_SPHERE = 1, SHAPE_BALL = 1;
-    const SHAPE_CYLINDER = 2, SHAPE_CYLINDER_STANDING = 2, SHAPE_STANDING_CYLINDER = 2;
+    const SHAPE_CYLINDER = 2, SHAPE_STANDING_CYLINDER = 2;
     
     public abstract function getName(): string;
     

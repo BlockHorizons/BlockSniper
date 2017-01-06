@@ -1,17 +1,17 @@
 <?php
 
-namespace Sandertv\BlockSniper\brush\shapes;
+namespace Sandertv\BlockSniper\brush\types;
 
-use Sandertv\BlockSniper\brush\BaseShape;
+use Sandertv\BlockSniper\brush\BaseType;
 use pocketmine\math\Vector3;
 use pocketmine\math\Math;
 use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\item\Item;
 
-class SphereShape extends BaseShape {
+class DrainType extends BaseType {
     
-    public function __construct(Level $level, float $radius = null, Vector3 $center = null, array $blocks = []) {
+    public function __construct(Level $level, float $radius = null, Vector3 $center = null) {
         $this->level = $level;
         $this->radius = $radius;
         $this->center = $center;
@@ -19,9 +19,6 @@ class SphereShape extends BaseShape {
 
         if(!isset($center)) {
             $this->center = new Vector3(0, 0, 0);
-        }
-        if(!isset($blocks)) {
-            $this->blocks = ["Air"];
         }
     }
     
@@ -49,10 +46,11 @@ class SphereShape extends BaseShape {
                 for($z = $maxZ; $z >= $minZ; $z--) {
                     $zs = ($targetZ - $z) * ($targetZ - $z);
                     if($xs + $ys + $zs < $radiusSquared) {
-                        $randomName = $this->blocks[array_rand($this->blocks)];
-                        $randomBlock = is_numeric($randomName) ? Item::get($randomName)->getBlock() : Item::fromString($randomName)->getBlock();
                         if($randomBlock !== 0 || strtolower($randomName) === "air") {
-                            $this->level->setBlock(new Vector3($x, $y, $z), $randomBlock, false, false);
+                            $blockId = $this->level->getBlock(new Vector3($x, $y, $z))->getId();
+                            if($blockId === Item::LAVA || $blockId === Item::WATER) {
+                                $this->level->setBlock(new Vector3($x, $y, $z), $randomBlock, false, false);
+                            }
                         }
                     }
                 }
@@ -65,11 +63,11 @@ class SphereShape extends BaseShape {
     }
 
     public function getName(): string {
-        return "Sphere";
+        return "Drain";
     }
     
     public function getPermission(): string {
-        return "blocksniper.shape.sphere";
+        return "blocksniper.type.drain";
     }
     
     public function getApproximateBlocks(): int {
@@ -92,14 +90,6 @@ class SphereShape extends BaseShape {
         $this->center = $center;
     }
     
-    public function getBlocks(): array {
-        return $this->blocks;
-    }
-    
-    public function setBlocks(array $blocks) {
-        $this->blocks = $blocks;
-    }
-
     public function getLevel(): Level {
         return $this->level;
     }

@@ -57,6 +57,10 @@ class EventListener implements Listener {
                 $shape = new OverlayType($player->getLevel(), $brushwand["radius"], $center, explode(",", $brushwand["blocks"]));
                 break;
             
+            case "TYPE_DRAIN":
+                $shape = new DrainType($player->getLevel(), $brushwand["radius"], $center);
+                break;
+                
             case "TYPE_REPLACE":
                 if(!isset($brushwand["additionalData"])) {
                     $sender->sendMessage(TF::RED . "[Usage] /snipe replace <radius> <block to replace> <replacement>");
@@ -66,7 +70,6 @@ class EventListener implements Listener {
                 break;
                 
             case "TYPE_CYLINDER":
-            case "TYPE_CYLINDER_STANDING":
             case "TYPE_STANDING_CYLINDER":
                 if(strpos(strtolower($args[1]), "x") === false) {
                     $player->sendMessage(TF::RED . "[Usage] /snipe cylinder <radiusXheight> <block(s)>");
