@@ -45,7 +45,7 @@ class SnipeCommand extends BaseCommand {
             return true;
         }
         
-        if((count($args) < 3 || count($args) > 4) && strtolower($args[0]) !== "drain") {
+        if((count($args) < 2 || count($args) > 4)) {
             $sender->sendMessage(TF::RED . "[Usage] /snipe <type> <radius> <block(s)>");
             return true;
         }
