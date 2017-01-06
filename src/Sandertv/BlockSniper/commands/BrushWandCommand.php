@@ -15,6 +15,8 @@ use Sandertv\BlockSniper\brush\types\LayerType;
 use Sandertv\BlockSniper\brush\types\ReplaceType;
 use Sandertv\BlockSniper\brush\types\FlattenType;
 use Sandertv\BlockSniper\brush\types\DrainType;
+use Sandertv\BlockSniper\brush\types\CleanType;
+use Sandertv\BlockSniper\brush\types\LeafBlowerType;
 
 class BrushWandCommand extends BaseCommand {
     
@@ -34,7 +36,7 @@ class BrushWandCommand extends BaseCommand {
             return true;
         }
         
-        if((count($args) < 3 || count($args) > 4) && strtolower($args[0]) !== "drain") {
+        if((count($args) < 2 || count($args) > 4) && strtolower($args[0])) {
             $sender->sendMessage(TF::RED . "[Usage] /brushwand <type> <radius> <block(s)>");
             return true;
         }
@@ -92,6 +94,15 @@ class BrushWandCommand extends BaseCommand {
             case "TYPE_FLAT_LAYER":
             case "TYPE_LAYER":
                 $shape = new LayerType($sender->getLevel());
+                break;
+            
+            case "TYPE_CLEAN":
+            case "TYPE_CLEAR":
+                $shape = new CleanType($sender->getLevel());
+                break;
+            
+            case "TYPE_LEAF_BLOWER":
+                $shape = new CleanType($sender->getLevel());
                 break;
             
             default:

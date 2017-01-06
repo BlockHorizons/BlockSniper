@@ -19,6 +19,8 @@ use Sandertv\BlockSniper\brush\types\LayerType;
 use Sandertv\BlockSniper\brush\types\ReplaceType;
 use Sandertv\BlockSniper\brush\types\FlattenType;
 use Sandertv\BlockSniper\brush\types\DrainType;
+use Sandertv\BlockSniper\brush\types\CleanType;
+use Sandertv\BlockSniper\brush\types\LeafBlowerType;
 
 class SnipeCommand extends BaseCommand {
     
@@ -92,6 +94,15 @@ class SnipeCommand extends BaseCommand {
             
             case "TYPE_DRAIN":
                 $shape = new DrainType($sender->getLevel(), $args[1], $center);
+                break;
+            
+            case "TYPE_CLEAR":
+            case "TYPE_CLEAN":
+                $shape = new CleanType($sender->getLevel(), $args[1], $center);
+                break;
+            
+            case "TYPE_LEAFBLOWER":
+                $shape = new LeafBlowerType($sender->getLevel(), $args[1], $center);
                 break;
                 
             case "TYPE_CYLINDER":

@@ -33,6 +33,18 @@ permissions:
                     blocksniper.type.replace:
                         default: op
                         description: "Allows access to the replace type"
+                    blocksniper.type.clean:
+                        default: op
+                        description: "Allows access to the clean type"
+                    blocksniper.type.drain:
+                        default: op
+                        description: "Allows access to the drain type"
+                    blocksniper.type.leafblower:
+                        default: op
+                        description: "Allows access to the leaf blower type"
+                    blocksniper.type.flatten:
+                        default: op
+                        description: "Allows access to the flatten type"
             blocksniper.shape:
                 default: false
                 description: "Allows access to all BlockSniper shapes."

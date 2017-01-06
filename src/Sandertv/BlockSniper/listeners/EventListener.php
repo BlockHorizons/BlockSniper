@@ -20,6 +20,8 @@ use Sandertv\BlockSniper\brush\types\LayerType;
 use Sandertv\BlockSniper\brush\types\ReplaceType;
 use Sandertv\BlockSniper\brush\types\FlattenType;
 use Sandertv\BlockSniper\brush\types\DrainType;
+use Sandertv\BlockSniper\brush\types\LeafBlowerType;
+use Sandertv\BlockSniper\brush\types\CleanType;
 
 class EventListener implements Listener {
     
@@ -60,6 +62,15 @@ class EventListener implements Listener {
             
             case "TYPE_DRAIN":
                 $shape = new DrainType($player->getLevel(), $brushwand["radius"], $center);
+                break;
+            
+            case "TYPE_CLEAN":
+            case "TYPE_CLEAR":
+                $shape = new CleanType($player->getLevel(), $brushwand["radius"], $center);
+                break;
+            
+            case "TYPE_LEAFBLOWER":
+                $shape = new LeafBlowerTypeType($player->getLevel(), $brushwand["radius"], $center);
                 break;
                 
             case "TYPE_REPLACE":
