@@ -45,18 +45,13 @@ class DrainType extends BaseType {
                 for($z = $maxZ; $z >= $minZ; $z--) {
                     $zs = ($targetZ - $z) * ($targetZ - $z);
                     if($xs + $ys + $zs < $radiusSquared) {
-                        if($randomBlock !== 0 || strtolower($randomName) === "air") {
-                            $blockId = $this->level->getBlock(new Vector3($x, $y, $z))->getId();
-                            if($blockId === Item::LAVA || $blockId === Item::WATER) {
-                                $this->level->setBlock(new Vector3($x, $y, $z), $randomBlock, false, false);
-                            }
-                        }
+                        $blockId = $this->level->getBlock(new Vector3($x, $y, $z))->getId();
+                        if($blockId === Item::LAVA || $blockId === Item::WATER) {
+                            $this->level->setBlock(new Vector3($x, $y, $z), $randomBlock, false, false);
+                       }
                     }
                 }
             }
-        }
-        if($randomBlock->getId() === Block::AIR && strtolower($randomName) !== "air") {
-            return false;
         }
         return true;
     }
