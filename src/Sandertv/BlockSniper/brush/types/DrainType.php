@@ -5,7 +5,6 @@ namespace Sandertv\BlockSniper\brush\types;
 use Sandertv\BlockSniper\brush\BaseType;
 use pocketmine\math\Vector3;
 use pocketmine\math\Math;
-use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\item\Item;
 
@@ -47,7 +46,7 @@ class DrainType extends BaseType {
                     if($xs + $ys + $zs < $radiusSquared) {
                         $blockId = $this->level->getBlock(new Vector3($x, $y, $z))->getId();
                         if($blockId === Item::LAVA || $blockId === Item::WATER) {
-                            $this->level->setBlock(new Vector3($x, $y, $z), $randomBlock, false, false);
+                            $this->level->setBlock(new Vector3($x, $y, $z), Item::AIR, false, false);
                        }
                     }
                 }
