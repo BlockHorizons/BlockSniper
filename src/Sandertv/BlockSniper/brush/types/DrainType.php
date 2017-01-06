@@ -15,7 +15,6 @@ class DrainType extends BaseType {
         $this->level = $level;
         $this->radius = $radius;
         $this->center = $center;
-        $this->blocks = $blocks;
 
         if(!isset($center)) {
             $this->center = new Vector3(0, 0, 0);
