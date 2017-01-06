@@ -46,7 +46,7 @@ class DrainType extends BaseType {
                     $zs = ($targetZ - $z) * ($targetZ - $z);
                     if($xs + $ys + $zs < $radiusSquared) {
                         $blockId = $this->level->getBlock(new Vector3($x, $y, $z))->getId();
-                        if($blockId === Item::LAVA || $blockId === Item::WATER) {
+                        if($blockId === Item::LAVA || $blockId === Item::WATER || $blockId === Item::STILL_LAVA || $blockId === Item::STILL_WATER) {
                             $this->level->setBlock(new Vector3($x, $y, $z), Block::get(Block::AIR), false, false);
                        }
                     }
