@@ -7,6 +7,7 @@ use pocketmine\math\Vector3;
 use pocketmine\math\Math;
 use pocketmine\level\Level;
 use pocketmine\item\Item;
+use pocketmine\block\Block;
 
 class DrainType extends BaseType {
     
@@ -46,7 +47,7 @@ class DrainType extends BaseType {
                     if($xs + $ys + $zs < $radiusSquared) {
                         $blockId = $this->level->getBlock(new Vector3($x, $y, $z))->getId();
                         if($blockId === Item::LAVA || $blockId === Item::WATER) {
-                            $this->level->setBlock(new Vector3($x, $y, $z), Item::AIR, false, false);
+                            $this->level->setBlock(new Vector3($x, $y, $z), Block::AIR, false, false);
                        }
                     }
                 }
