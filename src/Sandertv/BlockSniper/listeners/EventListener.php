@@ -70,7 +70,7 @@ class EventListener implements Listener {
                 break;
             
             case "TYPE_LEAFBLOWER":
-                $shape = new LeafBlowerTypeType($player->getLevel(), $brushwand["radius"], $center);
+                $shape = new LeafBlowerType($player->getLevel(), $brushwand["radius"], $center);
                 break;
                 
             case "TYPE_REPLACE":
