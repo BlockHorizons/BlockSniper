@@ -101,8 +101,8 @@ class BrushWandCommand extends BaseCommand {
                 $shape = new CleanType($sender->getLevel());
                 break;
             
-            case "TYPE_LEAF_BLOWER":
-                $shape = new CleanType($sender->getLevel());
+            case "TYPE_LEAFBLOWER":
+                $shape = new LeafBlowerType($sender->getLevel());
                 break;
             
             default:
