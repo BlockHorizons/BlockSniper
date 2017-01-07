@@ -33,4 +33,8 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand 
     public function sendNoPermission(CommandSender $sender) {
         $sender->sendMessage(TF::RED . "[Warning] You don't have permission to execute this command.");
     }
+    
+    public function getSettings() {
+        return $this->getPlugin()->settings;
+    }
 }

@@ -32,17 +32,21 @@ class LeafBlowerType extends BaseType {
         
         $minX = $targetX - $this->radius;
         $minZ = $targetZ - $this->radius;
+        $minY = $targetY - 2;
         $maxX = $targetX + $this->radius;
         $maxZ = $targetZ + $this->radius;
+        $maxY = $targetY + 2;
         
         $valid = false;
         for($x = $minX; $x <= $maxX; $x++) {
             for($z = $minZ; $z <= $maxZ; $z++) {
-                if(pow($targetX - $x, 2) + pow($targetZ - $z, 2) <= $radiusSquared) {
-                    if($this->level->getBlock(new Vector3($x, $targetY + 1, $z)) instanceof Flowable) {
-                        $this->level->dropItem(new Vector3($x, $targetY + 1, $z), Item::get($this->level->getBlock(new Vector3($x, $targetY + 1, $z))->getId()));
-                        $this->level->setBlock(new Vector3($x, $targetY + 1, $z), Block::get(Block::AIR), false, false);
-                        $valid = true;
+                for($y = $minY; $y <= $maxY; $y++) {
+                    if(pow($targetX - $x, 2) + pow($targetZ - $z, 2) <= $radiusSquared) {
+                        if($this->level->getBlock(new Vector3($x, $targetY + 1, $z)) instanceof Flowable) {
+                            $this->level->dropItem(new Vector3($x, $targetY + 1, $z), Item::get($this->level->getBlock(new Vector3($x, $targetY + 1, $z))->getId()));
+                            $this->level->setBlock(new Vector3($x, $targetY + 1, $z), Block::get(Block::AIR), false, false);
+                            $valid = true;
+                        }
                     }
                 }
             }

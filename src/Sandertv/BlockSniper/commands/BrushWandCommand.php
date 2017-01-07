@@ -36,7 +36,7 @@ class BrushWandCommand extends BaseCommand {
             return true;
         }
         
-        if((count($args) < 2 || count($args) > 4) && strtolower($args[0])) {
+        if((count($args) < 2 || count($args) > 4)) {
             $sender->sendMessage(TF::RED . "[Usage] /brushwand <type> <radius> <block(s)>");
             return true;
         }
@@ -53,8 +53,8 @@ class BrushWandCommand extends BaseCommand {
             return true;
         }
         
-        if($args[1] > 10) { // TODO: Make this configurable.
-            $sender->sendMessage(TF::RED . "[Warning] That radius is too big. Please set a radius of 10 or smaller.");
+        if($args[1] > $this->getSettings()->get("Maximum-Radius")) {
+            $sender->sendMessage(TF::RED . "[Warning] That radius is too big. Please set a radius of " . $this->getSettings()->get("Maximum-Radius") . " or smaller.");
             return true;
         }
         

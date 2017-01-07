@@ -1,0 +1,6 @@
+---
+# Configuration for BlockSniper: An innovative worldedit plugin by Sandertv.
+
+# Maximum radius for shapes/types, it is recommended to keep this number below 20 to prevent server freezes and lag.
+Maximum-Radius: 10
+...
