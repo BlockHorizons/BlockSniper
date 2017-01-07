@@ -42,17 +42,14 @@ class LeafBlowerType extends BaseType {
             for($z = $minZ; $z <= $maxZ; $z++) {
                 for($y = $minY; $y <= $maxY; $y++) {
                     if(pow($targetX - $x, 2) + pow($targetZ - $z, 2) <= $radiusSquared) {
-                        if($this->level->getBlock(new Vector3($x, $targetY + 1, $z)) instanceof Flowable) {
-                            $this->level->dropItem(new Vector3($x, $targetY + 1, $z), Item::get($this->level->getBlock(new Vector3($x, $targetY + 1, $z))->getId()));
-                            $this->level->setBlock(new Vector3($x, $targetY + 1, $z), Block::get(Block::AIR), false, false);
+                        if($this->level->getBlock(new Vector3($x, $y, $z)) instanceof Flowable) {
+                            $this->level->dropItem(new Vector3($x, $y, $z), Item::get($this->level->getBlock(new Vector3($x, $y, $z))->getId()));
+                            $this->level->setBlock(new Vector3($x, $y, $z), Block::get(Block::AIR), false, false);
                             $valid = true;
                         }
                     }
                 }
             }
-        }
-        if($randomBlock === Block::AIR && strtolower($randomName) !== "air") {
-            return false;
         }
         if($valid) {
             return true;
