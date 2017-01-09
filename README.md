@@ -10,15 +10,32 @@ If you do decide to compile a phar file yourself to benefit from the latest feat
  - Upload your phar file to your server and restart the server.
 
 ## What is this?
-BlockSniper is an advanced world editing tool, based on the idea of VoxelSniper from minecraft PC softwares.
-BlockSniper allows you to edit your world on a long range, with several different types. The types are as follows:
-> Cuboid    > Spawn a cube on the target location
+BlockSniper is an advanced world editing tool, based on the idea of VoxelSniper from Mineraft PC softwares.
+BlockSniper allows you to edit your world on a long range, with several different types/shapes. The types/shapes are as follows:
+
+>> Shapes
 >
-> Sphere    > Spawn a sphere on the target location
+> Cube      > As if minecraft wasn't enough cubes already.
 >
-> Overlay   > Overlay blocks with a different type
+> Sphere    > Done with trying to build a perfect sphere?
 >
-> Layer     > Lay a thin layer of blocks on the target location
+> Cylinder (standing) > For the people that really want a unique building.
+>
+>> Types
+>
+> Overlay   > Get those ugly dirt blocks out of sight.
+>
+> Layer     > Make a thin layer of blocks to fix your terrain.
+>
+> Replace   > Replace those useless coal blocks for diamond blocks instead!
+>
+> Leafblower > Blow away all those annoying plants.
+>
+> Clean     > Restore your terrain from all the ugly dirt houses.
+>
+> Drain     > Ever wanted to drain an ocean? No?
+>
+> Flatten   > Finally you don't need a flat world for flat terrain anymore.
 >
 > More coming soon!
 
@@ -26,12 +43,12 @@ BlockSniper allows you to edit your world on a long range, with several differen
 BlockSniper has several commands to edit your world. The commands work as follows:
 >> /snipe <type> <radius> <block(s)> : Snipe an edit type at the location you're looking at.
 >
-> Additional blocks can be added by sepparating them with a comma.
+> Additional blocks can be added by separating them with a comma.
 >
 >
 >> /brushwand <type> <radius> <block(s)> : Set a wand with an edit type to shoot everytime you hold your finger on the screen or interact.
 >
-> Additional blocks can here too be added by sepparating them with a comma.
+> Additional blocks can here too be added by separating them with a comma.
 
 ## Are there permissions? Where can I find them?
 A full list of permissions can be found in the [plugin.yml](https://github.com/Sandertv/BlockSniper/blob/master/plugin.yml) file. 

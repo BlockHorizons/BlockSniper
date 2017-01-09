@@ -12,8 +12,8 @@ class ShapeCreateEvent extends BaseEvent implements Cancellable {
 	
 	public $owner;
 	
-	/** @noinspection PhpMissingParentConstructorInspection */
 	public function __construct($owner) {
+		parent::__construct($owner);
 		$this->owner = $owner;
 	}
 	

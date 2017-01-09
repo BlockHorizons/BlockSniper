@@ -9,10 +9,10 @@
 
 #### Versions
 * PocketMine version:
-* BlockSniper:
+* BlockSniper version:
 * Game version: PE/W10
 
-#### Crashdump or console errors
+#### Crashdump and/or console errors
 <!--- Insert in the code block below -->
 ```
 ```
