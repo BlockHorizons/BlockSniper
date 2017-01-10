@@ -53,7 +53,7 @@ class SnipeCommand extends BaseCommand {
 		
 		$type = ("TYPE_" . strtoupper($args[0]));
 		
-		if(!is_numeric($args[1]) && $type !== "TYPE_CYLINDER" && $type !== "TYPE_STANDING_CYLINDER") {
+		if(!is_numeric($args[1]) && $type !== "TYPE_CYLINDER" && $type !== "TYPE_STANDING_CYLINDER" && $type !== "TYPE_CUBOID") {
 			$sender->sendMessage(TF::RED . "[Warning] The radius should be numeric.");
 			return true;
 		}
