@@ -9,7 +9,7 @@ use pocketmine\math\Math;
 use pocketmine\math\Vector3;
 use Sandertv\BlockSniper\brush\BaseShape;
 
-class CuboidShape extends BaseShape {
+class CubeShape extends BaseShape {
 	
 	public function __construct(Level $level, float $radius = null, Vector3 $center = null, array $blocks = []) {
 		$this->level = $level;
