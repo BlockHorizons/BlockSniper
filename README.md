@@ -1,5 +1,5 @@
 # BlockSniper
-An innovative new world editing tool, made for PocketMine-MP: A MCPE server software written in PHP.
+An innovative new world editing tool, made for PocketMine-MP: An MCPE server software written in PHP.
 For detailed information, check out the [Website.](http://blocksniper.tk/)
 
 ## Development!
@@ -20,6 +20,8 @@ BlockSniper allows you to edit your world on a long range, with several differen
 > Sphere    > Done with trying to build a perfect sphere?
 >
 > Cylinder (standing) > For the people that really want a unique building.
+>
+> Cuboid    > Making a cuboid has never been so easy.
 >
 >> Types
 >

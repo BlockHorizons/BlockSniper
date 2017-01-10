@@ -7,9 +7,10 @@ use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
 use Sandertv\BlockSniper\brush\BaseShape;
 use Sandertv\BlockSniper\brush\BaseType;
-use Sandertv\BlockSniper\brush\shapes\CuboidShape;
+use Sandertv\BlockSniper\brush\shapes\CubeShape;
 use Sandertv\BlockSniper\brush\shapes\CylinderStandingShape;
 use Sandertv\BlockSniper\brush\shapes\SphereShape;
+use Sandertv\BlockSniper\brush\shapes\CuboidShape;
 use Sandertv\BlockSniper\brush\types\CleanType;
 use Sandertv\BlockSniper\brush\types\DrainType;
 use Sandertv\BlockSniper\brush\types\FlattenType;
@@ -70,8 +71,7 @@ class SnipeCommand extends BaseCommand {
 		
 		switch($type) {
 			case "TYPE_CUBE":
-			case "TYPE_CUBOID":
-				$shape = new CuboidShape($sender->getLevel(), $args[1], $center, explode(",", $args[2]));
+				$shape = new CubeShape($sender->getLevel(), $args[1], $center, explode(",", $args[2]));
 				break;
 			
 			case "TYPE_SPHERE":
@@ -118,6 +118,18 @@ class SnipeCommand extends BaseCommand {
 				$shape = new CylinderStandingShape($sender->getLevel(), $radius, $height, $center, explode(",", $args[2]));
 				break;
 			
+			case "TYPE_CUBOID":
+				if(strpos(strtolower($args[1]), "x") === false) {
+					$player->sendMessage(TF::RED . "[Usage] /brushwand cuboid <widthXlengthXheight> <block(s)>");
+					return true;
+				}
+				$sizes = explode("x", $brushwand["radius"]);
+				$width = $sizes[0];
+				$length = $sizes[1];
+				$height = $sizes[2];
+				$shape = new CuboidShape($player->getLevel(), $width, $length, $height, $center, explode(",", $args[2]));
+				break;
+				
 			case "TYPE_OVERLAY":
 				$shape = new OverlayType($sender->getLevel(), $args[1], $center, explode(",", $args[2]));
 				break;

@@ -5,16 +5,16 @@ namespace Sandertv\BlockSniper\brush\shapes;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\level\Level;
-use pocketmine\math\Math;
 use pocketmine\math\Vector3;
 use Sandertv\BlockSniper\brush\BaseShape;
 
 class CuboidShape extends BaseShape {
 	
-	/** @noinspection PhpMissingParentConstructorInspection */
-	public function __construct(Level $level, float $radius = null, Vector3 $center = null, array $blocks = []) {
+	public function __construct(Level $level, float $width = null, float $length = null, float $height = null, Vector3 $center = null, array $blocks = []) {
 		$this->level = $level;
-		$this->radius = $radius;
+		$this->width = $width;
+		$this->length = $length;
+		$this->height = $height;
 		$this->center = $center;
 		$this->blocks = $blocks;
 		
@@ -34,12 +34,12 @@ class CuboidShape extends BaseShape {
 		$targetY = $this->center->y;
 		$targetZ = $this->center->z;
 		
-		$minX = $targetX - $this->radius;
-		$minY = $targetY - $this->radius;
-		$minZ = $targetZ - $this->radius;
-		$maxX = $targetX + $this->radius;
-		$maxY = $targetY + $this->radius;
-		$maxZ = $targetZ + $this->radius;
+		$minX = $targetX - $this->width;
+		$minY = $targetY - $this->height;
+		$minZ = $targetZ - $this->length;
+		$maxX = $targetX + $this->width;
+		$maxY = $targetY + $this->height;
+		$maxZ = $targetZ + $this->length;
 		
 		for($x = $minX; $x <= $maxX; $x++) {
 			for($y = $minY; $y <= $maxY; $y++) {

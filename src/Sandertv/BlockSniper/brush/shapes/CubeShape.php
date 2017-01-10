@@ -1,20 +1,21 @@
 <?php
 
-namespace Sandertv\BlockSniper\brush\types;
+namespace Sandertv\BlockSniper\brush\shapes;
 
 use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\level\Level;
+use pocketmine\math\Math;
 use pocketmine\math\Vector3;
-use Sandertv\BlockSniper\brush\BaseType;
+use Sandertv\BlockSniper\brush\BaseShape;
 
-class OverlayType extends BaseType {
+class CuboidShape extends BaseShape {
 	
 	public function __construct(Level $level, float $radius = null, Vector3 $center = null, array $blocks = []) {
 		$this->level = $level;
+		$this->radius = $radius;
 		$this->center = $center;
 		$this->blocks = $blocks;
-		$this->radius = $radius;
 		
 		if(!isset($center)) {
 			$this->center = new Vector3(0, 0, 0);
@@ -42,53 +43,26 @@ class OverlayType extends BaseType {
 		for($x = $minX; $x <= $maxX; $x++) {
 			for($y = $minY; $y <= $maxY; $y++) {
 				for($z = $minZ; $z <= $maxZ; $z++) {
-					$block = $this->level->getBlock(new Vector3($x, $y, $z));
-					if($block->getId() !== Item::AIR) {
-						$directions = [
-							$block->getSide(Block::SIDE_DOWN),
-							$block->getSide(Block::SIDE_UP),
-							$block->getSide(Block::SIDE_NORTH),
-							$block->getSide(Block::SIDE_SOUTH),
-							$block->getSide(Block::SIDE_WEST),
-							$block->getSide(Block::SIDE_EAST)
-						];
-						$valid = true;
-						foreach($this->blocks as $possibleBlock) {
-							if(is_numeric($possibleBlock)) {
-								if($block->getId() === $possibleBlock) {
-									$valid = false;
-								}
-							} else {
-								if($block->getId() === Item::fromString($possibleBlock)->getId()) {
-									$valid = false;
-								}
-							}
-						}
-						foreach($directions as $direction) {
-							if($this->level->getBlock($direction)->getId() === Item::AIR && $valid) {
-								$randomName = $this->blocks[array_rand($this->blocks)];
-								$randomBlock = is_numeric($randomName) ? Item::get($randomName)->getBlock() : Item::fromString($randomName)->getBlock();
-								if(($randomBlock !== 0 || strtolower($randomName) === "air") && $block->getId() !== $randomBlock->getId()) {
-									$this->level->setBlock($direction, $randomBlock, false, false);
-								}
-							}
-						}
+					$randomName = $this->blocks[array_rand($this->blocks)];
+					$randomBlock = is_numeric($randomName) ? Item::get($randomName)->getBlock() : Item::fromString($randomName)->getBlock();
+					if($randomBlock->getId() !== 0 || strtolower($randomName) === "air") {
+						$this->level->setBlock(new Vector3($x, $y, $z), $randomBlock, false, false);
 					}
 				}
 			}
 		}
-		if($randomBlock->getId() === Block::AIR && strtolower($randomName) !== "air") {
+		if($randomBlock === Block::AIR && strtolower($randomName) !== "air") {
 			return false;
 		}
 		return true;
 	}
 	
 	public function getName(): string {
-		return "Overlay";
+		return "Cube";
 	}
 	
 	public function getPermission(): string {
-		return "blocksniper.type.overlay";
+		return "blocksniper.shape.cube";
 	}
 	
 	public function getApproximateBlocks(): int {

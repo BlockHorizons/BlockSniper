@@ -11,7 +11,6 @@ use Sandertv\BlockSniper\brush\BaseShape;
 
 class SphereShape extends BaseShape {
 	
-	/** @noinspection PhpMissingParentConstructorInspection */
 	public function __construct(Level $level, float $radius = null, Vector3 $center = null, array $blocks = []) {
 		$this->level = $level;
 		$this->radius = $radius;

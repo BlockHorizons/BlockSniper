@@ -10,7 +10,6 @@ use Sandertv\BlockSniper\brush\BaseShape;
 
 class CylinderStandingShape extends BaseShape {
 	
-	/** @noinspection PhpMissingParentConstructorInspection */
 	public function __construct(Level $level, float $radius = null, int $height = null, Vector3 $center = null, array $blocks = []) {
 		$this->level = $level;
 		$this->radius = $radius;

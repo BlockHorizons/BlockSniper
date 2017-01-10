@@ -10,7 +10,6 @@ use Sandertv\BlockSniper\brush\BaseType;
 
 class FlattenType extends BaseType {
 	
-	/** @noinspection PhpMissingParentConstructorInspection */
 	public function __construct(Level $level, float $radius = null, Vector3 $center = null, array $blocks = []) {
 		$this->level = $level;
 		$this->radius = $radius;

@@ -5,9 +5,10 @@ namespace Sandertv\BlockSniper\commands;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
-use Sandertv\BlockSniper\brush\shapes\CuboidShape;
+use Sandertv\BlockSniper\brush\shapes\CubeShape;
 use Sandertv\BlockSniper\brush\shapes\CylinderStandingShape;
 use Sandertv\BlockSniper\brush\shapes\SphereShape;
+use Sandertv\BlockSniper\brush\shapes\CuboidShape;
 use Sandertv\BlockSniper\brush\types\CleanType;
 use Sandertv\BlockSniper\brush\types\DrainType;
 use Sandertv\BlockSniper\brush\types\FlattenType;
@@ -59,8 +60,7 @@ class BrushWandCommand extends BaseCommand {
 		
 		switch($type) {
 			case "TYPE_CUBE":
-			case "TYPE_CUBOID":
-				$shape = new CuboidShape($sender->getLevel());
+				$shape = new CubeShape($sender->getLevel());
 				break;
 			
 			case "TYPE_SPHERE":
@@ -102,6 +102,10 @@ class BrushWandCommand extends BaseCommand {
 			
 			case "TYPE_LEAFBLOWER":
 				$shape = new LeafBlowerType($sender->getLevel());
+				break;
+			
+			case "TYPE_CUBOID":
+				$shape = new CuboidShape($sender->getLevel());
 				break;
 			
 			default:

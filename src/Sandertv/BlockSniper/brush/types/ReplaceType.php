@@ -11,7 +11,6 @@ use Sandertv\BlockSniper\brush\BaseType;
 
 class ReplaceType extends BaseType {
 	
-	/** @noinspection PhpMissingParentConstructorInspection */
 	public function __construct(Level $level, float $radius = null, Vector3 $center = null, $block = null, array $replacements = []) {
 		$this->level = $level;
 		$this->radius = $radius;
