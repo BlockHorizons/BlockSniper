@@ -12,7 +12,6 @@ class UndoStorer {
 	public $undoStore = [];
 	
 	public function __construct(Loader $owner) {
-		parent::__construct($owner);
 		$this->owner = $owner;
 	}
 	
