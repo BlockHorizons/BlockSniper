@@ -83,7 +83,7 @@ class EventListener implements Listener {
 			
 			case "TYPE_CYLINDER":
 			case "TYPE_STANDING_CYLINDER":
-				if(strpos(strtolower($args[1]), "x") === false) {
+				if(strpos(strtolower($brushwand["radius"]), "x") === false) {
 					$player->sendMessage(TF::RED . "[Usage] /brushwand cylinder <radiusXheight> <block(s)>");
 					return true;
 				}
@@ -94,7 +94,7 @@ class EventListener implements Listener {
 				break;
 				
 			case "TYPE_CUBOID":
-				if(strpos(strtolower($args[1]), "x") === false) {
+				if(strpos(strtolower($brushwand["radius"]), "x") === false) {
 					$player->sendMessage(TF::RED . "[Usage] /brushwand cuboid <widthXlengthXheight> <block(s)>");
 					return true;
 				}

@@ -123,7 +123,7 @@ class SnipeCommand extends BaseCommand {
 					$player->sendMessage(TF::RED . "[Usage] /brushwand cuboid <widthXlengthXheight> <block(s)>");
 					return true;
 				}
-				$sizes = explode("x", $brushwand["radius"]);
+				$sizes = explode("x", $args[1]);
 				$width = $sizes[0];
 				$length = $sizes[1];
 				$height = $sizes[2];
