@@ -48,37 +48,37 @@ class EventListener implements Listener {
 		
 		switch($brushwand["type"]) {
 			case "TYPE_CUBE":
-				$shape = new CubeShape($player->getLevel(), $brushwand["radius"], $center, explode(",", $brushwand["blocks"]));
+				$shape = new CubeShape($this->getOwner(), $player->getLevel(), $brushwand["radius"], $center, explode(",", $brushwand["blocks"]));
 				break;
 			
 			case "TYPE_SPHERE":
 			case "TYPE_BALL":
-				$shape = new SphereShape($player->getLevel(), $brushwand["radius"], $center, explode(",", $brushwand["blocks"]));
+				$shape = new SphereShape($this->getOwner(), $player->getLevel(), $brushwand["radius"], $center, explode(",", $brushwand["blocks"]));
 				break;
 			
 			case "TYPE_OVERLAY":
-				$shape = new OverlayType($player->getLevel(), $brushwand["radius"], $center, explode(",", $brushwand["blocks"]));
+				$shape = new OverlayType($this->getOwner(), $player->getLevel(), $brushwand["radius"], $center, explode(",", $brushwand["blocks"]));
 				break;
 			
 			case "TYPE_DRAIN":
-				$shape = new DrainType($player->getLevel(), $brushwand["radius"], $center);
+				$shape = new DrainType($this->getOwner(), $player->getLevel(), $brushwand["radius"], $center);
 				break;
 			
 			case "TYPE_CLEAN":
 			case "TYPE_CLEAR":
-				$shape = new CleanType($player->getLevel(), $brushwand["radius"], $center);
+				$shape = new CleanType($this->getOwner(), $player->getLevel(), $brushwand["radius"], $center);
 				break;
 			
 			case "TYPE_LEAFBLOWER":
-				$shape = new LeafBlowerType($player->getLevel(), $brushwand["radius"], $center);
+				$shape = new LeafBlowerType($this->getOwner(), $player->getLevel(), $brushwand["radius"], $center);
 				break;
 			
 			case "TYPE_REPLACE":
 				if(!isset($brushwand["additionalData"])) {
-					$sender->sendMessage(TF::RED . "[Usage] /snipe replace <radius> <block to replace> <replacement>");
+					$player->sendMessage(TF::RED . "[Usage] /snipe replace <radius> <block to replace> <replacement>");
 					return true;
 				}
-				$shape = new ReplaceType($player->getLevel(), $brushwand["radius"], $center, $brushwand["blocks"], explode(",", $brushwand["additionalData"]));
+				$shape = new ReplaceType($this->getOwner(), $player->getLevel(), $brushwand["radius"], $center, $brushwand["blocks"], explode(",", $brushwand["additionalData"]));
 				break;
 			
 			case "TYPE_CYLINDER":
@@ -90,7 +90,7 @@ class EventListener implements Listener {
 				$sizes = explode("x", $brushwand["radius"]);
 				$radius = $sizes[0];
 				$height = $sizes[1];
-				$shape = new CylinderStandingShape($player->getLevel(), $radius, $height, $center, explode(",", $brushwand["blocks"]));
+				$shape = new CylinderStandingShape($this->getOwner(), $player->getLevel(), $radius, $height, $center, explode(",", $brushwand["blocks"]));
 				break;
 				
 			case "TYPE_CUBOID":
@@ -102,17 +102,17 @@ class EventListener implements Listener {
 				$width = $sizes[0];
 				$length = $sizes[1];
 				$height = $sizes[2];
-				$shape = new CuboidShape($player->getLevel(), $width, $length, $height, $center, explode(",", $brushwand["blocks"]));
+				$shape = new CuboidShape($this->getOwner(), $player->getLevel(), $width, $length, $height, $center, explode(",", $brushwand["blocks"]));
 				break;
 			
 			case "TYPE_FLAT_LAYER":
 			case "TYPE_LAYER":
-				$shape = new LayerType($player->getLevel(), $brushwand["radius"], $center, explode(",", $brushwand["blocks"]));
+				$shape = new LayerType($this->getOwner(), $player->getLevel(), $brushwand["radius"], $center, explode(",", $brushwand["blocks"]));
 				break;
 			
 			case "TYPE_FLATTEN":
 			case "TYPE_EQUALIZE":
-				$shape = new FlattenType($player->getLevel(), $brushwand["radius"], $center, explode(",", $brushwand["blocks"]));
+				$shape = new FlattenType($this->getOwner(), $player->getLevel(), $brushwand["radius"], $center, explode(",", $brushwand["blocks"]));
 				break;
 		}
 		

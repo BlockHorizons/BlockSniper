@@ -8,10 +8,12 @@ use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use Sandertv\BlockSniper\brush\BaseType;
+use Sandertv\BlockSniper\Loader;
 
 class LeafBlowerType extends BaseType {
 	
-	public function __construct(Level $level, float $radius = null, Vector3 $center = null) {
+	public function __construct(Loader $main, Level $level, float $radius = null, Vector3 $center = null) {
+		parent::__construct($main);
 		$this->level = $level;
 		$this->radius = $radius;
 		$this->center = $center;

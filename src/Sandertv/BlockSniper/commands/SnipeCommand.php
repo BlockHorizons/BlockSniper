@@ -71,12 +71,12 @@ class SnipeCommand extends BaseCommand {
 		
 		switch($type) {
 			case "TYPE_CUBE":
-				$shape = new CubeShape($sender->getLevel(), $args[1], $center, explode(",", $args[2]));
+				$shape = new CubeShape($this->getPlugin(), $sender->getLevel(), $args[1], $center, explode(",", $args[2]));
 				break;
 			
 			case "TYPE_SPHERE":
 			case "TYPE_BALL":
-				$shape = new SphereShape($sender->getLevel(), $args[1], $center, explode(",", $args[2]));
+				$shape = new SphereShape($this->getPlugin(), $sender->getLevel(), $args[1], $center, explode(",", $args[2]));
 				break;
 			
 			case "TYPE_REPLACE":
@@ -84,25 +84,25 @@ class SnipeCommand extends BaseCommand {
 					$sender->sendMessage(TF::RED . "[Usage] /snipe replace <radius> <block to replace> <replacement>");
 					return true;
 				}
-				$shape = new ReplaceType($sender->getLevel(), $args[1], $center, $args[2], explode(",", $args[3]));
+				$shape = new ReplaceType($this->getPlugin(), $sender->getLevel(), $args[1], $center, $args[2], explode(",", $args[3]));
 				break;
 			
 			case "TYPE_FLATTEN":
 			case "TYPE_EQUALIZE":
-				$shape = new FlattenType($sender->getLevel(), $args[1], $center, explode(",", $args[2]));
+				$shape = new FlattenType($this->getPlugin(), $sender->getLevel(), $args[1], $center, explode(",", $args[2]));
 				break;
 			
 			case "TYPE_DRAIN":
-				$shape = new DrainType($sender->getLevel(), $args[1], $center);
+				$shape = new DrainType($this->getPlugin(), $sender->getLevel(), $args[1], $center);
 				break;
 			
 			case "TYPE_CLEAR":
 			case "TYPE_CLEAN":
-				$shape = new CleanType($sender->getLevel(), $args[1], $center);
+				$shape = new CleanType($this->getPlugin(), $sender->getLevel(), $args[1], $center);
 				break;
 			
 			case "TYPE_LEAFBLOWER":
-				$shape = new LeafBlowerType($sender->getLevel(), $args[1], $center);
+				$shape = new LeafBlowerType($this->getPlugin(), $sender->getLevel(), $args[1], $center);
 				break;
 			
 			case "TYPE_CYLINDER":
@@ -115,7 +115,7 @@ class SnipeCommand extends BaseCommand {
 				$sizes = explode("x", $args[1]);
 				$radius = $sizes[0];
 				$height = $sizes[1];
-				$shape = new CylinderStandingShape($sender->getLevel(), $radius, $height, $center, explode(",", $args[2]));
+				$shape = new CylinderStandingShape($this->getPlugin(), $sender->getLevel(), $radius, $height, $center, explode(",", $args[2]));
 				break;
 			
 			case "TYPE_CUBOID":
@@ -127,16 +127,16 @@ class SnipeCommand extends BaseCommand {
 				$width = $sizes[0];
 				$length = $sizes[1];
 				$height = $sizes[2];
-				$shape = new CuboidShape($sender->getLevel(), $width, $length, $height, $center, explode(",", $args[2]));
+				$shape = new CuboidShape($this->getPlugin(), $sender->getLevel(), $width, $length, $height, $center, explode(",", $args[2]));
 				break;
 				
 			case "TYPE_OVERLAY":
-				$shape = new OverlayType($sender->getLevel(), $args[1], $center, explode(",", $args[2]));
+				$shape = new OverlayType($this->getPlugin(), $sender->getLevel(), $args[1], $center, explode(",", $args[2]));
 				break;
 			
 			case "TYPE_FLAT_LAYER":
 			case "TYPE_LAYER":
-				$shape = new LayerType($sender->getLevel(), $args[1], $center, explode(",", $args[2]));
+				$shape = new LayerType($this->getPlugin(), $sender->getLevel(), $args[1], $center, explode(",", $args[2]));
 				break;
 			
 			default:

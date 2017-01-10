@@ -5,13 +5,14 @@ namespace Sandertv\BlockSniper\brush\types;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\level\Level;
-use pocketmine\math\Math;
 use pocketmine\math\Vector3;
 use Sandertv\BlockSniper\brush\BaseType;
+use Sandertv\BlockSniper\Loader;
 
 class ReplaceType extends BaseType {
 	
-	public function __construct(Level $level, float $radius = null, Vector3 $center = null, $block = null, array $replacements = []) {
+	public function __construct(Loader $main, Level $level, float $radius = null, Vector3 $center = null, $block = null, array $replacements = []) {
+		parent::__construct($main);
 		$this->level = $level;
 		$this->radius = $radius;
 		$this->center = $center;

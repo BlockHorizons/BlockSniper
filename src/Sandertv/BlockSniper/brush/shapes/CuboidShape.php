@@ -7,10 +7,12 @@ use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use Sandertv\BlockSniper\brush\BaseShape;
+use Sandertv\BlockSniper\Loader;
 
 class CuboidShape extends BaseShape {
 	
-	public function __construct(Level $level, float $width = null, float $length = null, float $height = null, Vector3 $center = null, array $blocks = []) {
+	public function __construct(Loader $main, Level $level, float $width = null, float $length = null, float $height = null, Vector3 $center = null, array $blocks = []) {
+		parent::__construct($main);
 		$this->level = $level;
 		$this->width = $width;
 		$this->length = $length;

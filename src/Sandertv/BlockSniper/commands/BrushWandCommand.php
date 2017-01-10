@@ -60,52 +60,52 @@ class BrushWandCommand extends BaseCommand {
 		
 		switch($type) {
 			case "TYPE_CUBE":
-				$shape = new CubeShape($sender->getLevel());
+				$shape = new CubeShape($this->getPlugin(), $sender->getLevel());
 				break;
 			
 			case "TYPE_SPHERE":
 			case "TYPE_BALL":
-				$shape = new SphereShape($sender->getLevel());
+				$shape = new SphereShape($this->getPlugin(), $sender->getLevel());
 				break;
 			
 			case "TYPE_CYLINDER":
 			case "TYPE_STANDING_CYLINDER":
-				$shape = new CylinderStandingShape($sender->getLevel());
+				$shape = new CylinderStandingShape($this->getPlugin(), $sender->getLevel());
 				break;
 			
 			case "TYPE_REPLACE":
-				$shape = new ReplaceType($sender->getLevel());
+				$shape = new ReplaceType($this->getPlugin(), $sender->getLevel());
 				break;
 			
 			case "TYPE_DRAIN":
-				$shape = new DrainType($sender->getLevel());
+				$shape = new DrainType($this->getPlugin(), $sender->getLevel());
 				break;
 			
 			case "TYPE_OVERLAY":
-				$shape = new OverlayType($sender->getLevel());
+				$shape = new OverlayType($this->getPlugin(), $sender->getLevel());
 				break;
 			
 			case "TYPE_FLATTEN":
 			case "TYPE_EQUALIZE":
-				$shape = new FlattenType($sender->getLevel());
+				$shape = new FlattenType($this->getPlugin(), $sender->getLevel());
 				break;
 			
 			case "TYPE_FLAT_LAYER":
 			case "TYPE_LAYER":
-				$shape = new LayerType($sender->getLevel());
+				$shape = new LayerType($this->getPlugin(), $sender->getLevel());
 				break;
 			
 			case "TYPE_CLEAN":
 			case "TYPE_CLEAR":
-				$shape = new CleanType($sender->getLevel());
+				$shape = new CleanType($this->getPlugin(), $sender->getLevel());
 				break;
 			
 			case "TYPE_LEAFBLOWER":
-				$shape = new LeafBlowerType($sender->getLevel());
+				$shape = new LeafBlowerType($this->getPlugin(), $sender->getLevel());
 				break;
 			
 			case "TYPE_CUBOID":
-				$shape = new CuboidShape($sender->getLevel());
+				$shape = new CuboidShape($this->getPlugin(), $sender->getLevel());
 				break;
 			
 			default:

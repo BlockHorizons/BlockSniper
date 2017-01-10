@@ -5,13 +5,14 @@ namespace Sandertv\BlockSniper\brush\shapes;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\level\Level;
-use pocketmine\math\Math;
 use pocketmine\math\Vector3;
 use Sandertv\BlockSniper\brush\BaseShape;
+use Sandertv\BlockSniper\Loader;
 
 class CubeShape extends BaseShape {
 	
-	public function __construct(Level $level, float $radius = null, Vector3 $center = null, array $blocks = []) {
+	public function __construct(Loader $main, Level $level, float $radius = null, Vector3 $center = null, array $blocks = []) {
+		parent::__construct($main);
 		$this->level = $level;
 		$this->radius = $radius;
 		$this->center = $center;
