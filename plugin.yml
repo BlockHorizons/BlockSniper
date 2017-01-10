@@ -20,6 +20,9 @@ permissions:
                     blocksniper.command.brushwand:
                         default: op
                         description: "Allows access to the brush wand command."
+                    blocksniper.command.undo:
+                        default: op
+                        description: "Allows access to the undo command."
             blocksniper.type:
                 default: false
                 description: "Allows access to all BlockSniper types."

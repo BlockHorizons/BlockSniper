@@ -2,18 +2,20 @@
 
 namespace Sandertv\BlockSniper;
 
-use pocketmine\math\Vector3;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat as TF;
 use Sandertv\BlockSniper\commands\BrushWandCommand;
 use Sandertv\BlockSniper\commands\SnipeCommand;
+use Sandertv\BlockSniper\commands\UndoCommand;
 use Sandertv\BlockSniper\listeners\EventListener;
+use Sandertv\BlockSniper\UndoStorer;
 
 class Loader extends PluginBase {
 	
 	public $brushwand = [];
+	public $undoStore;
 	
 	public function onEnable() {
 		
@@ -27,8 +29,11 @@ class Loader extends PluginBase {
 		
 		$this->getServer()->getCommandMap()->register("snipe", new SnipeCommand($this));
 		$this->getServer()->getCommandMap()->register("brushwand", new BrushWandCommand($this));
+		$this->getServer()->getCommandMap()->register("undo", new UndoCommand($this));
 		
 		$this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
+		
+		$this->undoStore = new UndoStorer($this);
 	}
 	
 	
@@ -36,6 +41,12 @@ class Loader extends PluginBase {
 		
 		$this->getLogger()->info(TF::RED . "BlockSniper has been disabled");
 		
+		$this->getUndoStore()->resetUndoStorage();
+		
+	}
+	
+	public function getUndoStore(): UndoStorer {
+		return $this->undoStore;
 	}
 	
 	/**
