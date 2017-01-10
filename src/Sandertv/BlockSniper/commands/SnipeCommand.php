@@ -120,14 +120,14 @@ class SnipeCommand extends BaseCommand {
 			
 			case "TYPE_CUBOID":
 				if(strpos(strtolower($args[1]), "x") === false) {
-					$player->sendMessage(TF::RED . "[Usage] /brushwand cuboid <widthXlengthXheight> <block(s)>");
+					$sender->sendMessage(TF::RED . "[Usage] /brushwand cuboid <widthXlengthXheight> <block(s)>");
 					return true;
 				}
 				$sizes = explode("x", $args[1]);
 				$width = $sizes[0];
 				$length = $sizes[1];
 				$height = $sizes[2];
-				$shape = new CuboidShape($player->getLevel(), $width, $length, $height, $center, explode(",", $args[2]));
+				$shape = new CuboidShape($sender->getLevel(), $width, $length, $height, $center, explode(",", $args[2]));
 				break;
 				
 			case "TYPE_OVERLAY":
