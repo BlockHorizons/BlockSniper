@@ -27,6 +27,7 @@ class UndoStorer {
 	 */
 	public function saveUndo(array $blocks) {
 		$i = 0;
+		echo("Saving undo...");
 		foreach($blocks as $block) {
 			$this->undoStore[$this->totalStores][$block->getId() . "($i)"] = [
 				"x" => $block->x,
@@ -40,10 +41,12 @@ class UndoStorer {
 		if($this->totalStores >= $this->getOwner()->settings->get("Maximum-Undo-Stores")) {
 			$this->unsetFirstUndo();
 		}
-		$this->totalStores++;
+		$this->totalStores += 1;
+		var_dump($this->totalStores);
 	}
 	
 	public function restoreLastUndo() {
+		echo("Restoring undo...");
 		foreach($this->undoStore[max(array_keys($this->undoStore))] as $block) {
 			$Id = explode("(", $block);
 			$blockId = $Id[0];
@@ -72,11 +75,13 @@ class UndoStorer {
 	 * @return bool
 	 */
 	public function undoStorageExists() {
+		echo("Checking undo storage existance...");
 		if($this->totalStores === 0) {
 			return false;
 		} elseif(empty($this->undoStore)) {
 			return false;
 		}
+		echo("Undo storage exists...");
 		return true;
 	}
 	
