@@ -45,6 +45,7 @@ class UndoStorer {
 		if($this->totalStores >= $this->getOwner()->settings->get("Maximum-Undo-Stores")) {
 			$this->unsetFirstUndo();
 		}
+		var_dump($this->undoStore);
 		$this->totalStores += 1;
 		$this->getOwner()->getLogger()->info("Saved undo...");
 	}

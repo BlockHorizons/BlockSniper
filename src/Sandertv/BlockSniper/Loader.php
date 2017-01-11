@@ -15,6 +15,7 @@ class Loader extends PluginBase {
 	
 	public $brushwand = [];
 	public $undoStore;
+	public $settings;
 	
 	public function onEnable() {
 		
