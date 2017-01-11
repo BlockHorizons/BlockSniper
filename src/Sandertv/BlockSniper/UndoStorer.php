@@ -2,7 +2,6 @@
 
 namespace Sandertv\BlockSniper;
 
-use Sandertv\BlockSniper\Loader;
 use pocketmine\math\Vector3;
 use pocketmine\block\Block;
 
@@ -10,8 +9,6 @@ class UndoStorer {
 	
 	public $totalStores = 0;
 	public $undoStore = [];
-	
-	public $owner;
 	
 	public function __construct(Loader $owner) {
 		$this->owner = $owner;
@@ -35,9 +32,9 @@ class UndoStorer {
 				"x" => $block->x,
 				"y" => $block->y,
 				"z" => $block->z,
-				"level" => $block->level
+				"level" => $block->level->getName()
 			];
-			$i++;
+			$i += 1;
 		}
 		unset($i);
 		if($this->totalStores >= $this->getOwner()->settings->get("Maximum-Undo-Stores")) {
