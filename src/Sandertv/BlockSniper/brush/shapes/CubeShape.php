@@ -13,6 +13,7 @@ class CubeShape extends BaseShape {
 	
 	public function __construct(Loader $main, Level $level, float $radius = null, Vector3 $center = null, array $blocks = []) {
 		parent::__construct($main);
+		$this->main = $main;
 		$this->level = $level;
 		$this->radius = $radius;
 		$this->center = $center;
@@ -58,7 +59,7 @@ class CubeShape extends BaseShape {
 		if($randomBlock === Block::AIR && strtolower($randomName) !== "air") {
 			return false;
 		}
-		$this->getMain()->undoStore->saveUndo($undoBlocks);
+		$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
 		return true;
 	}
 	

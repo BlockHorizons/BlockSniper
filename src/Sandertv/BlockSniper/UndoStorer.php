@@ -11,6 +11,8 @@ class UndoStorer {
 	public $totalStores = 0;
 	public $undoStore = [];
 	
+	public $owner;
+	
 	public function __construct(Loader $owner) {
 		$this->owner = $owner;
 	}
