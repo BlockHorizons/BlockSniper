@@ -36,7 +36,6 @@ class Loader extends PluginBase {
 		$this->undoStore = new UndoStorer($this);
 	}
 	
-	
 	public function onDisable() {
 		
 		$this->getLogger()->info(TF::RED . "BlockSniper has been disabled");
