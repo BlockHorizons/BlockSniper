@@ -24,7 +24,7 @@ class UndoStorer {
 	/**
 	 * @param array $blocks
 	 *
-	 * undoStore[0] => 193(0) => "x" => $x
+	 * undoStore[0] = 193(0) => "x" => $x
 	 *                           "y" => $y
 	 *                           "z" => $z
 	 *                           "level" => $levelname
@@ -33,12 +33,12 @@ class UndoStorer {
 		$i = 0;
 		$this->getOwner()->getLogger()->info("Starting save process...");
 		foreach($blocks as $block) {
-			$this->undoStore[$this->totalStores] = [$block->getId() . "($i)" => [
+			$this->undoStore[$this->totalStores][$block->getId() . "($i)"] = [
 				"x" => $block->x,
 				"y" => $block->y,
 				"z" => $block->z,
 				"level" => $block->level->getName()
-			]];
+			];
 			$i += 1;
 		}
 		unset($i);
