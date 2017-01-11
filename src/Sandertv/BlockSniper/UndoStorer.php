@@ -26,7 +26,7 @@ class UndoStorer {
 	 */
 	public function saveUndo(array $blocks) {
 		$i = 0;
-		$this->getMain()->getLogger()->info("Starting save process...");
+		$this->getOwner()->getLogger()->info("Starting save process...");
 		foreach($blocks as $block) {
 			$this->undoStore[$this->totalStores][$block->getId() . "($i)"] = [
 				"x" => $block->x,
@@ -41,11 +41,11 @@ class UndoStorer {
 			$this->unsetFirstUndo();
 		}
 		$this->totalStores += 1;
-		$this->getMain()->getLogger()->info("Saved undo...");
+		$this->getOwner()->getLogger()->info("Saved undo...");
 	}
 	
 	public function restoreLastUndo() {
-		$this->getMain()->getLogger()->info("Restoring undo save...");
+		$this->getOwner()->getLogger()->info("Restoring undo save...");
 		foreach($this->undoStore[max(array_keys($this->undoStore))] as $block) {
 			$Id = explode("(", $block);
 			$blockId = $Id[0];
@@ -54,7 +54,7 @@ class UndoStorer {
 			$z = $this->undoStore[max(array_keys($this->undoStore))][$block]["z"];
 			$this->getOwner()->getServer()->getLevelByName($this->undoStore[max(array_keys($this->undoStore))][$block]["level"])->setBlock(new Vector3($x, $y, $z), Block::get((int)$blockId), false, false);
 		}
-		$this->getMain()->getLogger()->info("Restoring succesful...");
+		$this->getOwner()->getLogger()->info("Restoring succesful...");
 		$this->unsetLastUndo();
 	}
 	
