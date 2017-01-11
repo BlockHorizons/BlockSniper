@@ -76,12 +76,9 @@ class UndoStorer {
 	 */
 	public function undoStorageExists() {
 		$this->getOwner()->getLogger()->info("Checking undo storage existance...");
-		if($this->totalStores === 0) {
-			return false;
-		} elseif(empty($this->undoStore)) {
+		if($this->totalStores === 0 && empty($this->undoStore)) {
 			return false;
 		}
-		echo("Undo storage exists...");
 		return true;
 	}
 	
