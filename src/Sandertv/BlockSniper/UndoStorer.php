@@ -8,7 +8,7 @@ use pocketmine\block\Block;
 class UndoStorer {
 	
 	public $totalStores = 0;
-	public $undoStore = [];
+	public $undoStore;
 	
 	public function __construct(Loader $owner) {
 		$this->owner = $owner;
@@ -26,6 +26,7 @@ class UndoStorer {
 	 */
 	public function saveUndo(array $blocks) {
 		$i = 0;
+		$this->undoStore = [];
 		$this->getOwner()->getLogger()->info("Starting save process...");
 		foreach($blocks as $block) {
 			$this->undoStore[$this->totalStores][$block->getId() . "(" . $i . ")"] = [
@@ -77,7 +78,7 @@ class UndoStorer {
 	 */
 	public function undoStorageExists() {
 		$this->getOwner()->getLogger()->info("Checking undo storage existance...");
-		if($this->totalStores === 0 && empty($this->undoStore)) {
+		if($this->totalStores === 0 || !is_array($this->undoStore) || empty($this->undoStore)) {
 			return false;
 		}
 		return true;
