@@ -33,6 +33,7 @@ class UndoStorer {
 	 */
 	public function saveUndo(array $blocks) {
 		$i = 1;
+		$this->totalStores += 1;
 		$this->getOwner()->getLogger()->info("Starting save process...");
 		foreach($blocks as $block) {
 			$this->undoStore[$this->totalStores][($block->getId() . "($i)")] = [
@@ -41,7 +42,6 @@ class UndoStorer {
 				"z" => $block->z,
 				"level" => $block->level->getName()
 			];
-			echo("$i blocks detected...");
 			$i += 1;
 		}
 		unset($i);
@@ -49,7 +49,6 @@ class UndoStorer {
 			$this->unsetFirstUndo();
 		}
 		var_dump($this->undoStore);
-		$this->totalStores += 1;
 		$this->getOwner()->getLogger()->info("Saved undo...");
 	}
 	
