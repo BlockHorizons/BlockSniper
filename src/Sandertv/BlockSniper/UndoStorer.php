@@ -8,7 +8,7 @@ use pocketmine\block\Block;
 class UndoStorer {
 	
 	public $totalStores = 0;
-	public $undoStore;
+	public $undoStore = [];
 	
 	public function __construct(Loader $owner) {
 		$this->owner = $owner;
@@ -26,7 +26,6 @@ class UndoStorer {
 	 */
 	public function saveUndo(array $blocks) {
 		$i = 0;
-		$this->undoStore = [];
 		$this->getOwner()->getLogger()->info("Starting save process...");
 		foreach($blocks as $block) {
 			$this->undoStore[$this->totalStores][$block->getId() . "(" . $i . ")"] = [
@@ -36,10 +35,6 @@ class UndoStorer {
 				"level" => $block->level->getName()
 			];
 			$i++;
-		}
-		unset($i);
-		if($this->totalStores >= $this->getOwner()->settings->get("Maximum-Undo-Stores")) {
-			$this->unsetFirstUndo();
 		}
 		print_r($this->undoStore);
 		$this->totalStores++;
