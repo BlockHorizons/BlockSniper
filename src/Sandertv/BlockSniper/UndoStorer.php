@@ -12,6 +12,8 @@ class UndoStorer {
 	
 	public function __construct(Loader $owner) {
 		$this->owner = $owner;
+		$this->totalStores = 0;
+		$this->undoStore = [];
 	}
 	
 	/**
@@ -30,7 +32,7 @@ class UndoStorer {
 	 *                           "level" => $levelname
 	 */
 	public function saveUndo(array $blocks) {
-		$i = 0;
+		$i = 1;
 		$this->getOwner()->getLogger()->info("Starting save process...");
 		foreach($blocks as $block) {
 			$this->undoStore[$this->totalStores][($block->getId() . "($i)")] = [
