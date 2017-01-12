@@ -12,8 +12,6 @@ class UndoStorer {
 	
 	public function __construct(Loader $owner) {
 		$this->owner = $owner;
-		$this->totalStores = 0;
-		$this->undoStore = [];
 	}
 	
 	/**
@@ -25,30 +23,25 @@ class UndoStorer {
 	
 	/**
 	 * @param array $blocks
-	 *
-	 * undoStore[0] = 193(0) =>  "x" => $x
-	 *                           "y" => $y
-	 *                           "z" => $z
-	 *                           "level" => $levelname
 	 */
 	public function saveUndo(array $blocks) {
-		$i = 1;
-		$this->totalStores += 1;
+		$i = 0;
 		$this->getOwner()->getLogger()->info("Starting save process...");
 		foreach($blocks as $block) {
-			$this->undoStore[$this->totalStores][($block->getId() . "($i)")] = [
+			$this->undoStore[$this->totalStores][$block->getId() . "(" . $i . ")"] = [
 				"x" => $block->x,
 				"y" => $block->y,
 				"z" => $block->z,
 				"level" => $block->level->getName()
 			];
-			$i += 1;
+			$i++;
 		}
 		unset($i);
 		if($this->totalStores >= $this->getOwner()->settings->get("Maximum-Undo-Stores")) {
 			$this->unsetFirstUndo();
 		}
-		var_dump($this->undoStore);
+		print_r($this->undoStore);
+		$this->totalStores++;
 		$this->getOwner()->getLogger()->info("Saved undo...");
 	}
 	
