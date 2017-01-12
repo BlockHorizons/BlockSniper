@@ -41,6 +41,7 @@ class UndoStorer {
 				"z" => $block->z,
 				"level" => $block->level->getName()
 			];
+			echo("$i blocks detected...");
 			$i += 1;
 		}
 		unset($i);
