@@ -10,16 +10,18 @@ use Sandertv\BlockSniper\commands\BrushWandCommand;
 use Sandertv\BlockSniper\commands\SnipeCommand;
 use Sandertv\BlockSniper\commands\UndoCommand;
 use Sandertv\BlockSniper\listeners\EventListener;
-use Sandertv\BlockSniper\UndoStorer;
 
 class Loader extends PluginBase {
 	
 	public $brushwand = [];
 	public $undoStore;
+	public $settings;
 	
 	public function onEnable() {
 		
 		$this->getLogger()->info(TF::GREEN . "BlockSniper has been enabled");
+		
+		$this->undoStore = new UndoStorer($this);
 		
 		if(!is_dir($this->getDataFolder())) {
 			mkdir($this->getDataFolder());
@@ -33,9 +35,7 @@ class Loader extends PluginBase {
 		
 		$this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
 		
-		$this->undoStore = new UndoStorer($this);
 	}
-	
 	
 	public function onDisable() {
 		
@@ -45,6 +45,9 @@ class Loader extends PluginBase {
 		
 	}
 	
+	/**
+	 * @return UndoStorer
+	 */
 	public function getUndoStore(): UndoStorer {
 		return $this->undoStore;
 	}

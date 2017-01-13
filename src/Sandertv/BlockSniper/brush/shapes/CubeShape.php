@@ -58,6 +58,7 @@ class CubeShape extends BaseShape {
 		if($randomBlock === Block::AIR && strtolower($randomName) !== "air") {
 			return false;
 		}
+		$this->getMain()->getLogger()->info("Saving undo...");
 		$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
 		return true;
 	}
