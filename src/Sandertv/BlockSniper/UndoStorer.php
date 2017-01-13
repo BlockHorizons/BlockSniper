@@ -44,7 +44,7 @@ class UndoStorer {
 		$this->getOwner()->getLogger()->info("Restoring undo save...");
 		foreach($this->undoStore[max(array_keys($this->undoStore))] as $key => $block) {
 			$Id = explode("(", key($block));
-			var_dump(key($key));
+			var_dump($key);
 			var_dump(key($block));
 			$blockId = $Id[0];
 			$x = $block["x"];
