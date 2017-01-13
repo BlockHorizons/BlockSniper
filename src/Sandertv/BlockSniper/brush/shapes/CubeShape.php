@@ -48,8 +48,11 @@ class CubeShape extends BaseShape {
 				for($z = $minZ; $z <= $maxZ; $z++) {
 					$randomName = $this->blocks[array_rand($this->blocks)];
 					$randomBlock = is_numeric($randomName) ? Item::get($randomName)->getBlock() : Item::fromString($randomName)->getBlock();
+					$originBlock = $this->level->getBlock(new Vector3($x, $y, $z));
 					if($randomBlock->getId() !== 0 || strtolower($randomName) === "air") {
-						$undoBlocks[] = $this->level->getBlock(new Vector3($x, $y, $z));
+						if($originBlock->getId() !== $randomBlock->getId()) {
+							$undoBlocks[] = $originBlock;
+						}
 						$this->level->setBlock(new Vector3($x, $y, $z), $randomBlock, false, false);
 					}
 				}
@@ -58,7 +61,6 @@ class CubeShape extends BaseShape {
 		if($randomBlock === Block::AIR && strtolower($randomName) !== "air") {
 			return false;
 		}
-		$this->getMain()->getLogger()->info("Saving undo...");
 		$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
 		return true;
 	}

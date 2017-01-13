@@ -37,7 +37,7 @@ class UndoCommand extends BaseCommand {
 		}
 		
 		$this->getPlugin()->getUndoStore()->restoreLastUndo();
-		$sender->sendMessage(TF::GREEN . "Succesfully undid the last modification.");
+		$sender->sendMessage(TF::GREEN . "Successfully undid the last modification.");
 		return true;
 	}
 }

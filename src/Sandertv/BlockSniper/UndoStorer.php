@@ -36,6 +36,11 @@ class UndoStorer {
 			];
 			$i++;
 		}
+		unset($i);
+		
+		if(count($this->undoStore) === $this->getOwner()->settings->get("Maximum-Undo-Stores")) {
+			$this->unsetFirstUndo(); // Unset the first undo to make sure the array won't get too big.
+		}
 	}
 	
 	public function restoreLastUndo() {

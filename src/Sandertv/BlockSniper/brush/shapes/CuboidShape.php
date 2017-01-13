@@ -43,12 +43,18 @@ class CuboidShape extends BaseShape {
 		$maxY = $targetY + $this->height;
 		$maxZ = $targetZ + $this->length;
 		
+		$undoBlocks = [];
+		
 		for($x = $minX; $x <= $maxX; $x++) {
 			for($y = $minY; $y <= $maxY; $y++) {
 				for($z = $minZ; $z <= $maxZ; $z++) {
 					$randomName = $this->blocks[array_rand($this->blocks)];
 					$randomBlock = is_numeric($randomName) ? Item::get($randomName)->getBlock() : Item::fromString($randomName)->getBlock();
+					$originBlock = $this->level->getBlock(new Vector3($x, $y, $z));
 					if($randomBlock->getId() !== 0 || strtolower($randomName) === "air") {
+						if($originBlock->getId() !== $randomBlock->getId()) {
+							$undoBlocks[] = $originBlock;
+						}
 						$this->level->setBlock(new Vector3($x, $y, $z), $randomBlock, false, false);
 					}
 				}
@@ -57,6 +63,7 @@ class CuboidShape extends BaseShape {
 		if($randomBlock === Block::AIR && strtolower($randomName) !== "air") {
 			return false;
 		}
+		$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
 		return true;
 	}
 	
