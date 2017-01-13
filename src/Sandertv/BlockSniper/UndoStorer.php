@@ -43,14 +43,12 @@ class UndoStorer {
 	public function restoreLastUndo() {
 		$this->getOwner()->getLogger()->info("Restoring undo save...");
 		foreach($this->undoStore[max(array_keys($this->undoStore))] as $block) {
-			var_dump(key($block));
-			var_dump($block);
 			$Id = explode("(", key($block));
 			$blockId = $Id[0];
-			$x = $this->undoStore[max(array_keys($this->undoStore))][key($block)]["x"];
-			$y = $this->undoStore[max(array_keys($this->undoStore))][key($block)]["y"];
-			$z = $this->undoStore[max(array_keys($this->undoStore))][key($block)]["z"];
-			$this->getOwner()->getServer()->getLevelByName($this->undoStore[max(array_keys($this->undoStore))][key($block)]["level"])->setBlock(new Vector3($x, $y, $z), Block::get((int)$blockId), false, false);
+			$x = $block["x"];
+			$y = $block["y"];
+			$z = $block["z"];
+			$this->getOwner()->getServer()->getLevelByName($block["level"])->setBlock(new Vector3($x, $y, $z), Block::get((int)$blockId), false, false);
 		}
 		$this->getOwner()->getLogger()->info("Restoring successful...");
 		$this->unsetLastUndo();
