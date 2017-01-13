@@ -11,6 +11,8 @@ use Sandertv\BlockSniper\commands\SnipeCommand;
 use Sandertv\BlockSniper\commands\UndoCommand;
 use Sandertv\BlockSniper\listeners\EventListener;
 
+use Sandertv\BlockSniper\tasks\UndoDiminishTask;
+
 class Loader extends PluginBase {
 	
 	public $brushwand = [];
@@ -35,6 +37,7 @@ class Loader extends PluginBase {
 		
 		$this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
 		
+		$this->scheduleTasks();
 	}
 	
 	public function onDisable() {
@@ -43,6 +46,10 @@ class Loader extends PluginBase {
 		
 		$this->getUndoStore()->resetUndoStorage();
 		
+	}
+	
+	public function scheduleTasks() {
+		$this->getServer()->getScheduler()->scheduleRepeatingTask(new UndoDiminishTask($this), 1200);
 	}
 	
 	/**
