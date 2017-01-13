@@ -49,7 +49,7 @@ class UndoStorer {
 			$x = $this->undoStore[max(array_keys($this->undoStore))][key($block)]["x"];
 			$y = $this->undoStore[max(array_keys($this->undoStore))][key($block)]["y"];
 			$z = $this->undoStore[max(array_keys($this->undoStore))][key($block)]["z"];
-			var_dump($this->undoStore[max(array_keys($this->undoStore))][key($block)]["level"]);
+			var_dump($this->undoStore[max(array_keys($this->undoStore))][key($block)]);
 			$this->getOwner()->getServer()->getLevelByName($this->undoStore[max(array_keys($this->undoStore))][key($block)]["level"])->setBlock(new Vector3($x, $y, $z), Block::get((int)$blockId), false, false);
 		}
 		$this->getOwner()->getLogger()->info("Restoring successful...");
