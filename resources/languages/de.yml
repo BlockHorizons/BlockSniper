@@ -1,0 +1,22 @@
+# German translations, by HimbeersaftLP.
+
+# Deutsch:
+---
+commands:
+  errors:
+    no-permission: "Du hast nicht die nötigen Berechtigungen um das zu tun."
+    console-use: "Du kannst diesen Befehl nicht auf der Konsole verwenden."
+    radius-not-numeric: "Der Radius sollte eine Zahl sein."
+    radius-too-big: "Radius zu groß. Bitte gib einen kleineren an."
+    no-target-found: "Kein Zielblock gefunden."
+    no-valid-block: "Block nicht gefunden, bitte gib einen gültigen Namen/ID ein."
+    shape-not-found: "Form oder Typ nicht gefunden."
+    no-modifications: "Keine Modifikation zum Rückgängig-machen wurde gefunden."
+  succeed:
+    default: "Die Form wurde erfolgreich dort begonnen, wo du hingesehen hast."
+    undo: "Die letzte Modifikation wurde erfolgreich rückgängig gemacht."
+
+brushwand:
+  disable: "Brushwand (Zauberpinsel) wurde deaktiviert."
+  enable: "Brushwand (Zauberpinsel) wurde aktiviert."
+...
