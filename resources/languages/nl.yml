@@ -11,7 +11,10 @@ commands:
     no-target-found: "Er kon geen doelwit gevonden worden."
     no-valid-block: "Blok kon niet gevonden worden. Vul een geldige blok naam/ID in."
     shape-not-found: "Vorm of type niet gevonden."
-  succeed: "Afvuren van vorm is geslaagd."
+    no-modifications: "Geen modificaties gevonden om terug te draaien."
+  succeed:
+    default: "Afvuren van vorm geslaagd."
+    undo: "Terugdraaien van vorige modificatie geslaagd."
 
 brushwand:
   disable: "Verfstaf is uitgeschakeld."
