@@ -29,7 +29,7 @@ class UndoStorer {
 		$i = 0;
 		$this->totalStores++;
 		foreach($blocks as $block) {
-			$this->undoStore[$this->totalStores][$block->getId() . "(" . $i . ")"] = [
+			$this->undoStore[$this->totalStores][$block->getId() . ":" . $block->getDamage() . "(" . $i . ")"] = [
 				"x" => $block->x,
 				"y" => $block->y,
 				"z" => $block->z,
