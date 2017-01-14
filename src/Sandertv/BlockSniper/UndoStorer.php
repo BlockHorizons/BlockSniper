@@ -3,7 +3,7 @@
 namespace Sandertv\BlockSniper;
 
 use pocketmine\math\Vector3;
-use pocketmine\block\Block;
+use pocketmine\item\Item;
 use Sandertv\BlockSniper\tasks\UndoDiminishTask;
 
 class UndoStorer {
@@ -29,7 +29,7 @@ class UndoStorer {
 		$i = 0;
 		$this->totalStores++;
 		foreach($blocks as $block) {
-			$this->undoStore[$this->totalStores][$block->getId() . ":" . $block->getDamage() . "(" . $i . ")"] = [
+			$this->undoStore[$this->totalStores][$block->getId() . ", " . $block->getDamage() . "(" . $i . ")"] = [
 				"x" => $block->x,
 				"y" => $block->y,
 				"z" => $block->z,
@@ -52,7 +52,7 @@ class UndoStorer {
 			$x = $block["x"];
 			$y = $block["y"];
 			$z = $block["z"];
-			$this->getOwner()->getServer()->getLevelByName($block["level"])->setBlock(new Vector3($x, $y, $z), Block::get($blockId), false, false);
+			$this->getOwner()->getServer()->getLevelByName($block["level"])->setBlock(new Vector3($x, $y, $z), Item::get($blockId)->getBlock(), false, false);
 		}
 		$this->unsetLastUndo();
 	}
