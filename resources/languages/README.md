@@ -21,8 +21,8 @@ commands:
     undo: ""
 
 brushwand:
-  disable: "Verfstaf is uitgeschakeld."
-  enable: "Verfstaf is ingeschakeld."
+  disable: ""
+  enable: ""
 ...
 ````
 Please make sure to end every line with a full stop (.), to make sure the formatting remains tidy.
