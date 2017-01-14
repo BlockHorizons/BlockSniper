@@ -42,7 +42,7 @@ class UndoStorer {
 		if(count($this->undoStore) === $this->getOwner()->settings->get("Maximum-Undo-Stores")) {
 			$this->unsetFirstUndo(); // Unset the first undo to make sure the array won't get too big.
 		}
-		$this->getOwner()->getServer()->getScheduler()->scheduleDelayedTask(new UndoDiminishTask($this), 2400);
+		$this->getOwner()->getServer()->getScheduler()->scheduleDelayedTask(new UndoDiminishTask($this->getOwner()), 2400);
 	}
 	
 	public function restoreLastUndo() {
