@@ -9,6 +9,8 @@ If you do decide to compile a phar file yourself to benefit from the latest feat
  - Go to pmt.mcpe.me and convert the .ZIP file to a phar file.
  - Upload your phar file to your server and restart the server.
 
+[![Poggit-CI](https://poggit.pmmp.io/ci.badge/Sandertv/BlockSniper/BlockSniper)](https://poggit.pmmp.io/ci/Sandertv/BlockSniper/BlockSniper)
+
 ## What is this?
 BlockSniper is an advanced world editing tool, based on the idea of VoxelSniper from Mineraft PC softwares.
 BlockSniper allows you to edit your world on a long range, with several different types/shapes. The types/shapes are as follows:
