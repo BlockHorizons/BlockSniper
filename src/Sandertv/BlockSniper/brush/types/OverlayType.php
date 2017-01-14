@@ -72,7 +72,7 @@ class OverlayType extends BaseType {
 							if($this->level->getBlock($direction)->getId() === Item::AIR && $valid) {
 								$randomName = $this->blocks[array_rand($this->blocks)];
 								$randomBlock = is_numeric($randomName) ? Item::get($randomName)->getBlock() : Item::fromString($randomName)->getBlock();
-								$originBlock = $this->level->getBlock(new Vector3($x, $y, $z));
+								$originBlock = $this->level->getBlock($direction);
 								if(($randomBlock !== 0 || strtolower($randomName) === "air") && $block->getId() !== $randomBlock->getId()) {
 									if($originBlock->getId() !== $randomBlock->getId()) {
 										$undoBlocks[] = $originBlock;

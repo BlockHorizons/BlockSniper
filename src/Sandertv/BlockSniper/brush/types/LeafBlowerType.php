@@ -51,7 +51,7 @@ class LeafBlowerType extends BaseType {
 							if($originBlock->getId() !== Block::AIR) {
 								$undoBlocks[] = $originBlock;
 							}
-							$this->level->dropItem($originBlock, Item::get($originBlock)->getId());
+							$this->level->dropItem(new Vector3($x, $y, $z), Item::get($originBlock->getId()));
 							$this->level->setBlock(new Vector3($x, $y, $z), Block::get(Block::AIR), false, false);
 							$valid = true;
 						}
