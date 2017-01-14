@@ -54,18 +54,18 @@ class SnipeCommand extends BaseCommand {
 		$type = ("TYPE_" . strtoupper($args[0]));
 		
 		if(!is_numeric($args[1]) && $type !== "TYPE_CYLINDER" && $type !== "TYPE_STANDING_CYLINDER" && $type !== "TYPE_CUBOID") {
-			$sender->sendMessage(TF::RED . "[Warning] The radius should be numeric.");
+			$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.radius-not-numeric"));
 			return true;
 		}
 		
 		if($args[1] > $this->getSettings()->get("Maximum-Radius")) {
-			$sender->sendMessage(TF::RED . "[Warning] That radius is too big. Please set a radius of " . $this->getSettings()->get("Maximum-Radius") . " or smaller.");
+			$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.radius-too-big"));
 			return true;
 		}
 		
 		$center = $sender->getTargetBlock(100);
 		if(!$center) {
-			$sender->sendMessage(TF::RED . "[Warning] No target block could be found.");
+			$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.no-target-found"));
 			return true;
 		}
 		
@@ -140,12 +140,12 @@ class SnipeCommand extends BaseCommand {
 				break;
 			
 			default:
-				$sender->sendMessage(TF::RED . "[Warning] Type not found.");
+				$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.shape-not-found"));
 				return true;
 		}
 		
 		if(!$sender->hasPermission($shape->getPermission())) {
-			$sender->sendMessage(TF::RED . "[Warning] You don't have permission to use this type.");
+			$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.no-permission"));
 			return true;
 		}
 		
@@ -156,11 +156,11 @@ class SnipeCommand extends BaseCommand {
 		}
 		
 		if(!$shape->fillShape()) {
-			$sender->sendMessage(TF::RED . "[Warning] Invalid block given.");
+			$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.no-valid-block"));
 			return true;
 		}
 		
-		$sender->sendMessage(TF::GREEN . "Succesfully launched a(n) " . $args[0] . " at the location looked at.");
+		$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("commands.succeed.default"));
 		return true;
 	}
 }

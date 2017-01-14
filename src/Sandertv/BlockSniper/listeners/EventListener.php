@@ -42,7 +42,7 @@ class EventListener implements Listener {
 		$brushwand = $this->getOwner()->getBrushWand($player);
 		$center = $player->getTargetBlock(100);
 		if(!$center) {
-			$player->sendMessage(TF::RED . "[Warning] Could not find a valid target block.");
+			$player->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.no-target-found"));
 			return;
 		}
 		
@@ -117,7 +117,7 @@ class EventListener implements Listener {
 		}
 		
 		if(!$player->hasPermission($shape->getPermission())) {
-			$player->sendMessage(TF::RED . "[Warning] You do not have permission to use this shape.");
+			$player->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.no-permission"));
 			return true;
 		}
 		
@@ -128,11 +128,11 @@ class EventListener implements Listener {
 		}
 		
 		if(!$shape->fillShape()) {
-			$player->sendMessage(TF::RED . "[Warning] Invalid block given.");
+			$player->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.no-valid-block"));
 			return true;
 		}
 		
-		$player->sendPopup(TF::GREEN . "Succesfully launched the shape at the location looked at.");
+		$player->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("commands.succeed.default"));
 		return true;
 	}
 	

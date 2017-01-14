@@ -1,0 +1,22 @@
+# English translations, by Sandertv.
+
+# English:
+---
+commands:
+  errors:
+    no-permission: "You do not have permission to do that."
+    console-use: "This command can't be executed by the console."
+    radius-not-numeric: "The radius should be numeric."
+    radius-too-big: "That radius is too big. Please enter a smaller one."
+    no-target-found: "No target block could be found."
+    no-valid-block: "Block not found, please enter a valid block name/ID."
+    shape-not-found: "Shape or type not found."
+    no-modifications: "No modifications were found to undo."
+  succeed:
+    default: "Successfully launched the shape at the location looked at."
+    undo: "Successfully undid the last modification."
+
+brushwand:
+  disable: "Brushwand has been disabled."
+  enable: "Brushwand has been enabled."
+...
