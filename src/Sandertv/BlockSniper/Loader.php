@@ -64,13 +64,13 @@ class Loader extends PluginBase {
 		if(!file_exists($this->getDataFolder() . "language.yml")) {
 			foreach($this->availableLanguages as $language) {
 				if($this->getSettings()->get("Message-Language") === $language) {
-					$this->saveResource($language . ".yml");
+					$this->saveResource("languages/" . $language . ".yml");
 					$this->language = new Config($this->getDataFolder() . "languages/" . $language . ".yml", Config::YAML);
 					return true;
 				}
 			}
 		}
-		$this->saveResource("en.yml");
+		$this->saveResource("languages/en.yml");
 		$this->language = new Config($this->getDataFolder() . "languages/en.yml", Config::YAML);
 		return false;
 	}
