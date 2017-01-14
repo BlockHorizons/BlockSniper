@@ -43,18 +43,18 @@ class BrushWandCommand extends BaseCommand {
 		
 		$type = ("TYPE_" . strtoupper($args[0]));
 		if(strtolower($args[0]) === "off") {
-			$sender->sendMessage(TF::GREEN . "Brush wand disabled.");
+			$sender->sendMessage(TF::YELLOW . $this->getPlugin()->getTranslation("brushwand.disable"));
 			$this->getPlugin()->disableBrushWand($sender);
 			return true;
 		}
 		
 		if(!is_numeric($args[1]) && $type !== "TYPE_CYLINDER" && $type !== "TYPE_STANDING_CYLINDER" && $type !== "TYPE_CUBOID") {
-			$sender->sendMessage(TF::RED . "[Warning] The radius should be numeric.");
+			$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.radius-not-numeric"));
 			return true;
 		}
 		
 		if($args[1] > $this->getSettings()->get("Maximum-Radius")) {
-			$sender->sendMessage(TF::RED . "[Warning] That radius is too big. Please set a radius of " . $this->getSettings()->get("Maximum-Radius") . " or smaller.");
+			$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.radius-too-big"));
 			return true;
 		}
 		
@@ -109,15 +109,15 @@ class BrushWandCommand extends BaseCommand {
 				break;
 			
 			default:
-				$sender->sendMessage(TF::RED . "[Warning] Shape not found.");
+				$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.shape-not-found"));
 				return true;
 		}
 		
 		if(!$sender->hasPermission($shape->getPermission())) {
-			$sender->sendMessage(TF::RED . "[Warning] You do not have permission to use this type.");
+			$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.no-permission"));
 			return true;
 		}
-		$sender->sendMessage(TF::GREEN . "Brush wand has been enabled.");
+		$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("brushwand.enable"));
 		$this->getPlugin()->enableBrushWand($sender, $type, $args[1], isset($args[2]) ? $args[2] : null, isset($args[3]) ? $args[3] : null);
 		return true;
 	}

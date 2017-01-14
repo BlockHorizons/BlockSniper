@@ -6,4 +6,8 @@ Maximum-Radius: 10
 
 # Maximum undo stores to save, old ones will get destroyed automatically. Setting this number too high could result in lag or data loss.
 Maximum-Undo-Stores: 7
+
+# Language in which messages are displayed. Available languages:
+# en (English), nl (Dutch)
+Message-Language: ""
 ...

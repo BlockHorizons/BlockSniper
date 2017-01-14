@@ -27,11 +27,11 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand 
 	 * @param CommandSender $sender
 	 */
 	public function sendConsoleError(CommandSender $sender) {
-		$sender->sendMessage(TF::RED . "[Warning] You can't execute this command using console.");
+		$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.console-use"));
 	}
 	
 	public function sendNoPermission(CommandSender $sender) {
-		$sender->sendMessage(TF::RED . "[Warning] You don't have permission to execute this command.");
+		$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.no-permission"));
 	}
 	
 	public function getSettings() {

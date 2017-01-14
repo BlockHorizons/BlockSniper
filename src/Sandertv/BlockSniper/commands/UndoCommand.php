@@ -32,12 +32,12 @@ class UndoCommand extends BaseCommand {
 		}
 		
 		if(!$this->getPlugin()->getUndoStore()->undoStorageExists()) {
-			$sender->sendMessage(TF::RED . "[Warning] There are no modifications to undo.");
+			$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.no-modifications"));
 			return true;
 		}
 		
 		$this->getPlugin()->getUndoStore()->restoreLastUndo();
-		$sender->sendMessage(TF::GREEN . "Successfully undid the last modification.");
+		$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("commands.succeed.undo"));
 		return true;
 	}
 }

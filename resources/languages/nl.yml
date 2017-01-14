@@ -1,0 +1,22 @@
+# Dutch translations, by Sandertv.
+
+# Nederlands:
+---
+commands:
+  errors:
+    no-permission: "Je hebt geen toestemming om dat te doen."
+    console-use: "Dit commando kan niet worden uitgevoerd met de console."
+    radius-not-numeric: "De radius moet numeriek zijn."
+    radius-too-big: "Die radius is te groot. Vul een kleinere radius in."
+    no-target-found: "Er kon geen doelwit gevonden worden."
+    no-valid-block: "Blok kon niet gevonden worden. Vul een geldige blok naam/ID in."
+    shape-not-found: "Vorm of type niet gevonden."
+    no-modifications: "Geen modificaties gevonden om terug te draaien."
+  succeed:
+    default: "Afvuren van vorm geslaagd."
+    undo: "Terugdraaien van vorige modificatie geslaagd."
+
+brushwand:
+  disable: "Verfstaf is uitgeschakeld."
+  enable: "Verfstaf is ingeschakeld."
+...

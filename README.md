@@ -43,6 +43,9 @@ BlockSniper allows you to edit your world on a long range, with several differen
 >
 > More coming soon!
 
+## Translation
+BlockSniper has a multi-language system, so everybody can have a good time using the plugin. We currently have nowhere near enough translated languages though, and we need your help! It is very appreciated if you help translate, so please do so whenever you have time. The available languages can be found under resources/languages.
+
 ## How does it work?
 BlockSniper has several commands to edit your world. The commands work as follows:
 >> /snipe <type> <radius> <block(s)> : Snipe an edit type at the location you're looking at.
