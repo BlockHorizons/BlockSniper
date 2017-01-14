@@ -1,0 +1,22 @@
+# French translations, by archie426.
+
+# Francais:
+---
+commands:
+  errors:
+    no-permission: "Interdit."
+    console-use: "Uniquement pour l'utilisation du console."
+    radius-not-numeric: "Ce n'est pas un numéro."
+    radius-too-big: "Ce numéro est trop grand."
+    no-target-found: "Cible non trouvée."
+    no-valid-block: "Ce block la n'est pas validé."
+    shape-not-found: "Forme non trouvée."
+    no-modifications: "Sans modifications ."
+  succeed:
+    default: "Défaut."
+    undo: "Défaire."
+
+brushwand:
+  disable: "Désactivater."
+  enable: "Activer."
+...
