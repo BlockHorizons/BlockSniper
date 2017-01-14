@@ -39,7 +39,7 @@ class Loader extends PluginBase {
 			mkdir($this->getDataFolder() . "languages/");
 		}
 		if(!$this->setupLanguageFile()) {
-			$this->getLogger()->info(TF::AQUA . "[BlockSniper] " . "No valid language selected, English has been auto-selected.");
+			$this->getLogger()->info(TF::AQUA . "[BlockSniper] No valid language selected, English has been auto-selected.");
 		}
 		
 		$this->registerCommands();

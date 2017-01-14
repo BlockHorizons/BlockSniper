@@ -37,7 +37,7 @@ class UndoCommand extends BaseCommand {
 		}
 		
 		$this->getPlugin()->getUndoStore()->restoreLastUndo();
-		$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.succeed.undo"));
+		$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("commands.succeed.undo"));
 		return true;
 	}
 }
