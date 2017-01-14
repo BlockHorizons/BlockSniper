@@ -13,10 +13,11 @@ commands:
     shape-not-found: "Forme non trouvée."
     no-modifications: "Sans modifications ."
   succeed:
-    default: "Défaut."
-    undo: "Défaire."
+    default: "La forme a été construite"
+    undo: "Défait la dernière modification."
+
 
 brushwand:
-  disable: "Désactivater."
-  enable: "Activer."
+  disable: "Désactivaté."
+  enable: "Activé."
 ...
