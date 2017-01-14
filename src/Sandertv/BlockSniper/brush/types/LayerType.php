@@ -40,13 +40,19 @@ class LayerType extends BaseType {
 		$maxX = $targetX + $this->radius;
 		$maxZ = $targetZ + $this->radius;
 		
+		$undoBlocks = [];
+		
 		$valid = false;
 		for($x = $minX; $x <= $maxX; $x++) {
 			for($z = $minZ; $z <= $maxZ; $z++) {
 				$randomName = $this->blocks[array_rand($this->blocks)];
 				$randomBlock = is_numeric($randomName) ? Item::get($randomName)->getBlock() : Item::fromString($randomName)->getBlock();
+				$originBlock = $this->level->getBlock(new Vector3($x, $y, $z));
 				if(pow($targetX - $x, 2) + pow($targetZ - $z, 2) <= $radiusSquared) {
 					if($randomBlock->getId() !== 0 || strtolower($randomName) === "air") {
+						if($originBlock->getId() !== $randomBlock->getId()) {
+							$undoBlocks[] = $originBlock;
+						}
 						$this->level->setBlock(new Vector3($x, $targetY + 1, $z), $randomBlock, false, false);
 						$valid = true;
 					}
@@ -57,6 +63,7 @@ class LayerType extends BaseType {
 			return false;
 		}
 		if($valid) {
+			$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
 			return true;
 		}
 		return false;

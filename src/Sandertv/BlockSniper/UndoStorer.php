@@ -2,9 +2,9 @@
 
 namespace Sandertv\BlockSniper;
 
-use Sandertv\BlockSniper\Loader;
 use pocketmine\math\Vector3;
 use pocketmine\block\Block;
+use Sandertv\BlockSniper\tasks\UndoDiminishTask;
 
 class UndoStorer {
 	
@@ -27,30 +27,32 @@ class UndoStorer {
 	 */
 	public function saveUndo(array $blocks) {
 		$i = 0;
+		$this->totalStores++;
 		foreach($blocks as $block) {
-			$this->undoStore[$this->totalStores][$block->getId() . "($i)"] = [
+			$this->undoStore[$this->totalStores][$block->getId() . "(" . $i . ")"] = [
 				"x" => $block->x,
 				"y" => $block->y,
 				"z" => $block->z,
-				"level" => $block->level
+				"level" => $block->level->getName()
 			];
 			$i++;
 		}
 		unset($i);
-		if($this->totalStores >= $this->getOwner()->settings->get("Maximum-Undo-Stores")) {
-			$this->unsetFirstUndo();
+		
+		if(count($this->undoStore) === $this->getOwner()->settings->get("Maximum-Undo-Stores")) {
+			$this->unsetFirstUndo(); // Unset the first undo to make sure the array won't get too big.
 		}
-		$this->totalStores++;
+		$this->getOwner()->getServer()->getScheduler()->scheduleDelayedTask(new UndoDiminishTask($this->getOwner()), 2400);
 	}
 	
 	public function restoreLastUndo() {
-		foreach($this->undoStore[max(array_keys($this->undoStore))] as $block) {
-			$Id = explode("(", $block);
+		foreach($this->undoStore[max(array_keys($this->undoStore))] as $key => $block) {
+			$Id = explode("(", $key);
 			$blockId = $Id[0];
-			$x = $this->undoStore[max(array_keys($this->undoStore))][$block]["x"];
-			$y = $this->undoStore[max(array_keys($this->undoStore))][$block]["y"];
-			$z = $this->undoStore[max(array_keys($this->undoStore))][$block]["z"];
-			$this->getOwner()->getServer()->getLevelByName($this->undoStore[max(array_keys($this->undoStore))][$block]["level"])->setBlock(new Vector3($x, $y, $z), Block::get((int) $blockId), false, false);
+			$x = $block["x"];
+			$y = $block["y"];
+			$z = $block["z"];
+			$this->getOwner()->getServer()->getLevelByName($block["level"])->setBlock(new Vector3($x, $y, $z), Block::get((int)$blockId), false, false);
 		}
 		$this->unsetLastUndo();
 	}
@@ -72,9 +74,7 @@ class UndoStorer {
 	 * @return bool
 	 */
 	public function undoStorageExists() {
-		if($this->totalStores === 0) {
-			return false;
-		} elseif(empty($this->undoStore)) {
+		if($this->totalStores === 0 || !is_array($this->undoStore) || empty($this->undoStore)) {
 			return false;
 		}
 		return true;

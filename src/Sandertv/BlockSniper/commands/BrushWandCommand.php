@@ -21,7 +21,7 @@ use Sandertv\BlockSniper\Loader;
 class BrushWandCommand extends BaseCommand {
 	
 	public function __construct(Loader $owner) {
-		parent::__construct($owner, "brushwand", "Switch off/on the Brush Wand", "<type|off> <radius> <block(s)>", ["bw"]);
+		parent::__construct($owner, "brushwand", "Switch off/on the Brush Wand", "<type|off> <radius> <block(s)>", ["bw", "brush"]);
 		$this->setPermission("blocksniper.command.brushwand");
 	}
 	

@@ -42,15 +42,21 @@ class FlattenType extends BaseType {
 		$maxZ = $targetZ + $this->radius;
 		$maxY = $targetY;
 		
+		$undoBlocks = [];
+		
 		$valid = false;
 		for($x = $minX; $x <= $maxX; $x++) {
 			for($z = $minZ; $z <= $maxZ; $z++) {
 				for($y = $minY; $y <= $maxY; $y++) {
 					$randomName = $this->blocks[array_rand($this->blocks)];
 					$randomBlock = is_numeric($randomName) ? Item::get($randomName)->getBlock() : Item::fromString($randomName)->getBlock();
+					$originBlock = $this->level->getBlock(new Vector3($x, $y, $z));
 					if(pow($targetX - $x, 2) + pow($targetZ - $z, 2) <= $radiusSquared) {
 						if($randomBlock->getId() !== 0 || strtolower($randomName) === "air") {
 							if($this->level->getBlock(new Vector3($x, $y, $z))->getId() === Item::AIR) {
+								if($originBlock->getId() !== $randomBlock->getId()) {
+									$undoBlocks[] = $originBlock;
+								}
 								$this->level->setBlock(new Vector3($x, $y, $z), $randomBlock, false, false);
 								$valid = true;
 							}
@@ -63,6 +69,7 @@ class FlattenType extends BaseType {
 			return false;
 		}
 		if($valid) {
+			$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
 			return true;
 		}
 		return false;

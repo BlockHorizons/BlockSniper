@@ -44,6 +44,8 @@ class SphereShape extends BaseShape {
 		$minZ = Math::floorFloat($targetZ - $this->radius);
 		$maxZ = Math::floorFloat($targetZ + $this->radius) + 1;
 		
+		$undoBlocks = [];
+		
 		for($x = $maxX; $x >= $minX; $x--) {
 			$xs = ($targetX - $x) * ($targetX - $x);
 			for($y = $maxY; $y >= $minY; $y--) {
@@ -53,7 +55,11 @@ class SphereShape extends BaseShape {
 					if($xs + $ys + $zs < $radiusSquared) {
 						$randomName = $this->blocks[array_rand($this->blocks)];
 						$randomBlock = is_numeric($randomName) ? Item::get($randomName)->getBlock() : Item::fromString($randomName)->getBlock();
+						$originBlock = $this->level->getBlock(new Vector3($x, $y, $z));
 						if($randomBlock !== 0 || strtolower($randomName) === "air") {
+							if($originBlock->getId() !== $randomBlock->getId()) {
+								$undoBlocks[] = $originBlock;
+							}
 							$this->level->setBlock(new Vector3($x, $y, $z), $randomBlock, false, false);
 						}
 					}
@@ -63,6 +69,7 @@ class SphereShape extends BaseShape {
 		if($randomBlock->getId() === Block::AIR && strtolower($randomName) !== "air") {
 			return false;
 		}
+		$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
 		return true;
 	}
 	
