@@ -39,13 +39,19 @@ class LeafBlowerType extends BaseType {
 		$maxZ = $targetZ + $this->radius;
 		$maxY = $targetY + 2;
 		
+		$undoBlocks = [];
+		
 		$valid = false;
 		for($x = $minX; $x <= $maxX; $x++) {
 			for($z = $minZ; $z <= $maxZ; $z++) {
 				for($y = $minY; $y <= $maxY; $y++) {
 					if(pow($targetX - $x, 2) + pow($targetZ - $z, 2) <= $radiusSquared) {
-						if($this->level->getBlock(new Vector3($x, $y, $z)) instanceof Flowable) {
-							$this->level->dropItem(new Vector3($x, $y, $z), Item::get($this->level->getBlock(new Vector3($x, $y, $z))->getId()));
+						$originBlock = $this->level->getBlock(new Vector3($x, $y, $z));
+						if($originBlock instanceof Flowable) {
+							if($originBlock->getId() !== Block::AIR) {
+								$undoBlocks[] = $originBlock;
+							}
+							$this->level->dropItem($originBlock, Item::get($originBlock)->getId());
 							$this->level->setBlock(new Vector3($x, $y, $z), Block::get(Block::AIR), false, false);
 							$valid = true;
 						}
@@ -54,6 +60,7 @@ class LeafBlowerType extends BaseType {
 			}
 		}
 		if($valid) {
+			$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
 			return true;
 		}
 		return false;

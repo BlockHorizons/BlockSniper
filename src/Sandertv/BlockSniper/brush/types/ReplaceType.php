@@ -42,13 +42,19 @@ class ReplaceType extends BaseType {
 		$maxY = $targetY + $this->radius;
 		$maxZ = $targetZ + $this->radius;
 		
+		$undoBlocks = [];
+		
 		for($x = $minX; $x <= $maxX; $x++) {
 			for($y = $minY; $y <= $maxY; $y++) {
 				for($z = $minZ; $z <= $maxZ; $z++) {
 					$toBeReplaced = is_numeric($this->block) ? Item::get($this->block)->getBlock() : Item::fromString($this->block)->getBlock();
 					$randomName = $this->replacements[array_rand($this->replacements)];
 					$randomBlock = is_numeric($randomName) ? Item::get($randomName)->getBlock() : Item::fromString($randomName)->getBlock();
+					$originBlock = $this->level->getBlock(new Vector3($x, $y, $z));
 					if(($randomBlock->getId() !== 0 || strtolower($randomName) === "air") && $this->level->getBlock(new Vector3($x, $y, $z))->getId() === $toBeReplaced->getId()) {
+						if($originBlock->getId() !== $randomBlock->getId()) {
+							$undoBlocks[] = $originBlock;
+						}
 						$this->level->setBlock(new Vector3($x, $y, $z), $randomBlock, false, false);
 					}
 				}
@@ -57,6 +63,7 @@ class ReplaceType extends BaseType {
 		if($randomBlock === Block::AIR && strtolower($randomName) !== "air") {
 			return false;
 		}
+		$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
 		return true;
 	}
 	

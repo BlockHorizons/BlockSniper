@@ -41,6 +41,8 @@ class OverlayType extends BaseType {
 		$maxY = $targetY + $this->radius;
 		$maxZ = $targetZ + $this->radius;
 		
+		$undoBlocks = [];
+		
 		for($x = $minX; $x <= $maxX; $x++) {
 			for($y = $minY; $y <= $maxY; $y++) {
 				for($z = $minZ; $z <= $maxZ; $z++) {
@@ -70,7 +72,11 @@ class OverlayType extends BaseType {
 							if($this->level->getBlock($direction)->getId() === Item::AIR && $valid) {
 								$randomName = $this->blocks[array_rand($this->blocks)];
 								$randomBlock = is_numeric($randomName) ? Item::get($randomName)->getBlock() : Item::fromString($randomName)->getBlock();
+								$originBlock = $this->level->getBlock(new Vector3($x, $y, $z));
 								if(($randomBlock !== 0 || strtolower($randomName) === "air") && $block->getId() !== $randomBlock->getId()) {
+									if($originBlock->getId() !== $randomBlock->getId()) {
+										$undoBlocks[] = $originBlock;
+									}
 									$this->level->setBlock($direction, $randomBlock, false, false);
 								}
 							}
@@ -82,6 +88,7 @@ class OverlayType extends BaseType {
 		if($randomBlock->getId() === Block::AIR && strtolower($randomName) !== "air") {
 			return false;
 		}
+		$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
 		return true;
 	}
 	

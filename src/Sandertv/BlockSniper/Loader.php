@@ -36,8 +36,7 @@ class Loader extends PluginBase {
 		$this->getServer()->getCommandMap()->register("undo", new UndoCommand($this));
 		
 		$this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
-		
-		$this->scheduleTasks();
+
 	}
 	
 	public function onDisable() {
@@ -49,7 +48,7 @@ class Loader extends PluginBase {
 	}
 	
 	public function scheduleTasks() {
-		$this->getServer()->getScheduler()->scheduleRepeatingTask(new UndoDiminishTask($this), 1200);
+		$this->getServer()->getScheduler()->scheduleDelayedTask(new UndoDiminishTask($this), 2400);
 	}
 	
 	/**

@@ -40,6 +40,8 @@ class DrainType extends BaseType {
 		$minZ = Math::floorFloat($targetZ - $this->radius);
 		$maxZ = Math::floorFloat($targetZ + $this->radius) + 1;
 		
+		$undoBlocks = [];
+		
 		for($x = $maxX; $x >= $minX; $x--) {
 			$xs = ($targetX - $x) * ($targetX - $x);
 			for($y = $maxY; $y >= $minY; $y--) {
@@ -48,13 +50,18 @@ class DrainType extends BaseType {
 					$zs = ($targetZ - $z) * ($targetZ - $z);
 					if($xs + $ys + $zs < $radiusSquared) {
 						$blockId = $this->level->getBlock(new Vector3($x, $y, $z))->getId();
+						$originBlock = $this->level->getBlock(new Vector3($x, $y, $z));
 						if($blockId === Item::LAVA || $blockId === Item::WATER || $blockId === Item::STILL_LAVA || $blockId === Item::STILL_WATER) {
+							if($originBlock->getId() !== Block::AIR) {
+								$undoBlocks[] = $originBlock;
+							}
 							$this->level->setBlock(new Vector3($x, $y, $z), Block::get(Block::AIR), false, false);
 						}
 					}
 				}
 			}
 		}
+		$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
 		return true;
 	}
 	

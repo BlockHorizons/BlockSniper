@@ -36,16 +36,23 @@ class CleanType extends BaseType {
 		$maxY = $targetY + $this->radius;
 		$maxZ = $targetZ + $this->radius;
 		
+		$undoBlocks = [];
+		
 		for($x = $minX; $x <= $maxX; $x++) {
 			for($y = $minY; $y <= $maxY; $y++) {
 				for($z = $minZ; $z <= $maxZ; $z++) {
 					$bId = $this->level->getBlock(new Vector3($x, $y, $z))->getId();
+					$originBlock = $this->level->getBlock(new Vector3($x, $y, $z));
 					if($bId !== 0 && $bId !== 1 && $bId !== 2 && $bId !== 3 && $bId !== 12 && $bId !== 13 && $bId !== 24) {
+						if($originBlock->getId() !== Block::AIR) {
+							$undoBlocks[] = $originBlock;
+						}
 						$this->level->setBlock(new Vector3($x, $y, $z), Block::get(Block::AIR), false, false);
 					}
 				}
 			}
 		}
+		$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
 		return true;
 	}
 	
