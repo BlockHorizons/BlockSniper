@@ -15,7 +15,7 @@ commands:
   succeed:
     default: "Successfully launched the shape at the location looked at."
     undo: "Successfully undid the last modification."
-
+    language: "Language has been changed successfully."
 brushwand:
   disable: "Brushwand has been disabled."
   enable: "Brushwand has been enabled."

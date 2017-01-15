@@ -15,6 +15,7 @@ commands:
   succeed:
     default: "Die Form wurde erfolgreich dort begonnen, wo du hingesehen hast."
     undo: "Die letzte Modifikation wurde erfolgreich rückgängig gemacht."
+    language: "Sprache wurde erfolgreich geändert."
 
 brushwand:
   disable: "Brushwand (Zauberpinsel) wurde deaktiviert."

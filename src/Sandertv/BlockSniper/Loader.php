@@ -9,11 +9,15 @@ use pocketmine\utils\TextFormat as TF;
 use Sandertv\BlockSniper\commands\BrushWandCommand;
 use Sandertv\BlockSniper\commands\SnipeCommand;
 use Sandertv\BlockSniper\commands\UndoCommand;
+use Sandertv\BlockSniper\commands\BlockSniperCommand;
 use Sandertv\BlockSniper\listeners\EventListener;
 
 use Sandertv\BlockSniper\tasks\UndoDiminishTask;
 
 class Loader extends PluginBase {
+	
+	const VERSION = "0.0.99";
+	const API_TARGET = "2.1.0";
 	
 	public $brushwand = [];
 	public $undoStore;
@@ -22,7 +26,8 @@ class Loader extends PluginBase {
 	public $availableLanguages = [
 		"en",
 		"nl",
-		"de"
+		"de",
+		"fr"
 	];
 	public $language;
 	
@@ -40,7 +45,9 @@ class Loader extends PluginBase {
 			mkdir($this->getDataFolder() . "languages/");
 		}
 		if(!$this->setupLanguageFile()) {
-			$this->getLogger()->info(TF::AQUA . "[BlockSniper] No valid language selected, English has been auto-selected.");
+			$this->getLogger()->info(TF::AQUA . "[BlockSniper] No valid language selected, English has been auto-selected.\n" . TF::AQUA . "Please setup a language by using /blocksniper language <lang>.");
+		} else {
+			$this->getLogger()->info(TF::AQUA . "[BlockSniper] Language selected: " . TF::GREEN . $this->getSettings()->get("Message-Language"));
 		}
 		
 		$this->registerCommands();
@@ -53,6 +60,7 @@ class Loader extends PluginBase {
 	}
 	
 	public function registerCommands() {
+		$this->getServer()->getCommandMap()->register("blocksniper", new BlockSniperCommand($this));
 		$this->getServer()->getCommandMap()->register("snipe", new SnipeCommand($this));
 		$this->getServer()->getCommandMap()->register("brushwand", new BrushWandCommand($this));
 		$this->getServer()->getCommandMap()->register("undo", new UndoCommand($this));

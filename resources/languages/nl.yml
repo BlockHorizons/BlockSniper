@@ -15,6 +15,7 @@ commands:
   succeed:
     default: "Afvuren van vorm geslaagd."
     undo: "Terugdraaien van vorige modificatie geslaagd."
+    language: "Taal veranderen is geslaagd."
 
 brushwand:
   disable: "Verfstaf is uitgeschakeld."

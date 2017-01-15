@@ -20,6 +20,7 @@ commands:
   succeed:
     default: ""
     undo: ""
+    language: ""
 
 brushwand:
   disable: ""

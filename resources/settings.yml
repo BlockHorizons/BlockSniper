@@ -8,6 +8,6 @@ Maximum-Radius: 10
 Maximum-Undo-Stores: 7
 
 # Language in which messages are displayed. Available languages:
-# en (English), nl (Dutch), de (German)
+# en (English), nl (Dutch), de (German), fr (French)
 Message-Language: ""
 ...

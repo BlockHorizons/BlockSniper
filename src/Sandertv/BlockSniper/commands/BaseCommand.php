@@ -35,6 +35,6 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand 
 	}
 	
 	public function getSettings() {
-		return $this->getPlugin()->settings;
+		return $this->getPlugin()->getSettings();
 	}
 }
