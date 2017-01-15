@@ -1,0 +1,21 @@
+# Persian translations, by  MrKiAN
+# Persian:
+---
+commands:
+  errors:
+    no-permission: "Shoma nemitavanid az in estefade konid."
+    console-use: "In command nemitavan ba console ejra shod."
+    radius-not-numeric: "Shoaa intekhab shode adadi nis."
+    radius-too-big: "Shoaa entekhab shode ziad bozorg ast, lotfan adadi kockek entekhab konid."
+    no-target-found: "Block morede nazar yaft nashod."
+    no-valid-block: "Block yaft nashod, ID/name block ra benevisid."
+    shape-not-found: "Shekl ya Type yaft nashod."
+    no-modifications: "Shoma hich taghiri anjam nadadid ke Undo konid."
+  succeed:
+    default: "Shape ba movafaghiat lunch shod."
+    undo: "Taghir Undo shod."
+    language: "Zaban Morede Nazar Be Farsi(Persian) Taghir Yaft."
+brushwand:
+  disable: "Brushwand ghirefaal shod."
+  enable: "Brushwand faal shod."
+...
