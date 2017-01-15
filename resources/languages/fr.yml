@@ -15,7 +15,7 @@ commands:
   succeed:
     default: "La forme a été construite"
     undo: "Défait la dernière modification."
-    language: "Le langage a été modifié avec succès."
+    language: "Le langue a été changé."
 
 
 brushwand:

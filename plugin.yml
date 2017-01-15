@@ -1,6 +1,6 @@
 ---
 name: "BlockSniper"
-version: 0.0.99
+version: 0.1.0
 api: 2.1.0
 author: "Sandertv"
 main: Sandertv\BlockSniper\Loader
