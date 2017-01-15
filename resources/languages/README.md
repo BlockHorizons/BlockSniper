@@ -1,7 +1,7 @@
 # Translation information
 
 Thank you for your interest in helping translate. If you do happen to help translate, please make sure to follow this format:
-For an example on how to do it, click the English translation.
+For an example on how to do it, click the English translation. The English messages are the ones to be translated, so keep those next to you.
 ````
 # <English name of language> translations, by <Your name>.
 
