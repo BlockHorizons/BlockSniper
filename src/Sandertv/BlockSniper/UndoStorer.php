@@ -58,7 +58,7 @@ class UndoStorer {
 			$block->setDamage((int) $meta);
 			$this->getOwner()->getServer()->getLevelByName($block["level"])->setBlock(new Vector3($x, $y, $z), $block, false, false);
 		}
-		$this->restoreLastUndo();
+		$this->unsetLastUndo();
 	}
 	
 	public function unsetLastUndo() {
