@@ -11,8 +11,10 @@ use Sandertv\BlockSniper\commands\SnipeCommand;
 use Sandertv\BlockSniper\commands\UndoCommand;
 use Sandertv\BlockSniper\commands\BlockSniperCommand;
 use Sandertv\BlockSniper\listeners\EventListener;
-
+use Sandertv\BlockSniper\cloning\CloneStorer;
 use Sandertv\BlockSniper\tasks\UndoDiminishTask;
+use Sandertv\BlockSniper\commands\cloning\CloneCommand;
+use Sandertv\BlockSniper\commands\cloning\PasteCommand;
 
 class Loader extends PluginBase {
 	
@@ -35,6 +37,7 @@ class Loader extends PluginBase {
 	public function onEnable() {
 		$this->getLogger()->info(TF::GREEN . "BlockSniper has been enabled.");
 		$this->undoStore = new UndoStorer($this);
+		$this->cloneStore = new CloneStorer($this);
 		if(!is_dir($this->getDataFolder())) {
 			mkdir($this->getDataFolder());
 		}
@@ -65,6 +68,8 @@ class Loader extends PluginBase {
 		$this->getServer()->getCommandMap()->register("snipe", new SnipeCommand($this));
 		$this->getServer()->getCommandMap()->register("brushwand", new BrushWandCommand($this));
 		$this->getServer()->getCommandMap()->register("undo", new UndoCommand($this));
+		//$this->getServer()->getCommandMap()->register("clone", new CloneCommand($this));
+		//$this->getServer()->getCommandMap()->register("paste", new PasteCommand($this));
 	}
 	
 	/**
@@ -110,6 +115,10 @@ class Loader extends PluginBase {
 	 */
 	public function getUndoStore(): UndoStorer {
 		return $this->undoStore;
+	}
+	
+	public function getCopyStore(): CloneStorer {
+		return $this->cloneStorer;
 	}
 	
 	/**

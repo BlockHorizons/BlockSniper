@@ -23,6 +23,15 @@ permissions:
                     blocksniper.command.undo:
                         default: op
                         description: "Allows access to the undo command."
+                    blocksniper.command.blocksniper:
+                        default: op
+                        description: "Allows access to the BlockSniper commmand."
+                    blocksniper.command.clone:
+                        default: op
+                        description: "Allows access to the clone command."
+                    blocksniper.command.paste:
+                        default: op
+                        description: "Allows access to the paste command."
             blocksniper.type:
                 default: false
                 description: "Allows access to all BlockSniper types."

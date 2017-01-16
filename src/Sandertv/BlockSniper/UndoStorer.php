@@ -29,7 +29,7 @@ class UndoStorer {
 		$i = 0;
 		$this->totalStores++;
 		foreach($blocks as $block) {
-			$this->undoStore[$this->totalStores][$block->getId() . ", " . $block->getDamage() . "(" . $i . ")"] = [
+			$this->undoStore[$this->totalStores][$block->getId() . ":" . $block->getDamage() . "(" . $i . ")"] = [
 				"x" => $block->x,
 				"y" => $block->y,
 				"z" => $block->z,
@@ -49,12 +49,16 @@ class UndoStorer {
 		foreach($this->undoStore[max(array_keys($this->undoStore))] as $key => $block) {
 			$Id = explode("(", $key);
 			$blockId = $Id[0];
+			$meta = explode(":", $Id);
+			$meta = $meta[1];
 			$x = $block["x"];
 			$y = $block["y"];
 			$z = $block["z"];
-			$this->getOwner()->getServer()->getLevelByName($block["level"])->setBlock(new Vector3($x, $y, $z), Item::get($blockId)->getBlock(), false, false);
+			$block = Item::get($blockId, $meta)->getBlock();
+			$block->setDamage((int) $meta);
+			$this->getOwner()->getServer()->getLevelByName($block["level"])->setBlock(new Vector3($x, $y, $z), $block, false, false);
 		}
-		$this->unsetLastUndo();
+		$this->restoreLastUndo();
 	}
 	
 	public function unsetLastUndo() {

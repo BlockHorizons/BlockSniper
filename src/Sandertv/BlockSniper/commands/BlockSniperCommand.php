@@ -46,6 +46,6 @@ class BlockSniperCommand extends BaseCommand {
 					TF::GREEN . "Target API: " . TF::YELLOW . Loader::API_TARGET . "\n" .
 					TF::GREEN . "Author: " . TF::YELLOW . "Sandertv");
 				return true;
-	}
+		}
 	}
 }

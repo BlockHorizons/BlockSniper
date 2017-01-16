@@ -39,6 +39,7 @@ class SnipeCommand extends BaseCommand {
 	public function execute(CommandSender $sender, $commandLabel, array $args) {
 		if(!$this->testPermission($sender)) {
 			$this->sendNoPermission($sender);
+			return true;
 		}
 		
 		if(!$sender instanceof Player) {
