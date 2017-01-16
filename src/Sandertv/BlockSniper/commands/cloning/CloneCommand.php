@@ -63,8 +63,9 @@ class CloneCommand extends BaseCommand {
 				break;
 				
 			default:
-				$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.shape-not-found"));
+				$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.clone-not-found"));
 				return true;
 		}
+		$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("commands.succeed.clone"));
 	}
 }

@@ -12,10 +12,14 @@ commands:
     no-valid-block: "Blok kon niet gevonden worden. Vul een geldige blok naam/ID in."
     shape-not-found: "Vorm of type niet gevonden."
     no-modifications: "Geen modificaties gevonden om terug te draaien."
+    paste-not-found: "Dat plak-type kon niet gevonden worden."
+    clone-not-found: "Dat kloon-type kon niet gevonden worden."
   succeed:
     default: "Afvuren van vorm geslaagd."
     undo: "Terugdraaien van vorige modificatie geslaagd."
     language: "Taal veranderen is geslaagd."
+    paste: "Kloon plakken is geslaagd."
+    clone: "Het kopieëren van de zone is geslaagd."
 
 brushwand:
   disable: "Verfstaf is uitgeschakeld."

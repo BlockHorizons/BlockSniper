@@ -12,10 +12,15 @@ commands:
     no-valid-block: "Block not found, please enter a valid block name/ID."
     shape-not-found: "Shape or type not found."
     no-modifications: "No modifications were found to undo."
+    paste-not-found: "That paste type could not be found."
+    clone-not-found: "That clone type could not be found."
   succeed:
     default: "Successfully launched the shape at the location looked at."
     undo: "Successfully undid the last modification."
     language: "Language has been changed successfully."
+    paste: "Pasted the clone successfully."
+    clone: "Area has been cloned and copied successfully."
+
 brushwand:
   disable: "Brushwand has been disabled."
   enable: "Brushwand has been enabled."

@@ -59,9 +59,9 @@ class PasteCommand extends BaseCommand {
 				break;
 			
 			default:
-				$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.shape-not-found"));
+				$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.paste-not-found"));
 				return true;
 		}
-		$sender->sendMessage(TF::GREEN . "Pasting succeeded.");
+		$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("commands.succeed.paste"));
 	}
 }
