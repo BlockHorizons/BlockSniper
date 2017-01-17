@@ -69,7 +69,7 @@ class CloneStorer {
 			$y = $block["y"];
 			$z = $block["z"];
 			$finalBlock = Item::get($blockId)->getBlock();
-			$finalBlock->setDamage((int) $meta);
+			$finalBlock->setDamage((int) $meta !== null ? $meta : 0);
 			
 			// Start pasting the copy...
 			$blockPos = new Vector3($x + $this->getTargetBlock()->x, $y + $this->getTargetBlock()->y, $z + $this->getTargetBlock()->z);
