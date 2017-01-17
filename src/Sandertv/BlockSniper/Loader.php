@@ -68,8 +68,8 @@ class Loader extends PluginBase {
 		$this->getServer()->getCommandMap()->register("snipe", new SnipeCommand($this));
 		$this->getServer()->getCommandMap()->register("brushwand", new BrushWandCommand($this));
 		$this->getServer()->getCommandMap()->register("undo", new UndoCommand($this));
-		//$this->getServer()->getCommandMap()->register("clone", new CloneCommand($this));
-		//$this->getServer()->getCommandMap()->register("paste", new PasteCommand($this));
+		$this->getServer()->getCommandMap()->register("clone", new CloneCommand($this));
+		$this->getServer()->getCommandMap()->register("paste", new PasteCommand($this));
 	}
 	
 	/**
