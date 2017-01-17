@@ -13,7 +13,7 @@ use Sandertv\BlockSniper\cloning\Template;
 class PasteCommand extends BaseCommand {
 	
 	public function __construct(Loader $owner) {
-		parent::__construct($owner, "clone", "Clone the area you're watching", "<type> <radiusXheight>", []);
+		parent::__construct($owner, "paste", "Paste the selected clone or template", "<type> [name]", []);
 		$this->setPermission("blocksniper.command.paste");
 	}
 	
