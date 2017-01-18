@@ -35,7 +35,7 @@ class CloneCommand extends BaseCommand {
 			return true;
 		}
 		
-		if(count($args) < 2 || count($args) > 2) {
+		if(count($args) < 2 || count($args) > 3) {
 			$sender->sendMessage(TF::RED . "[Usage] /clone <type> <radiusXheight>");
 			return true;
 		}
