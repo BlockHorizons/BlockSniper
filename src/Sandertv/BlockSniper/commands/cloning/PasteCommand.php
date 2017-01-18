@@ -48,9 +48,9 @@ class PasteCommand extends BaseCommand {
 		
 		switch(strtolower($args[0])) {
 			case "copy":
-				if($this->getPlugin()->getCopyStore()->copyStoreExists()) {
-					$this->getPlugin()->getCopyStore()->setTargetBlock($center);
-					$this->getPlugin()->getCopyStore()->pasteCopy();
+				if($this->getPlugin()->getCloneStore()->copyStoreExists()) {
+					$this->getPlugin()->getCloneStore()->setTargetBlock($center);
+					$this->getPlugin()->getCloneStore()->pasteCopy();
 				}
 				break;
 			

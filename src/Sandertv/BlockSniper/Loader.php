@@ -23,6 +23,7 @@ class Loader extends PluginBase {
 	
 	public $brushwand = [];
 	public $undoStore;
+	public $cloneStore;
 	public $settings;
 	
 	public $availableLanguages = [
@@ -117,7 +118,10 @@ class Loader extends PluginBase {
 		return $this->undoStore;
 	}
 	
-	public function getCopyStore(): CloneStorer {
+	/**
+	 * @return CloneStorer
+	 */
+	public function getCloneStore(): CloneStorer {
 		return $this->cloneStorer;
 	}
 	
