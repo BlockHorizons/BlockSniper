@@ -13,7 +13,7 @@ use Sandertv\BlockSniper\cloning\Template;
 class CloneCommand extends BaseCommand {
 	
 	public function __construct(Loader $owner) {
-		parent::__construct($owner, "clone", "Clone the area you're watching", "<type> <radiusXheight>", []);
+		parent::__construct($owner, "clone", "Clone the area you're watching", "<type> <radiusXheight> [name]", []);
 		$this->setPermission("blocksniper.command.clone");
 	}
 	
@@ -57,15 +57,20 @@ class CloneCommand extends BaseCommand {
 			case "copy":
 				$clone = new Copy($this->getPlugin(), $sender->getLevel(), $center, $sizes[0], $sizes[1]);
 				break;
-				
+			
 			case "template":
-				$clone = new Template($this); // TODO
+				if(!isset($args[2])) {
+					$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.name-not-set"));
+					return true;
+				}
+				$clone = new Template($this->getPlugin(), $sender->getLevel(), $args[2], $center, $sizes[0], $sizes[1]);
 				break;
 				
 			default:
 				$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.clone-not-found"));
 				return true;
 		}
+		$clone->saveClone();
 		$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("commands.succeed.clone"));
 	}
 }

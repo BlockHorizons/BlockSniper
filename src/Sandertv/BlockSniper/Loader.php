@@ -42,6 +42,9 @@ class Loader extends PluginBase {
 		if(!is_dir($this->getDataFolder())) {
 			mkdir($this->getDataFolder());
 		}
+		if(!is_dir($this->getDataFolder() . "templates/")) {
+			mkdir($this->getDataFolder() . "templates/");
+		}
 		$this->saveResource("settings.yml");
 		$this->settings = new Config($this->getDataFolder() . "settings.yml", Config::YAML);
 		

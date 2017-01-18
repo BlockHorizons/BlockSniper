@@ -55,7 +55,11 @@ class PasteCommand extends BaseCommand {
 				break;
 			
 			case "template":
-				$clone = new Template($this); // TODO
+				if(!$this->getPlugin()->getCloneStore()->templateExists($args[1])) {
+					$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.template-not-existing"));
+					return true;
+				}
+				$this->getPlugin()->getCloneStore()->pasteTemplate($args[1], $center);
 				break;
 			
 			default:

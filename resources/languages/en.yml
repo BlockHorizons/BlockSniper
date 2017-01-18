@@ -14,6 +14,8 @@ commands:
     no-modifications: "No modifications were found to undo."
     paste-not-found: "That paste type could not be found."
     clone-not-found: "That clone type could not be found."
+    name-not-set: "No valid name has been given."
+    template-not-existing: "A template with that name does not exist."
   succeed:
     default: "Successfully launched the shape at the location looked at."
     undo: "Successfully undid the last modification."

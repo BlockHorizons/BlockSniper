@@ -105,4 +105,64 @@ class CloneStorer {
 	public function getCopyBlockAmount() {
 		return count($this->copyStore);
 	}
+	
+	/*
+	 * Templates
+	 */
+	
+	/**
+	 * @param string  $templateName
+	 * @param array   $blocks
+	 * @param Vector3 $targetBlock
+	 *
+	 * @return bool
+	 */
+	public function saveTemplate(string $templateName, array $blocks, Vector3 $targetBlock): bool {
+		$template = [];
+		$i = 0;
+		foreach($blocks as $block) {
+			$template[$block->getId() . ":" . $block->getDamage() . "(" . $i . ")"] = [
+				"x" => $block->x - $targetBlock->x,
+				"y" => $block->y - $targetBlock->y,
+				"z" => $block->z - $targetBlock->z
+			];
+			$i++;
+		}
+		unset($i);
+		file_put_contents($this->getOwner()->getDataFolder() . "templates/" . $templateName . ".yml", $template);
+		return true;
+	}
+	
+	/**
+	 * @param string $templateName
+	 * @param Block  $targetBlock
+	 *
+	 * @return bool
+	 */
+	public function pasteTemplate(string $templateName, Block $targetBlock): bool {
+		$content = file($this->getOwner()->getDataFolder() . "templates/" . $templateName . ".yml");
+		
+		foreach($content as $key => $block) {
+			$Id = explode("(", $key);
+			$blockId = $Id[0];
+			$meta = explode(":", $Id);
+			$meta = $meta[1];
+			$x = $block["x"];
+			$y = $block["y"];
+			$z = $block["z"];
+			$finalBlock = Item::get($blockId)->getBlock();
+			$finalBlock->setDamage((int) $meta !== null ? $meta : 0);
+			
+			$blockPos = new Vector3($x + $targetBlock->x, $y + $targetBlock->y, $z + $targetBlock->z);
+			$targetBlock->getLevel()->setBlock($blockPos, Block::get((int) $blockId, (int) $meta), false, false);
+			return true;
+		}
+	}
+	
+	public function templateExists(string $templateName): bool {
+		if(is_file($this->getOwner()->getDataFolder() . "templates/" . $templateName . ".yml")) {
+			return true;
+		}
+		return false;
+	}
 }

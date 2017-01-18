@@ -14,6 +14,8 @@ commands:
     no-modifications: "Geen modificaties gevonden om terug te draaien."
     paste-not-found: "Dat plak-type kon niet gevonden worden."
     clone-not-found: "Dat kloon-type kon niet gevonden worden."
+    name-not-set: "Er is geen naam gegeven."
+    template-not-existing: "Er bestaat geen template met die naam."
   succeed:
     default: "Afvuren van vorm geslaagd."
     undo: "Terugdraaien van vorige modificatie geslaagd."
