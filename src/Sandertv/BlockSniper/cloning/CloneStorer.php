@@ -129,7 +129,7 @@ class CloneStorer {
 			$i++;
 		}
 		unset($i);
-		file_put_contents($this->getOwner()->getDataFolder() . "templates/" . $templateName . ".yml", $template);
+		file_put_contents($this->getOwner()->getDataFolder() . "templates/" . $templateName . ".yml", serialize($template));
 		return true;
 	}
 	
@@ -140,7 +140,8 @@ class CloneStorer {
 	 * @return bool
 	 */
 	public function pasteTemplate(string $templateName, Block $targetBlock): bool {
-		$content = file($this->getOwner()->getDataFolder() . "templates/" . $templateName . ".yml");
+		$data = file_get_contents($this->getOwner()->getDataFolder() . "templates/" . $templateName . ".yml");
+		$content = unserialize($data);
 		
 		foreach($content as $key => $block) {
 			$Id = explode("(", $key);
