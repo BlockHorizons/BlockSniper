@@ -158,8 +158,8 @@ class CloneStorer {
 			
 			$blockPos = new Vector3($x + $targetBlock->x, $y + $targetBlock->y, $z + $targetBlock->z);
 			$targetBlock->getLevel()->setBlock($blockPos, Block::get((int) $blockId, (int) $meta), false, false);
-			return true;
 		}
+		return true;
 	}
 	
 	public function templateExists(string $templateName): bool {
