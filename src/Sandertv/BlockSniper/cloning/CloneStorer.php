@@ -66,7 +66,7 @@ class CloneStorer {
 			$meta = explode(":", $Id);
 			$meta = $meta[1];
 			$x = $block["x"];
-			$y = $block["y"];
+			$y = $block["y"] + 1;
 			$z = $block["z"];
 			$finalBlock = Item::get($blockId)->getBlock();
 			$finalBlock->setDamage((int) $meta !== null ? $meta : 0);
@@ -151,7 +151,7 @@ class CloneStorer {
 			$meta = explode(":", $blockId);
 			$meta = $meta[1];
 			$x = $block["x"];
-			$y = $block["y"];
+			$y = $block["y"] + 1;
 			$z = $block["z"];
 			$finalBlock = Item::get($blockId)->getBlock();
 			$finalBlock->setDamage((int) $meta !== null ? $meta : 0);
