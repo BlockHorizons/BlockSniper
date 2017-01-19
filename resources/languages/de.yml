@@ -12,10 +12,16 @@ commands:
     no-valid-block: "Block nicht gefunden, bitte gib einen gültigen Namen/ID ein."
     shape-not-found: "Form oder Typ nicht gefunden."
     no-modifications: "Keine Modifikation zum Rückgängig-machen wurde gefunden."
+    paste-not-found: "Dieser Einfügetyp (paste type) konnte nicht gefunden werden."
+    clone-not-found: "Dieser Klontyp (clone type) konnte nicht gefunden werden."
+    name-not-set: "Kein gültiger Name wurde festgelegt."
+    template-not-existing: "Es gibt keine Vorlage mit diesem Namen."
   succeed:
     default: "Die Form wurde erfolgreich dort begonnen, wo du hingesehen hast."
     undo: "Die letzte Modifikation wurde erfolgreich rückgängig gemacht."
     language: "Sprache wurde erfolgreich geändert."
+    paste: "Klon wurde erfolgreich eingefügt."
+    clone: "Bereich wurde erfolgreich geklont und kopiert."
 
 brushwand:
   disable: "Brushwand (Zauberpinsel) wurde deaktiviert."
