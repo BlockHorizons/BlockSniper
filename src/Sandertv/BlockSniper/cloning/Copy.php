@@ -52,8 +52,9 @@ class Copy extends BaseClone {
 				}
 			}
 		}
-		$this->getOwner()->getCloneStore()->saveCopy($copyBlocks);
+		
 		$this->getOwner()->getCloneStore()->setOriginalCenter($this->center);
+		$this->getOwner()->getCloneStore()->saveCopy($copyBlocks);
 		return true;
 	}
 	
