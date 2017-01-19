@@ -144,6 +144,8 @@ class CloneStorer {
 		$content = unserialize($data);
 		
 		foreach($content as $key => $block) {
+			var_dump($key);
+			var_dump($block);
 			$Id = explode("(", $key);
 			$blockId = $Id[0];
 			$meta = explode(":", $Id);
