@@ -49,7 +49,7 @@ class UndoStorer {
 		foreach($this->undoStore[max(array_keys($this->undoStore))] as $key => $block) {
 			$Id = explode("(", $key);
 			$blockId = $Id[0];
-			$meta = explode(":", $Id);
+			$meta = explode(":", $blockId);
 			$meta = $meta[1];
 			$x = $block["x"];
 			$y = $block["y"];
