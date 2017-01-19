@@ -63,7 +63,7 @@ class CloneStorer {
 		foreach($this->copyStore as $key => $block) {
 			$Id = explode("(", $key);
 			$blockId = $Id[0];
-			$meta = explode(":", $Id);
+			$meta = explode(":", $blockId);
 			$meta = $meta[1];
 			$x = $block["x"];
 			$y = $block["y"] + 1;
@@ -144,8 +144,6 @@ class CloneStorer {
 		$content = unserialize($data);
 		
 		foreach($content as $key => $block) {
-			var_dump($key);
-			var_dump($block);
 			$Id = explode("(", $key);
 			$blockId = $Id[0];
 			$meta = explode(":", $blockId);

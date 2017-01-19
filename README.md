@@ -1,6 +1,5 @@
 # BlockSniper
 An innovative new world editing tool, made for PocketMine-MP: An MCPE server software written in PHP.
-For detailed information, check out the [Website.](http://blocksniper.tk/)
 
 ## Development!
 BlockSniper is currently under heavy development. Stable releases will be drafted at [Releases](https://github.com/Sandertv/BlockSniper/releases).
@@ -15,6 +14,11 @@ If you do decide to compile a phar file yourself to benefit from the latest feat
 BlockSniper is an advanced world editing tool, based on the idea of VoxelSniper from Mineraft PC softwares.
 BlockSniper allows you to edit your world on a long range, with several different types/shapes. The types/shapes are as follows:
 
+>> Clone types
+> Template  > Saves the selected clone in a sharable file.
+>
+> Copy      > Virtually saves the selected area to paste later.
+>
 >> Shapes
 >
 > Cube      > As if minecraft wasn't enough cubes already.
@@ -52,10 +56,21 @@ BlockSniper has several commands to edit your world. The commands work as follow
 >
 > Additional blocks can be added by separating them with a comma.
 >
->
 >> /brushwand <type> <radius> <block(s)> : Set a wand with an edit type to shoot everytime you hold your finger on the screen or interact.
 >
 > Additional blocks can here too be added by separating them with a comma.
+>
+>> /undo
+>
+> Undoes the last modification done.
+>
+>> /clone <template/copy> <radiusXheight> [name]
+>
+> Clones the target in either a copy, or a template with the given name.
+>
+>> /paste <template/copy> [name]
+>
+> Pastes the current copy, or template with the given name.
 
 ## Are there permissions? Where can I find them?
 A full list of permissions can be found in the [plugin.yml](https://github.com/Sandertv/BlockSniper/blob/master/plugin.yml) file. 
