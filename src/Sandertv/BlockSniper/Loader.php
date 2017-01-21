@@ -16,6 +16,8 @@ use Sandertv\BlockSniper\tasks\UndoDiminishTask;
 use Sandertv\BlockSniper\commands\cloning\CloneCommand;
 use Sandertv\BlockSniper\commands\cloning\PasteCommand;
 
+use Sandertv\BlockSniper\events\ToggleBrushEvent;
+
 class Loader extends PluginBase {
 	
 	const VERSION = "0.1.0";
@@ -141,6 +143,7 @@ class Loader extends PluginBase {
 			"radius" => $radius,
 			"additionalData" => $data,
 			"blocks" => $blocks];
+		$this->getServer()->getPluginManager()->callEvent(new ToggleBrushEvent($this, $player, "disabled"));
 	}
 	
 	/**
@@ -158,6 +161,7 @@ class Loader extends PluginBase {
 	public function disableBrushWand(Player $player) {
 		unset($this->brushwand[$player->getName()]);
 		$player->sendMessage(TF::YELLOW . $this->getTranslation("brushwand.disable"));
+		$this->getServer()->getPluginManager()->callEvent(new ToggleBrushEvent($this, $player, "enabled"));
 	}
 	
 	/**

@@ -17,10 +17,16 @@ commands:
     no-valid-block: ""
     shape-not-found: ""
     no-modifications: ""
+    paste-not-found: ""
+    clone-not-found: ""
+    name-not-set: ""
+    template-not-existing: ""
   succeed:
     default: ""
     undo: ""
     language: ""
+    paste: ""
+    clone: ""
 
 brushwand:
   disable: ""
