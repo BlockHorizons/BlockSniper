@@ -19,6 +19,7 @@ commands:
   succeed:
     default: "La forme a été construite"
     undo: "Défait la dernière modification."
+    language: "Le langue a été changé."
     paste: "Collage du clone reussi."
     clone: "Clonage de la région reussi."
 
