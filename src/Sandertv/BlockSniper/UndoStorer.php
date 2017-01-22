@@ -54,9 +54,9 @@ class UndoStorer {
 			$x = $block["x"];
 			$y = $block["y"];
 			$z = $block["z"];
-			$block = Item::get($blockId, $meta)->getBlock();
-			$block->setDamage((int) $meta !== null ? $meta : 0);
-			$this->getOwner()->getServer()->getLevelByName($block["level"])->setBlock(new Vector3($x, $y, $z), $block, false, false);
+			$finalBlock = Item::get($blockId, $meta)->getBlock();
+			$finalBlock->setDamage((int) $meta !== null ? $meta : 0);
+			$this->getOwner()->getServer()->getLevelByName($block["level"])->setBlock(new Vector3($x, $y, $z), $finalBlock, false, false);
 		}
 		$this->unsetLastUndo();
 	}
