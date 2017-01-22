@@ -31,7 +31,7 @@ class SphereShape extends BaseShape {
 	 * @return bool
 	 */
 	public function fillShape(): bool {
-		$radiusSquared = pow($this->radius - 0.5, 2);
+		$radiusSquared = pow($this->radius, 2) + 0.5;
 		
 		$targetX = $this->center->x;
 		$targetY = $this->center->y;
