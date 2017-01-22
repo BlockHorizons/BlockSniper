@@ -16,6 +16,8 @@ use Sandertv\BlockSniper\tasks\UndoDiminishTask;
 use Sandertv\BlockSniper\commands\cloning\CloneCommand;
 use Sandertv\BlockSniper\commands\cloning\PasteCommand;
 
+use Sandertv\BlockSniper\events\ToggleBrushEvent;
+
 class Loader extends PluginBase {
 	
 	const VERSION = "0.1.0";
@@ -23,6 +25,7 @@ class Loader extends PluginBase {
 	
 	public $brushwand = [];
 	public $undoStore;
+	public $cloneStore;
 	public $settings;
 	
 	public $availableLanguages = [
@@ -40,6 +43,9 @@ class Loader extends PluginBase {
 		$this->cloneStore = new CloneStorer($this);
 		if(!is_dir($this->getDataFolder())) {
 			mkdir($this->getDataFolder());
+		}
+		if(!is_dir($this->getDataFolder() . "templates/")) {
+			mkdir($this->getDataFolder() . "templates/");
 		}
 		$this->saveResource("settings.yml");
 		$this->settings = new Config($this->getDataFolder() . "settings.yml", Config::YAML);
@@ -68,8 +74,8 @@ class Loader extends PluginBase {
 		$this->getServer()->getCommandMap()->register("snipe", new SnipeCommand($this));
 		$this->getServer()->getCommandMap()->register("brushwand", new BrushWandCommand($this));
 		$this->getServer()->getCommandMap()->register("undo", new UndoCommand($this));
-		//$this->getServer()->getCommandMap()->register("clone", new CloneCommand($this));
-		//$this->getServer()->getCommandMap()->register("paste", new PasteCommand($this));
+		$this->getServer()->getCommandMap()->register("clone", new CloneCommand($this));
+		$this->getServer()->getCommandMap()->register("paste", new PasteCommand($this));
 	}
 	
 	/**
@@ -117,8 +123,11 @@ class Loader extends PluginBase {
 		return $this->undoStore;
 	}
 	
-	public function getCopyStore(): CloneStorer {
-		return $this->cloneStorer;
+	/**
+	 * @return CloneStorer
+	 */
+	public function getCloneStore(): CloneStorer {
+		return $this->cloneStore;
 	}
 	
 	/**
@@ -134,6 +143,7 @@ class Loader extends PluginBase {
 			"radius" => $radius,
 			"additionalData" => $data,
 			"blocks" => $blocks];
+		$this->getServer()->getPluginManager()->callEvent(new ToggleBrushEvent($this, $player, "disabled"));
 	}
 	
 	/**
@@ -151,6 +161,7 @@ class Loader extends PluginBase {
 	public function disableBrushWand(Player $player) {
 		unset($this->brushwand[$player->getName()]);
 		$player->sendMessage(TF::YELLOW . $this->getTranslation("brushwand.disable"));
+		$this->getServer()->getPluginManager()->callEvent(new ToggleBrushEvent($this, $player, "enabled"));
 	}
 	
 	/**

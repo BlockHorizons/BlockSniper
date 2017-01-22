@@ -5,6 +5,7 @@ namespace Sandertv\BlockSniper\cloning;
 use Sandertv\BlockSniper\Loader;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
+use pocketmine\item\Item;
 
 class Copy extends BaseClone {
 	
@@ -51,8 +52,9 @@ class Copy extends BaseClone {
 				}
 			}
 		}
-		$this->getOwner()->getCopyStore()->saveCopy($copyBlocks);
-		$this->getOwner()->getCopyStore()->setOriginalCenter($this->center);
+		
+		$this->getOwner()->getCloneStore()->setOriginalCenter($this->center);
+		$this->getOwner()->getCloneStore()->saveCopy($copyBlocks);
 		return true;
 	}
 	

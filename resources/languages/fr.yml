@@ -12,10 +12,16 @@ commands:
     no-valid-block: "Ce block la n'est pas validé."
     shape-not-found: "Forme non trouvée."
     no-modifications: "Sans modifications."
+    template-not-existing: "Ce modele n'existe pas."
+    name-not-set: "Il faut un nom."
+    paste-not-found: "Coller non trouvée."
+    clone-not-found: "Clone non trouvée."
   succeed:
     default: "La forme a été construite"
     undo: "Défait la dernière modification."
     language: "Le langue a été changé."
+    paste: "Collage du clone reussi."
+    clone: "Clonage de la région reussi."
 
 
 brushwand:
