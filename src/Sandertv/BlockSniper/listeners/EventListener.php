@@ -23,7 +23,7 @@ class EventListener implements Listener {
 	
 	public function onBrush(PlayerInteractEvent $event) {
 		$player = $event->getPlayer();
-		if(!$player->getInventory()->getItemInHand()->getId() === Item::BRICK) {
+		if(!$player->getInventory()->getItemInHand()->getId() === Item::GOLDEN_CARROT) {
 			return;
 		}
 		
@@ -43,8 +43,6 @@ class EventListener implements Listener {
 		$type = Brush::getType($player, $shape->getBlocksInside());
 		
 		$type->fillShape();
-		
-		$player->sendPopup(TF::GREEN . $this->getOwner()->getTranslation("commands.succeed.default"));
 		return true;
 	}
 }
