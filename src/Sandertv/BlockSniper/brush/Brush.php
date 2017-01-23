@@ -27,7 +27,6 @@ class Brush {
 	public static $owner;
 	
 	public function __construct(Loader $owner) {
-		$this->owner = $owner;
 		self::$owner = $owner;
 	}
 	

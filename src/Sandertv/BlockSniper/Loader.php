@@ -14,6 +14,7 @@ use Sandertv\BlockSniper\cloning\CloneStorer;
 use Sandertv\BlockSniper\tasks\UndoDiminishTask;
 use Sandertv\BlockSniper\commands\cloning\CloneCommand;
 use Sandertv\BlockSniper\commands\cloning\PasteCommand;
+use Sandertv\BlockSniper\brush\Brush;
 
 use Sandertv\BlockSniper\events\ToggleBrushEvent;
 
@@ -26,6 +27,7 @@ class Loader extends PluginBase {
 	public $undoStore;
 	public $cloneStore;
 	public $settings;
+	public $brush;
 	
 	public $availableLanguages = [
 		"en",
@@ -39,6 +41,7 @@ class Loader extends PluginBase {
 	
 	public function onEnable() {
 		$this->getLogger()->info(TF::GREEN . "BlockSniper has been enabled.");
+		$this->brush = new Brush($this);
 		$this->undoStore = new UndoStorer($this);
 		$this->cloneStore = new CloneStorer($this);
 		if(!is_dir($this->getDataFolder())) {
