@@ -6,8 +6,7 @@ use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat as TF;
-use Sandertv\BlockSniper\commands\BrushWandCommand;
-use Sandertv\BlockSniper\commands\SnipeCommand;
+use Sandertv\BlockSniper\commands\BrushCommand;
 use Sandertv\BlockSniper\commands\UndoCommand;
 use Sandertv\BlockSniper\commands\BlockSniperCommand;
 use Sandertv\BlockSniper\listeners\EventListener;
@@ -34,7 +33,7 @@ class Loader extends PluginBase {
 		"de",
 		"fr",
 		"fa",	
-                "ru"
+        "ru"
 	];
 	public $language;
 	
@@ -72,8 +71,7 @@ class Loader extends PluginBase {
 	
 	public function registerCommands() {
 		$this->getServer()->getCommandMap()->register("blocksniper", new BlockSniperCommand($this));
-		$this->getServer()->getCommandMap()->register("snipe", new SnipeCommand($this));
-		$this->getServer()->getCommandMap()->register("brushwand", new BrushWandCommand($this));
+		$this->getServer()->getCommandMap()->register("brush", new BrushCommand($this));
 		$this->getServer()->getCommandMap()->register("undo", new UndoCommand($this));
 		$this->getServer()->getCommandMap()->register("clone", new CloneCommand($this));
 		$this->getServer()->getCommandMap()->register("paste", new PasteCommand($this));
@@ -146,35 +144,4 @@ class Loader extends PluginBase {
 			"blocks" => $blocks];
 		$this->getServer()->getPluginManager()->callEvent(new ToggleBrushEvent($this, $player, "disabled"));
 	}
-	
-	/**
-	 * @param Player $player
-	 *
-	 * @return array
-	 */
-	public function getBrushWand(Player $player) {
-		return $this->brushwand[$player->getName()];
-	}
-	
-	/**
-	 * @param Player $player
-	 */
-	public function disableBrushWand(Player $player) {
-		unset($this->brushwand[$player->getName()]);
-		$player->sendMessage(TF::YELLOW . $this->getTranslation("brushwand.disable"));
-		$this->getServer()->getPluginManager()->callEvent(new ToggleBrushEvent($this, $player, "enabled"));
-	}
-	
-	/**
-	 * @param Player $player
-	 *
-	 * @return boolean
-	 */
-	public function hasBrushWandEnabled(Player $player): bool {
-		if(isset($this->brushwand[$player->getName()])) {
-			return true;
-		}
-		return false;
-	}
-	
 }

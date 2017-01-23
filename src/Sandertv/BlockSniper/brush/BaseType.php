@@ -6,6 +6,8 @@ use Sandertv\BlockSniper\Loader;
 
 abstract class BaseType {
 	
+	public $main;
+	
 	public function __construct(Loader $main) {
 		$this->main = $main;
 	}

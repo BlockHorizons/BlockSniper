@@ -12,25 +12,21 @@ use Sandertv\BlockSniper\Loader;
 
 class SphereShape extends BaseShape {
 	
-	public function __construct(Loader $main, Level $level, float $radius = null, Vector3 $center = null, array $blocks = []) {
+	public function __construct(Loader $main, Level $level, float $radius = null, Vector3 $center = null) {
 		parent::__construct($main);
 		$this->level = $level;
 		$this->radius = $radius;
 		$this->center = $center;
-		$this->blocks = $blocks;
 		
 		if(!isset($center)) {
 			$this->center = new Vector3(0, 0, 0);
 		}
-		if(!isset($blocks)) {
-			$this->blocks = ["Air"];
-		}
 	}
 	
 	/**
-	 * @return bool
+	 * @return array
 	 */
-	public function fillShape(): bool {
+	public function getBlocksInside(): array {
 		$radiusSquared = pow($this->radius, 2) + 0.5;
 		
 		$targetX = $this->center->x;
@@ -44,7 +40,7 @@ class SphereShape extends BaseShape {
 		$minZ = Math::floorFloat($targetZ - $this->radius);
 		$maxZ = Math::floorFloat($targetZ + $this->radius) + 1;
 		
-		$undoBlocks = [];
+		$blocksInside = [];
 		
 		for($x = $maxX; $x >= $minX; $x--) {
 			$xs = ($targetX - $x) * ($targetX - $x);
@@ -53,24 +49,12 @@ class SphereShape extends BaseShape {
 				for($z = $maxZ; $z >= $minZ; $z--) {
 					$zs = ($targetZ - $z) * ($targetZ - $z);
 					if($xs + $ys + $zs < $radiusSquared) {
-						$randomName = $this->blocks[array_rand($this->blocks)];
-						$randomBlock = is_numeric($randomName) ? Item::get($randomName)->getBlock() : Item::fromString($randomName)->getBlock();
-						$originBlock = $this->level->getBlock(new Vector3($x, $y, $z));
-						if($randomBlock !== 0 || strtolower($randomName) === "air") {
-							if($originBlock->getId() !== $randomBlock->getId()) {
-								$undoBlocks[] = $originBlock;
-							}
-							$this->level->setBlock(new Vector3($x, $y, $z), $randomBlock, false, false);
-						}
+						$blocksInside[] = $this->getLevel()->getBlock(new Vector3($x, $y, $z));
 					}
 				}
 			}
 		}
-		if($randomBlock->getId() === Block::AIR && strtolower($randomName) !== "air") {
-			return false;
-		}
-		$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
-		return true;
+		return $blocksInside;
 	}
 	
 	public function getName(): string {

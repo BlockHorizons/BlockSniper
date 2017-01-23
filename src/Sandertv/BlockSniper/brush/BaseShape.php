@@ -22,7 +22,7 @@ abstract class BaseShape {
 	
 	public abstract function getPermission(): string;
 	
-	public abstract function fillShape(): bool;
+	public abstract function getBlocksInside(): array;
 	
 	public function getMain(): Loader {
 		return $this->main;

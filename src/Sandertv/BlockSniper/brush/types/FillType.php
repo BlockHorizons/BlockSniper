@@ -2,24 +2,22 @@
 
 namespace Sandertv\BlockSniper\brush\types;
 
-use Sandertv\BlockSniper\brush\Brush;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
-use pocketmine\Player;
 use Sandertv\BlockSniper\brush\BaseType;
 use Sandertv\BlockSniper\Loader;
+use Sandertv\BlockSniper\brush\Brush;
+use pocketmine\Player;
 
-class LayerType extends BaseType {
+class FillType extends BaseType {
 	
-	public $player;
 	public $level;
-	public $center;
 	public $blocks;
+	public $player;
 	
-	public function __construct(Loader $main, Player $player, Level $level, Vector3 $center = null, array $blocks = []) {
+	public function __construct(Loader $main, Player $player, Level $level, array $blocks) {
 		parent::__construct($main);
 		$this->level = $level;
-		$this->center = $center;
 		$this->blocks = $blocks;
 		
 		$this->player = $player;
@@ -32,21 +30,19 @@ class LayerType extends BaseType {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			$randomBlock = Brush::$brush[$this->player->getId()]["blocks"][array_rand(Brush::$brush[$this->player->getId()]["blocks"])];
-			if($block->getId() !== $randomBlock->getId()) {
-				$undoBlocks[] = $block;
-			}
-			$this->level->setBlock(new Vector3($block->x, $this->center->y + 1, $block->z), $randomBlock, false, false);
+			$undoBlocks[] = $block;
+			$this->level->setBlock(new Vector3($block->x, $block->y, $block->z), $randomBlock, false, false);
 		}
 		$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
 		return true;
 	}
 	
 	public function getName(): string {
-		return "Layer";
+		return "Drain";
 	}
 	
 	public function getPermission(): string {
-		return "blocksniper.type.layer";
+		return "blocksniper.type.drain";
 	}
 	
 	public function getApproximateBlocks(): int {
@@ -57,4 +53,3 @@ class LayerType extends BaseType {
 		return $this->level;
 	}
 }
-
