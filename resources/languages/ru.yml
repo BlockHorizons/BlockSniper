@@ -3,9 +3,9 @@
 ---
 commands:
   errors:
-    no-permission: "You do not have permission to do that."
-    console-use: "This command can't be executed by the console."
-    radius-not-numeric: "The radius should be numeric."
+    no-permission: "У вас не достаточно прав для исполнения этой команды."
+    console-use: "Данную команду нельзя использовать в консоле."
+    radius-not-numeric: "Радиус должен быть числовым."
     radius-too-big: "Этот радиус очень большой. Пожалуйста укажите цыфру по меньше."
     no-target-found: "No target block could be found."
     no-valid-block: "Блок не нацден пожалуйста укажите имя блока или ID."
