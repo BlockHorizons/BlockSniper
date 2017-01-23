@@ -1,0 +1,28 @@
+# Russian translations, by infomcpe.
+# Russian:
+---
+commands:
+  errors:
+    no-permission: "You do not have permission to do that."
+    console-use: "This command can't be executed by the console."
+    radius-not-numeric: "The radius should be numeric."
+    radius-too-big: "Этот радиус очень большой. Пожалуйста укажите цыфру по меньше."
+    no-target-found: "No target block could be found."
+    no-valid-block: "Блок не нацден пожалуйста укажите имя блока или ID."
+    shape-not-found: "Тип Shape не найден."
+    no-modifications: "No modifications were found to undo."
+    paste-not-found: "That paste type could not be found."
+    clone-not-found: "That clone type could not be found."
+    name-not-set: "No valid name has been given."
+    template-not-existing: "A template with that name does not exist."
+  succeed:
+    default: "Успешно создано."
+    undo: "Успешно удалена последния модификациия"
+    language: "Смена языка удалась."
+    paste: "Установка скопированой территории удалась."
+    clone: "Територия была скопирована успешно."
+
+brushwand:
+  disable: "Brushwand Отключен"
+  enable: "Brushwand Включён."
+...
