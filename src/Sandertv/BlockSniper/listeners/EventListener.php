@@ -11,6 +11,8 @@ use Sandertv\BlockSniper\brush\Brush;
 
 class EventListener implements Listener {
 	
+	public $owner;
+	
 	public function __construct(Loader $owner) {
 		$this->owner = $owner;
 	}
@@ -27,6 +29,7 @@ class EventListener implements Listener {
 		
 		if(!$player->hasPermission("blocksniper.command.brush")) {
 			$player->sendMessage(TF::RED . "[Warning] " . $this->getOwner()->getTranslation("commands.errors.no-permission"));
+			return;
 		}
 		
 		$center = $player->getTargetBlock(100);

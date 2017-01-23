@@ -27,6 +27,7 @@ class Brush {
 	public static $owner;
 	
 	public function __construct(Loader $owner) {
+		$this->owner = $owner;
 		self::$owner = $owner;
 	}
 	
@@ -160,6 +161,10 @@ class Brush {
 				break;
 			case "cylinder":
 				$shape = new CylinderStandingShape(self::$owner, $player->getLevel(), self::getSize($player), self::getHeight($player), $player->getTargetBlock(100));
+				break;
+				
+			default:
+				$shape = new SphereShape(self::$owner, $player->getLevel(), self::getSize($player), $player->getTargetBlock(100));
 				break;
 		}
 		return $shape;
