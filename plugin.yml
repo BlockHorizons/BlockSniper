@@ -14,9 +14,6 @@ permissions:
                 default: false
                 description: "Allows access to all BlockSniper command features."
                 children:
-                    blocksniper.command.snipe:
-                        default: op
-                        description: "Allows access to the snipe command."
                     blocksniper.command.brush:
                         default: op
                         description: "Allows access to the brush wand command."
