@@ -1,5 +1,5 @@
 # BlockSniper
-An innovative new world editing tool, made for PocketMine-MP: An MCPE server software written in PHP.
+An innovative new world editing tool, made for PocketMine-MP: An MCPE server software written in PHP. Worlds can be easily edited using a Golden Carrot.
 
 ## Development!
 BlockSniper is currently under heavy development. Stable releases will be drafted at [Releases](https://github.com/Sandertv/BlockSniper/releases).
@@ -53,26 +53,22 @@ BlockSniper has a multi-language system, so everybody can have a good time using
 
 ## How does it work?
 BlockSniper has several commands to edit your world. The commands work as follows:
->> /snipe <type> <radius> <block(s)> : Snipe an edit type at the location you're looking at.
+
+>> /brush <size|shape|type|blocks|height|obsolete> <args>
 >
 > Additional blocks can be added by separating them with a comma.
->
->> /brush <size|shape|type|blocks|height|obsolete> <args> : Set a wand with an edit type to shoot everytime you hold your finger on the screen or interact.
->
-> Additional blocks can here too be added by separating them with a comma.
 >
 >> /undo
 >
 > Undoes the last modification done.
 >
->> /clone <template/copy> <radiusXheight> <name> : Clones the target in either a copy, or a template with the given name.       
+>> /clone <template/copy> <radiusXheight> <name>
 >
 > Templates can be downloaded and shared, while copies are only temporary.
 >
->> /paste <template/copy> <name> : Pastes the current copy, or template with the given name.       
+>> /paste <template/copy> <name>
 >
-> Downloaded templates can be pasted using the according name, copies can be pasted without name.     
->
+> Downloaded templates can be pasted using the according name, copies can be pasted without name.
 
 ## Are there permissions? Where can I find them?
 A full list of permissions can be found in the [plugin.yml](https://github.com/Sandertv/BlockSniper/blob/master/plugin.yml) file. 
