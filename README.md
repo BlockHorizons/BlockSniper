@@ -54,7 +54,7 @@ BlockSniper has a multi-language system, so everybody can have a good time using
 ## How does it work?
 BlockSniper has several commands to edit your world. The commands work as follows:
 
->> /brush <size|shape|type|blocks|height|obsolete> <args>
+>> /brush  < size|shape|type|blocks|height|obsolete >  < args >
 >
 > Additional blocks can be added by separating them with a comma.
 >
@@ -62,11 +62,11 @@ BlockSniper has several commands to edit your world. The commands work as follow
 >
 > Undoes the last modification done.
 >
->> /clone <template/copy> <radiusXheight> <name>
+>> /clone  < template/copy >  < radiusXheight >  < name >
 >
 > Templates can be downloaded and shared, while copies are only temporary.
 >
->> /paste <template/copy> <name>
+>> /paste  < template/copy >  < name >
 >
 > Downloaded templates can be pasted using the according name, copies can be pasted without name.
 
