@@ -112,6 +112,10 @@ class BrushCommand extends BaseCommand {
 				Brush::setObsolete($sender, $args[1]);
 				$sender->sendMessage(TF::GREEN . "Obsolete: " . TF::AQUA . Brush::getObsolete($sender)->getName());
 				return true;
+				
+			case "perfect":
+				Brush::setPerfect($sender, $args[1]);
+				$sender->sendMessage(TF::GREEN . "Perfect: " . TF::AQUA . $args[1]);
 		}
 		return false;
 	}

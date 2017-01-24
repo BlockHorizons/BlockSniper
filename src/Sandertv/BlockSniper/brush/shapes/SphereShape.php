@@ -2,21 +2,27 @@
 
 namespace Sandertv\BlockSniper\brush\shapes;
 
-use pocketmine\block\Block;
-use pocketmine\item\Item;
+use Sandertv\BlockSniper\brush\Brush;
 use pocketmine\level\Level;
 use pocketmine\math\Math;
 use pocketmine\math\Vector3;
 use Sandertv\BlockSniper\brush\BaseShape;
 use Sandertv\BlockSniper\Loader;
+use pocketmine\Player;
 
 class SphereShape extends BaseShape {
 	
-	public function __construct(Loader $main, Level $level, float $radius = null, Vector3 $center = null) {
+	public $level;
+	public $radius;
+	public $center;
+	public $player;
+	
+	public function __construct(Loader $main, Player $player, Level $level, float $radius = null, Vector3 $center = null) {
 		parent::__construct($main);
 		$this->level = $level;
 		$this->radius = $radius;
 		$this->center = $center;
+		$this->player = $player;
 		
 		if(!isset($center)) {
 			$this->center = new Vector3(0, 0, 0);
@@ -27,7 +33,8 @@ class SphereShape extends BaseShape {
 	 * @return array
 	 */
 	public function getBlocksInside(): array {
-		$radiusSquared = pow($this->radius, 2) + 0.5;
+		$trueSphere = Brush::getPerfect($this->player);
+		$radiusSquared = pow($this->radius + ($trueSphere ? 0 : -0.5), 2) + ($trueSphere ? 0.5 : 0);
 		
 		$targetX = $this->center->x;
 		$targetY = $this->center->y;

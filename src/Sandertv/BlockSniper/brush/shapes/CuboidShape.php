@@ -11,6 +11,11 @@ use Sandertv\BlockSniper\Loader;
 
 class CuboidShape extends BaseShape {
 	
+	public $level;
+	public $width;
+	public $height;
+	public $center;
+	
 	public function __construct(Loader $main, Level $level, float $width = null, float $height = null, Vector3 $center = null) {
 		parent::__construct($main);
 		$this->level = $level;

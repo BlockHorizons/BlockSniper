@@ -41,6 +41,7 @@ class Brush {
 		}
 		self::$brush[$player->getId()] = [
 			"shape" => "sphere",
+			"perfect" => true,
 			"type" => "fill",
 			"size" => 1,
 			"height" => 1,
@@ -63,6 +64,14 @@ class Brush {
 				self::$brush[$player->getId()]["blocks"][] = Item::get($block)->getBlock();
 			}
 		}
+	}
+	
+	public static function setPerfect(Player $player, bool $value) {
+		self::$brush[$player->getId()]["perfect"] = (bool) $value;
+	}
+	
+	public static function getPerfect(Player $player): bool {
+		return self::$brush[$player->getId()]["perfect"];
 	}
 	
 	/**
@@ -153,7 +162,7 @@ class Brush {
 				$shape = new CubeShape(self::$owner, $player->getLevel(), self::getSize($player), $player->getTargetBlock(100));
 				break;
 			case "sphere":
-				$shape = new SphereShape(self::$owner, $player->getLevel(), self::getSize($player), $player->getTargetBlock(100));
+				$shape = new SphereShape(self::$owner, $player, $player->getLevel(), self::getSize($player), $player->getTargetBlock(100));
 				break;
 			case "cuboid":
 				$shape = new CuboidShape(self::$owner, $player->getLevel(), self::getSize($player), self::getHeight($player), $player->getTargetBlock(100));
