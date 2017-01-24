@@ -65,13 +65,13 @@ BlockSniper has several commands to edit your world. The commands work as follow
 >
 > Undoes the last modification done.
 >
->> /clone <template/copy> <radiusXheight> [name]
+>> /clone <template/copy> <radiusXheight> [name] : Clones the target in either a copy, or a template with the given name.
 >
-> Clones the target in either a copy, or a template with the given name.
+> Templates can be downloaded and shared, while copies are only temporary.
 >
->> /paste <template/copy> [name]
+>> /paste <template/copy> [name] : Pastes the current copy, or template with the given name.
 >
-> Pastes the current copy, or template with the given name.
+> Downloaded templates can be pasted using the according name, copies can be pasted without name.
 >
 
 ## Are there permissions? Where can I find them?
