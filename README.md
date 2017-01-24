@@ -15,6 +15,7 @@ BlockSniper is an advanced world editing tool, based on the idea of VoxelSniper 
 BlockSniper allows you to edit your world on a long range, with several different types/shapes. The types/shapes are as follows:
 
 >> Clone types
+>
 > Template  > Saves the selected clone in a sharable file.
 >
 > Copy      > Virtually saves the selected area to paste later.
@@ -71,6 +72,7 @@ BlockSniper has several commands to edit your world. The commands work as follow
 >> /paste <template/copy> [name]
 >
 > Pastes the current copy, or template with the given name.
+>
 
 ## Are there permissions? Where can I find them?
 A full list of permissions can be found in the [plugin.yml](https://github.com/Sandertv/BlockSniper/blob/master/plugin.yml) file. 

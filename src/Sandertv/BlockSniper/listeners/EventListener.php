@@ -23,26 +23,21 @@ class EventListener implements Listener {
 	
 	public function onBrush(PlayerInteractEvent $event) {
 		$player = $event->getPlayer();
-		if(!$player->getInventory()->getItemInHand()->getId() === Item::GOLDEN_CARROT) {
-			return;
+		if($player->getInventory()->getItemInHand()->getId() === Item::GOLDEN_CARROT) {
+			if($player->hasPermission("blocksniper.command.brush")) {
+				$center = $player->getTargetBlock(100);
+				
+				if(!$center) {
+					$player->sendMessage(TF::RED . "[Warning] " . $this->getOwner()->getTranslation("commands.errors.no-target-found"));
+					return;
+				}
+				
+				$shape = Brush::getShape($player);
+				$type = Brush::getType($player, $shape->getBlocksInside());
+				
+				$type->fillShape();
+				return true;
+			}
 		}
-		
-		if(!$player->hasPermission("blocksniper.command.brush")) {
-			$player->sendMessage(TF::RED . "[Warning] " . $this->getOwner()->getTranslation("commands.errors.no-permission"));
-			return;
-		}
-		
-		$center = $player->getTargetBlock(100);
-		
-		if(!$center) {
-			$player->sendMessage(TF::RED . "[Warning] " . $this->getOwner()->getTranslation("commands.errors.no-target-found"));
-			return;
-		}
-		
-		$shape = Brush::getShape($player);
-		$type = Brush::getType($player, $shape->getBlocksInside());
-		
-		$type->fillShape();
-		return true;
 	}
 }
