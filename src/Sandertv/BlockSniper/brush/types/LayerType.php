@@ -16,7 +16,7 @@ class LayerType extends BaseType {
 	public $center;
 	public $blocks;
 	
-	public function __construct(Loader $main, Player $player, Level $level, Vector3 $center = null, array $blocks = []) {
+	public function __construct(Loader $main, Player $player, Level $level, array $blocks = [], Vector3 $center = null) {
 		parent::__construct($main);
 		$this->level = $level;
 		$this->center = $center;
