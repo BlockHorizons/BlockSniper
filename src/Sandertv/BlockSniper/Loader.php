@@ -16,14 +16,11 @@ use Sandertv\BlockSniper\commands\cloning\CloneCommand;
 use Sandertv\BlockSniper\commands\cloning\PasteCommand;
 use Sandertv\BlockSniper\brush\Brush;
 
-use Sandertv\BlockSniper\events\ToggleBrushEvent;
-
 class Loader extends PluginBase {
 	
 	const VERSION = "0.99.0";
 	const API_TARGET = "2.1.0";
 	
-	public $brushwand = [];
 	public $undoStore;
 	public $cloneStore;
 	public $settings;
@@ -130,21 +127,5 @@ class Loader extends PluginBase {
 	 */
 	public function getCloneStore(): CloneStorer {
 		return $this->cloneStore;
-	}
-	
-	/**
-	 * @param Player $player
-	 * @param string $type
-	 * @param int    $radius
-	 * @param string $blocks
-	 * @param        $data = null
-	 */
-	public function enableBrushWand(Player $player, string $type, $radius, string $blocks = null, $data = null) {
-		$this->brushwand[$player->getName()] = [
-			"type" => $type,
-			"radius" => $radius,
-			"additionalData" => $data,
-			"blocks" => $blocks];
-		$this->getServer()->getPluginManager()->callEvent(new ToggleBrushEvent($this, $player, "disabled"));
 	}
 }
