@@ -116,7 +116,7 @@ class BrushCommand extends BaseCommand {
 			case "perfect":
 				Brush::setPerfect($sender, $args[1]);
 				$sender->sendMessage(TF::GREEN . "Perfect: " . TF::AQUA . $args[1]);
+				return true;
 		}
-		return false;
 	}
 }

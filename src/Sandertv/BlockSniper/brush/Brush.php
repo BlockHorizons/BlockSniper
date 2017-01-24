@@ -66,7 +66,7 @@ class Brush {
 		}
 	}
 	
-	public static function setPerfect(Player $player, bool $value) {
+	public static function setPerfect(Player $player, $value) {
 		self::$brush[$player->getId()]["perfect"] = (bool) $value;
 	}
 	
