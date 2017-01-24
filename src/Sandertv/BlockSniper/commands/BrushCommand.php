@@ -11,7 +11,7 @@ use Sandertv\BlockSniper\brush\Brush;
 class BrushCommand extends BaseCommand {
 	
 	public function __construct(Loader $owner) {
-		parent::__construct($owner, "brush", "Change the properties of the brush", "<size|shape|type|blocks|height> <args>", ["b", "brushwand"]);
+		parent::__construct($owner, "brush", "Change the properties of the brush", "<size|shape|type|blocks|height|obsolete> <args>", ["b", "brushwand"]);
 		$this->setPermission("blocksniper.command.brush");
 	}
 	

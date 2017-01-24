@@ -57,7 +57,7 @@ BlockSniper has several commands to edit your world. The commands work as follow
 >
 > Additional blocks can be added by separating them with a comma.
 >
->> /brushwand <type> <radius> <block(s)> : Set a wand with an edit type to shoot everytime you hold your finger on the screen or interact.
+>> /brush <size|shape|type|blocks|height|obsolete> <args> : Set a wand with an edit type to shoot everytime you hold your finger on the screen or interact.
 >
 > Additional blocks can here too be added by separating them with a comma.
 >
@@ -65,13 +65,13 @@ BlockSniper has several commands to edit your world. The commands work as follow
 >
 > Undoes the last modification done.
 >
->> /clone <template/copy> <radiusXheight> [name] : Clones the target in either a copy, or a template with the given name.
+>> /clone <template/copy> <radiusXheight> <name> : Clones the target in either a copy, or a template with the given name.       
 >
 > Templates can be downloaded and shared, while copies are only temporary.
 >
->> /paste <template/copy> [name] : Pastes the current copy, or template with the given name.
+>> /paste <template/copy> <name> : Pastes the current copy, or template with the given name.       
 >
-> Downloaded templates can be pasted using the according name, copies can be pasted without name.
+> Downloaded templates can be pasted using the according name, copies can be pasted without name.     
 >
 
 ## Are there permissions? Where can I find them?
