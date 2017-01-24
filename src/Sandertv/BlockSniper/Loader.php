@@ -20,7 +20,7 @@ use Sandertv\BlockSniper\events\ToggleBrushEvent;
 
 class Loader extends PluginBase {
 	
-	const VERSION = "0.2.0";
+	const VERSION = "0.99.0";
 	const API_TARGET = "2.1.0";
 	
 	public $brushwand = [];
