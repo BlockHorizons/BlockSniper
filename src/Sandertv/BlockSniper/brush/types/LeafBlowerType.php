@@ -32,8 +32,8 @@ class LeafBlowerType extends BaseType {
 		foreach($this->blocks as $block) {
 			if($block instanceof Flowable) {
 				$undoBlocks[] = $block;
-				$this->level->dropItem(new Vector3($x, $y, $z), Item::get($block->getId()));
-				$this->level->setBlock(new Vector3($x, $y, $z), Block::get(Block::AIR), false, false);
+				$this->level->dropItem($block, Item::get($block->getId()));
+				$this->level->setBlock($block, Block::get(Block::AIR), false, false);
 			}
 		}
 		$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
