@@ -74,3 +74,6 @@ BlockSniper has several commands to edit your world. The commands work as follow
 A full list of permissions can be found in the [plugin.yml](https://github.com/Sandertv/BlockSniper/blob/master/plugin.yml) file. 
 It contains the most up to date permissions, so every permission available can be found there.
 
+## I love/hate BlockSniper! Where can I review this?
+BlockSniper can be reviewed at the poggit release page [here](https://poggit.pmmp.io/p/BlockSniper/27).
+Any feedback given is very welcome, and it would be very much appreciated!
