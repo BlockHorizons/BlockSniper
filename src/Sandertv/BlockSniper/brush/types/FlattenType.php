@@ -2,13 +2,13 @@
 
 namespace Sandertv\BlockSniper\brush\types;
 
-use Sandertv\BlockSniper\brush\Brush;
 use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
-use Sandertv\BlockSniper\brush\BaseType;
-use Sandertv\BlockSniper\Loader;
 use pocketmine\Player;
+use Sandertv\BlockSniper\brush\BaseType;
+use Sandertv\BlockSniper\brush\Brush;
+use Sandertv\BlockSniper\Loader;
 
 class FlattenType extends BaseType {
 	

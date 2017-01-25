@@ -6,9 +6,9 @@ use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
+use pocketmine\Player;
 use Sandertv\BlockSniper\brush\BaseType;
 use Sandertv\BlockSniper\Loader;
-use pocketmine\Player;
 
 class DrainType extends BaseType {
 	

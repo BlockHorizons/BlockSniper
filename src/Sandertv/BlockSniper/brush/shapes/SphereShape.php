@@ -2,13 +2,13 @@
 
 namespace Sandertv\BlockSniper\brush\shapes;
 
-use Sandertv\BlockSniper\brush\Brush;
 use pocketmine\level\Level;
 use pocketmine\math\Math;
 use pocketmine\math\Vector3;
-use Sandertv\BlockSniper\brush\BaseShape;
-use Sandertv\BlockSniper\Loader;
 use pocketmine\Player;
+use Sandertv\BlockSniper\brush\BaseShape;
+use Sandertv\BlockSniper\brush\Brush;
+use Sandertv\BlockSniper\Loader;
 
 class SphereShape extends BaseShape {
 	
@@ -64,6 +64,10 @@ class SphereShape extends BaseShape {
 		return $blocksInside;
 	}
 	
+	public function getLevel(): Level {
+		return $this->level;
+	}
+	
 	public function getName(): string {
 		return "Sphere";
 	}
@@ -98,9 +102,5 @@ class SphereShape extends BaseShape {
 	
 	public function setBlocks(array $blocks) {
 		$this->blocks = $blocks;
-	}
-	
-	public function getLevel(): Level {
-		return $this->level;
 	}
 }

@@ -4,11 +4,11 @@ namespace Sandertv\BlockSniper\commands\cloning;
 
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
-use Sandertv\BlockSniper\commands\BaseCommand;
 use pocketmine\utils\TextFormat as TF;
-use Sandertv\BlockSniper\Loader;
 use Sandertv\BlockSniper\cloning\Copy;
 use Sandertv\BlockSniper\cloning\Template;
+use Sandertv\BlockSniper\commands\BaseCommand;
+use Sandertv\BlockSniper\Loader;
 
 class CloneCommand extends BaseCommand {
 	
@@ -42,7 +42,7 @@ class CloneCommand extends BaseCommand {
 		
 		$sizes = explode("x", strtolower($args[1]));
 		
-		if((int) $sizes[0] > $this->getSettings()->get("Maximum-Radius") || (int) $sizes[1] > $this->getSettings()->get("Maximum-Radius")) {
+		if((int)$sizes[0] > $this->getSettings()->get("Maximum-Radius") || (int)$sizes[1] > $this->getSettings()->get("Maximum-Radius")) {
 			$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.radius-too-big"));
 			return true;
 		}
@@ -65,7 +65,7 @@ class CloneCommand extends BaseCommand {
 				}
 				$clone = new Template($this->getPlugin(), $sender->getLevel(), $args[2], $center, $sizes[0], $sizes[1]);
 				break;
-				
+			
 			default:
 				$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.clone-not-found"));
 				return true;

@@ -16,16 +16,16 @@ abstract class BaseTask extends PluginTask {
 	}
 	
 	/**
-	 * @return Loader
-	 */
-	public function getPlugin(): Loader {
-		return $this->owner;
-	}
-	
-	/**
 	 * @return UndoStorer
 	 */
 	public function getUndoStore(): UndoStorer {
 		return $this->getPlugin()->getUndoStore();
+	}
+	
+	/**
+	 * @return Loader
+	 */
+	public function getPlugin(): Loader {
+		return $this->owner;
 	}
 }

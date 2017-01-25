@@ -7,8 +7,6 @@ use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
 use Sandertv\BlockSniper\commands\BaseCommand;
 use Sandertv\BlockSniper\Loader;
-use Sandertv\BlockSniper\cloning\Copy;
-use Sandertv\BlockSniper\cloning\Template;
 
 class PasteCommand extends BaseCommand {
 	

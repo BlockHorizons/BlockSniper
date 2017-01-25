@@ -2,24 +2,22 @@
 
 namespace Sandertv\BlockSniper\brush;
 
-use Sandertv\BlockSniper\Loader;
-use pocketmine\Player;
-use pocketmine\item\Item;
 use pocketmine\block\Block;
-
+use pocketmine\item\Item;
+use pocketmine\Player;
 use Sandertv\BlockSniper\brush\shapes\CubeShape;
 use Sandertv\BlockSniper\brush\shapes\CuboidShape;
 use Sandertv\BlockSniper\brush\shapes\CylinderStandingShape;
 use Sandertv\BlockSniper\brush\shapes\SphereShape;
-
-use Sandertv\BlockSniper\brush\types\FillType;
 use Sandertv\BlockSniper\brush\types\CleanType;
 use Sandertv\BlockSniper\brush\types\DrainType;
+use Sandertv\BlockSniper\brush\types\FillType;
 use Sandertv\BlockSniper\brush\types\FlattenType;
 use Sandertv\BlockSniper\brush\types\LayerType;
 use Sandertv\BlockSniper\brush\types\LeafBlowerType;
 use Sandertv\BlockSniper\brush\types\OverlayType;
 use Sandertv\BlockSniper\brush\types\ReplaceType;
+use Sandertv\BlockSniper\Loader;
 
 class Brush {
 	
@@ -67,7 +65,7 @@ class Brush {
 	}
 	
 	public static function setPerfect(Player $player, $value) {
-		self::$brush[$player->getId()]["perfect"] = (bool) $value;
+		self::$brush[$player->getId()]["perfect"] = (bool)$value;
 	}
 	
 	public static function getPerfect(Player $player): bool {
@@ -110,28 +108,10 @@ class Brush {
 	
 	/**
 	 * @param Player $player
-	 *
-	 * @return int
-	 */
-	public static function getHeight(Player $player): int {
-		return self::$brush[$player->getId()]["height"];
-	}
-	
-	/**
-	 * @param Player $player
 	 * @param float  $size
 	 */
 	public static function setSize(Player $player, float $size) {
 		self::$brush[$player->getId()]["size"] = $size;
-	}
-	
-	/**
-	 * @param Player $player
-	 *
-	 * @return int
-	 */
-	public static function getSize(Player $player): int {
-		return self::$brush[$player->getId()]["size"];
 	}
 	
 	/**
@@ -170,12 +150,30 @@ class Brush {
 			case "cylinder":
 				$shape = new CylinderStandingShape(self::$owner, $player->getLevel(), self::getSize($player), self::getHeight($player), $player->getTargetBlock(100));
 				break;
-				
+			
 			default:
 				$shape = new SphereShape(self::$owner, $player->getLevel(), self::getSize($player), $player->getTargetBlock(100));
 				break;
 		}
 		return $shape;
+	}
+	
+	/**
+	 * @param Player $player
+	 *
+	 * @return int
+	 */
+	public static function getSize(Player $player): int {
+		return self::$brush[$player->getId()]["size"];
+	}
+	
+	/**
+	 * @param Player $player
+	 *
+	 * @return int
+	 */
+	public static function getHeight(Player $player): int {
+		return self::$brush[$player->getId()]["height"];
 	}
 	
 	/**

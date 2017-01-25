@@ -2,10 +2,10 @@
 
 namespace Sandertv\BlockSniper\cloning;
 
-use Sandertv\BlockSniper\Loader;
+use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
-use pocketmine\item\Item;
+use Sandertv\BlockSniper\Loader;
 
 class Copy extends BaseClone {
 	

@@ -51,6 +51,10 @@ class CubeShape extends BaseShape {
 		return $blocksInside;
 	}
 	
+	public function getLevel(): Level {
+		return $this->level;
+	}
+	
 	public function getName(): string {
 		return "Cube";
 	}
@@ -69,9 +73,5 @@ class CubeShape extends BaseShape {
 	
 	public function setCenter(Vector3 $center) {
 		$this->center = $center;
-	}
-	
-	public function getLevel(): Level {
-		return $this->level;
 	}
 }

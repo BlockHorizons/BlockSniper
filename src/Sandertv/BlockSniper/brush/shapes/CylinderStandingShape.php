@@ -2,8 +2,6 @@
 
 namespace Sandertv\BlockSniper\brush\shapes;
 
-use pocketmine\block\Block;
-use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use Sandertv\BlockSniper\brush\BaseShape;
@@ -43,7 +41,7 @@ class CylinderStandingShape extends BaseShape {
 		$maxX = $targetX + $this->radius;
 		$maxZ = $targetZ + $this->radius;
 		$maxY = $targetY + $this->height;
-
+		
 		$blocksInside = [];
 		
 		for($x = $minX; $x <= $maxX; $x++) {
@@ -56,6 +54,10 @@ class CylinderStandingShape extends BaseShape {
 			}
 		}
 		return $blocksInside;
+	}
+	
+	public function getLevel(): Level {
+		return $this->level;
 	}
 	
 	public function getName(): string {
@@ -76,9 +78,5 @@ class CylinderStandingShape extends BaseShape {
 	
 	public function setCenter(Vector3 $center) {
 		$this->center = $center;
-	}
-	
-	public function getLevel(): Level {
-		return $this->level;
 	}
 }

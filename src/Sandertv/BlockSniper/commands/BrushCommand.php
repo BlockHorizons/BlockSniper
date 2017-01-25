@@ -5,8 +5,8 @@ namespace Sandertv\BlockSniper\commands;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
-use Sandertv\BlockSniper\Loader;
 use Sandertv\BlockSniper\brush\Brush;
+use Sandertv\BlockSniper\Loader;
 
 class BrushCommand extends BaseCommand {
 	
@@ -57,12 +57,12 @@ class BrushCommand extends BaseCommand {
 						Brush::setShape($sender, $args[1]);
 						$sender->sendMessage(TF::GREEN . "Shape: " . TF::AQUA . $args[1]);
 						return true;
-						
+					
 					default:
 						$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.shape-not-found"));
 						return true;
 				}
-				
+			
 			case "type":
 				switch(strtolower($args[1])) {
 					case "fill":
@@ -80,12 +80,12 @@ class BrushCommand extends BaseCommand {
 						Brush::setType($sender, $args[1]);
 						$sender->sendMessage(TF::GREEN . "Type: " . TF::AQUA . $args[1]);
 						return true;
-						
+					
 					default:
 						$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.shape-not-found"));
 						return true;
 				}
-				
+			
 			case "height":
 				if(!is_numeric($args[1])) {
 					$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.radius-not-numeric"));
@@ -94,7 +94,7 @@ class BrushCommand extends BaseCommand {
 				Brush::setHeight($sender, $args[1]);
 				$sender->sendMessage(TF::GREEN . "Height: " . TF::AQUA . $args[1]);
 				return true;
-				
+			
 			case "block":
 			case "blocks":
 				$blocks = explode(",", $args[1]);
@@ -106,13 +106,13 @@ class BrushCommand extends BaseCommand {
 				}
 				$sender->sendMessage(TF::GREEN . "Blocks: " . TF::AQUA . implode(", ", $blockNames));
 				return true;
-				
+			
 			case "obsolete":
 			case "replaced":
 				Brush::setObsolete($sender, $args[1]);
 				$sender->sendMessage(TF::GREEN . "Obsolete: " . TF::AQUA . Brush::getObsolete($sender)->getName());
 				return true;
-				
+			
 			case "perfect":
 				Brush::setPerfect($sender, $args[1]);
 				$sender->sendMessage(TF::GREEN . "Perfect: " . TF::AQUA . $args[1]);

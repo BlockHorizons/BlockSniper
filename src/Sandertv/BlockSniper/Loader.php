@@ -2,19 +2,18 @@
 
 namespace Sandertv\BlockSniper;
 
-use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat as TF;
-use Sandertv\BlockSniper\commands\BrushCommand;
-use Sandertv\BlockSniper\commands\UndoCommand;
-use Sandertv\BlockSniper\commands\BlockSniperCommand;
-use Sandertv\BlockSniper\listeners\EventListener;
+use Sandertv\BlockSniper\brush\Brush;
 use Sandertv\BlockSniper\cloning\CloneStorer;
-use Sandertv\BlockSniper\tasks\UndoDiminishTask;
+use Sandertv\BlockSniper\commands\BlockSniperCommand;
+use Sandertv\BlockSniper\commands\BrushCommand;
 use Sandertv\BlockSniper\commands\cloning\CloneCommand;
 use Sandertv\BlockSniper\commands\cloning\PasteCommand;
-use Sandertv\BlockSniper\brush\Brush;
+use Sandertv\BlockSniper\commands\UndoCommand;
+use Sandertv\BlockSniper\listeners\EventListener;
+use Sandertv\BlockSniper\tasks\UndoDiminishTask;
 
 class Loader extends PluginBase {
 	
@@ -64,19 +63,6 @@ class Loader extends PluginBase {
 		$this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
 	}
 	
-	public function onDisable() {
-		$this->getLogger()->info(TF::RED . "BlockSniper has been disabled.");
-		$this->getUndoStore()->resetUndoStorage();
-	}
-	
-	public function registerCommands() {
-		$this->getServer()->getCommandMap()->register("blocksniper", new BlockSniperCommand($this));
-		$this->getServer()->getCommandMap()->register("brush", new BrushCommand($this));
-		$this->getServer()->getCommandMap()->register("undo", new UndoCommand($this));
-		$this->getServer()->getCommandMap()->register("clone", new CloneCommand($this));
-		$this->getServer()->getCommandMap()->register("paste", new PasteCommand($this));
-	}
-	
 	/**
 	 * @return bool
 	 */
@@ -96,23 +82,23 @@ class Loader extends PluginBase {
 	}
 	
 	/**
-	 * @param string $message
-	 *
-	 * @return string
-	 */
-	public function getTranslation(string $message) {
-		return (string) $this->language->getNested($message);
-	}
-	
-	public function scheduleTasks() {
-		$this->getServer()->getScheduler()->scheduleDelayedTask(new UndoDiminishTask($this), 2400);
-	}
-	
-	/**
 	 * @return Config
 	 */
 	public function getSettings(): Config {
 		return $this->settings;
+	}
+	
+	public function registerCommands() {
+		$this->getServer()->getCommandMap()->register("blocksniper", new BlockSniperCommand($this));
+		$this->getServer()->getCommandMap()->register("brush", new BrushCommand($this));
+		$this->getServer()->getCommandMap()->register("undo", new UndoCommand($this));
+		$this->getServer()->getCommandMap()->register("clone", new CloneCommand($this));
+		$this->getServer()->getCommandMap()->register("paste", new PasteCommand($this));
+	}
+	
+	public function onDisable() {
+		$this->getLogger()->info(TF::RED . "BlockSniper has been disabled.");
+		$this->getUndoStore()->resetUndoStorage();
 	}
 	
 	/**
@@ -120,6 +106,19 @@ class Loader extends PluginBase {
 	 */
 	public function getUndoStore(): UndoStorer {
 		return $this->undoStore;
+	}
+	
+	/**
+	 * @param string $message
+	 *
+	 * @return string
+	 */
+	public function getTranslation(string $message) {
+		return (string)$this->language->getNested($message);
+	}
+	
+	public function scheduleTasks() {
+		$this->getServer()->getScheduler()->scheduleDelayedTask(new UndoDiminishTask($this), 2400);
 	}
 	
 	/**

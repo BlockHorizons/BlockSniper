@@ -4,10 +4,10 @@ namespace Sandertv\BlockSniper\listeners;
 
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
-use pocketmine\utils\TextFormat as TF;
 use pocketmine\item\Item;
-use Sandertv\BlockSniper\Loader;
+use pocketmine\utils\TextFormat as TF;
 use Sandertv\BlockSniper\brush\Brush;
+use Sandertv\BlockSniper\Loader;
 
 class EventListener implements Listener {
 	
@@ -15,10 +15,6 @@ class EventListener implements Listener {
 	
 	public function __construct(Loader $owner) {
 		$this->owner = $owner;
-	}
-	
-	public function getOwner(): Loader {
-		return $this->owner;
 	}
 	
 	public function onBrush(PlayerInteractEvent $event) {
@@ -39,5 +35,9 @@ class EventListener implements Listener {
 				return true;
 			}
 		}
+	}
+	
+	public function getOwner(): Loader {
+		return $this->owner;
 	}
 }

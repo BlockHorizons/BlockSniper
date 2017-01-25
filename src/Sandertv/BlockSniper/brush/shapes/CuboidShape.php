@@ -2,8 +2,6 @@
 
 namespace Sandertv\BlockSniper\brush\shapes;
 
-use pocketmine\block\Block;
-use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use Sandertv\BlockSniper\brush\BaseShape;
@@ -55,6 +53,10 @@ class CuboidShape extends BaseShape {
 		return $blocksInside;
 	}
 	
+	public function getLevel(): Level {
+		return $this->level;
+	}
+	
 	public function getName(): string {
 		return "Cuboid";
 	}
@@ -73,9 +75,5 @@ class CuboidShape extends BaseShape {
 	
 	public function setCenter(Vector3 $center) {
 		$this->center = $center;
-	}
-	
-	public function getLevel(): Level {
-		return $this->level;
 	}
 }

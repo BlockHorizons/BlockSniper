@@ -5,10 +5,10 @@ namespace Sandertv\BlockSniper\brush\types;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\level\Level;
-use Sandertv\BlockSniper\brush\BaseType;
-use Sandertv\BlockSniper\Loader;
-use Sandertv\BlockSniper\brush\Brush;
 use pocketmine\Player;
+use Sandertv\BlockSniper\brush\BaseType;
+use Sandertv\BlockSniper\brush\Brush;
+use Sandertv\BlockSniper\Loader;
 
 class OverlayType extends BaseType {
 	

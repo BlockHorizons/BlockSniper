@@ -2,10 +2,10 @@
 
 namespace Sandertv\BlockSniper\cloning;
 
-use Sandertv\BlockSniper\Loader;
+use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\math\Vector3;
-use pocketmine\block\Block;
+use Sandertv\BlockSniper\Loader;
 
 class CloneStorer {
 	
@@ -17,28 +17,8 @@ class CloneStorer {
 		$this->owner = $owner;
 	}
 	
-	/**
-	 * @return Loader
-	 */
-	public function getOwner(): Loader {
-		return $this->owner;
-	}
-	
 	public function setTargetBlock(Vector3 $target) {
 		$this->target = $target;
-	}
-	
-	public function getTargetBlock(): Vector3 {
-		return $this->target;
-	}
-	
-	// Required for math to copy-paste it on the location looked at.
-	public function setOriginalCenter(Vector3 $center) {
-		$this->originalCenter = $center;
-	}
-	
-	public function getOriginalCenter(): Vector3 {
-		return $this->originalCenter;
 	}
 	
 	/**
@@ -59,6 +39,22 @@ class CloneStorer {
 		unset($i);
 	}
 	
+	public function unsetCopy() {
+		foreach($this->copyStore as $blocks) {
+			unset($blocks);
+		}
+	}
+	
+	// Required for math to copy-paste it on the location looked at.
+
+	public function getOriginalCenter(): Vector3 {
+		return $this->originalCenter;
+	}
+	
+	public function setOriginalCenter(Vector3 $center) {
+		$this->originalCenter = $center;
+	}
+	
 	public function pasteCopy() {
 		foreach($this->copyStore as $key => $block) {
 			$Id = explode("(", $key);
@@ -69,18 +65,23 @@ class CloneStorer {
 			$y = $block["y"] + 1;
 			$z = $block["z"];
 			$finalBlock = Item::get($blockId)->getBlock();
-			$finalBlock->setDamage((int) $meta !== null ? $meta : 0);
+			$finalBlock->setDamage((int)$meta !== null ? $meta : 0);
 			
 			// Start pasting the copy...
 			$blockPos = new Vector3($x + $this->getTargetBlock()->x, $y + $this->getTargetBlock()->y, $z + $this->getTargetBlock()->z);
-			$this->getOwner()->getServer()->getLevelByName($block["level"])->setBlock($blockPos, Block::get((int) $blockId, (int) $meta), false, false);
+			$this->getOwner()->getServer()->getLevelByName($block["level"])->setBlock($blockPos, Block::get((int)$blockId, (int)$meta), false, false);
 		}
 	}
 	
-	public function unsetCopy() {
-		foreach($this->copyStore as $blocks) {
-			unset($blocks);
-		}
+	public function getTargetBlock(): Vector3 {
+		return $this->target;
+	}
+	
+	/**
+	 * @return Loader
+	 */
+	public function getOwner(): Loader {
+		return $this->owner;
 	}
 	
 	public function resetCopyStorage() {
@@ -152,10 +153,10 @@ class CloneStorer {
 			$y = $block["y"] + 1;
 			$z = $block["z"];
 			$finalBlock = Item::get($blockId)->getBlock();
-			$finalBlock->setDamage((int) $meta !== null ? $meta : 0);
+			$finalBlock->setDamage((int)$meta !== null ? $meta : 0);
 			
 			$blockPos = new Vector3($x + $targetBlock->x, $y + $targetBlock->y, $z + $targetBlock->z);
-			$targetBlock->getLevel()->setBlock($blockPos, Block::get((int) $blockId, (int) $meta), false, false);
+			$targetBlock->getLevel()->setBlock($blockPos, Block::get((int)$blockId, (int)$meta), false, false);
 		}
 		return true;
 	}

@@ -4,10 +4,10 @@ namespace Sandertv\BlockSniper\brush\types;
 
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
-use Sandertv\BlockSniper\brush\BaseType;
-use Sandertv\BlockSniper\Loader;
-use Sandertv\BlockSniper\brush\Brush;
 use pocketmine\Player;
+use Sandertv\BlockSniper\brush\BaseType;
+use Sandertv\BlockSniper\brush\Brush;
+use Sandertv\BlockSniper\Loader;
 
 class FillType extends BaseType {
 	
