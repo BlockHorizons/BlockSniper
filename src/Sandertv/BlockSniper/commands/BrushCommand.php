@@ -11,7 +11,7 @@ use Sandertv\BlockSniper\Loader;
 class BrushCommand extends BaseCommand {
 	
 	public function __construct(Loader $owner) {
-		parent::__construct($owner, "brush", "Change the properties of the brush", "<size|shape|type|blocks|height|obsolete> <args>", ["b", "brushwand"]);
+		parent::__construct($owner, "brush", "Change the properties of the brush", "<size|shape|type|blocks|height|obsolete|perfect> <args>", ["b", "brushwand"]);
 		$this->setPermission("blocksniper.command.brush");
 	}
 	
@@ -27,7 +27,7 @@ class BrushCommand extends BaseCommand {
 		}
 		
 		if(count($args) !== 2) {
-			$sender->sendMessage(TF::RED . "[Usage] /brush <size|shape|type|blocks|height> <args>");
+			$sender->sendMessage(TF::RED . "[Usage] /brush <size|shape|type|blocks|height|obsolete|perfect> <value>");
 			return true;
 		}
 		
@@ -116,6 +116,10 @@ class BrushCommand extends BaseCommand {
 			case "perfect":
 				Brush::setPerfect($sender, $args[1]);
 				$sender->sendMessage(TF::GREEN . "Perfect: " . TF::AQUA . $args[1]);
+				return true;
+				
+			default:
+				$sender->sendMessage(TF::RED . "[Usage] /brush <size|shape|type|blocks|height|obsolete|perfect> <value>");
 				return true;
 		}
 	}
