@@ -1,8 +1,8 @@
 # BlockSniper
-An innovative new world editing tool, made for PocketMine-MP: An MCPE server software written in PHP. Worlds can be easily edited using a Golden Carrot.
+An innovative world editing tool, made for PocketMine-MP: An MCPE server software written in PHP. Worlds can be easily edited using a Golden Carrot, which is used as brush.
 
-## Development!
-BlockSniper is currently under heavy development. Stable releases will be drafted at [Releases](https://github.com/Sandertv/BlockSniper/releases).
+## Installation
+Stable releases will be drafted at [Releases](https://github.com/Sandertv/BlockSniper/releases).
 If you do decide to compile a phar file yourself to benefit from the latest features, here's how:
  - Download the .ZIP file with the big green button.
  - Go to pmt.mcpe.me and convert the .ZIP file to a phar file.
@@ -12,42 +12,45 @@ If you do decide to compile a phar file yourself to benefit from the latest feat
 
 ## What is this?
 BlockSniper is an advanced world editing tool, based on the idea of VoxelSniper from Mineraft PC softwares.
-BlockSniper allows you to edit your world on a long range, with several different types/shapes. The types/shapes are as follows:
+BlockSniper allows you to edit your world on a long range, with several different types and shapes. Shapes are the shapes types are being executed in. This means that every type can be executed in any shape.
 
+
+>> Shapes
+>
+> Cube      > Selects a cube area around the target block.
+>
+> Sphere    > Selects a sphere area around the target block.
+>
+> Cylinder (standing) > Selects a *standing* cylinder are around the target block.
+>
+> Cuboid    > Selects a cuboid area around the target block.
+>
+>> Types
+>
+> Fill      > Basic type, fills up the whole shape with blocks.
+>
+> Overlay   > Lays a layer of blocks over other blocks.
+>
+> Layer     > Creates a thin layer of blocks on top of the target block.
+>
+> Replace   > Replaces a block for other blocks.
+>
+> Leafblower > Blows away all nearby plants.
+>
+> Clean     > Cleans up the landscape, only leaving behind ground.
+>
+> Drain     > Drains all liquid blocks.
+>
+> Flatten   > Flattens the area around the selected block.
+>
+> More coming soon!
+>
 >> Clone types
 >
 > Template  > Saves the selected clone in a sharable file.
 >
 > Copy      > Virtually saves the selected area to paste later.
 >
->> Shapes
->
-> Cube      > As if minecraft wasn't enough cubes already.
->
-> Sphere    > Done with trying to build a perfect sphere?
->
-> Cylinder (standing) > For the people that really want a unique building.
->
-> Cuboid    > Making a cuboid has never been so easy.
->
->> Types
->
-> Overlay   > Get those ugly dirt blocks out of sight.
->
-> Layer     > Make a thin layer of blocks to fix your terrain.
->
-> Replace   > Replace those useless coal blocks for diamond blocks instead!
->
-> Leafblower > Blow away all those annoying plants.
->
-> Clean     > Restore your terrain from all the ugly dirt houses.
->
-> Drain     > Ever wanted to drain an ocean? No?
->
-> Flatten   > Finally you don't need a flat world for flat terrain anymore.
->
-> More coming soon!
-
 ## Translation
 BlockSniper has a multi-language system, so everybody can have a good time using the plugin. We currently have nowhere near enough translated languages though, and we need your help! It is very appreciated if you help translate, so please do so whenever you have time. The available languages can be found under resources/languages.
 
