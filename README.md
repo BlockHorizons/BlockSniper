@@ -50,7 +50,7 @@ BlockSniper allows you to edit your world on a long range, with several differen
 > Template  > Saves the selected clone in a sharable file.
 >
 > Copy      > Virtually saves the selected area to paste later.
->
+
 ## Translation
 BlockSniper has a multi-language system, so everybody can have a good time using the plugin. We currently have nowhere near enough translated languages though, and we need your help! It is very appreciated if you help translate, so please do so whenever you have time. The available languages can be found under resources/languages.
 
