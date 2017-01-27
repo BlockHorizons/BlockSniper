@@ -82,5 +82,5 @@ A full list of permissions can be found in the [plugin.yml](https://github.com/S
 It contains the most up to date permissions, so every permission available can be found there.
 
 ## I love/hate BlockSniper! Where can I review this?
-BlockSniper can be reviewed at the poggit release page [here](https://poggit.pmmp.io/p/BlockSniper/27).
+BlockSniper can be reviewed at the poggit release page [here](https://poggit.pmmp.io/p/BlockSniper/).
 Any feedback given is very welcome, and it would be very much appreciated!
