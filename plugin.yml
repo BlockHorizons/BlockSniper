@@ -33,6 +33,9 @@ permissions:
                 default: false
                 description: "Allows access to all BlockSniper types."
                 children:
+                    blocksniper.type.fill:
+                        default: op
+                        description: "Allows access to the fill type."
                     blocksniper.type.overlay:
                         default: op
                         description: "Allows access to the overlay type."

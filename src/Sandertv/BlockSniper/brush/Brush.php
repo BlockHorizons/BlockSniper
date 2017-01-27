@@ -43,7 +43,7 @@ class Brush {
 			"type" => "fill",
 			"size" => 1,
 			"height" => 1,
-			"blocks" => [Block::get(Block::AIR)],
+			"blocks" => [Block::get(Block::STONE)],
 			"obsolete" => Block::get(Block::AIR)
 		];
 		return true;
