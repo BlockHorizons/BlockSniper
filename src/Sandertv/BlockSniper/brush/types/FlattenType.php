@@ -2,77 +2,46 @@
 
 namespace Sandertv\BlockSniper\brush\types;
 
-use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
+use pocketmine\Player;
 use Sandertv\BlockSniper\brush\BaseType;
+use Sandertv\BlockSniper\brush\Brush;
 use Sandertv\BlockSniper\Loader;
 
 class FlattenType extends BaseType {
 	
-	public function __construct(Loader $main, Level $level, float $radius = null, Vector3 $center = null, array $blocks = []) {
+	public $level;
+	public $blocks;
+	public $player;
+	public $center;
+	
+	public function __construct(Loader $main, Player $player, Level $level, array $blocks = [], Vector3 $center) {
 		parent::__construct($main);
 		$this->level = $level;
-		$this->radius = $radius;
-		$this->center = $center;
 		$this->blocks = $blocks;
+		$this->center = $center;
 		
-		if(!isset($center)) {
-			$this->center = new Vector3(0, 0, 0);
-		}
-		if(!isset($blocks)) {
-			$this->blocks = ["Air"];
-		}
+		$this->player = $player;
 	}
 	
 	/**
 	 * @return bool
 	 */
 	public function fillShape(): bool {
-		$radiusSquared = pow($this->radius, 2);
-		$targetX = $this->center->x;
-		$targetY = $this->center->y;
-		$targetZ = $this->center->z;
-		
-		$minX = $targetX - $this->radius;
-		$minZ = $targetZ - $this->radius;
-		$minY = $targetY - 5;
-		$maxX = $targetX + $this->radius;
-		$maxZ = $targetZ + $this->radius;
-		$maxY = $targetY;
-		
 		$undoBlocks = [];
-		
-		$valid = false;
-		for($x = $minX; $x <= $maxX; $x++) {
-			for($z = $minZ; $z <= $maxZ; $z++) {
-				for($y = $minY; $y <= $maxY; $y++) {
-					$randomName = $this->blocks[array_rand($this->blocks)];
-					$randomBlock = is_numeric($randomName) ? Item::get($randomName)->getBlock() : Item::fromString($randomName)->getBlock();
-					$originBlock = $this->level->getBlock(new Vector3($x, $y, $z));
-					if(pow($targetX - $x, 2) + pow($targetZ - $z, 2) <= $radiusSquared) {
-						if($randomBlock->getId() !== 0 || strtolower($randomName) === "air") {
-							if($this->level->getBlock(new Vector3($x, $y, $z))->getId() === Item::AIR) {
-								if($originBlock->getId() !== $randomBlock->getId()) {
-									$undoBlocks[] = $originBlock;
-								}
-								$this->level->setBlock(new Vector3($x, $y, $z), $randomBlock, false, false);
-								$valid = true;
-							}
-						}
-					}
+		foreach($this->blocks as $block) {
+			$randomBlock = Brush::$brush[$this->player->getId()]["blocks"][array_rand(Brush::$brush[$this->player->getId()]["blocks"])];
+			if($block->getId() === Item::AIR && $block->y <= $this->center->y) {
+				if($block->getId() !== $randomBlock->getId()) {
+					$undoBlocks[] = $block;
 				}
+				$this->level->setBlock(new Vector3($block->x, $block->y, $block->z), $randomBlock, false, false);
 			}
 		}
-		if($randomBlock === Block::AIR && strtolower($randomName) !== "air") {
-			return false;
-		}
-		if($valid) {
-			$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
-			return true;
-		}
-		return false;
+		$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
+		return true;
 	}
 	
 	public function getName(): string {
@@ -85,30 +54,6 @@ class FlattenType extends BaseType {
 	
 	public function getApproximateBlocks(): int {
 		// TODO
-	}
-	
-	public function getRadius(): float {
-		return $this->radius;
-	}
-	
-	public function setRadius(float $radius) {
-		$this->radius = $radius;
-	}
-	
-	public function getCenter(): Vector3 {
-		return $this->center;
-	}
-	
-	public function setCenter(Vector3 $center) {
-		$this->center = $center;
-	}
-	
-	public function getBlocks(): array {
-		return $this->blocks;
-	}
-	
-	public function setBlocks(array $blocks) {
-		$this->blocks = $blocks;
 	}
 	
 	public function getLevel(): Level {

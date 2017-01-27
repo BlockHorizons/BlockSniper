@@ -2,8 +2,8 @@
 
 namespace Sandertv\BlockSniper;
 
-use pocketmine\math\Vector3;
 use pocketmine\item\Item;
+use pocketmine\math\Vector3;
 use Sandertv\BlockSniper\tasks\UndoDiminishTask;
 
 class UndoStorer {
@@ -13,13 +13,6 @@ class UndoStorer {
 	
 	public function __construct(Loader $owner) {
 		$this->owner = $owner;
-	}
-	
-	/**
-	 * @return Loader
-	 */
-	public function getOwner(): Loader {
-		return $this->owner;
 	}
 	
 	/**
@@ -45,6 +38,17 @@ class UndoStorer {
 		$this->getOwner()->getServer()->getScheduler()->scheduleDelayedTask(new UndoDiminishTask($this->getOwner()), 2400);
 	}
 	
+	/**
+	 * @return Loader
+	 */
+	public function getOwner(): Loader {
+		return $this->owner;
+	}
+	
+	public function unsetFirstUndo() {
+		unset($this->undoStore[min(array_keys($this->undoStore))]);
+	}
+	
 	public function restoreLastUndo() {
 		foreach($this->undoStore[max(array_keys($this->undoStore))] as $key => $block) {
 			$Id = explode("(", $key);
@@ -55,7 +59,7 @@ class UndoStorer {
 			$y = $block["y"];
 			$z = $block["z"];
 			$finalBlock = Item::get($blockId, $meta)->getBlock();
-			$finalBlock->setDamage((int) $meta !== null ? $meta : 0);
+			$finalBlock->setDamage((int)$meta !== null ? $meta : 0);
 			$this->getOwner()->getServer()->getLevelByName($block["level"])->setBlock(new Vector3($x, $y, $z), $finalBlock, false, false);
 		}
 		$this->unsetLastUndo();
@@ -63,10 +67,6 @@ class UndoStorer {
 	
 	public function unsetLastUndo() {
 		unset($this->undoStore[max(array_keys($this->undoStore))]);
-	}
-	
-	public function unsetFirstUndo() {
-		unset($this->undoStore[min(array_keys($this->undoStore))]);
 	}
 	
 	public function resetUndoStorage() {

@@ -17,17 +17,17 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand 
 	}
 	
 	/**
-	 * @return Loader
-	 */
-	public function getPlugin(): Loader {
-		return $this->owner;
-	}
-	
-	/**
 	 * @param CommandSender $sender
 	 */
 	public function sendConsoleError(CommandSender $sender) {
 		$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.console-use"));
+	}
+	
+	/**
+	 * @return Loader
+	 */
+	public function getPlugin(): Loader {
+		return $this->owner;
 	}
 	
 	public function sendNoPermission(CommandSender $sender) {

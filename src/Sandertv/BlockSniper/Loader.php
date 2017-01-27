@@ -2,44 +2,42 @@
 
 namespace Sandertv\BlockSniper;
 
-use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat as TF;
-use Sandertv\BlockSniper\commands\BrushWandCommand;
-use Sandertv\BlockSniper\commands\SnipeCommand;
-use Sandertv\BlockSniper\commands\UndoCommand;
-use Sandertv\BlockSniper\commands\BlockSniperCommand;
-use Sandertv\BlockSniper\listeners\EventListener;
+use Sandertv\BlockSniper\brush\Brush;
 use Sandertv\BlockSniper\cloning\CloneStorer;
-use Sandertv\BlockSniper\tasks\UndoDiminishTask;
+use Sandertv\BlockSniper\commands\BlockSniperCommand;
+use Sandertv\BlockSniper\commands\BrushCommand;
 use Sandertv\BlockSniper\commands\cloning\CloneCommand;
 use Sandertv\BlockSniper\commands\cloning\PasteCommand;
-
-use Sandertv\BlockSniper\events\ToggleBrushEvent;
+use Sandertv\BlockSniper\commands\UndoCommand;
+use Sandertv\BlockSniper\listeners\EventListener;
+use Sandertv\BlockSniper\tasks\UndoDiminishTask;
 
 class Loader extends PluginBase {
 	
-	const VERSION = "0.2.0";
+	const VERSION = "0.99.0";
 	const API_TARGET = "2.1.0";
 	
-	public $brushwand = [];
 	public $undoStore;
 	public $cloneStore;
 	public $settings;
+	public $brush;
 	
 	public $availableLanguages = [
 		"en",
 		"nl",
 		"de",
 		"fr",
-		"fa",	
-                "ru"
+		"fa",
+		"ru"
 	];
 	public $language;
 	
 	public function onEnable() {
 		$this->getLogger()->info(TF::GREEN . "BlockSniper has been enabled.");
+		$this->brush = new Brush($this);
 		$this->undoStore = new UndoStorer($this);
 		$this->cloneStore = new CloneStorer($this);
 		if(!is_dir($this->getDataFolder())) {
@@ -65,20 +63,6 @@ class Loader extends PluginBase {
 		$this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
 	}
 	
-	public function onDisable() {
-		$this->getLogger()->info(TF::RED . "BlockSniper has been disabled.");
-		$this->getUndoStore()->resetUndoStorage();
-	}
-	
-	public function registerCommands() {
-		$this->getServer()->getCommandMap()->register("blocksniper", new BlockSniperCommand($this));
-		$this->getServer()->getCommandMap()->register("snipe", new SnipeCommand($this));
-		$this->getServer()->getCommandMap()->register("brushwand", new BrushWandCommand($this));
-		$this->getServer()->getCommandMap()->register("undo", new UndoCommand($this));
-		$this->getServer()->getCommandMap()->register("clone", new CloneCommand($this));
-		$this->getServer()->getCommandMap()->register("paste", new PasteCommand($this));
-	}
-	
 	/**
 	 * @return bool
 	 */
@@ -98,23 +82,23 @@ class Loader extends PluginBase {
 	}
 	
 	/**
-	 * @param string $message
-	 *
-	 * @return string
-	 */
-	public function getTranslation(string $message) {
-		return (string) $this->language->getNested($message);
-	}
-	
-	public function scheduleTasks() {
-		$this->getServer()->getScheduler()->scheduleDelayedTask(new UndoDiminishTask($this), 2400);
-	}
-	
-	/**
 	 * @return Config
 	 */
 	public function getSettings(): Config {
 		return $this->settings;
+	}
+	
+	public function registerCommands() {
+		$this->getServer()->getCommandMap()->register("blocksniper", new BlockSniperCommand($this));
+		$this->getServer()->getCommandMap()->register("brush", new BrushCommand($this));
+		$this->getServer()->getCommandMap()->register("undo", new UndoCommand($this));
+		$this->getServer()->getCommandMap()->register("clone", new CloneCommand($this));
+		$this->getServer()->getCommandMap()->register("paste", new PasteCommand($this));
+	}
+	
+	public function onDisable() {
+		$this->getLogger()->info(TF::RED . "BlockSniper has been disabled.");
+		$this->getUndoStore()->resetUndoStorage();
 	}
 	
 	/**
@@ -125,56 +109,22 @@ class Loader extends PluginBase {
 	}
 	
 	/**
+	 * @param string $message
+	 *
+	 * @return string
+	 */
+	public function getTranslation(string $message) {
+		return (string)$this->language->getNested($message);
+	}
+	
+	public function scheduleTasks() {
+		$this->getServer()->getScheduler()->scheduleDelayedTask(new UndoDiminishTask($this), 2400);
+	}
+	
+	/**
 	 * @return CloneStorer
 	 */
 	public function getCloneStore(): CloneStorer {
 		return $this->cloneStore;
 	}
-	
-	/**
-	 * @param Player $player
-	 * @param string $type
-	 * @param int    $radius
-	 * @param string $blocks
-	 * @param        $data = null
-	 */
-	public function enableBrushWand(Player $player, string $type, $radius, string $blocks = null, $data = null) {
-		$this->brushwand[$player->getName()] = [
-			"type" => $type,
-			"radius" => $radius,
-			"additionalData" => $data,
-			"blocks" => $blocks];
-		$this->getServer()->getPluginManager()->callEvent(new ToggleBrushEvent($this, $player, "disabled"));
-	}
-	
-	/**
-	 * @param Player $player
-	 *
-	 * @return array
-	 */
-	public function getBrushWand(Player $player) {
-		return $this->brushwand[$player->getName()];
-	}
-	
-	/**
-	 * @param Player $player
-	 */
-	public function disableBrushWand(Player $player) {
-		unset($this->brushwand[$player->getName()]);
-		$player->sendMessage(TF::YELLOW . $this->getTranslation("brushwand.disable"));
-		$this->getServer()->getPluginManager()->callEvent(new ToggleBrushEvent($this, $player, "enabled"));
-	}
-	
-	/**
-	 * @param Player $player
-	 *
-	 * @return boolean
-	 */
-	public function hasBrushWandEnabled(Player $player): bool {
-		if(isset($this->brushwand[$player->getName()])) {
-			return true;
-		}
-		return false;
-	}
-	
 }

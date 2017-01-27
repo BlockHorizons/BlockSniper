@@ -39,7 +39,7 @@ class BlockSniperCommand extends BaseCommand {
 				$this->getSettings()->save();
 				$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("commands.succeed.language"));
 				return true;
-				
+			
 			default:
 				$sender->sendMessage(TF::AQUA . "[BlockSniper] Information\n" .
 					TF::GREEN . "Version: " . TF::YELLOW . Loader::VERSION . "\n" .

@@ -1,7 +1,7 @@
 ---
 name: "BlockSniper"
-version: 0.2.0
-api: [2.0.0, 2.1.0, 3.0.0-ALPHA1 3.0.0-ALPHA2]
+version: 0.99.0
+api: [2.0.0, 2.1.0, 3.0.0-ALPHA1, 3.0.0-ALPHA2, 3.0.0-ALPHA3]
 author: "Sandertv"
 main: Sandertv\BlockSniper\Loader
 
@@ -14,10 +14,7 @@ permissions:
                 default: false
                 description: "Allows access to all BlockSniper command features."
                 children:
-                    blocksniper.command.snipe:
-                        default: op
-                        description: "Allows access to the snipe command."
-                    blocksniper.command.brushwand:
+                    blocksniper.command.brush:
                         default: op
                         description: "Allows access to the brush wand command."
                     blocksniper.command.undo:
@@ -36,6 +33,9 @@ permissions:
                 default: false
                 description: "Allows access to all BlockSniper types."
                 children:
+                    blocksniper.type.fill:
+                        default: op
+                        description: "Allows access to the fill type."
                     blocksniper.type.overlay:
                         default: op
                         description: "Allows access to the overlay type."
