@@ -17,7 +17,7 @@ use Sandertv\BlockSniper\tasks\UndoDiminishTask;
 
 class Loader extends PluginBase {
 	
-	const VERSION = "0.99.0";
+	const VERSION = "1.0.0";
 	const API_TARGET = "2.1.0";
 	
 	public $undoStore;
