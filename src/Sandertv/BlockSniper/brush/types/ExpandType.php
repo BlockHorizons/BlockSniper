@@ -39,7 +39,7 @@ class ExpandType extends BaseType {
 				foreach($directions as $direction) {
 					if($this->level->getBlock($direction)->getId() === Item::AIR) {
 						$undoBlocks[] = $direction;
-						$this->level->setBlock($direction, $block->getSide(Block::SIDE_DOWN), false, false);
+						$this->level->setBlock($direction, ($block->getSide(Block::SIDE_DOWN)->getId() !== Item::AIR ? $block->getSide(Block::SIDE_DOWN) : $block), false, false);
 					}
 				}
 			}
