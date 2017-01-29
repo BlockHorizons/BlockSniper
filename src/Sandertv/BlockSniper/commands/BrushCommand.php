@@ -36,6 +36,7 @@ class BrushCommand extends BaseCommand {
 		switch(strtolower($args[0])) {
 			case "size":
 			case "radius":
+			case "si":
 				if(!is_numeric($args[1])) {
 					$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.radius-not-numeric"));
 					return true;
@@ -44,6 +45,7 @@ class BrushCommand extends BaseCommand {
 				$sender->sendMessage(TF::GREEN . "Size: " . TF::AQUA . $args[1]);
 				return true;
 			
+			case "sh":
 			case "shape":
 				switch(strtolower($args[1])) {
 					case "cube":
@@ -63,6 +65,7 @@ class BrushCommand extends BaseCommand {
 						return true;
 				}
 			
+			case "ty":
 			case "type":
 				switch(strtolower($args[1])) {
 					case "fill":
@@ -88,6 +91,7 @@ class BrushCommand extends BaseCommand {
 						return true;
 				}
 			
+			case "he":
 			case "height":
 				if(!is_numeric($args[1])) {
 					$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.radius-not-numeric"));
@@ -97,6 +101,7 @@ class BrushCommand extends BaseCommand {
 				$sender->sendMessage(TF::GREEN . "Height: " . TF::AQUA . $args[1]);
 				return true;
 			
+			case "bl":
 			case "block":
 			case "blocks":
 				$blocks = explode(",", $args[1]);
@@ -109,12 +114,14 @@ class BrushCommand extends BaseCommand {
 				$sender->sendMessage(TF::GREEN . "Blocks: " . TF::AQUA . implode(", ", $blockNames));
 				return true;
 			
+			case "ob":
 			case "obsolete":
 			case "replaced":
 				Brush::setObsolete($sender, $args[1]);
 				$sender->sendMessage(TF::GREEN . "Obsolete: " . TF::AQUA . Brush::getObsolete($sender)->getName());
 				return true;
 			
+			case "pe":
 			case "perfect":
 				Brush::setPerfect($sender, $args[1]);
 				$sender->sendMessage(TF::GREEN . "Perfect: " . TF::AQUA . $args[1]);
