@@ -1,6 +1,6 @@
 ---
 name: "BlockSniper"
-version: 1.0.0
+version: 1.0.1
 api: [2.0.0, 2.1.0, 3.0.0-ALPHA1, 3.0.0-ALPHA2, 3.0.0-ALPHA3]
 author: "Sandertv"
 main: Sandertv\BlockSniper\Loader
@@ -57,6 +57,12 @@ permissions:
                     blocksniper.type.flatten:
                         default: op
                         description: "Allows access to the flatten type"
+                    blocksniper.type.expand:
+                        default: op
+                        description: "Allows access to the expand type"
+                    blocksniper.type.melt:
+                        default: op
+                        description: "Allows access to the melt type"
             blocksniper.shape:
                 default: false
                 description: "Allows access to all BlockSniper shapes."

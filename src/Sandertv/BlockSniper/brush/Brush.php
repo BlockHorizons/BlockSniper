@@ -17,6 +17,8 @@ use Sandertv\BlockSniper\brush\types\LayerType;
 use Sandertv\BlockSniper\brush\types\LeafBlowerType;
 use Sandertv\BlockSniper\brush\types\OverlayType;
 use Sandertv\BlockSniper\brush\types\ReplaceType;
+use Sandertv\BlockSniper\brush\types\ExpandType;
+use Sandertv\BlockSniper\brush\types\MeltType;
 use Sandertv\BlockSniper\Loader;
 
 class Brush {
@@ -152,7 +154,7 @@ class Brush {
 				break;
 			
 			default:
-				$shape = new SphereShape(self::$owner, $player->getLevel(), self::getSize($player), $player->getTargetBlock(100));
+				$shape = new SphereShape(self::$owner, $player, $player->getLevel(), self::getSize($player), $player->getTargetBlock(100));
 				break;
 		}
 		return $shape;
@@ -186,30 +188,36 @@ class Brush {
 		$typeName = self::$brush[$player->getId()]["type"];
 		switch($typeName) {
 			case "fill":
-				$shape = new FillType(self::$owner, $player, $player->getLevel(), $blocks);
+				$type = new FillType(self::$owner, $player, $player->getLevel(), $blocks);
 				break;
 			case "clean":
-				$shape = new CleanType(self::$owner, $player, $player->getLevel(), $blocks);
+				$type = new CleanType(self::$owner, $player, $player->getLevel(), $blocks);
 				break;
 			case "drain":
-				$shape = new DrainType(self::$owner, $player, $player->getLevel(), $blocks);
+				$type = new DrainType(self::$owner, $player, $player->getLevel(), $blocks);
 				break;
 			case "flatten":
-				$shape = new FlattenType(self::$owner, $player, $player->getLevel(), $blocks, $player->getTargetBlock(100));
+				$type = new FlattenType(self::$owner, $player, $player->getLevel(), $blocks, $player->getTargetBlock(100));
 				break;
 			case "layer":
-				$shape = new LayerType(self::$owner, $player, $player->getLevel(), $blocks, $player->getTargetBlock(100));
+				$type = new LayerType(self::$owner, $player, $player->getLevel(), $blocks, $player->getTargetBlock(100));
 				break;
 			case "leafblower":
-				$shape = new LeafBlowerType(self::$owner, $player, $player->getLevel(), $blocks);
+				$type = new LeafBlowerType(self::$owner, $player, $player->getLevel(), $blocks);
 				break;
 			case "overlay":
-				$shape = new OverlayType(self::$owner, $player, $player->getLevel(), $blocks);
+				$type = new OverlayType(self::$owner, $player, $player->getLevel(), $blocks);
 				break;
 			case "replace":
-				$shape = new ReplaceType(self::$owner, $player, $player->getLevel(), $blocks);
+				$type = new ReplaceType(self::$owner, $player, $player->getLevel(), $blocks);
+				break;
+			case "expand":
+				$type = new ExpandType(self::$owner, $player, $player->getLevel(), $blocks);
+				break;
+			case "melt":
+				$type = new MeltType(self::$owner, $player, $player->getLevel(), $blocks);
 				break;
 		}
-		return $shape;
+		return $type;
 	}
 }

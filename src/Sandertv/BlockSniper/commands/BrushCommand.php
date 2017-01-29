@@ -73,6 +73,8 @@ class BrushCommand extends BaseCommand {
 					case "leafblower":
 					case "overlay":
 					case "replace":
+					case "expand":
+					case "melt":
 						if(!$sender->hasPermission("blocksniper.type." . $args[1])) {
 							$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.no-permission"));
 							return true;
