@@ -36,13 +36,13 @@ class CloneCommand extends BaseCommand {
 		}
 		
 		if(count($args) < 2 || count($args) > 3) {
-			$sender->sendMessage(TF::RED . "[Usage] /clone <type> <radiusXheight>");
+			$sender->sendMessage(TF::RED . "[Usage] /clone <type> <radiusXheight> [name]");
 			return true;
 		}
 		
 		$sizes = explode("x", strtolower($args[1]));
 		
-		if((int)$sizes[0] > $this->getSettings()->get("Maximum-Radius") || (int)$sizes[1] > $this->getSettings()->get("Maximum-Radius")) {
+		if((int)$sizes[0] > 70 || (int)$sizes[1] > 70) {
 			$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.radius-too-big"));
 			return true;
 		}
