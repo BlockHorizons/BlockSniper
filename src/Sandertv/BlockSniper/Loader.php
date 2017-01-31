@@ -31,7 +31,8 @@ class Loader extends PluginBase {
 		"de",
 		"fr",
 		"fa",
-		"ru"
+		"ru",
+		"zh_tw"
 	];
 	public $language;
 	
