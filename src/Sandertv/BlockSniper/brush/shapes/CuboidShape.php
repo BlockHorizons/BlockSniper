@@ -4,6 +4,7 @@ namespace Sandertv\BlockSniper\brush\shapes;
 
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
+use pocketmine\level\Position;
 use Sandertv\BlockSniper\brush\BaseShape;
 use Sandertv\BlockSniper\Loader;
 
@@ -14,16 +15,12 @@ class CuboidShape extends BaseShape {
 	public $height;
 	public $center;
 	
-	public function __construct(Loader $main, Level $level, float $width = null, float $height = null, Vector3 $center = null) {
+	public function __construct(Loader $main, Level $level, float $width = null, float $height = null, Position $center = null) {
 		parent::__construct($main);
 		$this->level = $level;
 		$this->width = $width;
 		$this->height = $height;
 		$this->center = $center;
-		
-		if(!isset($center)) {
-			$this->center = new Vector3(0, 0, 0);
-		}
 	}
 	
 	/**
@@ -69,11 +66,11 @@ class CuboidShape extends BaseShape {
 		// TODO
 	}
 	
-	public function getCenter(): Vector3 {
+	public function getCenter(): Position {
 		return $this->center;
 	}
 	
-	public function setCenter(Vector3 $center) {
+	public function setCenter(Position $center) {
 		$this->center = $center;
 	}
 }

@@ -66,10 +66,19 @@ class Brush {
 		}
 	}
 	
+	/**
+	 * @param Player $player
+	 * @param        $value
+	 */
 	public static function setPerfect(Player $player, $value) {
 		self::$brush[$player->getId()]["perfect"] = (bool)$value;
 	}
 	
+	/**
+	 * @param Player $player
+	 *
+	 * @return bool
+	 */
 	public static function getPerfect(Player $player): bool {
 		return self::$brush[$player->getId()]["perfect"];
 	}
@@ -102,7 +111,7 @@ class Brush {
 	
 	/**
 	 * @param Player $player
-	 * @param float  $size
+	 * @param int    $height
 	 */
 	public static function setHeight(Player $player, int $height) {
 		self::$brush[$player->getId()]["size"] = $height;

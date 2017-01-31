@@ -8,6 +8,7 @@ use pocketmine\item\Item;
 use pocketmine\utils\TextFormat as TF;
 use Sandertv\BlockSniper\brush\Brush;
 use Sandertv\BlockSniper\Loader;
+use Sandertv\BlockSniper\events\BrushUseEvent;
 
 class EventListener implements Listener {
 	
@@ -25,6 +26,11 @@ class EventListener implements Listener {
 				
 				if(!$center) {
 					$player->sendMessage(TF::RED . "[Warning] " . $this->getOwner()->getTranslation("commands.errors.no-target-found"));
+					return;
+				}
+				
+				$this->getOwner()->getServer()->getPluginManager()->callEvent($event = new BrushUseEvent($this->getOwner(), $player));
+				if($event->isCancelled()) {
 					return;
 				}
 				
