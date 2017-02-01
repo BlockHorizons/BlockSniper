@@ -42,7 +42,7 @@ class MeltType extends BaseType {
 						$valid++;
 					}
 				}
-				if($valid >= 2) {
+				if($valid >= 3) {
 					$undoBlocks[] = $block;
 					$this->level->setBlock($block, Block::get(Block::AIR), false, false);
 				}
