@@ -38,11 +38,11 @@ class FillType extends BaseType {
 	}
 	
 	public function getName(): string {
-		return "Drain";
+		return "Fill";
 	}
 	
 	public function getPermission(): string {
-		return "blocksniper.type.drain";
+		return "blocksniper.type.fill";
 	}
 	
 	public function getApproximateBlocks(): int {
