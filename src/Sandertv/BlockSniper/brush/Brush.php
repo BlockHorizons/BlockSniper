@@ -114,7 +114,7 @@ class Brush {
 	 * @param int    $height
 	 */
 	public static function setHeight(Player $player, int $height) {
-		self::$brush[$player->getId()]["size"] = $height;
+		self::$brush[$player->getId()]["height"] = $height;
 	}
 	
 	/**
