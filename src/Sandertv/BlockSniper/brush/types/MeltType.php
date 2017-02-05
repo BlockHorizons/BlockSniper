@@ -27,6 +27,7 @@ class MeltType extends BaseType {
 	 */
 	public function fillShape(): bool {
 		$undoBlocks = [];
+		$selectedBlocks = [];
 		foreach($this->blocks as $block) {
 			if($block->getId() !== Item::AIR) {
 				$directions = [
@@ -46,9 +47,11 @@ class MeltType extends BaseType {
 				}
 				if($valid >= 3) {
 					$undoBlocks[] = $block;
-					$this->level->setBlock($block, Block::get(Block::AIR), false, false);
 				}
 			}
+		}
+		foreach($undoBlocks as $selectedBlock) {
+			$this->level->setBlock($selectedBlock, Block::get(Block::AIR), false, false);
 		}
 		$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
 		return true;
