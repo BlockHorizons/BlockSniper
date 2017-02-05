@@ -30,6 +30,8 @@ class MeltType extends BaseType {
 		foreach($this->blocks as $block) {
 			if($block->getId() !== Item::AIR) {
 				$directions = [
+					$block->getSide(Block::SIDE_DOWN),
+					$block->getSide(Block::SIDE_UP),
 					$block->getSide(Block::SIDE_NORTH),
 					$block->getSide(Block::SIDE_SOUTH),
 					$block->getSide(Block::SIDE_WEST),
