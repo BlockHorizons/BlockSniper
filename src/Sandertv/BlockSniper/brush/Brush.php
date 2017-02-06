@@ -46,7 +46,8 @@ class Brush {
 			"size" => 1,
 			"height" => 1,
 			"blocks" => [Block::get(Block::STONE)],
-			"obsolete" => Block::get(Block::AIR)
+			"obsolete" => Block::get(Block::AIR),
+			"gravity" => false
 		];
 		return true;
 	}
@@ -64,6 +65,23 @@ class Brush {
 				self::$brush[$player->getId()]["blocks"][] = Item::get($block)->getBlock();
 			}
 		}
+	}
+	
+	/**
+	 * @param Player $player
+	 * @param        $value
+	 */
+	public static function setGravity(Player $player, $value) {
+		self::$brush[$player->getId()]["gravity"] = (bool)$value;
+	}
+	
+	/**
+	 * @param Player $player
+	 *
+	 * @return bool
+	 */
+	public static function getGravity(Player $player): bool {
+		return self::$brush[$player->getId()]["gravity"];
 	}
 	
 	/**
@@ -150,16 +168,16 @@ class Brush {
 		$shapeName = self::$brush[$player->getId()]["shape"];
 		switch($shapeName) {
 			case "cube":
-				$shape = new CubeShape(self::$owner, $player->getLevel(), self::getSize($player), $player->getTargetBlock(100));
+				$shape = new CubeShape(self::$owner, $player, $player->getLevel(), self::getSize($player), $player->getTargetBlock(100));
 				break;
 			case "sphere":
 				$shape = new SphereShape(self::$owner, $player, $player->getLevel(), self::getSize($player), $player->getTargetBlock(100));
 				break;
 			case "cuboid":
-				$shape = new CuboidShape(self::$owner, $player->getLevel(), self::getSize($player), self::getHeight($player), $player->getTargetBlock(100));
+				$shape = new CuboidShape(self::$owner, $player, $player->getLevel(), self::getSize($player), self::getHeight($player), $player->getTargetBlock(100));
 				break;
 			case "cylinder":
-				$shape = new CylinderStandingShape(self::$owner, $player->getLevel(), self::getSize($player), self::getHeight($player), $player->getTargetBlock(100));
+				$shape = new CylinderStandingShape(self::$owner, $player, $player->getLevel(), self::getSize($player), self::getHeight($player), $player->getTargetBlock(100));
 				break;
 			
 			default:

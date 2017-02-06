@@ -126,6 +126,12 @@ class BrushCommand extends BaseCommand {
 				Brush::setPerfect($sender, $args[1]);
 				$sender->sendMessage(TF::GREEN . "Perfect: " . TF::AQUA . $args[1]);
 				return true;
+			
+			case "gr":
+			case "gravity":
+				Brush::setGravity($sender, $args[1]);
+				$sender->sendMessage(TF::GREEN . "Perfect: " . TF::AQUA . $args[1]);
+				return true;
 				
 			default:
 				$sender->sendMessage(TF::RED . "[Usage] /brush <size|shape|type|blocks|height|obsolete|perfect> <value>");

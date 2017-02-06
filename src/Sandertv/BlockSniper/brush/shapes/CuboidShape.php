@@ -3,9 +3,11 @@
 namespace Sandertv\BlockSniper\brush\shapes;
 
 use pocketmine\level\Level;
+use pocketmine\Player;
 use pocketmine\math\Vector3;
 use pocketmine\level\Position;
 use Sandertv\BlockSniper\brush\BaseShape;
+use Sandertv\BlockSniper\brush\Brush;
 use Sandertv\BlockSniper\Loader;
 
 class CuboidShape extends BaseShape {
@@ -14,13 +16,15 @@ class CuboidShape extends BaseShape {
 	public $width;
 	public $height;
 	public $center;
+	public $player;
 	
-	public function __construct(Loader $main, Level $level, float $width = null, float $height = null, Position $center = null) {
+	public function __construct(Loader $main, Player $player, Level $level, float $width = null, float $height = null, Position $center = null) {
 		parent::__construct($main);
 		$this->level = $level;
 		$this->width = $width;
 		$this->height = $height;
 		$this->center = $center;
+		$this->player = $player;
 	}
 	
 	/**
@@ -43,7 +47,11 @@ class CuboidShape extends BaseShape {
 		for($x = $minX; $x <= $maxX; $x++) {
 			for($y = $minY; $y <= $maxY; $y++) {
 				for($z = $minZ; $z <= $maxZ; $z++) {
-					$blocksInside[] = $this->getLevel()->getBlock(new Vector3($x, $y, $z));
+					if(Brush::getGravity($this->player->getId()) === true || Brush::getGravity($this->player->getId()) === 1) {
+						$gravityY = $this->level->getHighestBlockAt($x, $z) + 1;
+					}
+					$blocksInside[] = $this->getLevel()->getBlock(new Vector3($x, (isset($gravityY) ? $gravityY : $y), $z));
+					unset($gravityY);
 				}
 			}
 		}

@@ -53,7 +53,11 @@ class SphereShape extends BaseShape {
 				for($z = $maxZ; $z >= $minZ; $z--) {
 					$zs = ($targetZ - $z) * ($targetZ - $z);
 					if($xs + $ys + $zs < $radiusSquared) {
-						$blocksInside[] = $this->getLevel()->getBlock(new Vector3($x, $y, $z));
+						if(Brush::getGravity($this->player->getId()) === true || Brush::getGravity($this->player->getId()) === 1) {
+							$gravityY = $this->level->getHighestBlockAt($x, $z) + 1;
+						}
+						$blocksInside[] = $this->getLevel()->getBlock(new Vector3($x, (isset($gravityY) ? $gravityY : $y), $z));
+						unset($gravityY);
 					}
 				}
 			}

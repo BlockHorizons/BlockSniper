@@ -3,9 +3,11 @@
 namespace Sandertv\BlockSniper\brush\shapes;
 
 use pocketmine\level\Level;
+use pocketmine\Player;
 use pocketmine\math\Vector3;
 use pocketmine\level\Position;
 use Sandertv\BlockSniper\brush\BaseShape;
+use Sandertv\BlockSniper\brush\Brush;
 use Sandertv\BlockSniper\Loader;
 
 class CylinderStandingShape extends BaseShape {
@@ -13,14 +15,16 @@ class CylinderStandingShape extends BaseShape {
 	public $level;
 	public $radius;
 	public $height;
+	public $player;
 	public $center;
 	
-	public function __construct(Loader $main, Level $level, float $radius = null, int $height = null, Position $center = null) {
+	public function __construct(Loader $main, Player $player, Level $level, float $radius = null, int $height = null, Position $center = null) {
 		parent::__construct($main);
 		$this->level = $level;
 		$this->radius = $radius;
 		$this->height = $height;
 		$this->center = $center;
+		$this->player = $player;
 	}
 	
 	/**
@@ -45,7 +49,11 @@ class CylinderStandingShape extends BaseShape {
 			for($z = $minZ; $z <= $maxZ; $z++) {
 				for($y = $minY; $y <= $maxY; $y++) {
 					if(pow($targetX - $x, 2) + pow($targetZ - $z, 2) <= $radiusSquared) {
-						$blocksInside[] = $this->getLevel()->getBlock(new Vector3($x, $y, $z));
+						if(Brush::getGravity($this->player->getId()) === true || Brush::getGravity($this->player->getId()) === 1) {
+							$gravityY = $this->level->getHighestBlockAt($x, $z) + 1;
+						}
+						$blocksInside[] = $this->getLevel()->getBlock(new Vector3($x, (isset($gravityY) ? $gravityY : $y), $z));
+						unset($gravityY);
 					}
 				}
 			}
