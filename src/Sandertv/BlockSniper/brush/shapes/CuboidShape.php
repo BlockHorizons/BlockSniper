@@ -47,8 +47,8 @@ class CuboidShape extends BaseShape {
 		for($x = $minX; $x <= $maxX; $x++) {
 			for($y = $minY; $y <= $maxY; $y++) {
 				for($z = $minZ; $z <= $maxZ; $z++) {
-					if(Brush::getGravity($this->player->getId()) === true || Brush::getGravity($this->player->getId()) === 1) {
-						$gravityY = $this->level->getHighestBlockAt($x, $z) + 1;
+					if(Brush::getGravity($this->player) === true || Brush::getGravity($this->player) === 1) {
+						$gravityY = ($this->level->getHighestBlockAt($x, $z) + 1) <= $y ? $this->level->getHighestBlockAt($x, $z) + 1 : $y;
 					}
 					$blocksInside[] = $this->getLevel()->getBlock(new Vector3($x, (isset($gravityY) ? $gravityY : $y), $z));
 					unset($gravityY);
