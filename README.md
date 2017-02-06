@@ -17,7 +17,7 @@ If you do decide to compile a phar file yourself to benefit from the latest feat
 ## What is this?
 BlockSniper is an advanced world editing tool, based on the idea of VoxelSniper from Mineraft PC softwares.
 BlockSniper allows you to edit your world on a long range, with several different types and shapes. Shapes are the shapes types are being executed in. This means that every type can be executed in any shape.
-For more information, make sure to check the [Wiki](https://github.com/Sandertv/BlockSniper/wiki).
+**For more information, make sure to check the [Wiki](https://github.com/Sandertv/BlockSniper/wiki).**
 
 >> Shapes
 >
@@ -76,7 +76,9 @@ BlockSniper has several commands to edit your world. The commands work as follow
 >> /paste  < template/copy >  < name >
 >
 > Downloaded templates can be pasted using the according name, copies can be pasted without name.
-For more information, make sure to check the [Wiki](https://github.com/Sandertv/BlockSniper/wiki).
+
+
+**For more information, make sure to check the [Wiki](https://github.com/Sandertv/BlockSniper/wiki).**
 
 ## Are there permissions? Where can I find them?
 A full list of permissions can be found in the [plugin.yml](https://github.com/Sandertv/BlockSniper/blob/master/plugin.yml) file. 
