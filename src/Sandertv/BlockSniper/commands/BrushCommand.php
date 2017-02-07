@@ -132,6 +132,13 @@ class BrushCommand extends BaseCommand {
 				Brush::setGravity($sender, $args[1]);
 				$sender->sendMessage(TF::GREEN . "Gravity: " . TF::AQUA . $args[1]);
 				return true;
+			
+			case "decrement":
+			case "decrementing":
+			case "de":
+				Brush::setDecrementing($sender, $args[1]);
+				$sender->sendMessage(TF::GREEN . "Decrement: " . TF::AQUA . $args[1]);
+				return true;
 				
 			default:
 				$sender->sendMessage(TF::RED . "[Usage] /brush <size|shape|type|blocks|height|obsolete|perfect> <value>");

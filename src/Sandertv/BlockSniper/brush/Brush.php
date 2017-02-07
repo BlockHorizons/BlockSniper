@@ -47,7 +47,8 @@ class Brush {
 			"height" => 1,
 			"blocks" => [Block::get(Block::STONE)],
 			"obsolete" => Block::get(Block::AIR),
-			"gravity" => false
+			"gravity" => false,
+			"decrement" => false
 		];
 		return true;
 	}
@@ -65,6 +66,23 @@ class Brush {
 				self::$brush[$player->getId()]["blocks"][] = Item::get($block)->getBlock();
 			}
 		}
+	}
+	
+	/**
+	 * @param Player $player
+	 * @param        $value
+	 */
+	public static function setDecrementing(Player $player, $value) {
+		self::$brush[$player->getId()]["decrement"] = (bool)$value;
+	}
+	
+	/**
+	 * @param Player $player
+	 *
+	 * @return bool
+	 */
+	public static function isDecrementing(Player $player): bool {
+		return self::$brush[$player->getId()]["decrement"];
 	}
 	
 	/**

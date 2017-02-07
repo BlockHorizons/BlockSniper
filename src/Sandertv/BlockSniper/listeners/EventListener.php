@@ -18,7 +18,7 @@ class EventListener implements Listener {
 		$this->owner = $owner;
 	}
 	
-	public function onBrush(PlayerInteractEvent $event) {
+	public function brush(PlayerInteractEvent $event) {
 		$player = $event->getPlayer();
 		if($player->getInventory()->getItemInHand()->getId() === Item::GOLDEN_CARROT) {
 			if($player->hasPermission("blocksniper.command.brush")) {
@@ -26,13 +26,15 @@ class EventListener implements Listener {
 				
 				if(!$center) {
 					$player->sendMessage(TF::RED . "[Warning] " . $this->getOwner()->getTranslation("commands.errors.no-target-found"));
-					return;
+					return false;
 				}
 				
 				$this->getOwner()->getServer()->getPluginManager()->callEvent($event = new BrushUseEvent($this->getOwner(), $player));
 				if($event->isCancelled()) {
-					return;
+					return false;
 				}
+				
+				Brush::setupDefaultValues($player);
 				
 				$shape = Brush::getShape($player);
 				$type = Brush::getType($player, $shape->getBlocksInside());
@@ -43,6 +45,21 @@ class EventListener implements Listener {
 		}
 	}
 	
+	public function decrementBrush(BrushUseEvent $event) {
+		$player = $event->getPlayer();
+		if(Brush::isDecrementing($player)) {
+			if(Brush::getSize($player) <= 1) {
+				return false;
+			}
+			Brush::setSize($player, (Brush::getSize($player) - 1));
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * @return Loader
+	 */
 	public function getOwner(): Loader {
 		return $this->owner;
 	}
