@@ -25,6 +25,7 @@ class Brush {
 	
 	public static $brush = [];
 	public static $owner;
+	public static $resetSize = [];
 	
 	public function __construct(Loader $owner) {
 		self::$owner = $owner;

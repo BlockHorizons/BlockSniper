@@ -1,13 +1,19 @@
 ---
 # Configuration for BlockSniper: An innovative worldedit plugin by Sandertv.
 
+# Language in which messages are displayed. Available languages:
+# en (English), nl (Dutch), de (German), fr (French), fa (Persian), ru (Russian), zh_tw (Chinese)
+Message-Language: ""
+
+# Item ID of the item that is used to brush. (Golden carrot by default)
+Brush-Item: 396
+
 # Maximum radius for shapes/types, it is recommended to keep this number below 20 to prevent server freezes and lag.
 Maximum-Radius: 15
 
 # Maximum undo stores to save, old ones will get destroyed automatically. Setting this number too high could result in lag or data loss.
 Maximum-Undo-Stores: 7
 
-# Language in which messages are displayed. Available languages:
-# en (English), nl (Dutch), de (German), fr (French), fa (Persian), ru (Russian), zh_tw (Chinese)
-Message-Language: ""
+# Whether to reset the size, or make it remain the current size when smallest size with decrement brush is reached.
+Reset-Decrement-Brush: true
 ...

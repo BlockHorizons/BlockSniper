@@ -4,7 +4,6 @@ namespace Sandertv\BlockSniper\listeners;
 
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
-use pocketmine\item\Item;
 use pocketmine\utils\TextFormat as TF;
 use Sandertv\BlockSniper\brush\Brush;
 use Sandertv\BlockSniper\Loader;
@@ -20,7 +19,7 @@ class EventListener implements Listener {
 	
 	public function brush(PlayerInteractEvent $event) {
 		$player = $event->getPlayer();
-		if($player->getInventory()->getItemInHand()->getId() === Item::GOLDEN_CARROT) {
+		if($player->getInventory()->getItemInHand()->getId() === (int)$this->getOwner()->getSettings()->get("Brush-Item")) {
 			if($player->hasPermission("blocksniper.command.brush")) {
 				$center = $player->getTargetBlock(100);
 				
@@ -49,6 +48,11 @@ class EventListener implements Listener {
 		$player = $event->getPlayer();
 		if(Brush::isDecrementing($player)) {
 			if(Brush::getSize($player) <= 1) {
+				if($this->getOwner()->getSettings()->get("Reset-Decrement-Brush") !== false) {
+					Brush::setSize($player, Brush::$resetSize[$player->getId()]);
+					$player->sendPopup(TF::GREEN . "Brush reset to original size.");
+					return true;
+				}
 				return false;
 			}
 			Brush::setSize($player, (Brush::getSize($player) - 1));

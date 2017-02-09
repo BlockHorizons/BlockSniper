@@ -137,6 +137,7 @@ class BrushCommand extends BaseCommand {
 			case "decrementing":
 			case "de":
 				Brush::setDecrementing($sender, $args[1]);
+				Brush::$resetSize[$sender->getId()] = Brush::getSize($sender);
 				$sender->sendMessage(TF::GREEN . "Decrement: " . TF::AQUA . $args[1]);
 				return true;
 				
