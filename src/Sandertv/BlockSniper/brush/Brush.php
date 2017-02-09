@@ -262,6 +262,10 @@ class Brush {
 			case "melt":
 				$type = new MeltType(self::$owner, $player, $player->getLevel(), $blocks);
 				break;
+				
+			default:
+				$type = new FillType(self::$owner, $player, $player->getLevel(), $blocks);
+				break;
 		}
 		return $type;
 	}

@@ -45,7 +45,7 @@ class CubeShape extends BaseShape {
 			for($z = $minZ; $z <= $maxZ; $z++) {
 				for($y = $minY; $y <= $maxY; $y++) {
 					if(Brush::getGravity($this->player) === true || Brush::getGravity($this->player) === 1) {
-						$gravityY = ($this->level->getHighestBlockAt($x, $z) + 1) <= $y ? $this->level->getHighestBlockAt($x, $z) + 1 : $y;
+						$gravityY = ($this->level->getHighestBlockAt($x, $z) + 1) <= $maxY ? $this->level->getHighestBlockAt($x, $z) + 1 : $y;
 					}
 					$blocksInside[] = $this->getLevel()->getBlock(new Vector3($x, (isset($gravityY) ? $gravityY : $y), $z));
 					unset($temporalY);
