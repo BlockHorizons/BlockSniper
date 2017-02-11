@@ -70,6 +70,7 @@ class BrushCommand extends BaseCommand {
 				switch(strtolower($args[1])) {
 					case "fill":
 					case "clean":
+					case "cleanentities":
 					case "drain":
 					case "flatten":
 					case "layer":

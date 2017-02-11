@@ -9,6 +9,7 @@ use Sandertv\BlockSniper\brush\shapes\CubeShape;
 use Sandertv\BlockSniper\brush\shapes\CuboidShape;
 use Sandertv\BlockSniper\brush\shapes\CylinderStandingShape;
 use Sandertv\BlockSniper\brush\shapes\SphereShape;
+use Sandertv\BlockSniper\brush\types\CleanEntitiesType;
 use Sandertv\BlockSniper\brush\types\CleanType;
 use Sandertv\BlockSniper\brush\types\DrainType;
 use Sandertv\BlockSniper\brush\types\FillType;
@@ -262,6 +263,9 @@ class Brush {
 				break;
 			case "melt":
 				$type = new MeltType(self::$owner, $player, $player->getLevel(), $blocks);
+				break;
+			case "cleanentities":
+				$type = new CleanEntitiesType(self::$owner, $player, $player->getLevel(), $blocks);
 				break;
 				
 			default:

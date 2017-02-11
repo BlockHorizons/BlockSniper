@@ -63,6 +63,9 @@ permissions:
                     blocksniper.type.melt:
                         default: op
                         description: "Allows access to the melt type"
+                    blocksniper.type.cleanentities:
+                        default: op
+                        description: "Allows access to the clean entities type"
             blocksniper.shape:
                 default: false
                 description: "Allows access to all BlockSniper shapes."

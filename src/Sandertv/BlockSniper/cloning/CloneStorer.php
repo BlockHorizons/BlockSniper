@@ -56,6 +56,7 @@ class CloneStorer {
 	}
 	
 	public function pasteCopy() {
+		$undoBlocks = [];
 		foreach($this->copyStore as $key => $block) {
 			$Id = explode("(", $key);
 			$blockId = $Id[0];
@@ -67,10 +68,11 @@ class CloneStorer {
 			$finalBlock = Item::get($blockId)->getBlock();
 			$finalBlock->setDamage((int)$meta !== null ? $meta : 0);
 			
-			// Start pasting the copy...
 			$blockPos = new Vector3($x + $this->getTargetBlock()->x, $y + $this->getTargetBlock()->y, $z + $this->getTargetBlock()->z);
+			$undoBlocks[] = $this->getOwner()->getServer()->getLevelByName($block["level"])->getBlock($blockPos);
 			$this->getOwner()->getServer()->getLevelByName($block["level"])->setBlock($blockPos, Block::get((int)$blockId, (int)$meta), false, false);
 		}
+		
 	}
 	
 	public function getTargetBlock(): Vector3 {
@@ -144,6 +146,8 @@ class CloneStorer {
 		$data = file_get_contents($this->getOwner()->getDataFolder() . "templates/" . $templateName . ".yml");
 		$content = unserialize($data);
 		
+		$undoBlocks = [];
+		
 		foreach($content as $key => $block) {
 			$Id = explode("(", $key);
 			$blockId = $Id[0];
@@ -156,8 +160,10 @@ class CloneStorer {
 			$finalBlock->setDamage((int)$meta !== null ? $meta : 0);
 			
 			$blockPos = new Vector3($x + $targetBlock->x, $y + $targetBlock->y, $z + $targetBlock->z);
+			$undoBlocks[] = $targetBlock->getLevel()->getBlock($blockPos);
 			$targetBlock->getLevel()->setBlock($blockPos, Block::get((int)$blockId, (int)$meta), false, false);
 		}
+		$this->getOwner()->getUndoStore()->saveUndo($undoBlocks);
 		return true;
 	}
 	

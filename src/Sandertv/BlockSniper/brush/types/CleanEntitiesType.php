@@ -2,54 +2,45 @@
 
 namespace Sandertv\BlockSniper\brush\types;
 
-use pocketmine\block\Block;
-use pocketmine\block\Flowable;
-use pocketmine\item\Item;
 use pocketmine\level\Level;
-use pocketmine\math\Vector3;
 use pocketmine\Player;
 use Sandertv\BlockSniper\brush\BaseType;
 use Sandertv\BlockSniper\Loader;
 
-class LeafBlowerType extends BaseType {
+class CleanEntitiesType extends BaseType {
 	
 	public $level;
-	public $player;
 	public $blocks;
+	public $player;
 	
 	public function __construct(Loader $main, Player $player, Level $level, array $blocks) {
 		parent::__construct($main);
 		$this->level = $level;
-		$this->player = $player;
 		$this->blocks = $blocks;
+		
+		$this->player = $player;
 	}
 	
 	/**
 	 * @return bool
 	 */
 	public function fillShape(): bool {
-		$undoBlocks = [];
 		foreach($this->blocks as $block) {
-			if($block instanceof Flowable) {
-				$undoBlocks[] = $block;
-				$this->level->dropItem($block, Item::get($block->getId()));
-				$this->level->setBlock($block, Block::get(Block::AIR), false, false);
+			foreach($this->level->getEntities() as $entity) {
+				if($entity->distanceSquared($block) <= 1 && !($entity instanceof Player)) {
+					$entity->close();
+				}
 			}
 		}
-		$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
 		return true;
 	}
 	
 	public function getName(): string {
-		return "Leaf Blower";
+		return "Clean Entities";
 	}
 	
 	public function getPermission(): string {
-		return "blocksniper.type.leafblower";
-	}
-	
-	public function getApproximateBlocks(): int {
-		// TODO
+		return "blocksniper.type.cleanentities";
 	}
 	
 	public function getLevel(): Level {
