@@ -72,7 +72,7 @@ class CloneStorer {
 			$undoBlocks[] = $this->getOwner()->getServer()->getLevelByName($block["level"])->getBlock($blockPos);
 			$this->getOwner()->getServer()->getLevelByName($block["level"])->setBlock($blockPos, Block::get((int)$blockId, (int)$meta), false, false);
 		}
-		
+		$this->getOwner()->getUndoStore()->saveUndo($undoBlocks);
 	}
 	
 	public function getTargetBlock(): Vector3 {
