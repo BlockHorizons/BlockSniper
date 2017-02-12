@@ -66,6 +66,9 @@ permissions:
                     blocksniper.type.cleanentities:
                         default: op
                         description: "Allows access to the clean entities type"
+                    blocksniper.type.biome:
+                        default: op
+                        description: "Allows access to the biome type"
             blocksniper.shape:
                 default: false
                 description: "Allows access to all BlockSniper shapes."

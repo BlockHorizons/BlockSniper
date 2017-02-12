@@ -5,6 +5,7 @@ namespace Sandertv\BlockSniper\commands;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
+use pocketmine\level\generator\biome\Biome;
 use Sandertv\BlockSniper\brush\Brush;
 use Sandertv\BlockSniper\Loader;
 
@@ -140,6 +141,13 @@ class BrushCommand extends BaseCommand {
 				Brush::setDecrementing($sender, $args[1]);
 				Brush::$resetSize[$sender->getId()] = Brush::getSize($sender);
 				$sender->sendMessage(TF::GREEN . "Decrement: " . TF::AQUA . $args[1]);
+				return true;
+			
+			case "bi":
+			case "biome":
+				$biome = array_slice($args, 2);
+				Brush::setBiome($sender, $biome);
+				$sender->sendMessage(TF::GREEN . "Biome: " . TF::AQUA . Biome::getBiome(Brush::getBiomeIdFromString($sender)));
 				return true;
 				
 			default:

@@ -5,6 +5,7 @@ namespace Sandertv\BlockSniper\brush;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\Player;
+use pocketmine\level\generator\biome\Biome;
 use Sandertv\BlockSniper\brush\shapes\CubeShape;
 use Sandertv\BlockSniper\brush\shapes\CuboidShape;
 use Sandertv\BlockSniper\brush\shapes\CylinderStandingShape;
@@ -50,7 +51,8 @@ class Brush {
 			"blocks" => [Block::get(Block::STONE)],
 			"obsolete" => Block::get(Block::AIR),
 			"gravity" => false,
-			"decrement" => false
+			"decrement" => false,
+			"biome" => "plains"
 		];
 		return true;
 	}
@@ -235,7 +237,7 @@ class Brush {
 		$typeName = self::$brush[$player->getId()]["type"];
 		switch($typeName) {
 			case "fill":
-				$type = new FillType(self::$owner, $player, $player->getLevel(), $blocks);
+				$type = new FillType(self::owner, $player, $player->getLevel(), $blocks);
 				break;
 			case "clean":
 				$type = new CleanType(self::$owner, $player, $player->getLevel(), $blocks);
@@ -273,5 +275,23 @@ class Brush {
 				break;
 		}
 		return $type;
+	}
+	
+	/**
+	 * @param Player $player
+	 * @param string $biomeId
+	 */
+	public static function setBiome(Player $player, string $biomeId) {
+		self::$brush[$player->getId()]["biome"] = $biomeId;
+	}
+	
+	public static function getBiomeIdFromString(Player $player): int {
+		$biomes = new ReflectionClass('pocketmine\level\generator\biome\Biome');
+		$const = strtoupper(str_replace(" ", "_", self::$brush[$player->getId()]["biome"]));
+		if($biomes->hasConstant($const)) {
+			$biome = $biomes->getConstant($const);
+			return $biome;
+		}
+		return 0;
 	}
 }
