@@ -27,7 +27,7 @@ class ExpandType extends BaseType {
 	 */
 	public function fillShape(): bool {
 		$undoBlocks = [];
-		foreach($this->blocks as $block) { // for each block that does not have item ID 0, get the directions. For each of the directions of that block, if the direction of the block has item ID air, set them to the block below if that block is not air, otherwise the original block.
+	foreach($this->blocks as $block) {
 			if($block->getId() !== Item::AIR) {
 				$directions = [
 					$block->getSide(Block::SIDE_NORTH),
@@ -39,11 +39,14 @@ class ExpandType extends BaseType {
 				foreach($directions as $direction) {
 					if($this->level->getBlock($direction)->getId() === Item::AIR) {
 						$undoBlocks[] = $direction;
-						$this->level->setBlock($direction, ($direction->getSide(Block::SIDE_DOWN)->getId() !== Item::AIR ? $direction->getSide(Block::SIDE_DOWN) : $block), false, false);
 					}
 				}
 			}
 		}
+		foreach($undoBlocks as $selectedBlock) {
+			$this->level->setBlock($selectedBlock, $selectedBlock->getSide(Block::SIDE_DOWN), false, false);
+		}
+		
 		$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
 		return true;
 	}
