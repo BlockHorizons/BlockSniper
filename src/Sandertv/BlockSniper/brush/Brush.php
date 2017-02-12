@@ -283,10 +283,10 @@ class Brush {
 	
 	/**
 	 * @param Player $player
-	 * @param string $biomeId
+	 * @param string $biome
 	 */
-	public static function setBiome(Player $player, string $biomeId) {
-		self::$brush[$player->getId()]["biome"] = $biomeId;
+	public static function setBiome(Player $player, string $biome) {
+		self::$brush[$player->getId()]["biome"] = $biome;
 	}
 	
 	public static function getBiomeIdFromString(Player $player): int {

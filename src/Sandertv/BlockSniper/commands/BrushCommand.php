@@ -146,8 +146,8 @@ class BrushCommand extends BaseCommand {
 			
 			case "bi":
 			case "biome":
-				$biome = array_slice($args, 2);
-				Brush::setBiome($sender,implode(" ", $biome));
+				$biome = array_slice($args, 1);
+				Brush::setBiome($sender, implode(" ", $biome));
 				$sender->sendMessage(TF::GREEN . "Biome: " . TF::AQUA . Biome::getBiome(Brush::getBiomeIdFromString($sender))->getName());
 				return true;
 				
