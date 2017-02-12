@@ -5,6 +5,7 @@ namespace Sandertv\BlockSniper\brush;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\Player;
+use ReflectionClass;
 use pocketmine\level\generator\biome\Biome;
 use Sandertv\BlockSniper\brush\shapes\CubeShape;
 use Sandertv\BlockSniper\brush\shapes\CuboidShape;
@@ -237,7 +238,7 @@ class Brush {
 		$typeName = self::$brush[$player->getId()]["type"];
 		switch($typeName) {
 			case "fill":
-				$type = new FillType(self::owner, $player, $player->getLevel(), $blocks);
+				$type = new FillType(self::$owner, $player, $player->getLevel(), $blocks);
 				break;
 			case "clean":
 				$type = new CleanType(self::$owner, $player, $player->getLevel(), $blocks);
