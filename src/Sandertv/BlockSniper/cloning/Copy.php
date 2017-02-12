@@ -9,7 +9,14 @@ use Sandertv\BlockSniper\Loader;
 
 class Copy extends BaseClone {
 	
-	public function __construct(Loader $owner, Level $level, Vector3 $center = null, float $radius = null, int $height = 0) {
+	public $owner;
+	public $level;
+	public $center;
+	public $radius;
+	public $height;
+	
+	public function __construct(Loader $owner, Level $level, Position $center = null, float $radius = null, int $height = 0) {
+		parent::__construct($owner);
 		$this->owner = $owner;
 		$this->level = $level;
 		$this->center = $center;

@@ -4,6 +4,7 @@ namespace Sandertv\BlockSniper\cloning;
 
 use pocketmine\block\Block;
 use pocketmine\item\Item;
+use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use Sandertv\BlockSniper\Loader;
 
@@ -31,8 +32,7 @@ class CloneStorer {
 			$this->copyStore[$block->getId() . ":" . $block->getDamage() . "(" . $i . ")"] = [
 				"x" => $block->x - $this->getOriginalCenter()->x,
 				"y" => $block->y - $this->getOriginalCenter()->y,
-				"z" => $block->z - $this->getOriginalCenter()->z,
-				"level" => $block->level->getName()
+				"z" => $block->z - $this->getOriginalCenter()->z
 			];
 			$i++;
 		}
@@ -55,7 +55,7 @@ class CloneStorer {
 		$this->originalCenter = $center;
 	}
 	
-	public function pasteCopy() {
+	public function pasteCopy(Level $level) {
 		$undoBlocks = [];
 		foreach($this->copyStore as $key => $block) {
 			$Id = explode("(", $key);
@@ -69,10 +69,10 @@ class CloneStorer {
 			$finalBlock->setDamage((int)$meta !== null ? $meta : 0);
 			
 			$blockPos = new Vector3($x + $this->getTargetBlock()->x, $y + $this->getTargetBlock()->y, $z + $this->getTargetBlock()->z);
-			$undoBlocks[] = $this->getOwner()->getServer()->getLevelByName($block["level"])->getBlock($blockPos);
-			$this->getOwner()->getServer()->getLevelByName($block["level"])->setBlock($blockPos, Block::get((int)$blockId, (int)$meta), false, false);
+			$undoBlocks[] = $level->getBlock($blockPos);
+			$level->setBlock($blockPos, Block::get((int)$blockId, (int)$meta), false, false);
 		}
-		$this->getOwner()->getUndoStore()->saveUndo($undoBlocks);
+	$this->getOwner()->getUndoStore()->saveUndo($undoBlocks);
 	}
 	
 	public function getTargetBlock(): Vector3 {
