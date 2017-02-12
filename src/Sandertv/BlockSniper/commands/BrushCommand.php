@@ -80,6 +80,7 @@ class BrushCommand extends BaseCommand {
 					case "replace":
 					case "expand":
 					case "melt":
+					case "biome":
 						if(!$sender->hasPermission("blocksniper.type." . $args[1])) {
 							$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.no-permission"));
 							return true;
@@ -147,7 +148,7 @@ class BrushCommand extends BaseCommand {
 			case "biome":
 				$biome = array_slice($args, 2);
 				Brush::setBiome($sender,implode(" ", $biome));
-				$sender->sendMessage(TF::GREEN . "Biome: " . TF::AQUA . Biome::getBiome(Brush::getBiomeIdFromString($sender)));
+				$sender->sendMessage(TF::GREEN . "Biome: " . TF::AQUA . Biome::getBiome(Brush::getBiomeIdFromString($sender))->getName());
 				return true;
 				
 			default:
