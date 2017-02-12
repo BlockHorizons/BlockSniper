@@ -231,7 +231,7 @@ class Brush {
 	 *
 	 * @return BaseType
 	 */
-	public static function getType(Player $player, array $blocks): BaseType {
+	public static function getType(Player $player, array $blocks = []): BaseType {
 		$typeName = self::$brush[$player->getId()]["type"];
 		switch($typeName) {
 			case "fill":

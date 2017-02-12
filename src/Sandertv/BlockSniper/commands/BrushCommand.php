@@ -57,7 +57,7 @@ class BrushCommand extends BaseCommand {
 							return true;
 						}
 						Brush::setShape($sender, $args[1]);
-						$sender->sendMessage(TF::GREEN . "Shape: " . TF::AQUA . $args[1]);
+						$sender->sendMessage(TF::GREEN . "Shape: " . TF::AQUA . Brush::getShape($sender)->getName());
 						return true;
 					
 					default:
@@ -84,7 +84,7 @@ class BrushCommand extends BaseCommand {
 							return true;
 						}
 						Brush::setType($sender, $args[1]);
-						$sender->sendMessage(TF::GREEN . "Type: " . TF::AQUA . $args[1]);
+						$sender->sendMessage(TF::GREEN . "Type: " . TF::AQUA . Brush::getType($sender)->getName());
 						return true;
 					
 					default:

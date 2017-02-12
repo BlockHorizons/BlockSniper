@@ -27,7 +27,7 @@ class ExpandType extends BaseType {
 	 */
 	public function fillShape(): bool {
 		$undoBlocks = [];
-	foreach($this->blocks as $block) {
+		foreach($this->blocks as $block) {
 			if($block->getId() !== Item::AIR) {
 				$directions = [
 					$block->getSide(Block::SIDE_NORTH),
