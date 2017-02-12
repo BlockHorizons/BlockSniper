@@ -6,11 +6,11 @@ use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\Player;
 use ReflectionClass;
-use pocketmine\level\generator\biome\Biome;
 use Sandertv\BlockSniper\brush\shapes\CubeShape;
 use Sandertv\BlockSniper\brush\shapes\CuboidShape;
 use Sandertv\BlockSniper\brush\shapes\CylinderStandingShape;
 use Sandertv\BlockSniper\brush\shapes\SphereShape;
+use Sandertv\BlockSniper\brush\types\BiomeType;
 use Sandertv\BlockSniper\brush\types\CleanEntitiesType;
 use Sandertv\BlockSniper\brush\types\CleanType;
 use Sandertv\BlockSniper\brush\types\DrainType;
@@ -269,6 +269,9 @@ class Brush {
 				break;
 			case "cleanentities":
 				$type = new CleanEntitiesType(self::$owner, $player, $player->getLevel(), $blocks);
+				break;
+			case "biome":
+				$type = new BiomeType(self::$owner, $player, $player->getLevel(), $blocks);
 				break;
 				
 			default:
