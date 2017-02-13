@@ -42,7 +42,8 @@ class ChangeBrushPropertiesEvent extends PluginEvent {
 	
 	/**
 	 * Returns the action of the change.
-	 * @return string
+	 *
+	 * @return int
 	 */
 	public function getAction(): int {
 		return $this->action;
