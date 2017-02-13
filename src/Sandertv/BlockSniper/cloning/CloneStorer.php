@@ -46,7 +46,7 @@ class CloneStorer {
 	}
 	
 	// Required for math to copy-paste it on the location looked at.
-
+	
 	public function getOriginalCenter(): Vector3 {
 		return $this->originalCenter;
 	}
@@ -72,7 +72,7 @@ class CloneStorer {
 			$undoBlocks[] = $level->getBlock($blockPos);
 			$level->setBlock($blockPos, Block::get((int)$blockId, (int)$meta), false, false);
 		}
-	$this->getOwner()->getUndoStore()->saveUndo($undoBlocks);
+		$this->getOwner()->getUndoStore()->saveUndo($undoBlocks);
 	}
 	
 	public function getTargetBlock(): Vector3 {

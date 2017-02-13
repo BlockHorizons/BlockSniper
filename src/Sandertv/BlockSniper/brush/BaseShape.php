@@ -12,7 +12,7 @@ abstract class BaseShape {
 	const SHAPE_SPHERE = 1, SHAPE_BALL = 1;
 	const SHAPE_CYLINDER = 2, SHAPE_STANDING_CYLINDER = 2;
 	const SHAPE_CUBOID = 3;
-
+	
 	public function __construct(Loader $main) {
 		$this->main = $main;
 	}

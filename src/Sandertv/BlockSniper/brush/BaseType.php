@@ -16,7 +16,7 @@ abstract class BaseType {
 	const TYPE_LEAF_BLOWER = 6;
 	const TYPE_CLEAN = 7, TYPE_CLEAR = 7;
 	public $main;
-
+	
 	public function __construct(Loader $main) {
 		$this->main = $main;
 	}

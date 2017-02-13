@@ -3,7 +3,6 @@
 namespace Sandertv\BlockSniper\brush\types;
 
 use pocketmine\level\Level;
-use pocketmine\math\Vector3;
 use pocketmine\Player;
 use Sandertv\BlockSniper\brush\BaseType;
 use Sandertv\BlockSniper\brush\Brush;

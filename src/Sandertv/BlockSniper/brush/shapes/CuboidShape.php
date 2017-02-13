@@ -3,9 +3,9 @@
 namespace Sandertv\BlockSniper\brush\shapes;
 
 use pocketmine\level\Level;
-use pocketmine\Player;
-use pocketmine\math\Vector3;
 use pocketmine\level\Position;
+use pocketmine\math\Vector3;
+use pocketmine\Player;
 use Sandertv\BlockSniper\brush\BaseShape;
 use Sandertv\BlockSniper\brush\Brush;
 use Sandertv\BlockSniper\Loader;

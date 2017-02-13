@@ -3,12 +3,12 @@
 namespace Sandertv\BlockSniper\brush\shapes;
 
 use pocketmine\level\Level;
-use pocketmine\math\Vector3;
 use pocketmine\level\Position;
+use pocketmine\math\Vector3;
 use pocketmine\Player;
 use Sandertv\BlockSniper\brush\BaseShape;
-use Sandertv\BlockSniper\Loader;
 use Sandertv\BlockSniper\brush\Brush;
+use Sandertv\BlockSniper\Loader;
 
 class CubeShape extends BaseShape {
 	

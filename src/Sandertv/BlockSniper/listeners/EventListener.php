@@ -6,8 +6,8 @@ use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\utils\TextFormat as TF;
 use Sandertv\BlockSniper\brush\Brush;
-use Sandertv\BlockSniper\Loader;
 use Sandertv\BlockSniper\events\BrushUseEvent;
+use Sandertv\BlockSniper\Loader;
 
 class EventListener implements Listener {
 	
@@ -44,6 +44,13 @@ class EventListener implements Listener {
 		}
 	}
 	
+	/**
+	 * @return Loader
+	 */
+	public function getOwner(): Loader {
+		return $this->owner;
+	}
+	
 	public function decrementBrush(BrushUseEvent $event) {
 		$player = $event->getPlayer();
 		if(Brush::isDecrementing($player)) {
@@ -59,12 +66,5 @@ class EventListener implements Listener {
 			return true;
 		}
 		return false;
-	}
-	
-	/**
-	 * @return Loader
-	 */
-	public function getOwner(): Loader {
-		return $this->owner;
 	}
 }

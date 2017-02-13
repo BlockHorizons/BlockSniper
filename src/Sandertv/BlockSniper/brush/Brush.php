@@ -14,14 +14,14 @@ use Sandertv\BlockSniper\brush\types\BiomeType;
 use Sandertv\BlockSniper\brush\types\CleanEntitiesType;
 use Sandertv\BlockSniper\brush\types\CleanType;
 use Sandertv\BlockSniper\brush\types\DrainType;
+use Sandertv\BlockSniper\brush\types\ExpandType;
 use Sandertv\BlockSniper\brush\types\FillType;
 use Sandertv\BlockSniper\brush\types\FlattenType;
 use Sandertv\BlockSniper\brush\types\LayerType;
 use Sandertv\BlockSniper\brush\types\LeafBlowerType;
+use Sandertv\BlockSniper\brush\types\MeltType;
 use Sandertv\BlockSniper\brush\types\OverlayType;
 use Sandertv\BlockSniper\brush\types\ReplaceType;
-use Sandertv\BlockSniper\brush\types\ExpandType;
-use Sandertv\BlockSniper\brush\types\MeltType;
 use Sandertv\BlockSniper\Loader;
 
 class Brush {
@@ -273,7 +273,7 @@ class Brush {
 			case "biome":
 				$type = new BiomeType(self::$owner, $player, $player->getLevel(), $blocks);
 				break;
-				
+			
 			default:
 				$type = new FillType(self::$owner, $player, $player->getLevel(), $blocks);
 				break;
