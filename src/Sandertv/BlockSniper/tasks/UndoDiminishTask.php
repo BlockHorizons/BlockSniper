@@ -12,7 +12,9 @@ class UndoDiminishTask extends BaseTask {
 	
 	public function onRun($currentTick) {
 		if($this->getUndoStore()->undoStorageExists()) {
-			$this->getUndoStore()->unsetFirstUndo();
+			if($this->getUndoStore()->getLastUndoActivity() >= 180) {
+				$this->getUndoStore()->unsetFirstUndo();
+			}
 		}
 	}
 }
