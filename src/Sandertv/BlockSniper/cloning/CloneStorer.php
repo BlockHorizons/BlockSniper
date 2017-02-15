@@ -40,9 +40,8 @@ class CloneStorer {
 	}
 	
 	public function unsetCopy() {
-		foreach($this->copyStore as $blocks) {
-			unset($blocks);
-		}
+		unset($this->copyStore);
+		$this->copyStore = [];
 	}
 	
 	// Required for math to copy-paste it on the location looked at.
