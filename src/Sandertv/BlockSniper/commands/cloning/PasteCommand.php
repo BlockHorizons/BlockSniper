@@ -23,7 +23,7 @@ class PasteCommand extends BaseCommand {
 	 * @return boolean
 	 */
 	public function execute(CommandSender $sender, $commandLabel, array $args) {
-		if(!$this->testPermission($sender)) {
+		if(!$this->testPermission($sender) || !$sender->hasPermission("blocksniper.cloning." . $args[0])) {
 			$this->sendNoPermission($sender);
 			return true;
 		}
@@ -48,7 +48,7 @@ class PasteCommand extends BaseCommand {
 			case "copy":
 				if($this->getPlugin()->getCloneStore()->copyStoreExists()) {
 					$this->getPlugin()->getCloneStore()->setTargetBlock($center);
-					$this->getPlugin()->getCloneStore()->pasteCopy();
+					$this->getPlugin()->getCloneStore()->pasteCopy($sender->getLevel());
 				}
 				break;
 			

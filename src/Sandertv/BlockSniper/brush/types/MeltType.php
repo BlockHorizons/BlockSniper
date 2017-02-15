@@ -27,7 +27,6 @@ class MeltType extends BaseType {
 	 */
 	public function fillShape(): bool {
 		$undoBlocks = [];
-		$selectedBlocks = [];
 		foreach($this->blocks as $block) {
 			if($block->getId() !== Item::AIR) {
 				$directions = [

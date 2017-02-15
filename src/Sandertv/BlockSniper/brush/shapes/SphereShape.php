@@ -3,9 +3,9 @@
 namespace Sandertv\BlockSniper\brush\shapes;
 
 use pocketmine\level\Level;
+use pocketmine\level\Position;
 use pocketmine\math\Math;
 use pocketmine\math\Vector3;
-use pocketmine\level\Position;
 use pocketmine\Player;
 use Sandertv\BlockSniper\brush\BaseShape;
 use Sandertv\BlockSniper\brush\Brush;
@@ -53,7 +53,11 @@ class SphereShape extends BaseShape {
 				for($z = $maxZ; $z >= $minZ; $z--) {
 					$zs = ($targetZ - $z) * ($targetZ - $z);
 					if($xs + $ys + $zs < $radiusSquared) {
-						$blocksInside[] = $this->getLevel()->getBlock(new Vector3($x, $y, $z));
+						if(Brush::getGravity($this->player) === true || Brush::getGravity($this->player) === 1) {
+							$gravityY = ($this->level->getHighestBlockAt($x, $z) + 1) <= $maxY ? $this->level->getHighestBlockAt($x, $z) + 1 : $y;
+						}
+						$blocksInside[] = $this->getLevel()->getBlock(new Vector3($x, (isset($gravityY) ? $gravityY : $y), $z));
+						unset($gravityY);
 					}
 				}
 			}

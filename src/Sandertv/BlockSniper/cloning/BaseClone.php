@@ -8,8 +8,9 @@ abstract class BaseClone {
 	
 	const TYPE_COPY = 0;
 	const TYPE_TEMPLATE = 1;
+	
 	public $owner;
-
+	
 	public function __construct(Loader $owner) {
 		$this->owner = $owner;
 	}

@@ -4,11 +4,10 @@ namespace Sandertv\BlockSniper\listeners;
 
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
-use pocketmine\item\Item;
 use pocketmine\utils\TextFormat as TF;
 use Sandertv\BlockSniper\brush\Brush;
-use Sandertv\BlockSniper\Loader;
 use Sandertv\BlockSniper\events\BrushUseEvent;
+use Sandertv\BlockSniper\Loader;
 
 class EventListener implements Listener {
 	
@@ -18,21 +17,23 @@ class EventListener implements Listener {
 		$this->owner = $owner;
 	}
 	
-	public function onBrush(PlayerInteractEvent $event) {
+	public function brush(PlayerInteractEvent $event) {
 		$player = $event->getPlayer();
-		if($player->getInventory()->getItemInHand()->getId() === Item::GOLDEN_CARROT) {
+		if($player->getInventory()->getItemInHand()->getId() === (int)$this->getOwner()->getSettings()->get("Brush-Item")) {
 			if($player->hasPermission("blocksniper.command.brush")) {
 				$center = $player->getTargetBlock(100);
 				
 				if(!$center) {
 					$player->sendMessage(TF::RED . "[Warning] " . $this->getOwner()->getTranslation("commands.errors.no-target-found"));
-					return;
+					return false;
 				}
 				
 				$this->getOwner()->getServer()->getPluginManager()->callEvent($event = new BrushUseEvent($this->getOwner(), $player));
 				if($event->isCancelled()) {
-					return;
+					return false;
 				}
+				
+				Brush::setupDefaultValues($player);
 				
 				$shape = Brush::getShape($player);
 				$type = Brush::getType($player, $shape->getBlocksInside());
@@ -43,7 +44,27 @@ class EventListener implements Listener {
 		}
 	}
 	
+	/**
+	 * @return Loader
+	 */
 	public function getOwner(): Loader {
 		return $this->owner;
+	}
+	
+	public function decrementBrush(BrushUseEvent $event) {
+		$player = $event->getPlayer();
+		if(Brush::isDecrementing($player)) {
+			if(Brush::getSize($player) <= 1) {
+				if($this->getOwner()->getSettings()->get("Reset-Decrement-Brush") !== false) {
+					Brush::setSize($player, Brush::$resetSize[$player->getId()]);
+					$player->sendPopup(TF::GREEN . "Brush reset to original size.");
+					return true;
+				}
+				return false;
+			}
+			Brush::setSize($player, (Brush::getSize($player) - 1));
+			return true;
+		}
+		return false;
 	}
 }

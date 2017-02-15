@@ -2,15 +2,15 @@
 
 namespace Sandertv\BlockSniper\events;
 
-use pocketmine\event\Cancellable;
-use pocketmine\Player;
 use pocketmine\block\Block;
+use pocketmine\event\Cancellable;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
-use Sandertv\BlockSniper\Loader;
-use Sandertv\BlockSniper\brush\Brush;
+use pocketmine\Player;
 use Sandertv\BlockSniper\brush\BaseShape;
 use Sandertv\BlockSniper\brush\BaseType;
+use Sandertv\BlockSniper\brush\Brush;
+use Sandertv\BlockSniper\Loader;
 
 class BrushUseEvent extends BaseEvent implements Cancellable {
 	
@@ -26,18 +26,18 @@ class BrushUseEvent extends BaseEvent implements Cancellable {
 	}
 	
 	/**
+	 * @return Level
+	 */
+	public function getLevel(): Level {
+		return $this->getPlayer()->getLevel();
+	}
+	
+	/**
 	 * Returns the player that used the Brush.
 	 * @return Player
 	 */
 	public function getPlayer(): Player {
 		return $this->player;
-	}
-	
-	/**
-	 * @return Level
-	 */
-	public function getLevel(): Level {
-		return $this->getPlayer()->getLevel();
 	}
 	
 	/**
@@ -50,21 +50,21 @@ class BrushUseEvent extends BaseEvent implements Cancellable {
 	}
 	
 	/**
-	 * Returns the shape of the player that used the Brush. (Object)
-	 *
-	 * @return BaseShape
-	 */
-	public function getShape(): BaseShape {
-		return Brush::getShape($this->player);
-	}
-	
-	/**
 	 * Returns the type of the player that used the Brush. (Object)
 	 *
 	 * @return BaseType
 	 */
 	public function getType(): BaseType {
 		return Brush::getType($this->player, $this->getShape()->getBlocksInside());
+	}
+	
+	/**
+	 * Returns the shape of the player that used the Brush. (Object)
+	 *
+	 * @return BaseShape
+	 */
+	public function getShape(): BaseShape {
+		return Brush::getShape($this->player);
 	}
 	
 	/**

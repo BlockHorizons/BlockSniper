@@ -17,8 +17,8 @@ use Sandertv\BlockSniper\tasks\UndoDiminishTask;
 
 class Loader extends PluginBase {
 	
-	const VERSION = "1.0.1";
-	const API_TARGET = "2.1.0 - 3.0.0-ALPHA3";
+	const VERSION = "1.1.0";
+	const API_TARGET = "2.0.0 - 3.0.0-ALPHA3";
 	
 	public $undoStore;
 	public $cloneStore;
@@ -90,11 +90,16 @@ class Loader extends PluginBase {
 	}
 	
 	public function registerCommands() {
-		$this->getServer()->getCommandMap()->register("blocksniper", new BlockSniperCommand($this));
-		$this->getServer()->getCommandMap()->register("brush", new BrushCommand($this));
-		$this->getServer()->getCommandMap()->register("undo", new UndoCommand($this));
-		$this->getServer()->getCommandMap()->register("clone", new CloneCommand($this));
-		$this->getServer()->getCommandMap()->register("paste", new PasteCommand($this));
+		$blockSniperCommands = [
+			"blocksniper" => new BlockSniperCommand($this),
+			"brush" => new BrushCommand($this),
+			"undo" => new UndoCommand($this),
+			"clone" => new CloneCommand($this),
+			"paste" => new PasteCommand($this)
+		];
+		foreach($blockSniperCommands as $name => $class) {
+			$this->getServer()->getCommandMap()->register($name, $class);
+		}
 	}
 	
 	public function onDisable() {

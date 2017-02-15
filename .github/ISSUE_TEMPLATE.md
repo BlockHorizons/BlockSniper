@@ -5,7 +5,7 @@
 -->
 
 #### Description
-<!--- Write a detailed description about the issue -->
+<!--- Write a detailed description about the issue. -->
 
 #### Versions
 * PocketMine version:
@@ -13,7 +13,7 @@
 * Game version: PE/W10
 
 #### Crashdump and/or console errors
-<!--- Insert in the code block below -->
+<!--- Insert in the code block below. -->
 ```
 ```
-<!--- Issues that do not follow this template will get closed immediatly, so make sure to follow it. -->
+<!--- Issues that do not follow this template will get closed immediatly, so make sure to follow it. If your issue is a suggestion or question, feel free to remove it however. -->

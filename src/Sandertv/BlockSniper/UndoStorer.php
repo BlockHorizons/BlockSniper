@@ -10,6 +10,7 @@ class UndoStorer {
 	
 	public $totalStores = 0;
 	public $undoStore = [];
+	public $lastUndo;
 	
 	public function __construct(Loader $owner) {
 		$this->owner = $owner;
@@ -36,6 +37,8 @@ class UndoStorer {
 			$this->unsetFirstUndo(); // Unset the first undo to make sure the array won't get too big.
 		}
 		$this->getOwner()->getServer()->getScheduler()->scheduleDelayedTask(new UndoDiminishTask($this->getOwner()), 2400);
+		
+		$this->lastUndo = time();
 	}
 	
 	/**
@@ -89,5 +92,12 @@ class UndoStorer {
 	 */
 	public function getLastUndoBlockAmount() {
 		return count($this->undoStore[max(array_keys($this->undoStore))]);
+	}
+	
+	/**
+	 * @return int
+	 */
+	public function getLastUndoActivity(): int {
+		return (time() - $this->lastUndo);
 	}
 }

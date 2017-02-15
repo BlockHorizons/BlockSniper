@@ -5,26 +5,30 @@ namespace Sandertv\BlockSniper\brush;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\Player;
+use ReflectionClass;
 use Sandertv\BlockSniper\brush\shapes\CubeShape;
 use Sandertv\BlockSniper\brush\shapes\CuboidShape;
 use Sandertv\BlockSniper\brush\shapes\CylinderStandingShape;
 use Sandertv\BlockSniper\brush\shapes\SphereShape;
+use Sandertv\BlockSniper\brush\types\BiomeType;
+use Sandertv\BlockSniper\brush\types\CleanEntitiesType;
 use Sandertv\BlockSniper\brush\types\CleanType;
 use Sandertv\BlockSniper\brush\types\DrainType;
+use Sandertv\BlockSniper\brush\types\ExpandType;
 use Sandertv\BlockSniper\brush\types\FillType;
 use Sandertv\BlockSniper\brush\types\FlattenType;
 use Sandertv\BlockSniper\brush\types\LayerType;
 use Sandertv\BlockSniper\brush\types\LeafBlowerType;
+use Sandertv\BlockSniper\brush\types\MeltType;
 use Sandertv\BlockSniper\brush\types\OverlayType;
 use Sandertv\BlockSniper\brush\types\ReplaceType;
-use Sandertv\BlockSniper\brush\types\ExpandType;
-use Sandertv\BlockSniper\brush\types\MeltType;
 use Sandertv\BlockSniper\Loader;
 
 class Brush {
 	
 	public static $brush = [];
 	public static $owner;
+	public static $resetSize = [];
 	
 	public function __construct(Loader $owner) {
 		self::$owner = $owner;
@@ -46,7 +50,10 @@ class Brush {
 			"size" => 1,
 			"height" => 1,
 			"blocks" => [Block::get(Block::STONE)],
-			"obsolete" => Block::get(Block::AIR)
+			"obsolete" => Block::get(Block::AIR),
+			"gravity" => false,
+			"decrement" => false,
+			"biome" => "plains"
 		];
 		return true;
 	}
@@ -64,6 +71,40 @@ class Brush {
 				self::$brush[$player->getId()]["blocks"][] = Item::get($block)->getBlock();
 			}
 		}
+	}
+	
+	/**
+	 * @param Player $player
+	 * @param        $value
+	 */
+	public static function setDecrementing(Player $player, $value) {
+		self::$brush[$player->getId()]["decrement"] = (bool)$value;
+	}
+	
+	/**
+	 * @param Player $player
+	 *
+	 * @return bool
+	 */
+	public static function isDecrementing(Player $player): bool {
+		return self::$brush[$player->getId()]["decrement"];
+	}
+	
+	/**
+	 * @param Player $player
+	 * @param        $value
+	 */
+	public static function setGravity(Player $player, $value) {
+		self::$brush[$player->getId()]["gravity"] = (bool)$value;
+	}
+	
+	/**
+	 * @param Player $player
+	 *
+	 * @return bool
+	 */
+	public static function getGravity(Player $player): bool {
+		return self::$brush[$player->getId()]["gravity"];
 	}
 	
 	/**
@@ -150,16 +191,16 @@ class Brush {
 		$shapeName = self::$brush[$player->getId()]["shape"];
 		switch($shapeName) {
 			case "cube":
-				$shape = new CubeShape(self::$owner, $player->getLevel(), self::getSize($player), $player->getTargetBlock(100));
+				$shape = new CubeShape(self::$owner, $player, $player->getLevel(), self::getSize($player), $player->getTargetBlock(100));
 				break;
 			case "sphere":
 				$shape = new SphereShape(self::$owner, $player, $player->getLevel(), self::getSize($player), $player->getTargetBlock(100));
 				break;
 			case "cuboid":
-				$shape = new CuboidShape(self::$owner, $player->getLevel(), self::getSize($player), self::getHeight($player), $player->getTargetBlock(100));
+				$shape = new CuboidShape(self::$owner, $player, $player->getLevel(), self::getSize($player), self::getHeight($player), $player->getTargetBlock(100));
 				break;
 			case "cylinder":
-				$shape = new CylinderStandingShape(self::$owner, $player->getLevel(), self::getSize($player), self::getHeight($player), $player->getTargetBlock(100));
+				$shape = new CylinderStandingShape(self::$owner, $player, $player->getLevel(), self::getSize($player), self::getHeight($player), $player->getTargetBlock(100));
 				break;
 			
 			default:
@@ -193,7 +234,7 @@ class Brush {
 	 *
 	 * @return BaseType
 	 */
-	public static function getType(Player $player, array $blocks): BaseType {
+	public static function getType(Player $player, array $blocks = []): BaseType {
 		$typeName = self::$brush[$player->getId()]["type"];
 		switch($typeName) {
 			case "fill":
@@ -226,7 +267,35 @@ class Brush {
 			case "melt":
 				$type = new MeltType(self::$owner, $player, $player->getLevel(), $blocks);
 				break;
+			case "cleanentities":
+				$type = new CleanEntitiesType(self::$owner, $player, $player->getLevel(), $blocks);
+				break;
+			case "biome":
+				$type = new BiomeType(self::$owner, $player, $player->getLevel(), $blocks);
+				break;
+			
+			default:
+				$type = new FillType(self::$owner, $player, $player->getLevel(), $blocks);
+				break;
 		}
 		return $type;
+	}
+	
+	/**
+	 * @param Player $player
+	 * @param string $biome
+	 */
+	public static function setBiome(Player $player, string $biome) {
+		self::$brush[$player->getId()]["biome"] = $biome;
+	}
+	
+	public static function getBiomeIdFromString(Player $player): int {
+		$biomes = new ReflectionClass('pocketmine\level\generator\biome\Biome');
+		$const = strtoupper(str_replace(" ", "_", self::$brush[$player->getId()]["biome"]));
+		if($biomes->hasConstant($const)) {
+			$biome = $biomes->getConstant($const);
+			return $biome;
+		}
+		return 0;
 	}
 }
