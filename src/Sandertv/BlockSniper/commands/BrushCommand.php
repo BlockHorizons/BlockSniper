@@ -139,11 +139,11 @@ class BrushCommand extends BaseCommand {
 				$sender->sendMessage(TF::GREEN . "Perfect: " . TF::AQUA . $args[1]);
 				return true;
 			
-			case "gr": // TODO: Add action for ChangeBrushPropertiesEvent once stable.
+			case "gr": // TODO: Fix gravity and move return true to end.
 			case "gravity":
+				return true;
 				Brush::setGravity($sender, $args[1]);
 				$sender->sendMessage(TF::GREEN . "Gravity: " . TF::AQUA . $args[1]);
-				return true;
 			
 			case "decrement":
 			case "decrementing":
