@@ -17,11 +17,11 @@ class FlattenType extends BaseType {
 	public $player;
 	public $center;
 	
-	public function __construct(Loader $main, Player $player, Level $level, array $blocks = [], Vector3 $center) {
+	public function __construct(Loader $main, Player $player, Level $level, array $blocks = []) {
 		parent::__construct($main);
 		$this->level = $level;
 		$this->blocks = $blocks;
-		$this->center = $center;
+		$this->center = $player->getTargetBlock(100);
 		
 		$this->player = $player;
 	}

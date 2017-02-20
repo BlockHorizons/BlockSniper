@@ -37,4 +37,17 @@ abstract class BaseType {
 	public function getMain(): Loader {
 		return $this->main;
 	}
+	
+	/**
+	 * @param string $type
+	 *
+	 * @return bool
+	 */
+	public static function isType(string $type): bool {
+		$typeConst = strtoupper("type_" . $type);
+		if(defined("self::$typeConst")) {
+			return true;
+		}
+		return false;
+	}
 }

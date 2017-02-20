@@ -16,7 +16,7 @@ class LeafBlowerType extends BaseType {
 	public $player;
 	public $blocks;
 	
-	public function __construct(Loader $main, Player $player, Level $level, array $blocks) {
+	public function __construct(Loader $main, Player $player, Level $level, array $blocks = []) {
 		parent::__construct($main);
 		$this->level = $level;
 		$this->player = $player;

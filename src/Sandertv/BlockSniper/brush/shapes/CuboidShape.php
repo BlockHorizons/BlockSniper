@@ -18,11 +18,11 @@ class CuboidShape extends BaseShape {
 	public $center;
 	public $player;
 	
-	public function __construct(Loader $main, Player $player, Level $level, float $width = null, float $height = null, Position $center = null) {
+	public function __construct(Loader $main, Player $player, Level $level, float $width = null, Position $center = null) {
 		parent::__construct($main);
 		$this->level = $level;
 		$this->width = $width;
-		$this->height = $height;
+		$this->height = Brush::getHeight($player);
 		$this->center = $center;
 		$this->player = $player;
 	}

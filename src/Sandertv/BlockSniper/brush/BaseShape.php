@@ -27,4 +27,17 @@ abstract class BaseShape {
 	public function getMain(): Loader {
 		return $this->main;
 	}
+	
+	/**
+	 * @param string $shape
+	 *
+	 * @return bool
+	 */
+	public static function isShape(string $shape): bool {
+		$shapeConst = strtoupper("shape_" . $shape);
+		if(defined("self::$shapeConst")) {
+			return true;
+		}
+		return false;
+	}
 }

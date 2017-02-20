@@ -18,11 +18,11 @@ class CylinderStandingShape extends BaseShape {
 	public $player;
 	public $center;
 	
-	public function __construct(Loader $main, Player $player, Level $level, float $radius = null, int $height = null, Position $center = null) {
+	public function __construct(Loader $main, Player $player, Level $level, float $radius = null, Position $center = null) {
 		parent::__construct($main);
 		$this->level = $level;
 		$this->radius = $radius;
-		$this->height = $height;
+		$this->height = Brush::getHeight($player);
 		$this->center = $center;
 		$this->player = $player;
 	}

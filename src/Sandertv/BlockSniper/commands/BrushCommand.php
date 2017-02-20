@@ -9,6 +9,8 @@ use pocketmine\utils\TextFormat as TF;
 use Sandertv\BlockSniper\brush\Brush;
 use Sandertv\BlockSniper\Loader;
 use Sandertv\BlockSniper\events\ChangeBrushPropertiesEvent as Change;
+use Sandertv\BlockSniper\brush\BaseShape;
+use Sandertv\BlockSniper\brush\BaseType;
 
 class BrushCommand extends BaseCommand {
 	
@@ -50,54 +52,32 @@ class BrushCommand extends BaseCommand {
 			
 			case "sh":
 			case "shape":
-				switch(strtolower($args[1])) {
-					case "cube":
-					case "sphere":
-					case "cuboid":
-					case "cylinder":
-						if(!$sender->hasPermission("blocksniper.shape." . $args[1])) {
-							$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.no-permission"));
-							return true;
-						}
-						Brush::setShape($sender, $args[1]);
-						$sender->sendMessage(TF::GREEN . "Shape: " . TF::AQUA . Brush::getShape($sender)->getName());
-						$action = Change::ACTION_CHANGE_SHAPE;
-						break;
-					
-					default:
-						$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.shape-not-found"));
-						return true;
+				if(!BaseShape::isShape($args[1])) {
+					$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.shape-not-found"));
+					return true;
 				}
+				if(!$sender->hasPermission("blocksniper.shape." . $args[1])) {
+					$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.no-permission"));
+					return true;
+				}
+				Brush::setShape($sender, $args[1]);
+				$sender->sendMessage(TF::GREEN . "Shape: " . TF::AQUA . Brush::getShape($sender)->getName());
+				$action = Change::ACTION_CHANGE_SHAPE;
 				break;
 			
 			case "ty":
 			case "type":
-				switch(strtolower($args[1])) {
-					case "fill":
-					case "clean":
-					case "cleanentities":
-					case "drain":
-					case "flatten":
-					case "layer":
-					case "leafblower":
-					case "overlay":
-					case "replace":
-					case "expand":
-					case "melt":
-					case "biome":
-						if(!$sender->hasPermission("blocksniper.type." . $args[1])) {
-							$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.no-permission"));
-							return true;
-						}
-						Brush::setType($sender, $args[1]);
-						$sender->sendMessage(TF::GREEN . "Type: " . TF::AQUA . Brush::getType($sender)->getName());
-						$action = Change::ACTION_CHANGE_TYPE;
-						break;
-						
-					default:
-						$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.shape-not-found"));
-						return true;
+				if(!BaseType::isType($args[1])) {
+					$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.shape-not-found"));
+					return true;
 				}
+				if(!$sender->hasPermission("blocksniper.type." . $args[1])) {
+					$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.no-permission"));
+					return true;
+				}
+				Brush::setType($sender, $args[1]);
+				$sender->sendMessage(TF::GREEN . "Type: " . TF::AQUA . Brush::getType($sender)->getName());
+				$action = Change::ACTION_CHANGE_TYPE;
 				break;
 			
 			case "he":

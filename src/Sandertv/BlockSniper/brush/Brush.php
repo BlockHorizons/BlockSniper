@@ -188,25 +188,9 @@ class Brush {
 	 * @return BaseShape
 	 */
 	public static function getShape(Player $player): BaseShape {
-		$shapeName = self::$brush[$player->getId()]["shape"];
-		switch($shapeName) {
-			case "cube":
-				$shape = new CubeShape(self::$owner, $player, $player->getLevel(), self::getSize($player), $player->getTargetBlock(100));
-				break;
-			case "sphere":
-				$shape = new SphereShape(self::$owner, $player, $player->getLevel(), self::getSize($player), $player->getTargetBlock(100));
-				break;
-			case "cuboid":
-				$shape = new CuboidShape(self::$owner, $player, $player->getLevel(), self::getSize($player), self::getHeight($player), $player->getTargetBlock(100));
-				break;
-			case "cylinder":
-				$shape = new CylinderStandingShape(self::$owner, $player, $player->getLevel(), self::getSize($player), self::getHeight($player), $player->getTargetBlock(100));
-				break;
-			
-			default:
-				$shape = new SphereShape(self::$owner, $player, $player->getLevel(), self::getSize($player), $player->getTargetBlock(100));
-				break;
-		}
+		$shapeName = (ucfirst(self::$brush[$player->getId()]["shape"]) . "Shape");
+		$shape = new $shapeName(self::$owner, $player, $player->getLevel(), self::getSize($player), $player->getTargetBlock(100));
+		
 		return $shape;
 	}
 	
@@ -235,49 +219,9 @@ class Brush {
 	 * @return BaseType
 	 */
 	public static function getType(Player $player, array $blocks = []): BaseType {
-		$typeName = self::$brush[$player->getId()]["type"];
-		switch($typeName) {
-			case "fill":
-				$type = new FillType(self::$owner, $player, $player->getLevel(), $blocks);
-				break;
-			case "clean":
-				$type = new CleanType(self::$owner, $player, $player->getLevel(), $blocks);
-				break;
-			case "drain":
-				$type = new DrainType(self::$owner, $player, $player->getLevel(), $blocks);
-				break;
-			case "flatten":
-				$type = new FlattenType(self::$owner, $player, $player->getLevel(), $blocks, $player->getTargetBlock(100));
-				break;
-			case "layer":
-				$type = new LayerType(self::$owner, $player, $player->getLevel(), $blocks, $player->getTargetBlock(100));
-				break;
-			case "leafblower":
-				$type = new LeafBlowerType(self::$owner, $player, $player->getLevel(), $blocks);
-				break;
-			case "overlay":
-				$type = new OverlayType(self::$owner, $player, $player->getLevel(), $blocks);
-				break;
-			case "replace":
-				$type = new ReplaceType(self::$owner, $player, $player->getLevel(), $blocks);
-				break;
-			case "expand":
-				$type = new ExpandType(self::$owner, $player, $player->getLevel(), $blocks);
-				break;
-			case "melt":
-				$type = new MeltType(self::$owner, $player, $player->getLevel(), $blocks);
-				break;
-			case "cleanentities":
-				$type = new CleanEntitiesType(self::$owner, $player, $player->getLevel(), $blocks);
-				break;
-			case "biome":
-				$type = new BiomeType(self::$owner, $player, $player->getLevel(), $blocks);
-				break;
-			
-			default:
-				$type = new FillType(self::$owner, $player, $player->getLevel(), $blocks);
-				break;
-		}
+		$typeName = (ucfirst(self::$brush[$player->getId()]["type"]) . "Type");
+		$type = new $typeName(self::$owner, $player, $player->getLevel(), $blocks);
+		
 		return $type;
 	}
 	
