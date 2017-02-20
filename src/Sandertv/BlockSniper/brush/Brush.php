@@ -6,22 +6,6 @@ use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\Player;
 use ReflectionClass;
-use Sandertv\BlockSniper\brush\shapes\CubeShape;
-use Sandertv\BlockSniper\brush\shapes\CuboidShape;
-use Sandertv\BlockSniper\brush\shapes\CylinderStandingShape;
-use Sandertv\BlockSniper\brush\shapes\SphereShape;
-use Sandertv\BlockSniper\brush\types\BiomeType;
-use Sandertv\BlockSniper\brush\types\CleanEntitiesType;
-use Sandertv\BlockSniper\brush\types\CleanType;
-use Sandertv\BlockSniper\brush\types\DrainType;
-use Sandertv\BlockSniper\brush\types\ExpandType;
-use Sandertv\BlockSniper\brush\types\FillType;
-use Sandertv\BlockSniper\brush\types\FlattenType;
-use Sandertv\BlockSniper\brush\types\LayerType;
-use Sandertv\BlockSniper\brush\types\LeafBlowerType;
-use Sandertv\BlockSniper\brush\types\MeltType;
-use Sandertv\BlockSniper\brush\types\OverlayType;
-use Sandertv\BlockSniper\brush\types\ReplaceType;
 use Sandertv\BlockSniper\Loader;
 
 class Brush {
@@ -188,7 +172,7 @@ class Brush {
 	 * @return BaseShape
 	 */
 	public static function getShape(Player $player): BaseShape {
-		$shapeName = (ucfirst(self::$brush[$player->getId()]["shape"]) . "Shape");
+		$shapeName = 'Sandertv\BlockSniper\brush\types\\' . (ucfirst(self::$brush[$player->getId()]["shape"]) . "Shape");
 		$shape = new $shapeName(self::$owner, $player, $player->getLevel(), self::getSize($player), $player->getTargetBlock(100));
 		
 		return $shape;
@@ -219,7 +203,7 @@ class Brush {
 	 * @return BaseType
 	 */
 	public static function getType(Player $player, array $blocks = []): BaseType {
-		$typeName = (ucfirst(self::$brush[$player->getId()]["type"]) . "Type");
+		$typeName = 'Sandertv\BlockSniper\brush\types\\' . (ucfirst(self::$brush[$player->getId()]["type"]) . "Type");
 		$type = new $typeName(self::$owner, $player, $player->getLevel(), $blocks);
 		
 		return $type;
