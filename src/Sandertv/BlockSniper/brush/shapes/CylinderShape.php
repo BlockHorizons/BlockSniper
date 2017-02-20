@@ -10,7 +10,7 @@ use Sandertv\BlockSniper\brush\BaseShape;
 use Sandertv\BlockSniper\brush\Brush;
 use Sandertv\BlockSniper\Loader;
 
-class CylinderStandingShape extends BaseShape {
+class CylinderShape extends BaseShape {
 	
 	public $level;
 	public $radius;

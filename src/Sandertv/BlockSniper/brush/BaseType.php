@@ -15,10 +15,10 @@ abstract class BaseType {
 	const TYPE_REPLACE = 3;
 	const TYPE_FLATTEN = 4;
 	const TYPE_DRAIN = 5;
-	const TYPE_LEAF_BLOWER = 6;
+	const TYPE_LEAFBLOWER = 6;
 	const TYPE_CLEAN = 7;
 	const TYPE_BIOME = 8;
-	const TYPE_CLEAN_ENTITIES = 9;
+	const TYPE_CLEANENTITIES = 9;
 	const TYPE_MELT = 10;
 	const TYPE_EXPAND = 11;
 	
