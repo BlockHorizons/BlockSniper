@@ -46,7 +46,7 @@ class UndoCommand extends BaseCommand {
 		}
 		
 		$this->getPlugin()->getUndoStore()->restoreLastUndo($undoAmount);
-		$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("commands.succeed.undo") . TF::AQUA . "(" . $undoAmount . ")");
+		$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("commands.succeed.undo") . TF::AQUA . " (" . $undoAmount . ")");
 		return true;
 	}
 }
