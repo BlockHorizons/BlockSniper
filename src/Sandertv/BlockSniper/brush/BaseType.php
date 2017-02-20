@@ -50,4 +50,25 @@ abstract class BaseType {
 		}
 		return false;
 	}
+	
+	/**
+	 * Registers a new Type. Example:
+	 * Raise, 12
+	 *
+	 * Defines the type as a constant making it able to be used.
+	 *
+	 *
+	 * @param string $shape
+	 * @param int    $number
+	 *
+	 * @return bool
+	 */
+	public function registerType(string $type, int $number): bool {
+		$typeConst = strtoupper("shape_" . str_replace("_", "", $type));
+		if(defined("self::$typeConst")) {
+			return false;
+		}
+		define(('Sandertv\BlockSniper\brush\BaseType\\' . $typeConst), $number);
+		return true;
+	}
 }

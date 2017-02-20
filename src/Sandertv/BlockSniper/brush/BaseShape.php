@@ -9,8 +9,8 @@ abstract class BaseShape {
 	const MAX_WORLD_HEIGHT = 256;
 	const MIN_WORLD_HEIGHT = 0;
 	
-	const SHAPE_CUBE = 0;
-	const SHAPE_SPHERE = 1;
+	const SHAPE_SPHERE = 0;
+	const SHAPE_CUBE = 1;
 	const SHAPE_CYLINDER = 2;
 	const SHAPE_CUBOID = 3;
 	
@@ -39,5 +39,26 @@ abstract class BaseShape {
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * Registers a new Shape. Example:
+	 * Triangle, 4
+	 *
+	 * Defines the shape as a constant making it able to be used.
+	 *
+	 *
+	 * @param string $shape
+	 * @param int    $number
+	 *
+	 * @return bool
+	 */
+	public function registerShape(string $shape, int $number): bool {
+		$shapeConst = strtoupper("shape_" . str_replace("_", "", $shape));
+		if(defined("self::$shapeConst")) {
+			return false;
+		}
+		define(('Sandertv\BlockSniper\brush\BaseShape\\' . $shapeConst), $number);
+		return true;
 	}
 }

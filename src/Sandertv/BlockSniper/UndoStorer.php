@@ -52,20 +52,22 @@ class UndoStorer {
 		unset($this->undoStore[min(array_keys($this->undoStore))]);
 	}
 	
-	public function restoreLastUndo() {
-		foreach($this->undoStore[max(array_keys($this->undoStore))] as $key => $block) {
-			$Id = explode("(", $key);
-			$blockId = $Id[0];
-			$meta = explode(":", $blockId);
-			$meta = $meta[1];
-			$x = $block["x"];
-			$y = $block["y"];
-			$z = $block["z"];
-			$finalBlock = Item::get($blockId, $meta)->getBlock();
-			$finalBlock->setDamage((int)$meta !== null ? $meta : 0);
-			$this->getOwner()->getServer()->getLevelByName($block["level"])->setBlock(new Vector3($x, $y, $z), $finalBlock, false, false);
+	public function restoreLastUndo(int $amount = 1) {
+		for($currentAmount = 0; $currentAmount <= $amount; $currentAmount++) {
+			foreach($this->undoStore[max(array_keys($this->undoStore))] as $key => $block) {
+				$Id = explode("(", $key);
+				$blockId = $Id[0];
+				$meta = explode(":", $blockId);
+				$meta = $meta[1];
+				$x = $block["x"];
+				$y = $block["y"];
+				$z = $block["z"];
+				$finalBlock = Item::get($blockId, $meta)->getBlock();
+				$finalBlock->setDamage((int)$meta !== null ? $meta : 0);
+				$this->getOwner()->getServer()->getLevelByName($block["level"])->setBlock(new Vector3($x, $y, $z), $finalBlock, false, false);
+			}
+			$this->unsetLastUndo();
 		}
-		$this->unsetLastUndo();
 	}
 	
 	public function unsetLastUndo() {
@@ -99,5 +101,12 @@ class UndoStorer {
 	 */
 	public function getLastUndoActivity(): int {
 		return (time() - $this->lastUndo);
+	}
+	
+	/**
+	 * @return int
+	 */
+	public function getTotalUndoStores(): int {
+		return count($this->undoStore);
 	}
 }
