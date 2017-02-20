@@ -172,7 +172,7 @@ class Brush {
 	 * @return BaseShape
 	 */
 	public static function getShape(Player $player): BaseShape {
-		$shapeName = 'Sandertv\BlockSniper\brush\types\\' . (ucfirst(self::$brush[$player->getId()]["shape"]) . "Shape");
+		$shapeName = 'Sandertv\BlockSniper\brush\shapes\\' . (ucfirst(self::$brush[$player->getId()]["shape"]) . "Shape");
 		$shape = new $shapeName(self::$owner, $player, $player->getLevel(), self::getSize($player), $player->getTargetBlock(100));
 		
 		return $shape;
