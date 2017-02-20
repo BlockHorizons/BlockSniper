@@ -37,7 +37,13 @@ class Loader extends PluginBase {
 	public $language;
 	
 	public function onEnable() {
-		$this->getLogger()->info(TF::GREEN . "BlockSniper has been enabled.");
+		$this->reloadAll();
+		
+		$this->registerCommands();
+		$this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
+	}
+	
+	public function reloadAll() {
 		$this->brush = new Brush($this);
 		$this->undoStore = new UndoStorer($this);
 		$this->cloneStore = new CloneStorer($this);
@@ -47,21 +53,18 @@ class Loader extends PluginBase {
 		if(!is_dir($this->getDataFolder() . "templates/")) {
 			mkdir($this->getDataFolder() . "templates/");
 		}
-		$this->saveResource("settings.yml");
-		$this->settings = new Config($this->getDataFolder() . "settings.yml", Config::YAML);
-		
-		// Language file setup
 		if(!is_dir($this->getDataFolder() . "languages/")) {
 			mkdir($this->getDataFolder() . "languages/");
 		}
+		
+		$this->saveResource("settings.yml");
+		$this->settings = new Config($this->getDataFolder() . "settings.yml", Config::YAML);
+		
 		if(!$this->setupLanguageFile()) {
 			$this->getLogger()->info(TF::AQUA . "[BlockSniper] No valid language selected, English has been auto-selected.\n" . TF::AQUA . "Please setup a language by using /blocksniper language <lang>.");
 		} else {
 			$this->getLogger()->info(TF::AQUA . "[BlockSniper] Language selected: " . TF::GREEN . $this->getSettings()->get("Message-Language"));
 		}
-		
-		$this->registerCommands();
-		$this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
 	}
 	
 	/**
