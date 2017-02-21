@@ -53,7 +53,7 @@ class UndoStorer {
 	}
 	
 	public function restoreLastUndo(int $amount = 1) {
-		for($currentAmount = 0; $currentAmount <= $amount; $currentAmount++) {
+		for($currentAmount = 0; $currentAmount < $amount; $currentAmount++) {
 			foreach($this->undoStore[max(array_keys($this->undoStore))] as $key => $block) {
 				$Id = explode("(", $key);
 				$blockId = $Id[0];
