@@ -146,7 +146,7 @@ class BrushCommand extends BaseCommand {
 				$sender->sendMessage(TF::RED . "[Usage] /brush <size|shape|type|blocks|height|obsolete|perfect> <value>");
 				return true;
 		}
-		$this->getPlugin()->getServer()->getPluginManager()->callEvent(new Change($this->getPlugin(), $sender, $action));
+		$this->getPlugin()->getServer()->getPluginManager()->callEvent(new Change($this->getPlugin(), $sender, $action, $args[0]));
 		return true;
 	}
 }

@@ -23,16 +23,18 @@ class ChangeBrushPropertiesEvent extends PluginEvent {
 	public $owner;
 	public $player;
 	public $action;
+	public $value;
 	
-	public function __construct(Loader $owner, Player $player, int $action) {
+	public function __construct(Loader $owner, Player $player, int $action, $value) {
 		parent::__construct($owner);
 		$this->owner = $owner;
 		$this->player = $player;
 		$this->action = $action;
+		$this->value = $value;
 	}
 	
 	/**
-	 * Returns the player that changed their brush.
+	 * Returns the player that changed their Brush.
 	 *
 	 * @return Player
 	 */
@@ -41,11 +43,20 @@ class ChangeBrushPropertiesEvent extends PluginEvent {
 	}
 	
 	/**
-	 * Returns the action of the change.
+	 * Returns the action of the modification.
 	 *
 	 * @return int
 	 */
 	public function getAction(): int {
 		return $this->action;
+	}
+	
+	/**
+	 * Returns the input arguments from the Brush modification.
+	 *
+	 * @return mixed
+	 */
+	public function getActionValue() {
+		return $this->value;
 	}
 }
