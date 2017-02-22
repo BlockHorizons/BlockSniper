@@ -58,7 +58,7 @@ abstract class BaseType {
 	 * Defines the type as a constant making it able to be used.
 	 *
 	 *
-	 * @param string $shape
+	 * @param string $type
 	 * @param int    $number
 	 *
 	 * @return bool
