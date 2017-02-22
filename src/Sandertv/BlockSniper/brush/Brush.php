@@ -217,7 +217,7 @@ class Brush {
 		self::$brush[$player->getId()]["biome"] = $biome;
 	}
 	
-	public static function getBiomeIdFromString(Player $player): int {
+	public static function getBiomeId(Player $player): int {
 		$biomes = new ReflectionClass('pocketmine\level\generator\biome\Biome');
 		$const = strtoupper(str_replace(" ", "_", self::$brush[$player->getId()]["biome"]));
 		if($biomes->hasConstant($const)) {

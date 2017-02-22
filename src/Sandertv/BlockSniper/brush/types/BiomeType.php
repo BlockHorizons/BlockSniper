@@ -27,7 +27,7 @@ class BiomeType extends BaseType {
 	 */
 	public function fillShape(): bool {
 		foreach($this->blocks as $block) {
-			$this->level->setBiomeId($block->x, $block->z, Brush::getBiomeIdFromString($this->player));
+			$this->level->setBiomeId($block->x, $block->z, Brush::getBiomeId($this->player));
 		}
 		return true;
 	}
