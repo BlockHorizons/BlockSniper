@@ -10,7 +10,7 @@ use pocketmine\Player;
 use Sandertv\BlockSniper\brush\BaseType;
 use Sandertv\BlockSniper\Loader;
 
-class LeafBlowerType extends BaseType {
+class LeafblowerType extends BaseType {
 	
 	public $level;
 	public $player;
