@@ -64,7 +64,7 @@ abstract class BaseType {
 	 * @return bool
 	 */
 	public function registerType(string $type, int $number): bool {
-		$typeConst = strtoupper("shape_" . str_replace("_", "", $type));
+		$typeConst = strtoupper("type_" . str_replace("_", "", $type));
 		if(defined("self::$typeConst")) {
 			return false;
 		}
