@@ -26,13 +26,16 @@ class RaiseType extends BaseType {
 	 * @return bool
 	 */
 	public function fillShape(): bool {
+		$savedBlocks = [];
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
-			$selectedBlock = $block->getSide(Block::SIDE_UP);
-			if($selectedBlock->getId() === Block::AIR) {
-				$undoBlocks[] = $selectedBlock;
-				$this->level->setBlock($selectedBlock, $block, false, false);
+			if($block->getSide(Block::SIDE_UP)->getId() === Block::AIR && $block->getId() !== Block::AIR) {
+				$savedBlocks[] = $block;
 			}
+		}
+		foreach($savedBlocks as $selectedBlock) {
+			$undoBlocks[] = $selectedBlock->getSide(Block::SIDE_UP);
+			$this->level->setBlock($selectedBlock->getSide(Block::SIDE_UP), $selectedBlock, false, false);
 		}
 		$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
 		return true;
