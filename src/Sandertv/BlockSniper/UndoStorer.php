@@ -8,7 +8,7 @@ use Sandertv\BlockSniper\tasks\UndoDiminishTask;
 
 class UndoStorer {
 	
-	public $totalStores = 0;
+	public $totalStores;
 	public $undoStore = [];
 	public $lastUndo;
 	
@@ -33,8 +33,8 @@ class UndoStorer {
 		}
 		unset($i);
 		
-		if(count($this->undoStore) === $this->getOwner()->settings->get("Maximum-Undo-Stores")) {
-			$this->unsetFirstUndo(); // Unset the first undo to make sure the array won't get too big.
+		if($this->getTotalUndoStores() === $this->getOwner()->settings->get("Maximum-Undo-Stores")) {
+			$this->unsetFirstUndo();
 		}
 		$this->getOwner()->getServer()->getScheduler()->scheduleDelayedTask(new UndoDiminishTask($this->getOwner()), 2400);
 		
@@ -83,7 +83,7 @@ class UndoStorer {
 	 * @return bool
 	 */
 	public function undoStorageExists() {
-		if($this->totalStores === 0 || !is_array($this->undoStore) || empty($this->undoStore)) {
+		if(!is_array($this->undoStore) || empty($this->undoStore)) {
 			return false;
 		}
 		return true;
