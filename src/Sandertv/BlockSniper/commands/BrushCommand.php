@@ -45,6 +45,10 @@ class BrushCommand extends BaseCommand {
 					$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.radius-not-numeric"));
 					return true;
 				}
+				if($args[1] > $this->getPlugin()->getSettings()->get("Maximum-Radius")) {
+					$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.radius-too-big"));
+					return true;
+				}
 				Brush::setSize($sender, $args[1]);
 				$sender->sendMessage(TF::GREEN . "Size: " . TF::AQUA . $args[1]);
 				$action = Change::ACTION_CHANGE_SIZE;
