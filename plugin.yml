@@ -69,6 +69,9 @@ permissions:
                     blocksniper.type.biome:
                         default: op
                         description: "Allows access to the biome type"
+                    blocksniper.type.raise:
+                        default: op
+                        description: "Allows access to the raise type"
             blocksniper.shape:
                 default: false
                 description: "Allows access to all BlockSniper shapes."

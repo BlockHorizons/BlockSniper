@@ -21,6 +21,7 @@ abstract class BaseType {
 	const TYPE_CLEANENTITIES = 9;
 	const TYPE_MELT = 10;
 	const TYPE_EXPAND = 11;
+	const TYPE_RAISE = 12;
 	
 	public $main;
 	
@@ -41,16 +42,6 @@ abstract class BaseType {
 		return false;
 	}
 	
-	public abstract function getName(): string;
-	
-	public abstract function getPermission(): string;
-	
-	public abstract function fillShape(): bool;
-	
-	public function getMain(): Loader {
-		return $this->main;
-	}
-	
 	/**
 	 * Registers a new Type. Example:
 	 * Raise, 12
@@ -63,12 +54,22 @@ abstract class BaseType {
 	 *
 	 * @return bool
 	 */
-	public function registerType(string $type, int $number): bool {
+	public static function registerType(string $type, int $number): bool {
 		$typeConst = strtoupper("type_" . str_replace("_", "", $type));
 		if(defined("self::$typeConst")) {
 			return false;
 		}
 		define(('Sandertv\BlockSniper\brush\BaseType\\' . $typeConst), $number);
 		return true;
+	}
+	
+	public abstract function getName(): string;
+	
+	public abstract function getPermission(): string;
+	
+	public abstract function fillShape(): bool;
+	
+	public function getMain(): Loader {
+		return $this->main;
 	}
 }

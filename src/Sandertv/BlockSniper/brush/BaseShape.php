@@ -31,16 +31,6 @@ abstract class BaseShape {
 		return false;
 	}
 	
-	public abstract function getName(): string;
-	
-	public abstract function getPermission(): string;
-	
-	public abstract function getBlocksInside(): array;
-	
-	public function getMain(): Loader {
-		return $this->main;
-	}
-	
 	/**
 	 * Registers a new Shape. Example:
 	 * Triangle, 4
@@ -53,12 +43,22 @@ abstract class BaseShape {
 	 *
 	 * @return bool
 	 */
-	public function registerShape(string $shape, int $number): bool {
+	public static function registerShape(string $shape, int $number): bool {
 		$shapeConst = strtoupper("shape_" . str_replace("_", "", $shape));
 		if(defined("self::$shapeConst")) {
 			return false;
 		}
 		define(('Sandertv\BlockSniper\brush\BaseShape\\' . $shapeConst), $number);
 		return true;
+	}
+	
+	public abstract function getName(): string;
+	
+	public abstract function getPermission(): string;
+	
+	public abstract function getBlocksInside(): array;
+	
+	public function getMain(): Loader {
+		return $this->main;
 	}
 }
