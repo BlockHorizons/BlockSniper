@@ -18,16 +18,6 @@ abstract class BaseShape {
 		$this->main = $main;
 	}
 	
-	public abstract function getName(): string;
-	
-	public abstract function getPermission(): string;
-	
-	public abstract function getBlocksInside(): array;
-	
-	public function getMain(): Loader {
-		return $this->main;
-	}
-	
 	/**
 	 * @param string $shape
 	 *
@@ -39,6 +29,16 @@ abstract class BaseShape {
 			return true;
 		}
 		return false;
+	}
+	
+	public abstract function getName(): string;
+	
+	public abstract function getPermission(): string;
+	
+	public abstract function getBlocksInside(): array;
+	
+	public function getMain(): Loader {
+		return $this->main;
 	}
 	
 	/**

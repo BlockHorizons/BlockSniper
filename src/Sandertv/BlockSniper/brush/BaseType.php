@@ -28,16 +28,6 @@ abstract class BaseType {
 		$this->main = $main;
 	}
 	
-	public abstract function getName(): string;
-	
-	public abstract function getPermission(): string;
-	
-	public abstract function fillShape(): bool;
-	
-	public function getMain(): Loader {
-		return $this->main;
-	}
-	
 	/**
 	 * @param string $type
 	 *
@@ -49,6 +39,16 @@ abstract class BaseType {
 			return true;
 		}
 		return false;
+	}
+	
+	public abstract function getName(): string;
+	
+	public abstract function getPermission(): string;
+	
+	public abstract function fillShape(): bool;
+	
+	public function getMain(): Loader {
+		return $this->main;
 	}
 	
 	/**

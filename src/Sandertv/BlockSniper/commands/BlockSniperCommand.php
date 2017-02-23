@@ -44,7 +44,7 @@ class BlockSniperCommand extends BaseCommand {
 				$sender->sendMessage(TF::GREEN . "Reloading...");
 				$this->getPlugin()->reloadAll();
 				return true;
-				
+			
 			default:
 				$sender->sendMessage(TF::AQUA . "[BlockSniper] Information\n" .
 					TF::GREEN . "Version: " . TF::YELLOW . Loader::VERSION . "\n" .

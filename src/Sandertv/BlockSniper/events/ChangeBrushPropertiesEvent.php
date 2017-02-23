@@ -2,8 +2,8 @@
 
 namespace Sandertv\BlockSniper\events;
 
-use pocketmine\Player;
 use pocketmine\event\plugin\PluginEvent;
+use pocketmine\Player;
 use Sandertv\BlockSniper\Loader;
 
 class ChangeBrushPropertiesEvent extends PluginEvent {

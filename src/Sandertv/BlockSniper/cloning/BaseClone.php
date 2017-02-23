@@ -15,16 +15,6 @@ abstract class BaseClone {
 		$this->owner = $owner;
 	}
 	
-	public abstract function getName(): string;
-	
-	public abstract function getPermission(): string;
-	
-	public abstract function saveClone();
-	
-	public function getOwner(): Loader {
-		return $this->owner;
-	}
-	
 	/**
 	 * @param string $type
 	 *
@@ -36,5 +26,15 @@ abstract class BaseClone {
 			return true;
 		}
 		return false;
+	}
+	
+	public abstract function getName(): string;
+	
+	public abstract function getPermission(): string;
+	
+	public abstract function saveClone();
+	
+	public function getOwner(): Loader {
+		return $this->owner;
 	}
 }

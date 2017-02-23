@@ -6,11 +6,11 @@ use pocketmine\command\CommandSender;
 use pocketmine\level\generator\biome\Biome;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
-use Sandertv\BlockSniper\brush\Brush;
-use Sandertv\BlockSniper\Loader;
-use Sandertv\BlockSniper\events\ChangeBrushPropertiesEvent as Change;
 use Sandertv\BlockSniper\brush\BaseShape;
 use Sandertv\BlockSniper\brush\BaseType;
+use Sandertv\BlockSniper\brush\Brush;
+use Sandertv\BlockSniper\events\ChangeBrushPropertiesEvent as Change;
+use Sandertv\BlockSniper\Loader;
 
 class BrushCommand extends BaseCommand {
 	
