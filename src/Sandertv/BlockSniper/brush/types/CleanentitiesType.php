@@ -7,7 +7,7 @@ use pocketmine\Player;
 use Sandertv\BlockSniper\brush\BaseType;
 use Sandertv\BlockSniper\Loader;
 
-class CleanEntitiesType extends BaseType {
+class CleanentitiesType extends BaseType {
 	
 	public $level;
 	public $blocks;

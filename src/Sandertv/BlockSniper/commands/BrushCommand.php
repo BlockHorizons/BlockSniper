@@ -6,9 +6,11 @@ use pocketmine\command\CommandSender;
 use pocketmine\level\generator\biome\Biome;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
+use Sandertv\BlockSniper\brush\BaseShape;
+use Sandertv\BlockSniper\brush\BaseType;
 use Sandertv\BlockSniper\brush\Brush;
-use Sandertv\BlockSniper\Loader;
 use Sandertv\BlockSniper\events\ChangeBrushPropertiesEvent as Change;
+use Sandertv\BlockSniper\Loader;
 
 class BrushCommand extends BaseCommand {
 	
@@ -43,6 +45,10 @@ class BrushCommand extends BaseCommand {
 					$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.radius-not-numeric"));
 					return true;
 				}
+				if($args[1] > $this->getPlugin()->getSettings()->get("Maximum-Radius")) {
+					$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.radius-too-big"));
+					return true;
+				}
 				Brush::setSize($sender, $args[1]);
 				$sender->sendMessage(TF::GREEN . "Size: " . TF::AQUA . $args[1]);
 				$action = Change::ACTION_CHANGE_SIZE;
@@ -50,54 +56,32 @@ class BrushCommand extends BaseCommand {
 			
 			case "sh":
 			case "shape":
-				switch(strtolower($args[1])) {
-					case "cube":
-					case "sphere":
-					case "cuboid":
-					case "cylinder":
-						if(!$sender->hasPermission("blocksniper.shape." . $args[1])) {
-							$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.no-permission"));
-							return true;
-						}
-						Brush::setShape($sender, $args[1]);
-						$sender->sendMessage(TF::GREEN . "Shape: " . TF::AQUA . Brush::getShape($sender)->getName());
-						$action = Change::ACTION_CHANGE_SHAPE;
-						break;
-					
-					default:
-						$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.shape-not-found"));
-						return true;
+				if(!BaseShape::isShape($args[1])) {
+					$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.shape-not-found"));
+					return true;
 				}
+				if(!$sender->hasPermission("blocksniper.shape." . $args[1])) {
+					$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.no-permission"));
+					return true;
+				}
+				Brush::setShape($sender, $args[1]);
+				$sender->sendMessage(TF::GREEN . "Shape: " . TF::AQUA . Brush::getShape($sender)->getName());
+				$action = Change::ACTION_CHANGE_SHAPE;
 				break;
 			
 			case "ty":
 			case "type":
-				switch(strtolower($args[1])) {
-					case "fill":
-					case "clean":
-					case "cleanentities":
-					case "drain":
-					case "flatten":
-					case "layer":
-					case "leafblower":
-					case "overlay":
-					case "replace":
-					case "expand":
-					case "melt":
-					case "biome":
-						if(!$sender->hasPermission("blocksniper.type." . $args[1])) {
-							$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.no-permission"));
-							return true;
-						}
-						Brush::setType($sender, $args[1]);
-						$sender->sendMessage(TF::GREEN . "Type: " . TF::AQUA . Brush::getType($sender)->getName());
-						$action = Change::ACTION_CHANGE_TYPE;
-						break;
-						
-					default:
-						$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.shape-not-found"));
-						return true;
+				if(!BaseType::isType($args[1])) {
+					$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.shape-not-found"));
+					return true;
 				}
+				if(!$sender->hasPermission("blocksniper.type." . $args[1])) {
+					$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.no-permission"));
+					return true;
+				}
+				Brush::setType($sender, $args[1]);
+				$sender->sendMessage(TF::GREEN . "Type: " . TF::AQUA . Brush::getType($sender)->getName());
+				$action = Change::ACTION_CHANGE_TYPE;
 				break;
 			
 			case "he":
@@ -158,7 +142,7 @@ class BrushCommand extends BaseCommand {
 			case "biome":
 				$biome = array_slice($args, 1);
 				Brush::setBiome($sender, implode(" ", $biome));
-				$sender->sendMessage(TF::GREEN . "Biome: " . TF::AQUA . Biome::getBiome(Brush::getBiomeIdFromString($sender))->getName());
+				$sender->sendMessage(TF::GREEN . "Biome: " . TF::AQUA . Biome::getBiome(Brush::getBiomeId($sender))->getName());
 				$action = Change::ACTION_CHANGE_BIOME;
 				break;
 			
@@ -166,7 +150,7 @@ class BrushCommand extends BaseCommand {
 				$sender->sendMessage(TF::RED . "[Usage] /brush <size|shape|type|blocks|height|obsolete|perfect> <value>");
 				return true;
 		}
-		$this->getPlugin()->getServer()->getPluginManager()->callEvent(new Change($this->getPlugin(), $sender, $action));
+		$this->getPlugin()->getServer()->getPluginManager()->callEvent(new Change($this->getPlugin(), $sender, $action, $args[0]));
 		return true;
 	}
 }

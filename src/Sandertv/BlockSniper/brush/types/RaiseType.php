@@ -4,11 +4,11 @@ namespace Sandertv\BlockSniper\brush\types;
 
 use pocketmine\level\Level;
 use pocketmine\Player;
+use pocketmine\block\Block;
 use Sandertv\BlockSniper\brush\BaseType;
-use Sandertv\BlockSniper\brush\Brush;
 use Sandertv\BlockSniper\Loader;
 
-class BiomeType extends BaseType {
+class RaiseType extends BaseType {
 	
 	public $level;
 	public $blocks;
@@ -26,18 +26,27 @@ class BiomeType extends BaseType {
 	 * @return bool
 	 */
 	public function fillShape(): bool {
+		$savedBlocks = [];
+		$undoBlocks = [];
 		foreach($this->blocks as $block) {
-			$this->level->setBiomeId($block->x, $block->z, Brush::getBiomeId($this->player));
+			if($block->getSide(Block::SIDE_UP)->getId() === Block::AIR && $block->getId() !== Block::AIR) {
+				$savedBlocks[] = $block;
+			}
 		}
+		foreach($savedBlocks as $selectedBlock) {
+			$undoBlocks[] = $selectedBlock->getSide(Block::SIDE_UP);
+			$this->level->setBlock($selectedBlock->getSide(Block::SIDE_UP), $selectedBlock, false, false);
+		}
+		$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
 		return true;
 	}
 	
 	public function getName(): string {
-		return "Biome";
+		return "Raise";
 	}
 	
 	public function getPermission(): string {
-		return "blocksniper.type.biome";
+		return "blocksniper.type.raise";
 	}
 	
 	public function getApproximateBlocks(): int {

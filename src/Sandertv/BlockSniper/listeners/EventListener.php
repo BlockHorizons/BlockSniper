@@ -5,6 +5,7 @@ namespace Sandertv\BlockSniper\listeners;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\utils\TextFormat as TF;
+use pocketmine\Player;
 use Sandertv\BlockSniper\brush\Brush;
 use Sandertv\BlockSniper\events\BrushUseEvent;
 use Sandertv\BlockSniper\Loader;
@@ -23,7 +24,7 @@ class EventListener implements Listener {
 			if($player->hasPermission("blocksniper.command.brush")) {
 				$center = $player->getTargetBlock(100);
 				
-				if(!$center) {
+				if($center === null) {
 					$player->sendMessage(TF::RED . "[Warning] " . $this->getOwner()->getTranslation("commands.errors.no-target-found"));
 					return false;
 				}
@@ -39,6 +40,7 @@ class EventListener implements Listener {
 				$type = Brush::getType($player, $shape->getBlocksInside());
 				
 				$type->fillShape();
+				$this->decrementBrush($player);
 				return true;
 			}
 		}
@@ -51,8 +53,12 @@ class EventListener implements Listener {
 		return $this->owner;
 	}
 	
-	public function decrementBrush(BrushUseEvent $event) {
-		$player = $event->getPlayer();
+	/**
+	 * @param Player $player
+	 *
+	 * @return bool
+	 */
+	public function decrementBrush(Player $player): bool {
 		if(Brush::isDecrementing($player)) {
 			if(Brush::getSize($player) <= 1) {
 				if($this->getOwner()->getSettings()->get("Reset-Decrement-Brush") !== false) {

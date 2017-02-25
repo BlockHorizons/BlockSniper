@@ -6,22 +6,6 @@ use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\Player;
 use ReflectionClass;
-use Sandertv\BlockSniper\brush\shapes\CubeShape;
-use Sandertv\BlockSniper\brush\shapes\CuboidShape;
-use Sandertv\BlockSniper\brush\shapes\CylinderStandingShape;
-use Sandertv\BlockSniper\brush\shapes\SphereShape;
-use Sandertv\BlockSniper\brush\types\BiomeType;
-use Sandertv\BlockSniper\brush\types\CleanEntitiesType;
-use Sandertv\BlockSniper\brush\types\CleanType;
-use Sandertv\BlockSniper\brush\types\DrainType;
-use Sandertv\BlockSniper\brush\types\ExpandType;
-use Sandertv\BlockSniper\brush\types\FillType;
-use Sandertv\BlockSniper\brush\types\FlattenType;
-use Sandertv\BlockSniper\brush\types\LayerType;
-use Sandertv\BlockSniper\brush\types\LeafBlowerType;
-use Sandertv\BlockSniper\brush\types\MeltType;
-use Sandertv\BlockSniper\brush\types\OverlayType;
-use Sandertv\BlockSniper\brush\types\ReplaceType;
 use Sandertv\BlockSniper\Loader;
 
 class Brush {
@@ -188,25 +172,9 @@ class Brush {
 	 * @return BaseShape
 	 */
 	public static function getShape(Player $player): BaseShape {
-		$shapeName = self::$brush[$player->getId()]["shape"];
-		switch($shapeName) {
-			case "cube":
-				$shape = new CubeShape(self::$owner, $player, $player->getLevel(), self::getSize($player), $player->getTargetBlock(100));
-				break;
-			case "sphere":
-				$shape = new SphereShape(self::$owner, $player, $player->getLevel(), self::getSize($player), $player->getTargetBlock(100));
-				break;
-			case "cuboid":
-				$shape = new CuboidShape(self::$owner, $player, $player->getLevel(), self::getSize($player), self::getHeight($player), $player->getTargetBlock(100));
-				break;
-			case "cylinder":
-				$shape = new CylinderStandingShape(self::$owner, $player, $player->getLevel(), self::getSize($player), self::getHeight($player), $player->getTargetBlock(100));
-				break;
-			
-			default:
-				$shape = new SphereShape(self::$owner, $player, $player->getLevel(), self::getSize($player), $player->getTargetBlock(100));
-				break;
-		}
+		$shapeName = 'Sandertv\BlockSniper\brush\shapes\\' . (ucfirst(self::$brush[$player->getId()]["shape"]) . "Shape");
+		$shape = new $shapeName(self::$owner, $player, $player->getLevel(), self::getSize($player), $player->getTargetBlock(100));
+		
 		return $shape;
 	}
 	
@@ -235,49 +203,9 @@ class Brush {
 	 * @return BaseType
 	 */
 	public static function getType(Player $player, array $blocks = []): BaseType {
-		$typeName = self::$brush[$player->getId()]["type"];
-		switch($typeName) {
-			case "fill":
-				$type = new FillType(self::$owner, $player, $player->getLevel(), $blocks);
-				break;
-			case "clean":
-				$type = new CleanType(self::$owner, $player, $player->getLevel(), $blocks);
-				break;
-			case "drain":
-				$type = new DrainType(self::$owner, $player, $player->getLevel(), $blocks);
-				break;
-			case "flatten":
-				$type = new FlattenType(self::$owner, $player, $player->getLevel(), $blocks, $player->getTargetBlock(100));
-				break;
-			case "layer":
-				$type = new LayerType(self::$owner, $player, $player->getLevel(), $blocks, $player->getTargetBlock(100));
-				break;
-			case "leafblower":
-				$type = new LeafBlowerType(self::$owner, $player, $player->getLevel(), $blocks);
-				break;
-			case "overlay":
-				$type = new OverlayType(self::$owner, $player, $player->getLevel(), $blocks);
-				break;
-			case "replace":
-				$type = new ReplaceType(self::$owner, $player, $player->getLevel(), $blocks);
-				break;
-			case "expand":
-				$type = new ExpandType(self::$owner, $player, $player->getLevel(), $blocks);
-				break;
-			case "melt":
-				$type = new MeltType(self::$owner, $player, $player->getLevel(), $blocks);
-				break;
-			case "cleanentities":
-				$type = new CleanEntitiesType(self::$owner, $player, $player->getLevel(), $blocks);
-				break;
-			case "biome":
-				$type = new BiomeType(self::$owner, $player, $player->getLevel(), $blocks);
-				break;
-			
-			default:
-				$type = new FillType(self::$owner, $player, $player->getLevel(), $blocks);
-				break;
-		}
+		$typeName = 'Sandertv\BlockSniper\brush\types\\' . (ucfirst(self::$brush[$player->getId()]["type"]) . "Type");
+		$type = new $typeName(self::$owner, $player, $player->getLevel(), $blocks);
+		
 		return $type;
 	}
 	
@@ -289,7 +217,7 @@ class Brush {
 		self::$brush[$player->getId()]["biome"] = $biome;
 	}
 	
-	public static function getBiomeIdFromString(Player $player): int {
+	public static function getBiomeId(Player $player): int {
 		$biomes = new ReflectionClass('pocketmine\level\generator\biome\Biome');
 		$const = strtoupper(str_replace(" ", "_", self::$brush[$player->getId()]["biome"]));
 		if($biomes->hasConstant($const)) {

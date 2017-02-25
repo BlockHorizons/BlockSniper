@@ -15,6 +15,19 @@ abstract class BaseClone {
 		$this->owner = $owner;
 	}
 	
+	/**
+	 * @param string $type
+	 *
+	 * @return bool
+	 */
+	public static function isCloneType(string $type): bool {
+		$cloneTypeConst = strtoupper("type_" . $type);
+		if(defined("self::$cloneTypeConst")) {
+			return true;
+		}
+		return false;
+	}
+	
 	public abstract function getName(): string;
 	
 	public abstract function getPermission(): string;
