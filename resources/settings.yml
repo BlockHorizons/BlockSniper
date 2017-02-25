@@ -12,7 +12,7 @@ Brush-Item: 396
 Maximum-Radius: 15
 
 # Maximum undo stores to save, old ones will get destroyed automatically. Setting this number too high could result in lag or data loss.
-Maximum-Undo-Stores: 7
+Maximum-Undo-Stores: 15
 
 # Whether to reset the size, or make it remain the current size when smallest size with decrement brush is reached.
 Reset-Decrement-Brush: true

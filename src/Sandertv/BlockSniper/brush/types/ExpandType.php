@@ -28,18 +28,21 @@ class ExpandType extends BaseType {
 	public function fillShape(): bool {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
-			if($block->getId() !== Item::AIR) {
+			if($block->getId() === Item::AIR) {
 				$directions = [
 					$block->getSide(Block::SIDE_NORTH),
 					$block->getSide(Block::SIDE_SOUTH),
 					$block->getSide(Block::SIDE_WEST),
 					$block->getSide(Block::SIDE_EAST)
 				];
-				
+				$valid = 0;
 				foreach($directions as $direction) {
-					if($this->level->getBlock($direction)->getId() === Item::AIR) {
-						$undoBlocks[] = $direction;
+					if($this->level->getBlock($direction)->getId() !== Item::AIR) {
+						$valid++;
 					}
+				}
+				if($valid >= 2) {
+					$undoBlocks[] = $block;
 				}
 			}
 		}
