@@ -14,10 +14,11 @@ use Sandertv\BlockSniper\commands\cloning\PasteCommand;
 use Sandertv\BlockSniper\commands\UndoCommand;
 use Sandertv\BlockSniper\listeners\EventListener;
 use Sandertv\BlockSniper\tasks\UndoDiminishTask;
+use Sandertv\BlockSniper\data\ConfigData;
 
 class Loader extends PluginBase {
 	
-	const VERSION = "1.2.0";
+	const VERSION = "1.2.1";
 	const API_TARGET = "2.0.0 - 3.0.0-ALPHA3";
 	
 	public $undoStore;
@@ -44,6 +45,8 @@ class Loader extends PluginBase {
 	}
 	
 	public function reloadAll() {
+		$this->settings = new ConfigData($this);
+		
 		$this->brush = new Brush($this);
 		$this->undoStore = new UndoStorer($this);
 		$this->cloneStore = new CloneStorer($this);
@@ -58,7 +61,7 @@ class Loader extends PluginBase {
 		}
 		
 		$this->saveResource("settings.yml");
-		$this->settings = new Config($this->getDataFolder() . "settings.yml", Config::YAML);
+		$this->settings->collectSettings();
 		
 		if(!$this->setupLanguageFile()) {
 			$this->getLogger()->info(TF::AQUA . "[BlockSniper] No valid language selected, English has been auto-selected.\n" . TF::AQUA . "Please setup a language by using /blocksniper language <lang>.");
@@ -70,7 +73,7 @@ class Loader extends PluginBase {
 	/**
 	 * @return bool
 	 */
-	public function setupLanguageFile() {
+	public function setupLanguageFile(): bool {
 		if(!file_exists($this->getDataFolder() . "language.yml")) {
 			foreach($this->availableLanguages as $language) {
 				if($this->getSettings()->get("Message-Language") === $language) {
