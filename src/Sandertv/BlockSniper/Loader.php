@@ -12,6 +12,7 @@ use Sandertv\BlockSniper\commands\BrushCommand;
 use Sandertv\BlockSniper\commands\cloning\CloneCommand;
 use Sandertv\BlockSniper\commands\cloning\PasteCommand;
 use Sandertv\BlockSniper\commands\UndoCommand;
+use Sandertv\BlockSniper\data\TranslationData;
 use Sandertv\BlockSniper\listeners\EventListener;
 use Sandertv\BlockSniper\tasks\UndoDiminishTask;
 use Sandertv\BlockSniper\data\ConfigData;
@@ -46,6 +47,7 @@ class Loader extends PluginBase {
 	
 	public function reloadAll() {
 		$this->settings = new ConfigData($this);
+		$this->language = new TranslationData($this);
 		
 		$this->brush = new Brush($this);
 		$this->undoStore = new UndoStorer($this);
@@ -63,29 +65,11 @@ class Loader extends PluginBase {
 		$this->saveResource("settings.yml");
 		$this->settings->collectSettings();
 		
-		if(!$this->setupLanguageFile()) {
+		if(!$this->language->collectTranslations()) {
 			$this->getLogger()->info(TF::AQUA . "[BlockSniper] No valid language selected, English has been auto-selected.\n" . TF::AQUA . "Please setup a language by using /blocksniper language <lang>.");
 		} else {
 			$this->getLogger()->info(TF::AQUA . "[BlockSniper] Language selected: " . TF::GREEN . $this->getSettings()->get("Message-Language"));
 		}
-	}
-	
-	/**
-	 * @return bool
-	 */
-	public function setupLanguageFile(): bool {
-		if(!file_exists($this->getDataFolder() . "language.yml")) {
-			foreach($this->availableLanguages as $language) {
-				if($this->getSettings()->get("Message-Language") === $language) {
-					$this->saveResource("languages/" . $language . ".yml");
-					$this->language = new Config($this->getDataFolder() . "languages/" . $language . ".yml", Config::YAML);
-					return true;
-				}
-			}
-		}
-		$this->saveResource("languages/en.yml");
-		$this->language = new Config($this->getDataFolder() . "languages/en.yml", Config::YAML);
-		return false;
 	}
 	
 	/**
@@ -126,7 +110,7 @@ class Loader extends PluginBase {
 	 * @return string
 	 */
 	public function getTranslation(string $message) {
-		return (string)$this->language->getNested($message);
+		return (string)$this->language->get($message);
 	}
 	
 	public function scheduleTasks() {
