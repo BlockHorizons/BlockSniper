@@ -14,7 +14,6 @@ use Sandertv\BlockSniper\commands\cloning\PasteCommand;
 use Sandertv\BlockSniper\commands\UndoCommand;
 use Sandertv\BlockSniper\data\TranslationData;
 use Sandertv\BlockSniper\listeners\EventListener;
-use Sandertv\BlockSniper\tasks\UndoDiminishTask;
 use Sandertv\BlockSniper\data\ConfigData;
 
 class Loader extends PluginBase {
@@ -110,12 +109,11 @@ class Loader extends PluginBase {
 	 * @return string
 	 */
 	public function getTranslation(string $message) {
-		return (string)$this->language->get($message);
+		if($this->language instanceof TranslationData) {
+			return $this->language->get($message);
+		}
 	}
 	
-	public function scheduleTasks() {
-		$this->getServer()->getScheduler()->scheduleDelayedTask(new UndoDiminishTask($this), 2400);
-	}
 	
 	/**
 	 * @return CloneStorer
