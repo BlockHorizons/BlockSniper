@@ -33,7 +33,7 @@ class UndoStorer {
 		}
 		unset($i);
 		
-		if($this->getTotalUndoStores() === $this->getOwner()->settings->get("Maximum-Undo-Stores")) {
+		if($this->getTotalUndoStores() === $this->getOwner()->getSettings()->get("Maximum-Undo-Stores")) {
 			$this->unsetFirstUndo();
 		}
 		$this->getOwner()->getServer()->getScheduler()->scheduleDelayedTask(new UndoDiminishTask($this->getOwner()), 2400);

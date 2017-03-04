@@ -25,7 +25,7 @@ class CloneCommand extends BaseCommand {
 	 * @return boolean
 	 */
 	public function execute(CommandSender $sender, $commandLabel, array $args) {
-		if(!$this->testPermission($sender) || !$sender->hasPermission("blocksniper.cloning." . $args[0])) {
+		if(!$this->testPermission($sender)) {
 			$this->sendNoPermission($sender);
 			return true;
 		}
