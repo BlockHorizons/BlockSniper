@@ -74,7 +74,7 @@ class Loader extends PluginBase {
 	/**
 	 * @return Config
 	 */
-	public function getSettings(): Config {
+	public function getSettings(): ConfigData {
 		return $this->settings;
 	}
 	
@@ -108,7 +108,7 @@ class Loader extends PluginBase {
 	 *
 	 * @return string
 	 */
-	public function getTranslation(string $message) {
+	public function getTranslation(string $message): string {
 		if($this->language instanceof TranslationData) {
 			return $this->language->get($message);
 		}
