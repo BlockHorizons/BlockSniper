@@ -42,7 +42,7 @@ class RaiseType extends BaseType {
 					$valid++;
 				}
 			}
-			if($valid <= 3) {
+			if($valid >= 3) {
 				$holeBlocks[] = $block;
 			}
 		}
