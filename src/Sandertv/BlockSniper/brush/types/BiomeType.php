@@ -40,10 +40,6 @@ class BiomeType extends BaseType {
 		return "blocksniper.type.biome";
 	}
 	
-	public function getApproximateBlocks(): int {
-		// TODO
-	}
-	
 	public function getLevel(): Level {
 		return $this->level;
 	}

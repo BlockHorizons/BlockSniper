@@ -64,10 +64,6 @@ class MeltType extends BaseType {
 		return "blocksniper.type.melt";
 	}
 	
-	public function getApproximateBlocks(): int {
-		// TODO
-	}
-	
 	public function getLevel(): Level {
 		return $this->level;
 	}

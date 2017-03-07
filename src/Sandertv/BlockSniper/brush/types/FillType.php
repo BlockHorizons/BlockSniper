@@ -45,10 +45,6 @@ class FillType extends BaseType {
 		return "blocksniper.type.fill";
 	}
 	
-	public function getApproximateBlocks(): int {
-		// TODO
-	}
-	
 	public function getLevel(): Level {
 		return $this->level;
 	}

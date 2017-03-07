@@ -30,7 +30,7 @@ class CleanType extends BaseType {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			$blockId = $block->getId();
-			if($blockId !== 0 && $blockId !== 1 && $blockId !== 2 && $blockId !== 3 && $blockId !== 12 && $blockId !== 13 && $blockId !== 24) {
+			if($blockId !== Block::AIR && $blockId !== Block::STONE && $blockId !== Block::GRASS && $blockId !== Block::DIRT && $blockId !== Block::GRAVEL && $blockId !== Block::SAND && $blockId !== Block::SANDSTONE) {
 				if($blockId !== Block::AIR) {
 					$undoBlocks[] = $block;
 				}
@@ -47,10 +47,6 @@ class CleanType extends BaseType {
 	
 	public function getPermission(): string {
 		return "blocksniper.type.clean";
-	}
-	
-	public function getApproximateBlocks(): int {
-		// TODO
 	}
 	
 	public function getLevel(): Level {

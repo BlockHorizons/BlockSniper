@@ -70,15 +70,8 @@ class CuboidShape extends BaseShape {
 		return "blocksniper.shape.cuboid";
 	}
 	
-	public function getApproximateBlocks(): int {
-		// TODO
-	}
-	
-	public function getCenter(): Position {
-		return $this->center;
-	}
-	
-	public function setCenter(Position $center) {
-		$this->center = $center;
+	public function getApproximateProcessedBlocks(): int {
+		$blockCount = abs(($this->center->x - $this->width) - ($this->center->x + $this->width)) * abs(($this->center->z - $this->width) - ($this->center->z + $this->width)) * abs(($this->center->y - $this->height) - ($this->center->y + $this->height));
+		return $blockCount;
 	}
 }

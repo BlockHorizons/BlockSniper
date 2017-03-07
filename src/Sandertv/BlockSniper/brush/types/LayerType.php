@@ -49,10 +49,6 @@ class LayerType extends BaseType {
 		return "blocksniper.type.layer";
 	}
 	
-	public function getApproximateBlocks(): int {
-		// TODO
-	}
-	
 	public function getLevel(): Level {
 		return $this->level;
 	}

@@ -49,10 +49,6 @@ class ReplaceType extends BaseType {
 		return "blocksniper.type.replace";
 	}
 	
-	public function getApproximateBlocks(): int {
-		// TODO
-	}
-	
 	public function getLevel(): Level {
 		return $this->level;
 	}

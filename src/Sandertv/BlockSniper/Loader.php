@@ -12,9 +12,9 @@ use Sandertv\BlockSniper\commands\BrushCommand;
 use Sandertv\BlockSniper\commands\cloning\CloneCommand;
 use Sandertv\BlockSniper\commands\cloning\PasteCommand;
 use Sandertv\BlockSniper\commands\UndoCommand;
+use Sandertv\BlockSniper\data\ConfigData;
 use Sandertv\BlockSniper\data\TranslationData;
 use Sandertv\BlockSniper\listeners\EventListener;
-use Sandertv\BlockSniper\data\ConfigData;
 
 class Loader extends PluginBase {
 	

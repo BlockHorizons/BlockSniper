@@ -4,7 +4,6 @@ namespace Sandertv\BlockSniper\brush\shapes;
 
 use pocketmine\level\Level;
 use pocketmine\level\Position;
-use pocketmine\math\Math;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 use Sandertv\BlockSniper\brush\BaseShape;
@@ -37,12 +36,12 @@ class SphereShape extends BaseShape {
 		$targetY = $this->center->y;
 		$targetZ = $this->center->z;
 		
-		$minX = Math::floorFloat($targetX - $this->radius);
-		$maxX = Math::floorFloat($targetX + $this->radius) + 1;
-		$minY = max(Math::floorFloat($targetY - $this->radius), 0);
-		$maxY = min(Math::floorFloat($targetY + $this->radius) + 1, BaseShape::MAX_WORLD_HEIGHT);
-		$minZ = Math::floorFloat($targetZ - $this->radius);
-		$maxZ = Math::floorFloat($targetZ + $this->radius) + 1;
+		$minX = $targetX - $this->radius;
+		$minZ = $targetZ - $this->radius;
+		$minY = $targetY - $this->radius;
+		$maxX = $targetX + $this->radius;
+		$maxZ = $targetZ + $this->radius;
+		$maxY = $targetY + $this->radius;
 		
 		$blocksInside = [];
 		
@@ -77,31 +76,8 @@ class SphereShape extends BaseShape {
 		return "blocksniper.shape.sphere";
 	}
 	
-	public function getApproximateBlocks(): int {
-		// TODO
-	}
-	
-	public function getRadius(): float {
-		return $this->radius;
-	}
-	
-	public function setRadius(float $radius) {
-		$this->radius = $radius;
-	}
-	
-	public function getCenter(): Position {
-		return $this->center;
-	}
-	
-	public function setCenter(Position $center) {
-		$this->center = $center;
-	}
-	
-	public function getBlocks(): array {
-		return $this->blocks;
-	}
-	
-	public function setBlocks(array $blocks) {
-		$this->blocks = $blocks;
+	public function getApproximateProcessedBlocks(): int {
+		$blockCount = 4 / 3 * M_PI * pow($this->radius, 3);
+		return $blockCount;
 	}
 }

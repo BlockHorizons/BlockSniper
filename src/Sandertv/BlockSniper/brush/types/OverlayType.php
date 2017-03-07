@@ -73,10 +73,6 @@ class OverlayType extends BaseType {
 		return "blocksniper.type.overlay";
 	}
 	
-	public function getApproximateBlocks(): int {
-		// TODO
-	}
-	
 	public function getLevel(): Level {
 		return $this->level;
 	}

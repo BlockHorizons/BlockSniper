@@ -52,10 +52,6 @@ class FlattenType extends BaseType {
 		return "blocksniper.type.flatten";
 	}
 	
-	public function getApproximateBlocks(): int {
-		// TODO
-	}
-	
 	public function getLevel(): Level {
 		return $this->level;
 	}

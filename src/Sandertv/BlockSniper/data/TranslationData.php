@@ -16,13 +16,6 @@ class TranslationData {
 	}
 	
 	/**
-	 * @return Loader
-	 */
-	public function getOwner(): Loader {
-		return $this->plugin;
-	}
-	
-	/**
 	 * @return bool
 	 */
 	public function collectTranslations(): bool {
@@ -37,7 +30,7 @@ class TranslationData {
 		}
 		if(!$languageSelected) {
 			$this->getOwner()->saveResource("languages/en.yml");
-			$language = yaml_parse_file($this->getOwner()->getDataFolder() ."languages/en.yml");
+			$language = yaml_parse_file($this->getOwner()->getDataFolder() . "languages/en.yml");
 		}
 		
 		// This is going to burn your eyes. Don't look at it for too long.
@@ -62,6 +55,13 @@ class TranslationData {
 			"commands.succeed.clone" => $language["commands"]["succeed"]["clone"],
 		];
 		return ($languageSelected ? true : false);
+	}
+	
+	/**
+	 * @return Loader
+	 */
+	public function getOwner(): Loader {
+		return $this->plugin;
 	}
 	
 	/**

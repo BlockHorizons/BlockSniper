@@ -62,9 +62,6 @@ class ExpandType extends BaseType {
 		return "blocksniper.type.expand";
 	}
 	
-	public function getApproximateBlocks(): int {
-		// TODO
-	}
 	
 	public function getLevel(): Level {
 		return $this->level;

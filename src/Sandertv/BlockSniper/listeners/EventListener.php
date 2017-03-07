@@ -4,8 +4,8 @@ namespace Sandertv\BlockSniper\listeners;
 
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
-use pocketmine\utils\TextFormat as TF;
 use pocketmine\Player;
+use pocketmine\utils\TextFormat as TF;
 use Sandertv\BlockSniper\brush\Brush;
 use Sandertv\BlockSniper\events\BrushUseEvent;
 use Sandertv\BlockSniper\Loader;

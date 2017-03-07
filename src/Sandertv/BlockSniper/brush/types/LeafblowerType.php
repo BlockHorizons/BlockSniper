@@ -47,10 +47,6 @@ class LeafblowerType extends BaseType {
 		return "blocksniper.type.leafblower";
 	}
 	
-	public function getApproximateBlocks(): int {
-		// TODO
-	}
-	
 	public function getLevel(): Level {
 		return $this->level;
 	}

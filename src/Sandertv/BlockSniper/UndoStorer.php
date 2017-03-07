@@ -42,6 +42,13 @@ class UndoStorer {
 	}
 	
 	/**
+	 * @return int
+	 */
+	public function getTotalUndoStores(): int {
+		return count($this->undoStore);
+	}
+	
+	/**
 	 * @return Loader
 	 */
 	public function getOwner(): Loader {
@@ -101,12 +108,5 @@ class UndoStorer {
 	 */
 	public function getLastUndoActivity(): int {
 		return (time() - $this->lastUndo);
-	}
-	
-	/**
-	 * @return int
-	 */
-	public function getTotalUndoStores(): int {
-		return count($this->undoStore);
 	}
 }

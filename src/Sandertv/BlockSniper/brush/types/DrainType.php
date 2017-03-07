@@ -48,10 +48,6 @@ class DrainType extends BaseType {
 		return "blocksniper.type.drain";
 	}
 	
-	public function getApproximateBlocks(): int {
-		// TODO
-	}
-	
 	public function getLevel(): Level {
 		return $this->level;
 	}
