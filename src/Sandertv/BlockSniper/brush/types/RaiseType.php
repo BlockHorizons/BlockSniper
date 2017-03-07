@@ -43,7 +43,7 @@ class RaiseType extends BaseType {
 			}
 			if($valid === 4) {
 				$undoBlocks[] = $block;
-				$this->level->setBlock($block, $block->subtract(0, 1), false, false);
+				$this->level->setBlock($block, $this->level->getBlock($block->subtract(0, 1)), false, false);
 			}
 		}
 		foreach($this->blocks as $block) {
