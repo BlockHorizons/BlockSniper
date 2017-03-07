@@ -42,8 +42,11 @@ class RaiseType extends BaseType {
 				}
 			}
 			if($valid === 4) {
-				$savedBlocks[] = $block->subtract(0, 1);
+				$undoBlocks[] = $block;
+				$this->level->setBlock($block, $block->subtract(0, 1), false, false);
 			}
+		}
+		foreach($this->blocks as $block) {
 			if($block->getSide(Block::SIDE_UP)->getId() === Block::AIR && $block->getId() !== Block::AIR) {
 				$savedBlocks[] = $block;
 			}
