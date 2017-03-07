@@ -12,12 +12,13 @@ use Sandertv\BlockSniper\commands\BrushCommand;
 use Sandertv\BlockSniper\commands\cloning\CloneCommand;
 use Sandertv\BlockSniper\commands\cloning\PasteCommand;
 use Sandertv\BlockSniper\commands\UndoCommand;
+use Sandertv\BlockSniper\data\TranslationData;
 use Sandertv\BlockSniper\listeners\EventListener;
-use Sandertv\BlockSniper\tasks\UndoDiminishTask;
+use Sandertv\BlockSniper\data\ConfigData;
 
 class Loader extends PluginBase {
 	
-	const VERSION = "1.2.0";
+	const VERSION = "1.2.1";
 	const API_TARGET = "2.0.0 - 3.0.0-ALPHA3";
 	
 	public $undoStore;
@@ -44,6 +45,9 @@ class Loader extends PluginBase {
 	}
 	
 	public function reloadAll() {
+		$this->settings = new ConfigData($this);
+		$this->language = new TranslationData($this);
+		
 		$this->brush = new Brush($this);
 		$this->undoStore = new UndoStorer($this);
 		$this->cloneStore = new CloneStorer($this);
@@ -58,9 +62,9 @@ class Loader extends PluginBase {
 		}
 		
 		$this->saveResource("settings.yml");
-		$this->settings = new Config($this->getDataFolder() . "settings.yml", Config::YAML);
+		$this->settings->collectSettings();
 		
-		if(!$this->setupLanguageFile()) {
+		if(!$this->language->collectTranslations()) {
 			$this->getLogger()->info(TF::AQUA . "[BlockSniper] No valid language selected, English has been auto-selected.\n" . TF::AQUA . "Please setup a language by using /blocksniper language <lang>.");
 		} else {
 			$this->getLogger()->info(TF::AQUA . "[BlockSniper] Language selected: " . TF::GREEN . $this->getSettings()->get("Message-Language"));
@@ -68,27 +72,9 @@ class Loader extends PluginBase {
 	}
 	
 	/**
-	 * @return bool
-	 */
-	public function setupLanguageFile() {
-		if(!file_exists($this->getDataFolder() . "language.yml")) {
-			foreach($this->availableLanguages as $language) {
-				if($this->getSettings()->get("Message-Language") === $language) {
-					$this->saveResource("languages/" . $language . ".yml");
-					$this->language = new Config($this->getDataFolder() . "languages/" . $language . ".yml", Config::YAML);
-					return true;
-				}
-			}
-		}
-		$this->saveResource("languages/en.yml");
-		$this->language = new Config($this->getDataFolder() . "languages/en.yml", Config::YAML);
-		return false;
-	}
-	
-	/**
 	 * @return Config
 	 */
-	public function getSettings(): Config {
+	public function getSettings(): ConfigData {
 		return $this->settings;
 	}
 	
@@ -122,13 +108,12 @@ class Loader extends PluginBase {
 	 *
 	 * @return string
 	 */
-	public function getTranslation(string $message) {
-		return (string)$this->language->getNested($message);
+	public function getTranslation(string $message): string {
+		if($this->language instanceof TranslationData) {
+			return $this->language->get($message);
+		}
 	}
 	
-	public function scheduleTasks() {
-		$this->getServer()->getScheduler()->scheduleDelayedTask(new UndoDiminishTask($this), 2400);
-	}
 	
 	/**
 	 * @return CloneStorer
