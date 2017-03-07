@@ -23,7 +23,7 @@ class ConfigData {
 	}
 	
 	public function collectSettings() {
-		$cfg = (new Config($this->getOwner()->getDataFolder() . "settings.yml", Config::YAML))->getAll();
+		$cfg = yaml_parse_file($this->getOwner()->getDataFolder() . "settings.yml");
 		$this->settings = [
 			"Message-Language" => $cfg["Message-Language"],
 			"Brush-Item" => $cfg["Brush-Item"],

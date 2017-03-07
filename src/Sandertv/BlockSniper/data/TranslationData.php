@@ -3,11 +3,11 @@
 namespace Sandertv\BlockSniper\data;
 
 use Sandertv\BlockSniper\Loader;
-use pocketmine\utils\Config;
 
 class TranslationData {
 	
 	public $messages = [];
+	public $plugin;
 	
 	public function __construct(Loader $plugin) {
 		$this->plugin = $plugin;
@@ -27,17 +27,17 @@ class TranslationData {
 	 */
 	public function collectTranslations(): bool {
 		$languageSelected = false;
-		$language = [];
-		foreach($this->getOwner()->availableLanguages as $language) {
-			if($this->getOwner()->getSettings()->get("Message-Language") === $language) {
-				$this->getOwner()->saveResource("languages/" . $language . ".yml");
-				$language = (new Config($this->getOwner()->getDataFolder() . "languages/" . $language . ".yml", Config::YAML))->getAll();
+		foreach($this->getOwner()->availableLanguages as $availableLanguage) {
+			if($this->getOwner()->getSettings()->get("Message-Language") === $availableLanguage) {
+				$this->getOwner()->saveResource("languages/" . $availableLanguage . ".yml");
+				$language = yaml_parse_file($this->getOwner()->getDataFolder() . "languages/" . $availableLanguage . ".yml");
 				$languageSelected = true;
+				break;
 			}
 		}
 		if(!$languageSelected) {
 			$this->getOwner()->saveResource("languages/en.yml");
-			$language = (new Config($this->getOwner()->getDataFolder() . "languages/en.yml", Config::YAML))->getAll();
+			$language = yaml_parse_file($this->getOwner()->getDataFolder() ."languages/en.yml");
 		}
 		
 		// This is going to burn your eyes. Don't look at it for too long.
