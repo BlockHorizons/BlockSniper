@@ -20,6 +20,7 @@ class TranslationData {
 	 */
 	public function collectTranslations(): bool {
 		$languageSelected = false;
+		$language = [];
 		foreach($this->getOwner()->availableLanguages as $availableLanguage) {
 			if($this->getOwner()->getSettings()->get("Message-Language") === $availableLanguage) {
 				$this->getOwner()->saveResource("languages/" . $availableLanguage . ".yml");
@@ -53,6 +54,18 @@ class TranslationData {
 			"commands.succeed.language" => $language["commands"]["succeed"]["language"],
 			"commands.succeed.paste" => $language["commands"]["succeed"]["paste"],
 			"commands.succeed.clone" => $language["commands"]["succeed"]["clone"],
+			"commands.succeed.brush.reset" => $language["commands"]["succeed"]["brush"]["reset"],
+			
+			"brush.shape" => $language["brush"]["shape"],
+			"brush.type" => $language["brush"]["type"],
+			"brush.blocks" => $language["brush"]["blocks"],
+			"brush.size" => $language["brush"]["size"],
+			"brush.perfect" => $language["brush"]["perfect"],
+			"brush.obsolete" => $language["brush"]["obsolete"],
+			"brush.height" => $language["brush"]["height"],
+			"brush.gravity" => $language["brush"]["gravity"],
+			"brush.decrement" => $language["brush"]["decrement"],
+			"brush.biome" => $language["brush"]["biome"]
 		];
 		return ($languageSelected ? true : false);
 	}

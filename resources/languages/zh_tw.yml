@@ -23,21 +23,21 @@ commands:
     paste: "成功複製模型"
     clone: "該範圍的模型成功建立"
     brush:
-      reset: "..."
+      reset: "Brush has been reset successfully."
 
 brushwand:
   disable: "刷子功能成功關閉"
   enable: "刷子功能成功開啟"
 
 brush:
-  shape: "...: "
-  type: "...: "
-  blocks: "...: "
-  size: "...: "
-  perfect: "...: "
-  obsolete: "...: "
-  height: "...: "
-  gravity: "...: "
-  decrement: "...: "
-  biome: "...: "
+  shape: "Shape: "
+  type: "Type: "
+  blocks: "Blocks: "
+  size: "Size: "
+  perfect: "Perfect: "
+  obsolete: "Obsolete: "
+  height: "Height: "
+  gravity: "Gravity: "
+  decrement: "Decrement: "
+  biome: "Biome: "
 ...

@@ -22,21 +22,21 @@ commands:
     paste: "Установка скопированой территории удалась."
     clone: "Територия была скопирована успешно."
     brush:
-      reset: "..."
+      reset: "Brush has been reset successfully."
 
 brushwand:
   disable: "Brushwand Отключен"
   enable: "Brushwand Включён."
 
 brush:
-  shape: "...: "
-  type: "...: "
-  blocks: "...: "
-  size: "...: "
-  perfect: "...: "
-  obsolete: "...: "
-  height: "...: "
-  gravity: "...: "
-  decrement: "...: "
-  biome: "...: "
+  shape: "Shape: "
+  type: "Type: "
+  blocks: "Blocks: "
+  size: "Size: "
+  perfect: "Perfect: "
+  obsolete: "Obsolete: "
+  height: "Height: "
+  gravity: "Gravity: "
+  decrement: "Decrement: "
+  biome: "Biome: "
 ...

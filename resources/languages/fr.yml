@@ -30,14 +30,14 @@ brushwand:
   enable: "Pinceau activé"
 
 brush:
-  shape: "Couche : "
-  type: "Type : "
-  blocks: "Blocs : "
-  size: "Taille : "
-  perfect: "Parfait : " # Don't understand what is it I will test the plugins to check really what is it
-  obsolete: "Obsolète : "
-  height: "Hauteur : "
-  gravity: "Gravité : "
-  decrement: "Diminuer : "
-  biome: "Biome : "
+  shape: "Couche: "
+  type: "Type: "
+  blocks: "Blocs: "
+  size: "Taille: "
+  perfect: "Parfait: "
+  obsolete: "Obsolète: "
+  height: "Hauteur: "
+  gravity: "Gravité: "
+  decrement: "Diminuer: "
+  biome: "Biome: "
 ...
