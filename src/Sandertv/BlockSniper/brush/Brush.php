@@ -226,4 +226,17 @@ class Brush {
 		}
 		return 0;
 	}
+	
+	/**
+	 * @param Player $player
+	 *
+	 * @return bool
+	 */
+	public static function resetBrush(Player $player): bool {
+		if(isset(self::$brush[$player->getId()])) {
+			unset(self::$brush[$player->getId()]);
+			return true;
+		}
+		return false;
+	}
 }

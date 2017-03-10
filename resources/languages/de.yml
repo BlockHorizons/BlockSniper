@@ -22,8 +22,22 @@ commands:
     language: "Sprache wurde erfolgreich geändert."
     paste: "Klon wurde erfolgreich eingefügt."
     clone: "Bereich wurde erfolgreich geklont und kopiert."
+    brush:
+      reset: "..."
 
 brushwand:
   disable: "Brushwand (Zauberpinsel) wurde deaktiviert."
   enable: "Brushwand (Zauberpinsel) wurde aktiviert."
+
+brush:
+  shape: "...: "
+  type: "...: "
+  blocks: "...: "
+  size: "...: "
+  perfect: "...: "
+  obsolete: "...: "
+  height: "...: "
+  gravity: "...: "
+  decrement: "...: "
+  biome: "...: "
 ...

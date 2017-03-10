@@ -36,6 +36,7 @@ class BrushCommand extends BaseCommand {
 		}
 		
 		Brush::setupDefaultValues($sender);
+		$action = null;
 		
 		switch(strtolower($args[0])) {
 			case "size":
@@ -145,9 +146,16 @@ class BrushCommand extends BaseCommand {
 				$sender->sendMessage(TF::GREEN . "Biome: " . TF::AQUA . Biome::getBiome(Brush::getBiomeId($sender))->getName());
 				$action = Change::ACTION_CHANGE_BIOME;
 				break;
+				
+			case "re":
+			case "reset":
+				Brush::resetBrush($sender);
+				$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("commands.succeed.brush.reset"));
+				$action = Change::ACTION_RESET_BRUSH;
+				break;
 			
 			default:
-				$sender->sendMessage(TF::RED . "[Usage] /brush <size|shape|type|blocks|height|obsolete|perfect> <value>");
+				$sender->sendMessage(TF::RED . "[Usage] /brush <parameter> <value>");
 				return true;
 		}
 		$this->getPlugin()->getServer()->getPluginManager()->callEvent(new Change($this->getPlugin(), $sender, $action, $args[0]));

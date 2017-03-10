@@ -22,8 +22,22 @@ commands:
     language: "成功改變語言檔案"
     paste: "成功複製模型"
     clone: "該範圍的模型成功建立"
+    brush:
+      reset: "..."
 
 brushwand:
   disable: "刷子功能成功關閉"
   enable: "刷子功能成功開啟"
+
+brush:
+  shape: "...: "
+  type: "...: "
+  blocks: "...: "
+  size: "...: "
+  perfect: "...: "
+  obsolete: "...: "
+  height: "...: "
+  gravity: "...: "
+  decrement: "...: "
+  biome: "...: "
 ...

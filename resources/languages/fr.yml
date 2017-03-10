@@ -22,9 +22,22 @@ commands:
     language: "La langue a été changé"
     paste: "Collage effectué avec succès"
     clone: "Clone réalisé avec succès"
-
+    brush:
+      reset: "..."
 
 brushwand:
   disable: "Pinceau désactivé"
   enable: "Pinceau activé"
+
+brush:
+  shape: "...: "
+  type: "...: "
+  blocks: "...: "
+  size: "...: "
+  perfect: "...: "
+  obsolete: "...: "
+  height: "...: "
+  gravity: "...: "
+  decrement: "...: "
+  biome: "...: "
 ...

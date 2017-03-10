@@ -7,7 +7,6 @@ use pocketmine\level\Level;
 use pocketmine\Player;
 use Sandertv\BlockSniper\brush\BaseShape;
 use Sandertv\BlockSniper\brush\BaseType;
-use Sandertv\BlockSniper\brush\Brush;
 use Sandertv\BlockSniper\Loader;
 
 class BrushUseEvent extends BaseEvent implements Cancellable {

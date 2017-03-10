@@ -22,8 +22,22 @@ commands:
     language: "Taal veranderen is geslaagd."
     paste: "Kloon plakken is geslaagd."
     clone: "Het kopieëren van de zone is geslaagd."
+    brush:
+      reset: "Het resetten van de de verf is geslaagd."
 
 brushwand:
   disable: "Verfstaf is uitgeschakeld."
   enable: "Verfstaf is ingeschakeld."
+
+brush:
+  shape: "Vorm: "
+  type: "Type: "
+  blocks: "Blokken: "
+  size: "Grootte: "
+  perfect: "Perfect: "
+  obsolete: "Vervangen: "
+  height: "Hoogte: "
+  gravity: "Zwaartekracht: "
+  decrement: "Verkleinend: "
+  biome: "Biome: "
 ...

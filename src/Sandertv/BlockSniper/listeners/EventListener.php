@@ -30,7 +30,6 @@ class EventListener implements Listener {
 				}
 				
 				Brush::setupDefaultValues($player);
-				
 				$shape = Brush::getShape($player);
 				$type = Brush::getType($player, $shape->getBlocksInside());
 				
@@ -41,9 +40,9 @@ class EventListener implements Listener {
 				
 				$type->fillShape();
 				$this->decrementBrush($player);
-				return true;
 			}
 		}
+		return true;
 	}
 	
 	/**
