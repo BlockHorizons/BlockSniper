@@ -29,15 +29,15 @@ class EventListener implements Listener {
 					return false;
 				}
 				
-				$this->getOwner()->getServer()->getPluginManager()->callEvent($event = new BrushUseEvent($this->getOwner(), $player));
-				if($event->isCancelled()) {
-					return false;
-				}
-				
 				Brush::setupDefaultValues($player);
 				
 				$shape = Brush::getShape($player);
 				$type = Brush::getType($player, $shape->getBlocksInside());
+				
+				$this->getOwner()->getServer()->getPluginManager()->callEvent($event = new BrushUseEvent($this->getOwner(), $player, $shape, $type));
+				if($event->isCancelled()) {
+					return false;
+				}
 				
 				$type->fillShape();
 				$this->decrementBrush($player);

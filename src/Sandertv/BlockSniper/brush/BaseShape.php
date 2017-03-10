@@ -58,6 +58,8 @@ abstract class BaseShape {
 	
 	public abstract function getBlocksInside(): array;
 	
+	public abstract function getApproximateProcessedBlocks(): int;
+	
 	public function getMain(): Loader {
 		return $this->main;
 	}
