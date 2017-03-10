@@ -23,21 +23,21 @@ commands:
     paste: "Collage effectué avec succès"
     clone: "Clone réalisé avec succès"
     brush:
-      reset: "..."
+      reset: "Le pinceau a été réinitialisé avec succès"
 
 brushwand:
   disable: "Pinceau désactivé"
   enable: "Pinceau activé"
 
 brush:
-  shape: "...: "
-  type: "...: "
-  blocks: "...: "
-  size: "...: "
-  perfect: "...: "
-  obsolete: "...: "
-  height: "...: "
-  gravity: "...: "
-  decrement: "...: "
-  biome: "...: "
+  shape: "Couche : "
+  type: "Type : "
+  blocks: "Blocs : "
+  size: "Taille : "
+  perfect: "Parfait : " # Don't understand what is it I will test the plugins to check really what is it
+  obsolete: "Obsolète : "
+  height: "Hauteur : "
+  gravity: "Gravité : "
+  decrement: "Diminuer : "
+  biome: "Biome : "
 ...
