@@ -10,6 +10,8 @@ use Sandertv\BlockSniper\Loader;
 
 abstract class BaseCommand extends Command implements PluginIdentifiableCommand {
 	
+	public $owner;
+	
 	public function __construct(Loader $owner, $name, $description = "", $usageMessage = null, array $aliases = []) {
 		parent::__construct($name, $description, $usageMessage, $aliases);
 		$this->owner = $owner;
