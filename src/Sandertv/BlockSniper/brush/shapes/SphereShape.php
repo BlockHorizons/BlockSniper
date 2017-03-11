@@ -13,16 +13,18 @@ use Sandertv\BlockSniper\Loader;
 class SphereShape extends BaseShape {
 	
 	public $level;
-	public $radius;
-	public $center;
-	public $player;
+	private $radius;
+	private $center;
+	private $player;
+	private $hollow;
 	
-	public function __construct(Loader $main, Player $player, Level $level, float $radius = null, Position $center = null) {
+	public function __construct(Loader $main, Player $player, Level $level, float $radius = null, Position $center = null, bool $hollow = false) {
 		parent::__construct($main);
 		$this->level = $level;
 		$this->radius = $radius;
 		$this->center = $center;
 		$this->player = $player;
+		$this->hollow = $hollow;
 	}
 	
 	/**

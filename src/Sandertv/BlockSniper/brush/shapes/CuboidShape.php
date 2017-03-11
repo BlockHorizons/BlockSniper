@@ -13,18 +13,20 @@ use Sandertv\BlockSniper\Loader;
 class CuboidShape extends BaseShape {
 	
 	public $level;
-	public $width;
-	public $height;
-	public $center;
-	public $player;
+	private $width;
+	private $center;
+	private $player;
+	private $hollow;
+	private $height;
 	
-	public function __construct(Loader $main, Player $player, Level $level, float $width = null, Position $center = null) {
+	public function __construct(Loader $main, Player $player, Level $level, float $width = null, Position $center = null, bool $hollow = false) {
 		parent::__construct($main);
 		$this->level = $level;
 		$this->width = $width;
 		$this->height = Brush::getHeight($player);
 		$this->center = $center;
 		$this->player = $player;
+		$this->hollow = $hollow;
 	}
 	
 	/**
@@ -47,6 +49,11 @@ class CuboidShape extends BaseShape {
 		for($x = $minX; $x <= $maxX; $x++) {
 			for($y = $minY; $y <= $maxY; $y++) {
 				for($z = $minZ; $z <= $maxZ; $z++) {
+					if($this->hollow === true) {
+						if(!$x === $maxX || $x === $minX || $y === $maxY || $y === $minY || $z === $maxZ || $z === $minZ) {
+							continue;
+						}
+					}
 					if(Brush::getGravity($this->player) === true || Brush::getGravity($this->player) === 1) {
 						$gravityY = ($this->level->getHighestBlockAt($x, $z) + 1) <= $maxY ? $this->level->getHighestBlockAt($x, $z) + 1 : $y;
 					}

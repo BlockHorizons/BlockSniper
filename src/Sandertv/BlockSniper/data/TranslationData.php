@@ -65,7 +65,8 @@ class TranslationData {
 			"brush.height" => $language["brush"]["height"],
 			"brush.gravity" => $language["brush"]["gravity"],
 			"brush.decrement" => $language["brush"]["decrement"],
-			"brush.biome" => $language["brush"]["biome"]
+			"brush.biome" => $language["brush"]["biome"],
+			"brush.hollow" => $language["brush"]["hollow"]
 		];
 		return ($languageSelected ? true : false);
 	}
