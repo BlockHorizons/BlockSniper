@@ -42,7 +42,7 @@ class CloneCommand extends BaseCommand {
 		
 		$sizes = explode("x", strtolower($args[1]));
 		
-		if((int)$sizes[0] > 70 || (int)$sizes[1] > 70) {
+		if((int)$sizes[0] > $this->getSettings()->get("Maximum-Clone-Radius") || (int)$sizes[1] > $this->getSettings()->get("Maximum-Clone-Radius")) {
 			$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.radius-too-big"));
 			return true;
 		}

@@ -50,7 +50,7 @@ class CuboidShape extends BaseShape {
 			for($y = $minY; $y <= $maxY; $y++) {
 				for($z = $minZ; $z <= $maxZ; $z++) {
 					if($this->hollow === true) {
-						if(!$x === $maxX || $x === $minX || $y === $maxY || $y === $minY || $z === $maxZ || $z === $minZ) {
+						if(!$x === $maxX && $x !== $minX && $y !== $maxY && $y !== $minY && $z !== $maxZ && $z !== $minZ) {
 							continue;
 						}
 					}

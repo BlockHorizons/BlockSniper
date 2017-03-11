@@ -11,6 +11,9 @@ Brush-Item: 396
 # Maximum radius for shapes/types, it is recommended to keep this number below 20 to prevent server freezes and lag.
 Maximum-Radius: 15
 
+# Maximum radius/height for clones, it is recommended to keep this number below 60 to prevent server freezes and lag.
+Maximum-Clone-Size: 60
+
 # Maximum undo stores to save, old ones will get destroyed automatically. Setting this number too high could result in lag or data loss.
 Maximum-Undo-Stores: 15
 

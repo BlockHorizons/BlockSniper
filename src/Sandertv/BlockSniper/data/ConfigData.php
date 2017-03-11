@@ -21,7 +21,8 @@ class ConfigData {
 			"Brush-Item" => $cfg["Brush-Item"],
 			"Maximum-Radius" => $cfg["Maximum-Radius"],
 			"Maximum-Undo-Stores" => $cfg["Maximum-Undo-Stores"],
-			"Reset-Decrement-Brush" => $cfg["Reset-Decrement-Brush"]
+			"Reset-Decrement-Brush" => $cfg["Reset-Decrement-Brush"],
+			"Maximum-Clone-Size" => $cfg["Maximum-Clone-Size"]
 		];
 	}
 	
