@@ -40,5 +40,5 @@ brush:
   gravity: "Gravity: "
   decrement: "Decrement: "
   biome: "Biome: "
-
+  hollow: "Hollow: "
 ...

@@ -15,11 +15,12 @@ use Sandertv\BlockSniper\commands\UndoCommand;
 use Sandertv\BlockSniper\data\ConfigData;
 use Sandertv\BlockSniper\data\TranslationData;
 use Sandertv\BlockSniper\listeners\EventListener;
+use Sandertv\BlockSniper\tasks\UndoDiminishTask;
 
 class Loader extends PluginBase {
 	
-	const VERSION = "1.2.1";
-	const API_TARGET = "2.0.0 - 3.0.0-ALPHA3";
+	const VERSION = "1.3.0";
+	const API_TARGET = "2.0.0 - 3.0.0-ALPHA4";
 	
 	public $undoStore;
 	public $cloneStore;
@@ -42,6 +43,8 @@ class Loader extends PluginBase {
 		
 		$this->registerCommands();
 		$this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
+		
+		$this->getServer()->getScheduler()->scheduleRepeatingTask(new UndoDiminishTask($this), 400);
 	}
 	
 	public function reloadAll() {

@@ -37,7 +37,8 @@ class Brush {
 			"obsolete" => Block::get(Block::AIR),
 			"gravity" => false,
 			"decrement" => false,
-			"biome" => "plains"
+			"biome" => "plains",
+			"hollow" => false
 		];
 		return true;
 	}
@@ -217,6 +218,11 @@ class Brush {
 		self::$brush[$player->getId()]["biome"] = $biome;
 	}
 	
+	/**
+	 * @param Player $player
+	 *
+	 * @return int
+	 */
 	public static function getBiomeId(Player $player): int {
 		$biomes = new ReflectionClass('pocketmine\level\generator\biome\Biome');
 		$const = strtoupper(str_replace(" ", "_", self::$brush[$player->getId()]["biome"]));
@@ -238,5 +244,22 @@ class Brush {
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * @param Player $player
+	 * @param        $value
+	 */
+	public static function setHollow(Player $player, $value = true) {
+		self::$brush[$player->getId()]["hollow"] = (bool)$value;
+	}
+	
+	/**
+	 * @param Player $player
+	 *
+	 * @return bool
+	 */
+	public static function getHollow(Player $player): bool {
+		return self::$brush[$player->getId()]["perfect"];
 	}
 }
