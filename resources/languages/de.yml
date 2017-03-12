@@ -23,22 +23,22 @@ commands:
     paste: "Klon wurde erfolgreich eingefügt."
     clone: "Bereich wurde erfolgreich geklont und kopiert."
     brush:
-      reset: "Brush has been reset successfully."
+      reset: "Der Pinsel wurde erfolgreich zurückgesetzt."
 
 brushwand:
   disable: "Brushwand (Zauberpinsel) wurde deaktiviert."
   enable: "Brushwand (Zauberpinsel) wurde aktiviert."
 
 brush:
-  shape: "Shape: "
-  type: "Type: "
-  blocks: "Blocks: "
-  size: "Size: "
-  perfect: "Perfect: "
-  obsolete: "Obsolete: "
-  height: "Height: "
-  gravity: "Gravity: "
-  decrement: "Decrement: "
-  biome: "Biome: "
-  hollow: "Hollow: "
+  shape: "Form: "
+  type: "Typ: "
+  blocks: "Blöcke: "
+  size: "Größe: "
+  perfect: "Perfekt: "
+  obsolete: "Veraltet: "
+  height: "Höhe: "
+  gravity: "Gravitation: "
+  decrement: "Verringern: "
+  biome: "Biom: "
+  hollow: "Hohl: "
 ...
