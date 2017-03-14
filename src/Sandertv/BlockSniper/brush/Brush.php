@@ -173,12 +173,8 @@ class Brush {
 	 * @return BaseShape
 	 */
 	public static function getShape(Player $player): BaseShape {
-		$hollow = false;
-		if(self::getHollow($player) === 1 || self::getHollow($player) === true) {
-			$hollow = true;
-		}
 		$shapeName = 'Sandertv\BlockSniper\brush\shapes\\' . (ucfirst(self::$brush[$player->getId()]["shape"]) . "Shape");
-		$shape = new $shapeName(self::$owner, $player, $player->getLevel(), self::getSize($player), $player->getTargetBlock(100), $hollow);
+		$shape = new $shapeName(self::$owner, $player, $player->getLevel(), self::getSize($player), $player->getTargetBlock(100), self::getHollow($player));
 		
 		return $shape;
 	}
