@@ -254,7 +254,7 @@ class Brush {
 	 * @param Player $player
 	 * @param        $value
 	 */
-	public static function setHollow(Player $player, $value = true) {
+	public static function setHollow(Player $player, $value) {
 		self::$brush[$player->getId()]["hollow"] = (bool)$value;
 	}
 	
@@ -264,6 +264,6 @@ class Brush {
 	 * @return bool
 	 */
 	public static function getHollow(Player $player): bool {
-		return self::$brush[$player->getId()]["perfect"];
+		return self::$brush[$player->getId()]["hollow"];
 	}
 }
