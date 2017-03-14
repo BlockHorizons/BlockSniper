@@ -30,8 +30,8 @@ class BrushCommand extends BaseCommand {
 			return true;
 		}
 		
-		if(count($args) !== 2) {
-			$sender->sendMessage(TF::RED . "[Usage] /brush <size|shape|type|blocks|height|obsolete|perfect> <value>");
+		if(count($args) !== 2 && strtolower($args[0]) !== "reset"  && strtolower($args[0]) !== "re") {
+			$sender->sendMessage(TF::RED . "[Usage] /brush <parameter> <value>");
 			return true;
 		}
 		

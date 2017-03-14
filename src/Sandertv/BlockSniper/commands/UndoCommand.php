@@ -38,10 +38,12 @@ class UndoCommand extends BaseCommand {
 		}
 		
 		$undoAmount = 1;
-		if(is_numeric($args[0])) {
-			$undoAmount = $args[0];
-			if($undoAmount > ($totalUndo = $this->getPlugin()->getUndoStore()->getTotalUndoStores())) {
-				$undoAmount = $totalUndo;
+		if(isset($args[0])) {
+			if(is_numeric($args[0])) {
+				$undoAmount = $args[0];
+				if($undoAmount > ($totalUndo = $this->getPlugin()->getUndoStore()->getTotalUndoStores())) {
+					$undoAmount = $totalUndo;
+				}
 			}
 		}
 		

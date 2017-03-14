@@ -44,4 +44,16 @@ class ConfigData {
 		}
 		return null;
 	}
+	
+	/**
+	 * @param string $key
+	 * @param        $value
+	 */
+	public function set(string $key, $value) {
+		$this->settings[$key] = $value;
+	}
+	
+	public function __destruct() {
+		yaml_emit_file($this->getOwner()->getDataFolder() . "settings.yml", $this->settings);
+	}
 }
