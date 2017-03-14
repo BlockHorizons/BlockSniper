@@ -39,6 +39,11 @@ class BrushCommand extends BaseCommand {
 		$action = null;
 		
 		switch(strtolower($args[0])) {
+			case "preset":
+			case "pr":
+				//TODO: Implement presets.
+				break;
+				
 			case "size":
 			case "radius":
 			case "si":

@@ -10,7 +10,7 @@ use Sandertv\BlockSniper\brush\Brush;
 use Sandertv\BlockSniper\events\BrushUseEvent;
 use Sandertv\BlockSniper\Loader;
 
-class EventListener implements Listener {
+class BrushListener implements Listener {
 	
 	public $owner;
 	

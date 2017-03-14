@@ -48,6 +48,11 @@ class SphereShape extends BaseShape {
 				for($z = $maxZ; $z >= $minZ; $z--) {
 					$zs = ($targetZ - $z) * ($targetZ - $z);
 					if($xs + $ys + $zs < $radiusSquared) {
+						if($this->hollow === true) {
+							if($y !== $maxY && $y !== $minY && !($xs + $ys + $zs) < $radiusSquared) {
+								continue;
+							}
+						}
 						if(Brush::getGravity($this->player) === true || Brush::getGravity($this->player) === 1) {
 							$gravityY = ($this->level->getHighestBlockAt($x, $z) + 1) <= $maxY ? $this->level->getHighestBlockAt($x, $z) + 1 : $y;
 						}

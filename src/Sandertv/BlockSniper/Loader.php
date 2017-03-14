@@ -14,7 +14,8 @@ use Sandertv\BlockSniper\commands\cloning\PasteCommand;
 use Sandertv\BlockSniper\commands\UndoCommand;
 use Sandertv\BlockSniper\data\ConfigData;
 use Sandertv\BlockSniper\data\TranslationData;
-use Sandertv\BlockSniper\listeners\EventListener;
+use Sandertv\BlockSniper\listeners\BrushListener;
+use Sandertv\BlockSniper\listeners\PresetListener;
 use Sandertv\BlockSniper\tasks\UndoDiminishTask;
 
 class Loader extends PluginBase {
@@ -42,7 +43,7 @@ class Loader extends PluginBase {
 		$this->reloadAll();
 		
 		$this->registerCommands();
-		$this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
+		$this->registerListeners();
 		
 		$this->getServer()->getScheduler()->scheduleRepeatingTask(new UndoDiminishTask($this), 400);
 	}
@@ -74,11 +75,9 @@ class Loader extends PluginBase {
 		}
 	}
 	
-	/**
-	 * @return Config
-	 */
-	public function getSettings(): ConfigData {
-		return $this->settings;
+	public function onDisable() {
+		$this->getLogger()->info(TF::RED . "BlockSniper has been disabled.");
+		$this->getUndoStore()->resetUndoStorage();
 	}
 	
 	public function registerCommands() {
@@ -94,9 +93,21 @@ class Loader extends PluginBase {
 		}
 	}
 	
-	public function onDisable() {
-		$this->getLogger()->info(TF::RED . "BlockSniper has been disabled.");
-		$this->getUndoStore()->resetUndoStorage();
+	public function registerListeners() {
+		$blockSniperListeners = [
+			new BrushListener($this),
+			new PresetListener($this),
+		];
+		foreach($blockSniperListeners as $listener) {
+			$this->getServer()->getPluginManager()->registerEvents($listener, $this);
+		}
+	}
+	
+	/**
+	 * @return ConfigData
+	 */
+	public function getSettings(): ConfigData {
+		return $this->settings;
 	}
 	
 	/**
@@ -107,21 +118,21 @@ class Loader extends PluginBase {
 	}
 	
 	/**
+	 * @return CloneStorer
+	 */
+	public function getCloneStore(): CloneStorer {
+		return $this->cloneStore;
+	}
+	
+	/**
 	 * @param string $message
 	 *
-	 * @return string
+	 * @return string|null
 	 */
 	public function getTranslation(string $message): string {
 		if($this->language instanceof TranslationData) {
 			return $this->language->get($message);
 		}
-	}
-	
-	
-	/**
-	 * @return CloneStorer
-	 */
-	public function getCloneStore(): CloneStorer {
-		return $this->cloneStore;
+		return null;
 	}
 }

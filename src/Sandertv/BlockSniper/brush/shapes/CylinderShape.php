@@ -44,6 +44,11 @@ class CylinderShape extends BaseShape {
 			for($z = $minZ; $z <= $maxZ; $z++) {
 				for($y = $minY; $y <= $maxY; $y++) {
 					if(pow($targetX - $x, 2) + pow($targetZ - $z, 2) <= $radiusSquared) {
+						if($this->hollow === true) {
+							if($y !== $maxY && $y !== $minY && !(pow($targetX - $x, 2) + pow($targetZ - $z, 2)) < $radiusSquared) {
+								continue;
+							}
+						}
 						if(Brush::getGravity($this->player) === true || Brush::getGravity($this->player) === 1) {
 							$gravityY = ($this->level->getHighestBlockAt($x, $z) + 1) <= $maxY ? $this->level->getHighestBlockAt($x, $z) + 1 : $y;
 						}
@@ -65,7 +70,7 @@ class CylinderShape extends BaseShape {
 	}
 	
 	public function getPermission(): string {
-		return "blocksniper.shape.cylinderstanding";
+		return "blocksniper.shape.standingcylinder";
 	}
 	
 	public function getApproximateProcessedBlocks(): int {
