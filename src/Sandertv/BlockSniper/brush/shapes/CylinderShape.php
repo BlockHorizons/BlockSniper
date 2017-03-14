@@ -12,13 +12,6 @@ use Sandertv\BlockSniper\Loader;
 
 class CylinderShape extends BaseShape {
 	
-	public $level;
-	private $radius;
-	private $center;
-	private $player;
-	private $hollow;
-	private $height;
-	
 	public function __construct(Loader $main, Player $player, Level $level, float $radius = null, Position $center = null, bool $hollow = false) {
 		parent::__construct($main);
 		$this->level = $level;

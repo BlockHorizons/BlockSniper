@@ -23,7 +23,13 @@ abstract class BaseType {
 	const TYPE_EXPAND = 11;
 	const TYPE_RAISE = 12;
 	
+	public $level;
+	public $player;
 	public $main;
+	protected $biome;
+	protected $blocks;
+	protected $center;
+	protected $obsolete;
 	
 	public function __construct(Loader $main) {
 		$this->main = $main;

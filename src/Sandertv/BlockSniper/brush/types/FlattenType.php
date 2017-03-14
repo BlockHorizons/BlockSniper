@@ -12,11 +12,6 @@ use Sandertv\BlockSniper\Loader;
 
 class FlattenType extends BaseType {
 	
-	public $level;
-	public $blocks;
-	public $player;
-	public $center;
-	
 	public function __construct(Loader $main, Player $player, Level $level, array $blocks = []) {
 		parent::__construct($main);
 		$this->level = $level;

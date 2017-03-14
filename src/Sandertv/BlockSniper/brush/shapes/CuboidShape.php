@@ -12,13 +12,6 @@ use Sandertv\BlockSniper\Loader;
 
 class CuboidShape extends BaseShape {
 	
-	public $level;
-	private $width;
-	private $center;
-	private $player;
-	private $hollow;
-	private $height;
-	
 	public function __construct(Loader $main, Player $player, Level $level, float $width = null, Position $center = null, bool $hollow = false) {
 		parent::__construct($main);
 		$this->level = $level;
@@ -50,7 +43,7 @@ class CuboidShape extends BaseShape {
 			for($y = $minY; $y <= $maxY; $y++) {
 				for($z = $minZ; $z <= $maxZ; $z++) {
 					if($this->hollow === true) {
-						if(!$x === $maxX && $x !== $minX && $y !== $maxY && $y !== $minY && $z !== $maxZ && $z !== $minZ) {
+						if($x !== $maxX && $x !== $minX && $y !== $maxY && $y !== $minY && $z !== $maxZ && $z !== $minZ) {
 							continue;
 						}
 					}

@@ -14,6 +14,15 @@ abstract class BaseShape {
 	const SHAPE_CYLINDER = 2;
 	const SHAPE_CUBOID = 3;
 	
+	public $level;
+	public $player;
+	public $main;
+	protected $width;
+	protected $radius;
+	protected $center;
+	protected $hollow;
+	protected $height;
+	
 	public function __construct(Loader $main) {
 		$this->main = $main;
 	}

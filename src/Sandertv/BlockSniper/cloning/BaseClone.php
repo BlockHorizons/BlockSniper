@@ -10,6 +10,12 @@ abstract class BaseClone {
 	const TYPE_TEMPLATE = 1;
 	
 	public $owner;
+	public $level;
+	protected $name;
+	
+	protected $center;
+	protected $radius;
+	protected $height;
 	
 	public function __construct(Loader $owner) {
 		$this->owner = $owner;

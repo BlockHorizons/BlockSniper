@@ -10,16 +10,13 @@ use Sandertv\BlockSniper\Loader;
 
 class BiomeType extends BaseType {
 	
-	public $level;
-	public $blocks;
-	public $player;
-	
 	public function __construct(Loader $main, Player $player, Level $level, array $blocks) {
 		parent::__construct($main);
 		$this->level = $level;
 		$this->blocks = $blocks;
-		
 		$this->player = $player;
+		$this->biome = Brush::getBiomeId($this->player);
+		
 	}
 	
 	/**
@@ -27,7 +24,7 @@ class BiomeType extends BaseType {
 	 */
 	public function fillShape(): bool {
 		foreach($this->blocks as $block) {
-			$this->level->setBiomeId($block->x, $block->z, Brush::getBiomeId($this->player));
+			$this->level->setBiomeId($block->x, $block->z, $this->biome);
 		}
 		return true;
 	}

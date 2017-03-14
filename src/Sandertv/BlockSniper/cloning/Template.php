@@ -10,14 +10,6 @@ use Sandertv\BlockSniper\Loader;
 
 class Template extends BaseClone {
 	
-	public $owner;
-	public $level;
-	public $name;
-	
-	public $center;
-	public $radius;
-	public $height;
-	
 	public function __construct(Loader $owner, Level $level, string $name, Position $center = null, float $radius = null, int $height = 0) {
 		parent::__construct($owner);
 		$this->owner = $owner;
