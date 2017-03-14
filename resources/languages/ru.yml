@@ -1,4 +1,4 @@
-# Russian translations, by infomcpe.
+# Russian translations, by infomcpe.ru
 # Russian:
 ---
 commands:
@@ -13,8 +13,8 @@ commands:
     no-modifications: "Не найдено модификаций чтобы отметить."
     paste-not-found: "Такой тип вставки не может быть выполнен."
     clone-not-found: "Такой тип копирования не модет быть выполнен."
-    name-not-set: "No valid name has been given."
-    template-not-existing: "A template with that name does not exist."
+    name-not-set: "Не указано действительное имя."
+    template-not-existing: "Шаблон с этим именем не существует."
   succeed:
     default: "Успешно создано."
     undo: "Успешно удалена последния модификациия"
