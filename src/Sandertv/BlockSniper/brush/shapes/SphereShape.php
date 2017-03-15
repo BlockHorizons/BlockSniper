@@ -50,7 +50,7 @@ class SphereShape extends BaseShape {
 					$zs = ($targetZ - $z) * ($targetZ - $z);
 					if($xs + $ys + $zs < $radiusSquared) {
 						if($this->hollow === true) {
-							if($y !== $maxY && $y !== $minY && ($xs + $ys + $zs) < $radiusSquared - 3 - $this->radius / 1.2) {
+							if($y !== $maxY && $y !== $minY && ($xs + $ys + $zs) < $radiusSquared - 3 - $this->radius) {
 								continue;
 							}
 						}
