@@ -3,7 +3,6 @@
 namespace Sandertv\BlockSniper;
 
 use pocketmine\plugin\PluginBase;
-use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat as TF;
 use Sandertv\BlockSniper\brush\Brush;
 use Sandertv\BlockSniper\cloning\CloneStorer;
@@ -16,6 +15,7 @@ use Sandertv\BlockSniper\data\ConfigData;
 use Sandertv\BlockSniper\data\TranslationData;
 use Sandertv\BlockSniper\listeners\BrushListener;
 use Sandertv\BlockSniper\listeners\PresetListener;
+use Sandertv\BlockSniper\presets\PresetManager;
 use Sandertv\BlockSniper\tasks\UndoDiminishTask;
 
 class Loader extends PluginBase {
@@ -27,6 +27,7 @@ class Loader extends PluginBase {
 	public $cloneStore;
 	public $settings;
 	public $brush;
+	public $presetManager;
 	
 	public $availableLanguages = [
 		"en",
@@ -55,6 +56,8 @@ class Loader extends PluginBase {
 		$this->brush = new Brush($this);
 		$this->undoStore = new UndoStorer($this);
 		$this->cloneStore = new CloneStorer($this);
+		
+		$this->presetManager = new PresetManager($this);
 		if(!is_dir($this->getDataFolder())) {
 			mkdir($this->getDataFolder());
 		}
@@ -75,9 +78,11 @@ class Loader extends PluginBase {
 		}
 	}
 	
-	public function onDisable() {
-		$this->getLogger()->info(TF::RED . "BlockSniper has been disabled.");
-		$this->getUndoStore()->resetUndoStorage();
+	/**
+	 * @return ConfigData
+	 */
+	public function getSettings(): ConfigData {
+		return $this->settings;
 	}
 	
 	public function registerCommands() {
@@ -103,11 +108,9 @@ class Loader extends PluginBase {
 		}
 	}
 	
-	/**
-	 * @return ConfigData
-	 */
-	public function getSettings(): ConfigData {
-		return $this->settings;
+	public function onDisable() {
+		$this->getLogger()->info(TF::RED . "BlockSniper has been disabled.");
+		$this->getUndoStore()->resetUndoStorage();
 	}
 	
 	/**
@@ -134,5 +137,9 @@ class Loader extends PluginBase {
 			return $this->language->get($message);
 		}
 		return null;
+	}
+	
+	public function getPresetManager(): PresetManager {
+		return $this->presetManager;
 	}
 }
