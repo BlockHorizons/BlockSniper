@@ -45,7 +45,7 @@ class CylinderShape extends BaseShape {
 				for($y = $minY; $y <= $maxY; $y++) {
 					if(pow($targetX - $x, 2) + pow($targetZ - $z, 2) <= $radiusSquared) {
 						if($this->hollow === true) {
-							if($y !== $maxY && $y !== $minY && (pow($targetX - $x, 2) + pow($targetZ - $z, 2)) < $radiusSquared - 3 - $this->radius / 2) {
+							if($y !== $maxY && $y !== $minY && (pow($targetX - $x, 2) + pow($targetZ - $z, 2)) < $radiusSquared - 3 - $this->radius / 1.4) {
 								continue;
 							}
 						}
