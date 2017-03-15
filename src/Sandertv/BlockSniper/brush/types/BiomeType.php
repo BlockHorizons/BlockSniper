@@ -16,7 +16,6 @@ class BiomeType extends BaseType {
 		$this->blocks = $blocks;
 		$this->player = $player;
 		$this->biome = Brush::getBiomeId($this->player);
-		
 	}
 	
 	/**

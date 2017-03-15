@@ -57,6 +57,9 @@ permissions:
                     blocksniper.type.flatten:
                         default: op
                         description: "Allows access to the flatten type"
+                    blocksniper.type.flattenall:
+                        default: op
+                        description: "Allows access to the flatten all type"
                     blocksniper.type.expand:
                         default: op
                         description: "Allows access to the expand type"

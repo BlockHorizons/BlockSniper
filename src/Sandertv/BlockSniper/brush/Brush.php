@@ -34,7 +34,7 @@ class Brush {
 			"size" => 1,
 			"height" => 1,
 			"blocks" => [Block::get(Block::STONE)],
-			"obsolete" => Block::get(Block::AIR),
+			"obsolete" => [Block::get(Block::AIR)],
 			"gravity" => false,
 			"decrement" => false,
 			"biome" => "plains",
@@ -112,18 +112,25 @@ class Brush {
 	/**
 	 * @param Player $player
 	 *
-	 * @return Block
+	 * @return array
 	 */
-	public static function getObsolete(Player $player): Block {
+	public static function getObsolete(Player $player): array {
 		return self::$brush[$player->getId()]["obsolete"];
 	}
 	
 	/**
 	 * @param Player $player
-	 * @param        $block
+	 * @param array  $blocks
 	 */
-	public static function setObsolete(Player $player, $block) {
-		self::$brush[$player->getId()]["obsolete"] = (is_numeric($block) ? Item::get($block)->getBlock() : Item::fromString($block)->getBlock());
+	public static function setObsolete(Player $player, array $blocks) {
+		unset(self::$brush[$player->getId()]["obsolete"]);
+		foreach($blocks as $block) {
+			if(!is_numeric($block)) {
+				self::$brush[$player->getId()]["obsolete"][] = Item::fromString($block)->getBlock();
+			} else {
+				self::$brush[$player->getId()]["obsolete"][] = Item::get($block)->getBlock();
+			}
+		}
 	}
 	
 	/**

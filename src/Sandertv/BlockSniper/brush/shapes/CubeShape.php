@@ -12,10 +12,10 @@ use Sandertv\BlockSniper\Loader;
 
 class CubeShape extends BaseShape {
 	
-	public function __construct(Loader $main, Player $player, Level $level, float $radius = null, Position $center = null, bool $hollow = false) {
+	public function __construct(Loader $main, Player $player, Level $level, int $width = null, Position $center = null, bool $hollow = false) {
 		parent::__construct($main);
 		$this->level = $level;
-		$this->radius = $radius;
+		$this->width = $width;
 		$this->center = $center;
 		$this->player = $player;
 		$this->hollow = $hollow;
@@ -29,12 +29,12 @@ class CubeShape extends BaseShape {
 		$targetY = $this->center->y;
 		$targetZ = $this->center->z;
 		
-		$minX = $targetX - $this->radius;
-		$minZ = $targetZ - $this->radius;
-		$minY = $targetY - $this->radius;
-		$maxX = $targetX + $this->radius;
-		$maxZ = $targetZ + $this->radius;
-		$maxY = $targetY + $this->radius;
+		$minX = $targetX - $this->width;
+		$minZ = $targetZ - $this->width;
+		$minY = $targetY - $this->width;
+		$maxX = $targetX + $this->width;
+		$maxZ = $targetZ + $this->width;
+		$maxY = $targetY + $this->width;
 		$blocksInside = [];
 		
 		for($x = $minX; $x <= $maxX; $x++) {

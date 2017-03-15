@@ -26,11 +26,13 @@ class ReplaceType extends BaseType {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			$randomBlock = Brush::$brush[$this->player->getId()]["blocks"][array_rand(Brush::$brush[$this->player->getId()]["blocks"])];
-			if($block->getId() === $this->obsolete->getId()) {
-				if($block->getId() !== $randomBlock->getId()) {
-					$undoBlocks[] = $block;
+			foreach($this->obsolete as $obsolete) {
+				if($block->getId() === $obsolete->getId()) {
+					if($block->getId() !== $randomBlock->getId()) {
+						$undoBlocks[] = $block;
+					}
+					$this->level->setBlock(new Vector3($block->x, $block->y, $block->z), $randomBlock, false, false);
 				}
-				$this->level->setBlock(new Vector3($block->x, $block->y, $block->z), $randomBlock, false, false);
 			}
 		}
 		$this->getMain()->getUndoStore()->saveUndo($undoBlocks);

@@ -16,7 +16,6 @@ class LayerType extends BaseType {
 		$this->level = $level;
 		$this->center = $player->getTargetBlock(100);
 		$this->blocks = $blocks;
-		
 		$this->player = $player;
 	}
 	

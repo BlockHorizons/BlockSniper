@@ -14,7 +14,6 @@ class RaiseType extends BaseType {
 		parent::__construct($main);
 		$this->level = $level;
 		$this->blocks = $blocks;
-		
 		$this->player = $player;
 	}
 	

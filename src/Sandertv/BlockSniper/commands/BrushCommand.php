@@ -118,8 +118,14 @@ class BrushCommand extends BaseCommand {
 			case "ob":
 			case "obsolete":
 			case "replaced":
-				Brush::setObsolete($sender, $args[1]);
-				$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("brush.obsolete") . TF::AQUA . Brush::getObsolete($sender)->getName());
+				$blocks = explode(",", $args[1]);
+				Brush::setObsolete($sender, $blocks);
+				$blocks = Brush::getObsolete($sender);
+				$blockNames = [];
+				foreach($blocks as $block) {
+					$blockNames[] = $block->getName();
+				}
+				$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("brush.obsolete") . TF::AQUA . implode(", ", $blockNames));
 				$action = Change::ACTION_CHANGE_OBSOLETE;
 				break;
 			
