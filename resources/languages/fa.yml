@@ -15,6 +15,8 @@ commands:
     no-valid-block: "Block yaft nashod, ID/name block ra benevisid."
     shape-not-found: "Shekl ya Type yaft nashod."
     no-modifications: "Shoma hich taghiri anjam nadadid ke Undo konid."
+    preset-already-exists: "That preset already exists."
+    preset-doesnt-exist: "That preset doesn't exist."
   succeed:
     paste: "Clone paste shode."
     clone: "Clone ba movafaghit anjam shod."
@@ -23,6 +25,9 @@ commands:
     language: "Zaban Morede Nazar Be Farsi(Persian) Taghir Yaft."
     brush:
       reset: "Brush has been reset successfully."
+    preset:
+      name: "Preset creation process started. Type a name in the chat,"
+      cancel: "or type 'cancel' to cancel the process."
 
 brushwand:
   disable: "Brushwand ghirefaal shod."
@@ -40,4 +45,5 @@ brush:
   decrement: "Decrement: "
   biome: "Biome: "
   hollow: "Hollow: "
+  preset: "Preset: "
 ...

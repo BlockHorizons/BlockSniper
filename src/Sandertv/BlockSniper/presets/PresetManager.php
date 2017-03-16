@@ -2,11 +2,13 @@
 
 namespace Sandertv\BlockSniper\presets;
 
+use pocketmine\Player;
 use Sandertv\BlockSniper\Loader;
 
 class PresetManager {
 	
 	public $main;
+	public $presetCreation = [];
 	private $data;
 	private $preset;
 	
@@ -61,5 +63,44 @@ class PresetManager {
 	 */
 	public function getPreset(string $name): Preset {
 		return $this->preset[$name];
+	}
+	
+	/**
+	 * @param Player $player
+	 *
+	 * @return bool
+	 */
+	public function isCreatingAPreset(Player $player): bool {
+		return isset($this->presetCreation[$player->getId()]);
+	}
+	
+	/**
+	 * @param Player $player
+	 *
+	 * @return int
+	 */
+	public function getCurrentPresetCreationProgress(Player $player): int {
+		return count($this->presetCreation[$player->getId()]);
+	}
+	
+	/**
+	 * @param Player $player
+	 * @param string $name
+	 */
+	public function parsePresetCreationInfo(Player $player, string $name) {
+		foreach($this->presetCreation[$player->getId()] as $key => $value) {
+			$this->data[$name][$key] = $value;
+		}
+		$this->addPreset($name);
+		unset($this->presetCreation[$player->getId()]);
+	}
+	
+	/**
+	 * @param Player $player
+	 * @param string $key
+	 * @param        $value
+	 */
+	public function addToCreationData(Player $player, string $key, $value) {
+		$this->presetCreation[$player->getId()][$key] = $value;
 	}
 }

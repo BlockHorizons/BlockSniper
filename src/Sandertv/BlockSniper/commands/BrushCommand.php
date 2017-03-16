@@ -43,11 +43,18 @@ class BrushCommand extends BaseCommand {
 			case "pr":
 				switch($args[1]) {
 					case "new":
+						if($this->getPlugin()->getPresetManager()->isPreset(strtolower($args[1]))) {
+							$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.preset-already-exists"));
+							return true;
+						}
+						$this->getPlugin()->getPresetManager()->presetCreation[$sender->getId()] = [];
+						$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("commands.succeed.preset.name"));
+						$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("commands.succeed.preset.cancel"));
 						return true;
 					
 					default:
 						if(!$this->getPlugin()->getPresetManager()->isPreset(strtolower($args[1]))) {
-							$sender->sendMessage("" /*TODO: Add new translations. Again...*/);
+							$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.preset-doesnt-exist"));
 							return true;
 						}
 						$preset = $this->getPlugin()->getPresetManager()->getPreset(strtolower($args[1]));

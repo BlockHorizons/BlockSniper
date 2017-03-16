@@ -15,6 +15,8 @@ commands:
     clone-not-found: "Такой тип копирования не модет быть выполнен."
     name-not-set: "Не указано действительное имя."
     template-not-existing: "Шаблон с этим именем не существует."
+    preset-already-exists: "That preset already exists."
+    preset-doesnt-exist: "That preset doesn't exist."
   succeed:
     default: "Успешно создано."
     undo: "Успешно удалена последния модификациия"
@@ -23,6 +25,9 @@ commands:
     clone: "Територия была скопирована успешно."
     brush:
       reset: "Кисть успешно сброшена."
+    preset:
+      name: "Preset creation process started. Type a name in the chat,"
+      cancel: "or type 'cancel' to cancel the process."
 
 brushwand:
   disable: "Brushwand Отключен"
@@ -40,4 +45,5 @@ brush:
   decrement: "Уменьшение: "
   biome: "Биом: "
   hollow: "Полый: "
+  preset: "Preset: "
 ...
