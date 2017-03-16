@@ -198,6 +198,15 @@ class Brush {
 	/**
 	 * @param Player $player
 	 *
+	 * @return bool
+	 */
+	public static function getHollow(Player $player): bool {
+		return self::$brush[$player->getId()]["hollow"];
+	}
+	
+	/**
+	 * @param Player $player
+	 *
 	 * @return int
 	 */
 	public static function getHeight(Player $player): int {
@@ -219,9 +228,9 @@ class Brush {
 	
 	/**
 	 * @param Player $player
-	 * @param string $biome
+	 * @param mixed  $biome
 	 */
-	public static function setBiome(Player $player, string $biome) {
+	public static function setBiome(Player $player, $biome) {
 		self::$brush[$player->getId()]["biome"] = $biome;
 	}
 	
@@ -231,6 +240,9 @@ class Brush {
 	 * @return int
 	 */
 	public static function getBiomeId(Player $player): int {
+		if(is_numeric(self::$brush[$player->getId()]["biome"])) {
+			return self::$brush[$player->getId()]["biome"];
+		}
 		$biomes = new ReflectionClass('pocketmine\level\generator\biome\Biome');
 		$const = strtoupper(str_replace(" ", "_", self::$brush[$player->getId()]["biome"]));
 		if($biomes->hasConstant($const)) {
@@ -259,14 +271,5 @@ class Brush {
 	 */
 	public static function setHollow(Player $player, $value) {
 		self::$brush[$player->getId()]["hollow"] = (bool)$value;
-	}
-	
-	/**
-	 * @param Player $player
-	 *
-	 * @return bool
-	 */
-	public static function getHollow(Player $player): bool {
-		return self::$brush[$player->getId()]["hollow"];
 	}
 }

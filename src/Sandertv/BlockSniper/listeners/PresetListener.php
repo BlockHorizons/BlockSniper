@@ -5,6 +5,8 @@ namespace Sandertv\BlockSniper\listeners;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\utils\TextFormat as TF;
+use Sandertv\BlockSniper\brush\BaseShape;
+use Sandertv\BlockSniper\brush\BaseType;
 use Sandertv\BlockSniper\Loader;
 
 class PresetListener implements Listener {
@@ -36,31 +38,61 @@ class PresetListener implements Listener {
 				$player->sendMessage(TF::GRAY . $this->getOwner()->getTranslation("brush.shape"));
 				break;
 			case 1:
+				if(!BaseShape::isShape(strtolower($message[0]))) {
+					$player->sendMessage(TF::RED . "[Warning] " . $this->getOwner()->getTranslation("commands.errors.shape-not-found"));
+					return false;
+				}
 				$player->sendMessage(TF::GREEN . $this->getOwner()->getTranslation("brush.shape") . TF::AQUA . $message[0]);
 				$this->getOwner()->getPresetManager()->addToCreationData($player, "shape", strtolower($message[0]));
 				$player->sendMessage(TF::GRAY . $this->getOwner()->getTranslation("brush.type"));
 				break;
 			case 2:
+				if(!BaseType::isType(strtolower($message[0]))) {
+					$player->sendMessage(TF::RED . "[Warning] " . $this->getOwner()->getTranslation("commands.errors.shape-not-found"));
+					return false;
+				}
 				$player->sendMessage(TF::GREEN . $this->getOwner()->getTranslation("brush.type") . TF::AQUA . $message[0]);
 				$this->getOwner()->getPresetManager()->addToCreationData($player, "type", strtolower($message[0]));
 				$player->sendMessage(TF::GRAY . $this->getOwner()->getTranslation("brush.decrement"));
 				break;
 			case 3:
+				$message[0] = (bool)$message[0];
+				if(!is_bool($message[0])) {
+					return false;
+				}
 				$player->sendMessage(TF::GREEN . $this->getOwner()->getTranslation("brush.decrement") . TF::AQUA . $message[0]);
 				$this->getOwner()->getPresetManager()->addToCreationData($player, "decrement", strtolower($message[0]));
 				$player->sendMessage(TF::GRAY . $this->getOwner()->getTranslation("brush.size"));
 				break;
 			case 4:
+				if(!is_numeric($message[0])) {
+					return false;
+				}
+				if($message[0] > $this->getOwner()->getSettings()->get("Maximum-Radius")) {
+					$player->sendMessage(TF::RED . "[Warning] " . $this->getOwner()->getTranslation("commands.errors.radius-too-big"));
+					return false;
+				}
 				$player->sendMessage(TF::GREEN . $this->getOwner()->getTranslation("brush.size") . TF::AQUA . $message[0]);
 				$this->getOwner()->getPresetManager()->addToCreationData($player, "size", strtolower($message[0]));
 				$player->sendMessage(TF::GRAY . $this->getOwner()->getTranslation("brush.hollow"));
 				break;
 			case 5:
+				$message[0] = (bool)$message[0];
+				if(!is_bool($message[0])) {
+					return false;
+				}
 				$player->sendMessage(TF::GREEN . $this->getOwner()->getTranslation("brush.hollow") . TF::AQUA . $message[0]);
 				$this->getOwner()->getPresetManager()->addToCreationData($player, "hollow", strtolower($message[0]));
 				$player->sendMessage(TF::GRAY . $this->getOwner()->getTranslation("brush.height"));
 				break;
 			case 6:
+				if(!is_numeric($message[0])) {
+					return false;
+				}
+				if($message[0] > $this->getOwner()->getSettings()->get("Maximum-Radius")) {
+					$player->sendMessage(TF::RED . "[Warning] " . $this->getOwner()->getTranslation("commands.errors.radius-too-big"));
+					return false;
+				}
 				$player->sendMessage(TF::GREEN . $this->getOwner()->getTranslation("brush.height") . TF::AQUA . $message[0]);
 				$this->getOwner()->getPresetManager()->addToCreationData($player, "height", strtolower($message[0]));
 				$player->sendMessage(TF::GRAY . $this->getOwner()->getTranslation("brush.biome"));
@@ -82,6 +114,7 @@ class PresetListener implements Listener {
 				$player->sendMessage(TF::GREEN . "Preset creation process finished successfully.");
 				break;
 		}
+		$event->setCancelled();
 	}
 	
 	public function getOwner(): Loader {

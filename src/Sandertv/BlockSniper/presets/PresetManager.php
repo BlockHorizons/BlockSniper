@@ -15,7 +15,9 @@ class PresetManager {
 	public function __construct(Loader $main) {
 		$this->main = $main;
 		
-		$this->data = yaml_parse_file($main->getDataFolder() . "presets.yml");
+		if(is_file($main->getDataFolder() . "presets.yml")) {
+			$this->data = yaml_parse_file($main->getDataFolder() . "presets.yml");
+		}
 		
 		foreach($this->data as $name => $data) {
 			$this->addPreset($name);

@@ -12,7 +12,7 @@ class Preset {
 	private $shape, $type, $size, $hollow, $decrement;
 	private $height, $biome, $obsolete, $blocks;
 	
-	public function __construct(string $name, string $shape = null, string $type = null, bool $decrement = null, int $size = null, bool $hollow = null, array $blocks = null, array $obsolete = null, int $height = null, string $biome = null) {
+	public function __construct(string $name, string $shape = null, string $type = null, bool $decrement = null, int $size = null, bool $hollow = null, string $blocks = null, string $obsolete = null, int $height = null, string $biome = null) {
 		$this->name = $name;
 		
 		$this->shape = $shape;
@@ -34,7 +34,37 @@ class Preset {
 	 */
 	public function apply(Player $player) {
 		foreach($this->getParsedData() as $property => $value) {
-			Brush::$brush[$player->getId()][$property] = $value;
+			switch($property) {
+				case "shape":
+					Brush::setShape($player, $value);
+					break;
+				case "type":
+					Brush::setType($player, $value);
+					break;
+				case "decrement":
+					Brush::setDecrementing($player, $value);
+					break;
+				case "size":
+					Brush::setSize($player, $value);
+					break;
+				case "hollow":
+					Brush::setHollow($player, $value);
+					break;
+				case "height":
+					Brush::setHeight($player, $value);
+					break;
+				case "biome":
+					Brush::setBiome($player, $value);
+					break;
+				case "obsolete":
+					$value = explode(",", $value);
+					Brush::setObsolete($player, $value);
+					break;
+				case "blocks":
+					$value = explode(",", $value);
+					Brush::setBlocks($player, $value);
+					break;
+			}
 		}
 	}
 	
