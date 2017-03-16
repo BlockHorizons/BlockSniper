@@ -1,4 +1,4 @@
-# Limba Romana by NycuRO
+# Limba Romana de catre NycuRO
 
 # Romana:
 ---
@@ -27,7 +27,7 @@ commands:
     brush:
       reset: "Brush a fost resetata cu succes."
     preset:
-      name: "Presetarea a inceput. Te rog sa introduci un nume in chat,"
+      name: "Presetarea a inceput. Te rog sa introduci un nume in chat"
       cancel: "sau scrie 'cancel' pentru a iesi din proces."
       canceled: "Presetarea procesului s-a incheiat."
 
