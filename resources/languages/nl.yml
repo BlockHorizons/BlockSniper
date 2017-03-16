@@ -29,6 +29,7 @@ commands:
     preset:
       name: "Voorinstellingen maken gestart. Type een naam in de chat,"
       cancel: "of type 'cancel' om het proces te stoppen."
+      canceled: "Voorinstellingen maken afgebroken."
 
 brushwand:
   disable: "Verfstaf is uitgeschakeld."

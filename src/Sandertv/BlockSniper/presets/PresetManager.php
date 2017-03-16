@@ -103,4 +103,8 @@ class PresetManager {
 	public function addToCreationData(Player $player, string $key, $value) {
 		$this->presetCreation[$player->getId()][$key] = $value;
 	}
+	
+	public function cancelPresetCreationProcess(Player $player) {
+		unset($this->presetCreation[$player->getId()]);
+	}
 }

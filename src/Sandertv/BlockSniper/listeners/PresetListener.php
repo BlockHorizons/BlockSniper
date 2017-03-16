@@ -19,6 +19,12 @@ class PresetListener implements Listener {
 		if(!$this->getOwner()->getPresetManager()->isCreatingAPreset($player)) {
 			return;
 		}
+		$message = explode(" ", $event->getMessage());
+		
+		switch($message[0]) {
+			case "cancel":
+			
+		}
 	}
 	
 	public function getOwner(): Loader {

@@ -29,6 +29,7 @@ commands:
     preset:
       name: "Preset creation process started. Type a name in the chat,"
       cancel: "or type 'cancel' to cancel the process."
+      canceled: "Preset creation has been canceled."
 
 brushwand:
   disable: "Brushwand (Zauberpinsel) wurde deaktiviert."
