@@ -104,6 +104,19 @@ class PresetManager {
 		$this->presetCreation[$player->getId()][$key] = $value;
 	}
 	
+	/**
+	 * @param Player $player
+	 * @param string $key
+	 *
+	 * @return mixed
+	 */
+	public function getCreationData(Player $player, string $key) {
+		return $this->presetCreation[$player->getId()][$key];
+	}
+	
+	/**
+	 * @param Player $player
+	 */
 	public function cancelPresetCreationProcess(Player $player) {
 		unset($this->presetCreation[$player->getId()]);
 	}

@@ -48,6 +48,8 @@ class TranslationData {
 			"commands.errors.clone-not-found" => $language["commands"]["errors"]["clone-not-found"],
 			"commands.errors.name-not-set" => $language["commands"]["errors"]["name-not-set"],
 			"commands.errors.template-not-existing" => $language["commands"]["errors"]["template-not-existing"],
+			"commands.errors.preset-already-exists" => $language["commands"]["errors"]["preset-already-exists"],
+			"commands.errors.preset-doesnt-exist" => $language["commands"]["errors"]["preset-doesnt-exist"],
 			
 			"commands.succeed.default" => $language["commands"]["succeed"]["default"],
 			"commands.succeed.undo" => $language["commands"]["succeed"]["undo"],
@@ -55,6 +57,9 @@ class TranslationData {
 			"commands.succeed.paste" => $language["commands"]["succeed"]["paste"],
 			"commands.succeed.clone" => $language["commands"]["succeed"]["clone"],
 			"commands.succeed.brush.reset" => $language["commands"]["succeed"]["brush"]["reset"],
+			"commands.succeed.preset.name" => $language["commands"]["succeed"]["preset"]["name"],
+			"commands.succeed.preset.cancel" => $language["commands"]["succeed"]["preset"]["cancel"],
+			"commands.succeed.preset.canceled" => $language["commands"]["succeed"]["preset"]["canceled"],
 			
 			"brush.shape" => $language["brush"]["shape"],
 			"brush.type" => $language["brush"]["type"],
@@ -66,7 +71,8 @@ class TranslationData {
 			"brush.gravity" => $language["brush"]["gravity"],
 			"brush.decrement" => $language["brush"]["decrement"],
 			"brush.biome" => $language["brush"]["biome"],
-			"brush.hollow" => $language["brush"]["hollow"]
+			"brush.hollow" => $language["brush"]["hollow"],
+			"brush.preset" => $language["brush"]["preset"]
 		];
 		return ($languageSelected ? true : false);
 	}
