@@ -59,7 +59,7 @@ class BrushCommand extends BaseCommand {
 						}
 						$preset = $this->getPlugin()->getPresetManager()->getPreset(strtolower($args[1]));
 						$preset->apply($sender);
-						$sender->sendMessage(TF::YELLOW . "Preset: " . $this->getPlugin()->getTranslation("brush.preset"));
+						$sender->sendMessage(TF::YELLOW . $this->getPlugin()->getTranslation("brush.preset") . TF::BLUE . $preset->name);
 						foreach($preset->getParsedData() as $key => $value) {
 							if($value !== null) {
 								$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("brush." . $key) . TF::AQUA . $value);

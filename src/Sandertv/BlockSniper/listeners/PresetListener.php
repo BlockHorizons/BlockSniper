@@ -105,12 +105,12 @@ class PresetListener implements Listener {
 				break;
 			case 8:
 				$player->sendMessage(TF::GREEN . $this->getOwner()->getTranslation("brush.obsolete") . TF::AQUA . $message[0]);
-				$this->getOwner()->getPresetManager()->addToCreationData($player, "obsolete", strtolower($message[0]));
+				$this->getOwner()->getPresetManager()->addToCreationData($player, "obsolete", explode(",", strtolower($message[0])));
 				$player->sendMessage(TF::GRAY . $this->getOwner()->getTranslation("brush.blocks"));
 				break;
 			case 9:
 				$player->sendMessage(TF::GREEN . $this->getOwner()->getTranslation("brush.blocks") . TF::AQUA . $message[0]);
-				$this->getOwner()->getPresetManager()->addToCreationData($player, "blocks", strtolower($message[0]));
+				$this->getOwner()->getPresetManager()->addToCreationData($player, "blocks", explode(",", strtolower($message[0])));
 				$this->getOwner()->getPresetManager()->parsePresetCreationInfo($player, $this->getOwner()->getPresetManager()->getCreationData($player, "name"));
 				$player->sendMessage(TF::GREEN . "Preset creation process finished successfully.");
 				break;
