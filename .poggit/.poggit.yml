@@ -1,7 +1,4 @@
 --- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/Sandertv/BlockSniper
-branches:
-- master
-- Version-1.3.0
 projects:
   BlockSniper:
     path: ""
