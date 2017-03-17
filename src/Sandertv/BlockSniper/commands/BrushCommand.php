@@ -52,6 +52,12 @@ class BrushCommand extends BaseCommand {
 						$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("commands.succeed.preset.cancel"));
 						return true;
 					
+					case "list":
+						$presetList = implode(", ", $this->getPlugin()->getPresetManager()->getAllPresets());
+						$sender->sendMessage(TF::GREEN . "--- " . TF::YELLOW . "Preset List" . TF::GREEN . " ---");
+						$sender->sendMessage(TF::AQUA . $presetList);
+						return true;
+						
 					default:
 						if(!$this->getPlugin()->getPresetManager()->isPreset(strtolower($args[1]))) {
 							$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.preset-doesnt-exist"));
@@ -61,7 +67,7 @@ class BrushCommand extends BaseCommand {
 						$preset->apply($sender);
 						$sender->sendMessage(TF::YELLOW . $this->getPlugin()->getTranslation("brush.preset") . TF::BLUE . $preset->name);
 						foreach($preset->getParsedData() as $key => $value) {
-							if($value !== null) {
+							if($value !== null && $key !== "name") {
 								$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("brush." . $key) . TF::AQUA . $value);
 							}
 						}

@@ -34,8 +34,8 @@ class PresetListener implements Listener {
 		// Ew... I know.
 		switch($this->getOwner()->getPresetManager()->getCurrentPresetCreationProgress($player)) {
 			case 0:
-				$player->sendMessage(TF::AQUA . strtolower($message[0]));
-				$this->getOwner()->getPresetManager()->addToCreationData($player, "name", strtolower($message[0]));
+				$player->sendMessage(TF::AQUA . $message[0]);
+				$this->getOwner()->getPresetManager()->addToCreationData($player, "name", $message[0]);
 				$player->sendMessage(TF::GRAY . $this->getOwner()->getTranslation("brush.shape"));
 				break;
 			case 1:
@@ -62,7 +62,7 @@ class PresetListener implements Listener {
 					return false;
 				}
 				$player->sendMessage(TF::GREEN . $this->getOwner()->getTranslation("brush.decrement") . TF::AQUA . $message[0]);
-				$this->getOwner()->getPresetManager()->addToCreationData($player, "decrement", strtolower($message[0]));
+				$this->getOwner()->getPresetManager()->addToCreationData($player, "decrement", $message[0]);
 				$player->sendMessage(TF::GRAY . $this->getOwner()->getTranslation("brush.size"));
 				break;
 			case 4:
@@ -74,7 +74,7 @@ class PresetListener implements Listener {
 					return false;
 				}
 				$player->sendMessage(TF::GREEN . $this->getOwner()->getTranslation("brush.size") . TF::AQUA . $message[0]);
-				$this->getOwner()->getPresetManager()->addToCreationData($player, "size", strtolower($message[0]));
+				$this->getOwner()->getPresetManager()->addToCreationData($player, "size", $message[0]);
 				$player->sendMessage(TF::GRAY . $this->getOwner()->getTranslation("brush.hollow"));
 				break;
 			case 5:
@@ -83,7 +83,7 @@ class PresetListener implements Listener {
 					return false;
 				}
 				$player->sendMessage(TF::GREEN . $this->getOwner()->getTranslation("brush.hollow") . TF::AQUA . $message[0]);
-				$this->getOwner()->getPresetManager()->addToCreationData($player, "hollow", strtolower($message[0]));
+				$this->getOwner()->getPresetManager()->addToCreationData($player, "hollow", $message[0]);
 				$player->sendMessage(TF::GRAY . $this->getOwner()->getTranslation("brush.height"));
 				break;
 			case 6:
@@ -95,7 +95,7 @@ class PresetListener implements Listener {
 					return false;
 				}
 				$player->sendMessage(TF::GREEN . $this->getOwner()->getTranslation("brush.height") . TF::AQUA . $message[0]);
-				$this->getOwner()->getPresetManager()->addToCreationData($player, "height", strtolower($message[0]));
+				$this->getOwner()->getPresetManager()->addToCreationData($player, "height", $message[0]);
 				$player->sendMessage(TF::GRAY . $this->getOwner()->getTranslation("brush.biome"));
 				break;
 			case 7:
@@ -116,6 +116,7 @@ class PresetListener implements Listener {
 				break;
 		}
 		$event->setCancelled();
+		return true;
 	}
 	
 	public function getOwner(): Loader {

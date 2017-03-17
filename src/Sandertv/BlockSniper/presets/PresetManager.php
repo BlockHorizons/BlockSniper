@@ -3,6 +3,7 @@
 namespace Sandertv\BlockSniper\presets;
 
 use pocketmine\Player;
+use pocketmine\utils\TextFormat as TF;
 use Sandertv\BlockSniper\Loader;
 
 class PresetManager {
@@ -19,8 +20,10 @@ class PresetManager {
 			$this->data = yaml_parse_file($main->getDataFolder() . "presets.yml");
 			foreach($this->data as $name => $data) {
 				$this->addPreset($name);
+				$main->getLogger()->debug(TF::GREEN . "Preset " . $name . " has been loaded.");
 			}
 			unlink($main->getDataFolder() . "presets.yml");
+			$main->getLogger()->info(TF::GREEN . "All presets have been loaded.");
 		}
 	}
 	
@@ -133,5 +136,16 @@ class PresetManager {
 	 */
 	public function getOwner(): Loader {
 		return $this->main;
+	}
+	
+	/**
+	 * @return array
+	 */
+	public function getAllPresets(): array {
+		$presets = [];
+		foreach($this->preset as $name => $preset) {
+			$presets[] = $name;
+		}
+		return $presets;
 	}
 }
