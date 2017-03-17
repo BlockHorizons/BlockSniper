@@ -119,6 +119,13 @@ class PresetManager {
 		unset($this->presetCreation[$player->getId()]);
 	}
 	
+	/**
+	 * @param string $name
+	 */
+	public function deletePreset(string $name) {
+		unset($this->preset[$name]);
+	}
+	
 	public function storePresetsToFile() {
 		$data = [];
 		if(isset($this->preset)) {
