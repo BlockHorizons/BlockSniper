@@ -27,6 +27,7 @@ class PresetListener implements Listener {
 		if(strtolower($message[0]) === "cancel") {
 			$this->getOwner()->getPresetManager()->cancelPresetCreationProcess($player);
 			$player->sendMessage(TF::YELLOW . $this->getOwner()->getTranslation("commands.succeed.preset.canceled"));
+			$event->setCancelled();
 			return true;
 		}
 		

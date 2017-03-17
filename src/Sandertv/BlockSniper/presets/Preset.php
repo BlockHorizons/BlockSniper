@@ -12,7 +12,7 @@ class Preset {
 	private $shape, $type, $size, $hollow, $decrement;
 	private $height, $biome, $obsolete, $blocks;
 	
-	public function __construct(string $name, string $shape = null, string $type = null, bool $decrement = null, int $size = null, bool $hollow = null, string $blocks = null, string $obsolete = null, int $height = null, string $biome = null) {
+	public function __construct(string $name, string $shape = null, string $type = null, bool $decrement = null, int $size = null, bool $hollow = null, array $blocks = null, array $obsolete = null, int $height = null, string $biome = null) {
 		$this->name = $name;
 		
 		$this->shape = $shape;
@@ -57,11 +57,9 @@ class Preset {
 					Brush::setBiome($player, $value);
 					break;
 				case "obsolete":
-					$value = explode(",", $value);
 					Brush::setObsolete($player, $value);
 					break;
 				case "blocks":
-					$value = explode(",", $value);
 					Brush::setBlocks($player, $value);
 					break;
 			}
@@ -73,6 +71,7 @@ class Preset {
 	 */
 	public function getParsedData(): array {
 		$data = [];
+		$data["name"] = $this->name;
 		$data["shape"] = $this->shape;
 		$data["type"] = $this->type;
 		$data["decrement"] = $this->decrement;

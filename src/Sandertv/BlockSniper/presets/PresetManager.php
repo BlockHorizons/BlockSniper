@@ -17,10 +17,10 @@ class PresetManager {
 		
 		if(is_file($main->getDataFolder() . "presets.yml")) {
 			$this->data = yaml_parse_file($main->getDataFolder() . "presets.yml");
-		}
-		
-		foreach($this->data as $name => $data) {
-			$this->addPreset($name);
+			foreach($this->data as $name => $data) {
+				$this->addPreset($name);
+			}
+			unlink($main->getDataFolder() . "presets.yml");
 		}
 	}
 	
@@ -40,13 +40,6 @@ class PresetManager {
 			$this->data[$name]["height"],
 			$this->data[$name]["biome"]);
 		unset($this->data[$name]);
-	}
-	
-	/**
-	 * @return Loader
-	 */
-	public function getOwner(): Loader {
-		return $this->main;
 	}
 	
 	/**
@@ -121,5 +114,24 @@ class PresetManager {
 	 */
 	public function cancelPresetCreationProcess(Player $player) {
 		unset($this->presetCreation[$player->getId()]);
+	}
+	
+	public function storePresetsToFile() {
+		$data = [];
+		if(isset($this->preset)) {
+			foreach($this->preset as $name => $preset) {
+				if($preset instanceof Preset) {
+					$data[$name] = $preset->getParsedData();
+				}
+			}
+		}
+		yaml_emit_file($this->getOwner()->getDataFolder() . "presets.yml", $data);
+	}
+	
+	/**
+	 * @return Loader
+	 */
+	public function getOwner(): Loader {
+		return $this->main;
 	}
 }
