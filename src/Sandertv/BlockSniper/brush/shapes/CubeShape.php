@@ -12,17 +12,13 @@ use Sandertv\BlockSniper\Loader;
 
 class CubeShape extends BaseShape {
 	
-	public $level;
-	public $radius;
-	public $center;
-	public $player;
-	
-	public function __construct(Loader $main, Player $player, Level $level, float $radius = null, Position $center = null) {
+	public function __construct(Loader $main, Player $player, Level $level, int $width = null, Position $center = null, bool $hollow = false) {
 		parent::__construct($main);
 		$this->level = $level;
-		$this->radius = $radius;
+		$this->width = $width;
 		$this->center = $center;
 		$this->player = $player;
+		$this->hollow = $hollow;
 	}
 	
 	/**
@@ -33,17 +29,22 @@ class CubeShape extends BaseShape {
 		$targetY = $this->center->y;
 		$targetZ = $this->center->z;
 		
-		$minX = $targetX - $this->radius;
-		$minZ = $targetZ - $this->radius;
-		$minY = $targetY - $this->radius;
-		$maxX = $targetX + $this->radius;
-		$maxZ = $targetZ + $this->radius;
-		$maxY = $targetY + $this->radius;
+		$minX = $targetX - $this->width;
+		$minZ = $targetZ - $this->width;
+		$minY = $targetY - $this->width;
+		$maxX = $targetX + $this->width;
+		$maxZ = $targetZ + $this->width;
+		$maxY = $targetY + $this->width;
 		$blocksInside = [];
 		
 		for($x = $minX; $x <= $maxX; $x++) {
 			for($z = $minZ; $z <= $maxZ; $z++) {
 				for($y = $minY; $y <= $maxY; $y++) {
+					if($this->hollow === true) {
+						if($x !== $maxX && $x !== $minX && $y !== $maxY && $y !== $minY && $z !== $maxZ && $z !== $minZ) {
+							continue;
+						}
+					}
 					if(Brush::getGravity($this->player) === true || Brush::getGravity($this->player) === 1) {
 						$gravityY = ($this->level->getHighestBlockAt($x, $z) + 1) <= $maxY ? $this->level->getHighestBlockAt($x, $z) + 1 : $y;
 					}
@@ -67,15 +68,8 @@ class CubeShape extends BaseShape {
 		return "blocksniper.shape.cube";
 	}
 	
-	public function getApproximateBlocks(): int {
-		// TODO
-	}
-	
-	public function getCenter(): Position {
-		return $this->center;
-	}
-	
-	public function setCenter(Position $center) {
-		$this->center = $center;
+	public function getApproximateProcessedBlocks(): int {
+		$blockCount = abs(($this->center->x - $this->radius) - ($this->center->x + $this->radius)) * abs(($this->center->z - $this->radius) - ($this->center->z + $this->radius)) * abs(($this->center->y - $this->radius) - ($this->center->y + $this->radius));
+		return $blockCount;
 	}
 }

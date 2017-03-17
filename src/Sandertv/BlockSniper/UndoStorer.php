@@ -4,7 +4,6 @@ namespace Sandertv\BlockSniper;
 
 use pocketmine\item\Item;
 use pocketmine\math\Vector3;
-use Sandertv\BlockSniper\tasks\UndoDiminishTask;
 
 class UndoStorer {
 	
@@ -36,9 +35,15 @@ class UndoStorer {
 		if($this->getTotalUndoStores() === $this->getOwner()->getSettings()->get("Maximum-Undo-Stores")) {
 			$this->unsetFirstUndo();
 		}
-		$this->getOwner()->getServer()->getScheduler()->scheduleDelayedTask(new UndoDiminishTask($this->getOwner()), 2400);
 		
 		$this->lastUndo = time();
+	}
+	
+	/**
+	 * @return int
+	 */
+	public function getTotalUndoStores(): int {
+		return count($this->undoStore);
 	}
 	
 	/**
@@ -101,12 +106,5 @@ class UndoStorer {
 	 */
 	public function getLastUndoActivity(): int {
 		return (time() - $this->lastUndo);
-	}
-	
-	/**
-	 * @return int
-	 */
-	public function getTotalUndoStores(): int {
-		return count($this->undoStore);
 	}
 }

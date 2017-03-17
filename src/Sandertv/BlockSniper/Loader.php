@@ -3,7 +3,6 @@
 namespace Sandertv\BlockSniper;
 
 use pocketmine\plugin\PluginBase;
-use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat as TF;
 use Sandertv\BlockSniper\brush\Brush;
 use Sandertv\BlockSniper\cloning\CloneStorer;
@@ -12,19 +11,23 @@ use Sandertv\BlockSniper\commands\BrushCommand;
 use Sandertv\BlockSniper\commands\cloning\CloneCommand;
 use Sandertv\BlockSniper\commands\cloning\PasteCommand;
 use Sandertv\BlockSniper\commands\UndoCommand;
-use Sandertv\BlockSniper\data\TranslationData;
-use Sandertv\BlockSniper\listeners\EventListener;
 use Sandertv\BlockSniper\data\ConfigData;
+use Sandertv\BlockSniper\data\TranslationData;
+use Sandertv\BlockSniper\listeners\BrushListener;
+use Sandertv\BlockSniper\listeners\PresetListener;
+use Sandertv\BlockSniper\presets\PresetManager;
+use Sandertv\BlockSniper\tasks\UndoDiminishTask;
 
 class Loader extends PluginBase {
 	
-	const VERSION = "1.2.1";
-	const API_TARGET = "2.0.0 - 3.0.0-ALPHA3";
+	const VERSION = "1.3.0";
+	const API_TARGET = "2.0.0 - 3.0.0-ALPHA4";
 	
 	public $undoStore;
 	public $cloneStore;
 	public $settings;
 	public $brush;
+	public $presetManager;
 	
 	public $availableLanguages = [
 		"en",
@@ -41,7 +44,9 @@ class Loader extends PluginBase {
 		$this->reloadAll();
 		
 		$this->registerCommands();
-		$this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
+		$this->registerListeners();
+		
+		$this->getServer()->getScheduler()->scheduleRepeatingTask(new UndoDiminishTask($this), 400);
 	}
 	
 	public function reloadAll() {
@@ -51,6 +56,8 @@ class Loader extends PluginBase {
 		$this->brush = new Brush($this);
 		$this->undoStore = new UndoStorer($this);
 		$this->cloneStore = new CloneStorer($this);
+		
+		$this->presetManager = new PresetManager($this);
 		if(!is_dir($this->getDataFolder())) {
 			mkdir($this->getDataFolder());
 		}
@@ -72,7 +79,7 @@ class Loader extends PluginBase {
 	}
 	
 	/**
-	 * @return Config
+	 * @return ConfigData
 	 */
 	public function getSettings(): ConfigData {
 		return $this->settings;
@@ -91,9 +98,20 @@ class Loader extends PluginBase {
 		}
 	}
 	
+	public function registerListeners() {
+		$blockSniperListeners = [
+			new BrushListener($this),
+			new PresetListener($this),
+		];
+		foreach($blockSniperListeners as $listener) {
+			$this->getServer()->getPluginManager()->registerEvents($listener, $this);
+		}
+	}
+	
 	public function onDisable() {
 		$this->getLogger()->info(TF::RED . "BlockSniper has been disabled.");
 		$this->getUndoStore()->resetUndoStorage();
+		$this->getPresetManager()->storePresetsToFile();
 	}
 	
 	/**
@@ -103,22 +121,26 @@ class Loader extends PluginBase {
 		return $this->undoStore;
 	}
 	
-	/**
-	 * @param string $message
-	 *
-	 * @return string
-	 */
-	public function getTranslation(string $message): string {
-		if($this->language instanceof TranslationData) {
-			return $this->language->get($message);
-		}
+	public function getPresetManager(): PresetManager {
+		return $this->presetManager;
 	}
-	
 	
 	/**
 	 * @return CloneStorer
 	 */
 	public function getCloneStore(): CloneStorer {
 		return $this->cloneStore;
+	}
+	
+	/**
+	 * @param string $message
+	 *
+	 * @return string|null
+	 */
+	public function getTranslation(string $message): string {
+		if($this->language instanceof TranslationData) {
+			return $this->language->get($message);
+		}
+		return null;
 	}
 }

@@ -11,10 +11,6 @@ use Sandertv\BlockSniper\Loader;
 
 class ExpandType extends BaseType {
 	
-	public $player;
-	public $level;
-	public $blocks;
-	
 	public function __construct(Loader $main, Player $player, Level $level, array $blocks = []) {
 		parent::__construct($main);
 		$this->level = $level;
@@ -62,9 +58,6 @@ class ExpandType extends BaseType {
 		return "blocksniper.type.expand";
 	}
 	
-	public function getApproximateBlocks(): int {
-		// TODO
-	}
 	
 	public function getLevel(): Level {
 		return $this->level;

@@ -16,14 +16,36 @@ commands:
     clone-not-found: "Dieser Klontyp (clone type) konnte nicht gefunden werden."
     name-not-set: "Kein gültiger Name wurde festgelegt."
     template-not-existing: "Es gibt keine Vorlage mit diesem Namen."
+    preset-already-exists: "That preset already exists."
+    preset-doesnt-exist: "That preset doesn't exist."
   succeed:
     default: "Die Form wurde erfolgreich dort begonnen, wo du hingesehen hast."
     undo: "Die letzte Modifikation wurde erfolgreich rückgängig gemacht."
     language: "Sprache wurde erfolgreich geändert."
     paste: "Klon wurde erfolgreich eingefügt."
     clone: "Bereich wurde erfolgreich geklont und kopiert."
+    brush:
+      reset: "Der Pinsel wurde erfolgreich zurückgesetzt."
+    preset:
+      name: "Preset creation process started. Type a name in the chat,"
+      cancel: "or type 'cancel' to cancel the process."
+      canceled: "Preset creation has been canceled."
 
 brushwand:
   disable: "Brushwand (Zauberpinsel) wurde deaktiviert."
   enable: "Brushwand (Zauberpinsel) wurde aktiviert."
+
+brush:
+  shape: "Form: "
+  type: "Typ: "
+  blocks: "Blöcke: "
+  size: "Größe: "
+  perfect: "Perfekt: "
+  obsolete: "Zu ersetzender Block: "
+  height: "Höhe: "
+  gravity: "Gravitation: "
+  decrement: "Verringern: "
+  biome: "Biom: "
+  hollow: "Hohl: "
+  preset: "Preset: "
 ...

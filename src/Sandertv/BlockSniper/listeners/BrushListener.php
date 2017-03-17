@@ -4,13 +4,13 @@ namespace Sandertv\BlockSniper\listeners;
 
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
-use pocketmine\utils\TextFormat as TF;
 use pocketmine\Player;
+use pocketmine\utils\TextFormat as TF;
 use Sandertv\BlockSniper\brush\Brush;
 use Sandertv\BlockSniper\events\BrushUseEvent;
 use Sandertv\BlockSniper\Loader;
 
-class EventListener implements Listener {
+class BrushListener implements Listener {
 	
 	public $owner;
 	
@@ -29,21 +29,20 @@ class EventListener implements Listener {
 					return false;
 				}
 				
-				$this->getOwner()->getServer()->getPluginManager()->callEvent($event = new BrushUseEvent($this->getOwner(), $player));
+				Brush::setupDefaultValues($player);
+				$shape = Brush::getShape($player);
+				$type = Brush::getType($player, $shape->getBlocksInside());
+				
+				$this->getOwner()->getServer()->getPluginManager()->callEvent($event = new BrushUseEvent($this->getOwner(), $player, $shape, $type));
 				if($event->isCancelled()) {
 					return false;
 				}
 				
-				Brush::setupDefaultValues($player);
-				
-				$shape = Brush::getShape($player);
-				$type = Brush::getType($player, $shape->getBlocksInside());
-				
 				$type->fillShape();
 				$this->decrementBrush($player);
-				return true;
 			}
 		}
+		return true;
 	}
 	
 	/**

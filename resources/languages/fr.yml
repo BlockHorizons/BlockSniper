@@ -16,15 +16,36 @@ commands:
     name-not-set: "Veuillez donner un nom"
     paste-not-found: "Copie introuvable"
     clone-not-found: "Clone introuvable"
+    preset-already-exists: "That preset already exists."
+    preset-doesnt-exist: "That preset doesn't exist."
   succeed:
     default: "La forme a été ajoutée avec succès"
     undo: "Annulé avec succès"
     language: "La langue a été changé"
     paste: "Collage effectué avec succès"
     clone: "Clone réalisé avec succès"
-
+    brush:
+      reset: "Le pinceau a été réinitialisé avec succès"
+    preset:
+      name: "Preset creation process started. Type a name in the chat,"
+      cancel: "or type 'cancel' to cancel the process."
+      canceled: "Preset creation has been canceled."
 
 brushwand:
   disable: "Pinceau désactivé"
   enable: "Pinceau activé"
+
+brush:
+  shape: "Couche: "
+  type: "Type: "
+  blocks: "Blocs: "
+  size: "Taille: "
+  perfect: "Parfait: "
+  obsolete: "Obsolète: "
+  height: "Hauteur: "
+  gravity: "Gravité: "
+  decrement: "Diminuer: "
+  biome: "Biome: "
+  hollow: "Creux: "
+  preset: "Preset: "
 ...

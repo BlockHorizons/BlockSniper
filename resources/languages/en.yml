@@ -16,14 +16,36 @@ commands:
     clone-not-found: "That clone type could not be found."
     name-not-set: "No valid name has been given."
     template-not-existing: "A template with that name does not exist."
+    preset-already-exists: "That preset already exists."
+    preset-doesnt-exist: "That preset doesn't exist."
   succeed:
     default: "Successfully launched the shape at the location looked at."
     undo: "Successfully undid the last modification."
     language: "Language has been changed successfully."
     paste: "Pasted the clone successfully."
     clone: "Area has been cloned and copied successfully."
+    brush:
+      reset: "Brush has been reset successfully."
+    preset:
+      name: "Preset creation process started. Type a name in the chat,"
+      cancel: "or type 'cancel' to cancel the process."
+      canceled: "Preset creation has been canceled."
 
 brushwand:
   disable: "Brushwand has been disabled."
   enable: "Brushwand has been enabled."
+
+brush:
+  shape: "Shape: "
+  type: "Type: "
+  blocks: "Blocks: "
+  size: "Size: "
+  perfect: "Perfect: "
+  obsolete: "Obsolete: "
+  height: "Height: "
+  gravity: "Gravity: "
+  decrement: "Decrement: "
+  biome: "Biome: "
+  hollow: "Hollow: "
+  preset: "Preset: "
 ...

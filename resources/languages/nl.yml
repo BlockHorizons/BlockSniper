@@ -16,14 +16,36 @@ commands:
     clone-not-found: "Dat kloon-type kon niet gevonden worden."
     name-not-set: "Er is geen naam gegeven."
     template-not-existing: "Er bestaat geen template met die naam."
+    preset-already-exists: "Die voorinstellingen bestaan al."
+    preset-doesnt-exist: "Die voorinstellingen bestaan niet."
   succeed:
     default: "Afvuren van vorm geslaagd."
     undo: "Terugdraaien van vorige modificatie geslaagd."
     language: "Taal veranderen is geslaagd."
     paste: "Kloon plakken is geslaagd."
     clone: "Het kopieëren van de zone is geslaagd."
+    brush:
+      reset: "Het resetten van de de verf is geslaagd."
+    preset:
+      name: "Voorinstellingen maken gestart. Type een naam in de chat,"
+      cancel: "of type 'cancel' om het proces te stoppen."
+      canceled: "Voorinstellingen maken afgebroken."
 
 brushwand:
   disable: "Verfstaf is uitgeschakeld."
   enable: "Verfstaf is ingeschakeld."
+
+brush:
+  shape: "Vorm: "
+  type: "Type: "
+  blocks: "Blokken: "
+  size: "Grootte: "
+  perfect: "Perfect: "
+  obsolete: "Vervangen: "
+  height: "Hoogte: "
+  gravity: "Zwaartekracht: "
+  decrement: "Verkleinend: "
+  biome: "Biome: "
+  hollow: "Hol: "
+  preset: "Voorinstelling: "
 ...

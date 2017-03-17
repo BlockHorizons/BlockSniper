@@ -2,6 +2,7 @@
 
 namespace Sandertv\BlockSniper\brush\types;
 
+use pocketmine\block\Flowable;
 use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
@@ -12,17 +13,11 @@ use Sandertv\BlockSniper\Loader;
 
 class FlattenType extends BaseType {
 	
-	public $level;
-	public $blocks;
-	public $player;
-	public $center;
-	
 	public function __construct(Loader $main, Player $player, Level $level, array $blocks = []) {
 		parent::__construct($main);
 		$this->level = $level;
 		$this->blocks = $blocks;
 		$this->center = $player->getTargetBlock(100);
-		
 		$this->player = $player;
 	}
 	
@@ -33,7 +28,7 @@ class FlattenType extends BaseType {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			$randomBlock = Brush::$brush[$this->player->getId()]["blocks"][array_rand(Brush::$brush[$this->player->getId()]["blocks"])];
-			if($block->getId() === Item::AIR && $block->y <= $this->center->y) {
+			if(($block->getId() === Item::AIR || $block instanceof Flowable) && $block->y <= $this->center->y) {
 				if($block->getId() !== $randomBlock->getId()) {
 					$undoBlocks[] = $block;
 				}
@@ -50,10 +45,6 @@ class FlattenType extends BaseType {
 	
 	public function getPermission(): string {
 		return "blocksniper.type.flatten";
-	}
-	
-	public function getApproximateBlocks(): int {
-		// TODO
 	}
 	
 	public function getLevel(): Level {

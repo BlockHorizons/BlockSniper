@@ -4,7 +4,6 @@ namespace Sandertv\BlockSniper\brush\shapes;
 
 use pocketmine\level\Level;
 use pocketmine\level\Position;
-use pocketmine\math\Math;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 use Sandertv\BlockSniper\brush\BaseShape;
@@ -13,17 +12,13 @@ use Sandertv\BlockSniper\Loader;
 
 class SphereShape extends BaseShape {
 	
-	public $level;
-	public $radius;
-	public $center;
-	public $player;
-	
-	public function __construct(Loader $main, Player $player, Level $level, float $radius = null, Position $center = null) {
+	public function __construct(Loader $main, Player $player, Level $level, int $radius = null, Position $center = null, bool $hollow = false) {
 		parent::__construct($main);
 		$this->level = $level;
 		$this->radius = $radius;
 		$this->center = $center;
 		$this->player = $player;
+		$this->hollow = $hollow;
 	}
 	
 	/**
@@ -37,12 +32,12 @@ class SphereShape extends BaseShape {
 		$targetY = $this->center->y;
 		$targetZ = $this->center->z;
 		
-		$minX = Math::floorFloat($targetX - $this->radius);
-		$maxX = Math::floorFloat($targetX + $this->radius) + 1;
-		$minY = max(Math::floorFloat($targetY - $this->radius), 0);
-		$maxY = min(Math::floorFloat($targetY + $this->radius) + 1, BaseShape::MAX_WORLD_HEIGHT);
-		$minZ = Math::floorFloat($targetZ - $this->radius);
-		$maxZ = Math::floorFloat($targetZ + $this->radius) + 1;
+		$minX = $targetX - $this->radius;
+		$minZ = $targetZ - $this->radius;
+		$minY = $targetY - $this->radius;
+		$maxX = $targetX + $this->radius;
+		$maxZ = $targetZ + $this->radius;
+		$maxY = $targetY + $this->radius;
 		
 		$blocksInside = [];
 		
@@ -53,6 +48,11 @@ class SphereShape extends BaseShape {
 				for($z = $maxZ; $z >= $minZ; $z--) {
 					$zs = ($targetZ - $z) * ($targetZ - $z);
 					if($xs + $ys + $zs < $radiusSquared) {
+						if($this->hollow === true) {
+							if($y !== $maxY && $y !== $minY && ($xs + $ys + $zs) < $radiusSquared - 3 - $this->radius / 0.5) {
+								continue;
+							}
+						}
 						if(Brush::getGravity($this->player) === true || Brush::getGravity($this->player) === 1) {
 							$gravityY = ($this->level->getHighestBlockAt($x, $z) + 1) <= $maxY ? $this->level->getHighestBlockAt($x, $z) + 1 : $y;
 						}
@@ -77,31 +77,8 @@ class SphereShape extends BaseShape {
 		return "blocksniper.shape.sphere";
 	}
 	
-	public function getApproximateBlocks(): int {
-		// TODO
-	}
-	
-	public function getRadius(): float {
-		return $this->radius;
-	}
-	
-	public function setRadius(float $radius) {
-		$this->radius = $radius;
-	}
-	
-	public function getCenter(): Position {
-		return $this->center;
-	}
-	
-	public function setCenter(Position $center) {
-		$this->center = $center;
-	}
-	
-	public function getBlocks(): array {
-		return $this->blocks;
-	}
-	
-	public function setBlocks(array $blocks) {
-		$this->blocks = $blocks;
+	public function getApproximateProcessedBlocks(): int {
+		$blockCount = 4 / 3 * M_PI * pow($this->radius, 3);
+		return $blockCount;
 	}
 }

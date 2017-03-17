@@ -2,6 +2,13 @@
 
 namespace Sandertv\BlockSniper\brush;
 
+use pocketmine\level\Level;
+use pocketmine\level\Position;
+use pocketmine\Player;
+use Sandertv\BlockSniper\brush\shapes\CubeShape;
+use Sandertv\BlockSniper\brush\shapes\CuboidShape;
+use Sandertv\BlockSniper\brush\shapes\CylinderShape;
+use Sandertv\BlockSniper\brush\shapes\SphereShape;
 use Sandertv\BlockSniper\Loader;
 
 abstract class BaseShape {
@@ -13,6 +20,15 @@ abstract class BaseShape {
 	const SHAPE_CUBE = 1;
 	const SHAPE_CYLINDER = 2;
 	const SHAPE_CUBOID = 3;
+	
+	public $level;
+	public $player;
+	public $main;
+	protected $width;
+	protected $radius;
+	protected $center;
+	protected $hollow;
+	protected $height;
 	
 	public function __construct(Loader $main) {
 		$this->main = $main;
@@ -58,7 +74,81 @@ abstract class BaseShape {
 	
 	public abstract function getBlocksInside(): array;
 	
+	public abstract function getApproximateProcessedBlocks(): int;
+	
 	public function getMain(): Loader {
 		return $this->main;
+	}
+	
+	/**
+	 * Returns the level the shape is made in.
+	 *
+	 * @return Level
+	 */
+	public function getLevel(): Level {
+		return $this->level;
+	}
+	
+	/**
+	 * Returns the player that made the shape.
+	 *
+	 * @return Player
+	 */
+	public function getPlayer(): Player {
+		return $this->player;
+	}
+	
+	/**
+	 * Returns the width in case of a CubeShape or CuboidShape.
+	 *
+	 * @return float
+	 */
+	public function getWidth(): float {
+		if($this instanceof CubeShape || $this instanceof CuboidShape) {
+			return $this->width;
+		}
+		return null;
+	}
+	
+	/**
+	 * Returns the radius in case of a SphereShape or CylinderShape.
+	 *
+	 * @return float|null
+	 */
+	public function getRadius(): int {
+		if($this instanceof SphereShape || $this instanceof CylinderShape) {
+			return $this->radius;
+		}
+		return null;
+	}
+	
+	/**
+	 * Returns the center of the shape made, or the target block.
+	 *
+	 * @return Position
+	 */
+	public function getCenter(): Position {
+		return $this->center;
+	}
+	
+	/**
+	 * Returns true if the shape is hollow, false if it is not.
+	 *
+	 * @return bool
+	 */
+	public function getHollow(): bool {
+		return $this->hollow;
+	}
+	
+	/**
+	 * Returns the height in case of a CylinderShape or CuboidShape.
+	 *
+	 * @return int|null
+	 */
+	public function getHeight(): int {
+		if($this instanceof CylinderShape || $this instanceof CuboidShape) {
+			return $this->height;
+		}
+		return null;
 	}
 }

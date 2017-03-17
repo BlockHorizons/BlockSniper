@@ -2,7 +2,6 @@
 
 namespace Sandertv\BlockSniper\data;
 
-use pocketmine\utils\Config;
 use Sandertv\BlockSniper\Loader;
 
 class ConfigData {
@@ -15,13 +14,6 @@ class ConfigData {
 		$this->collectSettings();
 	}
 	
-	/**
-	 * @return Loader
-	 */
-	public function getOwner(): Loader {
-		return $this->plugin;
-	}
-	
 	public function collectSettings() {
 		$cfg = yaml_parse_file($this->getOwner()->getDataFolder() . "settings.yml");
 		$this->settings = [
@@ -29,8 +21,16 @@ class ConfigData {
 			"Brush-Item" => $cfg["Brush-Item"],
 			"Maximum-Radius" => $cfg["Maximum-Radius"],
 			"Maximum-Undo-Stores" => $cfg["Maximum-Undo-Stores"],
-			"Reset-Decrement-Brush" => $cfg["Reset-Decrement-Brush"]
+			"Reset-Decrement-Brush" => $cfg["Reset-Decrement-Brush"],
+			"Maximum-Clone-Size" => $cfg["Maximum-Clone-Size"]
 		];
+	}
+	
+	/**
+	 * @return Loader
+	 */
+	public function getOwner(): Loader {
+		return $this->plugin;
 	}
 	
 	/**

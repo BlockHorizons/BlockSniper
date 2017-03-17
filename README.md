@@ -2,7 +2,7 @@
 An innovative world editing tool, made for PocketMine-MP: An MCPE server software written in PHP. Worlds can be easily edited using a Golden Carrot, which is used as brush. Find more information about BlockSniper and on how to use it at the [Wiki](https://github.com/Sandertv/BlockSniper/wiki).
 
 > Third party versions, forks or spoons of PocketMine are **not** supported.
->
+> 
 > Issues related to other server softwares will be closed immediately.
 
 ## Installation

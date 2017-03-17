@@ -1,4 +1,4 @@
-# Russian translations, by infomcpe.
+# Russian translations, by infomcpe.ru
 # Russian:
 ---
 commands:
@@ -13,16 +13,38 @@ commands:
     no-modifications: "Не найдено модификаций чтобы отметить."
     paste-not-found: "Такой тип вставки не может быть выполнен."
     clone-not-found: "Такой тип копирования не модет быть выполнен."
-    name-not-set: "No valid name has been given."
-    template-not-existing: "A template with that name does not exist."
+    name-not-set: "Не указано действительное имя."
+    template-not-existing: "Шаблон с этим именем не существует."
+    preset-already-exists: "Этот предустановка уже существует."
+    preset-doesnt-exist: "Предустановка не найдена."
   succeed:
     default: "Успешно создано."
     undo: "Успешно удалена последния модификациия"
     language: "Смена языка удалась."
     paste: "Установка скопированой территории удалась."
     clone: "Територия была скопирована успешно."
+    brush:
+      reset: "Кисть успешно сброшена."
+    preset:
+      name: "Запустился процесс создания предустановки. Введите имя в чате,"
+      cancel: "или введите «cancel», чтобы отменить процесс."
+      canceled: "Создание предустановки отменено."
 
 brushwand:
   disable: "Brushwand Отключен"
   enable: "Brushwand Включён."
+
+brush:
+  shape: "Форма: "
+  type: "Тип: "
+  blocks: "Блоки: "
+  size: "Размер: "
+  perfect: "Отлично: "
+  obsolete: "Устарел: "
+  height: "Высота: "
+  gravity: "Сила тяжести: "
+  decrement: "Уменьшение: "
+  biome: "Биом: "
+  hollow: "Полый: "
+  preset: "Предустановка: "
 ...

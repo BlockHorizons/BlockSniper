@@ -12,19 +12,14 @@ use Sandertv\BlockSniper\Loader;
 
 class CuboidShape extends BaseShape {
 	
-	public $level;
-	public $width;
-	public $height;
-	public $center;
-	public $player;
-	
-	public function __construct(Loader $main, Player $player, Level $level, float $width = null, Position $center = null) {
+	public function __construct(Loader $main, Player $player, Level $level, int $width = null, Position $center = null, bool $hollow = false) {
 		parent::__construct($main);
 		$this->level = $level;
 		$this->width = $width;
 		$this->height = Brush::getHeight($player);
 		$this->center = $center;
 		$this->player = $player;
+		$this->hollow = $hollow;
 	}
 	
 	/**
@@ -47,6 +42,11 @@ class CuboidShape extends BaseShape {
 		for($x = $minX; $x <= $maxX; $x++) {
 			for($y = $minY; $y <= $maxY; $y++) {
 				for($z = $minZ; $z <= $maxZ; $z++) {
+					if($this->hollow === true) {
+						if($x !== $maxX && $x !== $minX && $y !== $maxY && $y !== $minY && $z !== $maxZ && $z !== $minZ) {
+							continue;
+						}
+					}
 					if(Brush::getGravity($this->player) === true || Brush::getGravity($this->player) === 1) {
 						$gravityY = ($this->level->getHighestBlockAt($x, $z) + 1) <= $maxY ? $this->level->getHighestBlockAt($x, $z) + 1 : $y;
 					}
@@ -70,15 +70,8 @@ class CuboidShape extends BaseShape {
 		return "blocksniper.shape.cuboid";
 	}
 	
-	public function getApproximateBlocks(): int {
-		// TODO
-	}
-	
-	public function getCenter(): Position {
-		return $this->center;
-	}
-	
-	public function setCenter(Position $center) {
-		$this->center = $center;
+	public function getApproximateProcessedBlocks(): int {
+		$blockCount = abs(($this->center->x - $this->width) - ($this->center->x + $this->width)) * abs(($this->center->z - $this->width) - ($this->center->z + $this->width)) * abs(($this->center->y - $this->height) - ($this->center->y + $this->height));
+		return $blockCount;
 	}
 }

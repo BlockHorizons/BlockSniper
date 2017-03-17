@@ -11,17 +11,11 @@ use Sandertv\BlockSniper\Loader;
 
 class LayerType extends BaseType {
 	
-	public $player;
-	public $level;
-	public $center;
-	public $blocks;
-	
 	public function __construct(Loader $main, Player $player, Level $level, array $blocks = []) {
 		parent::__construct($main);
 		$this->level = $level;
 		$this->center = $player->getTargetBlock(100);
 		$this->blocks = $blocks;
-		
 		$this->player = $player;
 	}
 	
@@ -47,10 +41,6 @@ class LayerType extends BaseType {
 	
 	public function getPermission(): string {
 		return "blocksniper.type.layer";
-	}
-	
-	public function getApproximateBlocks(): int {
-		// TODO
 	}
 	
 	public function getLevel(): Level {

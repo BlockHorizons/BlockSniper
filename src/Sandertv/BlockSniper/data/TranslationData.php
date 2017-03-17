@@ -16,17 +16,11 @@ class TranslationData {
 	}
 	
 	/**
-	 * @return Loader
-	 */
-	public function getOwner(): Loader {
-		return $this->plugin;
-	}
-	
-	/**
 	 * @return bool
 	 */
 	public function collectTranslations(): bool {
 		$languageSelected = false;
+		$language = [];
 		foreach($this->getOwner()->availableLanguages as $availableLanguage) {
 			if($this->getOwner()->getSettings()->get("Message-Language") === $availableLanguage) {
 				$this->getOwner()->saveResource("languages/" . $availableLanguage . ".yml");
@@ -37,7 +31,7 @@ class TranslationData {
 		}
 		if(!$languageSelected) {
 			$this->getOwner()->saveResource("languages/en.yml");
-			$language = yaml_parse_file($this->getOwner()->getDataFolder() ."languages/en.yml");
+			$language = yaml_parse_file($this->getOwner()->getDataFolder() . "languages/en.yml");
 		}
 		
 		// This is going to burn your eyes. Don't look at it for too long.
@@ -54,14 +48,40 @@ class TranslationData {
 			"commands.errors.clone-not-found" => $language["commands"]["errors"]["clone-not-found"],
 			"commands.errors.name-not-set" => $language["commands"]["errors"]["name-not-set"],
 			"commands.errors.template-not-existing" => $language["commands"]["errors"]["template-not-existing"],
+			"commands.errors.preset-already-exists" => $language["commands"]["errors"]["preset-already-exists"],
+			"commands.errors.preset-doesnt-exist" => $language["commands"]["errors"]["preset-doesnt-exist"],
 			
 			"commands.succeed.default" => $language["commands"]["succeed"]["default"],
 			"commands.succeed.undo" => $language["commands"]["succeed"]["undo"],
 			"commands.succeed.language" => $language["commands"]["succeed"]["language"],
 			"commands.succeed.paste" => $language["commands"]["succeed"]["paste"],
 			"commands.succeed.clone" => $language["commands"]["succeed"]["clone"],
+			"commands.succeed.brush.reset" => $language["commands"]["succeed"]["brush"]["reset"],
+			"commands.succeed.preset.name" => $language["commands"]["succeed"]["preset"]["name"],
+			"commands.succeed.preset.cancel" => $language["commands"]["succeed"]["preset"]["cancel"],
+			"commands.succeed.preset.canceled" => $language["commands"]["succeed"]["preset"]["canceled"],
+			
+			"brush.shape" => $language["brush"]["shape"],
+			"brush.type" => $language["brush"]["type"],
+			"brush.blocks" => $language["brush"]["blocks"],
+			"brush.size" => $language["brush"]["size"],
+			"brush.perfect" => $language["brush"]["perfect"],
+			"brush.obsolete" => $language["brush"]["obsolete"],
+			"brush.height" => $language["brush"]["height"],
+			"brush.gravity" => $language["brush"]["gravity"],
+			"brush.decrement" => $language["brush"]["decrement"],
+			"brush.biome" => $language["brush"]["biome"],
+			"brush.hollow" => $language["brush"]["hollow"],
+			"brush.preset" => $language["brush"]["preset"]
 		];
 		return ($languageSelected ? true : false);
+	}
+	
+	/**
+	 * @return Loader
+	 */
+	public function getOwner(): Loader {
+		return $this->plugin;
 	}
 	
 	/**
