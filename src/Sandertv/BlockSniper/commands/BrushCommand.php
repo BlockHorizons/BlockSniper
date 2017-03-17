@@ -30,7 +30,7 @@ class BrushCommand extends BaseCommand {
 			return true;
 		}
 		
-		if(count($args) !== 2 && strtolower($args[0]) !== "reset"  && strtolower($args[0]) !== "re") {
+		if(count($args) !== 2 && strtolower($args[0]) !== "reset" && strtolower($args[0]) !== "re" && strtolower($args[1]) !== "delete") {
 			$sender->sendMessage(TF::RED . "[Usage] /brush <parameter> <value>");
 			return true;
 		}
@@ -43,7 +43,8 @@ class BrushCommand extends BaseCommand {
 			case "pr":
 				switch($args[1]) {
 					case "new":
-						if($this->getPlugin()->getPresetManager()->isPreset(strtolower($args[1]))) {
+					case "create":
+						if($this->getPlugin()->getPresetManager()->isPreset($args[1])) {
 							$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.preset-already-exists"));
 							return true;
 						}
@@ -57,13 +58,22 @@ class BrushCommand extends BaseCommand {
 						$sender->sendMessage(TF::GREEN . "--- " . TF::YELLOW . "Preset List" . TF::GREEN . " ---");
 						$sender->sendMessage(TF::AQUA . $presetList);
 						return true;
-						
-					default:
-						if(!$this->getPlugin()->getPresetManager()->isPreset(strtolower($args[1]))) {
+					
+					case "delete":
+						if(!$this->getPlugin()->getPresetManager()->isPreset($args[2])) {
 							$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.preset-doesnt-exist"));
 							return true;
 						}
-						$preset = $this->getPlugin()->getPresetManager()->getPreset(strtolower($args[1]));
+						$this->getPlugin()->getPresetManager()->deletePreset($args[2]);
+						$sender->sendMessage(TF::YELLOW . "Preset " . TF::RED . $args[2] . TF::YELLOW . " has been deleted successfully.");
+						return true;
+						
+					default:
+						if(!$this->getPlugin()->getPresetManager()->isPreset($args[1])) {
+							$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.preset-doesnt-exist"));
+							return true;
+						}
+						$preset = $this->getPlugin()->getPresetManager()->getPreset($args[1]);
 						$preset->apply($sender);
 						$sender->sendMessage(TF::YELLOW . $this->getPlugin()->getTranslation("brush.preset") . TF::BLUE . $preset->name);
 						foreach($preset->getParsedData() as $key => $value) {
