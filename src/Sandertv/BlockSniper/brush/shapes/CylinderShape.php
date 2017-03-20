@@ -61,10 +61,6 @@ class CylinderShape extends BaseShape {
 		return $blocksInside;
 	}
 	
-	public function getLevel(): Level {
-		return $this->level;
-	}
-	
 	public function getName(): string {
 		return "Standing Cylinder";
 	}
@@ -74,7 +70,7 @@ class CylinderShape extends BaseShape {
 	}
 	
 	public function getApproximateProcessedBlocks(): int {
-		$blockCount = $this->radius * $this->radius * M_PI * $this->height;
+		$blockCount = round($this->radius * $this->radius * M_PI * $this->height);
 		return $blockCount;
 	}
 }

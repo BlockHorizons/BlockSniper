@@ -12,7 +12,7 @@ class Preset {
 	private $shape, $type, $size, $hollow, $decrement;
 	private $height, $biome, $obsolete, $blocks;
 	
-	public function __construct(string $name, string $shape = null, string $type = null, bool $decrement = null, int $size = null, bool $hollow = null, array $blocks = null, array $obsolete = null, int $height = null, string $biome = null) {
+	public function __construct(string $name, string $shape = null, string $type = null, bool $decrement = null, bool $perfect = null, int $size = null, bool $hollow = null, array $blocks = null, array $obsolete = null, int $height = null, string $biome = null) {
 		$this->name = $name;
 		
 		$this->shape = $shape;
@@ -20,6 +20,7 @@ class Preset {
 		$this->decrement = $decrement;
 		$this->size = $size;
 		$this->hollow = $hollow;
+		$this->perfect = $perfect;
 		
 		$this->height = $height;
 		$this->biome = $biome;
@@ -62,6 +63,9 @@ class Preset {
 				case "blocks":
 					Brush::setBlocks($player, $value);
 					break;
+				case "perfect":
+					Brush::setPerfect($player, $value);
+					break;
 			}
 		}
 	}
@@ -75,6 +79,7 @@ class Preset {
 		$data["shape"] = $this->shape;
 		$data["type"] = $this->type;
 		$data["decrement"] = $this->decrement;
+		$data["perfect"] = $this->perfect;
 		$data["size"] = $this->size;
 		$data["hollow"] = $this->hollow;
 		$data["blocks"] = $this->blocks;

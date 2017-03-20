@@ -35,6 +35,7 @@ abstract class BaseType {
 	public $level;
 	public $player;
 	public $main;
+	
 	protected $biome;
 	protected $blocks;
 	protected $center;

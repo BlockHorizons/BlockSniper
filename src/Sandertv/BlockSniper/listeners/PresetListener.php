@@ -63,9 +63,18 @@ class PresetListener implements Listener {
 				}
 				$player->sendMessage(TF::GREEN . $this->getOwner()->getTranslation("brush.decrement") . TF::AQUA . $message[0]);
 				$this->getOwner()->getPresetManager()->addToCreationData($player, "decrement", $message[0]);
-				$player->sendMessage(TF::GRAY . $this->getOwner()->getTranslation("brush.size"));
+				$player->sendMessage(TF::GRAY . $this->getOwner()->getTranslation("brush.perfect"));
 				break;
 			case 4:
+				$message[0] = (bool)$message[0];
+				if(!is_bool($message[0])) {
+					return false;
+				}
+				$player->sendMessage(TF::GREEN . $this->getOwner()->getTranslation("brush.perfect") . TF::AQUA . $message[0]);
+				$this->getOwner()->getPresetManager()->addToCreationData($player, "perfect", $message[0]);
+				$player->sendMessage(TF::GRAY . $this->getOwner()->getTranslation("brush.size"));
+				break;
+			case 5:
 				if(!is_numeric($message[0])) {
 					return false;
 				}
@@ -77,7 +86,7 @@ class PresetListener implements Listener {
 				$this->getOwner()->getPresetManager()->addToCreationData($player, "size", $message[0]);
 				$player->sendMessage(TF::GRAY . $this->getOwner()->getTranslation("brush.hollow"));
 				break;
-			case 5:
+			case 6:
 				$message[0] = (bool)$message[0];
 				if(!is_bool($message[0])) {
 					return false;
@@ -86,7 +95,7 @@ class PresetListener implements Listener {
 				$this->getOwner()->getPresetManager()->addToCreationData($player, "hollow", $message[0]);
 				$player->sendMessage(TF::GRAY . $this->getOwner()->getTranslation("brush.height"));
 				break;
-			case 6:
+			case 7:
 				if(!is_numeric($message[0])) {
 					return false;
 				}
@@ -98,17 +107,17 @@ class PresetListener implements Listener {
 				$this->getOwner()->getPresetManager()->addToCreationData($player, "height", $message[0]);
 				$player->sendMessage(TF::GRAY . $this->getOwner()->getTranslation("brush.biome"));
 				break;
-			case 7:
+			case 8:
 				$player->sendMessage(TF::GREEN . $this->getOwner()->getTranslation("brush.biome") . TF::AQUA . $message[0]);
 				$this->getOwner()->getPresetManager()->addToCreationData($player, "biome", strtolower($message[0]));
 				$player->sendMessage(TF::GRAY . $this->getOwner()->getTranslation("brush.obsolete"));
 				break;
-			case 8:
+			case 9:
 				$player->sendMessage(TF::GREEN . $this->getOwner()->getTranslation("brush.obsolete") . TF::AQUA . $message[0]);
 				$this->getOwner()->getPresetManager()->addToCreationData($player, "obsolete", explode(",", strtolower($message[0])));
 				$player->sendMessage(TF::GRAY . $this->getOwner()->getTranslation("brush.blocks"));
 				break;
-			case 9:
+			case 10:
 				$player->sendMessage(TF::GREEN . $this->getOwner()->getTranslation("brush.blocks") . TF::AQUA . $message[0]);
 				$this->getOwner()->getPresetManager()->addToCreationData($player, "blocks", explode(",", strtolower($message[0])));
 				$this->getOwner()->getPresetManager()->parsePresetCreationInfo($player, $this->getOwner()->getPresetManager()->getCreationData($player, "name"));

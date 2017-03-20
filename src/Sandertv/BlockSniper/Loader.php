@@ -20,7 +20,7 @@ use Sandertv\BlockSniper\tasks\UndoDiminishTask;
 
 class Loader extends PluginBase {
 	
-	const VERSION = "1.3.0";
+	const VERSION = "1.3.1";
 	const API_TARGET = "2.0.0 - 3.0.0-ALPHA4";
 	
 	public $undoStore;
@@ -50,9 +50,6 @@ class Loader extends PluginBase {
 	}
 	
 	public function reloadAll() {
-		$this->settings = new ConfigData($this);
-		$this->language = new TranslationData($this);
-		
 		$this->brush = new Brush($this);
 		$this->undoStore = new UndoStorer($this);
 		$this->cloneStore = new CloneStorer($this);
@@ -68,8 +65,10 @@ class Loader extends PluginBase {
 			mkdir($this->getDataFolder() . "languages/");
 		}
 		
+		$this->language = new TranslationData($this);
+		
 		$this->saveResource("settings.yml");
-		$this->settings->collectSettings();
+		$this->settings = new ConfigData($this);
 		
 		if(!$this->language->collectTranslations()) {
 			$this->getLogger()->info(TF::AQUA . "[BlockSniper] No valid language selected, English has been auto-selected.\n" . TF::AQUA . "Please setup a language by using /blocksniper language <lang>.");

@@ -65,10 +65,6 @@ class SphereShape extends BaseShape {
 		return $blocksInside;
 	}
 	
-	public function getLevel(): Level {
-		return $this->level;
-	}
-	
 	public function getName(): string {
 		return "Sphere";
 	}
@@ -78,7 +74,7 @@ class SphereShape extends BaseShape {
 	}
 	
 	public function getApproximateProcessedBlocks(): int {
-		$blockCount = 4 / 3 * M_PI * pow($this->radius, 3);
+		$blockCount = round(4 / 3 * M_PI * pow($this->radius, 3));
 		return $blockCount;
 	}
 }

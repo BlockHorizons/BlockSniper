@@ -58,10 +58,6 @@ class CuboidShape extends BaseShape {
 		return $blocksInside;
 	}
 	
-	public function getLevel(): Level {
-		return $this->level;
-	}
-	
 	public function getName(): string {
 		return "Cuboid";
 	}

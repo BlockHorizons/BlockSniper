@@ -22,14 +22,12 @@ class ChangeBrushPropertiesEvent extends PluginEvent {
 	
 	public static $handlerList = null;
 	
-	public $owner;
 	public $player;
 	public $action;
 	public $value;
 	
 	public function __construct(Loader $owner, Player $player, int $action, $value) {
 		parent::__construct($owner);
-		$this->owner = $owner;
 		$this->player = $player;
 		$this->action = $action;
 		$this->value = $value;

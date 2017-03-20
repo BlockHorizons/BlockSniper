@@ -36,6 +36,7 @@ class PresetManager {
 			$this->data[$name]["shape"],
 			$this->data[$name]["type"],
 			$this->data[$name]["decrement"],
+			$this->data[$name]["perfect"],
 			$this->data[$name]["size"],
 			$this->data[$name]["hollow"],
 			$this->data[$name]["blocks"],

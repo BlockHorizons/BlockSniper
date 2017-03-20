@@ -4,6 +4,7 @@ namespace Sandertv\BlockSniper\brush\types;
 
 use pocketmine\block\Block;
 use pocketmine\level\Level;
+use pocketmine\math\Vector3;
 use pocketmine\Player;
 use Sandertv\BlockSniper\brush\BaseType;
 use Sandertv\BlockSniper\Loader;
@@ -47,7 +48,7 @@ class RaiseType extends BaseType {
 		}
 		foreach($holeBlocks as $selectedBlock) {
 			$undoBlocks[] = $selectedBlock;
-			$this->level->setBlock($selectedBlock, $this->level->getBlock($selectedBlock->subtract(0, 1)), false, false);
+			$this->level->setBlock($selectedBlock, $this->level->getBlock(new Vector3($selectedBlock->x, $selectedBlock->y - 1, $selectedBlock->z)), false, false);
 		}
 		foreach($peakBlocks as $selectedBlock) {
 			$undoBlocks[] = $selectedBlock;

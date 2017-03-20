@@ -24,6 +24,7 @@ abstract class BaseShape {
 	public $level;
 	public $player;
 	public $main;
+	
 	protected $width;
 	protected $radius;
 	protected $center;
@@ -68,12 +69,32 @@ abstract class BaseShape {
 		return true;
 	}
 	
+	/**
+	 * Returns the name of the shape.
+	 *
+	 * @return string
+	 */
 	public abstract function getName(): string;
 	
+	/**
+	 * Returns the permission node connected to the shape.
+	 *
+	 * @return string
+	 */
 	public abstract function getPermission(): string;
 	
+	/**
+	 * Returns all blocks inside of the shape.
+	 *
+	 * @return array
+	 */
 	public abstract function getBlocksInside(): array;
 	
+	/**
+	 * Returns the approximate amount of processed blocks in the shape. This may not be perfectly accurate.
+	 *
+	 * @return int
+	 */
 	public abstract function getApproximateProcessedBlocks(): int;
 	
 	public function getMain(): Loader {

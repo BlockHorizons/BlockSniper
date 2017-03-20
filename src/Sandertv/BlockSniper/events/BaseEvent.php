@@ -7,7 +7,7 @@ use Sandertv\BlockSniper\Loader;
 
 abstract class BaseEvent extends PluginEvent {
 	
-	public $owner;
+	protected $owner;
 	
 	public function __construct(Loader $owner) {
 		parent::__construct($owner);
