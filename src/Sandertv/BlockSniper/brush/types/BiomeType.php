@@ -35,8 +35,4 @@ class BiomeType extends BaseType {
 	public function getPermission(): string {
 		return "blocksniper.type.biome";
 	}
-	
-	public function getLevel(): Level {
-		return $this->level;
-	}
 }

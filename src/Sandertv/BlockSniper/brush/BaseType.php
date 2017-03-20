@@ -31,6 +31,7 @@ abstract class BaseType {
 	const TYPE_MELT = 11;
 	const TYPE_EXPAND = 12;
 	const TYPE_RAISE = 13;
+	const TYPE_TOPLAYER = 14;
 	
 	public $level;
 	public $player;

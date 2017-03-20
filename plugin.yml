@@ -1,6 +1,6 @@
 ---
 name: "BlockSniper"
-version: 1.3.0
+version: 1.3.1
 api: [2.0.0, 2.1.0, 3.0.0-ALPHA1, 3.0.0-ALPHA2, 3.0.0-ALPHA3, 3.0.0-ALPHA4]
 author: "Sandertv"
 main: Sandertv\BlockSniper\Loader
@@ -75,6 +75,9 @@ permissions:
                     blocksniper.type.raise:
                         default: op
                         description: "Allows access to the raise type"
+                    blocksniper.type.toplayer:
+                        default: op
+                        description: "Allows access to the top layer type"
             blocksniper.shape:
                 default: false
                 description: "Allows access to all BlockSniper shapes."

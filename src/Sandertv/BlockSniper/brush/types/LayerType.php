@@ -42,9 +42,5 @@ class LayerType extends BaseType {
 	public function getPermission(): string {
 		return "blocksniper.type.layer";
 	}
-	
-	public function getLevel(): Level {
-		return $this->level;
-	}
 }
 

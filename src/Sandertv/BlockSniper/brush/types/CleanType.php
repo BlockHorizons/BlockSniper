@@ -43,8 +43,4 @@ class CleanType extends BaseType {
 	public function getPermission(): string {
 		return "blocksniper.type.clean";
 	}
-	
-	public function getLevel(): Level {
-		return $this->level;
-	}
 }

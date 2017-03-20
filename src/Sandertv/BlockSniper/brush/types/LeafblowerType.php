@@ -42,8 +42,4 @@ class LeafblowerType extends BaseType {
 	public function getPermission(): string {
 		return "blocksniper.type.leafblower";
 	}
-	
-	public function getLevel(): Level {
-		return $this->level;
-	}
 }

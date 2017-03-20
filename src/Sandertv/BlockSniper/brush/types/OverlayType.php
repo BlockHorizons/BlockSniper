@@ -68,8 +68,4 @@ class OverlayType extends BaseType {
 	public function getPermission(): string {
 		return "blocksniper.type.overlay";
 	}
-	
-	public function getLevel(): Level {
-		return $this->level;
-	}
 }

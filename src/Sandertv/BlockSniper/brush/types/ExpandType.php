@@ -57,9 +57,4 @@ class ExpandType extends BaseType {
 	public function getPermission(): string {
 		return "blocksniper.type.expand";
 	}
-	
-	
-	public function getLevel(): Level {
-		return $this->level;
-	}
 }

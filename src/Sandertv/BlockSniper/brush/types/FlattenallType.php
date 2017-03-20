@@ -2,9 +2,9 @@
 
 namespace Sandertv\BlockSniper\brush\types;
 
-use pocketmine\item\Item;
 use pocketmine\block\Block;
 use pocketmine\block\Flowable;
+use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
@@ -50,9 +50,5 @@ class FlattenallType extends BaseType {
 	
 	public function getPermission(): string {
 		return "blocksniper.type.flattenall";
-	}
-	
-	public function getLevel(): Level {
-		return $this->level;
 	}
 }

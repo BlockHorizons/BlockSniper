@@ -46,9 +46,5 @@ class ReplaceType extends BaseType {
 	public function getPermission(): string {
 		return "blocksniper.type.replace";
 	}
-	
-	public function getLevel(): Level {
-		return $this->level;
-	}
 }
 

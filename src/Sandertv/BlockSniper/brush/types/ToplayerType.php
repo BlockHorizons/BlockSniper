@@ -5,11 +5,13 @@ namespace Sandertv\BlockSniper\brush\types;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\level\Level;
+use pocketmine\math\Vector3;
 use pocketmine\Player;
 use Sandertv\BlockSniper\brush\BaseType;
+use Sandertv\BlockSniper\brush\Brush;
 use Sandertv\BlockSniper\Loader;
 
-class MeltType extends BaseType {
+class ToplayerType extends BaseType {
 	
 	public function __construct(Loader $main, Player $player, Level $level, array $blocks = []) {
 		parent::__construct($main);
@@ -25,38 +27,24 @@ class MeltType extends BaseType {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			if($block->getId() !== Item::AIR) {
-				$directions = [
-					$block->getSide(Block::SIDE_DOWN),
-					$block->getSide(Block::SIDE_UP),
-					$block->getSide(Block::SIDE_NORTH),
-					$block->getSide(Block::SIDE_SOUTH),
-					$block->getSide(Block::SIDE_WEST),
-					$block->getSide(Block::SIDE_EAST)
-				];
-				
-				$valid = 0;
-				foreach($directions as $direction) {
-					if($this->level->getBlock($direction)->getId() === Item::AIR) {
-						$valid++;
+				if($block->getSide(Block::SIDE_UP)->getId() === Item::AIR) {
+					$randomBlock = Brush::$brush[$this->player->getId()]["blocks"][array_rand(Brush::$brush[$this->player->getId()]["blocks"])];
+					for($y = $block->y; $y >= $block->y - Brush::getHeight($this->player); $y--) {
+						$undoBlocks[] = $this->level->getBlock(new Vector3($block->x, $y, $block->z));
+						$this->level->setBlock(new Vector3($block->x, $y, $block->z), $randomBlock, false, false);
 					}
 				}
-				if($valid >= 3) {
-					$undoBlocks[] = $block;
-				}
 			}
-		}
-		foreach($undoBlocks as $selectedBlock) {
-			$this->level->setBlock($selectedBlock, Block::get(Block::AIR), false, false);
 		}
 		$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
 		return true;
 	}
 	
 	public function getName(): string {
-		return "Melt";
+		return "Top Layer";
 	}
 	
 	public function getPermission(): string {
-		return "blocksniper.type.melt";
+		return "blocksniper.type.toplayer";
 	}
 }

@@ -37,8 +37,4 @@ class CleanentitiesType extends BaseType {
 	public function getPermission(): string {
 		return "blocksniper.type.cleanentities";
 	}
-	
-	public function getLevel(): Level {
-		return $this->level;
-	}
 }

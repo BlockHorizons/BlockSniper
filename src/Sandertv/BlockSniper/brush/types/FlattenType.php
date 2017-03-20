@@ -46,8 +46,4 @@ class FlattenType extends BaseType {
 	public function getPermission(): string {
 		return "blocksniper.type.flatten";
 	}
-	
-	public function getLevel(): Level {
-		return $this->level;
-	}
 }

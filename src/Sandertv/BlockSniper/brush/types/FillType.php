@@ -39,8 +39,4 @@ class FillType extends BaseType {
 	public function getPermission(): string {
 		return "blocksniper.type.fill";
 	}
-	
-	public function getLevel(): Level {
-		return $this->level;
-	}
 }
