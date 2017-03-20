@@ -41,6 +41,7 @@ class Loader extends PluginBase {
 	public $language;
 	
 	public function onEnable() {
+		
 		$this->reloadAll();
 		
 		$this->registerCommands();
@@ -50,6 +51,12 @@ class Loader extends PluginBase {
 	}
 	
 	public function reloadAll() {
+		
+		$this->saveResource("settings.yml");
+		$this->settings = new ConfigData($this);
+		
+		$this->language = new TranslationData($this);
+		
 		$this->brush = new Brush($this);
 		$this->undoStore = new UndoStorer($this);
 		$this->cloneStore = new CloneStorer($this);
@@ -64,11 +71,6 @@ class Loader extends PluginBase {
 		if(!is_dir($this->getDataFolder() . "languages/")) {
 			mkdir($this->getDataFolder() . "languages/");
 		}
-		
-		$this->language = new TranslationData($this);
-		
-		$this->saveResource("settings.yml");
-		$this->settings = new ConfigData($this);
 		
 		if(!$this->language->collectTranslations()) {
 			$this->getLogger()->info(TF::AQUA . "[BlockSniper] No valid language selected, English has been auto-selected.\n" . TF::AQUA . "Please setup a language by using /blocksniper language <lang>.");
