@@ -9,6 +9,9 @@ use Sandertv\BlockSniper\Loader;
 
 class CleanentitiesType extends BaseType {
 	
+	/*
+	 * Clears all entities within the brush radius.
+	 */
 	public function __construct(Loader $main, Player $player, Level $level, array $blocks) {
 		parent::__construct($main);
 		$this->level = $level;

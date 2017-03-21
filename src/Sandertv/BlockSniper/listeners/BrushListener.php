@@ -12,7 +12,7 @@ use Sandertv\BlockSniper\Loader;
 
 class BrushListener implements Listener {
 	
-	public $owner;
+	private $owner;
 	
 	public function __construct(Loader $owner) {
 		$this->owner = $owner;

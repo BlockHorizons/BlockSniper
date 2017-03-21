@@ -12,6 +12,9 @@ use Sandertv\BlockSniper\Loader;
 
 class OverlayType extends BaseType {
 	
+	/*
+	 * Lays a layer of blocks over every block within the brush radius.
+	 */
 	public function __construct(Loader $main, Player $player, Level $level, array $blocks = []) {
 		parent::__construct($main);
 		$this->level = $level;

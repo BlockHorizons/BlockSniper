@@ -11,6 +11,9 @@ use Sandertv\BlockSniper\Loader;
 
 class RaiseType extends BaseType {
 	
+	/*
+	 * Raises the terrain by one block within the brush radius.
+	 */
 	public function __construct(Loader $main, Player $player, Level $level, array $blocks) {
 		parent::__construct($main);
 		$this->level = $level;

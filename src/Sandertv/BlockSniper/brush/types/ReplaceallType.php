@@ -2,6 +2,8 @@
 
 namespace Sandertv\BlockSniper\brush\types;
 
+use pocketmine\block\Block;
+use pocketmine\block\Flowable;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
@@ -9,10 +11,10 @@ use Sandertv\BlockSniper\brush\BaseType;
 use Sandertv\BlockSniper\brush\Brush;
 use Sandertv\BlockSniper\Loader;
 
-class FillType extends BaseType {
+class ReplaceallType extends BaseType {
 	
 	/*
-	 * Places blocks on every location within the brush radius.
+	 * Replaces every solid block within the brush radius.
 	 */
 	public function __construct(Loader $main, Player $player, Level $level, array $blocks) {
 		parent::__construct($main);
@@ -27,19 +29,21 @@ class FillType extends BaseType {
 	public function fillShape(): bool {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
-			$randomBlock = Brush::$brush[$this->player->getId()]["blocks"][array_rand(Brush::$brush[$this->player->getId()]["blocks"])];
-			$undoBlocks[] = $block;
-			$this->level->setBlock(new Vector3($block->x, $block->y, $block->z), $randomBlock, false, false);
+			if($block->getId() !== Block::AIR && !$block instanceof Flowable) {
+				$randomBlock = Brush::$brush[$this->player->getId()]["blocks"][array_rand(Brush::$brush[$this->player->getId()]["blocks"])];
+				$undoBlocks[] = $block;
+				$this->level->setBlock(new Vector3($block->x, $block->y, $block->z), $randomBlock, false, false);
+			}
 		}
 		$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
 		return true;
 	}
 	
 	public function getName(): string {
-		return "Fill";
+		return "Replace All";
 	}
 	
 	public function getPermission(): string {
-		return "blocksniper.type.fill";
+		return "blocksniper.type.replaceall";
 	}
 }

@@ -11,6 +11,9 @@ use Sandertv\BlockSniper\Loader;
 
 class CleanType extends BaseType {
 	
+	/*
+	 * Removes all non-natural blocks within the brush radius.
+	 */
 	public function __construct(Loader $main, Player $player, Level $level, array $blocks) {
 		parent::__construct($main);
 		$this->level = $level;

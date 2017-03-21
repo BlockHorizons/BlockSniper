@@ -10,9 +10,9 @@ use Sandertv\BlockSniper\Loader;
 
 class CloneStorer {
 	
-	public $copyStore = [];
-	public $originalCenter = null;
-	public $target = null;
+	private $copyStore = [];
+	private $originalCenter = null;
+	private $target = null;
 	
 	public function __construct(Loader $owner) {
 		$this->owner = $owner;

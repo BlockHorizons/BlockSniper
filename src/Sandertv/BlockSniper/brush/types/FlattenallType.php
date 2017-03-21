@@ -14,6 +14,9 @@ use Sandertv\BlockSniper\Loader;
 
 class FlattenallType extends BaseType {
 	
+	/*
+	 * Flattens the terrain below the selected point and removes the blocks above it within the brush radius.
+	 */
 	public function __construct(Loader $main, Player $player, Level $level, array $blocks = []) {
 		parent::__construct($main);
 		$this->level = $level;

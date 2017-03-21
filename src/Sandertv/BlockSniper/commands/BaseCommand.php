@@ -6,11 +6,12 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\utils\TextFormat as TF;
+use Sandertv\BlockSniper\data\ConfigData;
 use Sandertv\BlockSniper\Loader;
 
 abstract class BaseCommand extends Command implements PluginIdentifiableCommand {
 	
-	public $owner;
+	protected $owner;
 	
 	public function __construct(Loader $owner, $name, $description = "", $usageMessage = null, array $aliases = []) {
 		parent::__construct($name, $description, $usageMessage, $aliases);
@@ -32,11 +33,17 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand 
 		return $this->owner;
 	}
 	
+	/**
+	 * @param CommandSender $sender
+	 */
 	public function sendNoPermission(CommandSender $sender) {
 		$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.no-permission"));
 	}
 	
-	public function getSettings() {
+	/**
+	 * @return ConfigData
+	 */
+	public function getSettings(): ConfigData {
 		return $this->getPlugin()->getSettings();
 	}
 }

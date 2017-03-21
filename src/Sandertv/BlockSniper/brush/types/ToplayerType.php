@@ -13,6 +13,9 @@ use Sandertv\BlockSniper\Loader;
 
 class ToplayerType extends BaseType {
 	
+	/*
+	 * Replaces the top layer of the terrain, thickness depending on brush height, within the brush radius.
+	 */
 	public function __construct(Loader $main, Player $player, Level $level, array $blocks = []) {
 		parent::__construct($main);
 		$this->level = $level;

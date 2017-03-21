@@ -7,9 +7,9 @@ use pocketmine\math\Vector3;
 
 class UndoStorer {
 	
-	public $totalStores;
-	public $undoStore = [];
-	public $lastUndo;
+	private $totalStores;
+	private $undoStore = [];
+	private $lastUndo;
 	
 	public function __construct(Loader $owner) {
 		$this->owner = $owner;

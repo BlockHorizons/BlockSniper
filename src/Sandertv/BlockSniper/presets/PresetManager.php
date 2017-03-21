@@ -8,8 +8,8 @@ use Sandertv\BlockSniper\Loader;
 
 class PresetManager {
 	
-	public $main;
 	public $presetCreation = [];
+	private $main;
 	private $data;
 	private $preset;
 	

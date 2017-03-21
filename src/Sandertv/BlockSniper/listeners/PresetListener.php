@@ -11,7 +11,7 @@ use Sandertv\BlockSniper\Loader;
 
 class PresetListener implements Listener {
 	
-	public $main;
+	private $main;
 	
 	public function __construct(Loader $main) {
 		$this->main = $main;

@@ -78,7 +78,11 @@ class BrushCommand extends BaseCommand {
 						$sender->sendMessage(TF::YELLOW . $this->getPlugin()->getTranslation("brush.preset") . TF::BLUE . $preset->name);
 						foreach($preset->getParsedData() as $key => $value) {
 							if($value !== null && $key !== "name") {
-								$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("brush." . $key) . TF::AQUA . $value);
+								if(is_array($value)) {
+									$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("brush" . $key) . TF::AQUA . implode(", ", $value));
+								} else {
+									$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("brush." . $key) . TF::AQUA . $value);
+								}
 							}
 						}
 						return true;

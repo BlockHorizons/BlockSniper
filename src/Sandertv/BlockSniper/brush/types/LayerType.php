@@ -11,6 +11,9 @@ use Sandertv\BlockSniper\Loader;
 
 class LayerType extends BaseType {
 	
+	/*
+	 * Lays a thin layer of blocks within the brush radius.
+	 */
 	public function __construct(Loader $main, Player $player, Level $level, array $blocks = []) {
 		parent::__construct($main);
 		$this->level = $level;

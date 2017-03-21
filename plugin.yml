@@ -78,6 +78,9 @@ permissions:
                     blocksniper.type.toplayer:
                         default: op
                         description: "Allows access to the top layer type"
+                    blocksniper.type.replaceall:
+                        default: op
+                        description: "Allows access to the replace all type"
             blocksniper.shape:
                 default: false
                 description: "Allows access to all BlockSniper shapes."
