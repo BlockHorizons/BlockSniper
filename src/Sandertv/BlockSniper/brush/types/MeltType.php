@@ -12,7 +12,7 @@ use Sandertv\BlockSniper\Loader;
 class MeltType extends BaseType {
 	
 	/*
-	 * Melts away every block with more than 3 open sides within the brush radius.
+	 * Melts away every block with more than 2 open sides within the brush radius.
 	 */
 	public function __construct(Loader $main, Player $player, Level $level, array $blocks = []) {
 		parent::__construct($main);
@@ -43,7 +43,7 @@ class MeltType extends BaseType {
 						$valid++;
 					}
 				}
-				if($valid >= 3) {
+				if($valid >= 2) {
 					$undoBlocks[] = $block;
 				}
 			}

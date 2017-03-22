@@ -3,6 +3,7 @@
 namespace Sandertv\BlockSniper\brush\types;
 
 use pocketmine\block\Block;
+use pocketmine\block\Flowable;
 use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
@@ -29,8 +30,8 @@ class ToplayerType extends BaseType {
 	public function fillShape(): bool {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
-			if($block->getId() !== Item::AIR) {
-				if($block->getSide(Block::SIDE_UP)->getId() === Item::AIR) {
+			if($block->getId() !== Item::AIR && !$block instanceof Flowable) {
+				if($block->getSide(Block::SIDE_UP)->getId() === Item::AIR || $block->getSide(Block::SIDE_UP) instanceof Flowable) {
 					$randomBlock = Brush::$brush[$this->player->getId()]["blocks"][array_rand(Brush::$brush[$this->player->getId()]["blocks"])];
 					for($y = $block->y; $y >= $block->y - Brush::getHeight($this->player); $y--) {
 						$undoBlocks[] = $this->level->getBlock(new Vector3($block->x, $y, $block->z));
