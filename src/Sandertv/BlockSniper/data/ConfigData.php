@@ -6,7 +6,8 @@ use Sandertv\BlockSniper\Loader;
 
 class ConfigData {
 	
-	public $settings = [];
+	private $settings = [];
+	private $plugin;
 	
 	public function __construct(Loader $plugin) {
 		$this->plugin = $plugin;
@@ -43,5 +44,17 @@ class ConfigData {
 			return $this->settings[$key];
 		}
 		return null;
+	}
+	
+	/**
+	 * @param string $key
+	 * @param        $value
+	 */
+	public function set(string $key, $value) {
+		$this->settings[$key] = $value;
+	}
+	
+	public function save() {
+		yaml_emit_file($this->plugin->getDataFolder() . "settings.yml", $this->settings);
 	}
 }

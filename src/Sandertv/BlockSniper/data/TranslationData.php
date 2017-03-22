@@ -6,8 +6,8 @@ use Sandertv\BlockSniper\Loader;
 
 class TranslationData {
 	
-	public $messages = [];
-	public $plugin;
+	private $messages = [];
+	private $plugin;
 	
 	public function __construct(Loader $plugin) {
 		$this->plugin = $plugin;

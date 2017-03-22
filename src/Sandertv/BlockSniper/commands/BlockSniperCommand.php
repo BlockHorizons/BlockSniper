@@ -10,7 +10,7 @@ class BlockSniperCommand extends BaseCommand {
 	
 	public function __construct(Loader $owner) {
 		parent::__construct($owner, "blocksniper", "Get information or change things related to BlockSniper", "[language|reload] [lang]", ["bs"]);
-		$this->setPermission("blocksniper.command.undo");
+		$this->setPermission("blocksniper.command.blocksniper");
 	}
 	
 	/**
@@ -34,11 +34,10 @@ class BlockSniperCommand extends BaseCommand {
 		}
 		
 		switch(strtolower($args[0])) {
-			/*case "language":
+			case "language":
 				$this->getSettings()->set("Message-Language", $args[1]);
-				$this->getSettings()->save();
 				$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("commands.succeed.language"));
-				return true;*/
+				return true;
 			
 			case "reload":
 				$sender->sendMessage(TF::GREEN . "Reloading...");
