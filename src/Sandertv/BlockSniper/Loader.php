@@ -22,13 +22,6 @@ class Loader extends PluginBase {
 	
 	const VERSION = "1.3.1";
 	const API_TARGET = "2.0.0 - 3.0.0-ALPHA4";
-	
-	public $undoStore;
-	public $cloneStore;
-	public $settings;
-	public $brush;
-	public $presetManager;
-	
 	public $availableLanguages = [
 		"en",
 		"nl",
@@ -39,6 +32,11 @@ class Loader extends PluginBase {
 		"zh_tw"
 	];
 	public $language;
+	private $undoStore;
+	private $cloneStore;
+	private $settings;
+	private $brush;
+	private $presetManager;
 	
 	public function onEnable() {
 		

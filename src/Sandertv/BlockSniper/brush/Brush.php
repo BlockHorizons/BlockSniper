@@ -5,7 +5,6 @@ namespace Sandertv\BlockSniper\brush;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\Player;
-use ReflectionClass;
 use Sandertv\BlockSniper\Loader;
 
 class Brush {
@@ -243,7 +242,7 @@ class Brush {
 		if(is_numeric(self::$brush[$player->getId()]["biome"])) {
 			return self::$brush[$player->getId()]["biome"];
 		}
-		$biomes = new ReflectionClass('pocketmine\level\generator\biome\Biome');
+		$biomes = new \ReflectionClass('pocketmine\level\generator\biome\Biome');
 		$const = strtoupper(str_replace(" ", "_", self::$brush[$player->getId()]["biome"]));
 		if($biomes->hasConstant($const)) {
 			$biome = $biomes->getConstant($const);

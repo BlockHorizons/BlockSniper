@@ -74,7 +74,7 @@ class TranslationData {
 			"brush.hollow" => $language["brush"]["hollow"],
 			"brush.preset" => $language["brush"]["preset"]
 		];
-		return ($languageSelected ? true : false);
+		return $languageSelected;
 	}
 	
 	/**

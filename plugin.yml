@@ -81,6 +81,9 @@ permissions:
                     blocksniper.type.replaceall:
                         default: op
                         description: "Allows access to the replace all type"
+                    blocksniper.type.snowcone:
+                        default: op
+                        description: "Allows access to the snow cone type"
             blocksniper.shape:
                 default: false
                 description: "Allows access to all BlockSniper shapes."

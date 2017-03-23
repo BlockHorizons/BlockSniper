@@ -33,6 +33,7 @@ abstract class BaseType {
 	const TYPE_EXPAND = 13;
 	const TYPE_RAISE = 14;
 	const TYPE_TOPLAYER = 15;
+	const TYPE_SNOWCONE = 16;
 	
 	public $level;
 	public $player;
