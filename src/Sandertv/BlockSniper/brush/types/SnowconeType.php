@@ -26,7 +26,7 @@ class SnowconeType extends BaseType {
 	public function fillShape(): bool {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
-			if($block->getId() !== Block::AIR && ($block->getId() !== Block::SNOW_LAYER || ($block->getDamage() % 7 === 0 && $block->getId() === Block::SNOW_LAYER))) {
+			if($block->getId() !== Block::AIR && $block->getId() !== Block::SNOW_LAYER) {
 				$topBlock = $block->getSide(Block::SIDE_UP);
 				if($topBlock->getId() === Block::AIR || $topBlock->getId() === Block::SNOW_LAYER) {
 					if($topBlock->getDamage() < 7 && $topBlock->getId() === Block::SNOW_LAYER) {
