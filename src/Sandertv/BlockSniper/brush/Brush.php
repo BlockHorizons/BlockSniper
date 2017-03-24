@@ -5,19 +5,19 @@ namespace Sandertv\BlockSniper\brush;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\Player;
-use pocketmine\Server;
+use Sandertv\BlockSniper\Loader;
 
 class Brush {
 	
 	public $player;
 	public $resetSize = 0;
-	private $server;
+	private $plugin;
 	private $type = "fill", $shape = "sphere", $size = 1, $hollow = false, $decrement = false;
 	private $height = 1, $perfect = true, $blocks = [], $obsolete = [], $biome = "plains";
 	
-	public function __construct(string $player, Server $server) {
+	public function __construct(string $player, Loader $plugin) {
 		$this->player = $player;
-		$this->server = $server;
+		$this->plugin = $plugin;
 		
 		$this->blocks = [Block::get(Block::STONE)];
 		$this->obsolete = [Block::get(Block::AIR)];
@@ -97,8 +97,6 @@ class Brush {
 	}
 	
 	/**
-	 * @param Player $player
-	 *
 	 * @return array
 	 */
 	public function getBlocks(): array {
@@ -106,7 +104,6 @@ class Brush {
 	}
 	
 	/**
-	 * @param Player $player
 	 * @param float  $size
 	 */
 	public function setSize(float $size) {
@@ -114,7 +111,6 @@ class Brush {
 	}
 	
 	/**
-	 * @param Player $player
 	 * @param string $shape
 	 */
 	public function setShape(string $shape) {
@@ -122,20 +118,16 @@ class Brush {
 	}
 	
 	/**
-	 * @param Player $player
-	 *
 	 * @return BaseShape
 	 */
 	public function getShape(): BaseShape {
 		$shapeName = 'Sandertv\BlockSniper\brush\shapes\\' . (ucfirst($this->shape) . "Shape");
-		$shape = new $shapeName($this->server->getPlayer($this->player), $this->server->getPlayer($this->player)->getLevel(), $this->size, $this->server->getPlayer($this->player)->getTargetBlock(100), $this->hollow);
+		$shape = new $shapeName($this->plugin->getServer()->getPlayer($this->player), $this->plugin->getServer()->getPlayer($this->player)->getLevel(), $this->size, $this->plugin->getServer()->getPlayer($this->player)->getTargetBlock(100), $this->hollow);
 		
 		return $shape;
 	}
 	
 	/**
-	 * @param Player $player
-	 *
 	 * @return int
 	 */
 	public function getSize(): int {
@@ -143,8 +135,6 @@ class Brush {
 	}
 	
 	/**
-	 * @param Player $player
-	 *
 	 * @return bool
 	 */
 	public function getHollow(): bool {
@@ -152,8 +142,6 @@ class Brush {
 	}
 	
 	/**
-	 * @param Player $player
-	 *
 	 * @return int
 	 */
 	public function getHeight(): int {
@@ -161,7 +149,6 @@ class Brush {
 	}
 	
 	/**
-	 * @param Player $player
 	 * @param int    $height
 	 */
 	public function setHeight(int $height) {
@@ -169,20 +156,18 @@ class Brush {
 	}
 	
 	/**
-	 * @param Player $player
 	 * @param array  $blocks
 	 *
 	 * @return BaseType
 	 */
 	public function getType(array $blocks = []): BaseType {
 		$typeName = 'Sandertv\BlockSniper\brush\types\\' . (ucfirst($this->type) . "Type");
-		$type = new $typeName($this->server->getPluginManager()->getPlugin("BlockSniper"), $this->server->getPlayer($this->player), $this->server->getPlayer($this->player)->getLevel(), $blocks);
+		$type = new $typeName($this->plugin->getServer()->getPluginManager()->getPlugin("BlockSniper"), $this->plugin->getServer()->getPlayer($this->player), $this->plugin->getServer()->getPlayer($this->player)->getLevel(), $blocks);
 		
 		return $type;
 	}
 	
 	/**
-	 * @param Player $player
 	 * @param string $type
 	 */
 	public function setType(string $type) {
@@ -190,7 +175,6 @@ class Brush {
 	}
 	
 	/**
-	 * @param Player $player
 	 * @param mixed  $biome
 	 */
 	public function setBiome($biome) {
@@ -198,8 +182,6 @@ class Brush {
 	}
 	
 	/**
-	 * @param Player $player
-	 *
 	 * @return int
 	 */
 	public function getBiomeId(): int {
@@ -216,7 +198,6 @@ class Brush {
 	}
 	
 	/**
-	 * @param Player $player
 	 * @param        $value
 	 */
 	public function setHollow($value) {

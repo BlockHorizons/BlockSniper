@@ -14,14 +14,13 @@ class BrushManager {
 		$this->main = $main;
 		if($main->getSettings()->get("Save-Brush-Properties")) {
 			$brushes = [];
-			if(is_file($main->getDataFolder() . "brushes.json")) {
-				$brushesSerialized = file_get_contents($main->getDataFolder() . "brushes.json");
-				$brushes = json_decode($brushesSerialized);
-				unlink($main->getDataFolder() . "brushes.json");
+			if(is_file($main->getDataFolder() . "brushes.yml")) {
+				$brushes = yaml_parse_file($main->getDataFolder() . "brushes.yml");
+				unlink($main->getDataFolder() . "brushes.yml");
 			}
 			if(!empty($brushes)) {
 				foreach($brushes as $playerName => $brush) {
-					self::$brush[$playerName] = json_decode($brush);
+					self::$brush[$playerName] = unserialize($brush);
 					$main->getLogger()->debug(TF::GREEN . "Brush of player " . $playerName . " has been restored.");
 				}
 			}
@@ -50,7 +49,7 @@ class BrushManager {
 		if(isset(self::$brush[$player->getName()])) {
 			return false;
 		}
-		self::$brush[$player->getName()] = new Brush($player->getName(), $this->getPlugin()->getServer());
+		self::$brush[$player->getName()] = new Brush($player->getName(), $this->getPlugin());
 		return true;
 	}
 	
@@ -77,9 +76,8 @@ class BrushManager {
 	public function storeBrushesToFile() {
 		$data = [];
 		foreach(self::$brush as $playerName => $brush) {
-			$data[$playerName] = json_encode($brush, JSON_FORCE_OBJECT);
+			$data[$playerName] = serialize($brush);
 		}
-		$data = json_encode($data);
-		file_put_contents($this->getPlugin()->getDataFolder() . "brushes.json", $data);
+		yaml_emit_file($this->getPlugin()->getDataFolder() . "brushes.yml", $data);
 	}
 }
