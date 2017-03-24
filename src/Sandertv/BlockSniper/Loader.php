@@ -20,8 +20,10 @@ use Sandertv\BlockSniper\tasks\UndoDiminishTask;
 
 class Loader extends PluginBase {
 	
-	const VERSION = "1.3.1";
+	const VERSION = "1.3.2";
 	const API_TARGET = "2.0.0 - 3.0.0-ALPHA4";
+	const CONFIGURATION_VERSION = "1.0.0";
+	
 	public $availableLanguages = [
 		"en",
 		"nl",

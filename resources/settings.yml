@@ -1,6 +1,12 @@
 ---
 # Configuration for BlockSniper: A WorldEdit plugin for PocketMine.
 
+# Internal Property: Do not change.
+Configuration-Version: "1.0.0"
+
+# Auto-update Configuration with new version.
+Auto-Configuration-Update: true
+
 # Language in which messages are displayed. Available languages:
 # en (English), nl (Dutch), de (German), fr (French), fa (Persian), ru (Russian), zh_tw (Chinese)
 Message-Language: ""
@@ -19,4 +25,7 @@ Maximum-Undo-Stores: 15
 
 # Whether to reset the size, or make it remain the current size when smallest size with decrement brush is reached.
 Reset-Decrement-Brush: true
+
+# Whether to save Brush properties of players after server restart, or dispose them.
+Save-Brush-Properties: true
 ...

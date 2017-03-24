@@ -2,6 +2,7 @@
 
 namespace Sandertv\BlockSniper\data;
 
+use pocketmine\utils\TextFormat as TF;
 use Sandertv\BlockSniper\Loader;
 
 class ConfigData {
@@ -18,13 +19,25 @@ class ConfigData {
 	public function collectSettings() {
 		$cfg = yaml_parse_file($this->getOwner()->getDataFolder() . "settings.yml");
 		$this->settings = [
+			"Configuration-Version" => $cfg["Configuration-Version"] ?? "0",
+			"Auto-Configuration-Update" => $cfg["Auto-Configuration-Update"] ?? true,
 			"Message-Language" => $cfg["Message-Language"],
-			"Brush-Item" => $cfg["Brush-Item"],
-			"Maximum-Radius" => $cfg["Maximum-Radius"],
-			"Maximum-Undo-Stores" => $cfg["Maximum-Undo-Stores"],
-			"Reset-Decrement-Brush" => $cfg["Reset-Decrement-Brush"],
-			"Maximum-Clone-Size" => $cfg["Maximum-Clone-Size"]
+			"Brush-Item" => $cfg["Brush-Item"] ?? 396,
+			"Maximum-Radius" => $cfg["Maximum-Radius"] ?? 15,
+			"Maximum-Undo-Stores" => $cfg["Maximum-Undo-Stores"] ?? 15,
+			"Reset-Decrement-Brush" => $cfg["Reset-Decrement-Brush"] ?? true,
+			"Maximum-Clone-Size" => $cfg["Maximum-Clone-Size"] ?? 60,
+			"Save-Brush-Properties" => $cfg["Save-Brush-Properties"] ?? true
 		];
+		if($cfg["Configuration-Version"] !== Loader::CONFIGURATION_VERSION) {
+			$autoUpdate = $cfg["Auto-Configuration-Update"];
+			$this->getOwner()->getLogger()->info(TF::AQUA . "[BlockSniper] A new Configuration version was found. " . ($autoUpdate ? "Updating Configuration file..." : null));
+			if($autoUpdate) {
+				$this->updateConfig();
+			}
+		} else {
+			$this->getOwner()->getLogger()->info(TF::AQUA . "[BlockSniper] No new Configuration version found, Configuration is up to date.");
+		}
 	}
 	
 	/**
@@ -32,6 +45,11 @@ class ConfigData {
 	 */
 	public function getOwner(): Loader {
 		return $this->plugin;
+	}
+	
+	public function updateConfig() {
+		unlink($this->getOwner()->getDataFolder() . "settings.yml");
+		yaml_emit_file($this->getOwner()->getDataFolder() . "settings.yml", $this->settings);
 	}
 	
 	/**

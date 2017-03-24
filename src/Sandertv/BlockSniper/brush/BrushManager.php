@@ -3,6 +3,7 @@
 namespace Sandertv\BlockSniper\brush;
 
 use pocketmine\Player;
+use pocketmine\utils\TextFormat as TF;
 use Sandertv\BlockSniper\Loader;
 
 class BrushManager {
@@ -11,6 +12,20 @@ class BrushManager {
 	
 	public function __construct(Loader $main) {
 		$this->main = $main;
+		if($main->getSettings()->get("Save-Brush-Properties")) {
+			$brushes = [];
+			if(is_file($main->getDataFolder() . "brushes.yml")) {
+				$brushes = yaml_parse_file($main->getDataFolder() . "brushes.yml");
+				unlink($main->getDataFolder() . "brushes.yml");
+			}
+			if(!empty($brushes)) {
+				foreach($brushes as $playerName => $brush) {
+					self::$brush[$playerName] = unserialize($brush);
+					$main->getLogger()->debug(TF::GREEN . "Brush of player " . $playerName . " has been restored.");
+				}
+			}
+			$main->getLogger()->info(TF::GREEN . "All brushes have been restored.");
+		}
 	}
 	
 	/**
@@ -23,13 +38,6 @@ class BrushManager {
 			return self::$brush[$player->getName()];
 		}
 		return null;
-	}
-	
-	/**
-	 * @return Loader
-	 */
-	public function getPlugin(): Loader {
-		return $this->main;
 	}
 	
 	/**
@@ -56,5 +64,22 @@ class BrushManager {
 			return true;
 		}
 		return false;
+	}
+	
+	public function storeBrushToFile() {
+		$data = [];
+		if(!empty(self::$brush)) {
+			foreach(self::$brush as $playerName => $brush) {
+				$data[$playerName] = serialize($brush);
+			}
+			yaml_emit_file($this->getPlugin()->getDataFolder() . "brushes.yml", $data);
+		}
+	}
+	
+	/**
+	 * @return Loader
+	 */
+	public function getPlugin(): Loader {
+		return $this->main;
 	}
 }
