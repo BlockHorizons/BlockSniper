@@ -22,7 +22,7 @@ class BrushManager {
 			var_dump($brushes);
 			if(!empty($brushes)) {
 				foreach($brushes as $playerName => $brush) {
-					self::$brush[$playerName] = $brush;
+					self::$brush[$playerName] = json_decode($brush);
 					$main->getLogger()->debug(TF::GREEN . "Brush of player " . $playerName . " has been restored.");
 				}
 			}
@@ -78,7 +78,7 @@ class BrushManager {
 	public function storeBrushesToFile() {
 		$data = [];
 		foreach(self::$brush as $playerName => $brush) {
-			$data[$playerName] = $brush;
+			$data[$playerName] = json_encode($brush);
 		}
 		$data = json_encode($data);
 		file_put_contents($this->getPlugin()->getDataFolder() . "brushes.json", $data);
