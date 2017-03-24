@@ -16,7 +16,6 @@ class Brush {
 	
 	public function __construct(string $player) {
 		$this->player = $player;
-		$this->server = Server::getInstance();
 		
 		$this->blocks = [Block::get(Block::STONE)];
 		$this->obsolete = [Block::get(Block::AIR)];
@@ -127,7 +126,7 @@ class Brush {
 	 */
 	public function getShape(): BaseShape {
 		$shapeName = 'Sandertv\BlockSniper\brush\shapes\\' . (ucfirst($this->shape) . "Shape");
-		$shape = new $shapeName($this->server->getPlayer($this->player), $this->server->getPlayer($this->player)->getLevel(), $this->size, $this->server->getPlayer($this->player)->getTargetBlock(100), $this->hollow);
+		$shape = new $shapeName(Server::getInstance()->getPlayer($this->player), Server::getInstance()->getPlayer($this->player)->getLevel(), $this->size, Server::getInstance()->getPlayer($this->player)->getTargetBlock(100), $this->hollow);
 		
 		return $shape;
 	}
@@ -175,7 +174,7 @@ class Brush {
 	 */
 	public function getType(array $blocks = []): BaseType {
 		$typeName = 'Sandertv\BlockSniper\brush\types\\' . (ucfirst($this->type) . "Type");
-		$type = new $typeName($this->server->getPluginManager()->getPlugin("BlockSniper"), $this->server->getPlayer($this->player), $this->server->getPlayer($this->player)->getLevel(), $blocks);
+		$type = new $typeName(Server::getInstance()->getPluginManager()->getPlugin("BlockSniper"), Server::getInstance()->getPlayer($this->player), Server::getInstance()->getPlayer($this->player)->getLevel(), $blocks);
 		
 		return $type;
 	}
