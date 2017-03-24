@@ -14,9 +14,9 @@ class Brush {
 	private $type = "fill", $shape = "sphere", $size = 1, $hollow = false, $decrement = false;
 	private $height = 1, $perfect = true, $blocks = [], $obsolete = [], $biome = "plains";
 	
-	public function __construct(string $player, Server $server) {
+	public function __construct(string $player) {
 		$this->player = $player;
-		$this->server = $server;
+		$this->server = Server::getInstance();
 		
 		$this->blocks = [Block::get(Block::STONE)];
 		$this->obsolete = [Block::get(Block::AIR)];

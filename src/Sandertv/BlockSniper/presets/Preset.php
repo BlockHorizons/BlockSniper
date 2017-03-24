@@ -3,7 +3,7 @@
 namespace Sandertv\BlockSniper\presets;
 
 use pocketmine\Player;
-use Sandertv\BlockSniper\brush\Brush;
+use Sandertv\BlockSniper\brush\BrushManager;
 
 class Preset {
 	
@@ -37,34 +37,34 @@ class Preset {
 		foreach($this->getParsedData() as $property => $value) {
 			switch($property) {
 				case "shape":
-					Brush::setShape($player, $value);
+					BrushManager::get($player)->setShape($value);
 					break;
 				case "type":
-					Brush::setType($player, $value);
+					BrushManager::get($player)->setType($value);
 					break;
 				case "decrement":
-					Brush::setDecrementing($player, $value);
+					BrushManager::get($player)->setDecrementing($value);
 					break;
 				case "size":
-					Brush::setSize($player, $value);
+					BrushManager::get($player)->setSize($value);
 					break;
 				case "hollow":
-					Brush::setHollow($player, $value);
+					BrushManager::get($player)->setHollow($value);
 					break;
 				case "height":
-					Brush::setHeight($player, $value);
+					BrushManager::get($player)->setHeight($value);
 					break;
 				case "biome":
-					Brush::setBiome($player, $value);
+					BrushManager::get($player)->setBiome($value);
 					break;
 				case "obsolete":
-					Brush::setObsolete($player, $value);
+					BrushManager::get($player)->setObsolete($value);
 					break;
 				case "blocks":
-					Brush::setBlocks($player, $value);
+					BrushManager::get($player)->setBlocks($value);
 					break;
 				case "perfect":
-					Brush::setPerfect($player, $value);
+					BrushManager::get($player)->setPerfect($value);
 					break;
 			}
 		}

@@ -49,7 +49,7 @@ class BrushManager {
 		if(isset(self::$brush[$player->getName()])) {
 			return false;
 		}
-		self::$brush[$player->getName()] = new Brush($player->getName(), $this->main->getServer());
+		self::$brush[$player->getName()] = new Brush($player->getName());
 		return true;
 	}
 	
@@ -68,9 +68,7 @@ class BrushManager {
 	
 	public function storeBrushesToFile() {
 		$data = [];
-		var_dump(self::$brush);
 		foreach(self::$brush as $playerName => $brush) {
-			var_dump($brush);
 			$data[$playerName] = serialize($brush);
 		}
 		yaml_emit_file($this->getPlugin()->getDataFolder() . "brushes.yml", $data);
