@@ -14,10 +14,10 @@ class BrushManager {
 		$this->main = $main;
 		if($main->getSettings()->get("Save-Brush-Properties")) {
 			$brushes = [];
-			if(is_file($main->getDataFolder() . "brushes.yml")) {
-				$brushesSerialized = file_get_contents($main->getDataFolder() . "brushes.yml");
-				$brushes = unserialize($brushesSerialized);
-				unlink($main->getDataFolder() . "brushes.yml");
+			if(is_file($main->getDataFolder() . "brushes.json")) {
+				$brushesSerialized = file_get_contents($main->getDataFolder() . "brushes.json");
+				$brushes = json_decode($brushesSerialized, true);
+				unlink($main->getDataFolder() . "brushes.json");
 			}
 			if(!empty($brushes)) {
 				foreach($brushes as $playerName => $brush) {
@@ -79,7 +79,7 @@ class BrushManager {
 		foreach(self::$brush as $playerName => $brush) {
 			$data[$playerName] = $brush;
 		}
-		$data = serialize($data);
-		file_put_contents($this->getPlugin()->getDataFolder() . "brushes.yml", $data);
+		$data = json_encode($data);
+		file_put_contents($this->getPlugin()->getDataFolder() . "brushes.json", $data);
 	}
 }
