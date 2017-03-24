@@ -110,7 +110,9 @@ class Loader extends PluginBase {
 	public function onDisable() {
 		$this->getLogger()->info(TF::RED . "BlockSniper has been disabled.");
 		$this->getUndoStore()->resetUndoStorage();
+		
 		$this->getPresetManager()->storePresetsToFile();
+		$this->getBrushManager()->storeBrushesToFile();
 		$this->getSettings()->save();
 	}
 	

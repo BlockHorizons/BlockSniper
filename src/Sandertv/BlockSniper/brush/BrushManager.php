@@ -66,7 +66,7 @@ class BrushManager {
 		return false;
 	}
 	
-	public function storeBrushToFile() {
+	public function storeBrushesToFile() {
 		$data = [];
 		if(!empty(self::$brush)) {
 			foreach(self::$brush as $playerName => $brush) {
