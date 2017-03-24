@@ -77,7 +77,7 @@ class BrushManager {
 	public function storeBrushesToFile() {
 		$data = [];
 		foreach(self::$brush as $playerName => $brush) {
-			$data[$playerName] = json_encode($brush);
+			$data[$playerName] = json_encode($brush, JSON_FORCE_OBJECT);
 		}
 		$data = json_encode($data);
 		file_put_contents($this->getPlugin()->getDataFolder() . "brushes.json", $data);
