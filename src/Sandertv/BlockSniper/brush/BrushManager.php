@@ -24,6 +24,7 @@ class BrushManager {
 					$main->getLogger()->debug(TF::GREEN . "Brush of player " . $playerName . " has been restored.");
 				}
 			}
+			var_dump(self::$brush);
 			$main->getLogger()->info(TF::GREEN . "All brushes have been restored.");
 		}
 	}
