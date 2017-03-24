@@ -68,6 +68,7 @@ class BrushManager {
 	
 	public function storeBrushesToFile() {
 		$data = [];
+		var_dump(self::$brush);
 		foreach(self::$brush as $playerName => $brush) {
 			$data[$playerName] = serialize($brush);
 		}
