@@ -7,13 +7,11 @@ use pocketmine\level\Position;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 use Sandertv\BlockSniper\brush\BaseShape;
-use Sandertv\BlockSniper\brush\Brush;
-use Sandertv\BlockSniper\Loader;
+use Sandertv\BlockSniper\brush\BrushManager;
 
 class SphereShape extends BaseShape {
 	
-	public function __construct(Loader $main, Player $player, Level $level, int $radius = null, Position $center = null, bool $hollow = false) {
-		parent::__construct($main);
+	public function __construct(Player $player, Level $level, int $radius = null, Position $center = null, bool $hollow = false) {
 		$this->level = $level;
 		$this->radius = $radius;
 		$this->center = $center;
@@ -25,7 +23,7 @@ class SphereShape extends BaseShape {
 	 * @return array
 	 */
 	public function getBlocksInside(): array {
-		$trueSphere = Brush::getPerfect($this->player);
+		$trueSphere = BrushManager::get($this->player)->getPerfect();
 		$radiusSquared = pow($this->radius + ($trueSphere ? 0 : -0.5), 2) + ($trueSphere ? 0.5 : 0);
 		
 		$targetX = $this->center->x;
@@ -52,9 +50,6 @@ class SphereShape extends BaseShape {
 							if($y !== $maxY && $y !== $minY && ($xs + $ys + $zs) < $radiusSquared - 3 - $this->radius / 0.5) {
 								continue;
 							}
-						}
-						if(Brush::getGravity($this->player) === true || Brush::getGravity($this->player) === 1) {
-							$gravityY = ($this->level->getHighestBlockAt($x, $z) + 1) <= $maxY ? $this->level->getHighestBlockAt($x, $z) + 1 : $y;
 						}
 						$blocksInside[] = $this->getLevel()->getBlock(new Vector3($x, (isset($gravityY) ? $gravityY : $y), $z));
 						unset($gravityY);

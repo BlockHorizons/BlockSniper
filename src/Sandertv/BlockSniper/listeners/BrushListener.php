@@ -6,7 +6,7 @@ use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
-use Sandertv\BlockSniper\brush\Brush;
+use Sandertv\BlockSniper\brush\BrushManager;
 use Sandertv\BlockSniper\events\BrushUseEvent;
 use Sandertv\BlockSniper\Loader;
 
@@ -29,9 +29,9 @@ class BrushListener implements Listener {
 					return false;
 				}
 				
-				Brush::setupDefaultValues($player);
-				$shape = Brush::getShape($player);
-				$type = Brush::getType($player, $shape->getBlocksInside());
+				$this->getOwner()->getBrushManager()->createBrush($player);
+				$shape = BrushManager::get($player)->getShape();
+				$type = BrushManager::get($player)->getType($shape->getBlocksInside());
 				
 				$this->getOwner()->getServer()->getPluginManager()->callEvent($event = new BrushUseEvent($this->getOwner(), $player, $shape, $type));
 				if($event->isCancelled()) {
@@ -58,16 +58,16 @@ class BrushListener implements Listener {
 	 * @return bool
 	 */
 	public function decrementBrush(Player $player): bool {
-		if(Brush::isDecrementing($player)) {
-			if(Brush::getSize($player) <= 1) {
+		if(BrushManager::get($player)->isDecrementing()) {
+			if(BrushManager::get($player)->getSize() <= 1) {
 				if($this->getOwner()->getSettings()->get("Reset-Decrement-Brush") !== false) {
-					Brush::setSize($player, Brush::$resetSize[$player->getId()]);
+					BrushManager::get($player)->setSize(BrushManager::get($player)->resetSize[$player->getId()]);
 					$player->sendPopup(TF::GREEN . "Brush reset to original size.");
 					return true;
 				}
 				return false;
 			}
-			Brush::setSize($player, (Brush::getSize($player) - 1));
+			BrushManager::get($player)->setSize(BrushManager::get($player)->getSize() - 1);
 			return true;
 		}
 		return false;

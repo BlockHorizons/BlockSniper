@@ -5,7 +5,7 @@ namespace Sandertv\BlockSniper\brush\types;
 use pocketmine\level\Level;
 use pocketmine\Player;
 use Sandertv\BlockSniper\brush\BaseType;
-use Sandertv\BlockSniper\brush\Brush;
+use Sandertv\BlockSniper\brush\BrushManager;
 use Sandertv\BlockSniper\Loader;
 
 class BiomeType extends BaseType {
@@ -18,7 +18,7 @@ class BiomeType extends BaseType {
 		$this->level = $level;
 		$this->blocks = $blocks;
 		$this->player = $player;
-		$this->biome = Brush::getBiomeId($this->player);
+		$this->biome = BrushManager::get($player)->getBiomeId();
 	}
 	
 	/**

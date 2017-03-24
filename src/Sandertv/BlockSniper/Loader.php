@@ -4,7 +4,7 @@ namespace Sandertv\BlockSniper;
 
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat as TF;
-use Sandertv\BlockSniper\brush\Brush;
+use Sandertv\BlockSniper\brush\BrushManager;
 use Sandertv\BlockSniper\cloning\CloneStorer;
 use Sandertv\BlockSniper\commands\BlockSniperCommand;
 use Sandertv\BlockSniper\commands\BrushCommand;
@@ -35,11 +35,10 @@ class Loader extends PluginBase {
 	private $undoStore;
 	private $cloneStore;
 	private $settings;
-	private $brush;
+	private $brushManager;
 	private $presetManager;
 	
 	public function onEnable() {
-		
 		$this->reloadAll();
 		
 		$this->registerCommands();
@@ -49,13 +48,12 @@ class Loader extends PluginBase {
 	}
 	
 	public function reloadAll() {
-		
 		$this->saveResource("settings.yml");
 		$this->settings = new ConfigData($this);
 		
 		$this->language = new TranslationData($this);
 		
-		$this->brush = new Brush($this);
+		$this->brushManager = new BrushManager($this);
 		$this->undoStore = new UndoStorer($this);
 		$this->cloneStore = new CloneStorer($this);
 		
@@ -121,8 +119,15 @@ class Loader extends PluginBase {
 		return $this->undoStore;
 	}
 	
+	/**
+	 * @return PresetManager
+	 */
 	public function getPresetManager(): PresetManager {
 		return $this->presetManager;
+	}
+	
+	public function getBrushManager(): BrushManager {
+		return $this->brushManager;
 	}
 	
 	/**

@@ -2,57 +2,33 @@
 
 namespace Sandertv\BlockSniper\brush;
 
-use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\Player;
-use Sandertv\BlockSniper\Loader;
+use pocketmine\Server;
 
 class Brush {
 	
-	public static $brush = [];
-	public static $owner;
-	public static $resetSize = [];
+	public $player;
+	public $resetSize = 0;
+	private $type = "fill", $shape = "sphere", $size = 1, $hollow = false, $decrement = false;
+	private $height = 1, $perfect = true, $blocks = [], $obsolete = [], $biome = "plains";
 	
-	public function __construct(Loader $owner) {
-		self::$owner = $owner;
-	}
-	
-	/**
-	 * @param Player $player
-	 *
-	 * @return bool
-	 */
-	public static function setupDefaultValues(Player $player): bool {
-		if(isset(self::$brush[$player->getId()])) {
-			return false;
-		}
-		self::$brush[$player->getId()] = [
-			"shape" => "sphere",
-			"perfect" => true,
-			"type" => "fill",
-			"size" => 1,
-			"height" => 1,
-			"blocks" => [Block::get(Block::STONE)],
-			"obsolete" => [Block::get(Block::AIR)],
-			"gravity" => false,
-			"decrement" => false,
-			"biome" => "plains",
-			"hollow" => false
-		];
-		return true;
+	public function __construct(Player $player, Server $server) {
+		$this->player = $player;
+		$this->server = $server;
 	}
 	
 	/**
 	 * @param Player $player
 	 * @param array  $blocks
 	 */
-	public static function setBlocks(Player $player, array $blocks) {
-		unset(self::$brush[$player->getId()]["blocks"]);
+	public function setBlocks(array $blocks) {
+		unset($this->blocks);
 		foreach($blocks as $block) {
 			if(!is_numeric($block)) {
-				self::$brush[$player->getId()]["blocks"][] = Item::fromString($block)->getBlock();
+				$this->blocks[] = Item::fromString($block)->getBlock();
 			} else {
-				self::$brush[$player->getId()]["blocks"][] = Item::get($block)->getBlock();
+				$this->blocks[] = Item::get($block)->getBlock();
 			}
 		}
 	}
@@ -61,8 +37,8 @@ class Brush {
 	 * @param Player $player
 	 * @param        $value
 	 */
-	public static function setDecrementing(Player $player, $value) {
-		self::$brush[$player->getId()]["decrement"] = (bool)$value;
+	public function setDecrementing($value) {
+		$this->decrement = (bool)$value;
 	}
 	
 	/**
@@ -70,16 +46,16 @@ class Brush {
 	 *
 	 * @return bool
 	 */
-	public static function isDecrementing(Player $player): bool {
-		return self::$brush[$player->getId()]["decrement"];
+	public function isDecrementing(): bool {
+		return $this->decrement;
 	}
 	
 	/**
 	 * @param Player $player
 	 * @param        $value
 	 */
-	public static function setGravity(Player $player, $value) {
-		self::$brush[$player->getId()]["gravity"] = (bool)$value;
+	public function setPerfect($value) {
+		$this->perfect = (bool)$value;
 	}
 	
 	/**
@@ -87,25 +63,8 @@ class Brush {
 	 *
 	 * @return bool
 	 */
-	public static function getGravity(Player $player): bool {
-		return self::$brush[$player->getId()]["gravity"];
-	}
-	
-	/**
-	 * @param Player $player
-	 * @param        $value
-	 */
-	public static function setPerfect(Player $player, $value) {
-		self::$brush[$player->getId()]["perfect"] = (bool)$value;
-	}
-	
-	/**
-	 * @param Player $player
-	 *
-	 * @return bool
-	 */
-	public static function getPerfect(Player $player): bool {
-		return self::$brush[$player->getId()]["perfect"];
+	public function getPerfect(): bool {
+		return $this->perfect;
 	}
 	
 	/**
@@ -113,21 +72,21 @@ class Brush {
 	 *
 	 * @return array
 	 */
-	public static function getObsolete(Player $player): array {
-		return self::$brush[$player->getId()]["obsolete"];
+	public function getObsolete(): array {
+		return $this->obsolete;
 	}
 	
 	/**
 	 * @param Player $player
 	 * @param array  $blocks
 	 */
-	public static function setObsolete(Player $player, array $blocks) {
-		unset(self::$brush[$player->getId()]["obsolete"]);
+	public function setObsolete(array $blocks) {
+		unset($this->obsolete);
 		foreach($blocks as $block) {
 			if(!is_numeric($block)) {
-				self::$brush[$player->getId()]["obsolete"][] = Item::fromString($block)->getBlock();
+				$this->obsolete[] = Item::fromString($block)->getBlock();
 			} else {
-				self::$brush[$player->getId()]["obsolete"][] = Item::get($block)->getBlock();
+				$this->obsolete[] = Item::get($block)->getBlock();
 			}
 		}
 	}
@@ -137,40 +96,24 @@ class Brush {
 	 *
 	 * @return array
 	 */
-	public static function getBlocks(Player $player): array {
-		return self::$brush[$player->getId()]["blocks"];
-	}
-	
-	/**
-	 * @param Player $player
-	 * @param int    $height
-	 */
-	public static function setHeight(Player $player, int $height) {
-		self::$brush[$player->getId()]["height"] = $height;
+	public function getBlocks(): array {
+		return $this->blocks;
 	}
 	
 	/**
 	 * @param Player $player
 	 * @param float  $size
 	 */
-	public static function setSize(Player $player, float $size) {
-		self::$brush[$player->getId()]["size"] = $size;
-	}
-	
-	/**
-	 * @param Player $player
-	 * @param string $type
-	 */
-	public static function setType(Player $player, string $type) {
-		self::$brush[$player->getId()]["type"] = $type;
+	public function setSize(float $size) {
+		$this->size = $size;
 	}
 	
 	/**
 	 * @param Player $player
 	 * @param string $shape
 	 */
-	public static function setShape(Player $player, string $shape) {
-		self::$brush[$player->getId()]["shape"] = $shape;
+	public function setShape(string $shape) {
+		$this->shape = $shape;
 	}
 	
 	/**
@@ -178,9 +121,9 @@ class Brush {
 	 *
 	 * @return BaseShape
 	 */
-	public static function getShape(Player $player): BaseShape {
-		$shapeName = 'Sandertv\BlockSniper\brush\shapes\\' . (ucfirst(self::$brush[$player->getId()]["shape"]) . "Shape");
-		$shape = new $shapeName(self::$owner, $player, $player->getLevel(), self::getSize($player), $player->getTargetBlock(100), self::getHollow($player));
+	public function getShape(): BaseShape {
+		$shapeName = 'Sandertv\BlockSniper\brush\shapes\\' . (ucfirst($this->shape) . "Shape");
+		$shape = new $shapeName($this->player, $this->player->getLevel(), $this->size, $this->player->getTargetBlock(100), $this->hollow);
 		
 		return $shape;
 	}
@@ -190,8 +133,8 @@ class Brush {
 	 *
 	 * @return int
 	 */
-	public static function getSize(Player $player): int {
-		return self::$brush[$player->getId()]["size"];
+	public function getSize(): int {
+		return $this->size;
 	}
 	
 	/**
@@ -199,8 +142,8 @@ class Brush {
 	 *
 	 * @return bool
 	 */
-	public static function getHollow(Player $player): bool {
-		return self::$brush[$player->getId()]["hollow"];
+	public function getHollow(): bool {
+		return $this->hollow;
 	}
 	
 	/**
@@ -208,8 +151,16 @@ class Brush {
 	 *
 	 * @return int
 	 */
-	public static function getHeight(Player $player): int {
-		return self::$brush[$player->getId()]["height"];
+	public function getHeight(): int {
+		return $this->height;
+	}
+	
+	/**
+	 * @param Player $player
+	 * @param int    $height
+	 */
+	public function setHeight(int $height) {
+		$this->height = $height;
 	}
 	
 	/**
@@ -218,19 +169,27 @@ class Brush {
 	 *
 	 * @return BaseType
 	 */
-	public static function getType(Player $player, array $blocks = []): BaseType {
-		$typeName = 'Sandertv\BlockSniper\brush\types\\' . (ucfirst(self::$brush[$player->getId()]["type"]) . "Type");
-		$type = new $typeName(self::$owner, $player, $player->getLevel(), $blocks);
+	public function getType(array $blocks = []): BaseType {
+		$typeName = 'Sandertv\BlockSniper\brush\types\\' . (ucfirst($this->type) . "Type");
+		$type = new $typeName($this->server->getPluginManager()->getPlugin("BlockSniper"), $this->player, $this->player->getLevel(), $blocks);
 		
 		return $type;
 	}
 	
 	/**
 	 * @param Player $player
+	 * @param string $type
+	 */
+	public function setType(string $type) {
+		$this->type = $type;
+	}
+	
+	/**
+	 * @param Player $player
 	 * @param mixed  $biome
 	 */
-	public static function setBiome(Player $player, $biome) {
-		self::$brush[$player->getId()]["biome"] = $biome;
+	public function setBiome($biome) {
+		$this->biome = $biome;
 	}
 	
 	/**
@@ -238,12 +197,12 @@ class Brush {
 	 *
 	 * @return int
 	 */
-	public static function getBiomeId(Player $player): int {
-		if(is_numeric(self::$brush[$player->getId()]["biome"])) {
-			return self::$brush[$player->getId()]["biome"];
+	public function getBiomeId(): int {
+		if(is_numeric($this->biome)) {
+			return $this->biome;
 		}
 		$biomes = new \ReflectionClass('pocketmine\level\generator\biome\Biome');
-		$const = strtoupper(str_replace(" ", "_", self::$brush[$player->getId()]["biome"]));
+		$const = strtoupper(str_replace(" ", "_", $this->biome));
 		if($biomes->hasConstant($const)) {
 			$biome = $biomes->getConstant($const);
 			return $biome;
@@ -253,22 +212,9 @@ class Brush {
 	
 	/**
 	 * @param Player $player
-	 *
-	 * @return bool
-	 */
-	public static function resetBrush(Player $player): bool {
-		if(isset(self::$brush[$player->getId()])) {
-			unset(self::$brush[$player->getId()]);
-			return true;
-		}
-		return false;
-	}
-	
-	/**
-	 * @param Player $player
 	 * @param        $value
 	 */
-	public static function setHollow(Player $player, $value) {
-		self::$brush[$player->getId()]["hollow"] = (bool)$value;
+	public function setHollow($value) {
+		$this->hollow = (bool)$value;
 	}
 }
