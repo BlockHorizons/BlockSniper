@@ -2,6 +2,7 @@
 
 namespace Sandertv\BlockSniper\brush;
 
+use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\Player;
 use pocketmine\Server;
@@ -13,9 +14,12 @@ class Brush {
 	private $type = "fill", $shape = "sphere", $size = 1, $hollow = false, $decrement = false;
 	private $height = 1, $perfect = true, $blocks = [], $obsolete = [], $biome = "plains";
 	
-	public function __construct(Player $player, Server $server) {
+	public function __construct(string $player, Server $server) {
 		$this->player = $player;
 		$this->server = $server;
+		
+		$this->blocks = [Block::get(Block::STONE)];
+		$this->obsolete = [Block::get(Block::AIR)];
 	}
 	
 	/**
@@ -123,7 +127,7 @@ class Brush {
 	 */
 	public function getShape(): BaseShape {
 		$shapeName = 'Sandertv\BlockSniper\brush\shapes\\' . (ucfirst($this->shape) . "Shape");
-		$shape = new $shapeName($this->player, $this->player->getLevel(), $this->size, $this->player->getTargetBlock(100), $this->hollow);
+		$shape = new $shapeName($this->server->getPlayer($this->player), $this->server->getPlayer($this->player)->getLevel(), $this->size, $this->server->getPlayer($this->player)->getTargetBlock(100), $this->hollow);
 		
 		return $shape;
 	}
@@ -171,7 +175,7 @@ class Brush {
 	 */
 	public function getType(array $blocks = []): BaseType {
 		$typeName = 'Sandertv\BlockSniper\brush\types\\' . (ucfirst($this->type) . "Type");
-		$type = new $typeName($this->server->getPluginManager()->getPlugin("BlockSniper"), $this->player, $this->player->getLevel(), $blocks);
+		$type = new $typeName($this->server->getPluginManager()->getPlugin("BlockSniper"), $this->server->getPlayer($this->player), $this->server->getPlayer($this->player)->getLevel(), $blocks);
 		
 		return $type;
 	}
