@@ -19,6 +19,7 @@ class BrushManager {
 				$brushes = json_decode($brushesSerialized, true);
 				unlink($main->getDataFolder() . "brushes.json");
 			}
+			var_dump($brushes);
 			if(!empty($brushes)) {
 				foreach($brushes as $playerName => $brush) {
 					self::$brush[$playerName] = $brush;
