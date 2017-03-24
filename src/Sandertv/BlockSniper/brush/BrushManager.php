@@ -16,8 +16,10 @@ class BrushManager {
 			$brushes = [];
 			if(is_file($main->getDataFolder() . "brushes.yml")) {
 				$brushes = yaml_parse_file($main->getDataFolder() . "brushes.yml");
+				echo("file found");
 				unlink($main->getDataFolder() . "brushes.yml");
 			}
+			var_dump($brushes);
 			if(!empty($brushes)) {
 				foreach($brushes as $playerName => $brush) {
 					self::$brush[$playerName] = unserialize($brush);
@@ -74,6 +76,7 @@ class BrushManager {
 				$data[$playerName] = serialize($brush);
 			}
 			yaml_emit_file($this->getPlugin()->getDataFolder() . "brushes.yml", $data);
+			echo("Brushes stored");
 		}
 	}
 	
