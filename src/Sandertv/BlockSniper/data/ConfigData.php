@@ -20,14 +20,14 @@ class ConfigData {
 		$cfg = yaml_parse_file($this->getOwner()->getDataFolder() . "settings.yml");
 		@$this->settings = [
 			"Configuration-Version" => $cfg["Configuration-Version"],
-			"Auto-Configuration-Update" => $cfg["Auto-Configuration-Update"],
-			"Message-Language" => $cfg["Message-Language"],
-			"Brush-Item" => $cfg["Brush-Item"],
-			"Maximum-Radius" => $cfg["Maximum-Radius"],
-			"Maximum-Undo-Stores" => $cfg["Maximum-Undo-Stores"],
-			"Reset-Decrement-Brush" => $cfg["Reset-Decrement-Brush"],
-			"Maximum-Clone-Size" => $cfg["Maximum-Clone-Size"],
-			"Save-Brush-Properties" => $cfg["Save-Brush-Properties"]
+			"Auto-Configuration-Update" => $cfg["Auto-Configuration-Update"] ?? true,
+			"Message-Language" => $cfg["Message-Language"] ?? "",
+			"Brush-Item" => $cfg["Brush-Item"] ?? 396,
+			"Maximum-Radius" => $cfg["Maximum-Radius"] ?? 15,
+			"Maximum-Undo-Stores" => $cfg["Maximum-Undo-Stores"] ?? 15,
+			"Reset-Decrement-Brush" => $cfg["Reset-Decrement-Brush"] ?? true,
+			"Maximum-Clone-Size" => $cfg["Maximum-Clone-Size"] ?? 60,
+			"Save-Brush-Properties" => $cfg["Save-Brush-Properties"] ?? true
 		];
 		if($cfg["Configuration-Version"] !== Loader::CONFIGURATION_VERSION) {
 			$autoUpdate = $cfg["Auto-Configuration-Update"];

@@ -29,6 +29,8 @@ class ExpandType extends BaseType {
 		foreach($this->blocks as $block) {
 			if($block->getId() === Item::AIR) {
 				$directions = [
+					$block->getSide(Block::SIDE_DOWN),
+					$block->getSide(Block::SIDE_UP),
 					$block->getSide(Block::SIDE_NORTH),
 					$block->getSide(Block::SIDE_SOUTH),
 					$block->getSide(Block::SIDE_WEST),
@@ -46,7 +48,11 @@ class ExpandType extends BaseType {
 			}
 		}
 		foreach($undoBlocks as $selectedBlock) {
-			$this->level->setBlock($selectedBlock, $selectedBlock->getSide(Block::SIDE_DOWN), false, false);
+			$temporalBlock = $selectedBlock;
+			while($temporalBlock->getSide(Block::SIDE_DOWN)->getId() === Block::AIR && $temporalBlock->y > 0) {
+				$temporalBlock = $temporalBlock->getSide(Block::SIDE_DOWN);
+			}
+			$this->level->setBlock($selectedBlock, $temporalBlock, false, false);
 		}
 		
 		$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
