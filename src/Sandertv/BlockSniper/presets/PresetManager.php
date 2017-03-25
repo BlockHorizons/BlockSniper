@@ -109,8 +109,11 @@ class PresetManager {
 	 *
 	 * @return mixed
 	 */
-	public function getCreationData(Player $player, string $key) {
-		return $this->presetCreation[$player->getId()][$key];
+	public function getCreationData(Player $player, string $key = null) {
+		if(isset($key)) {
+			return $this->presetCreation[$player->getId()][$key];
+		}
+		return $this->presetCreation[$player->getId()];
 	}
 	
 	/**

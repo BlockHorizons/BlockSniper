@@ -190,7 +190,7 @@ class Brush {
 	}
 	
 	/**
-	 * @param        $value
+	 * @param $value
 	 */
 	public function setHollow($value) {
 		$this->hollow = (bool)$value;
