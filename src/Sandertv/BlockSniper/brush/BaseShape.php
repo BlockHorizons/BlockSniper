@@ -9,7 +9,6 @@ use Sandertv\BlockSniper\brush\shapes\CubeShape;
 use Sandertv\BlockSniper\brush\shapes\CuboidShape;
 use Sandertv\BlockSniper\brush\shapes\CylinderShape;
 use Sandertv\BlockSniper\brush\shapes\SphereShape;
-use Sandertv\BlockSniper\Loader;
 
 abstract class BaseShape {
 	
@@ -30,10 +29,6 @@ abstract class BaseShape {
 	protected $center;
 	protected $hollow;
 	protected $height;
-	
-	public function __construct(Loader $main) {
-		$this->main = $main;
-	}
 	
 	/**
 	 * @param string $shape
@@ -96,10 +91,6 @@ abstract class BaseShape {
 	 * @return int
 	 */
 	public abstract function getApproximateProcessedBlocks(): int;
-	
-	public function getMain(): Loader {
-		return $this->main;
-	}
 	
 	/**
 	 * Returns the level the shape is made in.

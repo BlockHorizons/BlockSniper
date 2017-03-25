@@ -8,7 +8,7 @@ use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 use Sandertv\BlockSniper\brush\BaseType;
-use Sandertv\BlockSniper\brush\Brush;
+use Sandertv\BlockSniper\brush\BrushManager;
 use Sandertv\BlockSniper\Loader;
 
 class ReplaceallType extends BaseType {
@@ -30,7 +30,7 @@ class ReplaceallType extends BaseType {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			if($block->getId() !== Block::AIR && !$block instanceof Flowable) {
-				$randomBlock = Brush::$brush[$this->player->getId()]["blocks"][array_rand(Brush::$brush[$this->player->getId()]["blocks"])];
+				$randomBlock = BrushManager::get($this->player)->getBlocks()[array_rand(BrushManager::get($this->player)->getBlocks())];
 				$undoBlocks[] = $block;
 				$this->level->setBlock(new Vector3($block->x, $block->y, $block->z), $randomBlock, false, false);
 			}

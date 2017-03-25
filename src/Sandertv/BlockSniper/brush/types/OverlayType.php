@@ -7,7 +7,7 @@ use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\Player;
 use Sandertv\BlockSniper\brush\BaseType;
-use Sandertv\BlockSniper\brush\Brush;
+use Sandertv\BlockSniper\brush\BrushManager;
 use Sandertv\BlockSniper\Loader;
 
 class OverlayType extends BaseType {
@@ -38,7 +38,7 @@ class OverlayType extends BaseType {
 					$block->getSide(Block::SIDE_EAST)
 				];
 				$valid = true;
-				foreach(Brush::$brush[$this->player->getId()]["blocks"] as $possibleBlock) {
+				foreach(BrushManager::get($this->player)->getBlocks() as $possibleBlock) {
 					if(is_numeric($possibleBlock)) {
 						if($block->getId() === $possibleBlock) {
 							$valid = false;
@@ -51,7 +51,7 @@ class OverlayType extends BaseType {
 				}
 				foreach($directions as $direction) {
 					if($this->level->getBlock($direction)->getId() === Item::AIR && $valid) {
-						$randomBlock = Brush::$brush[$this->player->getId()]["blocks"][array_rand(Brush::$brush[$this->player->getId()]["blocks"])];
+						$randomBlock = BrushManager::get($this->player)->getBlocks()[array_rand(BrushManager::get($this->player)->getBlocks())];
 						if($block->getId() !== $randomBlock->getId()) {
 							$undoBlocks[] = $direction;
 							$this->level->setBlock($direction, $randomBlock, false, false);

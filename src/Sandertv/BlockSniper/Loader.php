@@ -4,7 +4,7 @@ namespace Sandertv\BlockSniper;
 
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat as TF;
-use Sandertv\BlockSniper\brush\Brush;
+use Sandertv\BlockSniper\brush\BrushManager;
 use Sandertv\BlockSniper\cloning\CloneStorer;
 use Sandertv\BlockSniper\commands\BlockSniperCommand;
 use Sandertv\BlockSniper\commands\BrushCommand;
@@ -20,8 +20,10 @@ use Sandertv\BlockSniper\tasks\UndoDiminishTask;
 
 class Loader extends PluginBase {
 	
-	const VERSION = "1.3.1";
+	const VERSION = "1.3.2";
 	const API_TARGET = "2.0.0 - 3.0.0-ALPHA4";
+	const CONFIGURATION_VERSION = "1.0.0";
+	
 	public $availableLanguages = [
 		"en",
 		"nl",
@@ -35,11 +37,10 @@ class Loader extends PluginBase {
 	private $undoStore;
 	private $cloneStore;
 	private $settings;
-	private $brush;
+	private $brushManager;
 	private $presetManager;
 	
 	public function onEnable() {
-		
 		$this->reloadAll();
 		
 		$this->registerCommands();
@@ -49,13 +50,12 @@ class Loader extends PluginBase {
 	}
 	
 	public function reloadAll() {
-		
 		$this->saveResource("settings.yml");
 		$this->settings = new ConfigData($this);
 		
 		$this->language = new TranslationData($this);
 		
-		$this->brush = new Brush($this);
+		$this->brushManager = new BrushManager($this);
 		$this->undoStore = new UndoStorer($this);
 		$this->cloneStore = new CloneStorer($this);
 		
@@ -110,7 +110,9 @@ class Loader extends PluginBase {
 	public function onDisable() {
 		$this->getLogger()->info(TF::RED . "BlockSniper has been disabled.");
 		$this->getUndoStore()->resetUndoStorage();
+		
 		$this->getPresetManager()->storePresetsToFile();
+		$this->getBrushManager()->storeBrushesToFile();
 		$this->getSettings()->save();
 	}
 	
@@ -121,8 +123,15 @@ class Loader extends PluginBase {
 		return $this->undoStore;
 	}
 	
+	/**
+	 * @return PresetManager
+	 */
 	public function getPresetManager(): PresetManager {
 		return $this->presetManager;
+	}
+	
+	public function getBrushManager(): BrushManager {
+		return $this->brushManager;
 	}
 	
 	/**

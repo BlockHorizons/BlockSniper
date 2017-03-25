@@ -8,7 +8,7 @@ use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
 use Sandertv\BlockSniper\brush\BaseShape;
 use Sandertv\BlockSniper\brush\BaseType;
-use Sandertv\BlockSniper\brush\Brush;
+use Sandertv\BlockSniper\brush\BrushManager;
 use Sandertv\BlockSniper\events\ChangeBrushPropertiesEvent as Change;
 use Sandertv\BlockSniper\Loader;
 
@@ -35,7 +35,9 @@ class BrushCommand extends BaseCommand {
 			return true;
 		}
 		
-		Brush::setupDefaultValues($sender);
+		$this->getPlugin()->getBrushManager()->createBrush($sender);
+		$brush = BrushManager::get($sender);
+		
 		$action = null;
 		
 		switch(strtolower($args[0])) {
@@ -100,7 +102,7 @@ class BrushCommand extends BaseCommand {
 					$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.radius-too-big"));
 					return true;
 				}
-				Brush::setSize($sender, $args[1]);
+				$brush->setSize($args[1]);
 				$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("brush.size") . TF::AQUA . $args[1]);
 				$action = Change::ACTION_CHANGE_SIZE;
 				break;
@@ -115,8 +117,8 @@ class BrushCommand extends BaseCommand {
 					$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.no-permission"));
 					return true;
 				}
-				Brush::setShape($sender, $args[1]);
-				$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("brush.shape") . TF::AQUA . Brush::getShape($sender)->getName());
+				$brush->setShape($args[1]);
+				$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("brush.shape") . TF::AQUA . $brush->getShape()->getName());
 				$action = Change::ACTION_CHANGE_SHAPE;
 				break;
 			
@@ -130,8 +132,8 @@ class BrushCommand extends BaseCommand {
 					$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.no-permission"));
 					return true;
 				}
-				Brush::setType($sender, $args[1]);
-				$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("brush.type") . TF::AQUA . Brush::getType($sender)->getName());
+				$brush->setType($args[1]);
+				$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("brush.type") . TF::AQUA . $brush->getType()->getName());
 				$action = Change::ACTION_CHANGE_TYPE;
 				break;
 			
@@ -141,7 +143,7 @@ class BrushCommand extends BaseCommand {
 					$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.radius-not-numeric"));
 					return true;
 				}
-				Brush::setHeight($sender, $args[1]);
+				$brush->setHeight($args[1]);
 				$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("brush.height") . TF::AQUA . $args[1]);
 				$action = Change::ACTION_CHANGE_HEIGHT;
 				break;
@@ -150,8 +152,8 @@ class BrushCommand extends BaseCommand {
 			case "block":
 			case "blocks":
 				$blocks = explode(",", $args[1]);
-				Brush::setBlocks($sender, $blocks);
-				$blocks = Brush::getBlocks($sender);
+				$brush->setBlocks($blocks);
+				$blocks = $brush->getBlocks();
 				$blockNames = [];
 				foreach($blocks as $block) {
 					$blockNames[] = $block->getName();
@@ -164,8 +166,8 @@ class BrushCommand extends BaseCommand {
 			case "obsolete":
 			case "replaced":
 				$blocks = explode(",", $args[1]);
-				Brush::setObsolete($sender, $blocks);
-				$blocks = Brush::getObsolete($sender);
+				$brush->setObsolete($blocks);
+				$blocks = $brush->getObsolete();
 				$blockNames = [];
 				foreach($blocks as $block) {
 					$blockNames[] = $block->getName();
@@ -176,21 +178,15 @@ class BrushCommand extends BaseCommand {
 			
 			case "pe":
 			case "perfect":
-				Brush::setPerfect($sender, $args[1]);
+				$brush->setPerfect($args[1]);
 				$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("brush.perfect") . TF::AQUA . $args[1]);
 				return true;
-			
-			case "gr": // TODO: Fix gravity and move return true to end.
-			case "gravity":
-				return true;
-				Brush::setGravity($sender, $args[1]);
-				$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("brush.gravity") . TF::AQUA . $args[1]);
 			
 			case "decrement":
 			case "decrementing":
 			case "de":
-				Brush::setDecrementing($sender, $args[1]);
-				Brush::$resetSize[$sender->getId()] = Brush::getSize($sender);
+				$brush->setDecrementing($args[1]);
+				$brush->resetSize[$sender->getId()] = $brush->getSize();
 				$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("brush.decrement") . TF::AQUA . $args[1]);
 				$action = Change::ACTION_CHANGE_DECREMENT;
 				break;
@@ -198,21 +194,21 @@ class BrushCommand extends BaseCommand {
 			case "bi":
 			case "biome":
 				$biome = array_slice($args, 1);
-				Brush::setBiome($sender, implode(" ", $biome));
-				$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("brush.biome") . TF::AQUA . Biome::getBiome(Brush::getBiomeId($sender))->getName());
+				$brush->setBiome(implode(" ", $biome));
+				$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("brush.biome") . TF::AQUA . Biome::getBiome($brush->getBiomeId())->getName());
 				$action = Change::ACTION_CHANGE_BIOME;
 				break;
 				
 			case "re":
 			case "reset":
-				Brush::resetBrush($sender);
+				$this->getPlugin()->getBrushManager()->resetBrush($sender);
 				$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("commands.succeed.brush.reset"));
 				$action = Change::ACTION_RESET_BRUSH;
 				break;
 			
 			case "ho":
 			case "hollow":
-				Brush::setHollow($sender, $args[1]);
+				$brush->setHollow($args[1]);
 				$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("brush.hollow") . TF::AQUA . $args[1]);
 				$action = Change::ACTION_CHANGE_HOLLOW;
 				break;

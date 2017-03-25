@@ -6,7 +6,7 @@ use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 use Sandertv\BlockSniper\brush\BaseType;
-use Sandertv\BlockSniper\brush\Brush;
+use Sandertv\BlockSniper\brush\BrushManager;
 use Sandertv\BlockSniper\Loader;
 
 class ReplaceType extends BaseType {
@@ -19,7 +19,7 @@ class ReplaceType extends BaseType {
 		$this->level = $level;
 		$this->player = $player;
 		$this->blocks = $blocks;
-		$this->obsolete = Brush::getObsolete($this->player);
+		$this->obsolete = BrushManager::get($player)->getObsolete();
 	}
 	
 	/**
@@ -28,7 +28,7 @@ class ReplaceType extends BaseType {
 	public function fillShape(): bool {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
-			$randomBlock = Brush::$brush[$this->player->getId()]["blocks"][array_rand(Brush::$brush[$this->player->getId()]["blocks"])];
+			$randomBlock = BrushManager::get($this->player)->getBlocks()[array_rand(BrushManager::get($this->player)->getBlocks())];
 			foreach($this->obsolete as $obsolete) {
 				if($block->getId() === $obsolete->getId()) {
 					if($block->getId() !== $randomBlock->getId()) {
