@@ -48,11 +48,7 @@ class ExpandType extends BaseType {
 			}
 		}
 		foreach($undoBlocks as $selectedBlock) {
-			$temporalBlock = $selectedBlock;
-			while($temporalBlock->getSide(Block::SIDE_DOWN)->getId() === Block::AIR && $temporalBlock->y > 0) {
-				$temporalBlock = $temporalBlock->getSide(Block::SIDE_DOWN);
-			}
-			$this->level->setBlock($selectedBlock, $temporalBlock, false, false);
+			$this->level->setBlock($selectedBlock, ($selectedBlock->getSide(Block::SIDE_DOWN)->getId() === Block::AIR ? $selectedBlock->getSide(Block::SIDE_UP) : $selectedBlock->getSide(Block::SIDE_DOWN)), false, false);
 		}
 		
 		$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
