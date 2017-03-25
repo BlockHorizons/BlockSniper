@@ -2,6 +2,7 @@
 
 namespace Sandertv\BlockSniper\brush;
 
+use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\Server;
 
@@ -17,7 +18,7 @@ class Brush {
 	}
 	
 	/**
-	 * @param array  $blocks
+	 * @param array $blocks
 	 */
 	public function setBlocks(array $blocks) {
 		$this->blocks = $blocks;
@@ -63,11 +64,14 @@ class Brush {
 				$data[] = Item::get($block)->getBlock();
 			}
 		}
+		if(empty($data)) {
+			return [Block::get(Block::AIR)];
+		}
 		return $data;
 	}
 	
 	/**
-	 * @param array  $blocks
+	 * @param array $blocks
 	 */
 	public function setObsolete(array $blocks) {
 		$this->obsolete = $blocks;
@@ -85,11 +89,14 @@ class Brush {
 				$data[] = Item::get($block)->getBlock();
 			}
 		}
+		if(empty($data)) {
+			return [Block::get(Block::STONE)];
+		}
 		return $data;
 	}
 	
 	/**
-	 * @param float  $size
+	 * @param float $size
 	 */
 	public function setSize(float $size) {
 		$this->size = $size;
@@ -134,14 +141,14 @@ class Brush {
 	}
 	
 	/**
-	 * @param int    $height
+	 * @param int $height
 	 */
 	public function setHeight(int $height) {
 		$this->height = $height;
 	}
 	
 	/**
-	 * @param array  $blocks
+	 * @param array $blocks
 	 *
 	 * @return BaseType
 	 */
@@ -160,7 +167,7 @@ class Brush {
 	}
 	
 	/**
-	 * @param mixed  $biome
+	 * @param mixed $biome
 	 */
 	public function setBiome($biome) {
 		$this->biome = $biome;
