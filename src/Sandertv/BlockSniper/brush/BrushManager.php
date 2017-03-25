@@ -4,6 +4,7 @@ namespace Sandertv\BlockSniper\brush;
 
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
+use Sandertv\BlockSniper\events\BrushRecoverEvent;
 use Sandertv\BlockSniper\Loader;
 
 class BrushManager {
@@ -20,12 +21,23 @@ class BrushManager {
 			}
 			if(!empty($brushes)) {
 				foreach($brushes as $playerName => $brush) {
+					$this->getPlugin()->getServer()->getPluginManager()->callEvent($event = new BrushRecoverEvent($this->getPlugin(), $playerName, unserialize($brush)));
+					if($event->isCancelled()) {
+						continue;
+					}
 					self::$brush[$playerName] = unserialize($brush);
 					$main->getLogger()->debug(TF::GREEN . "Brush of player " . $playerName . " has been restored.");
 				}
 			}
 			$main->getLogger()->info(TF::GREEN . "All brushes have been restored.");
 		}
+	}
+	
+	/**
+	 * @return Loader
+	 */
+	public function getPlugin(): Loader {
+		return $this->main;
 	}
 	
 	/**
@@ -51,13 +63,6 @@ class BrushManager {
 		}
 		self::$brush[$player->getName()] = new Brush($player->getName(), $this->getPlugin());
 		return true;
-	}
-	
-	/**
-	 * @return Loader
-	 */
-	public function getPlugin(): Loader {
-		return $this->main;
 	}
 	
 	/**

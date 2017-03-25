@@ -7,6 +7,7 @@ use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\utils\TextFormat as TF;
 use Sandertv\BlockSniper\brush\BaseShape;
 use Sandertv\BlockSniper\brush\BaseType;
+use Sandertv\BlockSniper\events\PresetCreationEvent;
 use Sandertv\BlockSniper\Loader;
 
 class PresetListener implements Listener {
@@ -120,6 +121,12 @@ class PresetListener implements Listener {
 			case 10:
 				$player->sendMessage(TF::GREEN . $this->getOwner()->getTranslation("brush.blocks") . TF::AQUA . $message[0]);
 				$this->getOwner()->getPresetManager()->addToCreationData($player, "blocks", explode(",", strtolower($message[0])));
+				$this->getOwner()->getServer()->getPluginManager()->callEvent($event = new PresetCreationEvent($this->getOwner(), $player, $this->getOwner()->getPresetManager()->getCreationData($player)));
+				if($event->isCancelled()) {
+					unset($this->getOwner()->getPresetManager()->presetCreation[$player->getId()]);
+					$player->sendMessage(TF::RED . "[Warning] Preset creation process cancelled.");
+					break;
+				}
 				$this->getOwner()->getPresetManager()->parsePresetCreationInfo($player, $this->getOwner()->getPresetManager()->getCreationData($player, "name"));
 				$player->sendMessage(TF::GREEN . "Preset creation process finished successfully.");
 				break;
