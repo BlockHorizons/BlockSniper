@@ -2,44 +2,28 @@
 
 namespace Sandertv\BlockSniper\brush;
 
-use pocketmine\block\Block;
 use pocketmine\item\Item;
-use pocketmine\Player;
-use Sandertv\BlockSniper\Loader;
+use pocketmine\Server;
 
 class Brush {
 	
 	public $player;
 	public $resetSize = 0;
-	private $plugin;
 	private $type = "fill", $shape = "sphere", $size = 1, $hollow = false, $decrement = false;
 	private $height = 1, $perfect = true, $blocks = [], $obsolete = [], $biome = "plains";
 	
-	public function __construct(string $player, Loader $plugin) {
+	public function __construct(string $player) {
 		$this->player = $player;
-		$this->plugin = $plugin;
-		
-		$this->blocks = [Block::get(Block::STONE)];
-		$this->obsolete = [Block::get(Block::AIR)];
 	}
 	
 	/**
-	 * @param Player $player
 	 * @param array  $blocks
 	 */
 	public function setBlocks(array $blocks) {
-		unset($this->blocks);
-		foreach($blocks as $block) {
-			if(!is_numeric($block)) {
-				$this->blocks[] = Item::fromString($block)->getBlock();
-			} else {
-				$this->blocks[] = Item::get($block)->getBlock();
-			}
-		}
+		$this->blocks = $blocks;
 	}
 	
 	/**
-	 * @param Player $player
 	 * @param        $value
 	 */
 	public function setDecrementing($value) {
@@ -47,8 +31,6 @@ class Brush {
 	}
 	
 	/**
-	 * @param Player $player
-	 *
 	 * @return bool
 	 */
 	public function isDecrementing(): bool {
@@ -56,7 +38,6 @@ class Brush {
 	}
 	
 	/**
-	 * @param Player $player
 	 * @param        $value
 	 */
 	public function setPerfect($value) {
@@ -64,8 +45,6 @@ class Brush {
 	}
 	
 	/**
-	 * @param Player $player
-	 *
 	 * @return bool
 	 */
 	public function getPerfect(): bool {
@@ -73,34 +52,40 @@ class Brush {
 	}
 	
 	/**
-	 * @param Player $player
-	 *
 	 * @return array
 	 */
 	public function getObsolete(): array {
-		return $this->obsolete;
+		$data = [];
+		foreach($this->obsolete as $block) {
+			if(!is_numeric($block)) {
+				$data[] = Item::fromString($block)->getBlock();
+			} else {
+				$data[] = Item::get($block)->getBlock();
+			}
+		}
+		return $data;
 	}
 	
 	/**
-	 * @param Player $player
 	 * @param array  $blocks
 	 */
 	public function setObsolete(array $blocks) {
-		unset($this->obsolete);
-		foreach($blocks as $block) {
-			if(!is_numeric($block)) {
-				$this->obsolete[] = Item::fromString($block)->getBlock();
-			} else {
-				$this->obsolete[] = Item::get($block)->getBlock();
-			}
-		}
+		$this->obsolete = $blocks;
 	}
 	
 	/**
 	 * @return array
 	 */
 	public function getBlocks(): array {
-		return $this->blocks;
+		$data = [];
+		foreach($this->blocks as $block) {
+			if(!is_numeric($block)) {
+				$data[] = Item::fromString($block)->getBlock();
+			} else {
+				$data[] = Item::get($block)->getBlock();
+			}
+		}
+		return $data;
 	}
 	
 	/**
@@ -122,7 +107,7 @@ class Brush {
 	 */
 	public function getShape(): BaseShape {
 		$shapeName = 'Sandertv\BlockSniper\brush\shapes\\' . (ucfirst($this->shape) . "Shape");
-		$shape = new $shapeName($this->plugin->getServer()->getPlayer($this->player), $this->plugin->getServer()->getPlayer($this->player)->getLevel(), $this->size, $this->plugin->getServer()->getPlayer($this->player)->getTargetBlock(100), $this->hollow);
+		$shape = new $shapeName(Server::getInstance()->getPlayer($this->player), Server::getInstance()->getPlayer($this->player)->getLevel(), $this->size, Server::getInstance()->getPlayer($this->player)->getTargetBlock(100), $this->hollow);
 		
 		return $shape;
 	}
@@ -162,7 +147,7 @@ class Brush {
 	 */
 	public function getType(array $blocks = []): BaseType {
 		$typeName = 'Sandertv\BlockSniper\brush\types\\' . (ucfirst($this->type) . "Type");
-		$type = new $typeName($this->plugin->getServer()->getPluginManager()->getPlugin("BlockSniper"), $this->plugin->getServer()->getPlayer($this->player), $this->plugin->getServer()->getPlayer($this->player)->getLevel(), $blocks);
+		$type = new $typeName(Server::getInstance()->getPluginManager()->getPlugin("BlockSniper"), Server::getInstance()->getPlayer($this->player), Server::getInstance()->getPlayer($this->player)->getLevel(), $blocks);
 		
 		return $type;
 	}
