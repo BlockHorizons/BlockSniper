@@ -2,6 +2,8 @@
 
 namespace Sandertv\BlockSniper\brush\types;
 
+use pocketmine\block\Block;
+use pocketmine\block\Flowable;
 use pocketmine\level\generator\object\Tree;
 use pocketmine\level\Level;
 use pocketmine\Player;
@@ -28,7 +30,10 @@ class TreeType extends BaseType {
 	 * @return bool
 	 */
 	public function fillShape(): bool {
-		Tree::growTree($this->level, $this->center->x, $this->center->y, $this->center->z, new Random(mt_rand()), $this->tree);
+		if(!$this->level->getBlock($this->center) instanceof Flowable && !$this->level->getBlock($this->center)->getId() === Block::AIR) {
+			$this->center->y++;
+		}
+		Tree::growTree($this->level, $this->center->x, $this->center->y + 1, $this->center->z, new Random(mt_rand()), $this->tree);
 		return true;
 	}
 	

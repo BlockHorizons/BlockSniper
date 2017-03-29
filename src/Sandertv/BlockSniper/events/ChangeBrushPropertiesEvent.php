@@ -19,6 +19,7 @@ class ChangeBrushPropertiesEvent extends PluginEvent {
 	const ACTION_CHANGE_OBSOLETE = 7;
 	const ACTION_CHANGE_DECREMENT = 8;
 	const ACTION_CHANGE_HOLLOW = 9;
+	const ACTION_CHANGE_TREE = 10;
 	
 	public static $handlerList = null;
 	

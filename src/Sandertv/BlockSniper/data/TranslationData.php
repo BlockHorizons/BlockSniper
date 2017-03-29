@@ -72,7 +72,8 @@ class TranslationData {
 			"brush.decrement" => $language["brush"]["decrement"],
 			"brush.biome" => $language["brush"]["biome"],
 			"brush.hollow" => $language["brush"]["hollow"],
-			"brush.preset" => $language["brush"]["preset"]
+			"brush.preset" => $language["brush"]["preset"],
+			"brush.tree" => $language["brush"]["tree"]
 		];
 		return $languageSelected;
 	}
