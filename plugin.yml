@@ -84,6 +84,9 @@ permissions:
                     blocksniper.type.snowcone:
                         default: op
                         description: "Allows access to the snow cone type"
+                    blocksniper.type.tree:
+                        default: op
+                        description: "Allows access to the tree type"
             blocksniper.shape:
                 default: false
                 description: "Allows access to all BlockSniper shapes."

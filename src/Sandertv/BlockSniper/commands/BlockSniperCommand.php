@@ -13,13 +13,6 @@ class BlockSniperCommand extends BaseCommand {
 		$this->setPermission("blocksniper.command.blocksniper");
 	}
 	
-	/**
-	 * @param CommandSender $sender
-	 * @param type          $commandLabel
-	 * @param array         $args
-	 *
-	 * @return boolean
-	 */
 	public function execute(CommandSender $sender, $commandLabel, array $args) {
 		if(!$this->testPermission($sender)) {
 			$this->sendNoPermission($sender);

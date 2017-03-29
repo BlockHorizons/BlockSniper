@@ -10,6 +10,7 @@ use Sandertv\BlockSniper\brush\types\FlattenallType;
 use Sandertv\BlockSniper\brush\types\FlattenType;
 use Sandertv\BlockSniper\brush\types\LayerType;
 use Sandertv\BlockSniper\brush\types\ReplaceType;
+use Sandertv\BlockSniper\brush\types\TreeType;
 use Sandertv\BlockSniper\Loader;
 
 abstract class BaseType {
@@ -34,6 +35,7 @@ abstract class BaseType {
 	const TYPE_RAISE = 14;
 	const TYPE_TOPLAYER = 15;
 	const TYPE_SNOWCONE = 16;
+	const TYPE_TREE = 17;
 	
 	public $level;
 	public $player;
@@ -43,6 +45,7 @@ abstract class BaseType {
 	protected $blocks;
 	protected $center;
 	protected $obsolete;
+	protected $tree;
 	
 	public function __construct(Loader $main) {
 		$this->main = $main;
@@ -135,7 +138,7 @@ abstract class BaseType {
 	}
 	
 	/**
-	 * Returns the center in case of a Flatten- or LayerType.
+	 * Returns the center in case of a Flatten-, Tree- or LayerType.
 	 *
 	 * @return Position|null
 	 */
@@ -154,6 +157,18 @@ abstract class BaseType {
 	public function getObsolete(): array {
 		if($this instanceof ReplaceType) {
 			return $this->obsolete;
+		}
+		return null;
+	}
+	
+	/**
+	 * Returns the tree ID of the tree type in case of a TreeType.
+	 *
+	 * @return int
+	 */
+	public function getTree(): int {
+		if($this instanceof TreeType) {
+			return $this->tree;
 		}
 		return null;
 	}

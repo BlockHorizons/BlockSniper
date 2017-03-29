@@ -34,37 +34,38 @@ class Preset {
 	 * @param Player $player
 	 */
 	public function apply(Player $player) {
+		$brush = BrushManager::get($player);
 		foreach($this->getParsedData() as $property => $value) {
 			switch($property) {
 				case "shape":
-					BrushManager::get($player)->setShape($value);
+					$brush->setShape($value);
 					break;
 				case "type":
-					BrushManager::get($player)->setType($value);
+					$brush->setType($value);
 					break;
 				case "decrement":
-					BrushManager::get($player)->setDecrementing($value);
+					$brush->setDecrementing($value);
 					break;
 				case "size":
-					BrushManager::get($player)->setSize($value);
+					$brush->setSize($value);
 					break;
 				case "hollow":
-					BrushManager::get($player)->setHollow($value);
+					$brush->setHollow($value);
 					break;
 				case "height":
-					BrushManager::get($player)->setHeight($value);
+					$brush->setHeight($value);
 					break;
 				case "biome":
-					BrushManager::get($player)->setBiome($value);
+					$brush->setBiome($value);
 					break;
 				case "obsolete":
-					BrushManager::get($player)->setObsolete($value);
+					$brush->setObsolete($value);
 					break;
 				case "blocks":
-					BrushManager::get($player)->setBlocks($value);
+					$brush->setBlocks($value);
 					break;
 				case "perfect":
-					BrushManager::get($player)->setPerfect($value);
+					$brush->setPerfect($value);
 					break;
 			}
 		}

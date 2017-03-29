@@ -11,7 +11,7 @@ class Brush {
 	public $player;
 	public $resetSize = 0;
 	private $type = "fill", $shape = "sphere", $size = 1, $hollow = false, $decrement = false;
-	private $height = 1, $perfect = true, $blocks = [], $obsolete = [], $biome = "plains";
+	private $height = 1, $perfect = true, $blocks = [], $obsolete = [], $biome = "plains", $tree = "oak";
 	
 	public function __construct(string $player) {
 		$this->player = $player;
@@ -194,5 +194,28 @@ class Brush {
 	 */
 	public function setHollow($value) {
 		$this->hollow = (bool)$value;
+	}
+	
+	/**
+	 * @param $treeType
+	 */
+	public function setTree($treeType) {
+		$this->tree = $treeType;
+	}
+	
+	/**
+	 * @return int
+	 */
+	public function getTreeType(): int {
+		if(is_numeric($this->tree)) {
+			return $this->tree;
+		}
+		$saplings = new \ReflectionClass('pocketmine\block\Sapling');
+		$treeConst = strtoupper(str_replace(" ", "_", $this->tree));
+		if($saplings->hasConstant($treeConst)) {
+			$treeType = $saplings->getConstant($treeConst);
+			return $treeType;
+		}
+		return 0;
 	}
 }
