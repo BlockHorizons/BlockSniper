@@ -179,7 +179,7 @@ class BrushCommand extends BaseCommand {
 			case "pe":
 			case "perfect":
 				$brush->setPerfect($args[1]);
-				$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("brush.perfect") . TF::AQUA . $brush->getPerfect());
+				$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("brush.perfect") . TF::AQUA . (string)$brush->getPerfect());
 				return true;
 			
 			case "decrement":
@@ -187,7 +187,7 @@ class BrushCommand extends BaseCommand {
 			case "de":
 				$brush->setDecrementing($args[1]);
 				$brush->resetSize[$sender->getId()] = $brush->getSize();
-				$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("brush.decrement") . TF::AQUA . $brush->isDecrementing());
+				$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("brush.decrement") . TF::AQUA . (string)$brush->isDecrementing());
 				$action = Change::ACTION_CHANGE_DECREMENT;
 				break;
 			
@@ -209,7 +209,7 @@ class BrushCommand extends BaseCommand {
 			case "ho":
 			case "hollow":
 				$brush->setHollow($args[1]);
-				$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("brush.hollow") . TF::AQUA . $brush->getHollow());
+				$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("brush.hollow") . TF::AQUA . (string)$brush->getHollow());
 				$action = Change::ACTION_CHANGE_HOLLOW;
 				break;
 			
