@@ -47,7 +47,7 @@ class UndoStorer {
 	 * @return int
 	 */
 	public function getTotalUndoStores(Player $player): int {
-		return count($this->undoStore);
+		return count($this->undoStore[$player->getName()]);
 	}
 	
 	/**
