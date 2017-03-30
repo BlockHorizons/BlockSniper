@@ -17,6 +17,7 @@ use Sandertv\BlockSniper\listeners\BrushListener;
 use Sandertv\BlockSniper\listeners\PresetListener;
 use Sandertv\BlockSniper\presets\PresetManager;
 use Sandertv\BlockSniper\tasks\UndoDiminishTask;
+use Sandertv\BlockSniper\undo\UndoStorer;
 
 class Loader extends PluginBase {
 	
