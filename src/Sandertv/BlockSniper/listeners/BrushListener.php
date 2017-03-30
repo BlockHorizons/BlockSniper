@@ -40,6 +40,8 @@ class BrushListener implements Listener {
 				
 				$type->fillShape();
 				$this->decrementBrush($player);
+				
+				$event->setCancelled();
 			}
 		}
 		return true;

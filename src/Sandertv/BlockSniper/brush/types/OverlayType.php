@@ -60,7 +60,7 @@ class OverlayType extends BaseType {
 				}
 			}
 		}
-		$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
+		$this->getMain()->getUndoStore()->saveUndo($undoBlocks, $this->player);
 		return true;
 	}
 	

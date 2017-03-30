@@ -51,7 +51,7 @@ class MeltType extends BaseType {
 		foreach($undoBlocks as $selectedBlock) {
 			$this->level->setBlock($selectedBlock, Block::get(Block::AIR), false, false);
 		}
-		$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
+		$this->getMain()->getUndoStore()->saveUndo($undoBlocks, $this->player);
 		return true;
 	}
 	

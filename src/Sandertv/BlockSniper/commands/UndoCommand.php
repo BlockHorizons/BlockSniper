@@ -25,7 +25,7 @@ class UndoCommand extends BaseCommand {
 			return true;
 		}
 		
-		if(!$this->getPlugin()->getUndoStore()->undoStorageExists()) {
+		if(!$this->getPlugin()->getUndoStore()->undoStorageExists($sender)) {
 			$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.no-modifications"));
 			return true;
 		}
@@ -34,13 +34,13 @@ class UndoCommand extends BaseCommand {
 		if(isset($args[0])) {
 			if(is_numeric($args[0])) {
 				$undoAmount = $args[0];
-				if($undoAmount > ($totalUndo = $this->getPlugin()->getUndoStore()->getTotalUndoStores())) {
+				if($undoAmount > ($totalUndo = $this->getPlugin()->getUndoStore()->getTotalUndoStores($sender))) {
 					$undoAmount = $totalUndo;
 				}
 			}
 		}
 		
-		$this->getPlugin()->getUndoStore()->restoreLastUndo($undoAmount);
+		$this->getPlugin()->getUndoStore()->restoreLastUndo($undoAmount, $sender);
 		$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("commands.succeed.undo") . TF::AQUA . " (" . $undoAmount . ")");
 		return true;
 	}

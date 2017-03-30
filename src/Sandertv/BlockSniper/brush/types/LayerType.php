@@ -34,7 +34,7 @@ class LayerType extends BaseType {
 			}
 			$this->level->setBlock(new Vector3($block->x, $this->center->y + 1, $block->z), $randomBlock, false, false);
 		}
-		$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
+		$this->getMain()->getUndoStore()->saveUndo($undoBlocks, $this->player);
 		return true;
 	}
 	

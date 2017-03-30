@@ -38,7 +38,7 @@ class FlattenType extends BaseType {
 				$this->level->setBlock(new Vector3($block->x, $block->y, $block->z), $randomBlock, false, false);
 			}
 		}
-		$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
+		$this->getMain()->getUndoStore()->saveUndo($undoBlocks, $this->player);
 		return true;
 	}
 	

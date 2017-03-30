@@ -43,7 +43,7 @@ class FlattenallType extends BaseType {
 				$this->level->setBlock($block, Block::get(Block::AIR));
 			}
 		}
-		$this->getMain()->getUndoStore()->saveUndo($undoBlocks);
+		$this->getMain()->getUndoStore()->saveUndo($undoBlocks, $this->player);
 		return true;
 	}
 	
