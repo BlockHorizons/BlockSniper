@@ -41,7 +41,7 @@ class PasteCommand extends BaseCommand {
 			case "copy":
 				if($this->getPlugin()->getCloneStore()->copyStoreExists()) {
 					$this->getPlugin()->getCloneStore()->setTargetBlock($center);
-					$this->getPlugin()->getCloneStore()->pasteCopy($sender->getLevel());
+					$this->getPlugin()->getCloneStore()->pasteCopy($sender->getLevel(), $sender);
 				}
 				break;
 			
@@ -50,7 +50,7 @@ class PasteCommand extends BaseCommand {
 					$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.template-not-existing"));
 					return true;
 				}
-				$this->getPlugin()->getCloneStore()->pasteTemplate($args[1], $center);
+				$this->getPlugin()->getCloneStore()->pasteTemplate($args[1], $center, $sender);
 				break;
 			
 			default:

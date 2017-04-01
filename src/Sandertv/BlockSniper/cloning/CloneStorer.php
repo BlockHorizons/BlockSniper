@@ -6,6 +6,7 @@ use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
+use pocketmine\Player;
 use Sandertv\BlockSniper\Loader;
 
 class CloneStorer {
@@ -54,7 +55,7 @@ class CloneStorer {
 		$this->originalCenter = $center;
 	}
 	
-	public function pasteCopy(Level $level) {
+	public function pasteCopy(Level $level, Player $player) {
 		$undoBlocks = [];
 		foreach($this->copyStore as $key => $block) {
 			$Id = explode("(", $key);
@@ -71,7 +72,7 @@ class CloneStorer {
 			$undoBlocks[] = $level->getBlock($blockPos);
 			$level->setBlock($blockPos, Block::get((int)$blockId, (int)$meta), false, false);
 		}
-		$this->getOwner()->getUndoStore()->saveUndo($undoBlocks);
+		$this->getOwner()->getUndoStore()->saveUndo($undoBlocks, $player);
 	}
 	
 	public function getTargetBlock(): Vector3 {
@@ -141,7 +142,7 @@ class CloneStorer {
 	 *
 	 * @return bool
 	 */
-	public function pasteTemplate(string $templateName, Block $targetBlock): bool {
+	public function pasteTemplate(string $templateName, Block $targetBlock, Player $player): bool {
 		$data = file_get_contents($this->getOwner()->getDataFolder() . "templates/" . $templateName . ".yml");
 		$content = unserialize($data);
 		
@@ -162,7 +163,7 @@ class CloneStorer {
 			$undoBlocks[] = $targetBlock->getLevel()->getBlock($blockPos);
 			$targetBlock->getLevel()->setBlock($blockPos, Block::get((int)$blockId, (int)$meta), false, false);
 		}
-		$this->getOwner()->getUndoStore()->saveUndo($undoBlocks);
+		$this->getOwner()->getUndoStore()->saveUndo($undoBlocks, $player);
 		return true;
 	}
 	

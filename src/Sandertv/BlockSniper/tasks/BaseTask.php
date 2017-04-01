@@ -4,7 +4,7 @@ namespace Sandertv\BlockSniper\tasks;
 
 use pocketmine\scheduler\PluginTask;
 use Sandertv\BlockSniper\Loader;
-use Sandertv\BlockSniper\UndoStorer;
+use Sandertv\BlockSniper\undo\UndoStorer;
 
 abstract class BaseTask extends PluginTask {
 	
