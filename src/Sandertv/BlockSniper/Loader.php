@@ -16,6 +16,7 @@ use Sandertv\BlockSniper\data\TranslationData;
 use Sandertv\BlockSniper\listeners\BrushListener;
 use Sandertv\BlockSniper\listeners\PresetListener;
 use Sandertv\BlockSniper\presets\PresetManager;
+use Sandertv\BlockSniper\redo\RedoStorer;
 use Sandertv\BlockSniper\tasks\UndoDiminishTask;
 use Sandertv\BlockSniper\undo\UndoStorer;
 
@@ -40,6 +41,7 @@ class Loader extends PluginBase {
 	private $settings;
 	private $brushManager;
 	private $presetManager;
+	private $redoStore;
 	
 	public function onEnable() {
 		$this->reloadAll();
@@ -58,6 +60,7 @@ class Loader extends PluginBase {
 		
 		$this->brushManager = new BrushManager($this);
 		$this->undoStore = new UndoStorer($this);
+		$this->redoStore = new RedoStorer($this);
 		$this->cloneStore = new CloneStorer($this);
 		
 		$this->presetManager = new PresetManager($this);
@@ -123,6 +126,13 @@ class Loader extends PluginBase {
 	public function getUndoStore(): UndoStorer {
 		return $this->undoStore;
 	}
+
+	/**
+	 * @return RedoStorer
+	 */
+	public function getRedoStore(): RedoStorer {
+		return $this->redoStore;
+	}
 	
 	/**
 	 * @return PresetManager
@@ -130,7 +140,10 @@ class Loader extends PluginBase {
 	public function getPresetManager(): PresetManager {
 		return $this->presetManager;
 	}
-	
+
+	/**
+	 * @return BrushManager
+	 */
 	public function getBrushManager(): BrushManager {
 		return $this->brushManager;
 	}
