@@ -25,7 +25,7 @@ class UndoStorer {
 	 * @param Player $player
 	 */
 	public function saveUndo(array $blocks, Player $player) {
-		$this->undoStore[$player->getName()][] = new Undo($this, $blocks);
+		$this->undoStore[$player->getName()][] = new Undo($blocks);
 		
 		if($this->getTotalUndoStores($player) === $this->getOwner()->getSettings()->get("Maximum-Undo-Stores")) {
 			$this->unsetOldestUndo($player);

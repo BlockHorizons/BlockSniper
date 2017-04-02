@@ -10,11 +10,9 @@ class Undo {
 	private $storer;
 	
 	/**
-	 * @param UndoStorer $storer
 	 * @param Block[]    $undoBlocks
 	 */
-	public function __construct(UndoStorer $storer, array $undoBlocks) {
-		$this->storer = $storer;
+	public function __construct(array $undoBlocks) {
 		$this->undoBlocks = $undoBlocks;
 	}
 	
@@ -33,7 +31,7 @@ class Undo {
 			$redoBlocks[] = $undoBlock->getLevel()->getBlock($undoBlock);
 		}
 
-		return new Redo($this->storer, $redoBlocks);
+		return new Redo($redoBlocks);
 	}
 	
 	/**

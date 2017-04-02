@@ -10,11 +10,9 @@ class Redo {
 	private $storer;
 
 	/**
-	 * @param UndoStorer $storer
 	 * @param Block[]    $redoBlocks
 	 */
-	public function __construct(UndoStorer $storer, array $redoBlocks) {
-		$this->storer = $storer;
+	public function __construct(array $redoBlocks) {
 		$this->redoBlocks = $redoBlocks;
 	}
 
