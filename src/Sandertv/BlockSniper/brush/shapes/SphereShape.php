@@ -51,8 +51,7 @@ class SphereShape extends BaseShape {
 								continue;
 							}
 						}
-						$blocksInside[] = $this->getLevel()->getBlock(new Vector3($x, (isset($gravityY) ? $gravityY : $y), $z));
-						unset($gravityY);
+						$blocksInside[] = $this->getLevel()->getBlock(new Vector3($x, $y, $z));
 					}
 				}
 			}
