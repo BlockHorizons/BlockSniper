@@ -22,7 +22,7 @@ use Sandertv\BlockSniper\undo\UndoStorer;
 
 class Loader extends PluginBase {
 	
-	const VERSION = "1.3.2";
+	const VERSION = "1.3.3";
 	const API_TARGET = "2.0.0 - 3.0.0-ALPHA4";
 	const CONFIGURATION_VERSION = "1.0.0";
 	
