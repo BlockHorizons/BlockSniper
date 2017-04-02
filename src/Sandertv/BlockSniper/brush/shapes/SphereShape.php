@@ -61,7 +61,7 @@ class SphereShape extends BaseShape {
 	}
 	
 	public function getName(): string {
-		return "Sphere";
+		return $this->hollow ? "Hollow Sphere" : "Sphere";
 	}
 	
 	public function getPermission(): string {
