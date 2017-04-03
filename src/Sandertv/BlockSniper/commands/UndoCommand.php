@@ -12,6 +12,7 @@ class UndoCommand extends BaseCommand {
 	public function __construct(Loader $owner) {
 		parent::__construct($owner, "undo", "Undo your last BlockSniper modification", "", ["u"]);
 		$this->setPermission("blocksniper.command.undo");
+		$this->setUsage(TF::RED . "[Usage] /undo [amount]");
 	}
 	
 	public function execute(CommandSender $sender, $commandLabel, array $args) {

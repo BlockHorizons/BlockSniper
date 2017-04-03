@@ -12,6 +12,7 @@ class RedoCommand extends BaseCommand {
 	public function __construct(Loader $owner) {
 		parent::__construct($owner, "redo", "Redo your last BlockSniper modification", "", []);
 		$this->setPermission("blocksniper.command.redo");
+		$this->setUsage(TF::RED . "[Usage] /redo [amount]");
 	}
 
 	public function execute(CommandSender $sender, $commandLabel, array $args) {

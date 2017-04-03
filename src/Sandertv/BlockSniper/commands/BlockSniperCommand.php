@@ -11,6 +11,7 @@ class BlockSniperCommand extends BaseCommand {
 	public function __construct(Loader $owner) {
 		parent::__construct($owner, "blocksniper", "Get information or change things related to BlockSniper", "[language|reload] [lang]", ["bs"]);
 		$this->setPermission("blocksniper.command.blocksniper");
+		$this->setUsage(TF::RED . "[Usage] /blocksniper [language [lang]");
 	}
 	
 	public function execute(CommandSender $sender, $commandLabel, array $args) {

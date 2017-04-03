@@ -10,6 +10,7 @@ use Sandertv\BlockSniper\commands\BlockSniperCommand;
 use Sandertv\BlockSniper\commands\BrushCommand;
 use Sandertv\BlockSniper\commands\cloning\CloneCommand;
 use Sandertv\BlockSniper\commands\cloning\PasteCommand;
+use Sandertv\BlockSniper\commands\RedoCommand;
 use Sandertv\BlockSniper\commands\UndoCommand;
 use Sandertv\BlockSniper\data\ConfigData;
 use Sandertv\BlockSniper\data\TranslationData;
@@ -91,6 +92,7 @@ class Loader extends PluginBase {
 			"blocksniper" => new BlockSniperCommand($this),
 			"brush" => new BrushCommand($this),
 			"undo" => new UndoCommand($this),
+			"redo" => new RedoCommand($this),
 			"clone" => new CloneCommand($this),
 			"paste" => new PasteCommand($this)
 		];

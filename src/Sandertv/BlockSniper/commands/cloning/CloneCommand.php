@@ -15,6 +15,7 @@ class CloneCommand extends BaseCommand {
 	public function __construct(Loader $owner) {
 		parent::__construct($owner, "clone", "Clone the area you're watching", "<type> <radiusXheight> [name]", []);
 		$this->setPermission("blocksniper.command.clone");
+		$this->setUsage(TF::RED . "[Usage] /clone <type> <radiusXheight> [name]");
 	}
 	
 	public function execute(CommandSender $sender, $commandLabel, array $args) {
@@ -29,7 +30,7 @@ class CloneCommand extends BaseCommand {
 		}
 		
 		if(count($args) < 2 || count($args) > 3) {
-			$sender->sendMessage(TF::RED . "[Usage] /clone <type> <radiusXheight> [name]");
+			$sender->sendMessage($this->getUsage());
 			return true;
 		}
 		
