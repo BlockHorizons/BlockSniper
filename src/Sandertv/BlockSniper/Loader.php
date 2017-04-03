@@ -16,7 +16,6 @@ use Sandertv\BlockSniper\data\TranslationData;
 use Sandertv\BlockSniper\listeners\BrushListener;
 use Sandertv\BlockSniper\listeners\PresetListener;
 use Sandertv\BlockSniper\presets\PresetManager;
-use Sandertv\BlockSniper\redo\RedoStorer;
 use Sandertv\BlockSniper\tasks\UndoDiminishTask;
 use Sandertv\BlockSniper\undo\UndoStorer;
 
