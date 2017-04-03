@@ -2,7 +2,7 @@
 # Configuration for BlockSniper: A WorldEdit plugin for PocketMine.
 
 # Internal Property: Do not change.
-Configuration-Version: "1.0.0"
+Configuration-Version: "1.0.1"
 
 # Auto-update Configuration with new version.
 Auto-Configuration-Update: true
@@ -28,4 +28,7 @@ Reset-Decrement-Brush: true
 
 # Whether to save Brush properties of players after server restart, or dispose them.
 Save-Brush-Properties: true
+
+# Whether to drop the plants when using LeafBlower brush, or dispose the items.
+Drop-Leafblower-Plants: true
 ...

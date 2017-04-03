@@ -13,6 +13,7 @@ class PasteCommand extends BaseCommand {
 	public function __construct(Loader $owner) {
 		parent::__construct($owner, "paste", "Paste the selected clone or template", "<type> [name]", []);
 		$this->setPermission("blocksniper.command.paste");
+		$this->setUsage(TF::RED . "[Usage] /paste <type> [name]");
 	}
 	
 	public function execute(CommandSender $sender, $commandLabel, array $args) {
@@ -27,7 +28,7 @@ class PasteCommand extends BaseCommand {
 		}
 		
 		if(count($args) < 1 || count($args) > 3) {
-			$sender->sendMessage(TF::RED . "[Usage] /paste <type> [name]");
+			$sender->sendMessage($this->getUsage());
 			return true;
 		}
 		

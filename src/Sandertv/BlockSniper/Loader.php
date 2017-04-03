@@ -10,6 +10,7 @@ use Sandertv\BlockSniper\commands\BlockSniperCommand;
 use Sandertv\BlockSniper\commands\BrushCommand;
 use Sandertv\BlockSniper\commands\cloning\CloneCommand;
 use Sandertv\BlockSniper\commands\cloning\PasteCommand;
+use Sandertv\BlockSniper\commands\RedoCommand;
 use Sandertv\BlockSniper\commands\UndoCommand;
 use Sandertv\BlockSniper\data\ConfigData;
 use Sandertv\BlockSniper\data\TranslationData;
@@ -21,9 +22,9 @@ use Sandertv\BlockSniper\undo\UndoStorer;
 
 class Loader extends PluginBase {
 	
-	const VERSION = "1.3.2";
+	const VERSION = "1.3.3";
 	const API_TARGET = "2.0.0 - 3.0.0-ALPHA4";
-	const CONFIGURATION_VERSION = "1.0.0";
+	const CONFIGURATION_VERSION = "1.0.1";
 	
 	public $availableLanguages = [
 		"en",
@@ -40,6 +41,7 @@ class Loader extends PluginBase {
 	private $settings;
 	private $brushManager;
 	private $presetManager;
+	private $redoStore;
 	
 	public function onEnable() {
 		$this->reloadAll();
@@ -90,6 +92,7 @@ class Loader extends PluginBase {
 			"blocksniper" => new BlockSniperCommand($this),
 			"brush" => new BrushCommand($this),
 			"undo" => new UndoCommand($this),
+			"redo" => new RedoCommand($this),
 			"clone" => new CloneCommand($this),
 			"paste" => new PasteCommand($this)
 		];
@@ -130,7 +133,10 @@ class Loader extends PluginBase {
 	public function getPresetManager(): PresetManager {
 		return $this->presetManager;
 	}
-	
+
+	/**
+	 * @return BrushManager
+	 */
 	public function getBrushManager(): BrushManager {
 		return $this->brushManager;
 	}

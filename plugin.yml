@@ -1,6 +1,6 @@
 ---
 name: "BlockSniper"
-version: 1.3.2
+version: 1.3.3
 api: [2.0.0, 2.1.0, 3.0.0-ALPHA1, 3.0.0-ALPHA2, 3.0.0-ALPHA3, 3.0.0-ALPHA4]
 author: "Sandertv"
 main: Sandertv\BlockSniper\Loader
@@ -20,6 +20,9 @@ permissions:
                     blocksniper.command.undo:
                         default: op
                         description: "Allows access to the undo command."
+                    blocksniper.command.redo:
+                        default: op
+                        description: "Allows access to the redo command."
                     blocksniper.command.blocksniper:
                         default: op
                         description: "Allows access to the BlockSniper commmand."
@@ -41,52 +44,52 @@ permissions:
                         description: "Allows access to the overlay type."
                     blocksniper.type.layer:
                         default: op
-                        description: "Allows access to the layer type"
+                        description: "Allows access to the layer type."
                     blocksniper.type.replace:
                         default: op
-                        description: "Allows access to the replace type"
+                        description: "Allows access to the replace type."
                     blocksniper.type.clean:
                         default: op
-                        description: "Allows access to the clean type"
+                        description: "Allows access to the clean type."
                     blocksniper.type.drain:
                         default: op
-                        description: "Allows access to the drain type"
+                        description: "Allows access to the drain type."
                     blocksniper.type.leafblower:
                         default: op
-                        description: "Allows access to the leaf blower type"
+                        description: "Allows access to the leaf blower type."
                     blocksniper.type.flatten:
                         default: op
-                        description: "Allows access to the flatten type"
+                        description: "Allows access to the flatten type."
                     blocksniper.type.flattenall:
                         default: op
-                        description: "Allows access to the flatten all type"
+                        description: "Allows access to the flatten all type."
                     blocksniper.type.expand:
                         default: op
-                        description: "Allows access to the expand type"
+                        description: "Allows access to the expand type."
                     blocksniper.type.melt:
                         default: op
-                        description: "Allows access to the melt type"
+                        description: "Allows access to the melt type."
                     blocksniper.type.cleanentities:
                         default: op
-                        description: "Allows access to the clean entities type"
+                        description: "Allows access to the clean entities type."
                     blocksniper.type.biome:
                         default: op
-                        description: "Allows access to the biome type"
+                        description: "Allows access to the biome type."
                     blocksniper.type.raise:
                         default: op
-                        description: "Allows access to the raise type"
+                        description: "Allows access to the raise type."
                     blocksniper.type.toplayer:
                         default: op
-                        description: "Allows access to the top layer type"
+                        description: "Allows access to the top layer type."
                     blocksniper.type.replaceall:
                         default: op
-                        description: "Allows access to the replace all type"
+                        description: "Allows access to the replace all type."
                     blocksniper.type.snowcone:
                         default: op
-                        description: "Allows access to the snow cone type"
+                        description: "Allows access to the snow cone type."
                     blocksniper.type.tree:
                         default: op
-                        description: "Allows access to the tree type"
+                        description: "Allows access to the tree type."
             blocksniper.shape:
                 default: false
                 description: "Allows access to all BlockSniper shapes."
