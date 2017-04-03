@@ -59,7 +59,6 @@ class Loader extends PluginBase {
 		
 		$this->brushManager = new BrushManager($this);
 		$this->undoStore = new UndoStorer($this);
-		$this->redoStore = new RedoStorer($this);
 		$this->cloneStore = new CloneStorer($this);
 		
 		$this->presetManager = new PresetManager($this);
@@ -124,13 +123,6 @@ class Loader extends PluginBase {
 	 */
 	public function getUndoStore(): UndoStorer {
 		return $this->undoStore;
-	}
-
-	/**
-	 * @return RedoStorer
-	 */
-	public function getRedoStore(): RedoStorer {
-		return $this->redoStore;
 	}
 	
 	/**
