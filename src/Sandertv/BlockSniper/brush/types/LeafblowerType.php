@@ -30,7 +30,9 @@ class LeafblowerType extends BaseType {
 		foreach($this->blocks as $block) {
 			if($block instanceof Flowable) {
 				$undoBlocks[] = $block;
-				$this->level->dropItem($block, Item::get($block->getId()));
+				if($this->getMain()->getSettings()->get("Drop-Leafblower-Plants")) {
+					$this->level->dropItem($block, Item::get($block->getId()));
+				}
 				$this->level->setBlock($block, Block::get(Block::AIR), false, false);
 			}
 		}
