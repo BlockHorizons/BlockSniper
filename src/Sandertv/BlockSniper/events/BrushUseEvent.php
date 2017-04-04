@@ -17,8 +17,8 @@ class BrushUseEvent extends BaseEvent implements Cancellable {
 	public $type;
 	public $shape;
 	
-	public function __construct(Loader $owner, Player $player, BaseShape $shape, BaseType $type) {
-		parent::__construct($owner);
+	public function __construct(Loader $loader, Player $player, BaseShape $shape, BaseType $type) {
+		parent::__construct($loader);
 		$this->player = $player;
 		$this->type = $type;
 		$this->shape = $shape;

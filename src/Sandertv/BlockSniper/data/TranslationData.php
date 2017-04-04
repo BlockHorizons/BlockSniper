@@ -7,10 +7,10 @@ use Sandertv\BlockSniper\Loader;
 class TranslationData {
 	
 	private $messages = [];
-	private $plugin;
+	private $loader;
 	
-	public function __construct(Loader $plugin) {
-		$this->plugin = $plugin;
+	public function __construct(Loader $loader) {
+		$this->loader = $loader;
 		
 		$this->collectTranslations();
 	}
@@ -21,17 +21,17 @@ class TranslationData {
 	public function collectTranslations(): bool {
 		$languageSelected = false;
 		$language = [];
-		foreach($this->getOwner()->availableLanguages as $availableLanguage) {
-			if($this->getOwner()->getSettings()->get("Message-Language") === $availableLanguage) {
-				$this->getOwner()->saveResource("languages/" . $availableLanguage . ".yml");
-				$language = yaml_parse_file($this->getOwner()->getDataFolder() . "languages/" . $availableLanguage . ".yml");
+		foreach($this->getLoader()->availableLanguages as $availableLanguage) {
+			if($this->getLoader()->getSettings()->get("Message-Language") === $availableLanguage) {
+				$this->getLoader()->saveResource("languages/" . $availableLanguage . ".yml");
+				$language = yaml_parse_file($this->getLoader()->getDataFolder() . "languages/" . $availableLanguage . ".yml");
 				$languageSelected = true;
 				break;
 			}
 		}
 		if(!$languageSelected) {
-			$this->getOwner()->saveResource("languages/en.yml");
-			$language = yaml_parse_file($this->getOwner()->getDataFolder() . "languages/en.yml");
+			$this->getLoader()->saveResource("languages/en.yml");
+			$language = yaml_parse_file($this->getLoader()->getDataFolder() . "languages/en.yml");
 		}
 		
 		// This is going to burn your eyes. Don't look at it for too long.
@@ -81,8 +81,8 @@ class TranslationData {
 	/**
 	 * @return Loader
 	 */
-	public function getOwner(): Loader {
-		return $this->plugin;
+	public function getLoader(): Loader {
+		return $this->loader;
 	}
 	
 	/**

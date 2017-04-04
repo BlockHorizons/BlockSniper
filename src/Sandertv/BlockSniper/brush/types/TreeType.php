@@ -11,17 +11,15 @@ use pocketmine\utils\Random;
 use Sandertv\BlockSniper\brush\BaseType;
 use Sandertv\BlockSniper\brush\BrushManager;
 use Sandertv\BlockSniper\Loader;
+use Sandertv\BlockSniper\undo\UndoStorer;
 
 class TreeType extends BaseType {
 	
 	/*
 	 * Grows a tree on the target block. This brush can not undo.
 	 */
-	public function __construct(Loader $main, Player $player, Level $level, array $blocks) {
-		parent::__construct($main);
-		$this->level = $level;
-		$this->blocks = $blocks;
-		$this->player = $player;
+	public function __construct(UndoStorer $undoStorer, Player $player, Level $level, array $blocks) {
+		parent::__construct($undoStorer, $player, $level, $blocks);
 		$this->center = $player->getTargetBlock(100);
 		$this->tree = BrushManager::get($player)->getTreeType();
 	}

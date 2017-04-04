@@ -8,16 +8,16 @@ use Sandertv\BlockSniper\Loader;
 class ConfigData {
 	
 	private $settings = [];
-	private $plugin;
+	private $loader;
 	
-	public function __construct(Loader $plugin) {
-		$this->plugin = $plugin;
+	public function __construct(Loader $loader) {
+		$this->loader = $loader;
 		
 		$this->collectSettings();
 	}
 	
 	public function collectSettings() {
-		$cfg = yaml_parse_file($this->getOwner()->getDataFolder() . "settings.yml");
+		$cfg = yaml_parse_file($this->getLoader()->getDataFolder() . "settings.yml");
 		@$this->settings = [
 			"Configuration-Version" => $cfg["Configuration-Version"],
 			"Auto-Configuration-Update" => $cfg["Auto-Configuration-Update"] ?? true,
@@ -32,26 +32,26 @@ class ConfigData {
 		];
 		if($cfg["Configuration-Version"] !== Loader::CONFIGURATION_VERSION) {
 			$autoUpdate = $cfg["Auto-Configuration-Update"];
-			$this->getOwner()->getLogger()->info(TF::AQUA . "[BlockSniper] A new Configuration version was found. " . ($autoUpdate ? "Updating Configuration file..." : null));
+			$this->getLoader()->getLogger()->info(TF::AQUA . "[BlockSniper] A new Configuration version was found. " . ($autoUpdate ? "Updating Configuration file..." : null));
 			if($autoUpdate) {
 				$this->updateConfig();
 			}
 		} else {
-			$this->getOwner()->getLogger()->info(TF::AQUA . "[BlockSniper] No new Configuration version found, Configuration is up to date.");
+			$this->getLoader()->getLogger()->info(TF::AQUA . "[BlockSniper] No new Configuration version found, Configuration is up to date.");
 		}
 	}
 	
 	/**
 	 * @return Loader
 	 */
-	public function getOwner(): Loader {
-		return $this->plugin;
+	public function getLoader(): Loader {
+		return $this->loader;
 	}
 	
 	public function updateConfig() {
-		unlink($this->getOwner()->getDataFolder() . "settings.yml");
+		unlink($this->getLoader()->getDataFolder() . "settings.yml");
 		$this->settings["Configuration-Version"] = Loader::CONFIGURATION_VERSION;
-		yaml_emit_file($this->getOwner()->getDataFolder() . "settings.yml", $this->settings);
+		yaml_emit_file($this->getLoader()->getDataFolder() . "settings.yml", $this->settings);
 	}
 	
 	/**
@@ -75,6 +75,6 @@ class ConfigData {
 	}
 	
 	public function save() {
-		yaml_emit_file($this->plugin->getDataFolder() . "settings.yml", $this->settings);
+		yaml_emit_file($this->getLoader()->getDataFolder() . "settings.yml", $this->settings);
 	}
 }

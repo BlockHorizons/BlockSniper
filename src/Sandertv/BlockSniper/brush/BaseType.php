@@ -2,6 +2,7 @@
 
 namespace Sandertv\BlockSniper\brush;
 
+use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\Player;
@@ -12,6 +13,7 @@ use Sandertv\BlockSniper\brush\types\LayerType;
 use Sandertv\BlockSniper\brush\types\ReplaceType;
 use Sandertv\BlockSniper\brush\types\TreeType;
 use Sandertv\BlockSniper\Loader;
+use Sandertv\BlockSniper\undo\UndoStorer;
 
 abstract class BaseType {
 	
@@ -36,19 +38,30 @@ abstract class BaseType {
 	const TYPE_TOPLAYER = 15;
 	const TYPE_SNOWCONE = 16;
 	const TYPE_TREE = 17;
-	
-	public $level;
+
 	public $player;
-	public $main;
-	
+
+	protected $undoStorer;
+	protected $level;
 	protected $biome;
 	protected $blocks;
 	protected $center;
 	protected $obsolete;
 	protected $tree;
-	
-	public function __construct(Loader $main) {
-		$this->main = $main;
+
+	/**
+	 * BaseType constructor.
+	 *
+	 * @param UndoStorer $undoStorer
+	 * @param Player     $player
+	 * @param Level      $level
+	 * @param Block[]    $blocks
+	 */
+	public function __construct(UndoStorer $undoStorer, Player $player, Level $level, array $blocks) {
+		$this->undoStorer = $undoStorer;
+		$this->player = $player;
+		$this->level = $level;
+		$this->blocks = $blocks;
 	}
 	
 	/**
@@ -92,10 +105,10 @@ abstract class BaseType {
 	public abstract function fillShape(): bool;
 	
 	/**
-	 * @return Loader
+	 * @return UndoStorer
 	 */
-	public function getMain(): Loader {
-		return $this->main;
+	public function getUndoStore(): UndoStorer {
+		return $this->undoStorer;
 	}
 	
 	/**

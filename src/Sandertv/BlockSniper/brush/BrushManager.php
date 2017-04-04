@@ -11,33 +11,33 @@ class BrushManager {
 	
 	private static $brush = [];
 	
-	public function __construct(Loader $main) {
-		$this->main = $main;
-		if($main->getSettings()->get("Save-Brush-Properties")) {
+	public function __construct(Loader $loader) {
+		$this->loader = $loader;
+		if($loader->getSettings()->get("Save-Brush-Properties")) {
 			$brushes = [];
-			if(is_file($main->getDataFolder() . "brushes.yml")) {
-				$brushes = yaml_parse_file($main->getDataFolder() . "brushes.yml");
-				unlink($main->getDataFolder() . "brushes.yml");
+			if(is_file($loader->getDataFolder() . "brushes.yml")) {
+				$brushes = yaml_parse_file($loader->getDataFolder() . "brushes.yml");
+				unlink($loader->getDataFolder() . "brushes.yml");
 			}
 			if(!empty($brushes)) {
 				foreach($brushes as $playerName => $brush) {
-					$this->getPlugin()->getServer()->getPluginManager()->callEvent($event = new BrushRecoverEvent($this->getPlugin(), $playerName, unserialize($brush)));
+					$this->getLoader()->getServer()->getPluginManager()->callEvent($event = new BrushRecoverEvent($this->getLoader(), $playerName, unserialize($brush)));
 					if($event->isCancelled()) {
 						continue;
 					}
 					self::$brush[$playerName] = unserialize($brush);
-					$main->getLogger()->debug(TF::GREEN . "Brush of player " . $playerName . " has been restored.");
+					$loader->getLogger()->debug(TF::GREEN . "Brush of player " . $playerName . " has been restored.");
 				}
 			}
-			$main->getLogger()->info(TF::GREEN . "All brushes have been restored.");
+			$loader->getLogger()->info(TF::GREEN . "All brushes have been restored.");
 		}
 	}
 	
 	/**
 	 * @return Loader
 	 */
-	public function getPlugin(): Loader {
-		return $this->main;
+	public function getLoader(): Loader {
+		return $this->loader;
 	}
 	
 	/**
@@ -61,7 +61,7 @@ class BrushManager {
 		if(isset(self::$brush[$player->getName()])) {
 			return false;
 		}
-		self::$brush[$player->getName()] = new Brush($player->getName(), $this->getPlugin());
+		self::$brush[$player->getName()] = new Brush($player->getName(), $this->getLoader());
 		return true;
 	}
 	
@@ -83,6 +83,6 @@ class BrushManager {
 		foreach(self::$brush as $playerName => $brush) {
 			$data[$playerName] = serialize($brush);
 		}
-		yaml_emit_file($this->getPlugin()->getDataFolder() . "brushes.yml", $data);
+		yaml_emit_file($this->getLoader()->getDataFolder() . "brushes.yml", $data);
 	}
 }

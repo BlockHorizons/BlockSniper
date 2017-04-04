@@ -12,12 +12,9 @@ use Sandertv\BlockSniper\brush\BrushManager;
 class CylinderShape extends BaseShape {
 	
 	public function __construct(Player $player, Level $level, int $radius = null, Position $center = null, bool $hollow = false) {
-		$this->level = $level;
+		parent::__construct($player, $level, $center, $hollow);
 		$this->radius = $radius;
 		$this->height = BrushManager::get($player)->getHeight();
-		$this->center = $center;
-		$this->player = $player;
-		$this->hollow = $hollow;
 	}
 	
 	/**

@@ -19,17 +19,16 @@ abstract class BaseShape {
 	const SHAPE_CUBE = 1;
 	const SHAPE_CYLINDER = 2;
 	const SHAPE_CUBOID = 3;
-	
-	public $level;
+
 	public $player;
-	public $main;
-	
+
+	protected $level;
 	protected $width;
 	protected $radius;
 	protected $center;
 	protected $hollow;
 	protected $height;
-	
+
 	/**
 	 * @param string $shape
 	 *
@@ -63,7 +62,14 @@ abstract class BaseShape {
 		define(('Sandertv\BlockSniper\brush\BaseShape\\' . $shapeConst), $number);
 		return true;
 	}
-	
+
+	public function __construct(Player $player, Level $level, Position $center, bool $hollow) {
+		$this->player = $player;
+		$this->level = $level;
+		$this->center = $center;
+		$this->hollow = $hollow;
+	}
+
 	/**
 	 * Returns the name of the shape.
 	 *
@@ -147,6 +153,7 @@ abstract class BaseShape {
 	 * Returns true if the shape is hollow, false if it is not.
 	 *
 	 * @return bool
+	 * @deprecated
 	 */
 	public function getHollow(): bool {
 		return $this->hollow;
@@ -162,5 +169,14 @@ abstract class BaseShape {
 			return $this->height;
 		}
 		return null;
+	}
+
+	/**
+	 * Returns true if the shape is hollow, false if it is not.
+	 *
+	 * @return bool
+	 */
+	public function isHollow(): bool {
+		return $this->hollow;
 	}
 }

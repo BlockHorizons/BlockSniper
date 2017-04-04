@@ -8,17 +8,15 @@ use pocketmine\level\Level;
 use pocketmine\Player;
 use Sandertv\BlockSniper\brush\BaseType;
 use Sandertv\BlockSniper\Loader;
+use Sandertv\BlockSniper\undo\UndoStorer;
 
 class ExpandType extends BaseType {
 	
 	/*
 	 * Expands the terrain with blocks below it.
 	 */
-	public function __construct(Loader $main, Player $player, Level $level, array $blocks = []) {
-		parent::__construct($main);
-		$this->level = $level;
-		$this->player = $player;
-		$this->blocks = $blocks;
+	public function __construct(UndoStorer $undoStorer, Player $player, Level $level, array $blocks) {
+		parent::__construct($undoStorer, $player, $level, $blocks);
 	}
 	
 	/**
@@ -51,7 +49,7 @@ class ExpandType extends BaseType {
 			$this->level->setBlock($selectedBlock, ($selectedBlock->getSide(Block::SIDE_DOWN)->getId() === Block::AIR ? $selectedBlock->getSide(Block::SIDE_UP) : $selectedBlock->getSide(Block::SIDE_DOWN)), false, false);
 		}
 		
-		$this->getMain()->getUndoStore()->saveUndo($undoBlocks, $this->player);
+		$this->getUndoStore()->saveUndo($undoBlocks, $this->player);
 		return true;
 	}
 	

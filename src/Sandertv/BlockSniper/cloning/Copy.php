@@ -10,9 +10,9 @@ use Sandertv\BlockSniper\Loader;
 
 class Copy extends BaseClone {
 	
-	public function __construct(Loader $owner, Level $level, Position $center = null, float $radius = null, int $height = 0) {
-		parent::__construct($owner);
-		$this->owner = $owner;
+	public function __construct(Loader $loader, Level $level, Position $center = null, float $radius = null, int $height = 0) {
+		parent::__construct($loader);
+		$this->loader = $loader;
 		$this->level = $level;
 		$this->center = $center;
 		$this->radius = $radius;
@@ -55,8 +55,8 @@ class Copy extends BaseClone {
 			}
 		}
 		
-		$this->getOwner()->getCloneStore()->setOriginalCenter($this->center);
-		$this->getOwner()->getCloneStore()->saveCopy($copyBlocks);
+		$this->getLoader()->getCloneStore()->setOriginalCenter($this->center);
+		$this->getLoader()->getCloneStore()->saveCopy($copyBlocks);
 		return true;
 	}
 	

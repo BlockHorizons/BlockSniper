@@ -9,12 +9,12 @@ use Sandertv\BlockSniper\Loader;
 class PresetManager {
 	
 	public $presetCreation = [];
-	private $main;
+	private $loader;
 	private $data;
 	private $preset;
 	
-	public function __construct(Loader $main) {
-		$this->main = $main;
+	public function __construct(Loader $loader) {
+		$this->loader = $loader;
 		
 		if(is_file($main->getDataFolder() . "presets.yml")) {
 			$this->data = yaml_parse_file($main->getDataFolder() . "presets.yml");
@@ -139,14 +139,14 @@ class PresetManager {
 				}
 			}
 		}
-		yaml_emit_file($this->getOwner()->getDataFolder() . "presets.yml", $data);
+		yaml_emit_file($this->getLoader()->getDataFolder() . "presets.yml", $data);
 	}
 	
 	/**
 	 * @return Loader
 	 */
-	public function getOwner(): Loader {
-		return $this->main;
+	public function getLoader(): Loader {
+		return $this->loader;
 	}
 	
 	/**

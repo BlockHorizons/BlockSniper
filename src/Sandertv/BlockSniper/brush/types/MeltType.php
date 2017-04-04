@@ -8,17 +8,15 @@ use pocketmine\level\Level;
 use pocketmine\Player;
 use Sandertv\BlockSniper\brush\BaseType;
 use Sandertv\BlockSniper\Loader;
+use Sandertv\BlockSniper\undo\UndoStorer;
 
 class MeltType extends BaseType {
 	
 	/*
 	 * Melts away every block with more than 2 open sides within the brush radius.
 	 */
-	public function __construct(Loader $main, Player $player, Level $level, array $blocks = []) {
-		parent::__construct($main);
-		$this->level = $level;
-		$this->player = $player;
-		$this->blocks = $blocks;
+	public function __construct(UndoStorer $undoStorer, Player $player, Level $level, array $blocks) {
+		parent::__construct($undoStorer, $player, $level, $blocks);
 	}
 	
 	/**
@@ -51,7 +49,7 @@ class MeltType extends BaseType {
 		foreach($undoBlocks as $selectedBlock) {
 			$this->level->setBlock($selectedBlock, Block::get(Block::AIR), false, false);
 		}
-		$this->getMain()->getUndoStore()->saveUndo($undoBlocks, $this->player);
+		$this->getUndoStore()->saveUndo($undoBlocks, $this->player);
 		return true;
 	}
 	

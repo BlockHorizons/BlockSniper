@@ -7,7 +7,6 @@ use pocketmine\block\Block;
 class Undo {
 	
 	private $undoBlocks;
-	private $storer;
 	
 	/**
 	 * @param Block[]    $undoBlocks

@@ -14,8 +14,8 @@ class BrushRecoverEvent extends PluginEvent implements Cancellable {
 	public $player;
 	public $brush;
 	
-	public function __construct(Loader $plugin, string $player, Brush $brush) {
-		parent::__construct($plugin);
+	public function __construct(Loader $loader, string $player, Brush $brush) {
+		parent::__construct($loader);
 		$this->player = $player;
 		$this->brush = $brush;
 	}

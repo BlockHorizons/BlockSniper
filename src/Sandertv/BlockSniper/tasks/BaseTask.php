@@ -8,24 +8,24 @@ use Sandertv\BlockSniper\undo\UndoStorer;
 
 abstract class BaseTask extends PluginTask {
 	
-	public $owner;
+	public $loader;
 	
-	public function __construct(Loader $owner) {
-		parent::__construct($owner);
-		$this->owner = $owner;
+	public function __construct(Loader $loader) {
+		parent::__construct($loader);
+		$this->owner = $loader;
 	}
 	
 	/**
 	 * @return UndoStorer
 	 */
 	public function getUndoStore(): UndoStorer {
-		return $this->getPlugin()->getUndoStore();
+		return $this->getLoader()->getUndoStore();
 	}
 	
 	/**
 	 * @return Loader
 	 */
-	public function getPlugin(): Loader {
-		return $this->owner;
+	public function getLoader(): Loader {
+		return $this->loader;
 	}
 }

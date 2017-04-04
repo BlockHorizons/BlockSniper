@@ -9,17 +9,15 @@ use pocketmine\level\Level;
 use pocketmine\Player;
 use Sandertv\BlockSniper\brush\BaseType;
 use Sandertv\BlockSniper\Loader;
+use Sandertv\BlockSniper\undo\UndoStorer;
 
 class LeafblowerType extends BaseType {
 	
 	/*
 	 * Blows away all plants and flowers within the brush radius.
 	 */
-	public function __construct(Loader $main, Player $player, Level $level, array $blocks = []) {
-		parent::__construct($main);
-		$this->level = $level;
-		$this->player = $player;
-		$this->blocks = $blocks;
+	public function __construct(UndoStorer $undoStorer, Player $player, Level $level, array $blocks) {
+		parent::__construct($undoStorer, $player, $level, $blocks);
 	}
 	
 	/**
@@ -36,7 +34,7 @@ class LeafblowerType extends BaseType {
 				$this->level->setBlock($block, Block::get(Block::AIR), false, false);
 			}
 		}
-		$this->getMain()->getUndoStore()->saveUndo($undoBlocks, $this->player);
+		$this->getUndoStore()->saveUndo($undoBlocks, $this->player);
 		return true;
 	}
 	

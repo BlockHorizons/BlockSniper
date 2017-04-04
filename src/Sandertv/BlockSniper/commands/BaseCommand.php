@@ -11,11 +11,11 @@ use Sandertv\BlockSniper\Loader;
 
 abstract class BaseCommand extends Command implements PluginIdentifiableCommand {
 	
-	protected $owner;
+	protected $loader;
 	
-	public function __construct(Loader $owner, $name, $description = "", $usageMessage = null, array $aliases = []) {
+	public function __construct(Loader $loader, $name, $description = "", $usageMessage = null, array $aliases = []) {
 		parent::__construct($name, $description, $usageMessage, $aliases);
-		$this->owner = $owner;
+		$this->loader = $loader;
 		$this->usageMessage = "";
 	}
 	
@@ -23,27 +23,36 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand 
 	 * @param CommandSender $sender
 	 */
 	public function sendConsoleError(CommandSender $sender) {
-		$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.console-use"));
+		$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.console-use"));
 	}
 	
 	/**
 	 * @return Loader
 	 */
+	public function getLoader(): Loader {
+		return $this->loader;
+	}
+
+	/**
+	 * Annoying we have to implement this function. Messes up code consistency.
+	 *
+	 * @return Loader
+	 */
 	public function getPlugin(): Loader {
-		return $this->owner;
+		return $this->loader;
 	}
 	
 	/**
 	 * @param CommandSender $sender
 	 */
 	public function sendNoPermission(CommandSender $sender) {
-		$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.no-permission"));
+		$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.no-permission"));
 	}
 	
 	/**
 	 * @return ConfigData
 	 */
 	public function getSettings(): ConfigData {
-		return $this->getPlugin()->getSettings();
+		return $this->getLoader()->getSettings();
 	}
 }

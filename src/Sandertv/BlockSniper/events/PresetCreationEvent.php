@@ -14,8 +14,8 @@ class PresetCreationEvent extends PluginEvent implements Cancellable {
 	private $player;
 	private $presetData;
 	
-	public function __construct(Loader $plugin, Player $player, array $presetData) {
-		parent::__construct($plugin);
+	public function __construct(Loader $loader, Player $player, array $presetData) {
+		parent::__construct($loader);
 		$this->player = $player;
 		$this->presetData = $presetData;
 	}

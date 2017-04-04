@@ -9,7 +9,7 @@ abstract class BaseClone {
 	const TYPE_COPY = 0;
 	const TYPE_TEMPLATE = 1;
 	
-	public $owner;
+	public $loader;
 	public $level;
 	protected $name;
 	
@@ -17,8 +17,8 @@ abstract class BaseClone {
 	protected $radius;
 	protected $height;
 	
-	public function __construct(Loader $owner) {
-		$this->owner = $owner;
+	public function __construct(Loader $loader) {
+		$this->loader = $loader;
 	}
 	
 	/**
@@ -40,7 +40,7 @@ abstract class BaseClone {
 	
 	public abstract function saveClone();
 	
-	public function getOwner(): Loader {
-		return $this->owner;
+	public function getLoader(): Loader {
+		return $this->loader;
 	}
 }

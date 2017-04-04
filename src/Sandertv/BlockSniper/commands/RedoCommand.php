@@ -9,8 +9,8 @@ use Sandertv\BlockSniper\Loader;
 
 class RedoCommand extends BaseCommand {
 
-	public function __construct(Loader $owner) {
-		parent::__construct($owner, "redo", "Redo your last BlockSniper modification", "", []);
+	public function __construct(Loader $loader) {
+		parent::__construct($loader, "redo", "Redo your last BlockSniper modification", "", []);
 		$this->setPermission("blocksniper.command.redo");
 		$this->setUsage(TF::RED . "[Usage] /redo [amount]");
 	}
@@ -26,8 +26,8 @@ class RedoCommand extends BaseCommand {
 			return true;
 		}
 
-		if(!$this->getPlugin()->getUndoStore()->redoStorageExists($sender)) {
-			$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.no-modifications"));
+		if(!$this->getLoader()->getUndoStore()->redoStorageExists($sender)) {
+			$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.no-modifications"));
 			return true;
 		}
 
@@ -35,14 +35,14 @@ class RedoCommand extends BaseCommand {
 		if(isset($args[0])) {
 			if(is_numeric($args[0])) {
 				$redoAmount = $args[0];
-				if($redoAmount > ($totalRedo = $this->getPlugin()->getUndoStore()->getTotalRedoStores($sender))) {
+				if($redoAmount > ($totalRedo = $this->getLoader()->getUndoStore()->getTotalRedoStores($sender))) {
 					$redoAmount = $totalRedo;
 				}
 			}
 		}
 
-		$this->getPlugin()->getUndoStore()->restoreLatestRedo($redoAmount, $sender);
-		$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("commands.succeed.undo") . TF::AQUA . " (" . $redoAmount . ")");
+		$this->getLoader()->getUndoStore()->restoreLatestRedo($redoAmount, $sender);
+		$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.undo") . TF::AQUA . " (" . $redoAmount . ")");
 		return true;
 	}
 }

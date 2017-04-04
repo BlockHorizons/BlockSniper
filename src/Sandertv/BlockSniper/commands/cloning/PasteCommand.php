@@ -10,8 +10,8 @@ use Sandertv\BlockSniper\Loader;
 
 class PasteCommand extends BaseCommand {
 	
-	public function __construct(Loader $owner) {
-		parent::__construct($owner, "paste", "Paste the selected clone or template", "<type> [name]", []);
+	public function __construct(Loader $loader) {
+		parent::__construct($loader, "paste", "Paste the selected clone or template", "<type> [name]", []);
 		$this->setPermission("blocksniper.command.paste");
 		$this->setUsage(TF::RED . "[Usage] /paste <type> [name]");
 	}
@@ -34,30 +34,30 @@ class PasteCommand extends BaseCommand {
 		
 		$center = $sender->getTargetBlock(100);
 		if(!$center) {
-			$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.no-target-found"));
+			$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.no-target-found"));
 			return true;
 		}
 		
 		switch(strtolower($args[0])) {
 			case "copy":
-				if($this->getPlugin()->getCloneStore()->copyStoreExists()) {
-					$this->getPlugin()->getCloneStore()->setTargetBlock($center);
-					$this->getPlugin()->getCloneStore()->pasteCopy($sender->getLevel(), $sender);
+				if($this->getLoader()->getCloneStore()->copyStoreExists()) {
+					$this->getLoader()->getCloneStore()->setTargetBlock($center);
+					$this->getLoader()->getCloneStore()->pasteCopy($sender->getLevel(), $sender);
 				}
 				break;
 			
 			case "template":
-				if(!$this->getPlugin()->getCloneStore()->templateExists($args[1])) {
-					$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.template-not-existing"));
+				if(!$this->getLoader()->getCloneStore()->templateExists($args[1])) {
+					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.template-not-existing"));
 					return true;
 				}
-				$this->getPlugin()->getCloneStore()->pasteTemplate($args[1], $center, $sender);
+				$this->getLoader()->getCloneStore()->pasteTemplate($args[1], $center, $sender);
 				break;
 			
 			default:
-				$sender->sendMessage(TF::RED . "[Warning] " . $this->getPlugin()->getTranslation("commands.errors.paste-not-found"));
+				$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.paste-not-found"));
 				return true;
 		}
-		$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("commands.succeed.paste"));
+		$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.paste"));
 	}
 }

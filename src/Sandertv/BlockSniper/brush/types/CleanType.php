@@ -8,17 +8,15 @@ use pocketmine\math\Vector3;
 use pocketmine\Player;
 use Sandertv\BlockSniper\brush\BaseType;
 use Sandertv\BlockSniper\Loader;
+use Sandertv\BlockSniper\undo\UndoStorer;
 
 class CleanType extends BaseType {
 	
 	/*
 	 * Removes all non-natural blocks within the brush radius.
 	 */
-	public function __construct(Loader $main, Player $player, Level $level, array $blocks) {
-		parent::__construct($main);
-		$this->level = $level;
-		$this->blocks = $blocks;
-		$this->player = $player;
+	public function __construct(UndoStorer $undoStorer, Player $player, Level $level, array $blocks) {
+		parent::__construct($undoStorer, $player, $level, $blocks);
 	}
 	
 	/**
@@ -35,7 +33,7 @@ class CleanType extends BaseType {
 				$this->level->setBlock(new Vector3($block->x, $block->y, $block->z), Block::get(Block::AIR), false, false);
 			}
 		}
-		$this->getMain()->getUndoStore()->saveUndo($undoBlocks, $this->player);
+		$this->getUndoStore()->saveUndo($undoBlocks, $this->player);
 		return true;
 	}
 	

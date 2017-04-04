@@ -7,7 +7,6 @@ use pocketmine\block\Block;
 class Redo {
 
 	private $redoBlocks;
-	private $storer;
 
 	/**
 	 * @param Block[]    $redoBlocks

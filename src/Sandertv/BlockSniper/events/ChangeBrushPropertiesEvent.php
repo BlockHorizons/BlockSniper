@@ -27,8 +27,8 @@ class ChangeBrushPropertiesEvent extends PluginEvent {
 	public $action;
 	public $value;
 	
-	public function __construct(Loader $owner, Player $player, int $action, $value) {
-		parent::__construct($owner);
+	public function __construct(Loader $loader, Player $player, int $action, $value) {
+		parent::__construct($loader);
 		$this->player = $player;
 		$this->action = $action;
 		$this->value = $value;

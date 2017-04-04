@@ -14,9 +14,10 @@ class CloneStorer {
 	private $copyStore = [];
 	private $originalCenter = null;
 	private $target = null;
+	private $loader;
 	
-	public function __construct(Loader $owner) {
-		$this->owner = $owner;
+	public function __construct(Loader $loader) {
+		$this->loader = $loader;
 	}
 	
 	public function setTargetBlock(Vector3 $target) {
@@ -72,7 +73,7 @@ class CloneStorer {
 			$undoBlocks[] = $level->getBlock($blockPos);
 			$level->setBlock($blockPos, Block::get((int)$blockId, (int)$meta), false, false);
 		}
-		$this->getOwner()->getUndoStore()->saveUndo($undoBlocks, $player);
+		$this->getLoader()->getUndoStore()->saveUndo($undoBlocks, $player);
 	}
 	
 	public function getTargetBlock(): Vector3 {
@@ -82,8 +83,8 @@ class CloneStorer {
 	/**
 	 * @return Loader
 	 */
-	public function getOwner(): Loader {
-		return $this->owner;
+	public function getLoader(): Loader {
+		return $this->loader;
 	}
 	
 	public function resetCopyStorage() {
@@ -132,7 +133,7 @@ class CloneStorer {
 			$i++;
 		}
 		unset($i);
-		file_put_contents($this->getOwner()->getDataFolder() . "templates/" . $templateName . ".yml", serialize($template));
+		file_put_contents($this->getLoader()->getDataFolder() . "templates/" . $templateName . ".yml", serialize($template));
 		return true;
 	}
 	
@@ -143,7 +144,7 @@ class CloneStorer {
 	 * @return bool
 	 */
 	public function pasteTemplate(string $templateName, Block $targetBlock, Player $player): bool {
-		$data = file_get_contents($this->getOwner()->getDataFolder() . "templates/" . $templateName . ".yml");
+		$data = file_get_contents($this->getLoader()->getDataFolder() . "templates/" . $templateName . ".yml");
 		$content = unserialize($data);
 		
 		$undoBlocks = [];
@@ -163,12 +164,12 @@ class CloneStorer {
 			$undoBlocks[] = $targetBlock->getLevel()->getBlock($blockPos);
 			$targetBlock->getLevel()->setBlock($blockPos, Block::get((int)$blockId, (int)$meta), false, false);
 		}
-		$this->getOwner()->getUndoStore()->saveUndo($undoBlocks, $player);
+		$this->getLoader()->getUndoStore()->saveUndo($undoBlocks, $player);
 		return true;
 	}
 	
 	public function templateExists(string $templateName): bool {
-		if(is_file($this->getOwner()->getDataFolder() . "templates/" . $templateName . ".yml")) {
+		if(is_file($this->getLoader()->getDataFolder() . "templates/" . $templateName . ".yml")) {
 			return true;
 		}
 		return false;

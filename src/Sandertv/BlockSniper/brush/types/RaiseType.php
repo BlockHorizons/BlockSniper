@@ -8,17 +8,15 @@ use pocketmine\math\Vector3;
 use pocketmine\Player;
 use Sandertv\BlockSniper\brush\BaseType;
 use Sandertv\BlockSniper\Loader;
+use Sandertv\BlockSniper\undo\UndoStorer;
 
 class RaiseType extends BaseType {
 	
 	/*
 	 * Raises the terrain by one block within the brush radius.
 	 */
-	public function __construct(Loader $main, Player $player, Level $level, array $blocks) {
-		parent::__construct($main);
-		$this->level = $level;
-		$this->blocks = $blocks;
-		$this->player = $player;
+	public function __construct(UndoStorer $undoStorer, Player $player, Level $level, array $blocks) {
+		parent::__construct($undoStorer, $player, $level, $blocks);
 	}
 	
 	/**
@@ -66,7 +64,7 @@ class RaiseType extends BaseType {
 			$undoBlocks[] = $selectedBlock->getSide(Block::SIDE_UP);
 			$this->level->setBlock($selectedBlock->getSide(Block::SIDE_UP), $selectedBlock, false, false);
 		}
-		$this->getMain()->getUndoStore()->saveUndo($undoBlocks, $this->player);
+		$this->getUndoStore()->saveUndo($undoBlocks, $this->player);
 		return true;
 	}
 	

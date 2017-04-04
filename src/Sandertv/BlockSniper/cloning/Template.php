@@ -10,9 +10,9 @@ use Sandertv\BlockSniper\Loader;
 
 class Template extends BaseClone {
 	
-	public function __construct(Loader $owner, Level $level, string $name, Position $center = null, float $radius = null, int $height = 0) {
-		parent::__construct($owner);
-		$this->owner = $owner;
+	public function __construct(Loader $loader, Level $level, string $name, Position $center = null, float $radius = null, int $height = 0) {
+		parent::__construct($loader);
+		$this->loader = $loader;
 		$this->level = $level;
 		$this->center = $center;
 		$this->radius = $radius;
@@ -55,7 +55,7 @@ class Template extends BaseClone {
 				}
 			}
 		}
-		$this->getOwner()->getCloneStore()->saveTemplate($this->name, $templateBlocks, $this->center);
+		$this->getLoader()->getCloneStore()->saveTemplate($this->name, $templateBlocks, $this->center);
 		return true;
 	}
 	

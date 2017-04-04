@@ -15,9 +15,10 @@ class UndoStorer {
 
 	private $lastUndo;
 	private $lastRedo;
+	private $loader;
 	
-	public function __construct(Loader $owner) {
-		$this->owner = $owner;
+	public function __construct(Loader $loader) {
+		$this->loader = $loader;
 	}
 	
 	/**
@@ -27,7 +28,7 @@ class UndoStorer {
 	public function saveUndo(array $blocks, Player $player) {
 		$this->undoStore[$player->getName()][] = new Undo($blocks);
 		
-		if($this->getTotalUndoStores($player) === $this->getOwner()->getSettings()->get("Maximum-Undo-Stores")) {
+		if($this->getTotalUndoStores($player) === $this->getLoader()->getSettings()->get("Maximum-Undo-Stores")) {
 			$this->unsetOldestUndo($player);
 		}
 		$this->lastUndo[$player->getName()] = time();
@@ -40,7 +41,7 @@ class UndoStorer {
 	public function saveRedo(Redo $redo, Player $player) {
 		$this->redoStore[$player->getName()][] = $redo;
 
-		if($this->getTotalRedoStores($player) === $this->getOwner()->getSettings()->get("Maximum-Undo-Stores")) {
+		if($this->getTotalRedoStores($player) === $this->getLoader()->getSettings()->get("Maximum-Undo-Stores")) {
 			$this->unsetOldestRedo($player);
 		}
 		$this->lastRedo[$player->getName()] = time();
@@ -81,8 +82,8 @@ class UndoStorer {
 	/**
 	 * @return Loader
 	 */
-	public function getOwner(): Loader {
-		return $this->owner;
+	public function getLoader(): Loader {
+		return $this->loader;
 	}
 	
 	/**

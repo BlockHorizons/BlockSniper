@@ -8,8 +8,8 @@ use Sandertv\BlockSniper\Loader;
 
 class BlockSniperCommand extends BaseCommand {
 	
-	public function __construct(Loader $owner) {
-		parent::__construct($owner, "blocksniper", "Get information or change things related to BlockSniper", "[language|reload] [lang]", ["bs"]);
+	public function __construct(Loader $loader) {
+		parent::__construct($loader, "blocksniper", "Get information or change things related to BlockSniper", "[language|reload] [lang]", ["bs"]);
 		$this->setPermission("blocksniper.command.blocksniper");
 		$this->setUsage(TF::RED . "[Usage] /blocksniper [language [lang]");
 	}
@@ -29,17 +29,17 @@ class BlockSniperCommand extends BaseCommand {
 		
 		switch(strtolower($args[0])) {
 			case "language":
-				if(!in_array(strtolower($args[1]), $this->getPlugin()->availableLanguages)) {
+				if(!in_array(strtolower($args[1]), $this->getLoader()->availableLanguages)) {
 					$sender->sendMessage(TF::RED . "That language doesn't exist. Please try again.");
 					return true;
 				}
 				$this->getSettings()->set("Message-Language", $args[1]);
-				$sender->sendMessage(TF::GREEN . $this->getPlugin()->getTranslation("commands.succeed.language"));
+				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.language"));
 				return true;
 			
 			case "reload":
 				$sender->sendMessage(TF::GREEN . "Reloading...");
-				$this->getPlugin()->reloadAll();
+				$this->getLoader()->reloadAll();
 				return true;
 			
 			default:
