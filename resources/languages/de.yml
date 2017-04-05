@@ -16,8 +16,8 @@ commands:
     clone-not-found: "Dieser Klontyp (clone type) konnte nicht gefunden werden."
     name-not-set: "Kein gültiger Name wurde festgelegt."
     template-not-existing: "Es gibt keine Vorlage mit diesem Namen."
-    preset-already-exists: "That preset already exists."
-    preset-doesnt-exist: "That preset doesn't exist."
+    preset-already-exists: "Diese Voreinstellung  existiert bereits."
+    preset-doesnt-exist: "Diese Voreinstellung existiert nicht."
   succeed:
     default: "Die Form wurde erfolgreich dort begonnen, wo du hingesehen hast."
     undo: "Die letzte Modifikation wurde erfolgreich rückgängig gemacht."
@@ -27,9 +27,9 @@ commands:
     brush:
       reset: "Der Pinsel wurde erfolgreich zurückgesetzt."
     preset:
-      name: "Preset creation process started. Type a name in the chat,"
-      cancel: "or type 'cancel' to cancel the process."
-      canceled: "Preset creation has been canceled."
+      name: "Das generieren der Voreinstellung wurde gestartet. Gib den Namen in den Chat ein,"
+      cancel: "oder schreibe 'cancel' um den Prozess abzubrechen."
+      canceled: "Das Erstellen der Voreinstellung wurde abgebrochen."
 
 brushwand:
   disable: "Brushwand (Zauberpinsel) wurde deaktiviert."
@@ -47,6 +47,6 @@ brush:
   decrement: "Verringern: "
   biome: "Biom: "
   hollow: "Hohl: "
-  preset: "Preset: "
-  tree: "Tree: "
+  preset: "Voreinstellung: "
+  tree: "Baum: "
 ...
