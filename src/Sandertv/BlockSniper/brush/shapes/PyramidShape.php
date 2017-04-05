@@ -24,7 +24,7 @@ class PyramidShape extends BaseShape {
 	}
 	
 	public function getName(): string {
-		return "Pyramid";
+		return $this->hollow ? "Hollow Pyramid" : "Pyramid";
 	}
 	
 	public function getPermission(): string {

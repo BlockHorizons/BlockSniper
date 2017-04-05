@@ -50,8 +50,6 @@ abstract class BaseType {
 	protected $tree;
 
 	/**
-	 * BaseType constructor.
-	 *
 	 * @param UndoStorer $undoStorer
 	 * @param Player     $player
 	 * @param Level      $level

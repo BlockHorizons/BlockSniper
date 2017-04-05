@@ -92,7 +92,7 @@ class Loader extends PluginBase {
 			"blocksniper" => new BlockSniperCommand($this),
 			"brush" => new BrushCommand($this),
 			"undo" => new UndoCommand($this),
-			"redo" => new RedoCommand($this),
+		"redo" => new RedoCommand($this),
 			"clone" => new CloneCommand($this),
 			"paste" => new PasteCommand($this)
 		];

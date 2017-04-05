@@ -63,6 +63,12 @@ abstract class BaseShape {
 		return true;
 	}
 
+	/**
+	 * @param Player   $player
+	 * @param Level    $level
+	 * @param Position $center
+	 * @param bool     $hollow
+	 */
 	public function __construct(Player $player, Level $level, Position $center, bool $hollow) {
 		$this->player = $player;
 		$this->level = $level;

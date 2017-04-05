@@ -48,7 +48,7 @@ class CubeShape extends BaseShape {
 	}
 	
 	public function getName(): string {
-		return "Cube";
+		return $this->hollow ? "Hollow Cube" : "Cube";
 	}
 	
 	public function getPermission(): string {

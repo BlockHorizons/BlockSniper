@@ -53,7 +53,7 @@ class CylinderShape extends BaseShape {
 	}
 	
 	public function getName(): string {
-		return "Standing Cylinder";
+		return $this->hollow ? "Hollow Standing Cylinder" : "Standing Cylinder";
 	}
 	
 	public function getPermission(): string {

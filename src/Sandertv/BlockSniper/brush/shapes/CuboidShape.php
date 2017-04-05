@@ -50,7 +50,7 @@ class CuboidShape extends BaseShape {
 	}
 	
 	public function getName(): string {
-		return "Cuboid";
+		return $this->hollow ? "Hollow Cuboid" : "Cuboid";
 	}
 	
 	public function getPermission(): string {
