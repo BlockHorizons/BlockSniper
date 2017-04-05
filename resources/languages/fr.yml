@@ -16,8 +16,8 @@ commands:
     name-not-set: "Veuillez donner un nom"
     paste-not-found: "Copie introuvable"
     clone-not-found: "Clone introuvable"
-    preset-already-exists: "That preset already exists."
-    preset-doesnt-exist: "That preset doesn't exist."
+    preset-already-exists: "Ce prédéfini (preset) est déjà existant."
+    preset-doesnt-exist: "Ce prédéfini (preset) n'existe pas."
   succeed:
     default: "La forme a été ajoutée avec succès"
     undo: "Annulé avec succès"
@@ -27,9 +27,9 @@ commands:
     brush:
       reset: "Le pinceau a été réinitialisé avec succès"
     preset:
-      name: "Preset creation process started. Type a name in the chat,"
-      cancel: "or type 'cancel' to cancel the process."
-      canceled: "Preset creation has been canceled."
+      name: "Le processus de création de prédéfini (preset) a démarré. Tapez un nom dans le chat,"
+      cancel: "ou tapez 'cancel' pour annuler"
+      canceled: "La création du prédéfini (preset) a été annulée"
 
 brushwand:
   disable: "Pinceau désactivé"
@@ -47,6 +47,6 @@ brush:
   decrement: "Diminuer: "
   biome: "Biome: "
   hollow: "Creux: "
-  preset: "Preset: "
-  tree: "Tree: "
+  preset: "Prédéfini (preset): "
+  tree: "Arbre: "
 ...
