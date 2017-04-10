@@ -15,29 +15,29 @@ commands:
     no-valid-block: "Block yaft nashod, ID/name block ra benevisid."
     shape-not-found: "Shekl ya Type yaft nashod."
     no-modifications: "Shoma hich taghiri anjam nadadid ke Undo konid."
-    preset-already-exists: "That preset already exists."
-    preset-doesnt-exist: "That preset doesn't exist."
+    preset-already-exists: "In jaye taain shode dar hale hazer vojod darad."
+    preset-doesnt-exist: "makan taiin shode vojod nadarad."
   succeed:
     paste: "Clone paste shode."
     clone: "Clone ba movafaghit anjam shod."
-    default: "Shape ba movafaghiat lunch shod."
+    default: "Shape ba movafaghiat launch shod."
     undo: "Taghir Undo shod."
     language: "Zaban Morede Nazar Be Farsi(Persian) Taghir Yaft."
     brush:
-      reset: "Brush has been reset successfully."
+      reset: "Brush ba movafaghiat rest shod."
     preset:
-      name: "Preset creation process started. Type a name in the chat,"
-      cancel: "or type 'cancel' to cancel the process."
-      canceled: "Preset creation has been canceled."
+      name: "Preset tamom shod,"
+      cancel: "baray cancel 'cancel' ra type konid."
+      canceled: "set nime tamam cancel shod."
 
 brushwand:
   disable: "Brushwand ghirefaal shod."
-  enable: "Brushwand faal shod."
-
+  enable: "Brushwand faal shod." 
+  
 brush:
   shape: "Shape: "
   type: "Type: "
-  blocks: "Blocks: "
+  blocks: "Block ha: "
   size: "Size: "
   perfect: "Perfect: "
   obsolete: "Obsolete: "
