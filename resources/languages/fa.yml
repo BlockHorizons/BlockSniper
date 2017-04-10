@@ -26,9 +26,9 @@ commands:
     brush:
       reset: "Brush ba movafaghiat rest shod."
     preset:
-      name: "Preset creation process started. Type a name in the chat,"
+      name: "Preset tamom shod,"
       cancel: "baray cancel 'cancel' ra type konid."
-      canceled: "Preset creation has been canceled."
+      canceled: "set nime tamam cancel shod."
 
 brushwand:
   disable: "Brushwand ghirefaal shod."
