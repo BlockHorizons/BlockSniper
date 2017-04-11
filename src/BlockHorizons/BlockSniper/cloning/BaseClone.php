@@ -2,24 +2,22 @@
 
 namespace BlockHorizons\BlockSniper\cloning;
 
-use BlockHorizons\BlockSniper\Loader;
+use pocketmine\block\Block;
+use pocketmine\level\Level;
+use pocketmine\level\Position;
 
 abstract class BaseClone {
 	
 	const TYPE_COPY = 0;
 	const TYPE_TEMPLATE = 1;
+	const TYPE_SCHEMATIC = 2;
 	
-	public $loader;
+	public $cloneStorer;
 	public $level;
+
 	protected $name;
-	
 	protected $center;
-	protected $radius;
-	protected $height;
-	
-	public function __construct(Loader $loader) {
-		$this->loader = $loader;
-	}
+	protected $blocks;
 	
 	/**
 	 * @param string $type
@@ -36,11 +34,62 @@ abstract class BaseClone {
 	
 	public abstract function getName(): string;
 	
-	public abstract function getPermission(): string;
-	
 	public abstract function saveClone();
-	
-	public function getLoader(): Loader {
-		return $this->loader;
+
+	/**
+	 * @param CloneStorer $cloneStorer
+	 * @param Level       $level
+	 * @param Position    $center
+	 * @param Block[]     $blocks
+	 */
+	public function __construct(CloneStorer $cloneStorer, Level $level, Position $center, array $blocks, string $name = "") {
+		$this->cloneStorer = $cloneStorer;
+		$this->level = $level;
+		$this->center = $center;
+		$this->blocks = $blocks;
+		$this->name = $name;
+	}
+
+	/**
+	 * @return CloneStorer
+	 */
+	public function getCloneStorer(): CloneStorer {
+		return $this->cloneStorer;
+	}
+
+	/**
+	 * Returns the level the clone is made in.
+	 *
+	 * @return Level
+	 */
+	public function getLevel(): Level {
+		return $this->level;
+	}
+
+	/**
+	 * Returns the center block of the clone.
+	 *
+	 * @return Position
+	 */
+	public function getCenter(): Position {
+		return $this->center;
+	}
+
+	/**
+	 * Returns all blocks that are being cloned.
+	 *
+	 * @return Block[]
+	 */
+	public function getBlocks(): array {
+		return $this->blocks;
+	}
+
+	/**
+	 * Returns the permission required to use the clone type.
+	 *
+	 * @return string
+	 */
+	public function getPermission(): string {
+		return "blocksniper.type." . strtolower($this->getName());
 	}
 }

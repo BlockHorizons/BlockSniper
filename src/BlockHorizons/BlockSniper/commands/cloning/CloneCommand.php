@@ -2,8 +2,9 @@
 
 namespace BlockHorizons\BlockSniper\commands\cloning;
 
-use BlockHorizons\BlockSniper\cloning\Copy;
-use BlockHorizons\BlockSniper\cloning\Template;
+use BlockHorizons\BlockSniper\brush\BrushManager;
+use BlockHorizons\BlockSniper\cloning\types\Copy;
+use BlockHorizons\BlockSniper\cloning\types\Template;
 use BlockHorizons\BlockSniper\commands\BaseCommand;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\command\CommandSender;
@@ -49,7 +50,9 @@ class CloneCommand extends BaseCommand {
 		
 		switch(strtolower($args[0])) {
 			case "copy":
-				$clone = new Copy($this->getLoader(), $sender->getLevel(), $center, $sizes[0], $sizes[1]);
+				$this->getLoader()->getBrushManager()->createBrush($sender);
+				$shape = BrushManager::get($sender)->getShape();
+				$cloneType = new Copy($this->getLoader()->getCloneStorer(), $sender->getLevel(), $center, $shape->getBlocksInside());
 				break;
 			
 			case "template":
@@ -57,14 +60,20 @@ class CloneCommand extends BaseCommand {
 					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.name-not-set"));
 					return true;
 				}
-				$clone = new Template($this->getLoader(), $sender->getLevel(), $args[2], $center, $sizes[0], $sizes[1]);
+				$this->getLoader()->getBrushManager()->createBrush($sender);
+				$shape = BrushManager::get($sender)->getShape();
+				$cloneType = new Template($this->getLoader()->getCloneStorer(), $sender->getLevel(), $center, $shape->getBlocksInside(), $args[2]);
 				break;
+
+			case "schematic":
+				// TODO: Implement Schematics
+				return false;
 			
 			default:
 				$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.clone-not-found"));
 				return true;
 		}
-		$clone->saveClone();
+		$cloneType->saveClone();
 		$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.clone"));
 	}
 }

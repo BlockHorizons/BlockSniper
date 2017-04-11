@@ -40,18 +40,18 @@ class PasteCommand extends BaseCommand {
 		
 		switch(strtolower($args[0])) {
 			case "copy":
-				if($this->getLoader()->getCloneStore()->copyStoreExists()) {
-					$this->getLoader()->getCloneStore()->setTargetBlock($center);
-					$this->getLoader()->getCloneStore()->pasteCopy($sender->getLevel(), $sender);
+				if($this->getLoader()->getCloneStorer()->copyStoreExists()) {
+					$this->getLoader()->getCloneStorer()->setTargetBlock($center);
+					$this->getLoader()->getCloneStorer()->pasteCopy($sender->getLevel(), $sender);
 				}
 				break;
 			
 			case "template":
-				if(!$this->getLoader()->getCloneStore()->templateExists($args[1])) {
+				if(!$this->getLoader()->getCloneStorer()->templateExists($args[1])) {
 					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.template-not-existing"));
 					return true;
 				}
-				$this->getLoader()->getCloneStore()->pasteTemplate($args[1], $center, $sender);
+				$this->getLoader()->getCloneStorer()->pasteTemplate($args[1], $center, $sender);
 				break;
 			
 			default:

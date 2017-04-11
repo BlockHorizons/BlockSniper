@@ -142,7 +142,7 @@ class Loader extends PluginBase {
 	/**
 	 * @return CloneStorer
 	 */
-	public function getCloneStore(): CloneStorer {
+	public function getCloneStorer(): CloneStorer {
 		return $this->cloneStore;
 	}
 	
