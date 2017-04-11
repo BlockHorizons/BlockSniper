@@ -2,11 +2,11 @@
 
 namespace BlockHorizons\BlockSniper\brush\shapes;
 
+use BlockHorizons\BlockSniper\brush\BaseShape;
+use BlockHorizons\BlockSniper\brush\BrushManager;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\Player;
-use BlockHorizons\BlockSniper\brush\BaseShape;
-use BlockHorizons\BlockSniper\brush\BrushManager;
 
 class PyramidShape extends BaseShape {
 	

@@ -2,15 +2,14 @@
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
+use BlockHorizons\BlockSniper\brush\BaseType;
+use BlockHorizons\BlockSniper\brush\BrushManager;
+use BlockHorizons\BlockSniper\undo\UndoStorer;
 use pocketmine\block\Block;
 use pocketmine\block\Flowable;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
-use BlockHorizons\BlockSniper\brush\BaseType;
-use BlockHorizons\BlockSniper\brush\BrushManager;
-use BlockHorizons\BlockSniper\Loader;
-use BlockHorizons\BlockSniper\undo\UndoStorer;
 
 class ReplaceallType extends BaseType {
 	

@@ -2,12 +2,11 @@
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
-use pocketmine\level\Level;
-use pocketmine\Player;
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\brush\BrushManager;
-use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\undo\UndoStorer;
+use pocketmine\level\Level;
+use pocketmine\Player;
 
 class BiomeType extends BaseType {
 	

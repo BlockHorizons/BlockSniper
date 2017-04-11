@@ -2,9 +2,9 @@
 
 namespace BlockHorizons\BlockSniper\commands;
 
+use BlockHorizons\BlockSniper\Loader;
 use pocketmine\command\CommandSender;
 use pocketmine\utils\TextFormat as TF;
-use BlockHorizons\BlockSniper\Loader;
 
 class BlockSniperCommand extends BaseCommand {
 	

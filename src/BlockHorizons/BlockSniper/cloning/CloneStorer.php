@@ -2,12 +2,12 @@
 
 namespace BlockHorizons\BlockSniper\cloning;
 
+use BlockHorizons\BlockSniper\Loader;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
-use BlockHorizons\BlockSniper\Loader;
 
 class CloneStorer {
 	

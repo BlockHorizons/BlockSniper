@@ -2,11 +2,11 @@
 
 namespace BlockHorizons\BlockSniper\brush\shapes;
 
+use BlockHorizons\BlockSniper\brush\BaseShape;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
-use BlockHorizons\BlockSniper\brush\BaseShape;
 
 class CubeShape extends BaseShape {
 	

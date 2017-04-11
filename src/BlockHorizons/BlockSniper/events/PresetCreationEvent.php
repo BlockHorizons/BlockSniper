@@ -2,10 +2,10 @@
 
 namespace BlockHorizons\BlockSniper\events;
 
+use BlockHorizons\BlockSniper\Loader;
 use pocketmine\event\Cancellable;
 use pocketmine\event\plugin\PluginEvent;
 use pocketmine\Player;
-use BlockHorizons\BlockSniper\Loader;
 
 class PresetCreationEvent extends PluginEvent implements Cancellable {
 	

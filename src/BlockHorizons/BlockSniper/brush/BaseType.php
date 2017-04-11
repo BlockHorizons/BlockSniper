@@ -2,18 +2,17 @@
 
 namespace BlockHorizons\BlockSniper\brush;
 
-use pocketmine\block\Block;
-use pocketmine\level\Level;
-use pocketmine\level\Position;
-use pocketmine\Player;
 use BlockHorizons\BlockSniper\brush\types\BiomeType;
 use BlockHorizons\BlockSniper\brush\types\FlattenallType;
 use BlockHorizons\BlockSniper\brush\types\FlattenType;
 use BlockHorizons\BlockSniper\brush\types\LayerType;
 use BlockHorizons\BlockSniper\brush\types\ReplaceType;
 use BlockHorizons\BlockSniper\brush\types\TreeType;
-use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\undo\UndoStorer;
+use pocketmine\block\Block;
+use pocketmine\level\Level;
+use pocketmine\level\Position;
+use pocketmine\Player;
 
 abstract class BaseType {
 	
@@ -188,6 +187,6 @@ abstract class BaseType {
 	 * @return string
 	 */
 	public function getPermission(): string {
-		return "blocksniper.type." . strtolower(str_replace("hollow", "", str_replace(" ", "_", $this->getName())));
+		return "blocksniper.type." . str_replace("hollow", "", str_replace(" ", "_", strtolower($this->getName())));
 	}
 }

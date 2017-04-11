@@ -2,8 +2,6 @@
 
 namespace BlockHorizons\BlockSniper;
 
-use pocketmine\plugin\PluginBase;
-use pocketmine\utils\TextFormat as TF;
 use BlockHorizons\BlockSniper\brush\BrushManager;
 use BlockHorizons\BlockSniper\cloning\CloneStorer;
 use BlockHorizons\BlockSniper\commands\BlockSniperCommand;
@@ -19,6 +17,8 @@ use BlockHorizons\BlockSniper\listeners\PresetListener;
 use BlockHorizons\BlockSniper\presets\PresetManager;
 use BlockHorizons\BlockSniper\tasks\UndoDiminishTask;
 use BlockHorizons\BlockSniper\undo\UndoStorer;
+use pocketmine\plugin\PluginBase;
+use pocketmine\utils\TextFormat as TF;
 
 class Loader extends PluginBase {
 	
@@ -41,7 +41,6 @@ class Loader extends PluginBase {
 	private $settings;
 	private $brushManager;
 	private $presetManager;
-	private $redoStore;
 	
 	public function onEnable() {
 		$this->reloadAll();

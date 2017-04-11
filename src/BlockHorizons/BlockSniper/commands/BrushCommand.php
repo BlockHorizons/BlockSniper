@@ -2,15 +2,15 @@
 
 namespace BlockHorizons\BlockSniper\commands;
 
-use pocketmine\command\CommandSender;
-use pocketmine\level\generator\biome\Biome;
-use pocketmine\Player;
-use pocketmine\utils\TextFormat as TF;
 use BlockHorizons\BlockSniper\brush\BaseShape;
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\brush\BrushManager;
 use BlockHorizons\BlockSniper\events\ChangeBrushPropertiesEvent as Change;
 use BlockHorizons\BlockSniper\Loader;
+use pocketmine\command\CommandSender;
+use pocketmine\level\generator\biome\Biome;
+use pocketmine\Player;
+use pocketmine\utils\TextFormat as TF;
 
 class BrushCommand extends BaseCommand {
 	

@@ -2,12 +2,12 @@
 
 namespace BlockHorizons\BlockSniper\commands;
 
+use BlockHorizons\BlockSniper\data\ConfigData;
+use BlockHorizons\BlockSniper\Loader;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\utils\TextFormat as TF;
-use BlockHorizons\BlockSniper\data\ConfigData;
-use BlockHorizons\BlockSniper\Loader;
 
 abstract class BaseCommand extends Command implements PluginIdentifiableCommand {
 	

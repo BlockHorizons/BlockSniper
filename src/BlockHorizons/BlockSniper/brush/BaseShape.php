@@ -2,13 +2,13 @@
 
 namespace BlockHorizons\BlockSniper\brush;
 
-use pocketmine\level\Level;
-use pocketmine\level\Position;
-use pocketmine\Player;
 use BlockHorizons\BlockSniper\brush\shapes\CubeShape;
 use BlockHorizons\BlockSniper\brush\shapes\CuboidShape;
 use BlockHorizons\BlockSniper\brush\shapes\CylinderShape;
 use BlockHorizons\BlockSniper\brush\shapes\SphereShape;
+use pocketmine\level\Level;
+use pocketmine\level\Position;
+use pocketmine\Player;
 
 abstract class BaseShape {
 	
@@ -185,6 +185,6 @@ abstract class BaseShape {
 	 * @return string
 	 */
 	public function getPermission(): string {
-		return "blocksniper.shape." . strtolower(str_replace("hollow", "", str_replace(" ", "_", $this->getName())));
+		return "blocksniper.shape." . str_replace("hollow", "", str_replace(" ", "_", strtolower($this->getName())));
 	}
 }

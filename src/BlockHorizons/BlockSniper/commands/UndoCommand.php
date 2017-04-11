@@ -2,10 +2,10 @@
 
 namespace BlockHorizons\BlockSniper\commands;
 
+use BlockHorizons\BlockSniper\Loader;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
-use BlockHorizons\BlockSniper\Loader;
 
 class UndoCommand extends BaseCommand {
 	

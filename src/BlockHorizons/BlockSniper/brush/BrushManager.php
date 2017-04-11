@@ -2,10 +2,10 @@
 
 namespace BlockHorizons\BlockSniper\brush;
 
-use pocketmine\Player;
-use pocketmine\utils\TextFormat as TF;
 use BlockHorizons\BlockSniper\events\BrushRecoverEvent;
 use BlockHorizons\BlockSniper\Loader;
+use pocketmine\Player;
+use pocketmine\utils\TextFormat as TF;
 
 class BrushManager {
 	

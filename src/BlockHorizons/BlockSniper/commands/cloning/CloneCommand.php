@@ -2,13 +2,13 @@
 
 namespace BlockHorizons\BlockSniper\commands\cloning;
 
-use pocketmine\command\CommandSender;
-use pocketmine\Player;
-use pocketmine\utils\TextFormat as TF;
 use BlockHorizons\BlockSniper\cloning\Copy;
 use BlockHorizons\BlockSniper\cloning\Template;
 use BlockHorizons\BlockSniper\commands\BaseCommand;
 use BlockHorizons\BlockSniper\Loader;
+use pocketmine\command\CommandSender;
+use pocketmine\Player;
+use pocketmine\utils\TextFormat as TF;
 
 class CloneCommand extends BaseCommand {
 	

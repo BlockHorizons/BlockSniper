@@ -2,12 +2,11 @@
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
+use BlockHorizons\BlockSniper\brush\BaseType;
+use BlockHorizons\BlockSniper\undo\UndoStorer;
 use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\Player;
-use BlockHorizons\BlockSniper\brush\BaseType;
-use BlockHorizons\BlockSniper\Loader;
-use BlockHorizons\BlockSniper\undo\UndoStorer;
 
 class SnowconeType extends BaseType {
 	

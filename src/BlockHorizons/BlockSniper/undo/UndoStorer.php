@@ -2,8 +2,8 @@
 
 namespace BlockHorizons\BlockSniper\undo;
 
-use pocketmine\Player;
 use BlockHorizons\BlockSniper\Loader;
+use pocketmine\Player;
 
 class UndoStorer {
 	

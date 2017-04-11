@@ -2,13 +2,13 @@
 
 namespace BlockHorizons\BlockSniper\listeners;
 
+use BlockHorizons\BlockSniper\brush\BrushManager;
+use BlockHorizons\BlockSniper\events\BrushUseEvent;
+use BlockHorizons\BlockSniper\Loader;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
-use BlockHorizons\BlockSniper\brush\BrushManager;
-use BlockHorizons\BlockSniper\events\BrushUseEvent;
-use BlockHorizons\BlockSniper\Loader;
 
 class BrushListener implements Listener {
 	

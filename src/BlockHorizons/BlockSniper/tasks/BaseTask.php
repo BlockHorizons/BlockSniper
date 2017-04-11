@@ -2,9 +2,9 @@
 
 namespace BlockHorizons\BlockSniper\tasks;
 
-use pocketmine\scheduler\PluginTask;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\undo\UndoStorer;
+use pocketmine\scheduler\PluginTask;
 
 abstract class BaseTask extends PluginTask {
 	

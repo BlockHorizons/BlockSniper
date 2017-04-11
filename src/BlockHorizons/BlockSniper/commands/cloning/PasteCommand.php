@@ -2,11 +2,11 @@
 
 namespace BlockHorizons\BlockSniper\commands\cloning;
 
+use BlockHorizons\BlockSniper\commands\BaseCommand;
+use BlockHorizons\BlockSniper\Loader;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
-use BlockHorizons\BlockSniper\commands\BaseCommand;
-use BlockHorizons\BlockSniper\Loader;
 
 class PasteCommand extends BaseCommand {
 	

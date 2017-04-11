@@ -2,10 +2,10 @@
 
 namespace BlockHorizons\BlockSniper\events;
 
-use pocketmine\event\Cancellable;
-use pocketmine\event\plugin\PluginEvent;
 use BlockHorizons\BlockSniper\brush\Brush;
 use BlockHorizons\BlockSniper\Loader;
+use pocketmine\event\Cancellable;
+use pocketmine\event\plugin\PluginEvent;
 
 class BrushRecoverEvent extends PluginEvent implements Cancellable {
 	

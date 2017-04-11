@@ -2,12 +2,12 @@
 
 namespace BlockHorizons\BlockSniper\events;
 
-use pocketmine\event\Cancellable;
-use pocketmine\level\Level;
-use pocketmine\Player;
 use BlockHorizons\BlockSniper\brush\BaseShape;
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\Loader;
+use pocketmine\event\Cancellable;
+use pocketmine\level\Level;
+use pocketmine\Player;
 
 class BrushUseEvent extends BaseEvent implements Cancellable {
 	

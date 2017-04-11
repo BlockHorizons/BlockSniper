@@ -2,13 +2,13 @@
 
 namespace BlockHorizons\BlockSniper\listeners;
 
-use pocketmine\event\Listener;
-use pocketmine\event\player\PlayerChatEvent;
-use pocketmine\utils\TextFormat as TF;
 use BlockHorizons\BlockSniper\brush\BaseShape;
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\events\PresetCreationEvent;
 use BlockHorizons\BlockSniper\Loader;
+use pocketmine\event\Listener;
+use pocketmine\event\player\PlayerChatEvent;
+use pocketmine\utils\TextFormat as TF;
 
 class PresetListener implements Listener {
 	

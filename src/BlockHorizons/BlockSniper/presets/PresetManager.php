@@ -2,9 +2,9 @@
 
 namespace BlockHorizons\BlockSniper\presets;
 
+use BlockHorizons\BlockSniper\Loader;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
-use BlockHorizons\BlockSniper\Loader;
 
 class PresetManager {
 	

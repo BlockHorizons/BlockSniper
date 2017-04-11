@@ -2,8 +2,8 @@
 
 namespace BlockHorizons\BlockSniper\events;
 
-use pocketmine\event\plugin\PluginEvent;
 use BlockHorizons\BlockSniper\Loader;
+use pocketmine\event\plugin\PluginEvent;
 
 abstract class BaseEvent extends PluginEvent {
 	

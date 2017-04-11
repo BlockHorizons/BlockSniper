@@ -2,8 +2,8 @@
 
 namespace BlockHorizons\BlockSniper\data;
 
-use pocketmine\utils\TextFormat as TF;
 use BlockHorizons\BlockSniper\Loader;
+use pocketmine\utils\TextFormat as TF;
 
 class ConfigData {
 	

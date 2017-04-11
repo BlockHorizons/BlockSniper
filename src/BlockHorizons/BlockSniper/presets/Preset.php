@@ -2,8 +2,8 @@
 
 namespace BlockHorizons\BlockSniper\presets;
 
-use pocketmine\Player;
 use BlockHorizons\BlockSniper\brush\BrushManager;
+use pocketmine\Player;
 
 class Preset {
 	
