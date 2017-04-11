@@ -1,9 +1,9 @@
 ---
 name: "BlockSniper"
-version: 1.3.3
+version: 1.3.4
 api: [2.0.0, 2.1.0, 3.0.0-ALPHA1, 3.0.0-ALPHA2, 3.0.0-ALPHA3, 3.0.0-ALPHA4]
-author: "Sandertv"
-main: Sandertv\BlockSniper\Loader
+author: "BlockHorizons"
+main: BlockHorizons\BlockSniper\Loader
 
 permissions:
     blocksniper:
