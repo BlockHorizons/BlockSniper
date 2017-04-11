@@ -1,4 +1,6 @@
 # BlockSniper<a href="https://github.com/Sandertv/BlockSniper"><img src="https://github.com/Sandertv/BlockSniper/blob/master/resources/BlockSniperLogo.png" width="60" height="60" align="right"></a>
+
+[![Join the chat at https://gitter.im/BlockHorizons/BlockSniper](https://badges.gitter.im/BlockHorizons/BlockSniper.svg)](https://gitter.im/BlockHorizons/BlockSniper?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)<br>
 An innovative world editing tool, made for PocketMine-MP: An MCPE server software written in PHP. Worlds can be easily edited using a Golden Carrot, which is used as brush. Find more information about BlockSniper and on how to use it at the [Wiki](https://github.com/Sandertv/BlockSniper/wiki).
 
 > Third party versions, forks or spoons of PocketMine are **not** supported.
