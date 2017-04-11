@@ -6,8 +6,8 @@ use BlockHorizons\BlockSniper\Loader;
 
 class RedoDiminishTask extends BaseTask {
 
-	public function __construct(Loader $owner) {
-		parent::__construct($owner);
+	public function __construct(Loader $loader) {
+		parent::__construct($loader);
 	}
 
 	public function onRun($currentTick) {

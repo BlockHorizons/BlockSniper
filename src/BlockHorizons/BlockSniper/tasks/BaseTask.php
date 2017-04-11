@@ -12,7 +12,7 @@ abstract class BaseTask extends PluginTask {
 	
 	public function __construct(Loader $loader) {
 		parent::__construct($loader);
-		$this->owner = $loader;
+		$this->loader = $loader;
 	}
 	
 	/**
