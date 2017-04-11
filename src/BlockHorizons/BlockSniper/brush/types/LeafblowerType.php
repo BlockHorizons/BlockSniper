@@ -36,7 +36,7 @@ class LeafblowerType extends BaseType {
 				$this->level->setBlock($block, Block::get(Block::AIR), false, false);
 			}
 		}
-		$this->getUndoStore()->saveUndo($undoBlocks, $this->player);
+		$this->getUndoStorer()->saveUndo($undoBlocks, $this->player);
 		return true;
 	}
 	

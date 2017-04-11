@@ -48,7 +48,7 @@ class ExpandType extends BaseType {
 			$this->level->setBlock($selectedBlock, ($selectedBlock->getSide(Block::SIDE_DOWN)->getId() === Block::AIR ? $selectedBlock->getSide(Block::SIDE_UP) : $selectedBlock->getSide(Block::SIDE_DOWN)), false, false);
 		}
 		
-		$this->getUndoStore()->saveUndo($undoBlocks, $this->player);
+		$this->getUndoStorer()->saveUndo($undoBlocks, $this->player);
 		return true;
 	}
 	

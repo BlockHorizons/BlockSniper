@@ -28,7 +28,7 @@ class FillType extends BaseType {
 			$undoBlocks[] = $block;
 			$this->level->setBlock(new Vector3($block->x, $block->y, $block->z), $randomBlock, false, false);
 		}
-		$this->getUndoStore()->saveUndo($undoBlocks, $this->player);
+		$this->getUndoStorer()->saveUndo($undoBlocks, $this->player);
 		return true;
 	}
 	

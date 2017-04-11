@@ -63,7 +63,7 @@ class RaiseType extends BaseType {
 			$undoBlocks[] = $selectedBlock->getSide(Block::SIDE_UP);
 			$this->level->setBlock($selectedBlock->getSide(Block::SIDE_UP), $selectedBlock, false, false);
 		}
-		$this->getUndoStore()->saveUndo($undoBlocks, $this->player);
+		$this->getUndoStorer()->saveUndo($undoBlocks, $this->player);
 		return true;
 	}
 	

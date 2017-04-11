@@ -28,7 +28,8 @@ class ConfigData {
 			"Reset-Decrement-Brush" => $cfg["Reset-Decrement-Brush"] ?? true,
 			"Maximum-Clone-Size" => $cfg["Maximum-Clone-Size"] ?? 60,
 			"Save-Brush-Properties" => $cfg["Save-Brush-Properties"] ?? true,
-			"Drop-Leafblower-Plants" => $cfg["Drop-Leafblower-Plants"] ?? true
+			"Drop-Leafblower-Plants" => $cfg["Drop-Leafblower-Plants"] ?? true,
+			"Save-Air-In-Copy" => $cfg["Save-Air-In-Copy"] ?? false
 		];
 		if($cfg["Configuration-Version"] !== Loader::CONFIGURATION_VERSION) {
 			$autoUpdate = $cfg["Auto-Configuration-Update"];

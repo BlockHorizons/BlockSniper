@@ -24,7 +24,7 @@ class Loader extends PluginBase {
 	
 	const VERSION = "1.3.4";
 	const API_TARGET = "2.0.0 - 3.0.0-ALPHA4";
-	const CONFIGURATION_VERSION = "1.0.1";
+	const CONFIGURATION_VERSION = "1.1.0";
 	
 	public $availableLanguages = [
 		"en",
@@ -36,8 +36,8 @@ class Loader extends PluginBase {
 		"zh_tw"
 	];
 	public $language;
-	private $undoStore;
-	private $cloneStore;
+	private $undoStorer;
+	private $cloneStorer;
 	private $settings;
 	private $brushManager;
 	private $presetManager;
@@ -59,8 +59,8 @@ class Loader extends PluginBase {
 		$this->presetManager = new PresetManager($this);
 		$this->brushManager = new BrushManager($this);
 
-		$this->undoStore = new UndoStorer($this);
-		$this->cloneStore = new CloneStorer($this);
+		$this->undoStorer = new UndoStorer($this);
+		$this->cloneStorer = new CloneStorer($this);
 
 		if(!is_dir($this->getDataFolder())) {
 			mkdir($this->getDataFolder());
@@ -121,8 +121,8 @@ class Loader extends PluginBase {
 	/**
 	 * @return UndoStorer
 	 */
-	public function getUndoStore(): UndoStorer {
-		return $this->undoStore;
+	public function getUndoStorer(): UndoStorer {
+		return $this->undoStorer;
 	}
 	
 	/**
@@ -143,7 +143,7 @@ class Loader extends PluginBase {
 	 * @return CloneStorer
 	 */
 	public function getCloneStorer(): CloneStorer {
-		return $this->cloneStore;
+		return $this->cloneStorer;
 	}
 	
 	/**

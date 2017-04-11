@@ -32,7 +32,7 @@ class CleanType extends BaseType {
 				$this->level->setBlock(new Vector3($block->x, $block->y, $block->z), Block::get(Block::AIR), false, false);
 			}
 		}
-		$this->getUndoStore()->saveUndo($undoBlocks, $this->player);
+		$this->getUndoStorer()->saveUndo($undoBlocks, $this->player);
 		return true;
 	}
 	

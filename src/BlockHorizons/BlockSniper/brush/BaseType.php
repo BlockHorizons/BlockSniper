@@ -102,7 +102,7 @@ abstract class BaseType {
 	/**
 	 * @return UndoStorer
 	 */
-	public function getUndoStore(): UndoStorer {
+	public function getUndoStorer(): UndoStorer {
 		return $this->undoStorer;
 	}
 	

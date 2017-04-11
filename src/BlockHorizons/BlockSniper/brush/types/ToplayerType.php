@@ -37,7 +37,7 @@ class ToplayerType extends BaseType {
 				}
 			}
 		}
-		$this->getUndoStore()->saveUndo($undoBlocks, $this->player);
+		$this->getUndoStorer()->saveUndo($undoBlocks, $this->player);
 		return true;
 	}
 	

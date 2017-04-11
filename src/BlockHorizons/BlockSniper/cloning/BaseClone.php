@@ -17,6 +17,7 @@ abstract class BaseClone {
 
 	protected $name;
 	protected $center;
+	protected $saveAir;
 	protected $blocks;
 	
 	/**
@@ -39,12 +40,14 @@ abstract class BaseClone {
 	/**
 	 * @param CloneStorer $cloneStorer
 	 * @param Level       $level
+	 * @param bool        $saveAir
 	 * @param Position    $center
 	 * @param Block[]     $blocks
 	 */
-	public function __construct(CloneStorer $cloneStorer, Level $level, Position $center, array $blocks, string $name = "") {
+	public function __construct(CloneStorer $cloneStorer, Level $level, bool $saveAir, Position $center, array $blocks, string $name = "") {
 		$this->cloneStorer = $cloneStorer;
 		$this->level = $level;
+		$this->saveAir = $saveAir;
 		$this->center = $center;
 		$this->blocks = $blocks;
 		$this->name = $name;

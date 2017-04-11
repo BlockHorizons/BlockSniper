@@ -154,7 +154,7 @@ class Brush {
 	 */
 	public function getType(array $blocks = []): BaseType {
 		$typeName = 'BlockHorizons\BlockSniper\brush\types\\' . (ucfirst($this->type) . "Type");
-		$type = new $typeName(Server::getInstance()->getPluginManager()->getPlugin("BlockSniper")->getUndoStore(), Server::getInstance()->getPlayer($this->player), Server::getInstance()->getPlayer($this->player)->getLevel(), $blocks);
+		$type = new $typeName(Server::getInstance()->getPluginManager()->getPlugin("BlockSniper")->getUndoStorer(), Server::getInstance()->getPlayer($this->player), Server::getInstance()->getPlayer($this->player)->getLevel(), $blocks);
 		
 		return $type;
 	}

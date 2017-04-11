@@ -52,7 +52,7 @@ class CloneCommand extends BaseCommand {
 			case "copy":
 				$this->getLoader()->getBrushManager()->createBrush($sender);
 				$shape = BrushManager::get($sender)->getShape();
-				$cloneType = new Copy($this->getLoader()->getCloneStorer(), $sender->getLevel(), $center, $shape->getBlocksInside());
+				$cloneType = new Copy($this->getLoader()->getCloneStorer(), $sender->getLevel(), $this->getSettings()->get("Save-Air-In-Copy"), $center, $shape->getBlocksInside());
 				break;
 			
 			case "template":
@@ -62,7 +62,7 @@ class CloneCommand extends BaseCommand {
 				}
 				$this->getLoader()->getBrushManager()->createBrush($sender);
 				$shape = BrushManager::get($sender)->getShape();
-				$cloneType = new Template($this->getLoader()->getCloneStorer(), $sender->getLevel(), $center, $shape->getBlocksInside(), $args[2]);
+				$cloneType = new Template($this->getLoader()->getCloneStorer(), $sender->getLevel(), $this->getSettings()->get("Save-Air-In-Copy"), $center, $shape->getBlocksInside(), $args[2]);
 				break;
 
 			case "schematic":
