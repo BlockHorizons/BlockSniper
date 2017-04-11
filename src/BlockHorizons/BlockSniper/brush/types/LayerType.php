@@ -2,6 +2,7 @@
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
+use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
@@ -38,10 +39,6 @@ class LayerType extends BaseType {
 	
 	public function getName(): string {
 		return "Layer";
-	}
-	
-	public function getPermission(): string {
-		return "blocksniper.type.layer";
 	}
 }
 

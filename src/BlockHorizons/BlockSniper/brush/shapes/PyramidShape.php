@@ -27,10 +27,6 @@ class PyramidShape extends BaseShape {
 		return $this->hollow ? "Hollow Pyramid" : "Pyramid";
 	}
 	
-	public function getPermission(): string {
-		return "blocksniper.shape.pyramid";
-	}
-	
 	public function getApproximateProcessedBlocks(): int {
 		//TODO: Implement Pyramids
 	}

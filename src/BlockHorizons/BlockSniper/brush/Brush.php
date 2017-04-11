@@ -25,7 +25,7 @@ class Brush {
 	}
 	
 	/**
-	 * @param        $value
+	 * @param $value
 	 */
 	public function setDecrementing($value) {
 		$this->decrement = (bool)$value;
@@ -39,7 +39,7 @@ class Brush {
 	}
 	
 	/**
-	 * @param        $value
+	 * @param $value
 	 */
 	public function setPerfect($value) {
 		$this->perfect = (bool)$value;
@@ -53,7 +53,7 @@ class Brush {
 	}
 	
 	/**
-	 * @return array
+	 * @return Block[]
 	 */
 	public function getObsolete(): array {
 		$data = [];
@@ -78,7 +78,7 @@ class Brush {
 	}
 	
 	/**
-	 * @return array
+	 * @return Block[]
 	 */
 	public function getBlocks(): array {
 		$data = [];

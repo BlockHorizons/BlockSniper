@@ -98,8 +98,6 @@ abstract class BaseType {
 	
 	public abstract function getName(): string;
 	
-	public abstract function getPermission(): string;
-	
 	public abstract function fillShape(): bool;
 	
 	/**
@@ -182,5 +180,14 @@ abstract class BaseType {
 			return $this->tree;
 		}
 		return null;
+	}
+
+	/**
+	 * Returns the permission required to use the type.
+	 *
+	 * @return string
+	 */
+	public function getPermission(): string {
+		return "blocksniper.type." . strtolower(str_replace("hollow", "", str_replace(" ", "_", $this->getName())));
 	}
 }

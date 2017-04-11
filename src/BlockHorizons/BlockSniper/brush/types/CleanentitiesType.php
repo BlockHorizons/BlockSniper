@@ -34,8 +34,4 @@ class CleanentitiesType extends BaseType {
 	public function getName(): string {
 		return "Clean Entities";
 	}
-	
-	public function getPermission(): string {
-		return "blocksniper.type.cleanentities";
-	}
 }

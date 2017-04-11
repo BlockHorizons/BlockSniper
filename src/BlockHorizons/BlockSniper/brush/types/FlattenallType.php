@@ -48,8 +48,4 @@ class FlattenallType extends BaseType {
 	public function getName(): string {
 		return "Flatten All";
 	}
-	
-	public function getPermission(): string {
-		return "blocksniper.type.flattenall";
-	}
 }

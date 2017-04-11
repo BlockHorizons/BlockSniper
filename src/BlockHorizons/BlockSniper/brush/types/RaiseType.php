@@ -71,8 +71,4 @@ class RaiseType extends BaseType {
 	public function getName(): string {
 		return "Raise";
 	}
-	
-	public function getPermission(): string {
-		return "blocksniper.type.raise";
-	}
 }

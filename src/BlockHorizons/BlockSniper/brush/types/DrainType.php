@@ -39,8 +39,4 @@ class DrainType extends BaseType {
 	public function getName(): string {
 		return "Drain";
 	}
-	
-	public function getPermission(): string {
-		return "blocksniper.type.drain";
-	}
 }

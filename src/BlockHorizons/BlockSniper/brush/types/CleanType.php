@@ -40,8 +40,4 @@ class CleanType extends BaseType {
 	public function getName(): string {
 		return "Clean";
 	}
-	
-	public function getPermission(): string {
-		return "blocksniper.type.clean";
-	}
 }

@@ -60,10 +60,6 @@ class SphereShape extends BaseShape {
 		return $this->hollow ? "Hollow Sphere" : "Sphere";
 	}
 	
-	public function getPermission(): string {
-		return "blocksniper.shape.sphere";
-	}
-	
 	public function getApproximateProcessedBlocks(): int {
 		$blockCount = round(4 / 3 * M_PI * pow($this->radius, 3));
 		return $blockCount;

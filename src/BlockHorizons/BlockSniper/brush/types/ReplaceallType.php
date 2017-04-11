@@ -40,8 +40,4 @@ class ReplaceallType extends BaseType {
 	public function getName(): string {
 		return "Replace All";
 	}
-	
-	public function getPermission(): string {
-		return "blocksniper.type.replaceall";
-	}
 }

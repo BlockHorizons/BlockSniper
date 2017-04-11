@@ -45,8 +45,4 @@ class ToplayerType extends BaseType {
 	public function getName(): string {
 		return "Top Layer";
 	}
-	
-	public function getPermission(): string {
-		return "blocksniper.type.toplayer";
-	}
 }

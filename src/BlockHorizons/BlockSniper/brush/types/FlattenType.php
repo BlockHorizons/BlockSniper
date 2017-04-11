@@ -2,6 +2,7 @@
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
+use pocketmine\block\Block;
 use pocketmine\block\Flowable;
 use pocketmine\item\Item;
 use pocketmine\level\Level;
@@ -9,7 +10,6 @@ use pocketmine\math\Vector3;
 use pocketmine\Player;
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\brush\BrushManager;
-use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\undo\UndoStorer;
 
 class FlattenType extends BaseType {
@@ -42,9 +42,5 @@ class FlattenType extends BaseType {
 	
 	public function getName(): string {
 		return "Flatten";
-	}
-	
-	public function getPermission(): string {
-		return "blocksniper.type.flatten";
 	}
 }

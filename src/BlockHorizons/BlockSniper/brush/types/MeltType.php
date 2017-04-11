@@ -56,8 +56,4 @@ class MeltType extends BaseType {
 	public function getName(): string {
 		return "Melt";
 	}
-	
-	public function getPermission(): string {
-		return "blocksniper.type.melt";
-	}
 }

@@ -28,7 +28,9 @@ class LeafblowerType extends BaseType {
 		foreach($this->blocks as $block) {
 			if($block instanceof Flowable) {
 				$undoBlocks[] = $block;
-				if($this->getMain()->getSettings()->get("Drop-Leafblower-Plants")) {
+				/** @var Loader $loader */
+				$loader = $this->getLevel()->getServer()->getPluginManager()->getPlugin("BlockSniper");
+				if($loader->getSettings()->get("Drop-Leafblower-Plants")) {
 					$this->level->dropItem($block, Item::get($block->getId()));
 				}
 				$this->level->setBlock($block, Block::get(Block::AIR), false, false);
@@ -40,9 +42,5 @@ class LeafblowerType extends BaseType {
 	
 	public function getName(): string {
 		return "Leaf Blower";
-	}
-	
-	public function getPermission(): string {
-		return "blocksniper.type.leafblower";
 	}
 }

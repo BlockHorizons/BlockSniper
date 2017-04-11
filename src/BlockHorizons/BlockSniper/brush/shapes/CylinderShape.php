@@ -56,10 +56,6 @@ class CylinderShape extends BaseShape {
 		return $this->hollow ? "Hollow Standing Cylinder" : "Standing Cylinder";
 	}
 	
-	public function getPermission(): string {
-		return "blocksniper.shape.standingcylinder";
-	}
-	
 	public function getApproximateProcessedBlocks(): int {
 		$blockCount = round($this->radius * $this->radius * M_PI * $this->height);
 		return $blockCount;

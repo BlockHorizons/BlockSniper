@@ -82,14 +82,7 @@ abstract class BaseShape {
 	 * @return string
 	 */
 	public abstract function getName(): string;
-	
-	/**
-	 * Returns the permission node connected to the shape.
-	 *
-	 * @return string
-	 */
-	public abstract function getPermission(): string;
-	
+
 	/**
 	 * Returns all blocks inside of the shape.
 	 *
@@ -184,5 +177,14 @@ abstract class BaseShape {
 	 */
 	public function isHollow(): bool {
 		return $this->hollow;
+	}
+
+	/**
+	 * Returns the permission required to use the shape.
+	 *
+	 * @return string
+	 */
+	public function getPermission(): string {
+		return "blocksniper.shape." . strtolower(str_replace("hollow", "", str_replace(" ", "_", $this->getName())));
 	}
 }

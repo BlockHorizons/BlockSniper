@@ -53,10 +53,6 @@ class CuboidShape extends BaseShape {
 		return $this->hollow ? "Hollow Cuboid" : "Cuboid";
 	}
 	
-	public function getPermission(): string {
-		return "blocksniper.shape.cuboid";
-	}
-	
 	public function getApproximateProcessedBlocks(): int {
 		$blockCount = abs(($this->center->x - $this->width) - ($this->center->x + $this->width)) * abs(($this->center->z - $this->width) - ($this->center->z + $this->width)) * abs(($this->center->y - $this->height) - ($this->center->y + $this->height));
 		return $blockCount;

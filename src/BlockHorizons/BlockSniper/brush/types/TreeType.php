@@ -38,8 +38,4 @@ class TreeType extends BaseType {
 	public function getName(): string {
 		return "Tree";
 	}
-	
-	public function getPermission(): string {
-		return "blocksniper.type.tree";
-	}
 }

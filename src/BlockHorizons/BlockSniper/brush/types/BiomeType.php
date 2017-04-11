@@ -32,8 +32,4 @@ class BiomeType extends BaseType {
 	public function getName(): string {
 		return "Biome";
 	}
-	
-	public function getPermission(): string {
-		return "blocksniper.type.biome";
-	}
 }
