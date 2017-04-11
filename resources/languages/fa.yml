@@ -1,0 +1,51 @@
+# Persian translations, by  MrKiAN
+# Persian:
+---
+commands:
+  errors:
+    paste-not-found: "In past yaft nashod."
+    clone-not-found: "Clone morde nazar yaft nashod."
+    name-not-set: "Lotfan name ro vard konid."
+    template-not-existing: "Hich tamplatei ba in nam pida nashod."
+    no-permission: "Shoma nemitavanid az in estefade konid."
+    console-use: "In command nemitavan ba console ejra shod."
+    radius-not-numeric: "Shoaa intekhab shode adadi nis."
+    radius-too-big: "Shoaa entekhab shode ziad bozorg ast, lotfan adadi kockek entekhab konid."
+    no-target-found: "Block morede nazar yaft nashod."
+    no-valid-block: "Block yaft nashod, ID/name block ra benevisid."
+    shape-not-found: "Shekl ya Type yaft nashod."
+    no-modifications: "Shoma hich taghiri anjam nadadid ke Undo konid."
+    preset-already-exists: "In jaye taain shode dar hale hazer vojod darad."
+    preset-doesnt-exist: "makan taiin shode vojod nadarad."
+  succeed:
+    paste: "Clone paste shode."
+    clone: "Clone ba movafaghit anjam shod."
+    default: "Shape ba movafaghiat launch shod."
+    undo: "Taghir Undo shod."
+    language: "Zaban Morede Nazar Be Farsi(Persian) Taghir Yaft."
+    brush:
+      reset: "Brush ba movafaghiat rest shod."
+    preset:
+      name: "Preset tamom shod,"
+      cancel: "baray cancel 'cancel' ra type konid."
+      canceled: "set nime tamam cancel shod."
+
+brushwand:
+  disable: "Brushwand ghirefaal shod."
+  enable: "Brushwand faal shod." 
+  
+brush:
+  shape: "Shape: "
+  type: "Type: "
+  blocks: "Block ha: "
+  size: "Size: "
+  perfect: "Perfect: "
+  obsolete: "Obsolete: "
+  height: "Height: "
+  gravity: "Gravity: "
+  decrement: "Decrement: "
+  biome: "Biome: "
+  hollow: "Hollow: "
+  preset: "Preset: "
+  tree: "Tree: "
+...

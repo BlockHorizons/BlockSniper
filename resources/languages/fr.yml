@@ -1,0 +1,52 @@
+# French translations, by archie426. Improved by Whaxion
+
+# Francais:
+---
+commands:
+  errors:
+    no-permission: "Tu n'as pas la permission"
+    console-use: "Cette commande ne peut être utilisé par la console"
+    radius-not-numeric: "Le rayon doit être un nombre"
+    radius-too-big: "Le rayon est trop grand"
+    no-target-found: "Cible introuvable"
+    no-valid-block: "Pas de block valide"
+    shape-not-found: "Forme introuvable"
+    no-modifications: "Pas de modifications"
+    template-not-existing: "Ce modèle n'existe pas"
+    name-not-set: "Veuillez donner un nom"
+    paste-not-found: "Copie introuvable"
+    clone-not-found: "Clone introuvable"
+    preset-already-exists: "Ce prédéfini (preset) est déjà existant."
+    preset-doesnt-exist: "Ce prédéfini (preset) n'existe pas."
+  succeed:
+    default: "La forme a été ajoutée avec succès"
+    undo: "Annulé avec succès"
+    language: "La langue a été changé"
+    paste: "Collage effectué avec succès"
+    clone: "Clone réalisé avec succès"
+    brush:
+      reset: "Le pinceau a été réinitialisé avec succès"
+    preset:
+      name: "Le processus de création de prédéfini (preset) a démarré. Tapez un nom dans le chat,"
+      cancel: "ou tapez 'cancel' pour annuler"
+      canceled: "La création du prédéfini (preset) a été annulée"
+
+brushwand:
+  disable: "Pinceau désactivé"
+  enable: "Pinceau activé"
+
+brush:
+  shape: "Couche: "
+  type: "Type: "
+  blocks: "Blocs: "
+  size: "Taille: "
+  perfect: "Parfait: "
+  obsolete: "Obsolète: "
+  height: "Hauteur: "
+  gravity: "Gravité: "
+  decrement: "Diminuer: "
+  biome: "Biome: "
+  hollow: "Creux: "
+  preset: "Prédéfini (preset): "
+  tree: "Arbre: "
+...

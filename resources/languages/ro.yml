@@ -1,0 +1,52 @@
+# Limba Romana de catre NycuRO
+
+# Romana:
+---
+commands:
+  errors:
+    no-permission: "Nu ai permisiunea pentru a face acest lucru."
+    console-use: "Aceasta comanda nu poate fi executata de consola."
+    radius-not-numeric: "Raza trebuie sa fie exprimata intr-un numar."
+    radius-too-big: "Raza este prea mare. Te rog sa introduci un numar mai mic."
+    no-target-found: "Nici un bloc tinta gasit."
+    no-valid-block: "Blocul nu a fost gasit. Te rog sa introduci un ID valid."
+    shape-not-found: "Forma sau alt tip nu a fost gasit."
+    no-modifications: "Nu se poate gasii o modificare pentru a remedia."
+    paste-not-found: "Nu se poate gasii o lipire disponibila."
+    clone-not-found: "Nu poate fi gasita o clona."
+    name-not-set: "Acest nume nu este valid."
+    template-not-existing: "Nici un sablon nu a fost gasit cu acest nume."
+    preset-already-exists: "Acest preset deja exista."
+    preset-doesnt-exist: "Acest preset nu exista."
+  succeed:
+    default: "Ai aruncat/lipit cu succes o forma in locul tinta."
+    undo: "Ai remediat cu succes lucrarea facuta."
+    language: "Limba a fost schimbata cu succes."
+    paste: "Ai lipit clona cu succes."
+    clone: "Zona a fost clonata cu succes."
+    brush:
+      reset: "Brush a fost resetata cu succes."
+    preset:
+      name: "Presetarea a inceput. Te rog sa introduci un nume in chat"
+      cancel: "sau scrie 'cancel' pentru a iesi din proces."
+      canceled: "Presetarea procesului s-a incheiat."
+
+brushwand:
+  disable: "Brushwand este dezactivat."
+  enable: "Brushwand s-a activat cu succes."
+
+brush:
+  shape: "Forme: "
+  type: "Tipuri: "
+  blocks: "Blocuri: "
+  size: "Marime: "
+  perfect: "Perfect: "
+  obsolete: "Invechite: "
+  height: "Inaltime: "
+  gravity: "Gravitate: "
+  decrement: "Decrementare: "
+  biome: "Biome: "
+  hollow: "Gol: "
+  preset: "Presetat: "
+  tree: "Tree: "
+...

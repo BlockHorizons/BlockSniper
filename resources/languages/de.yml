@@ -12,11 +12,41 @@ commands:
     no-valid-block: "Block nicht gefunden, bitte gib einen gültigen Namen/ID ein."
     shape-not-found: "Form oder Typ nicht gefunden."
     no-modifications: "Keine Modifikation zum Rückgängig-machen wurde gefunden."
+    paste-not-found: "Dieser Einfügetyp (paste type) konnte nicht gefunden werden."
+    clone-not-found: "Dieser Klontyp (clone type) konnte nicht gefunden werden."
+    name-not-set: "Kein gültiger Name wurde festgelegt."
+    template-not-existing: "Es gibt keine Vorlage mit diesem Namen."
+    preset-already-exists: "Diese Voreinstellung  existiert bereits."
+    preset-doesnt-exist: "Diese Voreinstellung existiert nicht."
   succeed:
     default: "Die Form wurde erfolgreich dort begonnen, wo du hingesehen hast."
     undo: "Die letzte Modifikation wurde erfolgreich rückgängig gemacht."
+    language: "Sprache wurde erfolgreich geändert."
+    paste: "Klon wurde erfolgreich eingefügt."
+    clone: "Bereich wurde erfolgreich geklont und kopiert."
+    brush:
+      reset: "Der Pinsel wurde erfolgreich zurückgesetzt."
+    preset:
+      name: "Das generieren der Voreinstellung wurde gestartet. Gib den Namen in den Chat ein,"
+      cancel: "oder schreibe 'cancel' um den Prozess abzubrechen."
+      canceled: "Das Erstellen der Voreinstellung wurde abgebrochen."
 
 brushwand:
   disable: "Brushwand (Zauberpinsel) wurde deaktiviert."
   enable: "Brushwand (Zauberpinsel) wurde aktiviert."
+
+brush:
+  shape: "Form: "
+  type: "Typ: "
+  blocks: "Blöcke: "
+  size: "Größe: "
+  perfect: "Perfekt: "
+  obsolete: "Zu ersetzender Block: "
+  height: "Höhe: "
+  gravity: "Gravitation: "
+  decrement: "Verringern: "
+  biome: "Biom: "
+  hollow: "Hohl: "
+  preset: "Voreinstellung: "
+  tree: "Baum: "
 ...

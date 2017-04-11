@@ -1,0 +1,52 @@
+# Chinese(ROC) translations, by RiceballBro.
+
+# Chinese(ROC):
+---
+commands:
+  errors:
+    no-permission: "你沒有權限可以使用此功能"
+    console-use: "這個功能不能在後台使用"
+    radius-not-numeric: "範圍參數應為數字"
+    radius-too-big: "範圍參數過大, 請輸入較小的範圍參數"
+    no-target-found: "目標方塊未找到"
+    no-valid-block: "方塊未找到, 請輸入方塊英文名稱或編號"
+    shape-not-found: "形狀或模式未找到"
+    no-modifications: "還原列表中未找到數據"
+    paste-not-found: "該複製功能模式未找到"
+    clone-not-found: "該模型模式未找到"
+    name-not-set: "名稱未設置"
+    template-not-existing: "未找到該名稱的模型模板"
+    preset-already-exists: "That preset already exists."
+    preset-doesnt-exist: "That preset doesn't exist."
+  succeed:
+    default: "成功在自身座標上建立形狀"
+    undo: "成功還原先前動作"
+    language: "成功改變語言檔案"
+    paste: "成功複製模型"
+    clone: "該範圍的模型成功建立"
+    brush:
+      reset: "Brush has been reset successfully."
+    preset:
+      name: "Preset creation process started. Type a name in the chat,"
+      cancel: "or type 'cancel' to cancel the process."
+      canceled: "Preset creation has been canceled."
+
+brushwand:
+  disable: "刷子功能成功關閉"
+  enable: "刷子功能成功開啟"
+
+brush:
+  shape: "Shape: "
+  type: "Type: "
+  blocks: "Blocks: "
+  size: "Size: "
+  perfect: "Perfect: "
+  obsolete: "Obsolete: "
+  height: "Height: "
+  gravity: "Gravity: "
+  decrement: "Decrement: "
+  biome: "Biome: "
+  hollow: "Hollow: "
+  preset: "Preset: "
+  tree: "Tree: "
+...
