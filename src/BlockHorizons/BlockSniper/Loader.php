@@ -22,7 +22,7 @@ use pocketmine\utils\TextFormat as TF;
 
 class Loader extends PluginBase {
 	
-	const VERSION = "1.3.3";
+	const VERSION = "1.3.4";
 	const API_TARGET = "2.0.0 - 3.0.0-ALPHA4";
 	const CONFIGURATION_VERSION = "1.0.1";
 	
@@ -54,14 +54,14 @@ class Loader extends PluginBase {
 	public function reloadAll() {
 		$this->saveResource("settings.yml");
 		$this->settings = new ConfigData($this);
-		
 		$this->language = new TranslationData($this);
-		
+
+		$this->presetManager = new PresetManager($this);
 		$this->brushManager = new BrushManager($this);
+
 		$this->undoStore = new UndoStorer($this);
 		$this->cloneStore = new CloneStorer($this);
-		
-		$this->presetManager = new PresetManager($this);
+
 		if(!is_dir($this->getDataFolder())) {
 			mkdir($this->getDataFolder());
 		}
