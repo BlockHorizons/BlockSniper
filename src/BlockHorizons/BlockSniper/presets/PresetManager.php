@@ -16,14 +16,14 @@ class PresetManager {
 	public function __construct(Loader $loader) {
 		$this->loader = $loader;
 		
-		if(is_file($main->getDataFolder() . "presets.yml")) {
-			$this->data = yaml_parse_file($main->getDataFolder() . "presets.yml");
+		if(is_file($loader->getDataFolder() . "presets.yml")) {
+			$this->data = yaml_parse_file($loader->getDataFolder() . "presets.yml");
 			foreach($this->data as $name => $data) {
 				$this->addPreset($name);
-				$main->getLogger()->debug(TF::GREEN . "Preset " . $name . " has been loaded.");
+				$loader->getLogger()->debug(TF::GREEN . "Preset " . $name . " has been loaded.");
 			}
-			unlink($main->getDataFolder() . "presets.yml");
-			$main->getLogger()->info(TF::GREEN . "All presets have been loaded.");
+			unlink($loader->getDataFolder() . "presets.yml");
+			$loader->getLogger()->info(TF::GREEN . "All presets have been loaded.");
 		}
 	}
 	
