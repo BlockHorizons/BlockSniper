@@ -50,7 +50,7 @@ class CloneCommand extends BaseCommand {
 		switch(strtolower($args[0])) {
 			case "copy":
 				$shape = BrushManager::get($sender)->getShape(true);
-				$cloneType = new CopyType($this->getLoader()->getCloneStorer(), $sender->getLevel(), $this->getSettings()->get("Save-Air-In-Copy"), $center, $shape->getBlocksInside());
+				$cloneType = new CopyType($this->getLoader()->getCloneStorer(), $sender, $this->getSettings()->get("Save-Air-In-Copy"), $center, $shape->getBlocksInside());
 				break;
 			
 			case "template":
@@ -59,7 +59,7 @@ class CloneCommand extends BaseCommand {
 					return true;
 				}
 				$shape = BrushManager::get($sender)->getShape(true);
-				$cloneType = new TemplateType($this->getLoader()->getCloneStorer(), $sender->getLevel(), $this->getSettings()->get("Save-Air-In-Copy"), $center, $shape->getBlocksInside(), $args[1]);
+				$cloneType = new TemplateType($this->getLoader()->getCloneStorer(), $sender, $this->getSettings()->get("Save-Air-In-Copy"), $center, $shape->getBlocksInside(), $args[1]);
 				break;
 
 			case "schematic":
@@ -85,7 +85,7 @@ class CloneCommand extends BaseCommand {
 					$width = $length;
 				}
 				$this->getLoader()->getSchematicProcessor()->submitValues($shape->getBlocksInside(), $length, $width, $height);
-				$cloneType = new SchematicType($this->getLoader()->getCloneStorer(), $sender->getLevel(), $this->getSettings()->get("Save-Air-In-Copy"), $center, $shape->getBlocksInside(), $args[1]);
+				$cloneType = new SchematicType($this->getLoader()->getCloneStorer(), $sender, $this->getSettings()->get("Save-Air-In-Copy"), $center, $shape->getBlocksInside(), $args[1]);
 				break;
 			
 			default:
