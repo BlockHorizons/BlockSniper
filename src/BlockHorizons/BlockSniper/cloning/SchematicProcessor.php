@@ -80,13 +80,14 @@ class SchematicProcessor {
 				for($z = 0; $z < $this->length; $z++) {
 					$index = $y * $this->width * $this->length + $z * $this->width + $x;
 					$blockInfo[] = [
-						"pos" => new Vector3($x, $y, $z),
+						"pos" => new Vector3($x - floor($this->width / 2), $y - floor($this->width / 2), $z - floor($this->width / 2)),
 						"id" => ord($this->blocks[$index]),
 						"damage" => ord($this->data[$index])
 					];
 				}
 			}
 		}
+		var_dump($blockInfo);
 		return $blockInfo;
 	}
 
@@ -94,9 +95,10 @@ class SchematicProcessor {
 		if(($blockInfo = $this->load($schematicName)) === false) {
 			return false;
 		}
+		$center = $player->getTargetBlock(100);
 		$undoBlocks = [];
 		foreach($blockInfo as $key => $info) {
-			$block = Block::get($info["id"], $info["damage"], new Position($info["pos"]->x, $info["pos"]->y, $info["pos"]->z, $player->getLevel()));
+			$block = Block::get($info["id"], $info["damage"], new Position($info["pos"]->x + $center->x, $info["pos"]->y + $center->y, $info["pos"]->z + $center->z, $player->getLevel()));
 			$undoBlocks[] = $player->getLevel()->getBlock($block);
 			$player->getLevel()->setBlock($block, $block, false, false);
 		}
