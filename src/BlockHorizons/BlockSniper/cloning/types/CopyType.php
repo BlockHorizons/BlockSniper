@@ -8,25 +8,26 @@ use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
 
-class Template extends BaseClone {
+class CopyType extends BaseClone {
 	
-	public function __construct(CloneStorer $cloneStorer, Level $level, bool $saveAir, Position $center, array $blocks, string $name) {
-		parent::__construct($cloneStorer, $level, $saveAir, $center, $blocks, $name);
+	public function __construct(CloneStorer $cloneStorer, Level $level, bool $saveAir, Position $center, array $blocks) {
+		parent::__construct($cloneStorer, $level, $saveAir, $center, $blocks);
 	}
 	
 	public function getName(): string {
-		return "Template";
+		return "Copy";
 	}
 	
 	public function saveClone() {
-		$templateBlocks = [];
+		$copyBlocks = [];
 		foreach($this->blocks as $block) {
 			if($block->getId() === Item::AIR && $this->saveAir === false) {
 				continue;
 			}
 			$templateBlocks[] = $block;
 		}
-		$this->getCloneStorer()->saveTemplate($this->name, $templateBlocks, $this->center);
+		$this->getCloneStorer()->setOriginalCenter($this->center);
+		$this->getCloneStorer()->saveCopy($copyBlocks);
 		return true;
 	}
 }

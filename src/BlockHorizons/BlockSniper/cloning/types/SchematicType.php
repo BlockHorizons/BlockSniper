@@ -8,26 +8,25 @@ use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
 
-class Copy extends BaseClone {
-	
-	public function __construct(CloneStorer $cloneStorer, Level $level, bool $saveAir, Position $center, array $blocks) {
-		parent::__construct($cloneStorer, $level, $saveAir, $center, $blocks);
+class SchematicType extends BaseClone {
+
+	public function __construct(CloneStorer $cloneStorer, Level $level, bool $saveAir, Position $center, array $blocks, string $name) {
+		parent::__construct($cloneStorer, $level, $saveAir, $center, $blocks, $name);
 	}
-	
+
 	public function getName(): string {
-		return "Copy";
+		return "Schematic";
 	}
-	
+
 	public function saveClone() {
-		$copyBlocks = [];
+		$schematicBlocks = [];
 		foreach($this->blocks as $block) {
 			if($block->getId() === Item::AIR && $this->saveAir === false) {
 				continue;
 			}
-			$templateBlocks[] = $block;
+			$schematicBlocks[] = $block;
 		}
-		$this->getCloneStorer()->setOriginalCenter($this->center);
-		$this->getCloneStorer()->saveCopy($copyBlocks);
+		$this->getCloneStorer()->getLoader()->getSchematicProcessor()->save($this->name);
 		return true;
 	}
 }

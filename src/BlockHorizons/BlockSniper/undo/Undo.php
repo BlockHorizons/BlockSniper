@@ -27,7 +27,7 @@ class Undo {
 	public function getDetachedRedo(): Redo {
 		$redoBlocks = [];
 		foreach($this->undoBlocks as $undoBlock) {
-			$redoBlocks[] = $undoBlock->getLevel()->getBlock($undoBlock);
+			$redoBlocks[] = $undoBlock;
 		}
 
 		return new Redo($redoBlocks);

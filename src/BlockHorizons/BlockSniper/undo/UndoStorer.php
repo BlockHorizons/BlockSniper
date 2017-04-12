@@ -55,6 +55,8 @@ class UndoStorer {
 		for($currentAmount = 0; $currentAmount < $amount; $currentAmount++) {
 			$redo = $this->redoStore[$player->getName()][max(array_keys($this->redoStore[$player->getName()]))];
 
+			$undo = $redo->getDetachedUndoBlocks();
+			$this->saveUndo($undo, $player);
 			$redo->restore();
 
 			$this->unsetLatestRedo($player);

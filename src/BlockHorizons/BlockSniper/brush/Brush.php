@@ -110,11 +110,13 @@ class Brush {
 	}
 	
 	/**
+	 * @param $cloneShape
+	 *
 	 * @return BaseShape
 	 */
-	public function getShape(): BaseShape {
+	public function getShape($cloneShape = false): BaseShape {
 		$shapeName = 'BlockHorizons\BlockSniper\brush\shapes\\' . (ucfirst($this->shape) . "Shape");
-		$shape = new $shapeName(Server::getInstance()->getPlayer($this->player), Server::getInstance()->getPlayer($this->player)->getLevel(), $this->size, Server::getInstance()->getPlayer($this->player)->getTargetBlock(100), $this->hollow);
+		$shape = new $shapeName(Server::getInstance()->getPlayer($this->player), Server::getInstance()->getPlayer($this->player)->getLevel(), $this->size, Server::getInstance()->getPlayer($this->player)->getTargetBlock(100), $this->hollow, $cloneShape);
 		
 		return $shape;
 	}

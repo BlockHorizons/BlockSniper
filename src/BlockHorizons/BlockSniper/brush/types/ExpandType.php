@@ -23,6 +23,7 @@ class ExpandType extends BaseType {
 	 */
 	public function fillShape(): bool {
 		$undoBlocks = [];
+		$oneHoles = [];
 		foreach($this->blocks as $block) {
 			if($block->getId() === Item::AIR) {
 				$directions = [
@@ -42,10 +43,16 @@ class ExpandType extends BaseType {
 				if($valid >= 2) {
 					$undoBlocks[] = $block;
 				}
+				if($valid >= 4) {
+					$oneHoles[] = $block;
+				}
 			}
 		}
 		foreach($undoBlocks as $selectedBlock) {
 			$this->level->setBlock($selectedBlock, ($selectedBlock->getSide(Block::SIDE_DOWN)->getId() === Block::AIR ? $selectedBlock->getSide(Block::SIDE_UP) : $selectedBlock->getSide(Block::SIDE_DOWN)), false, false);
+		}
+		foreach($oneHoles as $block) {
+			$this->level->setBlock($block, ($block->getSide(Block::SIDE_DOWN)->getId() === Block::AIR ? $block->getSide(Block::SIDE_EAST) : $block->getSide(Block::SIDE_DOWN)));
 		}
 		
 		$this->getUndoStorer()->saveUndo($undoBlocks, $this->player);

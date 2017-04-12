@@ -3,8 +3,15 @@
 namespace BlockHorizons\BlockSniper\commands\cloning;
 
 use BlockHorizons\BlockSniper\brush\BrushManager;
+use BlockHorizons\BlockSniper\brush\shapes\CubeShape;
+use BlockHorizons\BlockSniper\brush\shapes\CuboidShape;
+use BlockHorizons\BlockSniper\brush\shapes\CylinderShape;
+use BlockHorizons\BlockSniper\brush\shapes\SphereShape;
 use BlockHorizons\BlockSniper\cloning\types\Copy;
+use BlockHorizons\BlockSniper\cloning\types\CopyType;
+use BlockHorizons\BlockSniper\cloning\types\SchematicType;
 use BlockHorizons\BlockSniper\cloning\types\Template;
+use BlockHorizons\BlockSniper\cloning\types\TemplateType;
 use BlockHorizons\BlockSniper\commands\BaseCommand;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\command\CommandSender;
@@ -47,12 +54,12 @@ class CloneCommand extends BaseCommand {
 			$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.no-target-found"));
 			return true;
 		}
-		
+
+		$this->getLoader()->getBrushManager()->createBrush($sender);
 		switch(strtolower($args[0])) {
 			case "copy":
-				$this->getLoader()->getBrushManager()->createBrush($sender);
 				$shape = BrushManager::get($sender)->getShape();
-				$cloneType = new Copy($this->getLoader()->getCloneStorer(), $sender->getLevel(), $this->getSettings()->get("Save-Air-In-Copy"), $center, $shape->getBlocksInside());
+				$cloneType = new CopyType($this->getLoader()->getCloneStorer(), $sender->getLevel(), $this->getSettings()->get("Save-Air-In-Copy"), $center, $shape->getBlocksInside());
 				break;
 			
 			case "template":
@@ -60,14 +67,35 @@ class CloneCommand extends BaseCommand {
 					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.name-not-set"));
 					return true;
 				}
-				$this->getLoader()->getBrushManager()->createBrush($sender);
 				$shape = BrushManager::get($sender)->getShape();
-				$cloneType = new Template($this->getLoader()->getCloneStorer(), $sender->getLevel(), $this->getSettings()->get("Save-Air-In-Copy"), $center, $shape->getBlocksInside(), $args[2]);
+				$cloneType = new TemplateType($this->getLoader()->getCloneStorer(), $sender->getLevel(), $this->getSettings()->get("Save-Air-In-Copy"), $center, $shape->getBlocksInside(), $args[2]);
 				break;
 
 			case "schematic":
-				// TODO: Implement Schematics
-				return false;
+				if(!isset($args[2])) {
+					$sender->sendMessage(TF::RED . "[Warning] " .  $this->getLoader()->getTranslation("commands.errors.name-not-set"));
+					return true;
+				}
+				$shape = BrushManager::get($sender)->getShape();
+
+				if($shape instanceof CylinderShape || $shape instanceof CuboidShape) {
+					$height = $shape->getHeight() * 2 + 1;
+				} elseif($shape instanceof SphereShape) {
+					$height = $shape->getRadius() * 2 + 1;
+				} else {
+					$height = $shape->getWidth() * 2 + 1;
+				}
+
+				if($shape instanceof CuboidShape || $shape instanceof CubeShape) {
+					$length = $shape->getWidth() * 2 + 1;
+					$width = $length;
+				} else {
+					$length = $shape->getRadius() * 2 + 1;
+					$width = $length;
+				}
+				$this->getLoader()->getSchematicProcessor()->submitValues($shape->getBlocksInside(), $length, $width, $height);
+				$cloneType = new SchematicType($this->getLoader()->getCloneStorer(), $sender->getLevel(), $this->getSettings()->get("Save-Air-In-Copy"), $center, $shape->getBlocksInside(), $args[2]);
+				break;
 			
 			default:
 				$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.clone-not-found"));

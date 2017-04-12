@@ -68,12 +68,23 @@ abstract class BaseShape {
 	 * @param Level    $level
 	 * @param Position $center
 	 * @param bool     $hollow
+	 * @param bool     $cloneShape
 	 */
-	public function __construct(Player $player, Level $level, Position $center, bool $hollow) {
+	public function __construct(Player $player, Level $level, Position $center, bool $hollow, bool $cloneShape = false) {
 		$this->player = $player;
 		$this->level = $level;
 		$this->center = $center;
 		$this->hollow = $hollow;
+
+		if($cloneShape) {
+			if($this instanceof CuboidShape || $this instanceof CylinderShape) {
+				$this->center->y += $this->height;
+			} elseif($this instanceof SphereShape) {
+				$this->center->y += $this->radius;
+			} else {
+				$this->center->y += $this->width;
+			}
+		}
 	}
 
 	/**

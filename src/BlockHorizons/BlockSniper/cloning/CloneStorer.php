@@ -73,7 +73,7 @@ class CloneStorer {
 			$undoBlocks[] = $level->getBlock($blockPos);
 			$level->setBlock($blockPos, Block::get((int)$blockId, (int)$meta), false, false);
 		}
-		$this->getLoader()->getUndoStore()->saveUndo($undoBlocks, $player);
+		$this->getLoader()->getUndoStorer()->saveUndo($undoBlocks, $player);
 	}
 	
 	public function getTargetBlock(): Vector3 {
@@ -164,7 +164,7 @@ class CloneStorer {
 			$undoBlocks[] = $targetBlock->getLevel()->getBlock($blockPos);
 			$targetBlock->getLevel()->setBlock($blockPos, Block::get((int)$blockId, (int)$meta), false, false);
 		}
-		$this->getLoader()->getUndoStore()->saveUndo($undoBlocks, $player);
+		$this->getLoader()->getUndoStorer()->saveUndo($undoBlocks, $player);
 		return true;
 	}
 	

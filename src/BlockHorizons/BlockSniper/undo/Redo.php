@@ -22,6 +22,18 @@ class Redo {
 	}
 
 	/**
+	 * @return array
+	 */
+	public function getDetachedUndoBlocks(): array {
+		$undoBlocks = [];
+		foreach($this->redoBlocks as $redoBlock) {
+			$undoBlocks[] = $redoBlock;
+		}
+
+		return $undoBlocks;
+	}
+
+	/**
 	 * @return int
 	 */
 	public function getBlockCount(): int {
