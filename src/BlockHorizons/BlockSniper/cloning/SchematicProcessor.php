@@ -68,6 +68,7 @@ class SchematicProcessor {
 		$nbt->readCompressed(file_get_contents($this->getSchematicFile($schematicName)));
 		$values = $nbt->getData();
 
+		var_dump($values);
 		$this->blocks = $values->Blocks->getValue();
 		$this->data = $values->Data->getValue();
 		$this->height = (int) $values->Height->getValue();

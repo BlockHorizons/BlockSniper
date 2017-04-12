@@ -5,7 +5,6 @@ namespace BlockHorizons\BlockSniper\cloning;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
-use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 
@@ -13,7 +12,6 @@ class CloneStorer {
 	
 	private $copyStore = [];
 	private $originalCenter = null;
-	private $target = null;
 	private $loader;
 	
 	public function __construct(Loader $loader) {
@@ -55,15 +53,15 @@ class CloneStorer {
 	}
 
 	/**
-	 * @param Level  $level
 	 * @param Player $player
 	 */
 	public function pasteCopy(Player $player) {
+		var_dump($this->copyStore[$player->getName()]);
 		$undoBlocks = [];
 		$level = $player->getLevel();
 		$center = $player->getTargetBlock(100);
 		foreach($this->copyStore[$player->getName()] as $block) {
-			$undoBlocks[] = $level->getBlock($block);
+			$undoBlocks[] = $level->getBlock($center->add($block));
 			$level->setBlock($center->add($block), $block, false, false);
 		}
 		$this->getLoader()->getUndoStorer()->saveUndo($undoBlocks, $player);
@@ -81,11 +79,13 @@ class CloneStorer {
 		$this->originalCenter = null;
 		$this->target = null;
 	}
-	
+
 	/**
+	 * @param Player $player
+	 *
 	 * @return bool
 	 */
-	public function copyStoreExists(Player $player) {
+	public function copyStoreExists(Player $player): bool {
 		if(!is_array($this->copyStore[$player->getName()]) || empty($this->copyStore[$player->getName()])) {
 			return false;
 		}
@@ -95,7 +95,7 @@ class CloneStorer {
 	/**
 	 * @return int
 	 */
-	public function getCopyBlockAmount(Player $player) {
+	public function getCopyBlockAmount(Player $player): int {
 		return count($this->copyStore[$player->getName()]);
 	}
 	
