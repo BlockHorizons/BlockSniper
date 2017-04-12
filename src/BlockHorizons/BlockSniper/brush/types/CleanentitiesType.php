@@ -10,7 +10,7 @@ use pocketmine\Player;
 class CleanentitiesType extends BaseType {
 	
 	/*
-	 * Clears all entities within the brush radius.
+	 * Clears all entities within the brush radius. This brush can not undo.
 	 */
 	public function __construct(UndoStorer $undoStorer, Player $player, Level $level, array $blocks) {
 		parent::__construct($undoStorer, $player, $level, $blocks);

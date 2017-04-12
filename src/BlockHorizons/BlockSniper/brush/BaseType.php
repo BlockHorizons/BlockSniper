@@ -15,10 +15,7 @@ use pocketmine\level\Position;
 use pocketmine\Player;
 
 abstract class BaseType {
-	
-	const MAX_WORLD_HEIGHT = 256;
-	const MIN_WORLD_HEIGHT = 0;
-	
+
 	const TYPE_FILL = 0;
 	const TYPE_OVERLAY = 1;
 	const TYPE_LAYER = 2;

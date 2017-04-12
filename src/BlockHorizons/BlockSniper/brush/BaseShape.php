@@ -11,10 +11,7 @@ use pocketmine\level\Position;
 use pocketmine\Player;
 
 abstract class BaseShape {
-	
-	const MAX_WORLD_HEIGHT = 256;
-	const MIN_WORLD_HEIGHT = 0;
-	
+
 	const SHAPE_SPHERE = 0;
 	const SHAPE_CUBE = 1;
 	const SHAPE_CYLINDER = 2;
