@@ -26,7 +26,7 @@ class RedoCommand extends BaseCommand {
 			return true;
 		}
 
-		if(!$this->getLoader()->getUndoStore()->redoStorageExists($sender)) {
+		if(!$this->getLoader()->getUndoStorer()->redoStorageExists($sender)) {
 			$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.no-modifications"));
 			return true;
 		}
@@ -35,13 +35,13 @@ class RedoCommand extends BaseCommand {
 		if(isset($args[0])) {
 			if(is_numeric($args[0])) {
 				$redoAmount = $args[0];
-				if($redoAmount > ($totalRedo = $this->getLoader()->getUndoStore()->getTotalRedoStores($sender))) {
+				if($redoAmount > ($totalRedo = $this->getLoader()->getUndoStorer()->getTotalRedoStores($sender))) {
 					$redoAmount = $totalRedo;
 				}
 			}
 		}
 
-		$this->getLoader()->getUndoStore()->restoreLatestRedo($redoAmount, $sender);
+		$this->getLoader()->getUndoStorer()->restoreLatestRedo($redoAmount, $sender);
 		$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.undo") . TF::AQUA . " (" . $redoAmount . ")");
 		return true;
 	}

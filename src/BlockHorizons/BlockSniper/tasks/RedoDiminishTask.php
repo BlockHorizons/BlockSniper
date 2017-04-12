@@ -12,9 +12,9 @@ class RedoDiminishTask extends BaseTask {
 
 	public function onRun($currentTick) {
 		foreach($this->getLoader()->getServer()->getOnlinePlayers() as $player) {
-			if($this->getUndoStore()->redoStorageExists($player)) {
-				if($this->getUndoStore()->getLastRedoActivity($player) >= 180) {
-					$this->getUndoStore()->unsetOldestRedo($player);
+			if($this->getUndoStorer()->redoStorageExists($player)) {
+				if($this->getUndoStorer()->getLastRedoActivity($player) >= 180) {
+					$this->getUndoStorer()->unsetOldestRedo($player);
 				}
 			}
 		}

@@ -12,9 +12,9 @@ class UndoDiminishTask extends BaseTask {
 	
 	public function onRun($currentTick) {
 		foreach($this->getLoader()->getServer()->getOnlinePlayers() as $player) {
-			if($this->getUndoStore()->undoStorageExists($player)) {
-				if($this->getUndoStore()->getLastUndoActivity($player) >= 180) {
-					$this->getUndoStore()->unsetOldestUndo($player);
+			if($this->getUndoStorer()->undoStorageExists($player)) {
+				if($this->getUndoStorer()->getLastUndoActivity($player) >= 180) {
+					$this->getUndoStorer()->unsetOldestUndo($player);
 				}
 			}
 		}

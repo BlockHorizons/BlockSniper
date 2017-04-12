@@ -18,8 +18,8 @@ abstract class BaseTask extends PluginTask {
 	/**
 	 * @return UndoStorer
 	 */
-	public function getUndoStore(): UndoStorer {
-		return $this->getLoader()->getUndoStore();
+	public function getUndoStorer(): UndoStorer {
+		return $this->getLoader()->getUndoStorer();
 	}
 	
 	/**
