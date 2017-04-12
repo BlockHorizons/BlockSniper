@@ -68,12 +68,11 @@ class SchematicProcessor {
 		$nbt->readCompressed(file_get_contents($this->getSchematicFile($schematicName)));
 		$values = $nbt->getData();
 
-		var_dump($values);
-		$this->blocks = $values->Blocks->getValue();
-		$this->data = $values->Data->getValue();
-		$this->height = (int) $values->Height->getValue();
-		$this->width = (int) $values->Width->getValue();
-		$this->length = (int) $values->Length->getValue();
+		$this->blocks = $values["Blocks"];
+		$this->data = $values["Data"];
+		$this->height = (int) $values["Height"];
+		$this->width = (int) $values["Width"];
+		$this->length = (int) $values["Length"];
 		$blockInfo = [];
 
 		for($x = 0; $x < $this->width; $x++) {
