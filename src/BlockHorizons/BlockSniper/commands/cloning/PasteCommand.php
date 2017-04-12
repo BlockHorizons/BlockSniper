@@ -7,6 +7,7 @@ use BlockHorizons\BlockSniper\Loader;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
+use schematic\Schematic;
 
 class PasteCommand extends BaseCommand {
 	
@@ -54,11 +55,20 @@ class PasteCommand extends BaseCommand {
 				break;
 
 			case "schematic":
-				if(!$this->getLoader()->getSchematicProcessor()->schematicExists($args[1])) {
+				if(!is_file($file = $this->getLoader()->getDataFolder() . "schematics/" . $args[1] . ".schematic")) {
 					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.template-not-existing"));
 					return true;
 				}
-				$this->getLoader()->getSchematicProcessor()->paste($args[1], $sender);
+				$schematic = new Schematic(file_get_contents($file));
+				$schematic->decode();
+				$schematic->fixBlockIds();
+
+				$undoBlocks = [];
+
+				foreach($schematic->getBlocks() as $block) {
+					$undoBlocks[] = $center->getLevel()->getBlock($target = $center->add($block->x - floor($schematic->getWidth() / 2), $block->y, $block->z - floor($schematic->getLength() / 2)));
+					$center->getLevel()->setBlock($target, $block, false, false);
+				}
 				break;
 
 			default:

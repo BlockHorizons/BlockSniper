@@ -3,10 +3,6 @@
 namespace BlockHorizons\BlockSniper\commands\cloning;
 
 use BlockHorizons\BlockSniper\brush\BrushManager;
-use BlockHorizons\BlockSniper\brush\shapes\CubeShape;
-use BlockHorizons\BlockSniper\brush\shapes\CuboidShape;
-use BlockHorizons\BlockSniper\brush\shapes\CylinderShape;
-use BlockHorizons\BlockSniper\brush\shapes\SphereShape;
 use BlockHorizons\BlockSniper\cloning\types\CopyType;
 use BlockHorizons\BlockSniper\cloning\types\SchematicType;
 use BlockHorizons\BlockSniper\cloning\types\TemplateType;
@@ -15,6 +11,7 @@ use BlockHorizons\BlockSniper\Loader;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
+use schematic\Schematic;
 
 class CloneCommand extends BaseCommand {
 	
@@ -69,24 +66,14 @@ class CloneCommand extends BaseCommand {
 				}
 				$shape = BrushManager::get($sender)->getShape(true);
 
-				if($shape instanceof CylinderShape || $shape instanceof CuboidShape) {
-					$height = $shape->getHeight() * 2 + 1;
-				} elseif($shape instanceof SphereShape) {
-					$height = $shape->getRadius() * 2 + 1;
-				} else {
-					$height = $shape->getWidth() * 2 + 1;
-				}
+				$schematic = new Schematic("");
+				$schematic->setBlocks($shape->getBlocksInside());
+				$schematic->setMaterials(Schematic::MATERIALS_ALPHA);
+				$schematic->encode();
 
-				if($shape instanceof CuboidShape || $shape instanceof CubeShape) {
-					$length = $shape->getWidth() * 2 + 1;
-					$width = $length;
-				} else {
-					$length = $shape->getRadius() * 2 + 1;
-					$width = $length;
-				}
-				$this->getLoader()->getSchematicProcessor()->submitValues($shape->getBlocksInside(), $length, $width, $height);
-				$cloneType = new SchematicType($this->getLoader()->getCloneStorer(), $sender, $this->getSettings()->get("Save-Air-In-Copy"), $center, $shape->getBlocksInside(), $args[1]);
-				break;
+				file_put_contents($this->getLoader()->getDataFolder() . "schematics/" . $args[1] . ".schematic", $schematic->raw);
+				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.clone"));
+				return true;
 			
 			default:
 				$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.clone-not-found"));

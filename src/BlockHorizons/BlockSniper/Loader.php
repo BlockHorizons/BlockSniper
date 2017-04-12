@@ -4,7 +4,6 @@ namespace BlockHorizons\BlockSniper;
 
 use BlockHorizons\BlockSniper\brush\BrushManager;
 use BlockHorizons\BlockSniper\cloning\CloneStorer;
-use BlockHorizons\BlockSniper\cloning\SchematicProcessor;
 use BlockHorizons\BlockSniper\commands\BlockSniperCommand;
 use BlockHorizons\BlockSniper\commands\BrushCommand;
 use BlockHorizons\BlockSniper\commands\cloning\CloneCommand;
@@ -63,7 +62,6 @@ class Loader extends PluginBase {
 
 		$this->undoStorer = new UndoStorer($this);
 		$this->cloneStorer = new CloneStorer($this);
-		$this->schematicProcessor = new SchematicProcessor($this);
 
 		if(!is_dir($this->getDataFolder())) {
 			mkdir($this->getDataFolder());
@@ -150,13 +148,6 @@ class Loader extends PluginBase {
 	 */
 	public function getCloneStorer(): CloneStorer {
 		return $this->cloneStorer;
-	}
-
-	/**
-	 * @return SchematicProcessor
-	 */
-	public function getSchematicProcessor(): SchematicProcessor {
-		return $this->schematicProcessor;
 	}
 	
 	/**
