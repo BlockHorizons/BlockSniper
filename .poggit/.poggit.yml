@@ -1,4 +1,5 @@
 --- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/BlockHorizons/BlockSniper
+submodule: true
 projects:
   BlockSniper:
     path: ""
