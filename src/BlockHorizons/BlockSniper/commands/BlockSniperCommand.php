@@ -23,7 +23,8 @@ class BlockSniperCommand extends BaseCommand {
 			$sender->sendMessage(TF::AQUA . "[BlockSniper] Information\n" .
 				TF::GREEN . "Version: " . TF::YELLOW . Loader::VERSION . "\n" .
 				TF::GREEN . "Target API: " . TF::YELLOW . Loader::API_TARGET . "\n" .
-				TF::GREEN . "Author: " . TF::YELLOW . "BlockHorizons");
+				TF::GREEN . "Organization: " . TF::YELLOW . "BlockHorizons (https://github.com/BlockHorizons/BlockSniper)\n" .
+				TF::GREEN . "Authors: " . TF::YELLOW . "Sandertv (@Sandertv), Chris-Prime (@PrimusLV)");
 			return true;
 		}
 		
