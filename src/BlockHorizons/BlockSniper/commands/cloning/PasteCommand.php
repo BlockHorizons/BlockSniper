@@ -40,9 +40,8 @@ class PasteCommand extends BaseCommand {
 		
 		switch(strtolower($args[0])) {
 			case "copy":
-				if($this->getLoader()->getCloneStorer()->copyStoreExists()) {
-					$this->getLoader()->getCloneStorer()->setTargetBlock($center);
-					$this->getLoader()->getCloneStorer()->pasteCopy($sender->getLevel(), $sender);
+				if($this->getLoader()->getCloneStorer()->copyStoreExists($sender)) {
+					$this->getLoader()->getCloneStorer()->pasteCopy($sender);
 				}
 				break;
 			

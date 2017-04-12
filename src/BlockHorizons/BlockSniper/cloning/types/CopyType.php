@@ -5,13 +5,13 @@ namespace BlockHorizons\BlockSniper\cloning\types;
 use BlockHorizons\BlockSniper\cloning\BaseClone;
 use BlockHorizons\BlockSniper\cloning\CloneStorer;
 use pocketmine\item\Item;
-use pocketmine\level\Level;
 use pocketmine\level\Position;
+use pocketmine\Player;
 
 class CopyType extends BaseClone {
 	
-	public function __construct(CloneStorer $cloneStorer, Level $level, bool $saveAir, Position $center, array $blocks) {
-		parent::__construct($cloneStorer, $level, $saveAir, $center, $blocks);
+	public function __construct(CloneStorer $cloneStorer, Player $player, bool $saveAir, Position $center, array $blocks) {
+		parent::__construct($cloneStorer, $player, $saveAir, $center, $blocks);
 	}
 	
 	public function getName(): string {
@@ -26,8 +26,8 @@ class CopyType extends BaseClone {
 			}
 			$templateBlocks[] = $block;
 		}
-		$this->getCloneStorer()->setOriginalCenter($this->center);
-		$this->getCloneStorer()->saveCopy($copyBlocks);
+		$this->getCloneStorer()->setOriginalCenter($this->center, $this->player);
+		$this->getCloneStorer()->saveCopy($copyBlocks, $this->player);
 		return true;
 	}
 }

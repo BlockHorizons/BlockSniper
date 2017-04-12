@@ -5,6 +5,7 @@ namespace BlockHorizons\BlockSniper\cloning;
 use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
+use pocketmine\Player;
 
 abstract class BaseClone {
 	
@@ -15,6 +16,7 @@ abstract class BaseClone {
 	public $cloneStorer;
 	public $level;
 
+	protected $player;
 	protected $name;
 	protected $center;
 	protected $saveAir;
@@ -32,7 +34,7 @@ abstract class BaseClone {
 		}
 		return false;
 	}
-	
+
 	public abstract function getName(): string;
 	
 	public abstract function saveClone();
@@ -44,9 +46,10 @@ abstract class BaseClone {
 	 * @param Position    $center
 	 * @param Block[]     $blocks
 	 */
-	public function __construct(CloneStorer $cloneStorer, Level $level, bool $saveAir, Position $center, array $blocks, string $name = "") {
+	public function __construct(CloneStorer $cloneStorer, Player $player, bool $saveAir, Position $center, array $blocks, string $name = "") {
 		$this->cloneStorer = $cloneStorer;
-		$this->level = $level;
+		$this->player = $player;
+		$this->level = $player->getLevel();
 		$this->saveAir = $saveAir;
 		$this->center = $center;
 		$this->blocks = $blocks;
