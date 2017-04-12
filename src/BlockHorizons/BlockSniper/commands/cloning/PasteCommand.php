@@ -52,11 +52,20 @@ class PasteCommand extends BaseCommand {
 				}
 				$this->getLoader()->getCloneStorer()->pasteTemplate($args[1], $center, $sender);
 				break;
-			
+
+			case "schematic":
+				if(!$this->getLoader()->getSchematicProcessor()->schematicExists($args[1])) {
+					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.template-not-existing"));
+					return true;
+				}
+				$this->getLoader()->getSchematicProcessor()->paste($args[1], $sender);
+				break;
+
 			default:
 				$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.paste-not-found"));
 				return true;
 		}
 		$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.paste"));
+		return true;
 	}
 }
