@@ -5,6 +5,7 @@ namespace BlockHorizons\BlockSniper\commands\cloning;
 use BlockHorizons\BlockSniper\commands\BaseCommand;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\command\CommandSender;
+use pocketmine\item\Item;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
 use schematic\Schematic;
@@ -12,7 +13,7 @@ use schematic\Schematic;
 class PasteCommand extends BaseCommand {
 	
 	public function __construct(Loader $loader) {
-		parent::__construct($loader, "paste", "Paste the selected clone or template", "<type> [name]", []);
+		parent::__construct($loader, "paste", "Paste the selected clone, template or schematic", "<type> [name]", []);
 		$this->setPermission("blocksniper.command.paste");
 		$this->setUsage(TF::RED . "[Usage] /paste <type> [name]");
 	}
@@ -66,9 +67,12 @@ class PasteCommand extends BaseCommand {
 				$undoBlocks = [];
 
 				foreach($schematic->getBlocks() as $block) {
-					$undoBlocks[] = $center->getLevel()->getBlock($target = $center->add($block->x - floor($schematic->getWidth() / 2), $block->y, $block->z - floor($schematic->getLength() / 2)));
-					$center->getLevel()->setBlock($target, $block, false, false);
+					if($block->getId() !== Item::AIR) {
+						$undoBlocks[] = $center->getLevel()->getBlock($target = $center->add($block->x - floor($schematic->getWidth() / 2), $block->y, $block->z - floor($schematic->getLength() / 2)));
+						$center->getLevel()->setBlock($target, $block, false, false);
+					}
 				}
+				$this->getLoader()->getUndoStorer()->saveUndo($undoBlocks, $sender);
 				break;
 
 			default:
