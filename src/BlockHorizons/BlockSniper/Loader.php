@@ -22,8 +22,8 @@ use pocketmine\utils\TextFormat as TF;
 
 class Loader extends PluginBase {
 	
-	const VERSION = "1.3.4";
-	const API_TARGET = "2.0.0 - 3.0.0-ALPHA4";
+	const VERSION = "1.4.0";
+	const API_TARGET = "2.0.0 - 3.0.0-ALPHA5";
 	const CONFIGURATION_VERSION = "1.1.0";
 	
 	public $availableLanguages = [
@@ -38,7 +38,6 @@ class Loader extends PluginBase {
 	public $language;
 	private $undoStorer;
 	private $cloneStorer;
-	private $schematicProcessor;
 	private $settings;
 	private $brushManager;
 	private $presetManager;
