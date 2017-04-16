@@ -30,14 +30,16 @@ class BrushCommand extends BaseCommand {
 		}
 		
 		if(count($args) !== 2) {
+			if(!isset($args[0]) && !isset($args[1])) {
+				$sender->sendMessage($this->getUsage());
+				return true;
+			}
 			if(strtolower($args[0]) !== "reset" && strtolower($args[0]) !== "re" && strtolower($args[1]) !== "delete") {
 				$sender->sendMessage($this->getUsage());
 				return true;
 			}
 		}
 
-
-		
 		$this->getLoader()->getBrushManager()->createBrush($sender);
 		$brush = BrushManager::get($sender);
 		
