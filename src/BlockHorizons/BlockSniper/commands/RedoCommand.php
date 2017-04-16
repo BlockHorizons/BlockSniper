@@ -10,9 +10,7 @@ use pocketmine\utils\TextFormat as TF;
 class RedoCommand extends BaseCommand {
 
 	public function __construct(Loader $loader) {
-		parent::__construct($loader, "redo", "Redo your last BlockSniper modification", "", []);
-		$this->setPermission("blocksniper.command.redo");
-		$this->setUsage(TF::RED . "[Usage] /redo [amount]");
+		parent::__construct($loader, "redo", "Redo your last BlockSniper modification", "/redo [amount]", []);
 	}
 
 	public function execute(CommandSender $sender, $commandLabel, array $args) {
@@ -44,5 +42,18 @@ class RedoCommand extends BaseCommand {
 		$this->getLoader()->getUndoStorer()->restoreLatestRedo($redoAmount, $sender);
 		$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.undo") . TF::AQUA . " (" . $redoAmount . ")");
 		return true;
+	}
+
+	public function generateCustomCommandData(Player $player) {
+		$commandData = parent::generateCustomCommandData($player);
+		$commandData["overloads"]["default"]["input"]["parameters"] = [
+			0 => [
+				"type" => "int",
+				"name" => "amount",
+				"optional" => true
+			]
+		];
+
+		return $commandData;
 	}
 }

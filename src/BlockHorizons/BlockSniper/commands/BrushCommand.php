@@ -15,9 +15,7 @@ use pocketmine\utils\TextFormat as TF;
 class BrushCommand extends BaseCommand {
 	
 	public function __construct(Loader $loader) {
-		parent::__construct($loader, "brush", "Change the properties of the brush", "<parameter> <args>", ["b", "brushwand"]);
-		$this->setPermission("blocksniper.command.brush");
-		$this->setUsage(TF::RED . "[Usage] /brush <parameter> <value>");
+		parent::__construct($loader, "brush", "Change the properties of the brush", "/brush <parameter> <args>", ["b", "brushwand"]);
 	}
 	
 	public function execute(CommandSender $sender, $commandLabel, array $args) {
@@ -31,10 +29,14 @@ class BrushCommand extends BaseCommand {
 			return true;
 		}
 		
-		if(count($args) !== 2 && strtolower($args[0]) !== "reset" && strtolower($args[0]) !== "re" && strtolower($args[1]) !== "delete") {
-			$sender->sendMessage($this->getUsage());
-			return true;
+		if(count($args) !== 2) {
+			if(strtolower($args[0]) !== "reset" && strtolower($args[0]) !== "re" && strtolower($args[1]) !== "delete") {
+				$sender->sendMessage($this->getUsage());
+				return true;
+			}
 		}
+
+
 		
 		$this->getLoader()->getBrushManager()->createBrush($sender);
 		$brush = BrushManager::get($sender);
@@ -228,5 +230,28 @@ class BrushCommand extends BaseCommand {
 		}
 		$this->getLoader()->getServer()->getPluginManager()->callEvent(new Change($this->getLoader(), $sender, $action, $args[0]));
 		return true;
+	}
+
+	public function generateCustomCommandData(Player $player) {
+		$commandData = parent::generateCustomCommandData($player);
+		$commandData["overloads"]["default"]["input"]["parameters"] = [
+			0 => [
+				"type" => "string",
+				"name" => "parameter",
+				"optional" => false
+			],
+			1 => [
+				"type" => "rawtext",
+				"name" => "value",
+				"optional" => true
+			],
+			2 => [
+				"type" => "string",
+				"name" => "name",
+				"optional" => true
+			]
+		];
+
+		return $commandData;
 	}
 }

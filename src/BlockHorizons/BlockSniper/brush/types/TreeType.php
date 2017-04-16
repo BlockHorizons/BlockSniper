@@ -30,7 +30,7 @@ class TreeType extends BaseType {
 		if(!$this->level->getBlock($this->center) instanceof Flowable && !$this->level->getBlock($this->center)->getId() === Block::AIR) {
 			$this->center->y++;
 		}
-		Tree::growTree($this->level, $this->center->x, $this->center->y, $this->center->z, new Random(mt_rand()), $this->tree);
+		Tree::growTree($this->level, $this->center->x, $this->center->y + 1, $this->center->z, new Random(mt_rand()), $this->tree);
 		return true;
 	}
 	

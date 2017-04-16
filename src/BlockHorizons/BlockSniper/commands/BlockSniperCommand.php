@@ -4,14 +4,13 @@ namespace BlockHorizons\BlockSniper\commands;
 
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\command\CommandSender;
+use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
 
 class BlockSniperCommand extends BaseCommand {
 	
 	public function __construct(Loader $loader) {
-		parent::__construct($loader, "blocksniper", "Get information or change things related to BlockSniper", "[language|reload] [lang]", ["bs"]);
-		$this->setPermission("blocksniper.command.blocksniper");
-		$this->setUsage(TF::RED . "[Usage] /blocksniper [language [lang]");
+		parent::__construct($loader, "blocksniper", "Get information or change things related to BlockSniper", "/blocksniper [language|reload] [lang]", ["bs"]);
 	}
 	
 	public function execute(CommandSender $sender, $commandLabel, array $args) {
@@ -50,5 +49,23 @@ class BlockSniperCommand extends BaseCommand {
 					TF::GREEN . "Author: " . TF::YELLOW . "BlockHorizons");
 				return true;
 		}
+	}
+
+	public function generateCustomCommandData(Player $player) {
+		$commandData = parent::generateCustomCommandData($player);
+		$commandData["overloads"]["default"]["input"]["parameters"] = [
+			0 => [
+				"type" => "string",
+				"name" => "parameter",
+				"optional" => true
+			],
+			1 => [
+				"type" => "string",
+				"name" => "language",
+				"optional" => true
+			],
+		];
+
+		return $commandData;
 	}
 }

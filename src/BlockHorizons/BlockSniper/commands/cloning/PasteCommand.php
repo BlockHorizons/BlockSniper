@@ -13,9 +13,7 @@ use schematic\Schematic;
 class PasteCommand extends BaseCommand {
 	
 	public function __construct(Loader $loader) {
-		parent::__construct($loader, "paste", "Paste the selected clone, template or schematic", "<type> [name]", []);
-		$this->setPermission("blocksniper.command.paste");
-		$this->setUsage(TF::RED . "[Usage] /paste <type> [name]");
+		parent::__construct($loader, "paste", "Paste the selected clone, template or schematic", "/paste <type> [name]", []);
 	}
 	
 	public function execute(CommandSender $sender, $commandLabel, array $args) {
@@ -81,5 +79,23 @@ class PasteCommand extends BaseCommand {
 		}
 		$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.paste"));
 		return true;
+	}
+
+	public function generateCustomCommandData(Player $player) {
+		$commandData = parent::generateCustomCommandData($player);
+		$commandData["overloads"]["default"]["input"]["parameters"] = [
+			0 => [
+				"type" => "string",
+				"name" => "type",
+				"optional" => false
+			],
+			1 => [
+				"type" => "rawtext",
+				"name" => "name",
+				"optional" => true
+			]
+		];
+
+		return $commandData;
 	}
 }

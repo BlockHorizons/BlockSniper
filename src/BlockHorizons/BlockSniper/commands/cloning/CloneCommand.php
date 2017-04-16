@@ -15,9 +15,7 @@ use schematic\Schematic;
 class CloneCommand extends BaseCommand {
 	
 	public function __construct(Loader $loader) {
-		parent::__construct($loader, "clone", "Clone the area you're watching", "<type> [name]", []);
-		$this->setPermission("blocksniper.command.clone");
-		$this->setUsage(TF::RED . "[Usage] /clone <type> [name]");
+		parent::__construct($loader, "clone", "Clone the area you're watching", "/clone <type> [name]", []);
 	}
 	
 	public function execute(CommandSender $sender, $commandLabel, array $args) {
@@ -81,5 +79,23 @@ class CloneCommand extends BaseCommand {
 		$cloneType->saveClone();
 		$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.clone"));
 		return true;
+	}
+
+	public function generateCustomCommandData(Player $player) {
+		$commandData = parent::generateCustomCommandData($player);
+		$commandData["overloads"]["default"]["input"]["parameters"] = [
+			0 => [
+				"type" => "string",
+				"name" => "type",
+				"optional" => false
+			],
+			1 => [
+				"type" => "rawtext",
+				"name" => "name",
+				"optional" => true
+			]
+		];
+
+		return $commandData;
 	}
 }

@@ -7,6 +7,7 @@ use BlockHorizons\BlockSniper\Loader;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\command\PluginIdentifiableCommand;
+use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
 
 abstract class BaseCommand extends Command implements PluginIdentifiableCommand {
@@ -16,7 +17,8 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand 
 	public function __construct(Loader $loader, $name, $description = "", $usageMessage = null, array $aliases = []) {
 		parent::__construct($name, $description, $usageMessage, $aliases);
 		$this->loader = $loader;
-		$this->usageMessage = "";
+		$this->setPermission("blocksniper.command." . $name);
+		$this->setUsage(TF::RED . "[Usage] " . $usageMessage);
 	}
 	
 	/**
@@ -54,5 +56,13 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand 
 	 */
 	public function getSettings(): ConfigData {
 		return $this->getLoader()->getSettings();
+	}
+
+	public function generateCustomCommandData(Player $player) {
+		$commandData = $this->commandData;
+		$commandData["aliases"] = $this->getAliases();
+		$commandData["permission"] = $this->getPermission();
+
+		return $commandData;
 	}
 }

@@ -10,9 +10,7 @@ use pocketmine\utils\TextFormat as TF;
 class UndoCommand extends BaseCommand {
 	
 	public function __construct(Loader $loader) {
-		parent::__construct($loader, "undo", "Undo your last BlockSniper modification", "", ["u"]);
-		$this->setPermission("blocksniper.command.undo");
-		$this->setUsage(TF::RED . "[Usage] /undo [amount]");
+		parent::__construct($loader, "undo", "Undo your last BlockSniper modification", "/undo [amount]", ["u"]);
 	}
 	
 	public function execute(CommandSender $sender, $commandLabel, array $args) {
@@ -44,5 +42,18 @@ class UndoCommand extends BaseCommand {
 		$this->getLoader()->getUndoStorer()->restoreLatestUndo($undoAmount, $sender);
 		$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.undo") . TF::AQUA . " (" . $undoAmount . ")");
 		return true;
+	}
+
+	public function generateCustomCommandData(Player $player) {
+		$commandData = parent::generateCustomCommandData($player);
+		$commandData["overloads"]["default"]["input"]["parameters"] = [
+			0 => [
+				"type" => "int",
+				"name" => "amount",
+				"optional" => true
+			]
+		];
+
+		return $commandData;
 	}
 }
