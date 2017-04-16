@@ -235,7 +235,10 @@ class BrushCommand extends BaseCommand {
 	}
 
 	public function generateCustomCommandData(Player $player) {
-		$commandData = parent::generateCustomCommandData($player);
+		parent::generateCustomCommandData($player);
+		$commandData = $this->commandData;
+		$commandData["permission"] = $this->getPermission();
+
 		$commandData["overloads"]["default"]["input"]["parameters"] = [
 			0 => [
 				"type" => "string",
