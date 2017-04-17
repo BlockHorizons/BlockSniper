@@ -5,6 +5,7 @@ namespace BlockHorizons\BlockSniper\commands;
 use BlockHorizons\BlockSniper\brush\BaseShape;
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\brush\BrushManager;
+use BlockHorizons\BlockSniper\brush\BrushParameters;
 use BlockHorizons\BlockSniper\events\ChangeBrushPropertiesEvent as Change;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\command\CommandSender;
@@ -235,20 +236,20 @@ class BrushCommand extends BaseCommand {
 	}
 
 	public function generateCustomCommandData(Player $player) {
-		parent::generateCustomCommandData($player);
-		$commandData = $this->commandData;
-		$commandData["permission"] = $this->getPermission();
+		$commandData = parent::generateCustomCommandData($player);
 
+		$availableParameters = BrushParameters::getAliasesAndParameters();
 		$commandData["overloads"]["default"]["input"]["parameters"] = [
 			0 => [
-				"type" => "string",
+				"type" => "enumstring",
 				"name" => "parameter",
-				"optional" => false
+				"optional" => false,
+				"enum_values" => $availableParameters
 			],
 			1 => [
 				"type" => "rawtext",
 				"name" => "value",
-				"optional" => true
+				"optional" => true,
 			],
 			2 => [
 				"type" => "string",

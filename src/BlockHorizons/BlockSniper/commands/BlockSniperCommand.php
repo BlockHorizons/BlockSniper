@@ -12,7 +12,7 @@ class BlockSniperCommand extends BaseCommand {
 	public function __construct(Loader $loader) {
 		parent::__construct($loader, "blocksniper", "Get information or change things related to BlockSniper", "/blocksniper [language|reload] [lang]", ["bs"]);
 	}
-	
+
 	public function execute(CommandSender $sender, $commandLabel, array $args) {
 		if(!$this->testPermission($sender)) {
 			$this->sendNoPermission($sender);
@@ -26,7 +26,7 @@ class BlockSniperCommand extends BaseCommand {
 				TF::GREEN . "Authors: " . TF::YELLOW . "Sandertv (@Sandertv), Chris-Prime (@PrimusLV)");
 			return true;
 		}
-		
+
 		switch(strtolower($args[0])) {
 			case "language":
 				if(!in_array(strtolower($args[1]), $this->getLoader()->availableLanguages)) {
@@ -52,20 +52,23 @@ class BlockSniperCommand extends BaseCommand {
 	}
 
 	public function generateCustomCommandData(Player $player) {
-		parent::generateCustomCommandData($player);
-		$commandData = $this->commandData;
-		$commandData["permission"] = $this->getPermission();
+		$commandData = parent::generateCustomCommandData($player);
 
 		$commandData["overloads"]["default"]["input"]["parameters"] = [
 			0 => [
-				"type" => "string",
+				"type" => "enumstring",
 				"name" => "parameter",
-				"optional" => true
+				"optional" => true,
+				"enum_values" => [
+					"language",
+					"reload"
+				]
 			],
 			1 => [
-				"type" => "string",
+				"type" => "enumstring",
 				"name" => "language",
-				"optional" => true
+				"optional" => true,
+				"enum_values" => $this->getLoader()->availableLanguages
 			],
 		];
 

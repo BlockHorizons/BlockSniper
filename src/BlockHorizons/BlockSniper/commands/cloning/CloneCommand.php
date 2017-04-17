@@ -82,15 +82,18 @@ class CloneCommand extends BaseCommand {
 	}
 
 	public function generateCustomCommandData(Player $player) {
-		parent::generateCustomCommandData($player);
-		$commandData = $this->commandData;
-		$commandData["permission"] = $this->getPermission();
+		$commandData = parent::generateCustomCommandData($player);
 
 		$commandData["overloads"]["default"]["input"]["parameters"] = [
 			0 => [
-				"type" => "string",
+				"type" => "enumstring",
 				"name" => "type",
-				"optional" => false
+				"optional" => false,
+				"enum_values" => [
+					"copy",
+					"template",
+					"schematic"
+				]
 			],
 			1 => [
 				"type" => "rawtext",

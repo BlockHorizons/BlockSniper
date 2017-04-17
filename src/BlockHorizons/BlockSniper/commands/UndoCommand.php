@@ -45,9 +45,7 @@ class UndoCommand extends BaseCommand {
 	}
 
 	public function generateCustomCommandData(Player $player) {
-		parent::generateCustomCommandData($player);
-		$commandData = $this->commandData;
-		$commandData["permission"] = $this->getPermission();
+		$commandData = parent::generateCustomCommandData($player);
 
 		$commandData["overloads"]["default"]["input"]["parameters"] = [
 			0 => [
