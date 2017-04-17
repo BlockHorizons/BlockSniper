@@ -241,7 +241,7 @@ class BrushCommand extends BaseCommand {
 		$availableParameters = BrushParameters::getAliasesAndParameters();
 		$commandData["overloads"]["default"]["input"]["parameters"] = [
 			0 => [
-				"type" => "enumstring",
+				"type" => "stringenum",
 				"name" => "parameter",
 				"optional" => false,
 				"enum_values" => $availableParameters

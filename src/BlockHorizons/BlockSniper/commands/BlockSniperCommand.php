@@ -56,7 +56,7 @@ class BlockSniperCommand extends BaseCommand {
 
 		$commandData["overloads"]["default"]["input"]["parameters"] = [
 			0 => [
-				"type" => "enumstring",
+				"type" => "stringenum",
 				"name" => "parameter",
 				"optional" => true,
 				"enum_values" => [

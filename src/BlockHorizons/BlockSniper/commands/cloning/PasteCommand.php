@@ -86,7 +86,7 @@ class PasteCommand extends BaseCommand {
 
 		$commandData["overloads"]["default"]["input"]["parameters"] = [
 			0 => [
-				"type" => "enumstring",
+				"type" => "stringenum",
 				"name" => "type",
 				"optional" => false,
 				"enum_values" => [
