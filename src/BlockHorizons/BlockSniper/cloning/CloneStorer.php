@@ -56,7 +56,6 @@ class CloneStorer {
 	 * @param Player $player
 	 */
 	public function pasteCopy(Player $player) {
-		var_dump($this->copyStore[$player->getName()]);
 		$undoBlocks = [];
 		$level = $player->getLevel();
 		$center = $player->getTargetBlock(100);

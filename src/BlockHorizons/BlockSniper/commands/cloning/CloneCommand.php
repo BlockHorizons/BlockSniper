@@ -6,13 +6,14 @@ use BlockHorizons\BlockSniper\brush\BrushManager;
 use BlockHorizons\BlockSniper\cloning\types\CopyType;
 use BlockHorizons\BlockSniper\cloning\types\TemplateType;
 use BlockHorizons\BlockSniper\commands\BaseCommand;
+use BlockHorizons\BlockSniper\commands\OverloadedCommand;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
 use schematic\Schematic;
 
-class CloneCommand extends BaseCommand {
+class CloneCommand extends BaseCommand implements OverloadedCommand {
 	
 	public function __construct(Loader $loader) {
 		parent::__construct($loader, "clone", "Clone the area you're watching", "/clone <type> [name]", []);
@@ -35,11 +36,6 @@ class CloneCommand extends BaseCommand {
 		}
 		
 		$center = $sender->getTargetBlock(100);
-		if(!$center) {
-			$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.no-target-found"));
-			return true;
-		}
-
 		$this->getLoader()->getBrushManager()->createBrush($sender);
 		switch(strtolower($args[0])) {
 			case "copy":
@@ -71,7 +67,7 @@ class CloneCommand extends BaseCommand {
 				file_put_contents($this->getLoader()->getDataFolder() . "schematics/" . $args[1] . ".schematic", $schematic->raw);
 				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.clone"));
 				return true;
-			
+
 			default:
 				$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.clone-not-found"));
 				return true;

@@ -13,7 +13,7 @@ use pocketmine\level\generator\biome\Biome;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
 
-class BrushCommand extends BaseCommand {
+class BrushCommand extends BaseCommand implements OverloadedCommand {
 	
 	public function __construct(Loader $loader) {
 		parent::__construct($loader, "brush", "Change the properties of the brush", "/brush <parameter> <args>", ["b", "brushwand"]);

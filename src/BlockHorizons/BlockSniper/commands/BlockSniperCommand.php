@@ -7,7 +7,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
 
-class BlockSniperCommand extends BaseCommand {
+class BlockSniperCommand extends BaseCommand implements OverloadedCommand {
 	
 	public function __construct(Loader $loader) {
 		parent::__construct($loader, "blocksniper", "Get information or change things related to BlockSniper", "/blocksniper [language|reload] [lang]", ["bs"]);

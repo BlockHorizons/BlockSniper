@@ -7,7 +7,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
 
-class UndoCommand extends BaseCommand {
+class UndoCommand extends BaseCommand implements OverloadedCommand {
 	
 	public function __construct(Loader $loader) {
 		parent::__construct($loader, "undo", "Undo your last BlockSniper modification", "/undo [amount]", ["u"]);
@@ -31,11 +31,9 @@ class UndoCommand extends BaseCommand {
 		
 		$undoAmount = 1;
 		if(isset($args[0])) {
-			if(is_numeric($args[0])) {
-				$undoAmount = $args[0];
-				if($undoAmount > ($totalUndo = $this->getLoader()->getUndoStorer()->getTotalUndoStores($sender))) {
-					$undoAmount = $totalUndo;
-				}
+			$undoAmount = $args[0];
+			if($undoAmount > ($totalUndo = $this->getLoader()->getUndoStorer()->getTotalUndoStores($sender))) {
+				$undoAmount = $totalUndo;
 			}
 		}
 		

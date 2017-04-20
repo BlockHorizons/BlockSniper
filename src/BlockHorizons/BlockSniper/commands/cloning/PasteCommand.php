@@ -3,6 +3,7 @@
 namespace BlockHorizons\BlockSniper\commands\cloning;
 
 use BlockHorizons\BlockSniper\commands\BaseCommand;
+use BlockHorizons\BlockSniper\commands\OverloadedCommand;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\command\CommandSender;
 use pocketmine\item\Item;
@@ -10,7 +11,7 @@ use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
 use schematic\Schematic;
 
-class PasteCommand extends BaseCommand {
+class PasteCommand extends BaseCommand implements OverloadedCommand {
 	
 	public function __construct(Loader $loader) {
 		parent::__construct($loader, "paste", "Paste the selected clone, template or schematic", "/paste <type> [name]", []);
@@ -33,11 +34,6 @@ class PasteCommand extends BaseCommand {
 		}
 		
 		$center = $sender->getTargetBlock(100);
-		if(!$center) {
-			$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.no-target-found"));
-			return true;
-		}
-		
 		switch(strtolower($args[0])) {
 			case "copy":
 				if($this->getLoader()->getCloneStorer()->copyStoreExists($sender)) {

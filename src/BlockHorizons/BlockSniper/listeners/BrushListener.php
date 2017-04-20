@@ -22,13 +22,6 @@ class BrushListener implements Listener {
 		$player = $event->getPlayer();
 		if($player->getInventory()->getItemInHand()->getId() === (int)$this->getLoader()->getSettings()->get("Brush-Item")) {
 			if($player->hasPermission("blocksniper.command.brush")) {
-				$center = $player->getTargetBlock(100);
-				
-				if($center === null) {
-					$player->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.no-target-found"));
-					return false;
-				}
-				
 				$this->getLoader()->getBrushManager()->createBrush($player);
 				$shape = BrushManager::get($player)->getShape();
 				$type = BrushManager::get($player)->getType($shape->getBlocksInside());

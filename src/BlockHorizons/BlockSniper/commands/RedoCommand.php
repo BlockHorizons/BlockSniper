@@ -7,7 +7,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
 
-class RedoCommand extends BaseCommand {
+class RedoCommand extends BaseCommand implements OverloadedCommand {
 
 	public function __construct(Loader $loader) {
 		parent::__construct($loader, "redo", "Redo your last BlockSniper modification", "/redo [amount]", []);
@@ -31,11 +31,9 @@ class RedoCommand extends BaseCommand {
 
 		$redoAmount = 1;
 		if(isset($args[0])) {
-			if(is_numeric($args[0])) {
-				$redoAmount = $args[0];
-				if($redoAmount > ($totalRedo = $this->getLoader()->getUndoStorer()->getTotalRedoStores($sender))) {
-					$redoAmount = $totalRedo;
-				}
+			$redoAmount = $args[0];
+			if($redoAmount > ($totalRedo = $this->getLoader()->getUndoStorer()->getTotalRedoStores($sender))) {
+				$redoAmount = $totalRedo;
 			}
 		}
 
