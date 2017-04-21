@@ -10,7 +10,7 @@ use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
 
-abstract class BaseCommand extends Command implements PluginIdentifiableCommand {
+abstract class BaseCommand extends Command implements PluginIdentifiableCommand, OverloadedCommand {
 	
 	protected $loader;
 	
@@ -62,6 +62,7 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand 
 		$commandData = parent::generateCustomCommandData($player);
 		$commandData["permission"] = $this->getPermission();
 		$commandData["aliases"] = $this->getAliases();
+		$commandData["overloads"]["default"]["input"]["parameters"] = CommandOverloads::getOverloads($this->getName());
 
 		return $commandData;
 	}

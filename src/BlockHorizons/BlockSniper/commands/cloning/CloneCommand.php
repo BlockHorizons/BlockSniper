@@ -6,14 +6,13 @@ use BlockHorizons\BlockSniper\brush\BrushManager;
 use BlockHorizons\BlockSniper\cloning\types\CopyType;
 use BlockHorizons\BlockSniper\cloning\types\TemplateType;
 use BlockHorizons\BlockSniper\commands\BaseCommand;
-use BlockHorizons\BlockSniper\commands\OverloadedCommand;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
 use schematic\Schematic;
 
-class CloneCommand extends BaseCommand implements OverloadedCommand {
+class CloneCommand extends BaseCommand {
 	
 	public function __construct(Loader $loader) {
 		parent::__construct($loader, "clone", "Clone the area you're watching", "/clone <type> [name]", []);
@@ -75,29 +74,5 @@ class CloneCommand extends BaseCommand implements OverloadedCommand {
 		$cloneType->saveClone();
 		$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.clone"));
 		return true;
-	}
-
-	public function generateCustomCommandData(Player $player) {
-		$commandData = parent::generateCustomCommandData($player);
-
-		$commandData["overloads"]["default"]["input"]["parameters"] = [
-			0 => [
-				"type" => "stringenum",
-				"name" => "type",
-				"optional" => false,
-				"enum_values" => [
-					"copy",
-					"template",
-					"schematic"
-				]
-			],
-			1 => [
-				"type" => "rawtext",
-				"name" => "name",
-				"optional" => true
-			]
-		];
-
-		return $commandData;
 	}
 }

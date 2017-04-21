@@ -26,7 +26,7 @@ class Loader extends PluginBase {
 	const API_TARGET = "2.0.0 - 3.0.0-ALPHA5";
 	const CONFIGURATION_VERSION = "1.1.0";
 	
-	public $availableLanguages = [
+	private static $availableLanguages = [
 		"en",
 		"nl",
 		"de",
@@ -159,5 +159,12 @@ class Loader extends PluginBase {
 			return $this->language->get($message);
 		}
 		return null;
+	}
+
+	/**
+	 * @return array
+	 */
+	public static function getAvailableLanguages(): array {
+		return self::$availableLanguages;
 	}
 }

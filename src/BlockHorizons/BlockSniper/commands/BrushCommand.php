@@ -5,7 +5,6 @@ namespace BlockHorizons\BlockSniper\commands;
 use BlockHorizons\BlockSniper\brush\BaseShape;
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\brush\BrushManager;
-use BlockHorizons\BlockSniper\brush\BrushParameters;
 use BlockHorizons\BlockSniper\events\ChangeBrushPropertiesEvent as Change;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\command\CommandSender;
@@ -13,10 +12,10 @@ use pocketmine\level\generator\biome\Biome;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
 
-class BrushCommand extends BaseCommand implements OverloadedCommand {
+class BrushCommand extends BaseCommand {
 	
 	public function __construct(Loader $loader) {
-		parent::__construct($loader, "brush", "Change the properties of the brush", "/brush <parameter> <args>", ["b", "brushwand"]);
+		parent::__construct($loader, "brush", "Change the properties of the brush", "/brush <parameter> <args>", ["b"]);
 	}
 	
 	public function execute(CommandSender $sender, $commandLabel, array $args) {
@@ -233,31 +232,5 @@ class BrushCommand extends BaseCommand implements OverloadedCommand {
 		}
 		$this->getLoader()->getServer()->getPluginManager()->callEvent(new Change($this->getLoader(), $sender, $action, $args[0]));
 		return true;
-	}
-
-	public function generateCustomCommandData(Player $player) {
-		$commandData = parent::generateCustomCommandData($player);
-
-		$availableParameters = BrushParameters::getAliasesAndParameters();
-		$commandData["overloads"]["default"]["input"]["parameters"] = [
-			0 => [
-				"type" => "stringenum",
-				"name" => "parameter",
-				"optional" => false,
-				"enum_values" => $availableParameters
-			],
-			1 => [
-				"type" => "rawtext",
-				"name" => "value",
-				"optional" => true,
-			],
-			2 => [
-				"type" => "string",
-				"name" => "name",
-				"optional" => true
-			]
-		];
-
-		return $commandData;
 	}
 }

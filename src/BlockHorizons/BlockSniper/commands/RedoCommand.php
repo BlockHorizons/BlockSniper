@@ -7,7 +7,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
 
-class RedoCommand extends BaseCommand implements OverloadedCommand {
+class RedoCommand extends BaseCommand {
 
 	public function __construct(Loader $loader) {
 		parent::__construct($loader, "redo", "Redo your last BlockSniper modification", "/redo [amount]", []);
@@ -40,19 +40,5 @@ class RedoCommand extends BaseCommand implements OverloadedCommand {
 		$this->getLoader()->getUndoStorer()->restoreLatestRedo($redoAmount, $sender);
 		$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.undo") . TF::AQUA . " (" . $redoAmount . ")");
 		return true;
-	}
-
-	public function generateCustomCommandData(Player $player) {
-		$commandData = parent::generateCustomCommandData($player);
-
-		$commandData["overloads"]["default"]["input"]["parameters"] = [
-			0 => [
-				"type" => "int",
-				"name" => "amount",
-				"optional" => true
-			]
-		];
-
-		return $commandData;
 	}
 }

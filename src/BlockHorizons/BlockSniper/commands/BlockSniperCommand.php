@@ -4,10 +4,9 @@ namespace BlockHorizons\BlockSniper\commands;
 
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\command\CommandSender;
-use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
 
-class BlockSniperCommand extends BaseCommand implements OverloadedCommand {
+class BlockSniperCommand extends BaseCommand {
 	
 	public function __construct(Loader $loader) {
 		parent::__construct($loader, "blocksniper", "Get information or change things related to BlockSniper", "/blocksniper [language|reload] [lang]", ["bs"]);
@@ -29,7 +28,7 @@ class BlockSniperCommand extends BaseCommand implements OverloadedCommand {
 
 		switch(strtolower($args[0])) {
 			case "language":
-				if(!in_array(strtolower($args[1]), $this->getLoader()->availableLanguages)) {
+				if(!in_array(strtolower($args[1]), Loader::getAvailableLanguages())) {
 					$sender->sendMessage(TF::RED . "That language doesn't exist. Please try again.");
 					return true;
 				}
@@ -49,29 +48,5 @@ class BlockSniperCommand extends BaseCommand implements OverloadedCommand {
 					TF::GREEN . "Author: " . TF::YELLOW . "BlockHorizons");
 				return true;
 		}
-	}
-
-	public function generateCustomCommandData(Player $player) {
-		$commandData = parent::generateCustomCommandData($player);
-
-		$commandData["overloads"]["default"]["input"]["parameters"] = [
-			0 => [
-				"type" => "stringenum",
-				"name" => "parameter",
-				"optional" => true,
-				"enum_values" => [
-					"language",
-					"reload"
-				]
-			],
-			1 => [
-				"type" => "enumstring",
-				"name" => "language",
-				"optional" => true,
-				"enum_values" => $this->getLoader()->availableLanguages
-			],
-		];
-
-		return $commandData;
 	}
 }
