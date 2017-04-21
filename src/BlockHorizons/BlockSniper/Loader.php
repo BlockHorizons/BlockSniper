@@ -8,6 +8,7 @@ use BlockHorizons\BlockSniper\commands\BlockSniperCommand;
 use BlockHorizons\BlockSniper\commands\BrushCommand;
 use BlockHorizons\BlockSniper\commands\cloning\CloneCommand;
 use BlockHorizons\BlockSniper\commands\cloning\PasteCommand;
+use BlockHorizons\BlockSniper\commands\CommandOverloads;
 use BlockHorizons\BlockSniper\commands\RedoCommand;
 use BlockHorizons\BlockSniper\commands\UndoCommand;
 use BlockHorizons\BlockSniper\data\ConfigData;
@@ -49,6 +50,7 @@ class Loader extends PluginBase {
 		$this->registerListeners();
 		
 		$this->getServer()->getScheduler()->scheduleRepeatingTask(new UndoDiminishTask($this), 400);
+		CommandOverloads::initialize();
 	}
 	
 	public function reloadAll() {
