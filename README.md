@@ -35,3 +35,51 @@ It contains the most up to date permissions, so every permission available can b
 ### I love/hate BlockSniper! Where can I review this?
 BlockSniper can be reviewed at the poggit release page [here](https://poggit.pmmp.io/p/BlockSniper/).
 Any feedback given is very welcome, and it would be very much appreciated!
+
+=====
+
+### What does every setting in the settings.yml mean?
+The explanation of every setting in the settings.yml can be found below. The [settings.yml file](https://github.com/Sandertv/BlockSniper/blob/master/resources/settings.yml) always contains the latest property explanation.
+
+```
+---
+# Configuration for BlockSniper: A WorldEdit plugin for PocketMine.
+
+# Internal Property: Do not change.
+Configuration-Version: "2.1.0"
+
+# Whether to auto-update configuration when a new version is found.
+Auto-Configuration-Update: true
+
+# Language in which messages are displayed. Available languages:
+# en (English), nl (Dutch), de (German), fr (French), fa (Persian), ru (Russian), zh_tw (Chinese)
+Message-Language: ""
+
+# Item ID of the item that is used to brush. (Golden carrot by default)
+Brush-Item: 396
+
+# Maximum radius for shapes/types, it is recommended to keep this number below 20 to prevent server freezes and lag.
+Maximum-Radius: 15
+
+# Maximum radius/height for clones, it is recommended to keep this number below 60 to prevent server freezes and lag.
+Maximum-Clone-Size: 60
+
+# Whether to spread out the block placement of brush over ticks, or place them all at once. Tick spread brush reduces server lag significantly.
+Tick-Spread-Brush: true
+
+# Amount of blocks to place per tick if tick spread brush is enabled.
+Blocks-Per-Tick: 200
+
+# Maximum undo and redo stores to save, old ones will get destroyed automatically. Setting this number too high could result in lag or data loss.
+Maximum-Undo-Stores: 15
+
+# Whether to reset the size, or make it remain the current size when smallest size with decrement brush is reached.
+Reset-Decrement-Brush: true
+
+# Whether to save Brush properties of players after server restart, or dispose them.
+Save-Brush-Properties: true
+
+# Whether to drop the plants when using LeafBlower brush, or dispose the items.
+Drop-Leafblower-Plants: true
+...
+```

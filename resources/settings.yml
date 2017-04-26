@@ -2,9 +2,9 @@
 # Configuration for BlockSniper: A WorldEdit plugin for PocketMine.
 
 # Internal Property: Do not change.
-Configuration-Version: "1.1.0"
+Configuration-Version: "2.1.0"
 
-# Auto-update Configuration with new version.
+# Whether to auto-update configuration when a new version is found.
 Auto-Configuration-Update: true
 
 # Language in which messages are displayed. Available languages:
