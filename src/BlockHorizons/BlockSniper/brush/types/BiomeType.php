@@ -17,15 +17,15 @@ class BiomeType extends BaseType {
 		parent::__construct($undoStorer, $player, $level, $blocks);
 		$this->biome = BrushManager::get($player)->getBiomeId();
 	}
-	
+
 	/**
-	 * @return bool
+	 * @return array
 	 */
-	public function fillShape(): bool {
+	public function fillShape(): array {
 		foreach($this->blocks as $block) {
 			$this->level->setBiomeId($block->x, $block->z, $this->biome);
 		}
-		return true;
+		return [];
 	}
 	
 	public function getName(): string {

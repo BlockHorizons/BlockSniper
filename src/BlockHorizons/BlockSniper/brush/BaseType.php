@@ -94,7 +94,7 @@ abstract class BaseType {
 	
 	public abstract function getName(): string;
 	
-	public abstract function fillShape(): bool;
+	public abstract function fillShape(): array;
 	
 	/**
 	 * @return UndoStorer

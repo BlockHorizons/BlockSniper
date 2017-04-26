@@ -19,9 +19,9 @@ class CleanType extends BaseType {
 	}
 	
 	/**
-	 * @return bool
+	 * @return array
 	 */
-	public function fillShape(): bool {
+	public function fillShape(): array {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			$blockId = $block->getId();
@@ -32,8 +32,7 @@ class CleanType extends BaseType {
 				$this->level->setBlock(new Vector3($block->x, $block->y, $block->z), Block::get(Block::AIR), false, false);
 			}
 		}
-		$this->getUndoStorer()->saveUndo($undoBlocks, $this->player);
-		return true;
+		return $undoBlocks;
 	}
 	
 	public function getName(): string {

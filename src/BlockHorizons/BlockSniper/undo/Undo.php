@@ -32,6 +32,13 @@ class Undo {
 
 		return new Redo($redoBlocks);
 	}
+
+	/**
+	 * @return array
+	 */
+	public function getBlocks(): array {
+		return $this->undoBlocks;
+	}
 	
 	/**
 	 * @return int

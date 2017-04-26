@@ -24,7 +24,7 @@ Maximum-Clone-Size: 60
 Tick-Spread-Brush: true
 
 # Amount of blocks to place per tick if tick spread brush is enabled.
-Blocks-Per-Tick: 150
+Blocks-Per-Tick: 200
 
 # Maximum undo and redo stores to save, old ones will get destroyed automatically. Setting this number too high could result in lag or data loss.
 Maximum-Undo-Stores: 15

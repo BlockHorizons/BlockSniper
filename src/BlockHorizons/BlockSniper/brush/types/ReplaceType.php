@@ -18,11 +18,11 @@ class ReplaceType extends BaseType {
 		parent::__construct($undoStorer, $player, $level, $blocks);
 		$this->obsolete = BrushManager::get($player)->getObsolete();
 	}
-	
+
 	/**
-	 * @return bool
+	 * @return array
 	 */
-	public function fillShape(): bool {
+	public function fillShape(): array {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			$randomBlock = BrushManager::get($this->player)->getBlocks()[array_rand(BrushManager::get($this->player)->getBlocks())];
@@ -35,8 +35,7 @@ class ReplaceType extends BaseType {
 				}
 			}
 		}
-		$this->getUndoStorer()->saveUndo($undoBlocks, $this->player);
-		return true;
+		return $undoBlocks;
 	}
 	
 	public function getName(): string {

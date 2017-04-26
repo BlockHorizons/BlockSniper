@@ -17,11 +17,11 @@ class ExpandType extends BaseType {
 	public function __construct(UndoStorer $undoStorer, Player $player, Level $level, array $blocks) {
 		parent::__construct($undoStorer, $player, $level, $blocks);
 	}
-	
+
 	/**
-	 * @return bool
+	 * @return array
 	 */
-	public function fillShape(): bool {
+	public function fillShape(): array {
 		$undoBlocks = [];
 		$oneHoles = [];
 		foreach($this->blocks as $block) {
@@ -54,9 +54,8 @@ class ExpandType extends BaseType {
 		foreach($oneHoles as $block) {
 			$this->level->setBlock($block, ($block->getSide(Block::SIDE_DOWN)->getId() === Block::AIR ? $block->getSide(Block::SIDE_EAST) : $block->getSide(Block::SIDE_DOWN)));
 		}
-		
-		$this->getUndoStorer()->saveUndo($undoBlocks, $this->player);
-		return true;
+
+		return array_merge($undoBlocks, $oneHoles);
 	}
 	
 	public function getName(): string {

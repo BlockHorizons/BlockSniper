@@ -34,7 +34,8 @@ class BrushListener implements Listener {
 				if($this->getLoader()->getSettings()->get("Tick-Spread-Brush") === true) {
 					$this->getLoader()->spreadTickBrush($shape, $type);
 				} else {
-					$type->fillShape();
+					$undoBlocks = $type->fillShape();
+					$this->getLoader()->getUndoStorer()->saveUndo($undoBlocks, $player);
 				}
 
 				$this->decrementBrush($player);

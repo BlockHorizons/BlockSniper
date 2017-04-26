@@ -15,11 +15,11 @@ class CleanentitiesType extends BaseType {
 	public function __construct(UndoStorer $undoStorer, Player $player, Level $level, array $blocks) {
 		parent::__construct($undoStorer, $player, $level, $blocks);
 	}
-	
+
 	/**
-	 * @return bool
+	 * @return array
 	 */
-	public function fillShape(): bool {
+	public function fillShape(): array {
 		foreach($this->blocks as $block) {
 			foreach($this->level->getEntities() as $entity) {
 				if($entity->distanceSquared($block) <= 1 && !($entity instanceof Player)) {
@@ -27,7 +27,7 @@ class CleanentitiesType extends BaseType {
 				}
 			}
 		}
-		return true;
+		return [];
 	}
 	
 	public function getName(): string {

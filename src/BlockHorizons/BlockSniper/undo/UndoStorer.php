@@ -54,15 +54,18 @@ class UndoStorer {
 	public function restoreLatestRedo(int $amount = 1, Player $player) {
 		for($currentAmount = 0; $currentAmount < $amount; $currentAmount++) {
 			$redo = $this->redoStore[$player->getName()][max(array_keys($this->redoStore[$player->getName()]))];
+			if($this->getLoader()->getSettings()->get("Tick-Spread-Brush") === true) {
+				$this->getLoader()->spreadTickUndo($redo, $player);
+			} else {
+				$undo = $redo->getDetachedUndoBlocks();
+				$this->saveUndo($undo, $player);
 
-			$undo = $redo->getDetachedUndoBlocks();
-			$this->saveUndo($undo, $player);
-			$redo->restore();
-
+				$redo->restore();
+			}
 			$this->unsetLatestRedo($player);
 		}
 	}
-	
+
 	/**
 	 * @param Player $player
 	 *
@@ -109,12 +112,14 @@ class UndoStorer {
 	public function restoreLatestUndo(int $amount = 1, Player $player) {
 		for($currentAmount = 0; $currentAmount < $amount; $currentAmount++) {
 			$undo = $this->undoStore[$player->getName()][max(array_keys($this->undoStore[$player->getName()]))];
+			if($this->getLoader()->getSettings()->get("Tick-Spread-Brush") === true) {
+				$this->getLoader()->spreadTickUndo($undo, $player);
+			} else {
+				$redo = $undo->getDetachedRedo();
+				$this->saveRedo($redo, $player);
 
-			$redo = $undo->getDetachedRedo();
-			$this->saveRedo($redo, $player);
-
-			$undo->restore();
-			
+				$undo->restore();
+			}
 			$this->unsetLatestUndo($player);
 		}
 	}

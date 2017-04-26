@@ -20,11 +20,11 @@ class FlattenType extends BaseType {
 		parent::__construct($undoStorer, $player, $level, $blocks);
 		$this->center = $player->getTargetBlock(100);
 	}
-	
+
 	/**
-	 * @return bool
+	 * @return array
 	 */
-	public function fillShape(): bool {
+	public function fillShape(): array {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			$randomBlock = BrushManager::get($this->player)->getBlocks()[array_rand(BrushManager::get($this->player)->getBlocks())];
@@ -35,8 +35,7 @@ class FlattenType extends BaseType {
 				$this->level->setBlock(new Vector3($block->x, $block->y, $block->z), $randomBlock, false, false);
 			}
 		}
-		$this->getUndoStorer()->saveUndo($undoBlocks, $this->player);
-		return true;
+		return $undoBlocks;
 	}
 	
 	public function getName(): string {

@@ -34,6 +34,13 @@ class Redo {
 	}
 
 	/**
+	 * @return array
+	 */
+	public function getBlocks(): array {
+		return $this->redoBlocks;
+	}
+
+	/**
 	 * @return int
 	 */
 	public function getBlockCount(): int {

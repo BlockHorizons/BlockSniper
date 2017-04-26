@@ -18,11 +18,11 @@ class OverlayType extends BaseType {
 	public function __construct(UndoStorer $undoStorer, Player $player, Level $level, array $blocks) {
 		parent::__construct($undoStorer, $player, $level, $blocks);
 	}
-	
+
 	/**
-	 * @return bool
+	 * @return array
 	 */
-	public function fillShape(): bool {
+	public function fillShape(): array {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			if($block->getId() !== Item::AIR) {
@@ -57,8 +57,7 @@ class OverlayType extends BaseType {
 				}
 			}
 		}
-		$this->getUndoStorer()->saveUndo($undoBlocks, $this->player);
-		return true;
+		return $undoBlocks;
 	}
 	
 	public function getName(): string {

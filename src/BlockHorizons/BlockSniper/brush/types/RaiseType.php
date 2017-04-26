@@ -17,11 +17,11 @@ class RaiseType extends BaseType {
 	public function __construct(UndoStorer $undoStorer, Player $player, Level $level, array $blocks) {
 		parent::__construct($undoStorer, $player, $level, $blocks);
 	}
-	
+
 	/**
-	 * @return bool
+	 * @return array
 	 */
-	public function fillShape(): bool {
+	public function fillShape(): array {
 		$savedBlocks = [];
 		$holeBlocks = [];
 		$undoBlocks = [];
@@ -63,8 +63,7 @@ class RaiseType extends BaseType {
 			$undoBlocks[] = $selectedBlock->getSide(Block::SIDE_UP);
 			$this->level->setBlock($selectedBlock->getSide(Block::SIDE_UP), $selectedBlock, false, false);
 		}
-		$this->getUndoStorer()->saveUndo($undoBlocks, $this->player);
-		return true;
+		return $undoBlocks;
 	}
 	
 	public function getName(): string {

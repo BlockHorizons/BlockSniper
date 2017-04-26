@@ -19,11 +19,11 @@ class ReplaceallType extends BaseType {
 	public function __construct(UndoStorer $undoStorer, Player $player, Level $level, array $blocks) {
 		parent::__construct($undoStorer, $player, $level, $blocks);
 	}
-	
+
 	/**
-	 * @return bool
+	 * @return array
 	 */
-	public function fillShape(): bool {
+	public function fillShape(): array {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			if($block->getId() !== Block::AIR && !$block instanceof Flowable) {
@@ -32,8 +32,7 @@ class ReplaceallType extends BaseType {
 				$this->level->setBlock(new Vector3($block->x, $block->y, $block->z), $randomBlock, false, false);
 			}
 		}
-		$this->getUndoStorer()->saveUndo($undoBlocks, $this->player);
-		return true;
+		return $undoBlocks;
 	}
 	
 	public function getName(): string {

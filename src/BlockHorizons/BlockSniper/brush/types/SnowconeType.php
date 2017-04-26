@@ -18,9 +18,9 @@ class SnowconeType extends BaseType {
 	}
 	
 	/**
-	 * @return bool
+	 * @return array
 	 */
-	public function fillShape(): bool {
+	public function fillShape(): array {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			if($block->getId() !== Block::AIR && $block->getId() !== Block::SNOW_LAYER) {
@@ -36,8 +36,7 @@ class SnowconeType extends BaseType {
 				}
 			}
 		}
-		$this->getUndoStorer()->saveUndo($undoBlocks, $this->player);
-		return true;
+		return $undoBlocks;
 	}
 	
 	public function getName(): string {

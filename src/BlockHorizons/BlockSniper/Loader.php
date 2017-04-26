@@ -19,8 +19,12 @@ use BlockHorizons\BlockSniper\listeners\BrushListener;
 use BlockHorizons\BlockSniper\listeners\PresetListener;
 use BlockHorizons\BlockSniper\presets\PresetManager;
 use BlockHorizons\BlockSniper\tasks\TickSpreadBrushTask;
+use BlockHorizons\BlockSniper\tasks\TickSpreadUndoTask;
 use BlockHorizons\BlockSniper\tasks\UndoDiminishTask;
+use BlockHorizons\BlockSniper\undo\Redo;
+use BlockHorizons\BlockSniper\undo\Undo;
 use BlockHorizons\BlockSniper\undo\UndoStorer;
+use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat as TF;
 
@@ -176,11 +180,29 @@ class Loader extends PluginBase {
 	/**
 	 * @param BaseShape $shape
 	 * @param BaseType  $type
+	 *
+	 * @return bool
 	 */
-	public function spreadTickBrush(BaseShape $shape, BaseType $type) {
+	public function spreadTickBrush(BaseShape $shape, BaseType $type): bool {
 		$blockAmount = $shape->getAccurateTotalBlocks();
 		$blocksInside = $shape->getBlocksInside();
 
 		$this->getServer()->getScheduler()->scheduleRepeatingTask(new TickSpreadBrushTask($this, $blocksInside, $type, ceil($blockAmount / $this->getSettings()->get("Blocks-Per-Tick"))), 1);
+		return true;
+	}
+
+	/**
+	 * @param        $undo
+	 * @param Player $player
+	 *
+	 * @return bool
+	 */
+	public function spreadTickUndo($undo, Player $player): bool {
+		if(!$undo instanceof Undo && !$undo instanceof Redo) {
+			return false;
+		}
+		$undoAmount = $undo->getBlockCount();
+		$this->getServer()->getScheduler()->scheduleRepeatingTask(new TickSpreadUndoTask($this, $undo, $player, ceil($undoAmount / $this->getSettings()->get("Blocks-Per-Tick"))), 1);
+		return true;
 	}
 }

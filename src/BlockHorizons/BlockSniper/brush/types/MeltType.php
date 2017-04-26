@@ -17,11 +17,11 @@ class MeltType extends BaseType {
 	public function __construct(UndoStorer $undoStorer, Player $player, Level $level, array $blocks) {
 		parent::__construct($undoStorer, $player, $level, $blocks);
 	}
-	
+
 	/**
-	 * @return bool
+	 * @return array
 	 */
-	public function fillShape(): bool {
+	public function fillShape(): array {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			if($block->getId() !== Item::AIR) {
@@ -48,8 +48,7 @@ class MeltType extends BaseType {
 		foreach($undoBlocks as $selectedBlock) {
 			$this->level->setBlock($selectedBlock, Block::get(Block::AIR), false, false);
 		}
-		$this->getUndoStorer()->saveUndo($undoBlocks, $this->player);
-		return true;
+		return $undoBlocks;
 	}
 	
 	public function getName(): string {

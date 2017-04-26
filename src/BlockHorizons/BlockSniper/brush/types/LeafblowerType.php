@@ -3,7 +3,6 @@
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
-use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\undo\UndoStorer;
 use pocketmine\block\Block;
 use pocketmine\block\Flowable;
@@ -19,25 +18,23 @@ class LeafblowerType extends BaseType {
 	public function __construct(UndoStorer $undoStorer, Player $player, Level $level, array $blocks) {
 		parent::__construct($undoStorer, $player, $level, $blocks);
 	}
-	
+
 	/**
-	 * @return bool
+	 * @return array
 	 */
-	public function fillShape(): bool {
+	public function fillShape(): array {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			if($block instanceof Flowable) {
 				$undoBlocks[] = $block;
-				/** @var Loader $loader */
-				$loader = $this->getLevel()->getServer()->getPluginManager()->getPlugin("BlockSniper");
+				$loader = $this->getUndoStorer()->getLoader();
 				if($loader->getSettings()->get("Drop-Leafblower-Plants")) {
 					$this->level->dropItem($block, Item::get($block->getId()));
 				}
 				$this->level->setBlock($block, Block::get(Block::AIR), false, false);
 			}
 		}
-		$this->getUndoStorer()->saveUndo($undoBlocks, $this->player);
-		return true;
+		return $undoBlocks;
 	}
 	
 	public function getName(): string {
