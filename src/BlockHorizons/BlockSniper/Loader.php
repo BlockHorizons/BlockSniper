@@ -187,6 +187,7 @@ class Loader extends PluginBase {
 		$blockAmount = $shape->getAccurateTotalBlocks();
 		$blocksInside = $shape->getBlocksInside();
 
+		$this->getUndoStorer()->saveUndo($blocksInside, $type->getPlayer());
 		$this->getServer()->getScheduler()->scheduleRepeatingTask(new TickSpreadBrushTask($this, $blocksInside, $type, ceil($blockAmount / $this->getSettings()->get("Blocks-Per-Tick"))), 1);
 		return true;
 	}
@@ -202,6 +203,11 @@ class Loader extends PluginBase {
 			return false;
 		}
 		$undoAmount = $undo->getBlockCount();
+		if($undo instanceof Undo) {
+			$this->getUndoStorer()->saveRedo($undo->getDetachedRedo(), $player);
+		} else {
+			$this->getUndoStorer()->saveUndo($undo->getDetachedUndoBlocks(), $player);
+		}
 		$this->getServer()->getScheduler()->scheduleRepeatingTask(new TickSpreadUndoTask($this, $undo, $player, ceil($undoAmount / $this->getSettings()->get("Blocks-Per-Tick"))), 1);
 		return true;
 	}

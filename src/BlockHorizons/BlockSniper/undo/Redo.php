@@ -27,14 +27,14 @@ class Redo {
 	public function getDetachedUndoBlocks(): array {
 		$undoBlocks = [];
 		foreach($this->redoBlocks as $redoBlock) {
-			$undoBlocks[] = $redoBlock;
+			$undoBlocks[] = $redoBlock->getLevel()->getBlock($redoBlock);
 		}
 
 		return $undoBlocks;
 	}
 
 	/**
-	 * @return array
+	 * @return Block[]
 	 */
 	public function getBlocks(): array {
 		return $this->redoBlocks;

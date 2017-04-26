@@ -14,6 +14,12 @@ class TickSpreadUndoTask extends BaseTask {
 	private $ticks;
 	private $actualTick = 1;
 
+	/**
+	 * @param Loader    $loader
+	 * @param Undo|Redo $undo
+	 * @param Player    $player
+	 * @param int       $ticks
+	 */
 	public function __construct(Loader $loader, $undo, Player $player, int $ticks) {
 		parent::__construct($loader);
 		$this->undo = $undo;
@@ -22,19 +28,14 @@ class TickSpreadUndoTask extends BaseTask {
 	}
 
 	public function onRun($currentTick) {
-		if($this->undo instanceof Undo) {
-			$blocksInside = $this->undo->getBlocks();
-			$this->getLoader()->getUndoStorer()->saveRedo($this->undo->getDetachedRedo(), $this->player);
-		} elseif($this->undo instanceof Redo) {
-			$blocksInside = $this->undo->getBlocks();
-			$this->getLoader()->getUndoStorer()->saveUndo($this->undo->getDetachedUndoBlocks(), $this->player);
-		} else {
-			return;
-		}
+		$blocksInside = $this->undo->getBlocks();
 
 		if($this->actualTick <= $this->ticks) {
 			$i = 0;
 			foreach($blocksInside as $key => $block) {
+				if($block->getId() === $this->player->getLevel()->getBlock($block)) {
+					continue;
+				}
 				$i++;
 				$this->player->getLevel()->setBlock($block, $block, false, false);
 				unset($blocksInside[$key]);

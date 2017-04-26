@@ -21,7 +21,6 @@ class TickSpreadBrushTask extends BaseTask {
 
 	public function onRun($currentTick) {
 		$tickProcessedBlocks = [];
-		$this->getLoader()->getUndoStorer()->saveUndo($this->blocksInside, $this->type->getPlayer());
 		if($this->actualTick <= $this->ticks) {
 			$i = 0;
 			foreach($this->blocksInside as $key => $block) {
