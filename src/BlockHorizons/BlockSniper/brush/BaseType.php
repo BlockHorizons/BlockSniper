@@ -111,6 +111,13 @@ abstract class BaseType {
 	public function getLevel(): Level {
 		return $this->level;
 	}
+
+	/**
+	 * @param array $blocks
+	 */
+	public function setBlocksInside(array $blocks) {
+		$this->blocks = $blocks;
+	}
 	
 	/**
 	 * Returns the player that used the type.

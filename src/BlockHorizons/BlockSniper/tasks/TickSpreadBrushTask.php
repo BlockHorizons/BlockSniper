@@ -30,6 +30,8 @@ class TickSpreadBrushTask extends BaseTask {
 					break;
 				}
 			}
+			$this->type->setBlocksInside($tickProcessedBlocks);
+			$this->type->fillShape();
 		} else {
 			$this->getLoader()->getServer()->getScheduler()->cancelTask($this->getTaskId());
 		}

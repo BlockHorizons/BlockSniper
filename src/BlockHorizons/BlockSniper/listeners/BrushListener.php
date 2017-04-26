@@ -30,10 +30,14 @@ class BrushListener implements Listener {
 				if($event->isCancelled()) {
 					return false;
 				}
-				
-				$type->fillShape();
+
+				if($this->getLoader()->getSettings()->get("Tick-Spread-Brush") === true) {
+					$this->getLoader()->spreadTickBrush($shape, $type);
+				} else {
+					$type->fillShape();
+				}
+
 				$this->decrementBrush($player);
-				
 				$event->setCancelled();
 			}
 		}
