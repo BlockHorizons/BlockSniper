@@ -10,6 +10,7 @@ class TickSpreadBrushTask extends BaseTask {
 	private $blocksInside;
 	private $type;
 	private $ticks;
+	private $actualTick = 1;
 
 	public function __construct(Loader $loader, array $blocksInside, BaseType $type, int $ticks) {
 		parent::__construct($loader);
@@ -20,7 +21,7 @@ class TickSpreadBrushTask extends BaseTask {
 
 	public function onRun($currentTick) {
 		$tickProcessedBlocks = [];
-		if($currentTick <= $this->ticks) {
+		if($this->actualTick <= $this->ticks) {
 			$i = 0;
 			foreach($this->blocksInside as $key => $block) {
 				$i++;
@@ -36,6 +37,6 @@ class TickSpreadBrushTask extends BaseTask {
 		} else {
 			$this->getLoader()->getServer()->getScheduler()->cancelTask($this->getTaskId());
 		}
-		$this->ticks++;
+		$this->actualTick++;
 	}
 }
