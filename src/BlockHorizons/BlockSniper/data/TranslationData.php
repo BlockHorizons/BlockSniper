@@ -21,7 +21,7 @@ class TranslationData {
 	public function collectTranslations(): bool {
 		$languageSelected = false;
 		$language = [];
-		foreach($this->getLoader()->availableLanguages as $availableLanguage) {
+		foreach(Loader::getAvailableLanguages() as $availableLanguage) {
 			if($this->getLoader()->getSettings()->get("Message-Language") === $availableLanguage) {
 				$this->getLoader()->saveResource("languages/" . $availableLanguage . ".yml");
 				$language = yaml_parse_file($this->getLoader()->getDataFolder() . "languages/" . $availableLanguage . ".yml");
