@@ -2,6 +2,8 @@
 
 namespace BlockHorizons\BlockSniper;
 
+use BlockHorizons\BlockSniper\brush\BaseShape;
+use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\brush\BrushManager;
 use BlockHorizons\BlockSniper\cloning\CloneStorer;
 use BlockHorizons\BlockSniper\commands\BlockSniperCommand;
@@ -16,6 +18,7 @@ use BlockHorizons\BlockSniper\data\TranslationData;
 use BlockHorizons\BlockSniper\listeners\BrushListener;
 use BlockHorizons\BlockSniper\listeners\PresetListener;
 use BlockHorizons\BlockSniper\presets\PresetManager;
+use BlockHorizons\BlockSniper\tasks\TickSpreadBrushTask;
 use BlockHorizons\BlockSniper\tasks\UndoDiminishTask;
 use BlockHorizons\BlockSniper\undo\UndoStorer;
 use pocketmine\plugin\PluginBase;
@@ -25,7 +28,7 @@ class Loader extends PluginBase {
 	
 	const VERSION = "1.4.0";
 	const API_TARGET = "2.0.0 - 3.0.0-ALPHA5";
-	const CONFIGURATION_VERSION = "1.1.0";
+	const CONFIGURATION_VERSION = "2.1.0";
 	
 	private static $availableLanguages = [
 		"en",
@@ -168,5 +171,16 @@ class Loader extends PluginBase {
 	 */
 	public static function getAvailableLanguages(): array {
 		return self::$availableLanguages;
+	}
+
+	/**
+	 * @param BaseShape $shape
+	 * @param BaseType  $type
+	 */
+	public function spreadTickBrush(BaseShape $shape, BaseType $type) {
+		$blockAmount = $shape->getAccurateTotalBlocks();
+		$blocksInside = $shape->getBlocksInside();
+
+		$this->getServer()->getScheduler()->scheduleRepeatingTask(new TickSpreadBrushTask($this, $blocksInside, $type, ceil($blockAmount / $this->getSettings()->get("Blocks-Per-Tick"))), 1);
 	}
 }

@@ -25,6 +25,7 @@ abstract class BaseShape {
 	protected $center;
 	protected $hollow;
 	protected $height;
+	protected $totalBlocks = 0;
 
 	/**
 	 * @param string $shape
@@ -194,5 +195,15 @@ abstract class BaseShape {
 	 */
 	public function getPermission(): string {
 		return "blocksniper.shape." . str_replace("hollow", "", str_replace(" ", "_", strtolower($this->getName())));
+	}
+
+	/**
+	 * Returns the total amount of blocks in the shape.
+	 * Warning - This function should be called AFTER $shape->getBlocksInside().
+	 *
+	 * @return int
+	 */
+	public function getAccurateTotalBlocks(): int {
+		return $this->totalBlocks;
 	}
 }

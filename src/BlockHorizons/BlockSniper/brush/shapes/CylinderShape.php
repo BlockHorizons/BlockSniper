@@ -45,19 +45,31 @@ class CylinderShape extends BaseShape {
 							}
 						}
 						$blocksInside[] = $this->getLevel()->getBlock(new Vector3($x, $y, $z));
+						$this->totalBlocks++;
 					}
 				}
 			}
 		}
 		return $blocksInside;
 	}
-	
+
+	/**
+	 * @return string
+	 */
 	public function getName(): string {
 		return $this->hollow ? "Hollow Standing Cylinder" : "Standing Cylinder";
 	}
-	
+
+	/**
+	 * @return int
+	 */
 	public function getApproximateProcessedBlocks(): int {
-		$blockCount = round($this->radius * $this->radius * M_PI * $this->height);
-		return $blockCount;
+		if($this->hollow) {
+			$blockCount = (M_PI * $this->radius * $this->radius * 2) + (2 * M_PI * $this->radius * $this->height * 2);
+		} else {
+			$blockCount = $this->radius * $this->radius * M_PI * $this->height;
+		}
+
+		return ceil($blockCount);
 	}
 }

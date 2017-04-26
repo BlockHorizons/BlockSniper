@@ -43,18 +43,30 @@ class CuboidShape extends BaseShape {
 						}
 					}
 					$blocksInside[] = $this->getLevel()->getBlock(new Vector3($x, $y, $z));
+					$this->totalBlocks++;
 				}
 			}
 		}
 		return $blocksInside;
 	}
-	
+
+	/**
+	 * @return string
+	 */
 	public function getName(): string {
 		return $this->hollow ? "Hollow Cuboid" : "Cuboid";
 	}
-	
+
+	/**
+	 * @return int
+	 */
 	public function getApproximateProcessedBlocks(): int {
-		$blockCount = abs(($this->center->x - $this->width) - ($this->center->x + $this->width)) * abs(($this->center->z - $this->width) - ($this->center->z + $this->width)) * abs(($this->center->y - $this->height) - ($this->center->y + $this->height));
-		return $blockCount;
+		if($this->hollow) {
+			$blockCount = (pow($this->width * 2, 2) * 2) + (($this->width * 2) * ($this->height * 2) * 4);
+		} else {
+			$blockCount = ($this->width * 2) * ($this->width * 2) * ($this->height * 2);
+		}
+
+		return ceil($blockCount);
 	}
 }

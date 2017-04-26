@@ -41,18 +41,29 @@ class CubeShape extends BaseShape {
 						}
 					}
 					$blocksInside[] = $this->getLevel()->getBlock(new Vector3($x, $y, $z));
+					$this->totalBlocks++;
 				}
 			}
 		}
 		return $blocksInside;
 	}
-	
+
+	/**
+	 * @return string
+	 */
 	public function getName(): string {
 		return $this->hollow ? "Hollow Cube" : "Cube";
 	}
-	
+
+	/**
+	 * @return int
+	 */
 	public function getApproximateProcessedBlocks(): int {
-		$blockCount = abs(($this->center->x - $this->radius) - ($this->center->x + $this->radius)) * abs(($this->center->z - $this->radius) - ($this->center->z + $this->radius)) * abs(($this->center->y - $this->radius) - ($this->center->y + $this->radius));
-		return $blockCount;
+		if($this->hollow) {
+			$blockCount = pow($this->width * 2, 2) * 6;
+		} else {
+			$blockCount = pow($this->width * 2, 3);
+		}
+		return ceil($blockCount);
 	}
 }

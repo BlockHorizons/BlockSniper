@@ -49,19 +49,31 @@ class SphereShape extends BaseShape {
 							}
 						}
 						$blocksInside[] = $this->getLevel()->getBlock(new Vector3($x, $y, $z));
+						$this->totalBlocks++;
 					}
 				}
 			}
 		}
 		return $blocksInside;
 	}
-	
+
+	/**
+	 * @return string
+	 */
 	public function getName(): string {
 		return $this->hollow ? "Hollow Sphere" : "Sphere";
 	}
-	
+
+	/**
+	 * @return int
+	 */
 	public function getApproximateProcessedBlocks(): int {
-		$blockCount = round(4 / 3 * M_PI * pow($this->radius, 3));
+		if($this->hollow) {
+			$blockCount = 4 * M_PI * $this->radius;
+		} else {
+			$blockCount = round(4 / 3 * M_PI * pow($this->radius, 3));
+		}
+
 		return $blockCount;
 	}
 }

@@ -25,6 +25,8 @@ class ConfigData {
 			"Brush-Item" => $cfg["Brush-Item"] ?? 396,
 			"Maximum-Radius" => $cfg["Maximum-Radius"] ?? 15,
 			"Maximum-Undo-Stores" => $cfg["Maximum-Undo-Stores"] ?? 15,
+			"Tick-Spread-Brush" => $cfg["Tick-Spread-Brush"] ?? true,
+			"Blocks-Per-Tick" => $cfg["Blocks-Per-Tick"] ?? 150,
 			"Reset-Decrement-Brush" => $cfg["Reset-Decrement-Brush"] ?? true,
 			"Maximum-Clone-Size" => $cfg["Maximum-Clone-Size"] ?? 60,
 			"Save-Brush-Properties" => $cfg["Save-Brush-Properties"] ?? true,

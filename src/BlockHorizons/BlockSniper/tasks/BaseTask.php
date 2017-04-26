@@ -8,7 +8,7 @@ use pocketmine\scheduler\PluginTask;
 
 abstract class BaseTask extends PluginTask {
 	
-	public $loader;
+	protected $loader;
 	
 	public function __construct(Loader $loader) {
 		parent::__construct($loader);

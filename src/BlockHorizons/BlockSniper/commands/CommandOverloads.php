@@ -30,7 +30,7 @@ class CommandOverloads {
 				1 => [
 					"type" => "rawtext",
 					"name" => "value",
-					"optional" => true,
+					"optional" => true
 				],
 				2 => [
 					"type" => "string",
@@ -50,7 +50,7 @@ class CommandOverloads {
 					]
 				],
 				1 => [
-					"type" => "enumstring",
+					"type" => "stringenum",
 					"name" => "language",
 					"optional" => true,
 					"enum_values" => Loader::getAvailableLanguages()
