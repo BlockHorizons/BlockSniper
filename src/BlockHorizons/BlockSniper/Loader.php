@@ -184,8 +184,8 @@ class Loader extends PluginBase {
 	 * @return bool
 	 */
 	public function spreadTickBrush(BaseShape $shape, BaseType $type): bool {
-		$blockAmount = $shape->getAccurateTotalBlocks();
 		$blocksInside = $shape->getBlocksInside();
+		$blockAmount = $shape->getAccurateTotalBlocks();
 
 		$this->getUndoStorer()->saveUndo($blocksInside, $type->getPlayer());
 		$this->getServer()->getScheduler()->scheduleRepeatingTask(new TickSpreadBrushTask($this, $blocksInside, $type, ceil($blockAmount / $this->getSettings()->get("Blocks-Per-Tick"))), 1);
@@ -193,8 +193,8 @@ class Loader extends PluginBase {
 	}
 
 	/**
-	 * @param        $undo
-	 * @param Player $player
+	 * @param Undo|Redo $undo
+	 * @param Player    $player
 	 *
 	 * @return bool
 	 */
@@ -208,7 +208,7 @@ class Loader extends PluginBase {
 		} else {
 			$this->getUndoStorer()->saveUndo($undo->getDetachedUndoBlocks(), $player);
 		}
-		$this->getServer()->getScheduler()->scheduleRepeatingTask(new TickSpreadUndoTask($this, $undo, $player, ceil($undoAmount / $this->getSettings()->get("Blocks-Per-Tick"))), 1);
+		$this->getServer()->getScheduler()->scheduleRepeatingTask(new TickSpreadUndoTask($this, $undo->getBlocks(), $player, ceil($undoAmount / $this->getSettings()->get("Blocks-Per-Tick"))), 1);
 		return true;
 	}
 }

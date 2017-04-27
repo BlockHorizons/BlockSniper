@@ -2,6 +2,7 @@
 
 namespace BlockHorizons\BlockSniper\undo;
 
+use BlockHorizons\BlockSniper\brush\BrushManager;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\Player;
 
@@ -54,7 +55,7 @@ class UndoStorer {
 	public function restoreLatestRedo(int $amount = 1, Player $player) {
 		for($currentAmount = 0; $currentAmount < $amount; $currentAmount++) {
 			$redo = $this->redoStore[$player->getName()][max(array_keys($this->redoStore[$player->getName()]))];
-			if($this->getLoader()->getSettings()->get("Tick-Spread-Brush") === true) {
+			if($this->getLoader()->getSettings()->get("Tick-Spread-Brush") === 2 || ($this->getLoader()->getSettings()->get("Tick-Spread-Brush") === 1 && BrushManager::get($player)->getSize() > 15)) {
 				$this->getLoader()->spreadTickUndo($redo, $player);
 			} else {
 				$undo = $redo->getDetachedUndoBlocks();
@@ -112,7 +113,7 @@ class UndoStorer {
 	public function restoreLatestUndo(int $amount = 1, Player $player) {
 		for($currentAmount = 0; $currentAmount < $amount; $currentAmount++) {
 			$undo = $this->undoStore[$player->getName()][max(array_keys($this->undoStore[$player->getName()]))];
-			if($this->getLoader()->getSettings()->get("Tick-Spread-Brush") === true) {
+			if($this->getLoader()->getSettings()->get("Tick-Spread-Brush") === 2 || ($this->getLoader()->getSettings()->get("Tick-Spread-Brush") === 1 && BrushManager::get($player)->getSize() > 15)) {
 				$this->getLoader()->spreadTickUndo($undo, $player);
 			} else {
 				$redo = $undo->getDetachedRedo();

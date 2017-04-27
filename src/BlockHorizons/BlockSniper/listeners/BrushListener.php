@@ -25,13 +25,13 @@ class BrushListener implements Listener {
 				$this->getLoader()->getBrushManager()->createBrush($player);
 				$shape = BrushManager::get($player)->getShape();
 				$type = BrushManager::get($player)->getType($shape->getBlocksInside());
-				
+
 				$this->getLoader()->getServer()->getPluginManager()->callEvent($event = new BrushUseEvent($this->getLoader(), $player, $shape, $type));
 				if($event->isCancelled()) {
 					return false;
 				}
 
-				if($this->getLoader()->getSettings()->get("Tick-Spread-Brush") === true) {
+				if($this->getLoader()->getSettings()->get("Tick-Spread-Brush") === 2 || ($this->getLoader()->getSettings()->get("Tick-Spread-Brush") === 1 && BrushManager::get($player)->getSize() > 15)) {
 					$this->getLoader()->spreadTickBrush($shape, $type);
 				} else {
 					$undoBlocks = $type->fillShape();

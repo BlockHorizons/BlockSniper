@@ -107,6 +107,7 @@ class CloneStorer {
 	 * @param array   $blocks
 	 * @param Vector3 $targetBlock
 	 *
+	 * @deprecated
 	 * @return bool
 	 */
 	public function saveTemplate(string $templateName, array $blocks, Vector3 $targetBlock): bool {
@@ -129,6 +130,7 @@ class CloneStorer {
 	 * @param string $templateName
 	 * @param Block  $targetBlock
 	 *
+	 * @deprecated
 	 * @return bool
 	 */
 	public function pasteTemplate(string $templateName, Block $targetBlock, Player $player): bool {

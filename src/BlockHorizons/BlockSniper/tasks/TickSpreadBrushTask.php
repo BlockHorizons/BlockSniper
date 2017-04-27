@@ -24,6 +24,9 @@ class TickSpreadBrushTask extends BaseTask {
 		if($this->actualTick <= $this->ticks) {
 			$i = 0;
 			foreach($this->blocksInside as $key => $block) {
+				if($block->getId() === ($previousBlock = $this->type->getPlayer()->getLevel()->getBlock($block))->getId() && $block->getDamage() === $previousBlock->getDamage()) {
+					continue;
+				}
 				$i++;
 				$tickProcessedBlocks[] = $block;
 				unset($this->blocksInside[$key]);
