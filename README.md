@@ -41,7 +41,7 @@ Any feedback given is very welcome, and it would be very much appreciated!
 ### What does every setting in the settings.yml mean?
 The explanation of every setting in the settings.yml can be found below. The [settings.yml file](https://github.com/Sandertv/BlockSniper/blob/master/resources/settings.yml) always contains the latest property explanation.
 
-```
+```yaml
 ---
 # Configuration for BlockSniper: A WorldEdit plugin for PocketMine.
 

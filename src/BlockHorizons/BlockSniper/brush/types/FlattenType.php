@@ -4,7 +4,6 @@ namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\brush\BrushManager;
-use BlockHorizons\BlockSniper\undo\UndoStorer;
 use pocketmine\block\Flowable;
 use pocketmine\item\Item;
 use pocketmine\level\Level;
@@ -16,8 +15,8 @@ class FlattenType extends BaseType {
 	/*
 	 * Flattens the terrain below the selected point within the brush radius.
 	 */
-	public function __construct(UndoStorer $undoStorer, Player $player, Level $level, array $blocks) {
-		parent::__construct($undoStorer, $player, $level, $blocks);
+	public function __construct(Player $player, Level $level, array $blocks) {
+		parent::__construct($player, $level, $blocks);
 		$this->center = $player->getTargetBlock(100);
 	}
 

@@ -8,7 +8,6 @@ use BlockHorizons\BlockSniper\brush\types\FlattenType;
 use BlockHorizons\BlockSniper\brush\types\LayerType;
 use BlockHorizons\BlockSniper\brush\types\ReplaceType;
 use BlockHorizons\BlockSniper\brush\types\TreeType;
-use BlockHorizons\BlockSniper\undo\UndoStorer;
 use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
@@ -46,13 +45,11 @@ abstract class BaseType {
 	protected $tree;
 
 	/**
-	 * @param UndoStorer $undoStorer
 	 * @param Player     $player
 	 * @param Level      $level
 	 * @param Block[]    $blocks
 	 */
-	public function __construct(UndoStorer $undoStorer, Player $player, Level $level, array $blocks) {
-		$this->undoStorer = $undoStorer;
+	public function __construct(Player $player, Level $level, array $blocks) {
 		$this->player = $player;
 		$this->level = $level;
 		$this->blocks = $blocks;
@@ -95,13 +92,6 @@ abstract class BaseType {
 	public abstract function getName(): string;
 	
 	public abstract function fillShape(): array;
-	
-	/**
-	 * @return UndoStorer
-	 */
-	public function getUndoStorer(): UndoStorer {
-		return $this->undoStorer;
-	}
 	
 	/**
 	 * Returns the level the type is used in.

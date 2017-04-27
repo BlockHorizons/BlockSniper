@@ -3,20 +3,21 @@
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
-use BlockHorizons\BlockSniper\undo\UndoStorer;
+use BlockHorizons\BlockSniper\Loader;
 use pocketmine\block\Block;
 use pocketmine\block\Flowable;
 use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\Player;
+use pocketmine\Server;
 
 class LeafblowerType extends BaseType {
 	
 	/*
 	 * Blows away all plants and flowers within the brush radius.
 	 */
-	public function __construct(UndoStorer $undoStorer, Player $player, Level $level, array $blocks) {
-		parent::__construct($undoStorer, $player, $level, $blocks);
+	public function __construct(Player $player, Level $level, array $blocks) {
+		parent::__construct($player, $level, $blocks);
 	}
 
 	/**
@@ -27,7 +28,8 @@ class LeafblowerType extends BaseType {
 		foreach($this->blocks as $block) {
 			if($block instanceof Flowable) {
 				$undoBlocks[] = $block;
-				$loader = $this->getUndoStorer()->getLoader();
+				/** @var Loader $loader */
+				$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
 				if($loader->getSettings()->get("Drop-Leafblower-Plants")) {
 					$this->level->dropItem($block, Item::get($block->getId()));
 				}
