@@ -21,13 +21,13 @@ class UndoStorer {
 	public function __construct(Loader $loader) {
 		$this->loader = $loader;
 	}
-	
+
 	/**
-	 * @param array  $blocks
+	 * @param Undo   $undo
 	 * @param Player $player
 	 */
-	public function saveUndo(array $blocks, Player $player) {
-		$this->undoStore[$player->getName()][] = new Undo($blocks);
+	public function saveUndo(Undo $undo, Player $player) {
+		$this->undoStore[$player->getName()][] = $undo;
 		
 		if($this->getTotalUndoStores($player) === $this->getLoader()->getSettings()->get("Maximum-Undo-Stores")) {
 			$this->unsetOldestUndo($player);
@@ -58,7 +58,7 @@ class UndoStorer {
 			if($this->getLoader()->getSettings()->get("Tick-Spread-Brush") === 2 || ($this->getLoader()->getSettings()->get("Tick-Spread-Brush") === 1 && BrushManager::get($player)->getSize() > 15)) {
 				$this->getLoader()->spreadTickUndo($redo, $player);
 			} else {
-				$undo = $redo->getDetachedUndoBlocks();
+				$undo = $redo->getDetachedUndo();
 				$this->saveUndo($undo, $player);
 
 				$redo->restore();

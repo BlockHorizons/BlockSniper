@@ -5,6 +5,7 @@ namespace BlockHorizons\BlockSniper\listeners;
 use BlockHorizons\BlockSniper\brush\BrushManager;
 use BlockHorizons\BlockSniper\events\BrushUseEvent;
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\undo\Undo;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\Player;
@@ -35,7 +36,7 @@ class BrushListener implements Listener {
 					$this->getLoader()->spreadTickBrush($shape, $type);
 				} else {
 					$undoBlocks = $type->fillShape();
-					$this->getLoader()->getUndoStorer()->saveUndo($undoBlocks, $player);
+					$this->getLoader()->getUndoStorer()->saveUndo(new Undo($undoBlocks, $shape->getAccurateTotalBlocks()), $player);
 				}
 
 				$this->decrementBrush($player);
