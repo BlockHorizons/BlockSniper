@@ -11,7 +11,7 @@ An innovative world editing tool, made for PocketMine-MP: An MCPE server softwar
 Stable releases will be drafted at [Releases](https://github.com/Sandertv/BlockSniper/releases).
 If you do decide to compile a phar file yourself to benefit from the latest features, here's how:
  - Download the .ZIP file with the big green button.
- - Go to pmt.mcpe.me and convert the .ZIP file to a phar file.
+ - Go to pmt.mcpe.fun and convert the .ZIP file to a phar file.
  - Upload your phar file to your server and restart the server.
 
 [![Poggit-CI](https://poggit.pmmp.io/ci.badge/Sandertv/BlockSniper/BlockSniper)](https://poggit.pmmp.io/ci/Sandertv/BlockSniper/BlockSniper)
