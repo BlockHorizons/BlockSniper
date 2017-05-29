@@ -22,7 +22,6 @@ class PresetManager {
 				$this->addPreset($name);
 				$loader->getLogger()->debug(TF::GREEN . "Preset " . $name . " has been loaded.");
 			}
-			unlink($loader->getDataFolder() . "presets.yml");
 			$loader->getLogger()->info(TF::GREEN . "All presets have been loaded.");
 		}
 	}
