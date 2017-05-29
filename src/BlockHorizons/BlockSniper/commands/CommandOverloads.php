@@ -65,7 +65,8 @@ class CommandOverloads {
 					"enum_values" => [
 						"copy",
 						"template",
-						"schematic"
+						"schematic",
+						"offset"
 					]
 				],
 				1 => [

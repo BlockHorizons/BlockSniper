@@ -49,4 +49,5 @@ brush:
   hollow: "Creux: "
   preset: "Prédéfini (preset): "
   tree: "Arbre: "
+  yoffset: "Y Offset: "
 ...

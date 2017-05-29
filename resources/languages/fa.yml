@@ -48,4 +48,5 @@ brush:
   hollow: "Hollow: "
   preset: "Preset: "
   tree: "Tree: "
+  yoffset: "Y Offset: "
 ...

@@ -4,6 +4,7 @@ namespace BlockHorizons\BlockSniper\brush;
 
 use pocketmine\block\Block;
 use pocketmine\item\Item;
+use pocketmine\level\Position;
 use pocketmine\Server;
 
 class Brush {
@@ -11,12 +12,26 @@ class Brush {
 	public $player;
 	public $resetSize = 0;
 	private $type = "fill", $shape = "sphere", $size = 1, $hollow = false, $decrement = false;
-	private $height = 1, $perfect = true, $blocks = [], $obsolete = [], $biome = "plains", $tree = "oak";
+	private $height = 1, $perfect = true, $blocks = [], $obsolete = [], $biome = "plains", $tree = "oak", $yOffset = 0;
 	
 	public function __construct(string $player) {
 		$this->player = $player;
 	}
-	
+
+	/**
+	 * @return int
+	 */
+	public function getYOffset(): int {
+		return $this->yOffset;
+	}
+
+	/**
+	 * @param int $offset
+	 */
+	public function setYOffset(int $offset) {
+		$this->yOffset = $offset;
+	}
+
 	/**
 	 * @param array $blocks
 	 */
@@ -108,15 +123,18 @@ class Brush {
 	public function setShape(string $shape) {
 		$this->shape = $shape;
 	}
-	
+
 	/**
-	 * @param $cloneShape
+	 * @param bool $cloneShape
+	 * @param int  $yOffset
 	 *
 	 * @return BaseShape
 	 */
-	public function getShape($cloneShape = false): BaseShape {
+	public function getShape($cloneShape = false, int $yOffset = 0): BaseShape {
 		$shapeName = 'BlockHorizons\BlockSniper\brush\shapes\\' . (ucfirst($this->shape) . "Shape");
-		$shape = new $shapeName(Server::getInstance()->getPlayer($this->player), Server::getInstance()->getPlayer($this->player)->getLevel(), $this->size, Server::getInstance()->getPlayer($this->player)->getTargetBlock(100), $this->hollow, $cloneShape);
+		$vector3 = Server::getInstance()->getPlayer($this->player)->getTargetBlock(100)->add(0, $yOffset);
+		$location = new Position($vector3->x, $vector3->y, $vector3->z, Server::getInstance()->getPlayer($this->player)->getLevel());
+		$shape = new $shapeName(Server::getInstance()->getPlayer($this->player), Server::getInstance()->getPlayer($this->player)->getLevel(), $this->size, $location, $this->hollow, $cloneShape);
 		
 		return $shape;
 	}

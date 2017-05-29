@@ -38,7 +38,7 @@ class CloneCommand extends BaseCommand {
 		$this->getLoader()->getBrushManager()->createBrush($sender);
 		switch(strtolower($args[0])) {
 			case "copy":
-				$shape = BrushManager::get($sender)->getShape(true);
+				$shape = BrushManager::get($sender)->getShape(true, BrushManager::get($sender)->getYOffset());
 				$cloneType = new CopyType($this->getLoader()->getCloneStorer(), $sender, $this->getSettings()->saveAirInCopy(), $center, $shape->getBlocksInside());
 				break;
 			
@@ -47,7 +47,7 @@ class CloneCommand extends BaseCommand {
 					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.name-not-set"));
 					return true;
 				}
-				$shape = BrushManager::get($sender)->getShape(true);
+				$shape = BrushManager::get($sender)->getShape(true, BrushManager::get($sender)->getYOffset());
 				$cloneType = new TemplateType($this->getLoader()->getCloneStorer(), $sender, $this->getSettings()->saveAirInCopy(), $center, $shape->getBlocksInside(), $args[1]);
 				break;
 
@@ -56,7 +56,7 @@ class CloneCommand extends BaseCommand {
 					$sender->sendMessage(TF::RED . "[Warning] " .  $this->getLoader()->getTranslation("commands.errors.name-not-set"));
 					return true;
 				}
-				$shape = BrushManager::get($sender)->getShape(true);
+				$shape = BrushManager::get($sender)->getShape(true, BrushManager::get($sender)->getYOffset());
 
 				$schematic = new Schematic("");
 				$schematic->setBlocks($shape->getBlocksInside());
@@ -65,6 +65,19 @@ class CloneCommand extends BaseCommand {
 
 				file_put_contents($this->getLoader()->getDataFolder() . "schematics/" . $args[1] . ".schematic", $schematic->raw);
 				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.clone"));
+				return true;
+
+			case "offset":
+			case "yoffset":
+				if(!isset($args[1])) {
+					$offset = 0;
+				} elseif(is_numeric($args[1])) {
+					$offset = $args[1];
+				} else {
+					$offset = 0;
+				}
+				BrushManager::get($sender)->setYOffset($offset);
+				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("brush.yoffset"));
 				return true;
 
 			default:
