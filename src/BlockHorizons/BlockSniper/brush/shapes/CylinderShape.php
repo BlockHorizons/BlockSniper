@@ -26,7 +26,7 @@ class CylinderShape extends BaseShape {
 	 *
 	 * @return array
 	 */
-	public function getBlocksInside($partially = false, int $blocksPerTick = 100): array {
+	public function getBlocksInside(bool $partially = false, int $blocksPerTick = 100): array {
 		$radiusSquared = pow($this->radius, 2);
 		$targetX = $this->center->x;
 		$targetY = $this->center->y;
@@ -83,9 +83,9 @@ class CylinderShape extends BaseShape {
 	 */
 	public function getApproximateProcessedBlocks(): int {
 		if($this->hollow) {
-			$blockCount = (M_PI * $this->radius * $this->radius * 2) + (2 * M_PI * $this->radius * $this->height * 2);
+			$blockCount = round((M_PI * $this->radius * $this->radius * 2) + (2 * M_PI * $this->radius * $this->height * 2));
 		} else {
-			$blockCount = $this->radius * $this->radius * M_PI * $this->height;
+			$blockCount = round($this->radius * $this->radius * M_PI * $this->height);
 		}
 
 		return ceil($blockCount);

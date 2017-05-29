@@ -87,7 +87,7 @@ class SphereShape extends BaseShape {
 	 */
 	public function getApproximateProcessedBlocks(): int {
 		if($this->hollow) {
-			$blockCount = 4 * M_PI * $this->radius;
+			$blockCount = round(4 * M_PI * $this->radius);
 		} else {
 			$blockCount = round(4 / 3 * M_PI * pow($this->radius, 3));
 		}

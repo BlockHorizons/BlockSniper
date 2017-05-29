@@ -39,7 +39,7 @@ class BrushListener implements Listener {
 					return false;
 				}
 
-				if($this->getLoader()->getSettings()->getBrushLevel() === 2 || ($this->getLoader()->getSettings()->getBrushLevel() === 1 && $brush->getSize() >= 15)) {
+				if($this->getLoader()->getSettings()->getBrushLevel() === 0 || ($this->getLoader()->getSettings()->getBrushLevel() === 1 && $brush->getSize() >= 15)) {
 					$this->getLoader()->spreadTickBrush($shape, $type);
 				} else {
 					$type->setBlocksInside($shape->getBlocksInside());
