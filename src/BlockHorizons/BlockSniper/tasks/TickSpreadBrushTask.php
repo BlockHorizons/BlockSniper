@@ -22,7 +22,7 @@ class TickSpreadBrushTask extends BaseTask {
 	public function onRun($currentTick) {
 		$tickProcessedBlocks = [];
 		$i = 0;
-		foreach($this->shape->getBlocksInside(true, $this->getLoader()->getSettings()->get("Blocks-Per-Tick")) as $key => $block) {
+		foreach($this->shape->getBlocksInside(true, $this->getLoader()->getSettings()->getBlocksPerTick()) as $key => $block) {
 			$this->blocksProcessed[] = $block;
 			$tickProcessedBlocks[] = $block;
 			$i++;

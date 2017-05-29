@@ -30,7 +30,7 @@ class LeafblowerType extends BaseType {
 				$undoBlocks[] = $block;
 				/** @var Loader $loader */
 				$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
-				if($loader->getSettings()->get("Drop-Leafblower-Plants")) {
+				if($loader->getSettings()->dropLeafblowerPlants()) {
 					$this->level->dropItem($block, Item::get($block->getId()));
 				}
 				$this->level->setBlock($block, Block::get(Block::AIR), false, false);

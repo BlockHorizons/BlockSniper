@@ -3,6 +3,7 @@
 namespace BlockHorizons\BlockSniper\cloning;
 
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\undo\Undo;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\math\Vector3;
@@ -63,7 +64,7 @@ class CloneStorer {
 			$undoBlocks[] = $level->getBlock($center->add($block));
 			$level->setBlock($center->add($block), $block, false, false);
 		}
-		$this->getLoader()->getUndoStorer()->saveUndo($undoBlocks, $player);
+		$this->getLoader()->getUndoStorer()->saveUndo(new Undo($undoBlocks), $player);
 	}
 	
 	/**
@@ -154,7 +155,7 @@ class CloneStorer {
 			$undoBlocks[] = $targetBlock->getLevel()->getBlock($blockPos);
 			$targetBlock->getLevel()->setBlock($blockPos, Block::get((int)$blockId, (int)$meta), false, false);
 		}
-		$this->getLoader()->getUndoStorer()->saveUndo($undoBlocks, $player);
+		$this->getLoader()->getUndoStorer()->saveUndo(new Undo($undoBlocks), $player);
 		return true;
 	}
 	

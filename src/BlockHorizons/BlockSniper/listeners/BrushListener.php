@@ -21,20 +21,28 @@ class BrushListener implements Listener {
 	
 	public function brush(PlayerInteractEvent $event) {
 		$player = $event->getPlayer();
-		if($player->getInventory()->getItemInHand()->getId() === (int)$this->getLoader()->getSettings()->get("Brush-Item")) {
+		if($player->getInventory()->getItemInHand()->getId() === (int) $this->getLoader()->getSettings()->getBrushItem()) {
 			if($player->hasPermission("blocksniper.command.brush")) {
 				$this->getLoader()->getBrushManager()->createBrush($player);
-				$shape = BrushManager::get($player)->getShape();
-				$type = BrushManager::get($player)->getType($shape->getBlocksInside());
+
+				$brush = BrushManager::get($player);
+				if($brush->getSize() > $this->getLoader()->getSettings()->getMaxRadius() || $brush->getHeight() > $this->getLoader()->getSettings()->getMaxRadius()) {
+					$player->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.radius-too-big"));
+					return false;
+				}
+
+				$shape = $brush->getShape();
+				$type = $brush->getType();
 
 				$this->getLoader()->getServer()->getPluginManager()->callEvent($event = new BrushUseEvent($this->getLoader(), $player, $shape, $type));
 				if($event->isCancelled()) {
 					return false;
 				}
 
-				if($this->getLoader()->getSettings()->get("Tick-Spread-Brush") === 2 || ($this->getLoader()->getSettings()->get("Tick-Spread-Brush") === 1 && BrushManager::get($player)->getSize() > 15)) {
+				if($this->getLoader()->getSettings()->getBrushLevel() === 2 || ($this->getLoader()->getSettings()->getBrushLevel() === 1 && $brush->getSize() >= 15)) {
 					$this->getLoader()->spreadTickBrush($shape, $type);
 				} else {
+					$type->setBlocksInside($shape->getBlocksInside());
 					$undoBlocks = $type->fillShape();
 					$this->getLoader()->getUndoStorer()->saveUndo(new Undo($undoBlocks), $player);
 				}

@@ -43,6 +43,83 @@ class ConfigData {
 			$this->getLoader()->getLogger()->info(TF::AQUA . "[BlockSniper] No new Configuration version found, Configuration is up to date.");
 		}
 	}
+
+	/**
+	 * @return string
+	 */
+	public function getLanguage(): string {
+		return $this->settings["Message-Language"];
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getBrushItem(): int {
+		return $this->settings["Brush-Item"];
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getMaxRadius(): int {
+		return $this->settings["Maximum-Radius"];
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getMaxUndoStores(): int {
+		return $this->settings["Maximum-Undo-Stores"];
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getBrushLevel(): int {
+		return $this->settings["Tick-Spread-Brush"];
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getBlocksPerTick(): int {
+		return $this->settings["Blocks-Per-Tick"];
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function resetDecrementBrush(): bool {
+		return (bool) $this->settings["Reset-Decrement-Brush"];
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getMaxCloneSize(): int {
+		return $this->settings["Maximum-Clone-Size"];
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function saveBrushProperties(): bool {
+		return (bool) $this->settings["Save-Brush-Properties"];
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function dropLeafblowerPlants(): bool {
+		return (bool) $this->settings["Drop-Leafblower-Plants"];
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function saveAirInCopy(): bool {
+		return (bool) $this->settings["Save-Air-In-Copy"];
+	}
 	
 	/**
 	 * @return Loader

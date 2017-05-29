@@ -14,14 +14,14 @@ Message-Language: ""
 # Item ID of the item that is used to brush. (Golden carrot by default)
 Brush-Item: 396
 
-# Maximum radius for shapes/types, it is recommended to keep this number below 20 to prevent server freezes and lag.
+# Maximum radius for shapes/types, it is recommended to keep this number below 20 if tick spread brush is on 2, to prevent server freezes and/or lag.
 Maximum-Radius: 15
 
-# Maximum radius/height for clones, it is recommended to keep this number below 60 to prevent server freezes and lag.
+# Maximum radius/height for clones, it is recommended to keep this number below 60 to prevent server freezes and/or lag.
 Maximum-Clone-Size: 60
 
 # Whether to spread out the block placement of brush over ticks, place all blocks at once or a combination of the two. Tick spread brush reduces server lag significantly.
-# 0 = Brush block placement spread over ticks.
+# 0 = Brush block placement always spread over ticks.
 # 1 = Brush block placement spread over ticks if brush size over 15.
 # 2 = Brush block placement all at once.
 Tick-Spread-Brush: 1

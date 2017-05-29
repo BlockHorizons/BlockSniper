@@ -41,8 +41,4 @@ class SnowconeType extends BaseType {
 	public function getName(): string {
 		return "Snow Cone";
 	}
-	
-	public function getPermission(): string {
-		return "blocksniper.type.snowcone";
-	}
 }

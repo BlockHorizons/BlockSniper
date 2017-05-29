@@ -22,7 +22,7 @@ class TranslationData {
 		$languageSelected = false;
 		$language = [];
 		foreach(Loader::getAvailableLanguages() as $availableLanguage) {
-			if($this->getLoader()->getSettings()->get("Message-Language") === $availableLanguage) {
+			if($this->getLoader()->getSettings()->getLanguage() === $availableLanguage) {
 				$this->getLoader()->saveResource("languages/" . $availableLanguage . ".yml");
 				$language = yaml_parse_file($this->getLoader()->getDataFolder() . "languages/" . $availableLanguage . ".yml");
 				$languageSelected = true;

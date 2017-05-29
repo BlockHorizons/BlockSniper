@@ -29,7 +29,7 @@ class UndoStorer {
 	public function saveUndo(Undo $undo, Player $player) {
 		$this->undoStore[$player->getName()][] = $undo;
 		
-		if($this->getTotalUndoStores($player) === $this->getLoader()->getSettings()->get("Maximum-Undo-Stores")) {
+		if($this->getTotalUndoStores($player) === $this->getLoader()->getSettings()->getMaxUndoStores()) {
 			$this->unsetOldestUndo($player);
 		}
 		$this->lastUndo[$player->getName()] = time();
@@ -42,7 +42,7 @@ class UndoStorer {
 	public function saveRedo(Redo $redo, Player $player) {
 		$this->redoStore[$player->getName()][] = $redo;
 
-		if($this->getTotalRedoStores($player) === $this->getLoader()->getSettings()->get("Maximum-Undo-Stores")) {
+		if($this->getTotalRedoStores($player) === $this->getLoader()->getSettings()->getMaxUndoStores()) {
 			$this->unsetOldestRedo($player);
 		}
 		$this->lastRedo[$player->getName()] = time();
@@ -55,7 +55,7 @@ class UndoStorer {
 	public function restoreLatestRedo(int $amount = 1, Player $player) {
 		for($currentAmount = 0; $currentAmount < $amount; $currentAmount++) {
 			$redo = $this->redoStore[$player->getName()][max(array_keys($this->redoStore[$player->getName()]))];
-			if($this->getLoader()->getSettings()->get("Tick-Spread-Brush") === 2 || ($this->getLoader()->getSettings()->get("Tick-Spread-Brush") === 1 && BrushManager::get($player)->getSize() > 15)) {
+			if($this->getLoader()->getSettings()->getBrushLevel() === 2 || ($this->getLoader()->getSettings()->getBrushLevel() === 1 && BrushManager::get($player)->getSize() >= 15)) {
 				$this->getLoader()->spreadTickUndo($redo, $player);
 			} else {
 				$undo = $redo->getDetachedUndo();
@@ -113,7 +113,7 @@ class UndoStorer {
 	public function restoreLatestUndo(int $amount = 1, Player $player) {
 		for($currentAmount = 0; $currentAmount < $amount; $currentAmount++) {
 			$undo = $this->undoStore[$player->getName()][max(array_keys($this->undoStore[$player->getName()]))];
-			if($this->getLoader()->getSettings()->get("Tick-Spread-Brush") === 2 || ($this->getLoader()->getSettings()->get("Tick-Spread-Brush") === 1 && BrushManager::get($player)->getSize() > 15)) {
+			if($this->getLoader()->getSettings()->getBrushLevel() === 2 || ($this->getLoader()->getSettings()->getBrushLevel() === 1 && BrushManager::get($player)->getSize() >= 15)) {
 				$this->getLoader()->spreadTickUndo($undo, $player);
 			} else {
 				$redo = $undo->getDetachedRedo();

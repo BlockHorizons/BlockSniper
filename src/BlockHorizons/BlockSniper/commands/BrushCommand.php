@@ -103,7 +103,7 @@ class BrushCommand extends BaseCommand {
 					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.radius-not-numeric"));
 					return true;
 				}
-				if($args[1] > $this->getLoader()->getSettings()->get("Maximum-Radius")) {
+				if($args[1] > $this->getLoader()->getSettings()->getMaxCloneSize()) {
 					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.radius-too-big"));
 					return true;
 				}
@@ -146,6 +146,10 @@ class BrushCommand extends BaseCommand {
 			case "height":
 				if(!is_numeric($args[1])) {
 					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.radius-not-numeric"));
+					return true;
+				}
+				if($args[1] > $this->getLoader()->getSettings()->getMaxCloneSize()) {
+					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.radius-too-big"));
 					return true;
 				}
 				$brush->setHeight($args[1]);

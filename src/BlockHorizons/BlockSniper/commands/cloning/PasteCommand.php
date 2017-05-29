@@ -4,6 +4,8 @@ namespace BlockHorizons\BlockSniper\commands\cloning;
 
 use BlockHorizons\BlockSniper\commands\BaseCommand;
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\undo\Undo;
+use pocketmine\block\Block;
 use pocketmine\command\CommandSender;
 use pocketmine\item\Item;
 use pocketmine\Player;
@@ -59,13 +61,14 @@ class PasteCommand extends BaseCommand {
 
 				$undoBlocks = [];
 
+				/** @var Block $block */
 				foreach($schematic->getBlocks() as $block) {
 					if($block->getId() !== Item::AIR) {
 						$undoBlocks[] = $center->getLevel()->getBlock($target = $center->add($block->x - floor($schematic->getWidth() / 2), $block->y, $block->z - floor($schematic->getLength() / 2)));
 						$center->getLevel()->setBlock($target, $block, false, false);
 					}
 				}
-				$this->getLoader()->getUndoStorer()->saveUndo($undoBlocks, $sender);
+				$this->getLoader()->getUndoStorer()->saveUndo(new Undo($undoBlocks), $sender);
 				break;
 
 			default:

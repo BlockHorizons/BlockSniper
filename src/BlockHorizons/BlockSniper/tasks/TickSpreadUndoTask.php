@@ -36,7 +36,7 @@ class TickSpreadUndoTask extends BaseTask {
 				$i++;
 				$this->player->getLevel()->setBlock($block, $block, false, false);
 				unset($this->undoBlocks[$key]);
-				if($i === $this->getLoader()->getSettings()->get("Blocks-Per-Tick")) {
+				if($i === $this->getLoader()->getSettings()->getBlocksPerTick()) {
 					break;
 				}
 			}

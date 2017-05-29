@@ -199,6 +199,6 @@ abstract class BaseShape {
 	 * @return string
 	 */
 	public function getPermission(): string {
-		return "blocksniper.shape." . str_replace("hollow", "", str_replace(" ", "_", strtolower($this->getName())));
+		return "blocksniper.shape." . str_replace("hollow", "", str_replace(" ", "", strtolower($this->getName())));
 	}
 }

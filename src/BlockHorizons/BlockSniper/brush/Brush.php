@@ -28,7 +28,7 @@ class Brush {
 	 * @param $value
 	 */
 	public function setDecrementing($value) {
-		$this->decrement = (bool)$value;
+		$this->decrement = (bool) $value;
 	}
 	
 	/**
@@ -42,7 +42,7 @@ class Brush {
 	 * @param $value
 	 */
 	public function setPerfect($value) {
-		$this->perfect = (bool)$value;
+		$this->perfect = (bool) $value;
 	}
 	
 	/**
