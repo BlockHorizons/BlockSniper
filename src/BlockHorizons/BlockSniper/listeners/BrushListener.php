@@ -36,7 +36,7 @@ class BrushListener implements Listener {
 					$this->getLoader()->spreadTickBrush($shape, $type);
 				} else {
 					$undoBlocks = $type->fillShape();
-					$this->getLoader()->getUndoStorer()->saveUndo(new Undo($undoBlocks, $shape->getAccurateTotalBlocks()), $player);
+					$this->getLoader()->getUndoStorer()->saveUndo(new Undo($undoBlocks), $player);
 				}
 
 				$this->decrementBrush($player);

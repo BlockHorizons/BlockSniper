@@ -35,7 +35,7 @@ class TranslationData {
 		}
 		
 		// This is going to burn your eyes. Don't look at it for too long.
-		$this->messages = [
+		$this->messages = @[
 			"commands.errors.no-permission" => $language["commands"]["errors"]["no-permission"],
 			"commands.errors.console-use" => $language["commands"]["errors"]["console-use"],
 			"commands.errors.radius-not-numeric" => $language["commands"]["errors"]["radius-not-numeric"],

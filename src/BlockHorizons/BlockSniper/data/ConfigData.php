@@ -18,7 +18,7 @@ class ConfigData {
 	
 	public function collectSettings() {
 		$cfg = yaml_parse_file($this->getLoader()->getDataFolder() . "settings.yml");
-		@$this->settings = [
+		$this->settings = @[
 			"Configuration-Version" => $cfg["Configuration-Version"],
 			"Auto-Configuration-Update" => $cfg["Auto-Configuration-Update"] ?? true,
 			"Message-Language" => $cfg["Message-Language"] ?? "",

@@ -36,7 +36,6 @@ abstract class BaseType {
 
 	public $player;
 
-	protected $undoStorer;
 	protected $level;
 	protected $biome;
 	protected $blocks;

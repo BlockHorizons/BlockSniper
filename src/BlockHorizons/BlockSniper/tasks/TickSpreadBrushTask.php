@@ -2,43 +2,36 @@
 
 namespace BlockHorizons\BlockSniper\tasks;
 
+use BlockHorizons\BlockSniper\brush\BaseShape;
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\undo\Undo;
 
 class TickSpreadBrushTask extends BaseTask {
 
-	private $blocksInside;
+	private $shape;
 	private $type;
-	private $ticks;
-	private $actualTick = 1;
+	private $blocksProcessed = [];
 
-	public function __construct(Loader $loader, array $blocksInside, BaseType $type, int $ticks) {
+	public function __construct(Loader $loader, BaseShape $shape, BaseType $type) {
 		parent::__construct($loader);
-		$this->blocksInside = $blocksInside;
+		$this->shape = $shape;
 		$this->type = $type;
-		$this->ticks = $ticks;
 	}
 
 	public function onRun($currentTick) {
 		$tickProcessedBlocks = [];
-		if($this->actualTick <= $this->ticks) {
-			$i = 0;
-			foreach($this->blocksInside as $key => $block) {
-				if($block->getId() === ($previousBlock = $this->type->getPlayer()->getLevel()->getBlock($block))->getId() && $block->getDamage() === $previousBlock->getDamage()) {
-					continue;
-				}
-				$i++;
-				$tickProcessedBlocks[] = $block;
-				unset($this->blocksInside[$key]);
-				if($i === $this->getLoader()->getSettings()->get("Blocks-Per-Tick")) {
-					break;
-				}
-			}
-			$this->type->setBlocksInside($tickProcessedBlocks);
-			$this->type->fillShape();
-		} else {
-			$this->getLoader()->getServer()->getScheduler()->cancelTask($this->getTaskId());
+		$i = 0;
+		foreach($this->shape->getBlocksInside(true, $this->getLoader()->getSettings()->get("Blocks-Per-Tick")) as $key => $block) {
+			$this->blocksProcessed[] = $block;
+			$tickProcessedBlocks[] = $block;
+			$i++;
 		}
-		$this->actualTick++;
+		if($i < $this->getLoader()->getSettings()->get("Blocks-Per-Tick")) {
+			$this->getLoader()->getServer()->getScheduler()->cancelTask($this->getTaskId());
+			$this->getLoader()->getUndoStorer()->saveUndo(new Undo($this->blocksProcessed), $this->shape->getPlayer());
+		}
+		$this->type->setBlocksInside($tickProcessedBlocks);
+		$this->type->fillShape();
 	}
 }

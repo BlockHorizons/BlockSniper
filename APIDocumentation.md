@@ -1,5 +1,7 @@
 # BlockSniper API Documentation
 
+<br>
+
 ### Getting an instance of BlockHorizons\BlockSniper\Loader
 To get an instance of the main class of BlockSniper, the Loader class, add this code on enable.
 ```php
@@ -10,6 +12,8 @@ public function onEnable() {
 }
 ```
 From here on inside functions in the plugin can be called.
+
+<br>
 
 ### Hooking into BlockSniper events
 Hooking into BlockSniper events is very easy, and follows the same usage as a normal PocketMine event would. Hooking in the events would require registering events, implementing Listener and adding a function. Some events are cancellable, some are not.
@@ -42,6 +46,8 @@ class MyClass extends PluginBase implements Listener {
 |ChangeBrushPropertiesEvent|False|
 |PresetCreationEvent|True|
 
+<br>
+
 ### Registering new Shapes
 BlockSniper adds very easy to use API for adding new Shapes and Types. A new Shape or Type class requires at LEAST the following:
 ```php
@@ -55,20 +61,23 @@ use pocketmine\level\Level;
 use pocketmine\level\Position;
     
 class ExampleShape extends BaseShape {
-	
-	public function __construct(Player $player, Level $level, Position $center, bool $hollow) {
-		parent::__construct($player, $level, $center, $hollow);
-	}
-	
-	public function getBlocksInside(): array {
-		return [];
-	}
-	
-	public function getName(): string {
-		return "";
-	}
-	
-	public function getApproximateProcessedBlocks(): int {
+    
+    public function __construct(Player $player, Level $level, Position $center, bool $hollow) {
+        parent::__construct($player, $level, $center, $hollow);
+    }
+    
+    /*
+     * This function should return an array containing the blocks collected in the shape.
+     */
+    public function getBlocksInside(bool $partially = false, int $blocksPerTick = 100): array {
+        return [];
+    }
+    
+    public function getName(): string {
+        return "";
+    }
+    
+    public function getApproximateProcessedBlocks(): int {
         return 0;
     }
 }
@@ -129,6 +138,7 @@ $brush->setHollow();
 ```
 Make sure to check if the brush obtained from BrushManager::get() is a Brush object, and not null, which will happen if the player has no brush initialized.
 
-<br>
-##### Hopefully this API introduction was helpful. If there's anything you think should be added, make sure to say so in the issues.
+<br><br>
+
+Hopefully this API introduction was helpful. If there's anything you think should be added, make sure to say so in the [issues](https://github.com/BlockHorizons/BlockSniper/issues) or contact us on our [Gitter chat](https://gitter.im/BlockHorizons/BlockSniper)
 

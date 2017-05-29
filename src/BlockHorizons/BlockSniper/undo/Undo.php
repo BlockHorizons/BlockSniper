@@ -7,15 +7,12 @@ use pocketmine\block\Block;
 class Undo {
 	
 	private $undoBlocks;
-	private $blockCount;
 
 	/**
-	 * @param array $undoBlocks
-	 * @param int   $totalBlocks
+	 * @param Block[] $undoBlocks
 	 */
-	public function __construct(array $undoBlocks, int $blockCount) {
+	public function __construct(array $undoBlocks) {
 		$this->undoBlocks = $undoBlocks;
-		$this->blockCount = $blockCount;
 	}
 	
 	public function restore() {
@@ -33,7 +30,7 @@ class Undo {
 			$redoBlocks[] = $undoBlock->getLevel()->getBlock($undoBlock);
 		}
 
-		return new Redo($redoBlocks, $this->getBlockCount());
+		return new Redo($redoBlocks);
 	}
 
 	/**
@@ -42,11 +39,11 @@ class Undo {
 	public function getBlocks(): array {
 		return $this->undoBlocks;
 	}
-	
+
 	/**
 	 * @return int
 	 */
 	public function getBlockCount(): int {
-		return $this->blockCount;
+		return count($this->undoBlocks);
 	}
 }

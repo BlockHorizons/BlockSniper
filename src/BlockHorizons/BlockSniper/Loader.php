@@ -184,11 +184,7 @@ class Loader extends PluginBase {
 	 * @return bool
 	 */
 	public function spreadTickBrush(BaseShape $shape, BaseType $type): bool {
-		$blocksInside = $shape->getBlocksInside();
-		$blockAmount = $shape->getAccurateTotalBlocks();
-
-		$this->getUndoStorer()->saveUndo(new Undo($blocksInside, $blockAmount), $type->getPlayer());
-		$this->getServer()->getScheduler()->scheduleRepeatingTask(new TickSpreadBrushTask($this, $blocksInside, $type, ceil($blockAmount / $this->getSettings()->get("Blocks-Per-Tick"))), 1);
+		$this->getServer()->getScheduler()->scheduleRepeatingTask(new TickSpreadBrushTask($this, $shape, $type), 1);
 		return true;
 	}
 

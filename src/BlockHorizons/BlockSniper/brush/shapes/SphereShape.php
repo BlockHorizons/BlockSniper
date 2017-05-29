@@ -11,15 +11,21 @@ use pocketmine\Player;
 
 class SphereShape extends BaseShape {
 	
-	public function __construct(Player $player, Level $level, int $radius = null, Position $center = null, bool $hollow = false) {
+	public function __construct(Player $player, Level $level, int $radius = null, Position $center = null, bool $hollow = false, bool $cloneShape = false) {
 		parent::__construct($player, $level, $center, $hollow);
 		$this->radius = $radius;
+		if($cloneShape) {
+			$this->center->y += $this->radius;
+		}
 	}
-	
+
 	/**
+	 * @param bool $partially
+	 * @param int  $blocksPerTick
+	 *
 	 * @return array
 	 */
-	public function getBlocksInside(): array {
+	public function getBlocksInside(bool $partially = false, int $blocksPerTick = 100): array {
 		$trueSphere = BrushManager::get($this->player)->getPerfect();
 		$radiusSquared = pow($this->radius + ($trueSphere ? 0 : -0.5), 2) + ($trueSphere ? 0.5 : 0);
 		
@@ -35,21 +41,33 @@ class SphereShape extends BaseShape {
 		$maxY = $targetY + $this->radius;
 		
 		$blocksInside = [];
+		$i = 0;
+		$skipBlocks = 0;
 		
 		for($x = $maxX; $x >= $minX; $x--) {
 			$xs = ($targetX - $x) * ($targetX - $x);
 			for($y = $maxY; $y >= $minY; $y--) {
 				$ys = ($targetY - $y) * ($targetY - $y);
 				for($z = $maxZ; $z >= $minZ; $z--) {
-					$zs = ($targetZ - $z) * ($targetZ - $z);
+				$zs = ($targetZ - $z) * ($targetZ - $z);
 					if($xs + $ys + $zs < $radiusSquared) {
 						if($this->hollow === true) {
 							if($y !== $maxY && $y !== $minY && ($xs + $ys + $zs) < $radiusSquared - 3 - $this->radius / 0.5) {
 								continue;
 							}
 						}
+						if($partially) {
+							for($skip = $skipBlocks; $skip <= $this->getProcessedBlocks(); $skip++) {
+								continue 2;
+							}
+							if($i > $blocksPerTick) {
+								$this->partialBlocks = array_merge($this->partialBlocks, $blocksInside);
+								break 3;
+							}
+							$i++;
+							$this->partialBlockCount++;
+						}
 						$blocksInside[] = $this->getLevel()->getBlock(new Vector3($x, $y, $z));
-						$this->totalBlocks++;
 					}
 				}
 			}

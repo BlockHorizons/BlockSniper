@@ -6,6 +6,7 @@ use BlockHorizons\BlockSniper\brush\shapes\CubeShape;
 use BlockHorizons\BlockSniper\brush\shapes\CuboidShape;
 use BlockHorizons\BlockSniper\brush\shapes\CylinderShape;
 use BlockHorizons\BlockSniper\brush\shapes\SphereShape;
+use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\Player;
@@ -25,7 +26,9 @@ abstract class BaseShape {
 	protected $center;
 	protected $hollow;
 	protected $height;
-	protected $totalBlocks = 0;
+
+	protected $partialBlocks = [];
+	protected $partialBlockCount = 0;
 
 	/**
 	 * @param string $shape
@@ -68,21 +71,20 @@ abstract class BaseShape {
 	 * @param bool     $hollow
 	 * @param bool     $cloneShape
 	 */
-	public function __construct(Player $player, Level $level, Position $center, bool $hollow, bool $cloneShape = false) {
+	public function __construct(Player $player, Level $level, Position $center, bool $hollow) {
 		$this->player = $player;
 		$this->level = $level;
 		$this->center = $center;
 		$this->hollow = $hollow;
+	}
 
-		if($cloneShape) {
-			if($this instanceof CuboidShape || $this instanceof CylinderShape) {
-				$this->center->y += $this->height;
-			} elseif($this instanceof SphereShape) {
-				$this->center->y += $this->radius;
-			} else {
-				$this->center->y += $this->width;
-			}
-		}
+	/**
+	 * Internal function. Used to get progress of tick spread brush.
+	 *
+	 * @return int
+	 */
+	public function getProcessedBlocks(): int {
+		return $this->partialBlockCount;
 	}
 
 	/**
@@ -93,11 +95,14 @@ abstract class BaseShape {
 	public abstract function getName(): string;
 
 	/**
-	 * Returns all blocks inside of the shape.
+	 * Returns all blocks in the shape if $partially is false. If true, only returns part of the shape, specified by $blocksPerTick.
 	 *
-	 * @return array
+	 * @param bool $partially
+	 * @param int  $blocksPerTick
+	 *
+	 * @return Block[]
 	 */
-	public abstract function getBlocksInside(): array;
+	public abstract function getBlocksInside(bool $partially = false, int $blocksPerTick = 100): array;
 	
 	/**
 	 * Returns the approximate amount of processed blocks in the shape. This may not be perfectly accurate.
@@ -114,7 +119,7 @@ abstract class BaseShape {
 	public function getLevel(): Level {
 		return $this->level;
 	}
-	
+
 	/**
 	 * Returns the player that made the shape.
 	 *
@@ -195,15 +200,5 @@ abstract class BaseShape {
 	 */
 	public function getPermission(): string {
 		return "blocksniper.shape." . str_replace("hollow", "", str_replace(" ", "_", strtolower($this->getName())));
-	}
-
-	/**
-	 * Returns the total amount of blocks in the shape.
-	 * Warning - This function should be called AFTER $shape->getBlocksInside().
-	 *
-	 * @return int
-	 */
-	public function getAccurateTotalBlocks(): int {
-		return $this->totalBlocks;
 	}
 }
