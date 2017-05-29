@@ -29,13 +29,9 @@ class PasteCommand extends BaseCommand {
 			return true;
 		}
 		
-		if(count($args) < 1 || count($args) > 3) {
-			$sender->sendMessage($this->getUsage());
-			return true;
-		}
-		
 		$center = $sender->getTargetBlock(100);
 		switch(strtolower($args[0])) {
+			default:
 			case "copy":
 				if($this->getLoader()->getCloneStorer()->copyStoreExists($sender)) {
 					$this->getLoader()->getCloneStorer()->pasteCopy($sender);
@@ -70,10 +66,6 @@ class PasteCommand extends BaseCommand {
 				}
 				$this->getLoader()->getUndoStorer()->saveUndo(new Undo($undoBlocks), $sender);
 				break;
-
-			default:
-				$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.paste-not-found"));
-				return true;
 		}
 		$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.paste"));
 		return true;

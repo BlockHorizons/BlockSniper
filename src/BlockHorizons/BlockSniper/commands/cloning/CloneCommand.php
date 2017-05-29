@@ -29,14 +29,10 @@ class CloneCommand extends BaseCommand {
 			return true;
 		}
 		
-		if(count($args) < 1 || count($args) > 2) {
-			$sender->sendMessage($this->getUsage());
-			return true;
-		}
-		
 		$center = $sender->getTargetBlock(100);
 		$this->getLoader()->getBrushManager()->createBrush($sender);
 		switch(strtolower($args[0])) {
+			default:
 			case "copy":
 				$shape = BrushManager::get($sender)->getShape(true, BrushManager::get($sender)->getYOffset());
 				$cloneType = new CopyType($this->getLoader()->getCloneStorer(), $sender, $this->getSettings()->saveAirInCopy(), $center, $shape->getBlocksInside());
@@ -78,10 +74,6 @@ class CloneCommand extends BaseCommand {
 				}
 				BrushManager::get($sender)->setYOffset($offset);
 				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("brush.yoffset"));
-				return true;
-
-			default:
-				$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.clone-not-found"));
 				return true;
 		}
 		$cloneType->saveClone();

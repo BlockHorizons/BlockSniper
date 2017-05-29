@@ -30,10 +30,6 @@ class BrushCommand extends BaseCommand {
 		}
 		
 		if(count($args) !== 2) {
-			if(!isset($args[0]) && !isset($args[1])) {
-				$sender->sendMessage($this->getUsage());
-				return true;
-			}
 			if(strtolower($args[0]) !== "reset" && strtolower($args[0]) !== "re" && strtolower($args[1]) !== "delete") {
 				$sender->sendMessage($this->getUsage());
 				return true;
@@ -228,10 +224,6 @@ class BrushCommand extends BaseCommand {
 				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("brush.tree") . TF::AQUA . $brush->getTreeType());
 				$action = Change::ACTION_CHANGE_TREE;
 				break;
-				
-			default:
-				$sender->sendMessage(TF::RED . "[Usage] /brush <parameter> <value>");
-				return true;
 			
 		}
 		$this->getLoader()->getServer()->getPluginManager()->callEvent(new Change($this->getLoader(), $sender, $action, $args[0]));
