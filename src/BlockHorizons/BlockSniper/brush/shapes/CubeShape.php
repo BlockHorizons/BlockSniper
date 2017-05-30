@@ -38,8 +38,8 @@ class CubeShape extends BaseShape {
 		$maxY = $targetY + $this->width;
 
 		$blocksInside = [];
+		$skipBlocks = 1;
 		$i = 0;
-		$skipBlocks = 0;
 		
 		for($x = $minX; $x <= $maxX; $x++) {
 			for($z = $minZ; $z <= $maxZ; $z++) {
@@ -51,6 +51,7 @@ class CubeShape extends BaseShape {
 					}
 					if($partially) {
 						for($skip = $skipBlocks; $skip <= $this->getProcessedBlocks(); $skip++) {
+							$skipBlocks++;
 							continue 2;
 						}
 						if($i > $blocksPerTick) {

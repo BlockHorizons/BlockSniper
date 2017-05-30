@@ -42,7 +42,7 @@ class SphereShape extends BaseShape {
 		
 		$blocksInside = [];
 		$i = 0;
-		$skipBlocks = 0;
+		$skipBlocks = 1;
 		
 		for($x = $maxX; $x >= $minX; $x--) {
 			$xs = ($targetX - $x) * ($targetX - $x);
@@ -58,6 +58,7 @@ class SphereShape extends BaseShape {
 						}
 						if($partially) {
 							for($skip = $skipBlocks; $skip <= $this->getProcessedBlocks(); $skip++) {
+								$skipBlocks++;
 								continue 2;
 							}
 							if($i > $blocksPerTick) {

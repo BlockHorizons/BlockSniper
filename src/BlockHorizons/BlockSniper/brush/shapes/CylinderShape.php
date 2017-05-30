@@ -41,7 +41,7 @@ class CylinderShape extends BaseShape {
 		
 		$blocksInside = [];
 		$i = 0;
-		$skipBlocks = 0;
+		$skipBlocks = 1;
 		
 		for($x = $minX; $x <= $maxX; $x++) {
 			for($z = $minZ; $z <= $maxZ; $z++) {
@@ -54,6 +54,7 @@ class CylinderShape extends BaseShape {
 						}
 						if($partially) {
 							for($skip = $skipBlocks; $skip <= $this->getProcessedBlocks(); $skip++) {
+								$skipBlocks++;
 								continue 2;
 							}
 							if($i > $blocksPerTick) {

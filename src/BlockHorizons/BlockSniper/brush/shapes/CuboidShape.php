@@ -40,7 +40,7 @@ class CuboidShape extends BaseShape {
 		
 		$blocksInside = [];
 		$i = 0;
-		$skipBlocks = 0;
+		$skipBlocks = 1;
 		
 		for($x = $minX; $x <= $maxX; $x++) {
 			for($y = $minY; $y <= $maxY; $y++) {
@@ -52,6 +52,7 @@ class CuboidShape extends BaseShape {
 					}
 					if($partially) {
 						for($skip = $skipBlocks; $skip <= $this->getProcessedBlocks(); $skip++) {
+							$skipBlocks++;
 							continue 2;
 						}
 						if($i > $blocksPerTick) {

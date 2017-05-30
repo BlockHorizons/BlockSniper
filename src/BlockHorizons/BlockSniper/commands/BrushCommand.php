@@ -31,7 +31,7 @@ class BrushCommand extends BaseCommand {
 		}
 		
 		if(count($args) !== 2) {
-			if(strtolower($args[0]) !== "reset" && strtolower($args[0]) !== "re" && strtolower($args[1]) !== "delete") {
+			if(strtolower($args[0]) !== "reset" && strtolower($args[0]) !== "re" && strtolower($args[1]) !== "delete" && strtolower($args[0]) !== "tool"  && strtolower($args[0]) !== "to") {
 				$sender->sendMessage($this->getUsage());
 				return true;
 			}
