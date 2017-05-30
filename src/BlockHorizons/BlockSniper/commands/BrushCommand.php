@@ -8,6 +8,7 @@ use BlockHorizons\BlockSniper\brush\BrushManager;
 use BlockHorizons\BlockSniper\events\ChangeBrushPropertiesEvent as Change;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\command\CommandSender;
+use pocketmine\item\Item;
 use pocketmine\level\generator\biome\Biome;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
@@ -224,6 +225,13 @@ class BrushCommand extends BaseCommand {
 				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("brush.tree") . TF::AQUA . $brush->getTreeType());
 				$action = Change::ACTION_CHANGE_TREE;
 				break;
+
+			case "tool":
+			case "item":
+			case "to":
+				$brushTool = Item::get($this->getLoader()->getSettings()->getBrushItem(), 0, 1)->setCustomName(TF::BOLD . TF::YELLOW . "Brush Tool");
+				$sender->getInventory()->setItemInHand($brushTool);
+				return true;
 			
 		}
 		$this->getLoader()->getServer()->getPluginManager()->callEvent(new Change($this->getLoader(), $sender, $action, $args[0]));

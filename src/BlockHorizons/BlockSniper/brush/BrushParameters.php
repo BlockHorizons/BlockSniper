@@ -18,7 +18,8 @@ class BrushParameters {
 		"biome" => ["bi"],
 		"tree" => ["tr"],
 		"blocks" => ["bl", "block"],
-		"height" => ["he"]
+		"height" => ["he"],
+		"tool" => ["item", "to"]
 	];
 
 	/**
