@@ -55,7 +55,6 @@ class CubeShape extends BaseShape {
 							continue 2;
 						}
 						if($i > $blocksPerTick) {
-							$blocksInside[] = $this->getLevel()->getBlock(new Vector3($x, $y, $z));
 							$this->partialBlocks = array_merge($this->partialBlocks, $blocksInside);
 							break 3;
 						}

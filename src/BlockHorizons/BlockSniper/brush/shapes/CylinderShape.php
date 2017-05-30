@@ -58,7 +58,6 @@ class CylinderShape extends BaseShape {
 								continue 2;
 							}
 							if($i > $blocksPerTick) {
-								$blocksInside[] = $this->getLevel()->getBlock(new Vector3($x, $y, $z));
 								$this->partialBlocks = array_merge($this->partialBlocks, $blocksInside);
 								break 3;
 							}
@@ -85,9 +84,9 @@ class CylinderShape extends BaseShape {
 	 */
 	public function getApproximateProcessedBlocks(): int {
 		if($this->hollow) {
-			$blockCount = round((M_PI * $this->radius * $this->radius * 2) + (2 * M_PI * $this->radius * $this->height * 2));
+			$blockCount = (M_PI * $this->radius * $this->radius * 2) + (2 * M_PI * $this->radius * $this->height * 2);
 		} else {
-			$blockCount = round($this->radius * $this->radius * M_PI * $this->height);
+			$blockCount = $this->radius * $this->radius * M_PI * $this->height;
 		}
 
 		return ceil($blockCount);

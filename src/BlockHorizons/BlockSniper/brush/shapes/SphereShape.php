@@ -62,7 +62,6 @@ class SphereShape extends BaseShape {
 								continue 2;
 							}
 							if($i > $blocksPerTick) {
-								$blocksInside[] = $this->getLevel()->getBlock(new Vector3($x, $y, $z));
 								$this->partialBlocks = array_merge($this->partialBlocks, $blocksInside);
 								break 3;
 							}
@@ -89,11 +88,11 @@ class SphereShape extends BaseShape {
 	 */
 	public function getApproximateProcessedBlocks(): int {
 		if($this->hollow) {
-			$blockCount = round(4 * M_PI * $this->radius);
+			$blockCount = 4 * M_PI * $this->radius;
 		} else {
-			$blockCount = round(4 / 3 * M_PI * pow($this->radius, 3));
+			$blockCount = 4 / 3 * M_PI * pow($this->radius, 3);
 		}
 
-		return $blockCount;
+		return ceil($blockCount);
 	}
 }
