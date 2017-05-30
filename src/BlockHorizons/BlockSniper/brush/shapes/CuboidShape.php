@@ -62,11 +62,11 @@ class CuboidShape extends BaseShape {
 						}
 						$i++;
 					}
-					$this->partialBlockCount += $i;
 					$blocksInside[] = $this->getLevel()->getBlock(new Vector3($x, $y, $z));
 				}
 			}
 		}
+		$this->partialBlockCount += $i;
 		return $blocksInside;
 	}
 
