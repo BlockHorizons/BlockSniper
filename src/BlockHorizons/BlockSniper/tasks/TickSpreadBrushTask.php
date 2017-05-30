@@ -22,7 +22,7 @@ class TickSpreadBrushTask extends BaseTask {
 	public function onRun($currentTick) {
 		$tickProcessedBlocks = [];
 		$i = 0;
-		foreach($this->shape->getBlocksInside(true, $this->getLoader()->getSettings()->getBlocksPerTick()) as $key => $block) {
+		foreach($this->shape->getBlocksInside(true, $this->getLoader()->getSettings()->getBlocksPerTick()) as $block) {
 			$this->blocksProcessed[] = $block;
 			$tickProcessedBlocks[] = $block;
 			$i++;
@@ -30,7 +30,7 @@ class TickSpreadBrushTask extends BaseTask {
 		$this->type->setBlocksInside($tickProcessedBlocks);
 		$this->type->fillShape();
 
-		if($i > $this->getLoader()->getSettings()->getBlocksPerTick()) {
+		if($i < $this->getLoader()->getSettings()->getBlocksPerTick() - 1) {
 			$this->getLoader()->getServer()->getScheduler()->cancelTask($this->getTaskId());
 			$this->getLoader()->getUndoStorer()->saveUndo(new Undo($this->blocksProcessed), $this->shape->getPlayer());
 		}
