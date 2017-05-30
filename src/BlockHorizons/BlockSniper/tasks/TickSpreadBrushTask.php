@@ -27,7 +27,7 @@ class TickSpreadBrushTask extends BaseTask {
 			$tickProcessedBlocks[] = $block;
 			$i++;
 		}
-		if($i < $this->getLoader()->getSettings()->get("Blocks-Per-Tick")) {
+		if($i > $this->getLoader()->getSettings()->getBlocksPerTick()) {
 			$this->getLoader()->getServer()->getScheduler()->cancelTask($this->getTaskId());
 			$this->getLoader()->getUndoStorer()->saveUndo(new Undo($this->blocksProcessed), $this->shape->getPlayer());
 		}
