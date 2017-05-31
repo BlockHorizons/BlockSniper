@@ -68,6 +68,41 @@ class WorkerManager {
 	}
 
 	/**
+	 * @param Player $player
+	 *
+	 * @return TaskWorker
+	 */
+	public function getFirstWorkingWorker(Player $player): TaskWorker {
+		if(!$this->hasWorkingWorker($player)) {
+			return null;
+		}
+		foreach($this->workers as $worker) {
+			if($worker->getPlayer()->getName() === $player->getName()) {
+				if($worker->isOccupied()) {
+					return $worker;
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * @param Player $player
+	 *
+	 * @return bool
+	 */
+	public function hasWorkingWorker(Player $player): bool {
+		foreach($this->workers as $worker) {
+			if($worker->getPlayer()->getName() === $player->getName()) {
+				if($worker->isOccupied()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * @param int $id
 	 *
 	 * @return TaskWorker
@@ -107,7 +142,7 @@ class WorkerManager {
 	 * @return bool
 	 */
 	public function addWorkers(Player $player): bool {
-		if($this->hasWorkerAvailable($player)) {
+		if($this->hasWorkerAvailable($player) || $this->hasWorkingWorker($player)) {
 			return false;
 		}
 		for($i = 0; $i < $this->getLoader()->getSettings()->getTickSpreadWorkers(); $i++) {

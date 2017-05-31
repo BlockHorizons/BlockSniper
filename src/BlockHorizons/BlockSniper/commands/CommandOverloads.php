@@ -108,6 +108,10 @@ class CommandOverloads {
 					"name" => "amount",
 					"optional" => true
 				]
+			],
+
+			"cancel" => [
+
 			]
 		];
 	}

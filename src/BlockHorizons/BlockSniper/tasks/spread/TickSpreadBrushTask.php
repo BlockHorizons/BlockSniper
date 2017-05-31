@@ -24,6 +24,10 @@ class TickSpreadBrushTask extends BaseTask {
 	}
 
 	public function onRun($currentTick) {
+		if(!$this->getLoader()->getWorkerManager()->getWorker($this->workerId)->isOccupied()) {
+			$this->getLoader()->getServer()->getScheduler()->cancelTask($this->getTaskId());
+			$this->getLoader()->getUndoStorer()->saveUndo(new Undo($this->blocksProcessed), $this->shape->getPlayer());
+		}
 		$tickProcessedBlocks = [];
 		$i = 0;
 		foreach($this->shape->getBlocksInside(true, $this->getLoader()->getSettings()->getBlocksPerTick()) as $block) {

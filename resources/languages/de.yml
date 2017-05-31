@@ -18,6 +18,7 @@ commands:
     template-not-existing: "Es gibt keine Vorlage mit diesem Namen."
     preset-already-exists: "Diese Voreinstellung  existiert bereits."
     preset-doesnt-exist: "Diese Voreinstellung existiert nicht."
+    no-cancellable: "No running modifications could be found to cancel."
   succeed:
     default: "Die Form wurde erfolgreich dort begonnen, wo du hingesehen hast."
     undo: "Die letzte Modifikation wurde erfolgreich rückgängig gemacht."
@@ -30,6 +31,7 @@ commands:
       name: "Das generieren der Voreinstellung wurde gestartet. Gib den Namen in den Chat ein,"
       cancel: "oder schreibe 'cancel' um den Prozess abzubrechen."
       canceled: "Das Erstellen der Voreinstellung wurde abgebrochen."
+    cancel: "Successfully cancelled the currently running modification."
 
 brushwand:
   disable: "Brushwand (Zauberpinsel) wurde deaktiviert."

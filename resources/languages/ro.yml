@@ -18,6 +18,7 @@ commands:
     template-not-existing: "Nici un sablon nu a fost gasit cu acest nume."
     preset-already-exists: "Acest preset deja exista."
     preset-doesnt-exist: "Acest preset nu exista."
+    no-cancellable: "No running modifications could be found to cancel."
   succeed:
     default: "Ai aruncat/lipit cu succes o forma in locul tinta."
     undo: "Ai remediat cu succes lucrarea facuta."
@@ -30,6 +31,7 @@ commands:
       name: "Presetarea a inceput. Te rog sa introduci un nume in chat"
       cancel: "sau scrie 'cancel' pentru a iesi din proces."
       canceled: "Presetarea procesului s-a incheiat."
+    cancel: "Successfully cancelled the currently running modification."
 
 brushwand:
   disable: "Brushwand este dezactivat."

@@ -35,6 +35,9 @@ permissions:
                     blocksniper.command.paste:
                         default: op
                         description: "Allows access to the paste command."
+                    blocksniper.command.cancel:
+                        default: op
+                        description: "Allows access to the cancel command."
             blocksniper.type:
                 default: false
                 description: "Allows access to all BlockSniper types."

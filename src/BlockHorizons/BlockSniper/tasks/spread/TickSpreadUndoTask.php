@@ -32,6 +32,9 @@ class TickSpreadUndoTask extends BaseTask {
 	}
 
 	public function onRun($currentTick) {
+		if(!$this->getLoader()->getWorkerManager()->getWorker($this->workerId)->isOccupied()) {
+			$this->getLoader()->getServer()->getScheduler()->cancelTask($this->getTaskId());
+		}
 		if($this->actualTick <= $this->ticks) {
 			$i = 0;
 			foreach($this->undoBlocks as $key => $block) {

@@ -17,6 +17,7 @@ commands:
     no-modifications: "Shoma hich taghiri anjam nadadid ke Undo konid."
     preset-already-exists: "In jaye taain shode dar hale hazer vojod darad."
     preset-doesnt-exist: "makan taiin shode vojod nadarad."
+    no-cancellable: "No running modifications could be found to cancel."
   succeed:
     paste: "Clone paste shode."
     clone: "Clone ba movafaghit anjam shod."
@@ -29,6 +30,7 @@ commands:
       name: "Preset tamom shod,"
       cancel: "baray cancel 'cancel' ra type konid."
       canceled: "set nime tamam cancel shod."
+    cancel: "Successfully cancelled the currently running modification."
 
 brushwand:
   disable: "Brushwand ghirefaal shod."

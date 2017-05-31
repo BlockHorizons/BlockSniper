@@ -17,6 +17,7 @@ commands:
     template-not-existing: "Шаблон с этим именем не существует."
     preset-already-exists: "Этот предустановка уже существует."
     preset-doesnt-exist: "Предустановка не найдена."
+    no-cancellable: "No running modifications could be found to cancel."
   succeed:
     default: "Успешно создано."
     undo: "Успешно удалена последния модификациия"
@@ -29,6 +30,7 @@ commands:
       name: "Запустился процесс создания предустановки. Введите имя в чате,"
       cancel: "или введите «cancel», чтобы отменить процесс."
       canceled: "Создание предустановки отменено."
+    cancel: "Successfully cancelled the currently running modification."
 
 brushwand:
   disable: "Brushwand Отключен"

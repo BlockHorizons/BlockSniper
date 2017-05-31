@@ -18,6 +18,7 @@ commands:
     clone-not-found: "Clone introuvable"
     preset-already-exists: "Ce prédéfini (preset) est déjà existant."
     preset-doesnt-exist: "Ce prédéfini (preset) n'existe pas."
+    no-cancellable: "No running modifications could be found to cancel."
   succeed:
     default: "La forme a été ajoutée avec succès"
     undo: "Annulé avec succès"
@@ -30,6 +31,7 @@ commands:
       name: "Le processus de création de prédéfini (preset) a démarré. Tapez un nom dans le chat,"
       cancel: "ou tapez 'cancel' pour annuler"
       canceled: "La création du prédéfini (preset) a été annulée"
+    cancel: "Successfully cancelled the currently running modification."
 
 brushwand:
   disable: "Pinceau désactivé"

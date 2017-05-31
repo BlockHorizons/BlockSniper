@@ -18,6 +18,7 @@ commands:
     template-not-existing: "未找到該名稱的模型模板"
     preset-already-exists: "That preset already exists."
     preset-doesnt-exist: "That preset doesn't exist."
+    no-cancellable: "No running modifications could be found to cancel."
   succeed:
     default: "成功在自身座標上建立形狀"
     undo: "成功還原先前動作"
@@ -30,6 +31,7 @@ commands:
       name: "Preset creation process started. Type a name in the chat,"
       cancel: "or type 'cancel' to cancel the process."
       canceled: "Preset creation has been canceled."
+    cancel: "Successfully cancelled the currently running modification."
 
 brushwand:
   disable: "刷子功能成功關閉"

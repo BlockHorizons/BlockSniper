@@ -50,6 +50,7 @@ class TranslationData {
 			"commands.errors.template-not-existing" => $language["commands"]["errors"]["template-not-existing"],
 			"commands.errors.preset-already-exists" => $language["commands"]["errors"]["preset-already-exists"],
 			"commands.errors.preset-doesnt-exist" => $language["commands"]["errors"]["preset-doesnt-exist"],
+			"commands.errors.no-cancellable" => $language["commands"]["errors"]["no-cancellable"],
 			
 			"commands.succeed.default" => $language["commands"]["succeed"]["default"],
 			"commands.succeed.undo" => $language["commands"]["succeed"]["undo"],
@@ -60,6 +61,7 @@ class TranslationData {
 			"commands.succeed.preset.name" => $language["commands"]["succeed"]["preset"]["name"],
 			"commands.succeed.preset.cancel" => $language["commands"]["succeed"]["preset"]["cancel"],
 			"commands.succeed.preset.canceled" => $language["commands"]["succeed"]["preset"]["canceled"],
+			"commands.succeed.cancel" => $language["commands"]["succeed"]["cancel"],
 			
 			"brush.shape" => $language["brush"]["shape"],
 			"brush.type" => $language["brush"]["type"],

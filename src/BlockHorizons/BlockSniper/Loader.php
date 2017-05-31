@@ -8,6 +8,7 @@ use BlockHorizons\BlockSniper\brush\BrushManager;
 use BlockHorizons\BlockSniper\cloning\CloneStorer;
 use BlockHorizons\BlockSniper\commands\BlockSniperCommand;
 use BlockHorizons\BlockSniper\commands\BrushCommand;
+use BlockHorizons\BlockSniper\commands\CancelCommand;
 use BlockHorizons\BlockSniper\commands\cloning\CloneCommand;
 use BlockHorizons\BlockSniper\commands\cloning\PasteCommand;
 use BlockHorizons\BlockSniper\commands\CommandOverloads;
@@ -116,7 +117,8 @@ class Loader extends PluginBase {
 			"undo" => new UndoCommand($this),
 			"redo" => new RedoCommand($this),
 			"clone" => new CloneCommand($this),
-			"paste" => new PasteCommand($this)
+			"paste" => new PasteCommand($this),
+			"cancel" => new CancelCommand($this)
 		];
 		foreach($blockSniperCommands as $name => $class) {
 			$this->getServer()->getCommandMap()->register($name, $class);
@@ -181,6 +183,7 @@ class Loader extends PluginBase {
 	 * @return bool
 	 */
 	public function spreadTickBrush(BaseShape $shape, BaseType $type): bool {
+		$this->getWorkerManager()->addWorkers($shape->getPlayer());
 		if(!$this->getWorkerManager()->hasWorkerAvailable($shape->getPlayer())) {
 			return false;
 		}
@@ -203,6 +206,7 @@ class Loader extends PluginBase {
 	 * @return bool
 	 */
 	public function spreadTickUndo($undo, Player $player): bool {
+		$this->getWorkerManager()->addWorkers($player);
 		if(!$undo instanceof Undo && !$undo instanceof Redo) {
 			return false;
 		}
