@@ -14,10 +14,13 @@ class TickSpreadBrushTask extends BaseTask {
 	private $type;
 	private $blocksProcessed = [];
 
-	public function __construct(Loader $loader, BaseShape $shape, BaseType $type) {
+	private $workerId;
+
+	public function __construct(Loader $loader, BaseShape $shape, BaseType $type, int $workerId) {
 		parent::__construct($loader);
 		$this->shape = $shape;
 		$this->type = $type;
+		$this->workerId = $workerId;
 	}
 
 	public function onRun($currentTick) {
@@ -34,6 +37,7 @@ class TickSpreadBrushTask extends BaseTask {
 		if($i < $this->getLoader()->getSettings()->getBlocksPerTick() - 1) {
 			$this->getLoader()->getServer()->getScheduler()->cancelTask($this->getTaskId());
 			$this->getLoader()->getUndoStorer()->saveUndo(new Undo($this->blocksProcessed), $this->shape->getPlayer());
+			$this->getLoader()->getWorkerManager()->getWorker($this->workerId)->clearOccupation();
 		}
 	}
 }

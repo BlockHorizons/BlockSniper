@@ -14,18 +14,21 @@ class TickSpreadUndoTask extends BaseTask {
 	private $player;
 	private $ticks;
 	private $actualTick = 1;
+	private $workerId;
 
 	/**
 	 * @param Loader  $loader
 	 * @param Block[] $undoBlocks
 	 * @param Player  $player
 	 * @param int     $ticks
+	 * @param int     $workerId
 	 */
-	public function __construct(Loader $loader, array $undoBlocks, Player $player, int $ticks) {
+	public function __construct(Loader $loader, array $undoBlocks, Player $player, int $ticks, int $workerId) {
 		parent::__construct($loader);
 		$this->undoBlocks = $undoBlocks;
 		$this->player = $player;
 		$this->ticks = $ticks;
+		$this->workerId = $workerId;
 	}
 
 	public function onRun($currentTick) {
@@ -44,6 +47,7 @@ class TickSpreadUndoTask extends BaseTask {
 			}
 		} else {
 			$this->getLoader()->getServer()->getScheduler()->cancelTask($this->getTaskId());
+			$this->getLoader()->getWorkerManager()->getWorker($this->workerId)->clearOccupation();
 		}
 		$this->actualTick++;
 	}

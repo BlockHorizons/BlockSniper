@@ -27,6 +27,7 @@ class ConfigData {
 			"Maximum-Undo-Stores" => $cfg["Maximum-Undo-Stores"] ?? 15,
 			"Tick-Spread-Brush" => $cfg["Tick-Spread-Brush"] ?? true,
 			"Blocks-Per-Tick" => $cfg["Blocks-Per-Tick"] ?? 150,
+			"Tick-Spread-Workers" => $cfg["Tick-Spread-Workers"] ?? 2,
 			"Reset-Decrement-Brush" => $cfg["Reset-Decrement-Brush"] ?? true,
 			"Maximum-Clone-Size" => $cfg["Maximum-Clone-Size"] ?? 60,
 			"Save-Brush-Properties" => $cfg["Save-Brush-Properties"] ?? true,
@@ -42,6 +43,19 @@ class ConfigData {
 		} else {
 			$this->getLoader()->getLogger()->info(TF::AQUA . "[BlockSniper] No new Configuration version found, Configuration is up to date.");
 		}
+	}
+
+	/**
+	 * @return Loader
+	 */
+	public function getLoader(): Loader {
+		return $this->loader;
+	}
+
+	public function updateConfig() {
+		unlink($this->getLoader()->getDataFolder() . "settings.yml");
+		$this->settings["Configuration-Version"] = Loader::CONFIGURATION_VERSION;
+		yaml_emit_file($this->getLoader()->getDataFolder() . "settings.yml", $this->settings);
 	}
 
 	/**
@@ -122,16 +136,10 @@ class ConfigData {
 	}
 	
 	/**
-	 * @return Loader
+	 * @return int
 	 */
-	public function getLoader(): Loader {
-		return $this->loader;
-	}
-	
-	public function updateConfig() {
-		unlink($this->getLoader()->getDataFolder() . "settings.yml");
-		$this->settings["Configuration-Version"] = Loader::CONFIGURATION_VERSION;
-		yaml_emit_file($this->getLoader()->getDataFolder() . "settings.yml", $this->settings);
+	public function getTickSpreadWorkers(): int {
+		return $this->settings["Tick-Spread-Workers"];
 	}
 	
 	/**
