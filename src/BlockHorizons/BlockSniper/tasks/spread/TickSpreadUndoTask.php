@@ -1,8 +1,10 @@
 <?php
 
-namespace BlockHorizons\BlockSniper\tasks;
+namespace BlockHorizons\BlockSniper\tasks\spread;
 
+use BlockHorizons\BlockSniper\events\OperationFinishEvent;
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\tasks\BaseTask;
 use pocketmine\block\Block;
 use pocketmine\Player;
 

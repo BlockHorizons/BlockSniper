@@ -10,13 +10,16 @@ use pocketmine\math\Vector3;
 use pocketmine\Player;
 
 class SphereShape extends BaseShape {
-	
+
+	private $trueSphere;
+
 	public function __construct(Player $player, Level $level, int $radius = null, Position $center = null, bool $hollow = false, bool $cloneShape = false) {
 		parent::__construct($player, $level, $center, $hollow);
 		$this->radius = $radius;
 		if($cloneShape) {
 			$this->center->y += $this->radius;
 		}
+		$this->trueSphere = BrushManager::get($this->player)->getPerfect();
 	}
 
 	/**
@@ -26,8 +29,7 @@ class SphereShape extends BaseShape {
 	 * @return array
 	 */
 	public function getBlocksInside(bool $partially = false, int $blocksPerTick = 100): array {
-		$trueSphere = BrushManager::get($this->player)->getPerfect();
-		$radiusSquared = pow($this->radius + ($trueSphere ? 0 : -0.5), 2) + ($trueSphere ? 0.5 : 0);
+		$radiusSquared = pow($this->radius + ($this->trueSphere ? 0 : -0.5), 2) + ($this->trueSphere ? 0.5 : 0);
 		
 		$targetX = $this->center->x;
 		$targetY = $this->center->y;

@@ -30,6 +30,13 @@ abstract class BaseShape {
 	protected $partialBlocks = [];
 	protected $partialBlockCount = 0;
 
+	public function __construct(Player $player, Level $level, Position $center, bool $hollow) {
+		$this->player = $player;
+		$this->level = $level;
+		$this->center = $center;
+		$this->hollow = $hollow;
+	}
+	
 	/**
 	 * @param string $shape
 	 *
@@ -42,7 +49,7 @@ abstract class BaseShape {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Registers a new Shape. Example:
 	 * Triangle, 4
@@ -65,20 +72,6 @@ abstract class BaseShape {
 	}
 
 	/**
-	 * @param Player   $player
-	 * @param Level    $level
-	 * @param Position $center
-	 * @param bool     $hollow
-	 * @param bool     $cloneShape
-	 */
-	public function __construct(Player $player, Level $level, Position $center, bool $hollow) {
-		$this->player = $player;
-		$this->level = $level;
-		$this->center = $center;
-		$this->hollow = $hollow;
-	}
-
-	/**
 	 * Internal function. Used to get progress of tick spread brush.
 	 *
 	 * @return int
@@ -86,13 +79,6 @@ abstract class BaseShape {
 	public function getProcessedBlocks(): int {
 		return $this->partialBlockCount;
 	}
-
-	/**
-	 * Returns the name of the shape.
-	 *
-	 * @return string
-	 */
-	public abstract function getName(): string;
 
 	/**
 	 * Returns all blocks in the shape if $partially is false. If true, only returns part of the shape, specified by $blocksPerTick.
@@ -103,7 +89,7 @@ abstract class BaseShape {
 	 * @return Block[]
 	 */
 	public abstract function getBlocksInside(bool $partially = false, int $blocksPerTick = 100): array;
-	
+
 	/**
 	 * Returns the approximate amount of processed blocks in the shape. This may not be perfectly accurate.
 	 *
@@ -128,7 +114,7 @@ abstract class BaseShape {
 	public function getPlayer(): Player {
 		return $this->player;
 	}
-	
+
 	/**
 	 * Returns the width in case of a CubeShape or CuboidShape.
 	 *
@@ -171,6 +157,15 @@ abstract class BaseShape {
 	public function getHollow(): bool {
 		return $this->hollow;
 	}
+
+	/**
+	 * Returns true if the shape is hollow, false if it is not.
+	 *
+	 * @return bool
+	 */
+	public function isHollow(): bool {
+		return $this->hollow;
+	}
 	
 	/**
 	 * Returns the height in case of a CylinderShape or CuboidShape.
@@ -185,15 +180,6 @@ abstract class BaseShape {
 	}
 
 	/**
-	 * Returns true if the shape is hollow, false if it is not.
-	 *
-	 * @return bool
-	 */
-	public function isHollow(): bool {
-		return $this->hollow;
-	}
-
-	/**
 	 * Returns the permission required to use the shape.
 	 *
 	 * @return string
@@ -201,4 +187,11 @@ abstract class BaseShape {
 	public function getPermission(): string {
 		return "blocksniper.shape." . str_replace("hollow", "", str_replace(" ", "", strtolower($this->getName())));
 	}
+
+	/**
+	 * Returns the name of the shape.
+	 *
+	 * @return string
+	 */
+	public abstract function getName(): string;
 }

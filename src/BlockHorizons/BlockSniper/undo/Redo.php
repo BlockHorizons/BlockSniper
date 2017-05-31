@@ -22,6 +22,8 @@ class Redo {
 	}
 
 	/**
+	 * Should be called BEFORE the redo has been restored.
+	 *
 	 * @return Undo
 	 */
 	public function getDetachedUndo(): Undo {

@@ -1,10 +1,11 @@
 <?php
 
-namespace BlockHorizons\BlockSniper\tasks;
+namespace BlockHorizons\BlockSniper\tasks\spread;
 
 use BlockHorizons\BlockSniper\brush\BaseShape;
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\tasks\BaseTask;
 use BlockHorizons\BlockSniper\undo\Undo;
 
 class TickSpreadBrushTask extends BaseTask {

@@ -73,7 +73,8 @@ class TranslationData {
 			"brush.biome" => $language["brush"]["biome"],
 			"brush.hollow" => $language["brush"]["hollow"],
 			"brush.preset" => $language["brush"]["preset"],
-			"brush.tree" => $language["brush"]["tree"]
+			"brush.tree" => $language["brush"]["tree"],
+			"brush.yoffset" => $language["brush"]["yoffset"]
 		];
 		return $languageSelected;
 	}

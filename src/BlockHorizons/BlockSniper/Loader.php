@@ -18,8 +18,8 @@ use BlockHorizons\BlockSniper\data\TranslationData;
 use BlockHorizons\BlockSniper\listeners\BrushListener;
 use BlockHorizons\BlockSniper\listeners\PresetListener;
 use BlockHorizons\BlockSniper\presets\PresetManager;
-use BlockHorizons\BlockSniper\tasks\TickSpreadBrushTask;
-use BlockHorizons\BlockSniper\tasks\TickSpreadUndoTask;
+use BlockHorizons\BlockSniper\tasks\spread\TickSpreadBrushTask;
+use BlockHorizons\BlockSniper\tasks\spread\TickSpreadUndoTask;
 use BlockHorizons\BlockSniper\tasks\UndoDiminishTask;
 use BlockHorizons\BlockSniper\undo\Redo;
 use BlockHorizons\BlockSniper\undo\Undo;
@@ -49,13 +49,20 @@ class Loader extends PluginBase {
 	private $settings;
 	private $brushManager;
 	private $presetManager;
+
+	/**
+	 * @return array
+	 */
+	public static function getAvailableLanguages(): array {
+		return self::$availableLanguages;
+	}
 	
 	public function onEnable() {
 		$this->reloadAll();
-		
+
 		$this->registerCommands();
 		$this->registerListeners();
-		
+
 		$this->getServer()->getScheduler()->scheduleRepeatingTask(new UndoDiminishTask($this), 400);
 		CommandOverloads::initialize();
 	}
@@ -83,11 +90,11 @@ class Loader extends PluginBase {
 		if(!is_dir($this->getDataFolder() . "languages/")) {
 			mkdir($this->getDataFolder() . "languages/");
 		}
-		
+
 		if(!$this->language->collectTranslations()) {
 			$this->getLogger()->info(TF::AQUA . "[BlockSniper] No valid language selected, English has been auto-selected.\n" . TF::AQUA . "Please setup a language by using /blocksniper language <lang>.");
 		} else {
-			$this->getLogger()->info(TF::AQUA . "[BlockSniper] Language selected: " . TF::GREEN . $this->getSettings()->get("Message-Language"));
+			$this->getLogger()->info(TF::AQUA . "[BlockSniper] Language selected: " . TF::GREEN . $this->getSettings()->getLanguage());
 		}
 	}
 	
@@ -131,13 +138,6 @@ class Loader extends PluginBase {
 	}
 	
 	/**
-	 * @return UndoStorer
-	 */
-	public function getUndoStorer(): UndoStorer {
-		return $this->undoStorer;
-	}
-	
-	/**
 	 * @return PresetManager
 	 */
 	public function getPresetManager(): PresetManager {
@@ -171,13 +171,6 @@ class Loader extends PluginBase {
 	}
 
 	/**
-	 * @return array
-	 */
-	public static function getAvailableLanguages(): array {
-		return self::$availableLanguages;
-	}
-
-	/**
 	 * @param BaseShape $shape
 	 * @param BaseType  $type
 	 *
@@ -204,7 +197,14 @@ class Loader extends PluginBase {
 		} else {
 			$this->getUndoStorer()->saveUndo($undo->getDetachedUndo(), $player);
 		}
-		$this->getServer()->getScheduler()->scheduleRepeatingTask(new TickSpreadUndoTask($this, $undo->getBlocks(), $player, ceil($undoAmount / $this->getSettings()->get("Blocks-Per-Tick"))), 1);
+		$this->getServer()->getScheduler()->scheduleRepeatingTask(new TickSpreadUndoTask($this, $undo->getBlocks(), $player, ceil($undoAmount / $this->getSettings()->getBlocksPerTick())), 1);
 		return true;
+	}
+
+	/**
+	 * @return UndoStorer
+	 */
+	public function getUndoStorer(): UndoStorer {
+		return $this->undoStorer;
 	}
 }

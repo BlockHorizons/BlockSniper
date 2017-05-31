@@ -10,7 +10,9 @@ use pocketmine\math\Vector3;
 use pocketmine\Player;
 
 class CylinderShape extends BaseShape {
-	
+
+	private $trueCircle;
+
 	public function __construct(Player $player, Level $level, int $radius = null, Position $center = null, bool $hollow = false, bool $cloneShape = false) {
 		parent::__construct($player, $level, $center, $hollow);
 		$this->radius = $radius;
@@ -18,6 +20,7 @@ class CylinderShape extends BaseShape {
 		if($cloneShape) {
 			$this->center->y += $this->height;
 		}
+		$this->trueCircle = BrushManager::get($player)->getPerfect();
 	}
 
 	/**
@@ -27,7 +30,7 @@ class CylinderShape extends BaseShape {
 	 * @return array
 	 */
 	public function getBlocksInside(bool $partially = false, int $blocksPerTick = 100): array {
-		$radiusSquared = pow($this->radius, 2);
+		$radiusSquared = pow($this->radius + ($this->trueCircle ? 0 : -0.5), 2) + ($this->trueCircle ? 0.5 : 0);
 		$targetX = $this->center->x;
 		$targetY = $this->center->y;
 		$targetZ = $this->center->z;
