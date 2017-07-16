@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\commands;
 
 use BlockHorizons\BlockSniper\brush\BaseShape;
@@ -19,7 +21,7 @@ class BrushCommand extends BaseCommand {
 		parent::__construct($loader, "brush", "Change the properties of the brush", "/brush <parameter> <args>", ["b"]);
 	}
 	
-	public function execute(CommandSender $sender, $commandLabel, array $args) {
+	public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
 		if(!$this->testPermission($sender)) {
 			$this->sendNoPermission($sender);
 			return true;

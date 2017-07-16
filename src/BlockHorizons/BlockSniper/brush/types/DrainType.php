@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
@@ -25,7 +27,7 @@ class DrainType extends BaseType {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			$blockId = $block->getId();
-			if($blockId === Item::LAVA || $blockId === Item::WATER || $blockId === Item::STILL_LAVA || $blockId === Item::STILL_WATER) {
+			if($blockId === Item::LAVA || $blockId === Item::WATER|| $blockId === Item::STILL_LAVA || $blockId === Item::STILL_WATER) {
 				$undoBlocks[] = $block;
 				$this->level->setBlock(new Vector3($block->x, $block->y, $block->z), Block::get(Block::AIR), false, false);
 			}

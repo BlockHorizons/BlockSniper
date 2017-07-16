@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;

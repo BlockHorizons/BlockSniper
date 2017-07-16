@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\commands\cloning;
 
 use BlockHorizons\BlockSniper\brush\BrushManager;
@@ -10,7 +12,7 @@ use BlockHorizons\BlockSniper\Loader;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
-use schematic\Schematic;
+use BlockHorizons\libschematic\Schematic;
 
 class CloneCommand extends BaseCommand {
 	
@@ -18,7 +20,7 @@ class CloneCommand extends BaseCommand {
 		parent::__construct($loader, "clone", "Clone the area you're watching", "/clone <type> [name]", []);
 	}
 	
-	public function execute(CommandSender $sender, $commandLabel, array $args) {
+	public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
 		if(!$this->testPermission($sender)) {
 			$this->sendNoPermission($sender);
 			return true;

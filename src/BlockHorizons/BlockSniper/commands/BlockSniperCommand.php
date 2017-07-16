@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\commands;
 
 use BlockHorizons\BlockSniper\Loader;
@@ -12,7 +14,7 @@ class BlockSniperCommand extends BaseCommand {
 		parent::__construct($loader, "blocksniper", "Get information or change things related to BlockSniper", "/blocksniper [language|reload] [lang]", ["bs"]);
 	}
 
-	public function execute(CommandSender $sender, $commandLabel, array $args) {
+	public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
 		if(!$this->testPermission($sender)) {
 			$this->sendNoPermission($sender);
 		}

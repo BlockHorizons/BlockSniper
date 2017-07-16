@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\commands;
 
 use BlockHorizons\BlockSniper\Loader;
@@ -13,7 +15,7 @@ class CancelCommand extends BaseCommand {
 		parent::__construct($loader, "cancel", "Cancels a working tick spread operation of BlockSniper", "/cancel", ["canceloperation", "stopoperation", "cancelbrush", "c"]);
 	}
 
-	public function execute(CommandSender $sender, $commandLabel, array $args): bool {
+	public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
 		if(!$this->testPermission($sender)) {
 			$this->sendNoPermission($sender);
 			return true;

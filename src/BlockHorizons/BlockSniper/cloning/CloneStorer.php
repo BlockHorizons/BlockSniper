@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\cloning;
 
 use BlockHorizons\BlockSniper\Loader;

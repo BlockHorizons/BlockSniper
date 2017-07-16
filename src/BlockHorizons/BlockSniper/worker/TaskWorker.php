@@ -1,7 +1,8 @@
 <?php
 
-namespace BlockHorizons\BlockSniper\worker;
+declare(strict_types = 1);
 
+namespace BlockHorizons\BlockSniper\worker;
 
 use pocketmine\Player;
 
@@ -34,7 +35,7 @@ class TaskWorker {
 	 * @return bool
 	 */
 	public function clearOccupation(): bool {
-		if(!$this->isOccupied()) {
+		if($this->isOccupied()) {
 			$this->occupation = null;
 			return true;
 		}

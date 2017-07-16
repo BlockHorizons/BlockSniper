@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
@@ -35,14 +37,8 @@ class OverlayType extends BaseType {
 				];
 				$valid = true;
 				foreach(BrushManager::get($this->player)->getBlocks() as $possibleBlock) {
-					if(is_numeric($possibleBlock)) {
-						if($block->getId() === $possibleBlock) {
-							$valid = false;
-						}
-					} else {
-						if($block->getId() === Item::fromString($possibleBlock)->getId()) {
-							$valid = false;
-						}
+					if($block->getId() === $possibleBlock->getId() && $block->getDamage() === $possibleBlock->getDamage()) {
+						$valid = false;
 					}
 				}
 				foreach($directions as $direction) {

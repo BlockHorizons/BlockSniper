@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\tasks;
 
 use BlockHorizons\BlockSniper\Loader;
@@ -10,7 +12,7 @@ class RedoDiminishTask extends BaseTask {
 		parent::__construct($loader);
 	}
 
-	public function onRun($currentTick) {
+	public function onRun(int $currentTick) {
 		foreach($this->getLoader()->getServer()->getOnlinePlayers() as $player) {
 			if($this->getUndoStorer()->redoStorageExists($player)) {
 				if($this->getUndoStorer()->getLastRedoActivity($player) >= 180) {

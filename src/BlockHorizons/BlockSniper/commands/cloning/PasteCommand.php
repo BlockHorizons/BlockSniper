@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\commands\cloning;
 
 use BlockHorizons\BlockSniper\commands\BaseCommand;
@@ -10,7 +12,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\item\Item;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
-use schematic\Schematic;
+use BlockHorizons\libschematic\Schematic;
 
 class PasteCommand extends BaseCommand {
 	
@@ -18,7 +20,7 @@ class PasteCommand extends BaseCommand {
 		parent::__construct($loader, "paste", "Paste the selected clone, template or schematic", "/paste <type> [name]", []);
 	}
 	
-	public function execute(CommandSender $sender, $commandLabel, array $args) {
+	public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
 		if(!$this->testPermission($sender)) {
 			$this->sendNoPermission($sender);
 			return true;

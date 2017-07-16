@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
@@ -26,7 +28,7 @@ class TreeType extends BaseType {
 	 * @return array
 	 */
 	public function fillShape(): array {
-		if(!$this->level->getBlock($this->center) instanceof Flowable && !$this->level->getBlock($this->center)->getId() === Block::AIR) {
+		if(!($this->level->getBlock($this->center) instanceof Flowable) && $this->level->getBlock($this->center)->getId() !== Block::AIR) {
 			$this->center->y++;
 		}
 		Tree::growTree($this->level, $this->center->x, $this->center->y + 1, $this->center->z, new Random(mt_rand()), $this->tree);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\commands;
 
 use BlockHorizons\BlockSniper\Loader;
@@ -13,7 +15,7 @@ class UndoCommand extends BaseCommand {
 		parent::__construct($loader, "undo", "Undo your last BlockSniper modification", "/undo [amount]", ["u"]);
 	}
 	
-	public function execute(CommandSender $sender, $commandLabel, array $args) {
+	public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
 		if(!$this->testPermission($sender)) {
 			$this->sendNoPermission($sender);
 			return true;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\tasks;
 
 use BlockHorizons\BlockSniper\Loader;
@@ -10,7 +12,7 @@ class UndoDiminishTask extends BaseTask {
 		parent::__construct($loader);
 	}
 	
-	public function onRun($currentTick) {
+	public function onRun(int $currentTick) {
 		foreach($this->getLoader()->getServer()->getOnlinePlayers() as $player) {
 			if($this->getUndoStorer()->undoStorageExists($player)) {
 				if($this->getUndoStorer()->getLastUndoActivity($player) >= 180) {

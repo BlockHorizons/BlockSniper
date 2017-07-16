@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\tasks\spread;
 
 use BlockHorizons\BlockSniper\brush\BaseShape;
@@ -23,7 +25,7 @@ class TickSpreadBrushTask extends BaseTask {
 		$this->workerId = $workerId;
 	}
 
-	public function onRun($currentTick) {
+	public function onRun(int $currentTick) {
 		if(!$this->getLoader()->getWorkerManager()->getWorker($this->workerId)->isOccupied()) {
 			$this->getLoader()->getServer()->getScheduler()->cancelTask($this->getTaskId());
 			$this->getLoader()->getUndoStorer()->saveUndo(new Undo($this->blocksProcessed), $this->shape->getPlayer());

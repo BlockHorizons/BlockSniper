@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper;
 
 use BlockHorizons\BlockSniper\brush\BaseShape;
@@ -167,13 +169,13 @@ class Loader extends PluginBase {
 	/**
 	 * @param string $message
 	 *
-	 * @return string|null
+	 * @return string
 	 */
 	public function getTranslation(string $message): string {
 		if($this->language instanceof TranslationData) {
-			return $this->language->get($message);
+			return (string) $this->language->get($message);
 		}
-		return null;
+		return "";
 	}
 
 	/**
@@ -220,7 +222,7 @@ class Loader extends PluginBase {
 		} else {
 			$this->getUndoStorer()->saveUndo($undo->getDetachedUndo(), $player);
 		}
-		$this->getServer()->getScheduler()->scheduleRepeatingTask(new TickSpreadUndoTask($this, $undo->getBlocks(), $player, ceil($undoAmount / $this->getSettings()->getBlocksPerTick()), $workerId), 1);
+		$this->getServer()->getScheduler()->scheduleRepeatingTask(new TickSpreadUndoTask($this, $undo->getBlocks(), $player, (int) ceil($undoAmount / $this->getSettings()->getBlocksPerTick()), $workerId), 1);
 		return true;
 	}
 

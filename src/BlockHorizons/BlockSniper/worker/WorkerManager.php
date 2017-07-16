@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\worker;
 
 use BlockHorizons\BlockSniper\Loader;
@@ -21,11 +23,11 @@ class WorkerManager {
 	 * @param Player $player
 	 * @param string $occupation
 	 *
-	 * @return mixed
+	 * @return int
 	 */
-	public function scheduleWorker(Player $player, string $occupation) {
+	public function scheduleWorker(Player $player, string $occupation): int {
 		if(!$this->hasWorkerAvailable($player)) {
-			return false;
+			return 0;
 		}
 		$worker = $this->getFreeWorker($player);
 		$worker->setOccupation($occupation);

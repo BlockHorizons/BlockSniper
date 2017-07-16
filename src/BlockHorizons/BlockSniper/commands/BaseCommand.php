@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\commands;
 
 use BlockHorizons\BlockSniper\data\ConfigData;
@@ -8,6 +10,7 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\Player;
+use pocketmine\plugin\Plugin;
 use pocketmine\utils\TextFormat as TF;
 
 abstract class BaseCommand extends Command implements PluginIdentifiableCommand, OverloadedCommand {
@@ -40,7 +43,7 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand,
 	 *
 	 * @return Loader
 	 */
-	public function getPlugin(): Loader {
+	public function getPlugin(): Plugin {
 		return $this->loader;
 	}
 	
@@ -58,7 +61,7 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand,
 		return $this->getLoader()->getSettings();
 	}
 
-	public function generateCustomCommandData(Player $player) {
+	public function generateCustomCommandData(Player $player): array {
 		$commandData = parent::generateCustomCommandData($player);
 		$commandData["permission"] = $this->getPermission();
 		$commandData["aliases"] = $this->getAliases();

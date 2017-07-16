@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\events;
 
 use BlockHorizons\BlockSniper\brush\Brush;

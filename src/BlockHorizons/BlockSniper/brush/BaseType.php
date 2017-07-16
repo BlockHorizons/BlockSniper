@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\brush;
 
 use BlockHorizons\BlockSniper\brush\types\BiomeType;
@@ -9,6 +11,8 @@ use BlockHorizons\BlockSniper\brush\types\LayerType;
 use BlockHorizons\BlockSniper\brush\types\ReplaceType;
 use BlockHorizons\BlockSniper\brush\types\TreeType;
 use pocketmine\block\Block;
+use pocketmine\level\generator\biome\Biome;
+use pocketmine\level\generator\object\Tree;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\Player;
@@ -126,7 +130,7 @@ abstract class BaseType {
 		if($this instanceof BiomeType) {
 			return $this->biome;
 		}
-		return null;
+		return Biome::OCEAN;
 	}
 	
 	/**
@@ -153,13 +157,13 @@ abstract class BaseType {
 	/**
 	 * Returns the obsolete blocks in case of a ReplaceType.
 	 *
-	 * @return array|null
+	 * @return array
 	 */
 	public function getObsolete(): array {
 		if($this instanceof ReplaceType) {
 			return $this->obsolete;
 		}
-		return null;
+		return [];
 	}
 	
 	/**
@@ -171,7 +175,7 @@ abstract class BaseType {
 		if($this instanceof TreeType) {
 			return $this->tree;
 		}
-		return null;
+		return 0;
 	}
 
 	/**

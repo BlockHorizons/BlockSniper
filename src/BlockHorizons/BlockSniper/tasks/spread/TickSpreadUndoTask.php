@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\tasks\spread;
 
 use BlockHorizons\BlockSniper\events\OperationFinishEvent;
@@ -31,7 +33,7 @@ class TickSpreadUndoTask extends BaseTask {
 		$this->workerId = $workerId;
 	}
 
-	public function onRun($currentTick) {
+	public function onRun(int $currentTick) {
 		if(!$this->getLoader()->getWorkerManager()->getWorker($this->workerId)->isOccupied()) {
 			$this->getLoader()->getServer()->getScheduler()->cancelTask($this->getTaskId());
 		}

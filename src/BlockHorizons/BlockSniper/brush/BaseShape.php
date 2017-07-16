@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\brush;
 
 use BlockHorizons\BlockSniper\brush\shapes\CubeShape;
@@ -124,7 +126,7 @@ abstract class BaseShape {
 		if($this instanceof CubeShape || $this instanceof CuboidShape) {
 			return $this->width;
 		}
-		return null;
+		return 0.0;
 	}
 	
 	/**
@@ -136,7 +138,7 @@ abstract class BaseShape {
 		if($this instanceof SphereShape || $this instanceof CylinderShape) {
 			return $this->radius;
 		}
-		return null;
+		return 0;
 	}
 	
 	/**
@@ -176,7 +178,7 @@ abstract class BaseShape {
 		if($this instanceof CylinderShape || $this instanceof CuboidShape) {
 			return $this->height;
 		}
-		return null;
+		return 0;
 	}
 
 	/**
