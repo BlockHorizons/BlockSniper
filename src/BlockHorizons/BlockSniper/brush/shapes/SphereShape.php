@@ -22,7 +22,7 @@ class SphereShape extends BaseShape {
 		parent::__construct($player, $level, $center, $hollow);
 		$this->radius = $radius;
 		if($cloneShape) {
-			$this->center->y += $this->radius;
+			$this->center[1] += $this->radius;
 		}
 		$this->trueSphere = BrushManager::get($player)->getPerfect();
 	}
@@ -35,9 +35,9 @@ class SphereShape extends BaseShape {
 	public function getBlocksInside(bool $vectorOnly = false): array {
 		$radiusSquared = pow($this->radius + ($this->trueSphere ? 0 : -0.5), 2) + ($this->trueSphere ? 0.5 : 0);
 
-		$targetX = $this->center->x;
-		$targetY = $this->center->y;
-		$targetZ = $this->center->z;
+		$targetX = $this->center[0];
+		$targetY = $this->center[1];
+		$targetZ = $this->center[2];
 
 		$minX = $targetX - $this->radius;
 		$minZ = $targetZ - $this->radius;
@@ -101,16 +101,16 @@ class SphereShape extends BaseShape {
 	 * @return array
 	 */
 	public function getTouchedChunks(): array {
-		$maxX = $this->center->x + $this->radius;
-		$minX = $this->center->x - $this->radius;
-		$maxZ = $this->center->z + $this->radius;
-		$minZ = $this->center->z - $this->radius;
+		$maxX = $this->center[0] + $this->radius;
+		$minX = $this->center[0] - $this->radius;
+		$maxZ = $this->center[2] + $this->radius;
+		$minZ = $this->center[2] - $this->radius;
 
 		$touchedChunks = [];
 		for($x = $minX; $x <= $maxX + 16; $x += 16) {
 			for($z = $minZ; $z <= $maxZ + 16; $z += 16) {
 				$chunk = $this->getLevel()->getChunk($x >> 4, $z >> 4, true);
-				$touchedChunks[] = $chunk->fastSerialize();
+				$touchedChunks[Level::chunkHash($x >> 4, $z >> 4)] = $chunk->fastSerialize();
 			}
 		}
 		return $touchedChunks;

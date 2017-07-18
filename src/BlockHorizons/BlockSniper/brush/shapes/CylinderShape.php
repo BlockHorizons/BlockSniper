@@ -23,7 +23,7 @@ class CylinderShape extends BaseShape {
 		$this->radius = $radius;
 		$this->height = BrushManager::get($player)->getHeight();
 		if($cloneShape) {
-			$this->center->y += $this->height;
+			$this->center[1] += $this->height;
 		}
 		$this->trueCircle = BrushManager::get($player)->getPerfect();
 	}
@@ -35,9 +35,9 @@ class CylinderShape extends BaseShape {
 	 */
 	public function getBlocksInside(bool $vectorOnly = false): array {
 		$radiusSquared = pow($this->radius + ($this->trueCircle ? 0 : -0.5), 2) + ($this->trueCircle ? 0.5 : 0);
-		$targetX = $this->center->x;
-		$targetY = $this->center->y;
-		$targetZ = $this->center->z;
+		$targetX = $this->center[0];
+		$targetY = $this->center[1];
+		$targetZ = $this->center[2];
 
 		$minX = $targetX - $this->radius;
 		$minZ = $targetZ - $this->radius;
@@ -107,10 +107,10 @@ class CylinderShape extends BaseShape {
 	 * @return array
 	 */
 	public function getTouchedChunks(): array {
-		$maxX = $this->center->x + $this->radius;
-		$minX = $this->center->x - $this->radius;
-		$maxZ = $this->center->z + $this->radius;
-		$minZ = $this->center->z - $this->radius;
+		$maxX = $this->center[0] + $this->radius;
+		$minX = $this->center[0] - $this->radius;
+		$maxZ = $this->center[2] + $this->radius;
+		$minZ = $this->center[2] - $this->radius;
 
 		$touchedChunks = [];
 		for($x = $minX; $x <= $maxX + 16; $x += 16) {

@@ -2,7 +2,7 @@
 # Configuration for BlockSniper: A WorldEdit plugin for PocketMine.
 
 # Internal Property: Do not change.
-Configuration-Version: "2.2.1"
+Configuration-Version: "2.3.1"
 
 # Whether to auto-update configuration when a new version is found.
 Auto-Configuration-Update: true
@@ -14,8 +14,8 @@ Message-Language: ""
 # Item ID of the item that is used to brush. (Golden carrot by default)
 Brush-Item: 396
 
-# Maximum size for shapes/types, it is recommended to keep this number below 20 if tick spread brush is on 2, to prevent server freezes and/or lag.
-Maximum-Size: 15
+# Maximum size for shapes/types, it is recommended to keep this number below 40.
+Maximum-Size: 30
 
 # Maximum undo and redo stores to save, old ones will get destroyed automatically. Setting this number too high could result in lag or data loss.
 Maximum-Undo-Stores: 15

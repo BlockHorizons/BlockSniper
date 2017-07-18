@@ -108,8 +108,7 @@ class Loader extends PluginBase {
 			"undo" => new UndoCommand($this),
 			"redo" => new RedoCommand($this),
 			"clone" => new CloneCommand($this),
-			"paste" => new PasteCommand($this),
-			"cancel" => new CancelCommand($this)
+			"paste" => new PasteCommand($this)
 		];
 		foreach($blockSniperCommands as $name => $class) {
 			$this->getServer()->getCommandMap()->register($name, $class);

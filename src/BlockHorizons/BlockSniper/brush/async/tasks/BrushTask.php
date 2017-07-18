@@ -18,7 +18,7 @@ class BrushTask extends AsyncBlockSniperTask {
 	/** @var BaseShape */
 	private $shape = null;
 	/** @var BaseType */
-	private $type = null;
+	protected $type = null;
 	/** @var string */
 	private $chunks = "";
 
@@ -32,11 +32,12 @@ class BrushTask extends AsyncBlockSniperTask {
 		$chunks = unserialize($this->chunks);
 		$processedBlocks = 0;
 		$type = $this->type;
+		$shape = $this->shape;
 		foreach($chunks as $hash => $data) {
 			$chunks[$hash] = Chunk::fastDeserialize($data);
 		}
 		/** @var Chunk[] $chunks */
-		$vectorsInside = $this->shape->getBlocksInside(true);
+		$vectorsInside = $shape->getBlocksInside(true);
 		$blocks = [];
 		$manager = BaseType::establishChunkManager($chunks);
 		$i = 0;
@@ -49,18 +50,20 @@ class BrushTask extends AsyncBlockSniperTask {
 				$blocks[] = $block;
 				$processedBlocks++;
 			}
-			if($i++ === 10) {
-				$this->publishProgress(round($processedBlocks / $this->shape->getApproximateProcessedBlocks() * 100) . "%");
+			if(++$i === (int) ($shape->getApproximateProcessedBlocks() / 100)) {
+				$this->publishProgress(round($processedBlocks / $shape->getApproximateProcessedBlocks() * 100) . "%");
+				$i = 0;
 			}
 		}
 		$type->setBlocksInside($blocks);
 		$type->setAsynchronous();
 		$type->setChunkManager($manager);
 		$undoBlocks = $type->fillShape();
+
 		$this->setResult([
 			"undoBlocks" => $undoBlocks,
 			"chunks" => $chunks
-		]);
+		], true);
 	}
 
 	/**
@@ -71,10 +74,11 @@ class BrushTask extends AsyncBlockSniperTask {
 	public function onCompletion(Server $server): bool {
 		/** @var Loader $loader */
 		$loader = $server->getPluginManager()->getPlugin("BlockSniper");
-		if($loader instanceof Loader) {
-			if($loader->isEnabled()) {
-				return false;
-			}
+		if($loader === null) {
+			return false;
+		}
+		if(!$loader->isEnabled()) {
+			return false;
 		}
 		$chunks = $this->getResult()["chunks"];
 		$undoBlocks = $this->getResult()["undoBlocks"];
@@ -99,6 +103,7 @@ class BrushTask extends AsyncBlockSniperTask {
 	 */
 	public function onProgressUpdate(Server $server, $progress): bool {
 		$loader = $server->getPluginManager()->getPlugin("BlockSniper");
+		$loader->getLogger()->debug($progress);
 		if($loader instanceof Loader) {
 			if($loader->isEnabled()) {
 				return true;

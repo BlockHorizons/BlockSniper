@@ -19,7 +19,7 @@ class CubeShape extends BaseShape {
 		parent::__construct($player, $level, $center, $hollow);
 		$this->width = $width;
 		if($cloneShape) {
-			$this->center->y += $this->width;
+			$this->center[1] += $this->width;
 		}
 	}
 
@@ -29,9 +29,9 @@ class CubeShape extends BaseShape {
 	 * @return array
 	 */
 	public function getBlocksInside(bool $vectorOnly = false): array {
-		$targetX = $this->center->x;
-		$targetY = $this->center->y;
-		$targetZ = $this->center->z;
+		$targetX = $this->center[0];
+		$targetY = $this->center[1];
+		$targetZ = $this->center[2];
 
 		$minX = $targetX - $this->width;
 		$minZ = $targetZ - $this->width;
@@ -89,10 +89,10 @@ class CubeShape extends BaseShape {
 	 * @return array
 	 */
 	public function getTouchedChunks(): array {
-		$maxX = $this->center->x + $this->width;
-		$minX = $this->center->x - $this->width;
-		$maxZ = $this->center->z + $this->width;
-		$minZ = $this->center->z - $this->width;
+		$maxX = $this->center[0] + $this->width;
+		$minX = $this->center[0] - $this->width;
+		$maxZ = $this->center[2] + $this->width;
+		$minZ = $this->center[2] - $this->width;
 
 		$touchedChunks = [];
 		for($x = $minX; $x <= $maxX + 16; $x += 16) {

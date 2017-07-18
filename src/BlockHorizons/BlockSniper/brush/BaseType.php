@@ -113,7 +113,7 @@ abstract class BaseType {
 	public static function establishChunkManager(array $chunks): BlockSniperChunkManager {
 		$manager = new BlockSniperChunkManager(0);
 		foreach($chunks as $chunk) {
-			$manager->setChunk($chunk->getX, $chunk->getZ, $chunk);
+			$manager->setChunk($chunk->getX(), $chunk->getZ(), $chunk);
 		}
 		return $manager;
 	}

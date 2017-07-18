@@ -24,6 +24,7 @@ class MeltType extends BaseType {
 	 */
 	public function fillShape(): array {
 		$undoBlocks = [];
+
 		foreach($this->blocks as $block) {
 			if($block->getId() !== Item::AIR) {
 				if($this->isAsynchronous()) {

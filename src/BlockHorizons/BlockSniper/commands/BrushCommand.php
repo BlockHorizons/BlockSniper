@@ -106,7 +106,7 @@ class BrushCommand extends BaseCommand {
 					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.radius-too-big"));
 					return true;
 				}
-				$brush->setSize($args[1]);
+				$brush->setSize((int) $args[1]);
 				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("brush.size") . TF::AQUA . $args[1]);
 				$action = Change::ACTION_CHANGE_SIZE;
 				break;
@@ -151,7 +151,7 @@ class BrushCommand extends BaseCommand {
 					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.radius-too-big"));
 					return true;
 				}
-				$brush->setHeight($args[1]);
+				$brush->setHeight((int) $args[1]);
 				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("brush.height") . TF::AQUA . $args[1]);
 				$action = Change::ACTION_CHANGE_HEIGHT;
 				break;
@@ -186,16 +186,16 @@ class BrushCommand extends BaseCommand {
 
 			case "pe":
 			case "perfect":
-				$brush->setPerfect($args[1]);
-				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("brush.perfect") . TF::AQUA . (string) $brush->getPerfect());
+				$brush->setPerfect((bool) $args[1]);
+				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("brush.perfect") . TF::AQUA . $args[1]);
 				return true;
 
 			case "decrement":
 			case "decrementing":
 			case "de":
-				$brush->setDecrementing($args[1]);
+				$brush->setDecrementing((bool) $args[1]);
 				$brush->resetSize[$sender->getId()] = $brush->getSize();
-				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("brush.decrement") . TF::AQUA . (string) $brush->isDecrementing());
+				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("brush.decrement") . TF::AQUA . $args[1]);
 				$action = Change::ACTION_CHANGE_DECREMENT;
 				break;
 
@@ -216,8 +216,8 @@ class BrushCommand extends BaseCommand {
 
 			case "ho":
 			case "hollow":
-				$brush->setHollow($args[1]);
-				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("brush.hollow") . TF::AQUA . (string) $brush->getHollow());
+				$brush->setHollow((bool) $args[1]);
+				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("brush.hollow") . TF::AQUA . $args[1]);
 				$action = Change::ACTION_CHANGE_HOLLOW;
 				break;
 

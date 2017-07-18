@@ -25,14 +25,14 @@ class ConfigData {
 			"Auto-Configuration-Update" => $cfg["Auto-Configuration-Update"] ?? true,
 			"Message-Language" => $cfg["Message-Language"] ?? "",
 			"Brush-Item" => $cfg["Brush-Item"] ?? 396,
-			"Maximum-Radius" => $cfg["Maximum-Radius"] ?? 15,
+			"Maximum-Size" => $cfg["Maximum-Size"] ?? 15,
 			"Maximum-Undo-Stores" => $cfg["Maximum-Undo-Stores"] ?? 15,
 			"Reset-Decrement-Brush" => $cfg["Reset-Decrement-Brush"] ?? true,
 			"Maximum-Clone-Size" => $cfg["Maximum-Clone-Size"] ?? 60,
 			"Save-Brush-Properties" => $cfg["Save-Brush-Properties"] ?? true,
 			"Drop-Leafblower-Plants" => $cfg["Drop-Leafblower-Plants"] ?? true,
 			"Save-Air-In-Copy" => $cfg["Save-Air-In-Copy"] ?? false,
-			"Maximum-Brush-Workers" => $cfg["Maximum-Brush-Workers"] ?? 1
+			"Asynchronous-Operation-Size" => $cfg["Asynchronous-Operation-Size"] ?? 1
 		];
 		if($cfg["Configuration-Version"] !== Loader::CONFIGURATION_VERSION) {
 			$autoUpdate = $cfg["Auto-Configuration-Update"];

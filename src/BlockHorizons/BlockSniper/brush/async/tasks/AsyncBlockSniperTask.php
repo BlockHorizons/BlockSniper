@@ -15,8 +15,6 @@ abstract class AsyncBlockSniperTask extends AsyncTask {
 
 	/** @var int */
 	protected $type = self::TYPE_BRUSH;
-	/** @var array */
-	protected $result = [];
 
 	/**
 	 * @return int

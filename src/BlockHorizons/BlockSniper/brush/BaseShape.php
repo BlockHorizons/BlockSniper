@@ -21,8 +21,8 @@ abstract class BaseShape {
 
 	/** @var int */
 	protected $level = 0;
-	/** @var Position */
-	protected $center = null;
+	/** @var array */
+	protected $center = [];
 	/** @var bool */
 	protected $hollow = false;
 	/** @var int */
@@ -33,7 +33,7 @@ abstract class BaseShape {
 	public function __construct(Player $player, Level $level, Position $center, bool $hollow) {
 		$this->playerName = $player->getName();
 		$this->level = $level->getId();
-		$this->center = $center;
+		$this->center = [$center->x, $center->y, $center->z, $center->level->getId()];
 		$this->hollow = $hollow;
 	}
 
@@ -109,7 +109,7 @@ abstract class BaseShape {
 	 * @return Position
 	 */
 	public function getCenter(): Position {
-		return $this->center;
+		return new Position($this->center[0], $this->center[1], $this->center[2], Server::getInstance()->getLevel($this->center[3]));
 	}
 
 	/**

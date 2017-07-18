@@ -42,10 +42,10 @@ class Brush {
 	}
 
 	/**
-	 * @param $value
+	 * @param bool $value
 	 */
-	public function setDecrementing($value) {
-		$this->decrement = (bool) $value;
+	public function setDecrementing(bool $value) {
+		$this->decrement = $value;
 	}
 
 	/**
@@ -56,10 +56,10 @@ class Brush {
 	}
 
 	/**
-	 * @param $value
+	 * @param bool $value
 	 */
-	public function setPerfect($value) {
-		$this->perfect = (bool) $value;
+	public function setPerfect(bool $value) {
+		$this->perfect = $value;
 	}
 
 	/**
@@ -78,7 +78,7 @@ class Brush {
 			if(!is_numeric($block)) {
 				$data[] = Item::fromString($block)->getBlock();
 			} else {
-				$data[] = Item::get($block)->getBlock();
+				$data[] = Item::get((int) $block)->getBlock();
 			}
 		}
 		if(empty($data)) {
@@ -103,7 +103,7 @@ class Brush {
 			if(!is_numeric($block)) {
 				$data[] = Item::fromString($block)->getBlock();
 			} else {
-				$data[] = Item::get($block)->getBlock();
+				$data[] = Item::get((int) $block)->getBlock();
 			}
 		}
 		if(empty($data)) {
@@ -113,9 +113,9 @@ class Brush {
 	}
 
 	/**
-	 * @param float $size
+	 * @param int $size
 	 */
-	public function setSize(float $size) {
+	public function setSize(int $size) {
 		$this->size = $size;
 	}
 
@@ -200,22 +200,22 @@ class Brush {
 	 */
 	public function getBiomeId(): int {
 		if(is_numeric($this->biome)) {
-			return $this->biome;
+			return (int) $this->biome;
 		}
 		$biomes = new \ReflectionClass('pocketmine\level\generator\biome\Biome');
 		$const = strtoupper(str_replace(" ", "_", $this->biome));
 		if($biomes->hasConstant($const)) {
 			$biome = $biomes->getConstant($const);
-			return $biome;
+			return (int) $biome;
 		}
 		return 0;
 	}
 
 	/**
-	 * @param $value
+	 * @param bool $value
 	 */
-	public function setHollow($value) {
-		$this->hollow = (bool) $value;
+	public function setHollow(bool $value) {
+		$this->hollow = $value;
 	}
 
 	/**
@@ -230,13 +230,13 @@ class Brush {
 	 */
 	public function getTreeType(): int {
 		if(is_numeric($this->tree)) {
-			return $this->tree;
+			return (int) $this->tree;
 		}
 		$saplings = new \ReflectionClass('pocketmine\block\Sapling');
 		$treeConst = strtoupper(str_replace(" ", "_", $this->tree));
 		if($saplings->hasConstant($treeConst)) {
 			$treeType = $saplings->getConstant($treeConst);
-			return $treeType;
+			return (int) $treeType;
 		}
 		return 0;
 	}
