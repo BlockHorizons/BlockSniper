@@ -8,11 +8,10 @@ use BlockHorizons\BlockSniper\brush\BaseType;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\level\ChunkManager;
-use pocketmine\level\Level;
 use pocketmine\Player;
 
 class MeltType extends BaseType {
-	
+
 	/*
 	 * Melts away every block with more than 2 open sides within the brush radius.
 	 */
@@ -46,7 +45,7 @@ class MeltType extends BaseType {
 						$block->getSide(Block::SIDE_EAST)
 					];
 				}
-				
+
 				$valid = 0;
 				foreach($directions as $direction) {
 					if($direction->getId() === Item::AIR) {
@@ -67,7 +66,7 @@ class MeltType extends BaseType {
 		}
 		return $undoBlocks;
 	}
-	
+
 	public function getName(): string {
 		return "Melt";
 	}

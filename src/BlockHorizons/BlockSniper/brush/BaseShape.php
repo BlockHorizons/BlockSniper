@@ -5,10 +5,6 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\brush;
 
 use BlockHorizons\BlockSniper\brush\async\tasks\BrushTask;
-use BlockHorizons\BlockSniper\brush\shapes\CubeShape;
-use BlockHorizons\BlockSniper\brush\shapes\CuboidShape;
-use BlockHorizons\BlockSniper\brush\shapes\CylinderShape;
-use BlockHorizons\BlockSniper\brush\shapes\SphereShape;
 use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
@@ -40,7 +36,7 @@ abstract class BaseShape {
 		$this->center = $center;
 		$this->hollow = $hollow;
 	}
-	
+
 	/**
 	 * @param string $shape
 	 *
@@ -90,15 +86,6 @@ abstract class BaseShape {
 	 * @return int
 	 */
 	public abstract function getApproximateProcessedBlocks(): int;
-	
-	/**
-	 * Returns the level the shape is made in.
-	 *
-	 * @return Level
-	 */
-	public function getLevel(): Level {
-		return Server::getInstance()->getLevel($this->level);
-	}
 
 	/**
 	 * @param Server $server
@@ -109,13 +96,13 @@ abstract class BaseShape {
 		return $server->getPlayer($this->playerName);
 	}
 
-
 	/**
 	 * @return int
 	 */
 	public function getLevelId(): int {
 		return $this->level;
 	}
+
 	/**
 	 * Returns the center of the shape made, or the target block.
 	 *
@@ -151,11 +138,6 @@ abstract class BaseShape {
 	public abstract function getName(): string;
 
 	/**
-	 * @return array
-	 */
-	public abstract function getTouchedChunks(): array;
-
-	/**
 	 * @param BaseType $type
 	 *
 	 * @return bool
@@ -164,4 +146,18 @@ abstract class BaseShape {
 		$this->getLevel()->getServer()->getScheduler()->scheduleAsyncTask(new BrushTask($this, $type, $this->getTouchedChunks()));
 		return true;
 	}
+
+	/**
+	 * Returns the level the shape is made in.
+	 *
+	 * @return Level
+	 */
+	public function getLevel(): Level {
+		return Server::getInstance()->getLevel($this->level);
+	}
+
+	/**
+	 * @return array
+	 */
+	public abstract function getTouchedChunks(): array;
 }

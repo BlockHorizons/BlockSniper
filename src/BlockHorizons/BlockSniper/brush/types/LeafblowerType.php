@@ -10,12 +10,11 @@ use pocketmine\block\Block;
 use pocketmine\block\Flowable;
 use pocketmine\item\Item;
 use pocketmine\level\ChunkManager;
-use pocketmine\level\Level;
 use pocketmine\Player;
 use pocketmine\Server;
 
 class LeafblowerType extends BaseType {
-	
+
 	/*
 	 * Blows away all plants and flowers within the brush radius.
 	 */
@@ -45,7 +44,7 @@ class LeafblowerType extends BaseType {
 		}
 		return $undoBlocks;
 	}
-	
+
 	public function getName(): string {
 		return "Leaf Blower";
 	}

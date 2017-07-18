@@ -7,16 +7,16 @@ namespace BlockHorizons\BlockSniper\data;
 use BlockHorizons\BlockSniper\Loader;
 
 class TranslationData {
-	
+
 	private $messages = [];
 	private $loader;
-	
+
 	public function __construct(Loader $loader) {
 		$this->loader = $loader;
-		
+
 		$this->collectTranslations();
 	}
-	
+
 	/**
 	 * @return bool
 	 */
@@ -35,7 +35,7 @@ class TranslationData {
 			$this->getLoader()->saveResource("languages/en.yml");
 			$language = yaml_parse_file($this->getLoader()->getDataFolder() . "languages/en.yml");
 		}
-		
+
 		// This is going to burn your eyes. Don't look at it for too long.
 		$this->messages = @[
 			"commands.errors.no-permission" => $language["commands"]["errors"]["no-permission"],
@@ -53,7 +53,7 @@ class TranslationData {
 			"commands.errors.preset-already-exists" => $language["commands"]["errors"]["preset-already-exists"],
 			"commands.errors.preset-doesnt-exist" => $language["commands"]["errors"]["preset-doesnt-exist"],
 			"commands.errors.no-cancellable" => $language["commands"]["errors"]["no-cancellable"],
-			
+
 			"commands.succeed.default" => $language["commands"]["succeed"]["default"],
 			"commands.succeed.undo" => $language["commands"]["succeed"]["undo"],
 			"commands.succeed.language" => $language["commands"]["succeed"]["language"],
@@ -64,7 +64,7 @@ class TranslationData {
 			"commands.succeed.preset.cancel" => $language["commands"]["succeed"]["preset"]["cancel"],
 			"commands.succeed.preset.canceled" => $language["commands"]["succeed"]["preset"]["canceled"],
 			"commands.succeed.cancel" => $language["commands"]["succeed"]["cancel"],
-			
+
 			"brush.shape" => $language["brush"]["shape"],
 			"brush.type" => $language["brush"]["type"],
 			"brush.blocks" => $language["brush"]["blocks"],
@@ -82,14 +82,14 @@ class TranslationData {
 		];
 		return $languageSelected;
 	}
-	
+
 	/**
 	 * @return Loader
 	 */
 	public function getLoader(): Loader {
 		return $this->loader;
 	}
-	
+
 	/**
 	 * @param string $key
 	 *

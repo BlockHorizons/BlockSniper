@@ -8,16 +8,16 @@ use BlockHorizons\BlockSniper\Loader;
 use pocketmine\utils\TextFormat as TF;
 
 class ConfigData {
-	
+
 	private $settings = [];
 	private $loader;
-	
+
 	public function __construct(Loader $loader) {
 		$this->loader = $loader;
-		
+
 		$this->collectSettings();
 	}
-	
+
 	public function collectSettings() {
 		$cfg = yaml_parse_file($this->getLoader()->getDataFolder() . "settings.yml");
 		$this->settings = @[
@@ -127,7 +127,7 @@ class ConfigData {
 	public function getMaximumBrushWorkers(): int {
 		return (int) $this->settings["Maximum-Brush-Workers"];
 	}
-	
+
 	/**
 	 * @param string $key
 	 *
@@ -139,7 +139,7 @@ class ConfigData {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * @param string $key
 	 * @param        $value
@@ -154,7 +154,7 @@ class ConfigData {
 	public function getMinimumAsynchronousSize(): int {
 		return (int) $this->settings["Asynchronous-Operation-Size"];
 	}
-	
+
 	public function save() {
 		yaml_emit_file($this->getLoader()->getDataFolder() . "settings.yml", $this->settings);
 	}

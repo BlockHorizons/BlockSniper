@@ -10,18 +10,18 @@ use pocketmine\event\plugin\PluginEvent;
 use pocketmine\Player;
 
 class PresetCreationEvent extends PluginEvent implements Cancellable {
-	
+
 	public static $handlerList;
-	
+
 	private $player;
 	private $presetData;
-	
+
 	public function __construct(Loader $loader, Player $player, array $presetData) {
 		parent::__construct($loader);
 		$this->player = $player;
 		$this->presetData = $presetData;
 	}
-	
+
 	/**
 	 * Returns the player that created the preset.
 	 *
@@ -30,7 +30,7 @@ class PresetCreationEvent extends PluginEvent implements Cancellable {
 	public function getPlayer(): Player {
 		return $this->player;
 	}
-	
+
 	/**
 	 * Returns an array looking like this:
 	 *  "name" => string,

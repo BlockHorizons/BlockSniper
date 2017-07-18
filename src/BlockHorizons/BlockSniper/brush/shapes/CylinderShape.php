@@ -13,10 +13,10 @@ use pocketmine\Player;
 
 class CylinderShape extends BaseShape {
 
-	/** @var bool */
-	private $trueCircle = false;
 	/** @var int */
 	protected $radius = 0;
+	/** @var bool */
+	private $trueCircle = false;
 
 	public function __construct(Player $player, Level $level, int $radius = null, Position $center = null, bool $hollow = false, bool $cloneShape = false) {
 		parent::__construct($player, $level, $center, $hollow);
@@ -38,16 +38,16 @@ class CylinderShape extends BaseShape {
 		$targetX = $this->center->x;
 		$targetY = $this->center->y;
 		$targetZ = $this->center->z;
-		
+
 		$minX = $targetX - $this->radius;
 		$minZ = $targetZ - $this->radius;
 		$minY = $targetY - $this->height;
 		$maxX = $targetX + $this->radius;
 		$maxZ = $targetZ + $this->radius;
 		$maxY = $targetY + $this->height;
-		
+
 		$blocksInside = [];
-		
+
 		for($x = $minX; $x <= $maxX; $x++) {
 			for($z = $minZ; $z <= $maxZ; $z++) {
 				for($y = $minY; $y <= $maxY; $y++) {

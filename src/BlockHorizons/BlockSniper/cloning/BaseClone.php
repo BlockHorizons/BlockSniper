@@ -10,11 +10,11 @@ use pocketmine\level\Position;
 use pocketmine\Player;
 
 abstract class BaseClone {
-	
+
 	const TYPE_COPY = 0;
 	const TYPE_TEMPLATE = 1;
 	const TYPE_SCHEMATIC = 2;
-	
+
 	public $cloneStorer;
 	public $level;
 
@@ -23,7 +23,25 @@ abstract class BaseClone {
 	protected $center;
 	protected $saveAir;
 	protected $blocks;
-	
+
+	/**
+	 * @param CloneStorer $cloneStorer
+	 * @param Player      $player
+	 * @param bool        $saveAir
+	 * @param Position    $center
+	 * @param Block[]     $blocks
+	 * @param string      $name
+	 */
+	public function __construct(CloneStorer $cloneStorer, Player $player, bool $saveAir, Position $center, array $blocks, string $name = "") {
+		$this->cloneStorer = $cloneStorer;
+		$this->player = $player;
+		$this->level = $player->getLevel();
+		$this->saveAir = $saveAir;
+		$this->center = $center;
+		$this->blocks = $blocks;
+		$this->name = $name;
+	}
+
 	/**
 	 * @param string $type
 	 *
@@ -37,26 +55,7 @@ abstract class BaseClone {
 		return false;
 	}
 
-	public abstract function getName(): string;
-	
 	public abstract function saveClone();
-
-	/**
-	 * @param CloneStorer $cloneStorer
-	 * @param Level       $level
-	 * @param bool        $saveAir
-	 * @param Position    $center
-	 * @param Block[]     $blocks
-	 */
-	public function __construct(CloneStorer $cloneStorer, Player $player, bool $saveAir, Position $center, array $blocks, string $name = "") {
-		$this->cloneStorer = $cloneStorer;
-		$this->player = $player;
-		$this->level = $player->getLevel();
-		$this->saveAir = $saveAir;
-		$this->center = $center;
-		$this->blocks = $blocks;
-		$this->name = $name;
-	}
 
 	/**
 	 * @return CloneStorer
@@ -100,4 +99,6 @@ abstract class BaseClone {
 	public function getPermission(): string {
 		return "blocksniper.type." . strtolower($this->getName());
 	}
+
+	public abstract function getName(): string;
 }

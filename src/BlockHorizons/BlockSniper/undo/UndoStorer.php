@@ -4,12 +4,11 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\undo;
 
-use BlockHorizons\BlockSniper\brush\BrushManager;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\Player;
 
 class UndoStorer {
-	
+
 	/** @var Undo[][] */
 	private $undoStore = [];
 
@@ -19,35 +18,9 @@ class UndoStorer {
 	private $lastUndo;
 	private $lastRedo;
 	private $loader;
-	
+
 	public function __construct(Loader $loader) {
 		$this->loader = $loader;
-	}
-
-	/**
-	 * @param Undo   $undo
-	 * @param Player $player
-	 */
-	public function saveUndo(Undo $undo, Player $player) {
-		$this->undoStore[$player->getName()][] = $undo;
-		
-		if($this->getTotalUndoStores($player) === $this->getLoader()->getSettings()->getMaxUndoStores()) {
-			$this->unsetOldestUndo($player);
-		}
-		$this->lastUndo[$player->getName()] = time();
-	}
-
-	/**
-	 * @param Redo   $redo
-	 * @param Player $player
-	 */
-	public function saveRedo(Redo $redo, Player $player) {
-		$this->redoStore[$player->getName()][] = $redo;
-
-		if($this->getTotalRedoStores($player) === $this->getLoader()->getSettings()->getMaxUndoStores()) {
-			$this->unsetOldestRedo($player);
-		}
-		$this->lastRedo[$player->getName()] = time();
 	}
 
 	/**
@@ -66,6 +39,19 @@ class UndoStorer {
 	}
 
 	/**
+	 * @param Undo   $undo
+	 * @param Player $player
+	 */
+	public function saveUndo(Undo $undo, Player $player) {
+		$this->undoStore[$player->getName()][] = $undo;
+
+		if($this->getTotalUndoStores($player) === $this->getLoader()->getSettings()->getMaxUndoStores()) {
+			$this->unsetOldestUndo($player);
+		}
+		$this->lastUndo[$player->getName()] = time();
+	}
+
+	/**
 	 * @param Player $player
 	 *
 	 * @return int
@@ -75,21 +61,12 @@ class UndoStorer {
 	}
 
 	/**
-	 * @param Player $player
-	 *
-	 * @return int
-	 */
-	public function getTotalRedoStores(Player $player): int {
-		return count($this->redoStore[$player->getName()]);
-	}
-	
-	/**
 	 * @return Loader
 	 */
 	public function getLoader(): Loader {
 		return $this->loader;
 	}
-	
+
 	/**
 	 * @param Player $player
 	 */
@@ -100,10 +77,10 @@ class UndoStorer {
 	/**
 	 * @param Player $player
 	 */
-	public function unsetOldestRedo(Player $player) {
-		unset($this->redoStore[$player->getName()][min(array_keys($this->undoStore[$player->getName()]))]);
+	public function unsetLatestRedo(Player $player) {
+		unset($this->redoStore[$player->getName()][max(array_keys($this->redoStore[$player->getName()]))]);
 	}
-	
+
 	/**
 	 * @param int    $amount
 	 * @param Player $player
@@ -118,7 +95,36 @@ class UndoStorer {
 			$this->unsetLatestUndo($player);
 		}
 	}
-	
+
+	/**
+	 * @param Redo   $redo
+	 * @param Player $player
+	 */
+	public function saveRedo(Redo $redo, Player $player) {
+		$this->redoStore[$player->getName()][] = $redo;
+
+		if($this->getTotalRedoStores($player) === $this->getLoader()->getSettings()->getMaxUndoStores()) {
+			$this->unsetOldestRedo($player);
+		}
+		$this->lastRedo[$player->getName()] = time();
+	}
+
+	/**
+	 * @param Player $player
+	 *
+	 * @return int
+	 */
+	public function getTotalRedoStores(Player $player): int {
+		return count($this->redoStore[$player->getName()]);
+	}
+
+	/**
+	 * @param Player $player
+	 */
+	public function unsetOldestRedo(Player $player) {
+		unset($this->redoStore[$player->getName()][min(array_keys($this->undoStore[$player->getName()]))]);
+	}
+
 	/**
 	 * @param Player $player
 	 */
@@ -126,19 +132,12 @@ class UndoStorer {
 		unset($this->undoStore[$player->getName()][max(array_keys($this->undoStore[$player->getName()]))]);
 	}
 
-	/**
-	 * @param Player $player
-	 */
-	public function unsetLatestRedo(Player $player) {
-		unset($this->redoStore[$player->getName()][max(array_keys($this->redoStore[$player->getName()]))]);
-	}
-	
 	public function resetUndoStorage() {
 		$this->undoStore = [];
 		$this->redoStore = [];
 		$this->lastUndo = null;
 	}
-	
+
 	/**
 	 * @param Player $player
 	 *

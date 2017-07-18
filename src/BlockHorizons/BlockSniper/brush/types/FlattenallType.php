@@ -5,18 +5,15 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
-use BlockHorizons\BlockSniper\brush\BrushManager;
 use pocketmine\block\Block;
 use pocketmine\block\Flowable;
 use pocketmine\item\Item;
 use pocketmine\level\ChunkManager;
-use pocketmine\level\Level;
 use pocketmine\level\Position;
-use pocketmine\math\Vector3;
 use pocketmine\Player;
 
 class FlattenallType extends BaseType {
-	
+
 	/*
 	 * Flattens the terrain below the selected point and removes the blocks above it within the brush radius.
 	 */
@@ -54,7 +51,7 @@ class FlattenallType extends BaseType {
 		}
 		return $undoBlocks;
 	}
-	
+
 	public function getName(): string {
 		return "Flatten All";
 	}

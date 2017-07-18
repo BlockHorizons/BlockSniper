@@ -7,30 +7,30 @@ namespace BlockHorizons\BlockSniper\commands\cloning;
 use BlockHorizons\BlockSniper\commands\BaseCommand;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\undo\Undo;
+use BlockHorizons\libschematic\Schematic;
 use pocketmine\block\Block;
 use pocketmine\command\CommandSender;
 use pocketmine\item\Item;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
-use BlockHorizons\libschematic\Schematic;
 
 class PasteCommand extends BaseCommand {
-	
+
 	public function __construct(Loader $loader) {
 		parent::__construct($loader, "paste", "Paste the selected clone, template or schematic", "/paste <type> [name]", []);
 	}
-	
+
 	public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
 		if(!$this->testPermission($sender)) {
 			$this->sendNoPermission($sender);
 			return true;
 		}
-		
+
 		if(!$sender instanceof Player) {
 			$this->sendConsoleError($sender);
 			return true;
 		}
-		
+
 		$center = $sender->getTargetBlock(100);
 		switch(strtolower($args[0])) {
 			default:
@@ -39,7 +39,7 @@ class PasteCommand extends BaseCommand {
 					$this->getLoader()->getCloneStorer()->pasteCopy($sender);
 				}
 				break;
-			
+
 			case "template":
 				if(!$this->getLoader()->getCloneStorer()->templateExists($args[1])) {
 					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.template-not-existing"));

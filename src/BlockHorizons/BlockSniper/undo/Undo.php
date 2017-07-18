@@ -7,7 +7,7 @@ namespace BlockHorizons\BlockSniper\undo;
 use pocketmine\block\Block;
 
 class Undo implements Revert {
-	
+
 	private $undoBlocks;
 
 	/**
@@ -16,7 +16,7 @@ class Undo implements Revert {
 	public function __construct(array $undoBlocks) {
 		$this->undoBlocks = $undoBlocks;
 	}
-	
+
 	public function restore() {
 		foreach($this->undoBlocks as $undoBlock) {
 			$undoBlock->getLevel()->setBlock($undoBlock, $undoBlock, false, false);

@@ -11,22 +11,29 @@ use pocketmine\level\Position;
 use pocketmine\Player;
 
 class PyramidShape extends BaseShape {
-	
+
+	/** @var int */
+	protected $width = 0;
+
 	public function __construct(Player $player, Level $level, int $width = null, Position $center = null, bool $hollow = false) {
 		parent::__construct($player, $level, $center, $hollow);
 		$this->width = $width;
 		$this->height = BrushManager::get($player)->getHeight();
 	}
-	
+
 	public function getBlocksInside(bool $partially = false, int $blocksPerTick = 100): array {
-		// TODO: Implement getBlocksInside() method.
+		return [];
 	}
 
 	public function getName(): string {
 		return $this->hollow ? "Hollow Pyramid" : "Pyramid";
 	}
-	
+
 	public function getApproximateProcessedBlocks(): int {
-		//TODO: Implement Pyramids
+		return 0;
+	}
+
+	public function getTouchedChunks(): array {
+		return [];
 	}
 }

@@ -32,7 +32,7 @@ class CubeShape extends BaseShape {
 		$targetX = $this->center->x;
 		$targetY = $this->center->y;
 		$targetZ = $this->center->z;
-		
+
 		$minX = $targetX - $this->width;
 		$minZ = $targetZ - $this->width;
 		$minY = $targetY - $this->width;
@@ -41,7 +41,7 @@ class CubeShape extends BaseShape {
 		$maxY = $targetY + $this->width;
 
 		$blocksInside = [];
-		
+
 		for($x = $minX; $x <= $maxX; $x++) {
 			for($z = $minZ; $z <= $maxZ; $z++) {
 				for($y = $minY; $y <= $maxY; $y++) {

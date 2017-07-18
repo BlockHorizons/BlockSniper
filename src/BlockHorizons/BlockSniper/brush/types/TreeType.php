@@ -10,12 +10,11 @@ use pocketmine\block\Block;
 use pocketmine\block\Flowable;
 use pocketmine\level\ChunkManager;
 use pocketmine\level\generator\object\Tree;
-use pocketmine\level\Level;
 use pocketmine\Player;
 use pocketmine\utils\Random;
 
 class TreeType extends BaseType {
-	
+
 	/*
 	 * Grows a tree on the target block. This brush can not undo.
 	 */
@@ -35,7 +34,7 @@ class TreeType extends BaseType {
 		Tree::growTree($this->getLevel(), $this->center->x, $this->center->y + 1, $this->center->z, new Random(mt_rand()), $this->tree);
 		return [];
 	}
-	
+
 	public function getName(): string {
 		return "Tree";
 	}
@@ -53,6 +52,6 @@ class TreeType extends BaseType {
 	 * @return bool
 	 */
 	public function canExecuteAsynchronously(): bool {
-		return true;
+		return false;
 	}
 }

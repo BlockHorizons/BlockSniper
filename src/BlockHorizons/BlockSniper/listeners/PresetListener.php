@@ -13,27 +13,27 @@ use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\utils\TextFormat as TF;
 
 class PresetListener implements Listener {
-	
+
 	private $loader;
-	
+
 	public function __construct(Loader $loader) {
 		$this->loader = $loader;
 	}
-	
+
 	public function onChat(PlayerChatEvent $event) {
 		$player = $event->getPlayer();
 		if(!$this->getLoader()->getPresetManager()->isCreatingAPreset($player)) {
 			return false;
 		}
 		$message = explode(" ", $event->getMessage());
-		
+
 		if(strtolower($message[0]) === "cancel") {
 			$this->getLoader()->getPresetManager()->cancelPresetCreationProcess($player);
 			$player->sendMessage(TF::YELLOW . $this->getLoader()->getTranslation("commands.succeed.preset.canceled"));
 			$event->setCancelled();
 			return true;
 		}
-		
+
 		// Ew... I know.
 		switch($this->getLoader()->getPresetManager()->getCurrentPresetCreationProgress($player)) {
 			case 0:
@@ -60,7 +60,7 @@ class PresetListener implements Listener {
 				$player->sendMessage(TF::GRAY . $this->getLoader()->getTranslation("brush.decrement"));
 				break;
 			case 3:
-				$message[0] = (bool)$message[0];
+				$message[0] = (bool) $message[0];
 				if(!is_bool($message[0])) {
 					return false;
 				}
@@ -69,7 +69,7 @@ class PresetListener implements Listener {
 				$player->sendMessage(TF::GRAY . $this->getLoader()->getTranslation("brush.perfect"));
 				break;
 			case 4:
-				$message[0] = (bool)$message[0];
+				$message[0] = (bool) $message[0];
 				if(!is_bool($message[0])) {
 					return false;
 				}
@@ -90,7 +90,7 @@ class PresetListener implements Listener {
 				$player->sendMessage(TF::GRAY . $this->getLoader()->getTranslation("brush.hollow"));
 				break;
 			case 6:
-				$message[0] = (bool)$message[0];
+				$message[0] = (bool) $message[0];
 				if(!is_bool($message[0])) {
 					return false;
 				}
@@ -137,7 +137,7 @@ class PresetListener implements Listener {
 		$event->setCancelled();
 		return true;
 	}
-	
+
 	public function getLoader(): Loader {
 		return $this->loader;
 	}

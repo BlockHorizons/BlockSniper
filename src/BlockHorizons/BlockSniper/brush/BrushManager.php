@@ -10,9 +10,9 @@ use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
 
 class BrushManager {
-	
+
 	private static $brush = [];
-	
+
 	public function __construct(Loader $loader) {
 		$this->loader = $loader;
 		if($loader->getSettings()->saveBrushProperties()) {
@@ -34,14 +34,14 @@ class BrushManager {
 			$loader->getLogger()->info(TF::GREEN . "All brushes have been restored.");
 		}
 	}
-	
+
 	/**
 	 * @return Loader
 	 */
 	public function getLoader(): Loader {
 		return $this->loader;
 	}
-	
+
 	/**
 	 * @param Player $player
 	 *
@@ -53,7 +53,7 @@ class BrushManager {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * @param Player $player
 	 *
@@ -66,7 +66,7 @@ class BrushManager {
 		self::$brush[$player->getName()] = new Brush($player->getName(), $this->getLoader());
 		return true;
 	}
-	
+
 	/**
 	 * @param Player $player
 	 *
@@ -79,7 +79,7 @@ class BrushManager {
 		}
 		return false;
 	}
-	
+
 	public function storeBrushesToFile() {
 		$data = [];
 		foreach(self::$brush as $playerName => $brush) {

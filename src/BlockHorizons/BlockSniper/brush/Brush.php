@@ -10,12 +10,12 @@ use pocketmine\level\Position;
 use pocketmine\Server;
 
 class Brush {
-	
+
 	public $player;
 	public $resetSize = 0;
 	private $type = "fill", $shape = "sphere", $size = 1, $hollow = false, $decrement = false;
 	private $height = 1, $perfect = true, $blocks = [], $obsolete = [], $biome = "plains", $tree = "oak", $yOffset = 0;
-	
+
 	public function __construct(string $player) {
 		$this->player = $player;
 	}
@@ -40,35 +40,35 @@ class Brush {
 	public function setBlocks(array $blocks) {
 		$this->blocks = $blocks;
 	}
-	
+
 	/**
 	 * @param $value
 	 */
 	public function setDecrementing($value) {
 		$this->decrement = (bool) $value;
 	}
-	
+
 	/**
 	 * @return bool
 	 */
 	public function isDecrementing(): bool {
 		return $this->decrement;
 	}
-	
+
 	/**
 	 * @param $value
 	 */
 	public function setPerfect($value) {
 		$this->perfect = (bool) $value;
 	}
-	
+
 	/**
 	 * @return bool
 	 */
 	public function getPerfect(): bool {
 		return $this->perfect;
 	}
-	
+
 	/**
 	 * @return Block[]
 	 */
@@ -86,14 +86,14 @@ class Brush {
 		}
 		return $data;
 	}
-	
+
 	/**
 	 * @param array $blocks
 	 */
 	public function setObsolete(array $blocks) {
 		$this->obsolete = $blocks;
 	}
-	
+
 	/**
 	 * @return Block[]
 	 */
@@ -111,14 +111,14 @@ class Brush {
 		}
 		return $data;
 	}
-	
+
 	/**
 	 * @param float $size
 	 */
 	public function setSize(float $size) {
 		$this->size = $size;
 	}
-	
+
 	/**
 	 * @param string $shape
 	 */
@@ -137,38 +137,38 @@ class Brush {
 		$vector3 = Server::getInstance()->getPlayer($this->player)->getTargetBlock(100)->add(0, $yOffset);
 		$location = new Position($vector3->x, $vector3->y, $vector3->z, Server::getInstance()->getPlayer($this->player)->getLevel());
 		$shape = new $shapeName(Server::getInstance()->getPlayer($this->player), Server::getInstance()->getPlayer($this->player)->getLevel(), $this->size, $location, $this->hollow, $cloneShape);
-		
+
 		return $shape;
 	}
-	
+
 	/**
 	 * @return int
 	 */
 	public function getSize(): int {
 		return $this->size;
 	}
-	
+
 	/**
 	 * @return bool
 	 */
 	public function getHollow(): bool {
 		return $this->hollow;
 	}
-	
+
 	/**
 	 * @return int
 	 */
 	public function getHeight(): int {
 		return $this->height;
 	}
-	
+
 	/**
 	 * @param int $height
 	 */
 	public function setHeight(int $height) {
 		$this->height = $height;
 	}
-	
+
 	/**
 	 * @param array $blocks
 	 *
@@ -177,24 +177,24 @@ class Brush {
 	public function getType(array $blocks = []): BaseType {
 		$typeName = 'BlockHorizons\BlockSniper\brush\types\\' . (ucfirst($this->type) . "Type");
 		$type = new $typeName(Server::getInstance()->getPlayer($this->player), Server::getInstance()->getPlayer($this->player)->getLevel(), $blocks);
-		
+
 		return $type;
 	}
-	
+
 	/**
 	 * @param string $type
 	 */
 	public function setType(string $type) {
 		$this->type = $type;
 	}
-	
+
 	/**
 	 * @param mixed $biome
 	 */
 	public function setBiome($biome) {
 		$this->biome = $biome;
 	}
-	
+
 	/**
 	 * @return int
 	 */
@@ -210,21 +210,21 @@ class Brush {
 		}
 		return 0;
 	}
-	
+
 	/**
 	 * @param $value
 	 */
 	public function setHollow($value) {
-		$this->hollow = (bool)$value;
+		$this->hollow = (bool) $value;
 	}
-	
+
 	/**
 	 * @param $treeType
 	 */
 	public function setTree($treeType) {
 		$this->tree = $treeType;
 	}
-	
+
 	/**
 	 * @return int
 	 */

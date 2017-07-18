@@ -34,16 +34,16 @@ class CuboidShape extends BaseShape {
 		$targetX = $this->center->x;
 		$targetY = $this->center->y;
 		$targetZ = $this->center->z;
-		
+
 		$minX = $targetX - $this->width;
 		$minY = $targetY - $this->height;
 		$minZ = $targetZ - $this->width;
 		$maxX = $targetX + $this->width;
 		$maxY = $targetY + $this->height;
 		$maxZ = $targetZ + $this->width;
-		
+
 		$blocksInside = [];
-		
+
 		for($x = $minX; $x <= $maxX; $x++) {
 			for($y = $minY; $y <= $maxY; $y++) {
 				for($z = $minZ; $z <= $maxZ; $z++) {

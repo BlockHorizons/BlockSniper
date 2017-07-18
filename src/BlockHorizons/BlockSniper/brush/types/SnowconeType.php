@@ -7,18 +7,17 @@ namespace BlockHorizons\BlockSniper\brush\types;
 use BlockHorizons\BlockSniper\brush\BaseType;
 use pocketmine\block\Block;
 use pocketmine\level\ChunkManager;
-use pocketmine\level\Level;
 use pocketmine\Player;
 
 class SnowconeType extends BaseType {
-	
+
 	/*
 	 * Lays a layer of snow on top of the terrain, and raises it if there is snow already.
 	 */
 	public function __construct(Player $player, ChunkManager $level, array $blocks) {
 		parent::__construct($player, $level, $blocks);
 	}
-	
+
 	/**
 	 * @return array
 	 */
@@ -53,7 +52,7 @@ class SnowconeType extends BaseType {
 		}
 		return $undoBlocks;
 	}
-	
+
 	public function getName(): string {
 		return "Snow Cone";
 	}

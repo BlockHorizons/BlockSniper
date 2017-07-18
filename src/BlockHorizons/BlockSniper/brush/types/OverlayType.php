@@ -5,15 +5,13 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
-use BlockHorizons\BlockSniper\brush\BrushManager;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\level\ChunkManager;
-use pocketmine\level\Level;
 use pocketmine\Player;
 
 class OverlayType extends BaseType {
-	
+
 	/*
 	 * Lays a layer of blocks over every block within the brush radius.
 	 */
@@ -71,7 +69,7 @@ class OverlayType extends BaseType {
 		}
 		return $undoBlocks;
 	}
-	
+
 	public function getName(): string {
 		return "Overlay";
 	}

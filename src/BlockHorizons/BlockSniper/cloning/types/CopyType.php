@@ -11,15 +11,15 @@ use pocketmine\level\Position;
 use pocketmine\Player;
 
 class CopyType extends BaseClone {
-	
+
 	public function __construct(CloneStorer $cloneStorer, Player $player, bool $saveAir, Position $center, array $blocks) {
 		parent::__construct($cloneStorer, $player, $saveAir, $center, $blocks);
 	}
-	
+
 	public function getName(): string {
 		return "Copy";
 	}
-	
+
 	public function saveClone() {
 		$copyBlocks = [];
 		foreach($this->blocks as $block) {

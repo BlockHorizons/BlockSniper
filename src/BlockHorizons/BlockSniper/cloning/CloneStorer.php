@@ -12,17 +12,19 @@ use pocketmine\math\Vector3;
 use pocketmine\Player;
 
 class CloneStorer {
-	
+
 	private $copyStore = [];
 	private $originalCenter = null;
 	private $loader;
-	
+	private $target;
+
 	public function __construct(Loader $loader) {
 		$this->loader = $loader;
 	}
-	
+
 	/**
 	 * @param Block[] $blocks
+	 * @param Player  $player
 	 */
 	public function saveCopy(array $blocks, Player $player) {
 		$this->unsetCopy($player);
@@ -68,14 +70,14 @@ class CloneStorer {
 		}
 		$this->getLoader()->getUndoStorer()->saveUndo(new Undo($undoBlocks), $player);
 	}
-	
+
 	/**
 	 * @return Loader
 	 */
 	public function getLoader(): Loader {
 		return $this->loader;
 	}
-	
+
 	public function resetCopyStorage() {
 		$this->copyStore = [];
 		$this->originalCenter = null;
@@ -93,18 +95,20 @@ class CloneStorer {
 		}
 		return true;
 	}
-	
+
 	/**
+	 * @param Player $player
+	 *
 	 * @return int
 	 */
 	public function getCopyBlockAmount(Player $player): int {
 		return count($this->copyStore[$player->getName()]);
 	}
-	
+
 	/*
 	 * Templates
 	 */
-	
+
 	/**
 	 * @param string  $templateName
 	 * @param array   $blocks
@@ -128,10 +132,11 @@ class CloneStorer {
 		file_put_contents($this->getLoader()->getDataFolder() . "templates/" . $templateName . ".yml", serialize($template));
 		return true;
 	}
-	
+
 	/**
 	 * @param string $templateName
 	 * @param Block  $targetBlock
+	 * @param Player $player
 	 *
 	 * @deprecated
 	 * @return bool
@@ -139,9 +144,9 @@ class CloneStorer {
 	public function pasteTemplate(string $templateName, Block $targetBlock, Player $player): bool {
 		$data = file_get_contents($this->getLoader()->getDataFolder() . "templates/" . $templateName . ".yml");
 		$content = unserialize($data);
-		
+
 		$undoBlocks = [];
-		
+
 		foreach($content as $key => $block) {
 			$Id = explode("(", $key);
 			$blockId = $Id[0];
@@ -151,16 +156,16 @@ class CloneStorer {
 			$y = $block["y"] + 1;
 			$z = $block["z"];
 			$finalBlock = Item::get($blockId)->getBlock();
-			$finalBlock->setDamage((int)$meta !== null ? $meta : 0);
-			
+			$finalBlock->setDamage((int) $meta !== null ? $meta : 0);
+
 			$blockPos = new Vector3($x + $targetBlock->x, $y + $targetBlock->y, $z + $targetBlock->z);
 			$undoBlocks[] = $targetBlock->getLevel()->getBlock($blockPos);
-			$targetBlock->getLevel()->setBlock($blockPos, Block::get((int)$blockId, (int)$meta), false, false);
+			$targetBlock->getLevel()->setBlock($blockPos, Block::get((int) $blockId, (int) $meta), false, false);
 		}
 		$this->getLoader()->getUndoStorer()->saveUndo(new Undo($undoBlocks), $player);
 		return true;
 	}
-	
+
 	public function templateExists(string $templateName): bool {
 		if(is_file($this->getLoader()->getDataFolder() . "templates/" . $templateName . ".yml")) {
 			return true;

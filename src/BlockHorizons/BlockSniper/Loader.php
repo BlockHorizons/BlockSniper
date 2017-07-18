@@ -4,13 +4,10 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper;
 
-use BlockHorizons\BlockSniper\brush\BaseShape;
-use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\brush\BrushManager;
 use BlockHorizons\BlockSniper\cloning\CloneStorer;
 use BlockHorizons\BlockSniper\commands\BlockSniperCommand;
 use BlockHorizons\BlockSniper\commands\BrushCommand;
-use BlockHorizons\BlockSniper\commands\CancelCommand;
 use BlockHorizons\BlockSniper\commands\cloning\CloneCommand;
 use BlockHorizons\BlockSniper\commands\cloning\PasteCommand;
 use BlockHorizons\BlockSniper\commands\CommandOverloads;
@@ -21,23 +18,17 @@ use BlockHorizons\BlockSniper\data\TranslationData;
 use BlockHorizons\BlockSniper\listeners\BrushListener;
 use BlockHorizons\BlockSniper\listeners\PresetListener;
 use BlockHorizons\BlockSniper\presets\PresetManager;
-use BlockHorizons\BlockSniper\tasks\spread\TickSpreadBrushTask;
-use BlockHorizons\BlockSniper\tasks\spread\TickSpreadUndoTask;
 use BlockHorizons\BlockSniper\tasks\UndoDiminishTask;
-use BlockHorizons\BlockSniper\undo\Redo;
-use BlockHorizons\BlockSniper\undo\Undo;
 use BlockHorizons\BlockSniper\undo\UndoStorer;
-use BlockHorizons\BlockSniper\worker\WorkerManager;
-use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat as TF;
 
 class Loader extends PluginBase {
-	
+
 	const VERSION = "1.4.0";
 	const API_TARGET = "2.0.0 - 3.0.0-ALPHA5";
 	const CONFIGURATION_VERSION = "2.1.1";
-	
+
 	private static $availableLanguages = [
 		"en",
 		"nl",
@@ -61,7 +52,7 @@ class Loader extends PluginBase {
 	public static function getAvailableLanguages(): array {
 		return self::$availableLanguages;
 	}
-	
+
 	public function onEnable() {
 		$this->reloadAll();
 
@@ -71,7 +62,7 @@ class Loader extends PluginBase {
 		$this->getServer()->getScheduler()->scheduleRepeatingTask(new UndoDiminishTask($this), 400);
 		CommandOverloads::initialize();
 	}
-	
+
 	public function reloadAll() {
 		$this->saveResource("settings.yml");
 		$this->settings = new ConfigData($this);
@@ -102,14 +93,14 @@ class Loader extends PluginBase {
 			$this->getLogger()->info(TF::AQUA . "[BlockSniper] Language selected: " . TF::GREEN . $this->getSettings()->getLanguage());
 		}
 	}
-	
+
 	/**
 	 * @return ConfigData
 	 */
 	public function getSettings(): ConfigData {
 		return $this->settings;
 	}
-	
+
 	public function registerCommands() {
 		$blockSniperCommands = [
 			"blocksniper" => new BlockSniperCommand($this),
@@ -124,7 +115,7 @@ class Loader extends PluginBase {
 			$this->getServer()->getCommandMap()->register($name, $class);
 		}
 	}
-	
+
 	public function registerListeners() {
 		$blockSniperListeners = [
 			new BrushListener($this),
@@ -134,7 +125,7 @@ class Loader extends PluginBase {
 			$this->getServer()->getPluginManager()->registerEvents($listener, $this);
 		}
 	}
-	
+
 	public function onDisable() {
 		$this->getPresetManager()->storePresetsToFile();
 		$this->getBrushManager()->storeBrushesToFile();
@@ -142,7 +133,7 @@ class Loader extends PluginBase {
 
 		$this->getLogger()->info(TF::RED . "BlockSniper has been disabled.");
 	}
-	
+
 	/**
 	 * @return PresetManager
 	 */
@@ -156,7 +147,7 @@ class Loader extends PluginBase {
 	public function getBrushManager(): BrushManager {
 		return $this->brushManager;
 	}
-	
+
 	/**
 	 * @return CloneStorer
 	 */

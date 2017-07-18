@@ -5,20 +5,11 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\brush;
 
 use BlockHorizons\BlockSniper\brush\async\BlockSniperChunkManager;
-use BlockHorizons\BlockSniper\brush\types\BiomeType;
-use BlockHorizons\BlockSniper\brush\types\FlattenallType;
-use BlockHorizons\BlockSniper\brush\types\FlattenType;
-use BlockHorizons\BlockSniper\brush\types\LayerType;
-use BlockHorizons\BlockSniper\brush\types\ReplaceType;
-use BlockHorizons\BlockSniper\brush\types\TreeType;
 use pocketmine\block\Block;
 use pocketmine\level\ChunkManager;
 use pocketmine\level\format\Chunk;
-use pocketmine\level\generator\biome\Biome;
-use pocketmine\level\generator\object\Tree;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
-use pocketmine\level\SimpleChunkManager;
 use pocketmine\Player;
 use pocketmine\Server;
 
@@ -59,14 +50,14 @@ abstract class BaseType {
 	protected $brushBlocks = [];
 	/** @var int */
 	protected $height = 0;
-	/** @var bool */
-	private $async = false;
 	/** @var null|BlockSniperChunkManager */
 	protected $chunkManager = null;
+	/** @var bool */
+	private $async = false;
 
 	/**
 	 * @param Player       $player
-	 * @param ChunkManager $level
+	 * @param ChunkManager $manager
 	 * @param Block[]      $blocks
 	 */
 	public function __construct(Player $player, ChunkManager $manager, array $blocks) {
@@ -79,7 +70,7 @@ abstract class BaseType {
 		$this->blocks = $blocks;
 		$this->brushBlocks = BrushManager::get($player)->getBlocks();
 	}
-	
+
 	/**
 	 * @param string $type
 	 *
@@ -92,7 +83,7 @@ abstract class BaseType {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Registers a new Type. Example:
 	 * Raise, 12
@@ -113,11 +104,22 @@ abstract class BaseType {
 		define(('BlockHorizons\BlockSniper\brush\BaseType\\' . $typeConst), $number);
 		return true;
 	}
-	
-	public abstract function getName(): string;
-	
+
+	/**
+	 * @param Chunk[] $chunks
+	 *
+	 * @return BlockSniperChunkManager
+	 */
+	public static function establishChunkManager(array $chunks): BlockSniperChunkManager {
+		$manager = new BlockSniperChunkManager(0);
+		foreach($chunks as $chunk) {
+			$manager->setChunk($chunk->getX, $chunk->getZ, $chunk);
+		}
+		return $manager;
+	}
+
 	public abstract function fillShape(): array;
-	
+
 	/**
 	 * Returns the level the type is used in.
 	 *
@@ -147,7 +149,7 @@ abstract class BaseType {
 	public function setBlocksInside(array $blocks) {
 		$this->blocks = $blocks;
 	}
-	
+
 	/**
 	 * Returns the blocks the type is being executed upon.
 	 *
@@ -173,6 +175,8 @@ abstract class BaseType {
 		return "blocksniper.type." . str_replace("hollow", "", str_replace(" ", "_", strtolower($this->getName())));
 	}
 
+	public abstract function getName(): string;
+
 	/**
 	 * @return bool
 	 */
@@ -188,13 +192,6 @@ abstract class BaseType {
 	}
 
 	/**
-	 * @param ChunkManager $manager
-	 */
-	public function setChunkManager(ChunkManager $manager) {
-		$this->chunkManager = $manager;
-	}
-
-	/**
 	 * @return BlockSniperChunkManager
 	 */
 	public function getChunkManager(): BlockSniperChunkManager {
@@ -202,15 +199,9 @@ abstract class BaseType {
 	}
 
 	/**
-	 * @param Chunk[] $chunks
-	 *
-	 * @return BlockSniperChunkManager
+	 * @param ChunkManager $manager
 	 */
-	public static function establishChunkManager(array $chunks): BlockSniperChunkManager {
-		$manager = new BlockSniperChunkManager(0);
-		foreach($chunks as $chunk) {
-			$manager->setChunk($chunk->getX, $chunk->getZ, $chunk);
-		}
-		return $manager;
+	public function setChunkManager(ChunkManager $manager) {
+		$this->chunkManager = $manager;
 	}
 }

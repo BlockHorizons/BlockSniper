@@ -7,11 +7,10 @@ namespace BlockHorizons\BlockSniper\brush\types;
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\brush\BrushManager;
 use pocketmine\level\ChunkManager;
-use pocketmine\level\Level;
 use pocketmine\Player;
 
 class BiomeType extends BaseType {
-	
+
 	/*
 	 * Changes the biome within the brush radius.
 	 */
@@ -33,7 +32,7 @@ class BiomeType extends BaseType {
 		}
 		return [];
 	}
-	
+
 	public function getName(): string {
 		return "Biome";
 	}

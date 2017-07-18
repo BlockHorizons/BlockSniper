@@ -8,11 +8,10 @@ use BlockHorizons\BlockSniper\brush\BaseType;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\level\ChunkManager;
-use pocketmine\level\Level;
 use pocketmine\Player;
 
 class ExpandType extends BaseType {
-	
+
 	/*
 	 * Expands the terrain with blocks below it.
 	 */
@@ -85,7 +84,7 @@ class ExpandType extends BaseType {
 
 		return array_merge($undoBlocks, $oneHoles);
 	}
-	
+
 	public function getName(): string {
 		return "Expand";
 	}

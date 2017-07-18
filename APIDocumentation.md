@@ -80,6 +80,10 @@ class ExampleShape extends BaseShape {
     public function getApproximateProcessedBlocks(): int {
         return 0;
     }
+    
+    public function getTouchedChunks(): array {
+    	return [];
+    }
 }
 ```
 Note the namespace should always be like this for the shape to get registered correctly.<br>

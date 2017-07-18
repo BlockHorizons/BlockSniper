@@ -37,6 +37,43 @@ class BlockSniperChunkManager extends SimpleChunkManager {
 		return 0;
 	}
 
+	/**
+	 * @param int $x
+	 * @param int $y
+	 * @param int $z
+	 * @param int $side
+	 *
+	 * @return Block
+	 */
+	public function getSide(int $x, int $y, int $z, int $side): Block {
+		if($chunk = $this->getChunk($x >> 4, $z >> 4)) {
+			$block = Block::get($this->getSideId($x, $y, $z, $side), $this->getSideData($x, $y, $z, $side));
+			$pos = [];
+			switch($side) {
+				case Vector3::SIDE_DOWN:
+					$pos = [$x, $y - 1, $z];
+					break;
+				case Vector3::SIDE_UP:
+					$pos = [$x, $y + 1, $z];
+					break;
+				case Vector3::SIDE_NORTH:
+					$pos = [$x, $y, $z - 1];
+					break;
+				case Vector3::SIDE_SOUTH:
+					$pos = [$x, $y, $z + 1];
+					break;
+				case Vector3::SIDE_WEST:
+					$pos = [$x - 1, $y, $z];
+					break;
+				case Vector3::SIDE_EAST:
+					$pos = [$x + 1, $y, $z];
+			}
+			$block->setComponents($pos[0], $pos[1], $pos[2]);
+			return $block;
+		}
+		return Block::get(Block::AIR);
+	}
+
 	public function getSideId(int $x, int $y, int $z, int $side): int {
 		if($chunk = $this->getChunk($x >> 4, $z >> 4)) {
 			switch($side) {
@@ -79,42 +116,5 @@ class BlockSniperChunkManager extends SimpleChunkManager {
 			}
 		}
 		return -1;
-	}
-
-	/**
-	 * @param int $x
-	 * @param int $y
-	 * @param int $z
-	 * @param int $side
-	 *
-	 * @return Block
-	 */
-	public function getSide(int $x, int $y, int $z, int $side): Block {
-		if($chunk = $this->getChunk($x >> 4, $z >> 4)) {
-			$block = Block::get($this->getSideId($x, $y, $z, $side), $this->getSideData($x, $y, $z, $side));
-			$pos = [];
-			switch($side) {
-				case Vector3::SIDE_DOWN:
-					$pos = [$x, $y - 1, $z];
-					break;
-				case Vector3::SIDE_UP:
-					$pos = [$x, $y + 1, $z];
-					break;
-				case Vector3::SIDE_NORTH:
-					$pos = [$x, $y, $z - 1];
-					break;
-				case Vector3::SIDE_SOUTH:
-					$pos = [$x, $y, $z + 1];
-					break;
-				case Vector3::SIDE_WEST:
-					$pos = [$x - 1, $y, $z];
-					break;
-				case Vector3::SIDE_EAST:
-					$pos = [$x + 1, $y, $z];
-			}
-			$block->setComponents($pos[0], $pos[1], $pos[2]);
-			return $block;
-		}
-		return Block::get(Block::AIR);
 	}
 }

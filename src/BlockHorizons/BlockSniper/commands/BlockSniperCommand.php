@@ -9,7 +9,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\utils\TextFormat as TF;
 
 class BlockSniperCommand extends BaseCommand {
-	
+
 	public function __construct(Loader $loader) {
 		parent::__construct($loader, "blocksniper", "Get information or change things related to BlockSniper", "/blocksniper [language|reload] [lang]", ["bs"]);
 	}
@@ -18,7 +18,7 @@ class BlockSniperCommand extends BaseCommand {
 		if(!$this->testPermission($sender)) {
 			$this->sendNoPermission($sender);
 		}
-		
+
 		if(!isset($args[0])) {
 			$sender->sendMessage(TF::AQUA . "[BlockSniper] Information\n" .
 				TF::GREEN . "Version: " . TF::YELLOW . Loader::VERSION . "\n" .
@@ -33,12 +33,12 @@ class BlockSniperCommand extends BaseCommand {
 				$this->getSettings()->set("Message-Language", $args[1]);
 				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.language"));
 				return true;
-			
+
 			case "reload":
 				$sender->sendMessage(TF::GREEN . "Reloading...");
 				$this->getLoader()->reloadAll();
 				return true;
-			
+
 			default:
 				$sender->sendMessage(TF::AQUA . "[BlockSniper] Information\n" .
 					TF::GREEN . "Version: " . TF::YELLOW . Loader::VERSION . "\n" .

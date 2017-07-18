@@ -6,11 +6,10 @@ namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
 use pocketmine\level\ChunkManager;
-use pocketmine\level\Level;
 use pocketmine\Player;
 
 class CleanentitiesType extends BaseType {
-	
+
 	/*
 	 * Clears all entities within the brush radius. This brush can not undo.
 	 */
@@ -39,7 +38,7 @@ class CleanentitiesType extends BaseType {
 		}
 		return [];
 	}
-	
+
 	public function getName(): string {
 		return "Clean Entities";
 	}

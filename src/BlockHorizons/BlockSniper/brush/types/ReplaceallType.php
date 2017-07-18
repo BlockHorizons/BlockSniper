@@ -5,16 +5,13 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
-use BlockHorizons\BlockSniper\brush\BrushManager;
 use pocketmine\block\Block;
 use pocketmine\block\Flowable;
 use pocketmine\level\ChunkManager;
-use pocketmine\level\Level;
-use pocketmine\math\Vector3;
 use pocketmine\Player;
 
 class ReplaceallType extends BaseType {
-	
+
 	/*
 	 * Replaces every solid block within the brush radius.
 	 */
@@ -41,7 +38,7 @@ class ReplaceallType extends BaseType {
 		}
 		return $undoBlocks;
 	}
-	
+
 	public function getName(): string {
 		return "Replace All";
 	}
