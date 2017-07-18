@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\brush;
 
+use BlockHorizons\BlockSniper\brush\async\tasks\BrushTask;
 use BlockHorizons\BlockSniper\brush\shapes\CubeShape;
 use BlockHorizons\BlockSniper\brush\shapes\CuboidShape;
 use BlockHorizons\BlockSniper\brush\shapes\CylinderShape;
@@ -11,7 +12,9 @@ use BlockHorizons\BlockSniper\brush\shapes\SphereShape;
 use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
+use pocketmine\math\Vector3;
 use pocketmine\Player;
+use pocketmine\Server;
 
 abstract class BaseShape {
 
@@ -20,21 +23,20 @@ abstract class BaseShape {
 	const SHAPE_CYLINDER = 2;
 	const SHAPE_CUBOID = 3;
 
-	public $player;
-
-	protected $level;
-	protected $width;
-	protected $radius;
-	protected $center;
-	protected $hollow;
-	protected $height;
-
-	protected $partialBlocks = [];
-	protected $partialBlockCount = 0;
+	/** @var int */
+	protected $level = 0;
+	/** @var Position */
+	protected $center = null;
+	/** @var bool */
+	protected $hollow = false;
+	/** @var int */
+	protected $height = 0;
+	/** @var string */
+	protected $playerName = "";
 
 	public function __construct(Player $player, Level $level, Position $center, bool $hollow) {
-		$this->player = $player;
-		$this->level = $level;
+		$this->playerName = $player->getName();
+		$this->level = $level->getId();
 		$this->center = $center;
 		$this->hollow = $hollow;
 	}
@@ -74,23 +76,13 @@ abstract class BaseShape {
 	}
 
 	/**
-	 * Internal function. Used to get progress of tick spread brush.
-	 *
-	 * @return int
-	 */
-	public function getProcessedBlocks(): int {
-		return $this->partialBlockCount;
-	}
-
-	/**
 	 * Returns all blocks in the shape if $partially is false. If true, only returns part of the shape, specified by $blocksPerTick.
 	 *
-	 * @param bool $partially
-	 * @param int  $blocksPerTick
+	 * @param $vectorOnly
 	 *
-	 * @return Block[]
+	 * @return Block[]|Vector3[]
 	 */
-	public abstract function getBlocksInside(bool $partially = false, int $blocksPerTick = 100): array;
+	public abstract function getBlocksInside(bool $vectorOnly = false): array;
 
 	/**
 	 * Returns the approximate amount of processed blocks in the shape. This may not be perfectly accurate.
@@ -105,42 +97,25 @@ abstract class BaseShape {
 	 * @return Level
 	 */
 	public function getLevel(): Level {
-		return $this->level;
+		return Server::getInstance()->getLevel($this->level);
 	}
 
 	/**
-	 * Returns the player that made the shape.
+	 * @param Server $server
 	 *
 	 * @return Player
 	 */
-	public function getPlayer(): Player {
-		return $this->player;
+	public function getPlayer(Server $server): Player {
+		return $server->getPlayer($this->playerName);
 	}
 
+
 	/**
-	 * Returns the width in case of a CubeShape or CuboidShape.
-	 *
-	 * @return float
+	 * @return int
 	 */
-	public function getWidth(): float {
-		if($this instanceof CubeShape || $this instanceof CuboidShape) {
-			return $this->width;
-		}
-		return 0.0;
+	public function getLevelId(): int {
+		return $this->level;
 	}
-	
-	/**
-	 * Returns the radius in case of a SphereShape or CylinderShape.
-	 *
-	 * @return float|null
-	 */
-	public function getRadius(): int {
-		if($this instanceof SphereShape || $this instanceof CylinderShape) {
-			return $this->radius;
-		}
-		return 0;
-	}
-	
 	/**
 	 * Returns the center of the shape made, or the target block.
 	 *
@@ -148,16 +123,6 @@ abstract class BaseShape {
 	 */
 	public function getCenter(): Position {
 		return $this->center;
-	}
-	
-	/**
-	 * Returns true if the shape is hollow, false if it is not.
-	 *
-	 * @return bool
-	 * @deprecated
-	 */
-	public function getHollow(): bool {
-		return $this->hollow;
 	}
 
 	/**
@@ -167,18 +132,6 @@ abstract class BaseShape {
 	 */
 	public function isHollow(): bool {
 		return $this->hollow;
-	}
-	
-	/**
-	 * Returns the height in case of a CylinderShape or CuboidShape.
-	 *
-	 * @return int|null
-	 */
-	public function getHeight(): int {
-		if($this instanceof CylinderShape || $this instanceof CuboidShape) {
-			return $this->height;
-		}
-		return 0;
 	}
 
 	/**
@@ -196,4 +149,19 @@ abstract class BaseShape {
 	 * @return string
 	 */
 	public abstract function getName(): string;
+
+	/**
+	 * @return array
+	 */
+	public abstract function getTouchedChunks(): array;
+
+	/**
+	 * @param BaseType $type
+	 *
+	 * @return bool
+	 */
+	public function editAsynchronously(BaseType $type): bool {
+		$this->getLevel()->getServer()->getScheduler()->scheduleAsyncTask(new BrushTask($this, $type, $this->getTouchedChunks()));
+		return true;
+	}
 }

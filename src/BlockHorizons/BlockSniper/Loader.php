@@ -54,7 +54,6 @@ class Loader extends PluginBase {
 	private $settings;
 	private $brushManager;
 	private $presetManager;
-	private $workerManager;
 
 	/**
 	 * @return array
@@ -83,7 +82,6 @@ class Loader extends PluginBase {
 
 		$this->undoStorer = new UndoStorer($this);
 		$this->cloneStorer = new CloneStorer($this);
-		$this->workerManager = new WorkerManager($this);
 
 		if(!is_dir($this->getDataFolder())) {
 			mkdir($this->getDataFolder());
@@ -176,54 +174,6 @@ class Loader extends PluginBase {
 			return (string) $this->language->get($message);
 		}
 		return "";
-	}
-
-	/**
-	 * @param BaseShape $shape
-	 * @param BaseType  $type
-	 *
-	 * @return bool
-	 */
-	public function spreadTickBrush(BaseShape $shape, BaseType $type): bool {
-		$this->getWorkerManager()->addWorkers($shape->getPlayer());
-		if(!$this->getWorkerManager()->hasWorkerAvailable($shape->getPlayer())) {
-			return false;
-		}
-		$workerId = $this->getWorkerManager()->scheduleWorker($shape->getPlayer(), get_class($type));
-		$this->getServer()->getScheduler()->scheduleRepeatingTask(new TickSpreadBrushTask($this, $shape, $type, $workerId), 1);
-		return true;
-	}
-
-	/**
-	 * @return WorkerManager
-	 */
-	public function getWorkerManager(): WorkerManager {
-		return $this->workerManager;
-	}
-
-	/**
-	 * @param Undo|Redo $undo
-	 * @param Player    $player
-	 *
-	 * @return bool
-	 */
-	public function spreadTickUndo($undo, Player $player): bool {
-		$this->getWorkerManager()->addWorkers($player);
-		if(!$undo instanceof Undo && !$undo instanceof Redo) {
-			return false;
-		}
-		if(!$this->getWorkerManager()->hasWorkerAvailable($player)) {
-			return false;
-		}
-		$workerId = $this->getWorkerManager()->scheduleWorker($player, get_class($undo));
-		$undoAmount = $undo->getBlockCount();
-		if($undo instanceof Undo) {
-			$this->getUndoStorer()->saveRedo($undo->getDetachedRedo(), $player);
-		} else {
-			$this->getUndoStorer()->saveUndo($undo->getDetachedUndo(), $player);
-		}
-		$this->getServer()->getScheduler()->scheduleRepeatingTask(new TickSpreadUndoTask($this, $undo->getBlocks(), $player, (int) ceil($undoAmount / $this->getSettings()->getBlocksPerTick()), $workerId), 1);
-		return true;
 	}
 
 	/**

@@ -6,7 +6,7 @@ namespace BlockHorizons\BlockSniper\undo;
 
 use pocketmine\block\Block;
 
-class Redo {
+class Redo implements Revert {
 
 	private $redoBlocks;
 

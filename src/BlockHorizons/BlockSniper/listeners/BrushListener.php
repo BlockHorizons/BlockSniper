@@ -41,14 +41,13 @@ class BrushListener implements Listener {
 					return false;
 				}
 
-				if($this->getLoader()->getSettings()->getBrushLevel() === 0 || ($this->getLoader()->getSettings()->getBrushLevel() === 1 && $brush->getSize() >= 15)) {
-					$this->getLoader()->spreadTickBrush($shape, $type);
+				if($brush->getSize() >= 15) {
+					$shape->editAsynchronously($type);
 				} else {
 					$type->setBlocksInside($shape->getBlocksInside());
 					$undoBlocks = $type->fillShape();
 					$this->getLoader()->getUndoStorer()->saveUndo(new Undo($undoBlocks), $player);
 				}
-
 				$this->decrementBrush($player);
 				$event->setCancelled();
 			}
