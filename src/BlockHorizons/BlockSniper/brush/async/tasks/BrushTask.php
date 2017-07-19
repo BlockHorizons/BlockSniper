@@ -17,8 +17,6 @@ class BrushTask extends AsyncBlockSniperTask {
 
 	/** @var BaseShape */
 	private $shape = null;
-	/** @var BaseType */
-	protected $type = null;
 	/** @var string */
 	private $chunks = "";
 
@@ -63,7 +61,7 @@ class BrushTask extends AsyncBlockSniperTask {
 		$this->setResult([
 			"undoBlocks" => $undoBlocks,
 			"chunks" => $chunks
-		], true);
+		]);
 	}
 
 	/**
@@ -90,7 +88,7 @@ class BrushTask extends AsyncBlockSniperTask {
 			}
 		}
 		if(($player = $this->shape->getPlayer($server))) {
-			$loader->getUndoStorer()->saveUndo(new Undo($undoBlocks), $player);
+			$loader->getRevertStorer()->saveRevert((new Undo($undoBlocks))->setAsynchronous()->setManager(BaseType::establishChunkManager($chunks))->setTouchedChunks($chunks)->setPlayerName($this->shape->getPlayer($server)->getName()), $player);
 		}
 		return true;
 	}

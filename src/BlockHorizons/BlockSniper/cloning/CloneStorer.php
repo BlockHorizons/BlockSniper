@@ -68,7 +68,7 @@ class CloneStorer {
 			$undoBlocks[] = $level->getBlock($center->add($block));
 			$level->setBlock($center->add($block), $block, false, false);
 		}
-		$this->getLoader()->getUndoStorer()->saveUndo(new Undo($undoBlocks), $player);
+		$this->getLoader()->getRevertStorer()->saveRevert(new Undo($undoBlocks), $player);
 	}
 
 	/**
@@ -162,7 +162,7 @@ class CloneStorer {
 			$undoBlocks[] = $targetBlock->getLevel()->getBlock($blockPos);
 			$targetBlock->getLevel()->setBlock($blockPos, Block::get((int) $blockId, (int) $meta), false, false);
 		}
-		$this->getLoader()->getUndoStorer()->saveUndo(new Undo($undoBlocks), $player);
+		$this->getLoader()->getRevertStorer()->saveRevert(new Undo($undoBlocks), $player);
 		return true;
 	}
 

@@ -66,7 +66,7 @@ class PasteCommand extends BaseCommand {
 						$center->getLevel()->setBlock($target, $block, false, false);
 					}
 				}
-				$this->getLoader()->getUndoStorer()->saveUndo(new Undo($undoBlocks), $sender);
+				$this->getLoader()->getRevertStorer()->saveRevert(new Undo($undoBlocks), $sender);
 				break;
 		}
 		$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.paste"));

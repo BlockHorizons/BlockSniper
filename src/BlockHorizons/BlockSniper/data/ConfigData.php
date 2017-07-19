@@ -32,7 +32,7 @@ class ConfigData {
 			"Save-Brush-Properties" => $cfg["Save-Brush-Properties"] ?? true,
 			"Drop-Leafblower-Plants" => $cfg["Drop-Leafblower-Plants"] ?? true,
 			"Save-Air-In-Copy" => $cfg["Save-Air-In-Copy"] ?? false,
-			"Asynchronous-Operation-Size" => $cfg["Asynchronous-Operation-Size"] ?? 1
+			"Asynchronous-Operation-Size" => $cfg["Asynchronous-Operation-Size"] ?? 15
 		];
 		if($cfg["Configuration-Version"] !== Loader::CONFIGURATION_VERSION) {
 			$autoUpdate = $cfg["Auto-Configuration-Update"];

@@ -19,6 +19,7 @@ use BlockHorizons\BlockSniper\listeners\BrushListener;
 use BlockHorizons\BlockSniper\listeners\PresetListener;
 use BlockHorizons\BlockSniper\presets\PresetManager;
 use BlockHorizons\BlockSniper\tasks\UndoDiminishTask;
+use BlockHorizons\BlockSniper\undo\RevertStorer;
 use BlockHorizons\BlockSniper\undo\UndoStorer;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat as TF;
@@ -29,6 +30,7 @@ class Loader extends PluginBase {
 	const API_TARGET = "2.0.0 - 3.0.0-ALPHA5";
 	const CONFIGURATION_VERSION = "2.1.1";
 
+	/** @var string[] */
 	private static $availableLanguages = [
 		"en",
 		"nl",
@@ -38,12 +40,18 @@ class Loader extends PluginBase {
 		"ru",
 		"zh_tw"
 	];
-	public $language;
+	/** @var TranslationData */
+	public $language = "";
 
-	private $undoStorer;
+	/** @var RevertStorer */
+	private $revertStorer;
+	/** @var CloneStorer */
 	private $cloneStorer;
+	/** @var ConfigData */
 	private $settings;
+	/** @var BrushManager */
 	private $brushManager;
+	/** @var PresetManager */
 	private $presetManager;
 
 	/**
@@ -71,7 +79,7 @@ class Loader extends PluginBase {
 		$this->presetManager = new PresetManager($this);
 		$this->brushManager = new BrushManager($this);
 
-		$this->undoStorer = new UndoStorer($this);
+		$this->undoStorer = new RevertStorer($this);
 		$this->cloneStorer = new CloneStorer($this);
 
 		if(!is_dir($this->getDataFolder())) {
@@ -167,9 +175,9 @@ class Loader extends PluginBase {
 	}
 
 	/**
-	 * @return UndoStorer
+	 * @return RevertStorer
 	 */
-	public function getUndoStorer(): UndoStorer {
-		return $this->undoStorer;
+	public function getRevertStorer(): RevertStorer {
+		return $this->revertStorer;
 	}
 }

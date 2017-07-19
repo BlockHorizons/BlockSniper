@@ -46,7 +46,7 @@ class BrushListener implements Listener {
 				} else {
 					$type->setBlocksInside($shape->getBlocksInside());
 					$undoBlocks = $type->fillShape();
-					$this->getLoader()->getUndoStorer()->saveUndo(new Undo($undoBlocks), $player);
+					$this->getLoader()->getRevertStorer()->saveRevert(new Undo($undoBlocks), $player);
 				}
 				$this->decrementBrush($player);
 				$event->setCancelled();

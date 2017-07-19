@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\commands;
 
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\undo\Revert;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
@@ -26,7 +27,7 @@ class UndoCommand extends BaseCommand {
 			return true;
 		}
 
-		if(!$this->getLoader()->getUndoStorer()->undoStorageExists($sender)) {
+		if(!$this->getLoader()->getRevertStorer()->undoStorageExists($sender)) {
 			$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.no-modifications"));
 			return true;
 		}
@@ -34,12 +35,12 @@ class UndoCommand extends BaseCommand {
 		$undoAmount = 1;
 		if(isset($args[0])) {
 			$undoAmount = $args[0];
-			if($undoAmount > ($totalUndo = $this->getLoader()->getUndoStorer()->getTotalUndoStores($sender))) {
+			if($undoAmount > ($totalUndo = $this->getLoader()->getRevertStorer()->getTotalStores($sender, Revert::TYPE_UNDO))) {
 				$undoAmount = $totalUndo;
 			}
 		}
 
-		$this->getLoader()->getUndoStorer()->restoreLatestUndo($undoAmount, $sender);
+		$this->getLoader()->getRevertStorer()->restoreLatestRevert(Revert::TYPE_UNDO, $undoAmount, $sender);
 		$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.undo") . TF::AQUA . " (" . $undoAmount . ")");
 		return true;
 	}
