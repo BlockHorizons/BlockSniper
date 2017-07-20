@@ -12,7 +12,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\item\Item;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
-use BlockHorizons\libschematic\Schematic;
+use libschematic\Schematic;
 
 class PasteCommand extends BaseCommand {
 	
@@ -53,8 +53,8 @@ class PasteCommand extends BaseCommand {
 					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.template-not-existing"));
 					return true;
 				}
-				$schematic = new Schematic(file_get_contents($file));
-				$schematic->decode();
+				$schematic = new Schematic($file);
+				$schematic->decode()
 				$schematic->fixBlockIds();
 
 				$undoBlocks = [];
