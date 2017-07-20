@@ -54,7 +54,7 @@ class PasteCommand extends BaseCommand {
 					return true;
 				}
 				$schematic = new Schematic($file);
-				$schematic->decode()
+				$schematic->decode();
 				$schematic->fixBlockIds();
 
 				$undoBlocks = [];
