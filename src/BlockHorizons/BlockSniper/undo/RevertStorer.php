@@ -33,9 +33,9 @@ class RevertStorer {
 	public function restoreLatestRevert(int $type, int $amount, Player $player) {
 		for($i = 0; $i < $amount; $i++) {
 			if($type === Revert::TYPE_UNDO) {
-				$revert = $this->undoStack[$player->getName()][max(array_keys($this->redoStack[$player->getName()]))];
+				$revert = $this->undoStack[$player->getName()][max(array_keys($this->undoStack[$player->getName()]))];
 			} else {
-				$revert = $this->redoStack[$player->getName()][max(array_keys($this->undoStack[$player->getName()]))];
+				$revert = $this->redoStack[$player->getName()][max(array_keys($this->redoStack[$player->getName()]))];
 			}
 			$detached = $revert->getDetached();
 			$this->saveRevert($detached, $player);
@@ -70,8 +70,14 @@ class RevertStorer {
 	 */
 	public function getTotalStores(Player $player, int $type): int {
 		if($type === Revert::TYPE_UNDO) {
+			if(!isset($this->undoStack[$player->getName()])) {
+				return 0;
+			}
 			return count($this->undoStack[$player->getName()]);
 		} else {
+			if(!isset($this->redoStack[$player->getName()])) {
+				return 0;
+			}
 			return count($this->redoStack[$player->getName()]);
 		}
 	}

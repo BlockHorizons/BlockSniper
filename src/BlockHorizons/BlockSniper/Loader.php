@@ -20,7 +20,6 @@ use BlockHorizons\BlockSniper\listeners\PresetListener;
 use BlockHorizons\BlockSniper\presets\PresetManager;
 use BlockHorizons\BlockSniper\tasks\UndoDiminishTask;
 use BlockHorizons\BlockSniper\undo\RevertStorer;
-use BlockHorizons\BlockSniper\undo\UndoStorer;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat as TF;
 
@@ -79,7 +78,7 @@ class Loader extends PluginBase {
 		$this->presetManager = new PresetManager($this);
 		$this->brushManager = new BrushManager($this);
 
-		$this->undoStorer = new RevertStorer($this);
+		$this->revertStorer = new RevertStorer($this);
 		$this->cloneStorer = new CloneStorer($this);
 
 		if(!is_dir($this->getDataFolder())) {

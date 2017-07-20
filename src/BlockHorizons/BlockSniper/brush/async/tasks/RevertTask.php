@@ -36,7 +36,6 @@ class RevertTask extends AsyncBlockSniperTask {
 			"chunks" => $chunks,
 			"revert" => $detached
 		]);
-
 	}
 
 	public function onCompletion(Server $server) {
@@ -60,6 +59,7 @@ class RevertTask extends AsyncBlockSniperTask {
 		$level = $server->getLevel($levelId);
 		if($level instanceof Level) {
 			foreach($chunks as $hash => $chunk) {
+				$x = $z = 0;
 				Level::getXZ($hash, $x, $z);
 				$level->setChunk($x, $z, $chunk);
 			}

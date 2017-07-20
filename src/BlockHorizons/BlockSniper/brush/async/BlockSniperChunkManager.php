@@ -78,17 +78,17 @@ class BlockSniperChunkManager extends SimpleChunkManager {
 		if($chunk = $this->getChunk($x >> 4, $z >> 4)) {
 			switch($side) {
 				case Vector3::SIDE_DOWN:
-					return $chunk->getBlockId($x, $y - 1, $z);
+					return $this->getBlockIdAt($x, $y - 1, $z);
 				case Vector3::SIDE_UP:
-					return $chunk->getBlockId($x, $y + 1, $z);
+					return $this->getBlockIdAt($x, $y + 1, $z);
 				case Vector3::SIDE_NORTH:
-					return $chunk->getBlockId($x, $y, $z - 1);
+					return $this->getBlockIdAt($x, $y, $z - 1);
 				case Vector3::SIDE_SOUTH:
-					return $chunk->getBlockId($x, $y, $z + 1);
+					return $this->getBlockIdAt($x, $y, $z + 1);
 				case Vector3::SIDE_WEST:
-					return $chunk->getBlockId($x - 1, $y, $z);
+					return $this->getBlockIdAt($x - 1, $y, $z);
 				case Vector3::SIDE_EAST:
-					return $chunk->getBlockId($x + 1, $y, $z);
+					return $this->getBlockIdAt($x + 1, $y, $z);
 				default:
 					return -1;
 			}
@@ -100,17 +100,17 @@ class BlockSniperChunkManager extends SimpleChunkManager {
 		if($chunk = $this->getChunk($x >> 4, $z >> 4)) {
 			switch($side) {
 				case Vector3::SIDE_DOWN:
-					return $chunk->getBlockData($x, $y - 1, $z);
+					return $this->getBlockDataAt($x, $y - 1, $z);
 				case Vector3::SIDE_UP:
-					return $chunk->getBlockData($x, $y + 1, $z);
+					return $this->getBlockDataAt($x, $y + 1, $z);
 				case Vector3::SIDE_NORTH:
-					return $chunk->getBlockData($x, $y, $z - 1);
+					return $this->getBlockDataAt($x, $y, $z - 1);
 				case Vector3::SIDE_SOUTH:
-					return $chunk->getBlockData($x, $y, $z + 1);
+					return $this->getBlockDataAt($x, $y, $z + 1);
 				case Vector3::SIDE_WEST:
-					return $chunk->getBlockData($x - 1, $y, $z);
+					return $this->getBlockDataAt($x - 1, $y, $z);
 				case Vector3::SIDE_EAST:
-					return $chunk->getBlockData($x + 1, $y, $z);
+					return $this->getBlockDataAt($x + 1, $y, $z);
 				default:
 					return -1;
 			}

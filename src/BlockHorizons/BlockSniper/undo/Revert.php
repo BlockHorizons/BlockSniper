@@ -76,9 +76,17 @@ abstract class Revert {
 		if(empty($this->touchedChunks)) {
 			return false;
 		}
+		$this->setAsynchronous();
 		$this->scheduled = true;
 		Server::getInstance()->getScheduler()->scheduleAsyncTask(new RevertTask($this));
 		return true;
+	}
+
+	/**
+	 * @param array $blocks
+	 */
+	public function setBlocks(array $blocks) {
+		$this->blocks = $blocks;
 	}
 
 	/**
@@ -143,6 +151,13 @@ abstract class Revert {
 	 */
 	public function setAsynchronous(bool $value = true) {
 		$this->isAsync = $value;
+		if($value) {
+			$blocks = [];
+			foreach($this->blocks as $block) {
+				$blocks[] = Block::get($block->getId(), $block->getDamage())->setComponents($block->x, $block->y, $block->z);
+			}
+			$this->setBlocks($blocks);
+		}
 
 		return $this;
 	}
