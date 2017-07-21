@@ -90,9 +90,9 @@ abstract class BaseShape {
 	/**
 	 * @param Server $server
 	 *
-	 * @return Player
+	 * @return Player|null
 	 */
-	public function getPlayer(Server $server): Player {
+	public function getPlayer(Server $server) {
 		return $server->getPlayer($this->playerName);
 	}
 

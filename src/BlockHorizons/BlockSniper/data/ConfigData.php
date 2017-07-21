@@ -122,13 +122,6 @@ class ConfigData {
 	}
 
 	/**
-	 * @return int
-	 */
-	public function getMaximumBrushWorkers(): int {
-		return (int) $this->settings["Maximum-Brush-Workers"];
-	}
-
-	/**
 	 * @param string $key
 	 *
 	 * @return mixed|null

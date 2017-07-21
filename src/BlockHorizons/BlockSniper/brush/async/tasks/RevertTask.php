@@ -48,10 +48,11 @@ class RevertTask extends AsyncBlockSniperTask {
 			return false;
 		}
 		$levelId = 0;
+		$result = $this->getResult();
 		/** @var Revert $revert */
-		$revert = $this->getResult()["revert"];
+		$revert = $result["revert"];
 		/** @var Chunk[] $chunks */
-		$chunks = $this->getResult()["chunks"];
+		$chunks = $result["chunks"];
 		foreach($revert->getBlocks() as $block) {
 			$levelId = $block->getId();
 			break;

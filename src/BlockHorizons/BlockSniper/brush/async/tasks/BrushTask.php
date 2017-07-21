@@ -78,11 +78,13 @@ class BrushTask extends AsyncBlockSniperTask {
 		if(!$loader->isEnabled()) {
 			return false;
 		}
-		$chunks = $this->getResult()["chunks"];
-		$undoBlocks = $this->getResult()["undoBlocks"];
+		$result = $this->getResult();
+		$chunks = $result["chunks"];
+		$undoBlocks = $result["undoBlocks"];
 		$level = $server->getLevel($this->shape->getLevelId());
 		if($level instanceof Level) {
 			foreach($chunks as $hash => $chunk) {
+				$x = $z = 0;
 				Level::getXZ($hash, $x, $z);
 				$level->setChunk($x, $z, $chunk);
 			}
