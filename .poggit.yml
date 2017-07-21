@@ -1,7 +1,12 @@
 --- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/BlockHorizons/BlockSniper
-branches:
-- master
+submodule: true
 projects:
   BlockSniper:
     path: ""
+    icon: resources/BlockSniperLogo.png
+    libs:
+      - src: BlockHorizons/libgeom/libgeom
+        version: ^0.1.0
+      - src: libschematic/libschematic
+        version: ^0
 ...
