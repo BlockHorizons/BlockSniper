@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\brush\BrushManager;
-use BlockHorizons\BlockSniper\undo\UndoStorer;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\level\Level;
@@ -15,14 +16,14 @@ class OverlayType extends BaseType {
 	/*
 	 * Lays a layer of blocks over every block within the brush radius.
 	 */
-	public function __construct(UndoStorer $undoStorer, Player $player, Level $level, array $blocks) {
-		parent::__construct($undoStorer, $player, $level, $blocks);
+	public function __construct(Player $player, Level $level, array $blocks) {
+		parent::__construct($player, $level, $blocks);
 	}
-	
+
 	/**
-	 * @return bool
+	 * @return array
 	 */
-	public function fillShape(): bool {
+	public function fillShape(): array {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			if($block->getId() !== Item::AIR) {
@@ -36,14 +37,8 @@ class OverlayType extends BaseType {
 				];
 				$valid = true;
 				foreach(BrushManager::get($this->player)->getBlocks() as $possibleBlock) {
-					if(is_numeric($possibleBlock)) {
-						if($block->getId() === $possibleBlock) {
-							$valid = false;
-						}
-					} else {
-						if($block->getId() === Item::fromString($possibleBlock)->getId()) {
-							$valid = false;
-						}
+					if($block->getId() === $possibleBlock->getId() && $block->getDamage() === $possibleBlock->getDamage()) {
+						$valid = false;
 					}
 				}
 				foreach($directions as $direction) {
@@ -57,8 +52,7 @@ class OverlayType extends BaseType {
 				}
 			}
 		}
-		$this->getUndoStore()->saveUndo($undoBlocks, $this->player);
-		return true;
+		return $undoBlocks;
 	}
 	
 	public function getName(): string {

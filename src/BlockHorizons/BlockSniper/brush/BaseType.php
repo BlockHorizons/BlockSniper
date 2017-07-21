@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\brush;
 
 use BlockHorizons\BlockSniper\brush\types\BiomeType;
@@ -8,17 +10,15 @@ use BlockHorizons\BlockSniper\brush\types\FlattenType;
 use BlockHorizons\BlockSniper\brush\types\LayerType;
 use BlockHorizons\BlockSniper\brush\types\ReplaceType;
 use BlockHorizons\BlockSniper\brush\types\TreeType;
-use BlockHorizons\BlockSniper\undo\UndoStorer;
 use pocketmine\block\Block;
+use pocketmine\level\generator\biome\Biome;
+use pocketmine\level\generator\object\Tree;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\Player;
 
 abstract class BaseType {
-	
-	const MAX_WORLD_HEIGHT = 256;
-	const MIN_WORLD_HEIGHT = 0;
-	
+
 	const TYPE_FILL = 0;
 	const TYPE_OVERLAY = 1;
 	const TYPE_LAYER = 2;
@@ -40,7 +40,6 @@ abstract class BaseType {
 
 	public $player;
 
-	protected $undoStorer;
 	protected $level;
 	protected $biome;
 	protected $blocks;
@@ -49,13 +48,11 @@ abstract class BaseType {
 	protected $tree;
 
 	/**
-	 * @param UndoStorer $undoStorer
 	 * @param Player     $player
 	 * @param Level      $level
 	 * @param Block[]    $blocks
 	 */
-	public function __construct(UndoStorer $undoStorer, Player $player, Level $level, array $blocks) {
-		$this->undoStorer = $undoStorer;
+	public function __construct(Player $player, Level $level, array $blocks) {
 		$this->player = $player;
 		$this->level = $level;
 		$this->blocks = $blocks;
@@ -97,14 +94,7 @@ abstract class BaseType {
 	
 	public abstract function getName(): string;
 	
-	public abstract function fillShape(): bool;
-	
-	/**
-	 * @return UndoStorer
-	 */
-	public function getUndoStore(): UndoStorer {
-		return $this->undoStorer;
-	}
+	public abstract function fillShape(): array;
 	
 	/**
 	 * Returns the level the type is used in.
@@ -113,6 +103,13 @@ abstract class BaseType {
 	 */
 	public function getLevel(): Level {
 		return $this->level;
+	}
+
+	/**
+	 * @param array $blocks
+	 */
+	public function setBlocksInside(array $blocks) {
+		$this->blocks = $blocks;
 	}
 	
 	/**
@@ -133,7 +130,7 @@ abstract class BaseType {
 		if($this instanceof BiomeType) {
 			return $this->biome;
 		}
-		return null;
+		return Biome::OCEAN;
 	}
 	
 	/**
@@ -160,13 +157,13 @@ abstract class BaseType {
 	/**
 	 * Returns the obsolete blocks in case of a ReplaceType.
 	 *
-	 * @return array|null
+	 * @return array
 	 */
 	public function getObsolete(): array {
 		if($this instanceof ReplaceType) {
 			return $this->obsolete;
 		}
-		return null;
+		return [];
 	}
 	
 	/**
@@ -178,7 +175,7 @@ abstract class BaseType {
 		if($this instanceof TreeType) {
 			return $this->tree;
 		}
-		return null;
+		return 0;
 	}
 
 	/**

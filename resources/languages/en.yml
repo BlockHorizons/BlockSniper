@@ -18,6 +18,7 @@ commands:
     template-not-existing: "A template with that name does not exist."
     preset-already-exists: "That preset already exists."
     preset-doesnt-exist: "That preset doesn't exist."
+    no-cancellable: "No running modifications could be found to cancel."
   succeed:
     default: "Successfully launched the shape at the location looked at."
     undo: "Successfully undid the last modification."
@@ -30,6 +31,7 @@ commands:
       name: "Preset creation process started. Type a name in the chat,"
       cancel: "or type 'cancel' to cancel the process."
       canceled: "Preset creation has been canceled."
+    cancel: "Successfully cancelled the currently running modification."
 
 brushwand:
   disable: "Brushwand has been disabled."
@@ -49,4 +51,5 @@ brush:
   hollow: "Hollow: "
   preset: "Preset: "
   tree: "Tree: "
+  yoffset: "Y Offset: "
 ...

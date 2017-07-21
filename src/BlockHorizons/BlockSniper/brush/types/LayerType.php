@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\brush\BrushManager;
-use BlockHorizons\BlockSniper\undo\UndoStorer;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
@@ -14,15 +15,15 @@ class LayerType extends BaseType {
 	/*
 	 * Lays a thin layer of blocks within the brush radius.
 	 */
-	public function __construct(UndoStorer $undoStorer, Player $player, Level $level, array $blocks) {
-		parent::__construct($undoStorer, $player, $level, $blocks);
+	public function __construct(Player $player, Level $level, array $blocks) {
+		parent::__construct($player, $level, $blocks);
 		$this->center = $player->getTargetBlock(100);
 	}
-	
+
 	/**
-	 * @return bool
+	 * @return array
 	 */
-	public function fillShape(): bool {
+	public function fillShape(): array {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			$randomBlock = BrushManager::get($this->player)->getBlocks()[array_rand(BrushManager::get($this->player)->getBlocks())];
@@ -31,8 +32,7 @@ class LayerType extends BaseType {
 			}
 			$this->level->setBlock(new Vector3($block->x, $this->center->y + 1, $block->z), $randomBlock, false, false);
 		}
-		$this->getUndoStore()->saveUndo($undoBlocks, $this->player);
-		return true;
+		return $undoBlocks;
 	}
 	
 	public function getName(): string {

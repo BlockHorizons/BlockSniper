@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\commands;
 
 use BlockHorizons\BlockSniper\data\ConfigData;
@@ -7,16 +9,19 @@ use BlockHorizons\BlockSniper\Loader;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\command\PluginIdentifiableCommand;
+use pocketmine\Player;
+use pocketmine\plugin\Plugin;
 use pocketmine\utils\TextFormat as TF;
 
-abstract class BaseCommand extends Command implements PluginIdentifiableCommand {
+abstract class BaseCommand extends Command implements PluginIdentifiableCommand, OverloadedCommand {
 	
 	protected $loader;
 	
 	public function __construct(Loader $loader, $name, $description = "", $usageMessage = null, array $aliases = []) {
 		parent::__construct($name, $description, $usageMessage, $aliases);
 		$this->loader = $loader;
-		$this->usageMessage = "";
+		$this->setPermission("blocksniper.command." . $name);
+		$this->setUsage(TF::RED . "[Usage] " . $usageMessage);
 	}
 	
 	/**
@@ -38,7 +43,7 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand 
 	 *
 	 * @return Loader
 	 */
-	public function getPlugin(): Loader {
+	public function getPlugin(): Plugin {
 		return $this->loader;
 	}
 	
@@ -54,5 +59,14 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand 
 	 */
 	public function getSettings(): ConfigData {
 		return $this->getLoader()->getSettings();
+	}
+
+	public function generateCustomCommandData(Player $player): array {
+		$commandData = parent::generateCustomCommandData($player);
+		$commandData["permission"] = $this->getPermission();
+		$commandData["aliases"] = $this->getAliases();
+		$commandData["overloads"]["default"]["input"]["parameters"] = CommandOverloads::getOverloads($this->getName());
+
+		return $commandData;
 	}
 }

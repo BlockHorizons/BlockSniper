@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\undo;
 
 use pocketmine\block\Block;
@@ -7,9 +9,9 @@ use pocketmine\block\Block;
 class Undo {
 	
 	private $undoBlocks;
-	
+
 	/**
-	 * @param Block[]    $undoBlocks
+	 * @param Block[] $undoBlocks
 	 */
 	public function __construct(array $undoBlocks) {
 		$this->undoBlocks = $undoBlocks;
@@ -22,6 +24,8 @@ class Undo {
 	}
 
 	/**
+	 * Should be called BEFORE the undo has been restored.
+	 *
 	 * @return Redo
 	 */
 	public function getDetachedRedo(): Redo {
@@ -32,7 +36,14 @@ class Undo {
 
 		return new Redo($redoBlocks);
 	}
-	
+
+	/**
+	 * @return Block[]
+	 */
+	public function getBlocks(): array {
+		return $this->undoBlocks;
+	}
+
 	/**
 	 * @return int
 	 */

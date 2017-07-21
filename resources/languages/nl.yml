@@ -18,6 +18,7 @@ commands:
     template-not-existing: "Er bestaat geen template met die naam."
     preset-already-exists: "Die voorinstellingen bestaan al."
     preset-doesnt-exist: "Die voorinstellingen bestaan niet."
+    no-cancellable: "Geen lopende modificaties gevonden om af te breken."
   succeed:
     default: "Afvuren van vorm geslaagd."
     undo: "Terugdraaien van vorige modificatie geslaagd."
@@ -30,6 +31,7 @@ commands:
       name: "Voorinstellingen maken gestart. Type een naam in de chat,"
       cancel: "of type 'cancel' om het proces te stoppen."
       canceled: "Voorinstellingen maken afgebroken."
+    cancel: "Afbreken van huidige lopende modificatie succesvol."
 
 brushwand:
   disable: "Verfstaf is uitgeschakeld."
@@ -49,4 +51,5 @@ brush:
   hollow: "Hol: "
   preset: "Voorinstelling: "
   tree: "Boom: "
+  yoffset: "Y Uitlopen: "
 ...

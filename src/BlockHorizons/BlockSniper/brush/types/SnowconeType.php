@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
-use BlockHorizons\BlockSniper\undo\UndoStorer;
 use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\Player;
@@ -13,14 +14,14 @@ class SnowconeType extends BaseType {
 	/*
 	 * Lays a layer of snow on top of the terrain, and raises it if there is snow already.
 	 */
-	public function __construct(UndoStorer $undoStorer, Player $player, Level $level, array $blocks) {
-		parent::__construct($undoStorer, $player, $level, $blocks);
+	public function __construct(Player $player, Level $level, array $blocks) {
+		parent::__construct($player, $level, $blocks);
 	}
 	
 	/**
-	 * @return bool
+	 * @return array
 	 */
-	public function fillShape(): bool {
+	public function fillShape(): array {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			if($block->getId() !== Block::AIR && $block->getId() !== Block::SNOW_LAYER) {
@@ -36,15 +37,10 @@ class SnowconeType extends BaseType {
 				}
 			}
 		}
-		$this->getUndoStore()->saveUndo($undoBlocks, $this->player);
-		return true;
+		return $undoBlocks;
 	}
 	
 	public function getName(): string {
 		return "Snow Cone";
-	}
-	
-	public function getPermission(): string {
-		return "blocksniper.type.snowcone";
 	}
 }

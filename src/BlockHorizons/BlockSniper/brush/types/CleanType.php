@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
-use BlockHorizons\BlockSniper\undo\UndoStorer;
 use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
@@ -14,14 +15,14 @@ class CleanType extends BaseType {
 	/*
 	 * Removes all non-natural blocks within the brush radius.
 	 */
-	public function __construct(UndoStorer $undoStorer, Player $player, Level $level, array $blocks) {
-		parent::__construct($undoStorer, $player, $level, $blocks);
+	public function __construct(Player $player, Level $level, array $blocks) {
+		parent::__construct($player, $level, $blocks);
 	}
 	
 	/**
-	 * @return bool
+	 * @return array
 	 */
-	public function fillShape(): bool {
+	public function fillShape(): array {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			$blockId = $block->getId();
@@ -32,8 +33,7 @@ class CleanType extends BaseType {
 				$this->level->setBlock(new Vector3($block->x, $block->y, $block->z), Block::get(Block::AIR), false, false);
 			}
 		}
-		$this->getUndoStore()->saveUndo($undoBlocks, $this->player);
-		return true;
+		return $undoBlocks;
 	}
 	
 	public function getName(): string {

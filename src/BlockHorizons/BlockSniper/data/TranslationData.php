@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\data;
 
 use BlockHorizons\BlockSniper\Loader;
@@ -21,8 +23,8 @@ class TranslationData {
 	public function collectTranslations(): bool {
 		$languageSelected = false;
 		$language = [];
-		foreach($this->getLoader()->availableLanguages as $availableLanguage) {
-			if($this->getLoader()->getSettings()->get("Message-Language") === $availableLanguage) {
+		foreach(Loader::getAvailableLanguages() as $availableLanguage) {
+			if($this->getLoader()->getSettings()->getLanguage() === $availableLanguage) {
 				$this->getLoader()->saveResource("languages/" . $availableLanguage . ".yml");
 				$language = yaml_parse_file($this->getLoader()->getDataFolder() . "languages/" . $availableLanguage . ".yml");
 				$languageSelected = true;
@@ -35,7 +37,7 @@ class TranslationData {
 		}
 		
 		// This is going to burn your eyes. Don't look at it for too long.
-		$this->messages = [
+		$this->messages = @[
 			"commands.errors.no-permission" => $language["commands"]["errors"]["no-permission"],
 			"commands.errors.console-use" => $language["commands"]["errors"]["console-use"],
 			"commands.errors.radius-not-numeric" => $language["commands"]["errors"]["radius-not-numeric"],
@@ -50,6 +52,7 @@ class TranslationData {
 			"commands.errors.template-not-existing" => $language["commands"]["errors"]["template-not-existing"],
 			"commands.errors.preset-already-exists" => $language["commands"]["errors"]["preset-already-exists"],
 			"commands.errors.preset-doesnt-exist" => $language["commands"]["errors"]["preset-doesnt-exist"],
+			"commands.errors.no-cancellable" => $language["commands"]["errors"]["no-cancellable"],
 			
 			"commands.succeed.default" => $language["commands"]["succeed"]["default"],
 			"commands.succeed.undo" => $language["commands"]["succeed"]["undo"],
@@ -60,6 +63,7 @@ class TranslationData {
 			"commands.succeed.preset.name" => $language["commands"]["succeed"]["preset"]["name"],
 			"commands.succeed.preset.cancel" => $language["commands"]["succeed"]["preset"]["cancel"],
 			"commands.succeed.preset.canceled" => $language["commands"]["succeed"]["preset"]["canceled"],
+			"commands.succeed.cancel" => $language["commands"]["succeed"]["cancel"],
 			
 			"brush.shape" => $language["brush"]["shape"],
 			"brush.type" => $language["brush"]["type"],
@@ -73,7 +77,8 @@ class TranslationData {
 			"brush.biome" => $language["brush"]["biome"],
 			"brush.hollow" => $language["brush"]["hollow"],
 			"brush.preset" => $language["brush"]["preset"],
-			"brush.tree" => $language["brush"]["tree"]
+			"brush.tree" => $language["brush"]["tree"],
+			"brush.yoffset" => $language["brush"]["yoffset"]
 		];
 		return $languageSelected;
 	}

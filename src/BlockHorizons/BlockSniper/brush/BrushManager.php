@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\brush;
 
 use BlockHorizons\BlockSniper\events\BrushRecoverEvent;
@@ -13,7 +15,7 @@ class BrushManager {
 	
 	public function __construct(Loader $loader) {
 		$this->loader = $loader;
-		if($loader->getSettings()->get("Save-Brush-Properties")) {
+		if($loader->getSettings()->saveBrushProperties()) {
 			$brushes = [];
 			if(is_file($loader->getDataFolder() . "brushes.yml")) {
 				$brushes = yaml_parse_file($loader->getDataFolder() . "brushes.yml");

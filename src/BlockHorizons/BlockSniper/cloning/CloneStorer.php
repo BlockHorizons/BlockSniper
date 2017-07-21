@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\cloning;
 
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\undo\Undo;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
-use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 
@@ -13,71 +15,58 @@ class CloneStorer {
 	
 	private $copyStore = [];
 	private $originalCenter = null;
-	private $target = null;
 	private $loader;
 	
 	public function __construct(Loader $loader) {
 		$this->loader = $loader;
 	}
 	
-	public function setTargetBlock(Vector3 $target) {
-		$this->target = $target;
-	}
-	
 	/**
-	 * @param array $blocks
+	 * @param Block[] $blocks
 	 */
-	public function saveCopy(array $blocks) {
-		$i = 0;
-		$this->unsetCopy();
+	public function saveCopy(array $blocks, Player $player) {
+		$this->unsetCopy($player);
 		foreach($blocks as $block) {
-			$this->copyStore[$block->getId() . ":" . $block->getDamage() . "(" . $i . ")"] = [
-				"x" => $block->x - $this->getOriginalCenter()->x,
-				"y" => $block->y - $this->getOriginalCenter()->y,
-				"z" => $block->z - $this->getOriginalCenter()->z
-			];
-			$i++;
+			$this->copyStore[$player->getName()][] = $block->subtract($this->getOriginalCenter($player));
 		}
-		unset($i);
 	}
-	
-	public function unsetCopy() {
-		unset($this->copyStore);
-		$this->copyStore = [];
+
+	/**
+	 * @param Player $player
+	 */
+	public function unsetCopy(Player $player) {
+		unset($this->copyStore[$player->getName()]);
 	}
-	
-	// Required for math to copy-paste it on the location looked at.
-	
-	public function getOriginalCenter(): Vector3 {
-		return $this->originalCenter;
+
+	/**
+	 * @param Player $player
+	 *
+	 * @return Vector3
+	 */
+	public function getOriginalCenter(Player $player): Vector3 {
+		return $this->originalCenter[$player->getName()];
 	}
-	
-	public function setOriginalCenter(Vector3 $center) {
-		$this->originalCenter = $center;
+
+	/**
+	 * @param Vector3 $center
+	 * @param Player  $player
+	 */
+	public function setOriginalCenter(Vector3 $center, Player $player) {
+		$this->originalCenter[$player->getName()] = $center;
 	}
-	
-	public function pasteCopy(Level $level, Player $player) {
+
+	/**
+	 * @param Player $player
+	 */
+	public function pasteCopy(Player $player) {
 		$undoBlocks = [];
-		foreach($this->copyStore as $key => $block) {
-			$Id = explode("(", $key);
-			$blockId = $Id[0];
-			$meta = explode(":", $blockId);
-			$meta = $meta[1];
-			$x = $block["x"];
-			$y = $block["y"] + 1;
-			$z = $block["z"];
-			$finalBlock = Item::get($blockId)->getBlock();
-			$finalBlock->setDamage((int)$meta !== null ? $meta : 0);
-			
-			$blockPos = new Vector3($x + $this->getTargetBlock()->x, $y + $this->getTargetBlock()->y, $z + $this->getTargetBlock()->z);
-			$undoBlocks[] = $level->getBlock($blockPos);
-			$level->setBlock($blockPos, Block::get((int)$blockId, (int)$meta), false, false);
+		$level = $player->getLevel();
+		$center = $player->getTargetBlock(100);
+		foreach($this->copyStore[$player->getName()] as $block) {
+			$undoBlocks[] = $level->getBlock($center->add($block));
+			$level->setBlock($center->add($block), $block, false, false);
 		}
-		$this->getLoader()->getUndoStore()->saveUndo($undoBlocks, $player);
-	}
-	
-	public function getTargetBlock(): Vector3 {
-		return $this->target;
+		$this->getLoader()->getUndoStorer()->saveUndo(new Undo($undoBlocks), $player);
 	}
 	
 	/**
@@ -92,12 +81,14 @@ class CloneStorer {
 		$this->originalCenter = null;
 		$this->target = null;
 	}
-	
+
 	/**
+	 * @param Player $player
+	 *
 	 * @return bool
 	 */
-	public function copyStoreExists() {
-		if(!is_array($this->copyStore) || empty($this->copyStore)) {
+	public function copyStoreExists(Player $player): bool {
+		if(!is_array($this->copyStore[$player->getName()]) || empty($this->copyStore[$player->getName()])) {
 			return false;
 		}
 		return true;
@@ -106,8 +97,8 @@ class CloneStorer {
 	/**
 	 * @return int
 	 */
-	public function getCopyBlockAmount() {
-		return count($this->copyStore);
+	public function getCopyBlockAmount(Player $player): int {
+		return count($this->copyStore[$player->getName()]);
 	}
 	
 	/*
@@ -119,6 +110,7 @@ class CloneStorer {
 	 * @param array   $blocks
 	 * @param Vector3 $targetBlock
 	 *
+	 * @deprecated
 	 * @return bool
 	 */
 	public function saveTemplate(string $templateName, array $blocks, Vector3 $targetBlock): bool {
@@ -141,6 +133,7 @@ class CloneStorer {
 	 * @param string $templateName
 	 * @param Block  $targetBlock
 	 *
+	 * @deprecated
 	 * @return bool
 	 */
 	public function pasteTemplate(string $templateName, Block $targetBlock, Player $player): bool {
@@ -164,7 +157,7 @@ class CloneStorer {
 			$undoBlocks[] = $targetBlock->getLevel()->getBlock($blockPos);
 			$targetBlock->getLevel()->setBlock($blockPos, Block::get((int)$blockId, (int)$meta), false, false);
 		}
-		$this->getLoader()->getUndoStore()->saveUndo($undoBlocks, $player);
+		$this->getLoader()->getUndoStorer()->saveUndo(new Undo($undoBlocks), $player);
 		return true;
 	}
 	

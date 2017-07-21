@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\data;
 
 use BlockHorizons\BlockSniper\Loader;
@@ -18,17 +20,21 @@ class ConfigData {
 	
 	public function collectSettings() {
 		$cfg = yaml_parse_file($this->getLoader()->getDataFolder() . "settings.yml");
-		@$this->settings = [
+		$this->settings = @[
 			"Configuration-Version" => $cfg["Configuration-Version"],
 			"Auto-Configuration-Update" => $cfg["Auto-Configuration-Update"] ?? true,
 			"Message-Language" => $cfg["Message-Language"] ?? "",
 			"Brush-Item" => $cfg["Brush-Item"] ?? 396,
 			"Maximum-Radius" => $cfg["Maximum-Radius"] ?? 15,
 			"Maximum-Undo-Stores" => $cfg["Maximum-Undo-Stores"] ?? 15,
+			"Tick-Spread-Brush" => $cfg["Tick-Spread-Brush"] ?? true,
+			"Blocks-Per-Tick" => $cfg["Blocks-Per-Tick"] ?? 150,
+			"Tick-Spread-Workers" => $cfg["Tick-Spread-Workers"] ?? 2,
 			"Reset-Decrement-Brush" => $cfg["Reset-Decrement-Brush"] ?? true,
 			"Maximum-Clone-Size" => $cfg["Maximum-Clone-Size"] ?? 60,
 			"Save-Brush-Properties" => $cfg["Save-Brush-Properties"] ?? true,
-			"Drop-Leafblower-Plants" => $cfg["Drop-Leafblower-Plants"] ?? true
+			"Drop-Leafblower-Plants" => $cfg["Drop-Leafblower-Plants"] ?? true,
+			"Save-Air-In-Copy" => $cfg["Save-Air-In-Copy"] ?? false
 		];
 		if($cfg["Configuration-Version"] !== Loader::CONFIGURATION_VERSION) {
 			$autoUpdate = $cfg["Auto-Configuration-Update"];
@@ -40,18 +46,102 @@ class ConfigData {
 			$this->getLoader()->getLogger()->info(TF::AQUA . "[BlockSniper] No new Configuration version found, Configuration is up to date.");
 		}
 	}
-	
+
 	/**
 	 * @return Loader
 	 */
 	public function getLoader(): Loader {
 		return $this->loader;
 	}
-	
+
 	public function updateConfig() {
 		unlink($this->getLoader()->getDataFolder() . "settings.yml");
 		$this->settings["Configuration-Version"] = Loader::CONFIGURATION_VERSION;
 		yaml_emit_file($this->getLoader()->getDataFolder() . "settings.yml", $this->settings);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLanguage(): string {
+		return $this->settings["Message-Language"];
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getBrushItem(): int {
+		return $this->settings["Brush-Item"];
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getMaxRadius(): int {
+		return $this->settings["Maximum-Radius"];
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getMaxUndoStores(): int {
+		return $this->settings["Maximum-Undo-Stores"];
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getBrushLevel(): int {
+		return $this->settings["Tick-Spread-Brush"];
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getBlocksPerTick(): int {
+		return $this->settings["Blocks-Per-Tick"];
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function resetDecrementBrush(): bool {
+		return (bool) $this->settings["Reset-Decrement-Brush"];
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getMaxCloneSize(): int {
+		return $this->settings["Maximum-Clone-Size"];
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function saveBrushProperties(): bool {
+		return (bool) $this->settings["Save-Brush-Properties"];
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function dropLeafblowerPlants(): bool {
+		return (bool) $this->settings["Drop-Leafblower-Plants"];
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function saveAirInCopy(): bool {
+		return (bool) $this->settings["Save-Air-In-Copy"];
+	}
+	
+	/**
+	 * @return int
+	 */
+	public function getTickSpreadWorkers(): int {
+		return $this->settings["Tick-Spread-Workers"];
 	}
 	
 	/**

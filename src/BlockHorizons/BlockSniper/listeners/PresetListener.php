@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\listeners;
 
 use BlockHorizons\BlockSniper\brush\BaseShape;
@@ -119,6 +121,7 @@ class PresetListener implements Listener {
 				$player->sendMessage(TF::GRAY . $this->getLoader()->getTranslation("brush.blocks"));
 				break;
 			case 10:
+				$event->setCancelled();
 				$player->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("brush.blocks") . TF::AQUA . $message[0]);
 				$this->getLoader()->getPresetManager()->addToCreationData($player, "blocks", explode(",", strtolower($message[0])));
 				$this->getLoader()->getServer()->getPluginManager()->callEvent($event = new PresetCreationEvent($this->getLoader(), $player, $this->getLoader()->getPresetManager()->getCreationData($player)));

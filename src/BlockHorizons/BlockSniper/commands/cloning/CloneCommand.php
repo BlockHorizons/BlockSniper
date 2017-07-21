@@ -1,24 +1,26 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\commands\cloning;
 
-use BlockHorizons\BlockSniper\cloning\Copy;
-use BlockHorizons\BlockSniper\cloning\Template;
+use BlockHorizons\BlockSniper\brush\BrushManager;
+use BlockHorizons\BlockSniper\cloning\types\CopyType;
+use BlockHorizons\BlockSniper\cloning\types\TemplateType;
 use BlockHorizons\BlockSniper\commands\BaseCommand;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
+use libschematic\Schematic;
 
 class CloneCommand extends BaseCommand {
 	
 	public function __construct(Loader $loader) {
-		parent::__construct($loader, "clone", "Clone the area you're watching", "<type> <radiusXheight> [name]", []);
-		$this->setPermission("blocksniper.command.clone");
-		$this->setUsage(TF::RED . "[Usage] /clone <type> <radiusXheight> [name]");
+		parent::__construct($loader, "clone", "Clone the area you're watching", "/clone <type> [name]", []);
 	}
 	
-	public function execute(CommandSender $sender, $commandLabel, array $args) {
+	public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
 		if(!$this->testPermission($sender)) {
 			$this->sendNoPermission($sender);
 			return true;
@@ -29,42 +31,55 @@ class CloneCommand extends BaseCommand {
 			return true;
 		}
 		
-		if(count($args) < 2 || count($args) > 3) {
-			$sender->sendMessage($this->getUsage());
-			return true;
-		}
-		
-		$sizes = explode("x", strtolower($args[1]));
-		
-		if((int)$sizes[0] > $this->getSettings()->get("Maximum-Clone-Size") || (int)$sizes[1] > $this->getSettings()->get("Maximum-Clone-Size")) {
-			$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.radius-too-big"));
-			return true;
-		}
-		
 		$center = $sender->getTargetBlock(100);
-		if(!$center) {
-			$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.no-target-found"));
-			return true;
-		}
-		
+		$this->getLoader()->getBrushManager()->createBrush($sender);
 		switch(strtolower($args[0])) {
+			default:
 			case "copy":
-				$clone = new Copy($this->getLoader(), $sender->getLevel(), $center, $sizes[0], $sizes[1]);
+				$shape = BrushManager::get($sender)->getShape(true, BrushManager::get($sender)->getYOffset());
+				$cloneType = new CopyType($this->getLoader()->getCloneStorer(), $sender, $this->getSettings()->saveAirInCopy(), $center, $shape->getBlocksInside());
 				break;
 			
 			case "template":
-				if(!isset($args[2])) {
+				if(!isset($args[1])) {
 					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.name-not-set"));
 					return true;
 				}
-				$clone = new Template($this->getLoader(), $sender->getLevel(), $args[2], $center, $sizes[0], $sizes[1]);
+				$shape = BrushManager::get($sender)->getShape(true, BrushManager::get($sender)->getYOffset());
+				$cloneType = new TemplateType($this->getLoader()->getCloneStorer(), $sender, $this->getSettings()->saveAirInCopy(), $center, $shape->getBlocksInside(), $args[1]);
 				break;
-			
-			default:
-				$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.clone-not-found"));
+
+			case "schematic":
+				if(!isset($args[1])) {
+					$sender->sendMessage(TF::RED . "[Warning] " .  $this->getLoader()->getTranslation("commands.errors.name-not-set"));
+					return true;
+				}
+				$shape = BrushManager::get($sender)->getShape(true, BrushManager::get($sender)->getYOffset());
+
+				new Schematic()
+					->setBlocks($shape->getBlocksInside())
+					->setMaterials(Schematic::MATERIALS_ALPHA)
+					->encode()
+					->save($this->getLoader()->getDataFolder() . "schematics/" . $args[1] . ".schematic");
+
+				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.clone"));
+				return true;
+
+			case "offset":
+			case "yoffset":
+				if(!isset($args[1])) {
+					$offset = 0;
+				} elseif(is_numeric($args[1])) {
+					$offset = $args[1];
+				} else {
+					$offset = 0;
+				}
+				BrushManager::get($sender)->setYOffset($offset);
+				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("brush.yoffset"));
 				return true;
 		}
-		$clone->saveClone();
+		$cloneType->saveClone();
 		$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.clone"));
+		return true;
 	}
 }

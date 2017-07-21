@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\brush\BrushManager;
-use BlockHorizons\BlockSniper\undo\UndoStorer;
 use pocketmine\level\Level;
 use pocketmine\Player;
 
@@ -13,19 +14,19 @@ class BiomeType extends BaseType {
 	/*
 	 * Changes the biome within the brush radius.
 	 */
-	public function __construct(UndoStorer $undoStorer, Player $player, Level $level, array $blocks) {
-		parent::__construct($undoStorer, $player, $level, $blocks);
+	public function __construct(Player $player, Level $level, array $blocks) {
+		parent::__construct($player, $level, $blocks);
 		$this->biome = BrushManager::get($player)->getBiomeId();
 	}
-	
+
 	/**
-	 * @return bool
+	 * @return array
 	 */
-	public function fillShape(): bool {
+	public function fillShape(): array {
 		foreach($this->blocks as $block) {
 			$this->level->setBiomeId($block->x, $block->z, $this->biome);
 		}
-		return true;
+		return [];
 	}
 	
 	public function getName(): string {

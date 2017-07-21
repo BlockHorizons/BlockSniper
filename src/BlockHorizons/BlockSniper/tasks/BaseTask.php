@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\tasks;
 
 use BlockHorizons\BlockSniper\Loader;
@@ -8,7 +10,7 @@ use pocketmine\scheduler\PluginTask;
 
 abstract class BaseTask extends PluginTask {
 	
-	public $loader;
+	protected $loader;
 	
 	public function __construct(Loader $loader) {
 		parent::__construct($loader);
@@ -18,8 +20,8 @@ abstract class BaseTask extends PluginTask {
 	/**
 	 * @return UndoStorer
 	 */
-	public function getUndoStore(): UndoStorer {
-		return $this->getLoader()->getUndoStore();
+	public function getUndoStorer(): UndoStorer {
+		return $this->getLoader()->getUndoStorer();
 	}
 	
 	/**

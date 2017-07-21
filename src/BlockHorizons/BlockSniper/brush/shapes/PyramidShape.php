@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\brush\shapes;
 
 use BlockHorizons\BlockSniper\brush\BaseShape;
@@ -16,13 +18,10 @@ class PyramidShape extends BaseShape {
 		$this->height = BrushManager::get($player)->getHeight();
 	}
 	
-	/**
-	 * @return array
-	 */
-	public function getBlocksInside(): array {
-		//TODO: Implement Pyramids
+	public function getBlocksInside(bool $partially = false, int $blocksPerTick = 100): array {
+		// TODO: Implement getBlocksInside() method.
 	}
-	
+
 	public function getName(): string {
 		return $this->hollow ? "Hollow Pyramid" : "Pyramid";
 	}

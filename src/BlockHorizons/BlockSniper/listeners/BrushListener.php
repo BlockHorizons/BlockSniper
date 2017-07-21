@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\listeners;
 
 use BlockHorizons\BlockSniper\brush\BrushManager;
 use BlockHorizons\BlockSniper\events\BrushUseEvent;
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\undo\Undo;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\Player;
@@ -20,27 +23,33 @@ class BrushListener implements Listener {
 	
 	public function brush(PlayerInteractEvent $event) {
 		$player = $event->getPlayer();
-		if($player->getInventory()->getItemInHand()->getId() === (int)$this->getLoader()->getSettings()->get("Brush-Item")) {
+		if($player->getInventory()->getItemInHand()->getId() === (int) $this->getLoader()->getSettings()->getBrushItem()) {
 			if($player->hasPermission("blocksniper.command.brush")) {
-				$center = $player->getTargetBlock(100);
-				
-				if($center === null) {
-					$player->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.no-target-found"));
+				$this->getLoader()->getBrushManager()->createBrush($player);
+
+				$brush = BrushManager::get($player);
+				if($brush->getSize() > $this->getLoader()->getSettings()->getMaxRadius() || $brush->getHeight() > $this->getLoader()->getSettings()->getMaxRadius()) {
+					$player->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.radius-too-big"));
 					return false;
 				}
-				
-				$this->getLoader()->getBrushManager()->createBrush($player);
-				$shape = BrushManager::get($player)->getShape();
-				$type = BrushManager::get($player)->getType($shape->getBlocksInside());
-				
+
+				$shape = $brush->getShape();
+				$type = $brush->getType();
+
 				$this->getLoader()->getServer()->getPluginManager()->callEvent($event = new BrushUseEvent($this->getLoader(), $player, $shape, $type));
 				if($event->isCancelled()) {
 					return false;
 				}
-				
-				$type->fillShape();
+
+				if($this->getLoader()->getSettings()->getBrushLevel() === 0 || ($this->getLoader()->getSettings()->getBrushLevel() === 1 && $brush->getSize() >= 15)) {
+					$this->getLoader()->spreadTickBrush($shape, $type);
+				} else {
+					$type->setBlocksInside($shape->getBlocksInside());
+					$undoBlocks = $type->fillShape();
+					$this->getLoader()->getUndoStorer()->saveUndo(new Undo($undoBlocks), $player);
+				}
+
 				$this->decrementBrush($player);
-				
 				$event->setCancelled();
 			}
 		}

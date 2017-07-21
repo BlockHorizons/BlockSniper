@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\brush\BrushManager;
-use BlockHorizons\BlockSniper\undo\UndoStorer;
 use pocketmine\block\Block;
 use pocketmine\block\Flowable;
 use pocketmine\item\Item;
@@ -17,14 +18,14 @@ class ToplayerType extends BaseType {
 	/*
 	 * Replaces the top layer of the terrain, thickness depending on brush height, within the brush radius.
 	 */
-	public function __construct(UndoStorer $undoStorer, Player $player, Level $level, array $blocks) {
-		parent::__construct($undoStorer, $player, $level, $blocks);
+	public function __construct(Player $player, Level $level, array $blocks) {
+		parent::__construct($player, $level, $blocks);
 	}
-	
+
 	/**
-	 * @return bool
+	 * @return array
 	 */
-	public function fillShape(): bool {
+	public function fillShape(): array {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			if($block->getId() !== Item::AIR && !$block instanceof Flowable) {
@@ -37,8 +38,7 @@ class ToplayerType extends BaseType {
 				}
 			}
 		}
-		$this->getUndoStore()->saveUndo($undoBlocks, $this->player);
-		return true;
+		return $undoBlocks;
 	}
 	
 	public function getName(): string {

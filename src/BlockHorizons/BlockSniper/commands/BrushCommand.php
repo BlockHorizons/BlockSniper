@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\commands;
 
 use BlockHorizons\BlockSniper\brush\BaseShape;
@@ -8,6 +10,7 @@ use BlockHorizons\BlockSniper\brush\BrushManager;
 use BlockHorizons\BlockSniper\events\ChangeBrushPropertiesEvent as Change;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\command\CommandSender;
+use pocketmine\item\Item;
 use pocketmine\level\generator\biome\Biome;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
@@ -15,12 +18,10 @@ use pocketmine\utils\TextFormat as TF;
 class BrushCommand extends BaseCommand {
 	
 	public function __construct(Loader $loader) {
-		parent::__construct($loader, "brush", "Change the properties of the brush", "<parameter> <args>", ["b", "brushwand"]);
-		$this->setPermission("blocksniper.command.brush");
-		$this->setUsage(TF::RED . "[Usage] /brush <parameter> <value>");
+		parent::__construct($loader, "brush", "Change the properties of the brush", "/brush <parameter> <args>", ["b"]);
 	}
 	
-	public function execute(CommandSender $sender, $commandLabel, array $args) {
+	public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
 		if(!$this->testPermission($sender)) {
 			$this->sendNoPermission($sender);
 			return true;
@@ -31,11 +32,13 @@ class BrushCommand extends BaseCommand {
 			return true;
 		}
 		
-		if(count($args) !== 2 && strtolower($args[0]) !== "reset" && strtolower($args[0]) !== "re" && strtolower($args[1]) !== "delete") {
-			$sender->sendMessage($this->getUsage());
-			return true;
+		if(count($args) !== 2) {
+			if(strtolower($args[0]) !== "reset" && strtolower($args[0]) !== "re" && strtolower($args[1]) !== "delete" && strtolower($args[0]) !== "tool"  && strtolower($args[0]) !== "to") {
+				$sender->sendMessage($this->getUsage());
+				return true;
+			}
 		}
-		
+
 		$this->getLoader()->getBrushManager()->createBrush($sender);
 		$brush = BrushManager::get($sender);
 		
@@ -99,7 +102,7 @@ class BrushCommand extends BaseCommand {
 					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.radius-not-numeric"));
 					return true;
 				}
-				if($args[1] > $this->getLoader()->getSettings()->get("Maximum-Radius")) {
+				if($args[1] > $this->getLoader()->getSettings()->getMaxCloneSize()) {
 					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.radius-too-big"));
 					return true;
 				}
@@ -142,6 +145,10 @@ class BrushCommand extends BaseCommand {
 			case "height":
 				if(!is_numeric($args[1])) {
 					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.radius-not-numeric"));
+					return true;
+				}
+				if($args[1] > $this->getLoader()->getSettings()->getMaxCloneSize()) {
+					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.radius-too-big"));
 					return true;
 				}
 				$brush->setHeight($args[1]);
@@ -220,9 +227,12 @@ class BrushCommand extends BaseCommand {
 				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("brush.tree") . TF::AQUA . $brush->getTreeType());
 				$action = Change::ACTION_CHANGE_TREE;
 				break;
-				
-			default:
-				$sender->sendMessage(TF::RED . "[Usage] /brush <parameter> <value>");
+
+			case "tool":
+			case "item":
+			case "to":
+				$brushTool = Item::get($this->getLoader()->getSettings()->getBrushItem(), 0, 1)->setCustomName(TF::BOLD . TF::YELLOW . "Brush Tool");
+				$sender->getInventory()->setItemInHand($brushTool);
 				return true;
 			
 		}
