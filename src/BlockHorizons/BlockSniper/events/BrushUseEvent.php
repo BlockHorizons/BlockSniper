@@ -12,27 +12,27 @@ use pocketmine\level\Level;
 use pocketmine\Player;
 
 class BrushUseEvent extends BaseEvent implements Cancellable {
-	
+
 	public static $handlerList = null;
-	
+
 	public $player;
 	public $type;
 	public $shape;
-	
+
 	public function __construct(Loader $loader, Player $player, BaseShape $shape, BaseType $type) {
 		parent::__construct($loader);
 		$this->player = $player;
 		$this->type = $type;
 		$this->shape = $shape;
 	}
-	
+
 	/**
 	 * @return Level
 	 */
 	public function getLevel(): Level {
 		return $this->getPlayer()->getLevel();
 	}
-	
+
 	/**
 	 * Returns the player that used the Brush.
 	 * @return Player
@@ -40,7 +40,7 @@ class BrushUseEvent extends BaseEvent implements Cancellable {
 	public function getPlayer(): Player {
 		return $this->player;
 	}
-	
+
 	/**
 	 * Returns the type of the player that used the Brush. (Object)
 	 *
@@ -49,7 +49,7 @@ class BrushUseEvent extends BaseEvent implements Cancellable {
 	public function getType(): BaseType {
 		return $this->type;
 	}
-	
+
 	/**
 	 * Returns the shape of the player that used the Brush. (Object)
 	 *
@@ -58,7 +58,7 @@ class BrushUseEvent extends BaseEvent implements Cancellable {
 	public function getShape(): BaseShape {
 		return $this->shape;
 	}
-	
+
 	/**
 	 * Returns the *approximate* amount of blocks in the shape given.
 	 *

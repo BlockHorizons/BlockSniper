@@ -13,70 +13,58 @@ use pocketmine\Player;
 
 class SphereShape extends BaseShape {
 
-	private $trueSphere;
+	/** @var int */
+	protected $radius = 0;
+	/** @var bool */
+	private $trueSphere = false;
 
 	public function __construct(Player $player, Level $level, int $radius = null, Position $center = null, bool $hollow = false, bool $cloneShape = false) {
 		parent::__construct($player, $level, $center, $hollow);
 		$this->radius = $radius;
 		if($cloneShape) {
-			$this->center->y += $this->radius;
+			$this->center[1] += $this->radius;
 		}
-		$this->trueSphere = BrushManager::get($this->player)->getPerfect();
+		$this->trueSphere = BrushManager::get($player)->getPerfect();
 	}
 
 	/**
-	 * @param bool $partially
-	 * @param int  $blocksPerTick
+	 * @param bool $vectorOnly
 	 *
 	 * @return array
 	 */
-	public function getBlocksInside(bool $partially = false, int $blocksPerTick = 100): array {
+	public function getBlocksInside(bool $vectorOnly = false): array {
 		$radiusSquared = pow($this->radius + ($this->trueSphere ? 0 : -0.5), 2) + ($this->trueSphere ? 0.5 : 0);
-		
-		$targetX = $this->center->x;
-		$targetY = $this->center->y;
-		$targetZ = $this->center->z;
-		
+
+		$targetX = $this->center[0];
+		$targetY = $this->center[1];
+		$targetZ = $this->center[2];
+
 		$minX = $targetX - $this->radius;
 		$minZ = $targetZ - $this->radius;
 		$minY = $targetY - $this->radius;
 		$maxX = $targetX + $this->radius;
 		$maxZ = $targetZ + $this->radius;
 		$maxY = $targetY + $this->radius;
-		
+
 		$blocksInside = [];
-		$i = 0;
-		$skipBlocks = 1;
-		
+
 		for($x = $maxX; $x >= $minX; $x--) {
 			$xs = ($targetX - $x) * ($targetX - $x);
 			for($y = $maxY; $y >= $minY; $y--) {
 				$ys = ($targetY - $y) * ($targetY - $y);
 				for($z = $maxZ; $z >= $minZ; $z--) {
-				$zs = ($targetZ - $z) * ($targetZ - $z);
+					$zs = ($targetZ - $z) * ($targetZ - $z);
 					if($xs + $ys + $zs < $radiusSquared) {
 						if($this->hollow === true) {
 							if($y !== $maxY && $y !== $minY && ($xs + $ys + $zs) < $radiusSquared - 3 - $this->radius / 0.5) {
 								continue;
 							}
 						}
-						if($partially) {
-							for($skip = $skipBlocks; $skip <= $this->getProcessedBlocks(); $skip++) {
-								$skipBlocks++;
-								continue 2;
-							}
-							if($i > $blocksPerTick) {
-								$this->partialBlocks = array_merge($this->partialBlocks, $blocksInside);
-								break 3;
-							}
-							$i++;
-						}
-						$blocksInside[] = $this->getLevel()->getBlock(new Vector3($x, $y, $z));
+						$blocksInside[] = $vectorOnly ? new Vector3($x, $y, $z) : $this->getLevel()->getBlock(new Vector3($x, $y, $z));
 					}
 				}
 			}
 		}
-		$this->partialBlockCount += $i;
 		return $blocksInside;
 	}
 
@@ -97,6 +85,34 @@ class SphereShape extends BaseShape {
 			$blockCount = 4 / 3 * M_PI * pow($this->radius, 3);
 		}
 
-		return ceil($blockCount);
+		return (int) ceil($blockCount);
+	}
+
+	/**
+	 * Returns the radius of the sphere.
+	 *
+	 * @return int
+	 */
+	public function getRadius(): int {
+		return $this->radius;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getTouchedChunks(): array {
+		$maxX = $this->center[0] + $this->radius;
+		$minX = $this->center[0] - $this->radius;
+		$maxZ = $this->center[2] + $this->radius;
+		$minZ = $this->center[2] - $this->radius;
+
+		$touchedChunks = [];
+		for($x = $minX; $x <= $maxX + 16; $x += 16) {
+			for($z = $minZ; $z <= $maxZ + 16; $z += 16) {
+				$chunk = $this->getLevel()->getChunk($x >> 4, $z >> 4, true);
+				$touchedChunks[Level::chunkHash($x >> 4, $z >> 4)] = $chunk->fastSerialize();
+			}
+		}
+		return $touchedChunks;
 	}
 }

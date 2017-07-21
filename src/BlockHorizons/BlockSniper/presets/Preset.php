@@ -8,28 +8,28 @@ use BlockHorizons\BlockSniper\brush\BrushManager;
 use pocketmine\Player;
 
 class Preset {
-	
+
 	public $name;
-	
+
 	private $shape, $type, $size, $hollow, $decrement;
 	private $height, $biome, $obsolete, $blocks;
-	
+
 	public function __construct(string $name, string $shape = null, string $type = null, bool $decrement = null, bool $perfect = null, int $size = null, bool $hollow = null, array $blocks = null, array $obsolete = null, int $height = null, string $biome = null) {
 		$this->name = $name;
-		
+
 		$this->shape = $shape;
 		$this->type = $type;
 		$this->decrement = $decrement;
 		$this->size = $size;
 		$this->hollow = $hollow;
 		$this->perfect = $perfect;
-		
+
 		$this->height = $height;
 		$this->biome = $biome;
 		$this->obsolete = $obsolete;
 		$this->blocks = $blocks;
 	}
-	
+
 	/**
 	 * Applies the preset on a player.
 	 *
@@ -72,7 +72,7 @@ class Preset {
 			}
 		}
 	}
-	
+
 	/**
 	 * @return array
 	 */
@@ -89,7 +89,7 @@ class Preset {
 		$data["height"] = $this->height;
 		$data["biome"] = $this->biome;
 		$data["obsolete"] = $this->obsolete;
-		
+
 		return $data;
 	}
 }

@@ -15,22 +15,22 @@ use pocketmine\utils\TextFormat as TF;
 use libschematic\Schematic;
 
 class CloneCommand extends BaseCommand {
-	
+
 	public function __construct(Loader $loader) {
 		parent::__construct($loader, "clone", "Clone the area you're watching", "/clone <type> [name]", []);
 	}
-	
+
 	public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
 		if(!$this->testPermission($sender)) {
 			$this->sendNoPermission($sender);
 			return true;
 		}
-		
+
 		if(!$sender instanceof Player) {
 			$this->sendConsoleError($sender);
 			return true;
 		}
-		
+
 		$center = $sender->getTargetBlock(100);
 		$this->getLoader()->getBrushManager()->createBrush($sender);
 		switch(strtolower($args[0])) {
@@ -39,7 +39,7 @@ class CloneCommand extends BaseCommand {
 				$shape = BrushManager::get($sender)->getShape(true, BrushManager::get($sender)->getYOffset());
 				$cloneType = new CopyType($this->getLoader()->getCloneStorer(), $sender, $this->getSettings()->saveAirInCopy(), $center, $shape->getBlocksInside());
 				break;
-			
+
 			case "template":
 				if(!isset($args[1])) {
 					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.name-not-set"));
@@ -51,7 +51,7 @@ class CloneCommand extends BaseCommand {
 
 			case "schematic":
 				if(!isset($args[1])) {
-					$sender->sendMessage(TF::RED . "[Warning] " .  $this->getLoader()->getTranslation("commands.errors.name-not-set"));
+					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.name-not-set"));
 					return true;
 				}
 				$shape = BrushManager::get($sender)->getShape(true, BrushManager::get($sender)->getYOffset());

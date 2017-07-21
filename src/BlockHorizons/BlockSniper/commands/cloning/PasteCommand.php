@@ -15,22 +15,22 @@ use pocketmine\utils\TextFormat as TF;
 use libschematic\Schematic;
 
 class PasteCommand extends BaseCommand {
-	
+
 	public function __construct(Loader $loader) {
 		parent::__construct($loader, "paste", "Paste the selected clone, template or schematic", "/paste <type> [name]", []);
 	}
-	
+
 	public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
 		if(!$this->testPermission($sender)) {
 			$this->sendNoPermission($sender);
 			return true;
 		}
-		
+
 		if(!$sender instanceof Player) {
 			$this->sendConsoleError($sender);
 			return true;
 		}
-		
+
 		$center = $sender->getTargetBlock(100);
 		switch(strtolower($args[0])) {
 			default:
@@ -39,7 +39,7 @@ class PasteCommand extends BaseCommand {
 					$this->getLoader()->getCloneStorer()->pasteCopy($sender);
 				}
 				break;
-			
+
 			case "template":
 				if(!$this->getLoader()->getCloneStorer()->templateExists($args[1])) {
 					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.template-not-existing"));
@@ -66,7 +66,7 @@ class PasteCommand extends BaseCommand {
 						$center->getLevel()->setBlock($target, $block, false, false);
 					}
 				}
-				$this->getLoader()->getUndoStorer()->saveUndo(new Undo($undoBlocks), $sender);
+				$this->getLoader()->getRevertStorer()->saveRevert(new Undo($undoBlocks), $sender);
 				break;
 		}
 		$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.paste"));

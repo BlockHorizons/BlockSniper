@@ -14,13 +14,13 @@ use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
 
 class BrushListener implements Listener {
-	
+
 	private $loader;
-	
+
 	public function __construct(Loader $loader) {
 		$this->loader = $loader;
 	}
-	
+
 	public function brush(PlayerInteractEvent $event) {
 		$player = $event->getPlayer();
 		if($player->getInventory()->getItemInHand()->getId() === (int) $this->getLoader()->getSettings()->getBrushItem()) {
@@ -41,28 +41,27 @@ class BrushListener implements Listener {
 					return false;
 				}
 
-				if($this->getLoader()->getSettings()->getBrushLevel() === 0 || ($this->getLoader()->getSettings()->getBrushLevel() === 1 && $brush->getSize() >= 15)) {
-					$this->getLoader()->spreadTickBrush($shape, $type);
+				if($brush->getSize() >= 15  && $type->canExecuteAsynchronously()) {
+					$shape->editAsynchronously($type);
 				} else {
 					$type->setBlocksInside($shape->getBlocksInside());
 					$undoBlocks = $type->fillShape();
-					$this->getLoader()->getUndoStorer()->saveUndo(new Undo($undoBlocks), $player);
+					$this->getLoader()->getRevertStorer()->saveRevert(new Undo($undoBlocks), $player);
 				}
-
 				$this->decrementBrush($player);
 				$event->setCancelled();
 			}
 		}
 		return true;
 	}
-	
+
 	/**
 	 * @return Loader
 	 */
 	public function getLoader(): Loader {
 		return $this->loader;
 	}
-	
+
 	/**
 	 * @param Player $player
 	 *

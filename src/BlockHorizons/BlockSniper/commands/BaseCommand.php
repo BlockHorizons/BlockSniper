@@ -14,23 +14,23 @@ use pocketmine\plugin\Plugin;
 use pocketmine\utils\TextFormat as TF;
 
 abstract class BaseCommand extends Command implements PluginIdentifiableCommand, OverloadedCommand {
-	
+
 	protected $loader;
-	
+
 	public function __construct(Loader $loader, $name, $description = "", $usageMessage = null, array $aliases = []) {
 		parent::__construct($name, $description, $usageMessage, $aliases);
 		$this->loader = $loader;
 		$this->setPermission("blocksniper.command." . $name);
 		$this->setUsage(TF::RED . "[Usage] " . $usageMessage);
 	}
-	
+
 	/**
 	 * @param CommandSender $sender
 	 */
 	public function sendConsoleError(CommandSender $sender) {
 		$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.console-use"));
 	}
-	
+
 	/**
 	 * @return Loader
 	 */
@@ -41,19 +41,19 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand,
 	/**
 	 * Annoying we have to implement this function. Messes up code consistency.
 	 *
-	 * @return Loader
+	 * @return Plugin
 	 */
 	public function getPlugin(): Plugin {
 		return $this->loader;
 	}
-	
+
 	/**
 	 * @param CommandSender $sender
 	 */
 	public function sendNoPermission(CommandSender $sender) {
 		$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.no-permission"));
 	}
-	
+
 	/**
 	 * @return ConfigData
 	 */

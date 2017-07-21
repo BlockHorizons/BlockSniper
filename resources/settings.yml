@@ -2,7 +2,7 @@
 # Configuration for BlockSniper: A WorldEdit plugin for PocketMine.
 
 # Internal Property: Do not change.
-Configuration-Version: "2.2.1"
+Configuration-Version: "2.3.1"
 
 # Whether to auto-update configuration when a new version is found.
 Auto-Configuration-Update: true
@@ -14,23 +14,8 @@ Message-Language: ""
 # Item ID of the item that is used to brush. (Golden carrot by default)
 Brush-Item: 396
 
-# Maximum radius for shapes/types, it is recommended to keep this number below 20 if tick spread brush is on 2, to prevent server freezes and/or lag.
-Maximum-Radius: 15
-
-# Maximum radius/height for clones, it is recommended to keep this number below 60 to prevent server freezes and/or lag.
-Maximum-Clone-Size: 60
-
-# Whether to spread out the block placement of brush over ticks, place all blocks at once or a combination of the two. Tick spread brush reduces server lag significantly.
-# 0 = Brush block placement always spread over ticks.
-# 1 = Brush block placement spread over ticks if brush size over 15.
-# 2 = Brush block placement all at once.
-Tick-Spread-Brush: 1
-
-# Amount of blocks to place per tick if tick spread brush is enabled.
-Blocks-Per-Tick: 200
-
-# The amount of workers per player for tick spread brush. This means that only * operations per player can be active at a time.
-Tick-Spread-Workers: 2
+# Maximum size for shapes/types, it is recommended to keep this number below 40.
+Maximum-Size: 30
 
 # Maximum undo and redo stores to save, old ones will get destroyed automatically. Setting this number too high could result in lag or data loss.
 Maximum-Undo-Stores: 15
@@ -43,4 +28,7 @@ Save-Brush-Properties: true
 
 # Whether to drop the plants when using LeafBlower brush, or dispose the items.
 Drop-Leafblower-Plants: true
+
+# The size above which modifications get executed asynchronously, meaning it won't get executed on the main thread.
+Asynchronous-Operation-Size: 15
 ...

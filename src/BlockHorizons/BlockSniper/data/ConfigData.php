@@ -8,16 +8,16 @@ use BlockHorizons\BlockSniper\Loader;
 use pocketmine\utils\TextFormat as TF;
 
 class ConfigData {
-	
+
 	private $settings = [];
 	private $loader;
-	
+
 	public function __construct(Loader $loader) {
 		$this->loader = $loader;
-		
+
 		$this->collectSettings();
 	}
-	
+
 	public function collectSettings() {
 		$cfg = yaml_parse_file($this->getLoader()->getDataFolder() . "settings.yml");
 		$this->settings = @[
@@ -25,16 +25,14 @@ class ConfigData {
 			"Auto-Configuration-Update" => $cfg["Auto-Configuration-Update"] ?? true,
 			"Message-Language" => $cfg["Message-Language"] ?? "",
 			"Brush-Item" => $cfg["Brush-Item"] ?? 396,
-			"Maximum-Radius" => $cfg["Maximum-Radius"] ?? 15,
+			"Maximum-Size" => $cfg["Maximum-Size"] ?? 15,
 			"Maximum-Undo-Stores" => $cfg["Maximum-Undo-Stores"] ?? 15,
-			"Tick-Spread-Brush" => $cfg["Tick-Spread-Brush"] ?? true,
-			"Blocks-Per-Tick" => $cfg["Blocks-Per-Tick"] ?? 150,
-			"Tick-Spread-Workers" => $cfg["Tick-Spread-Workers"] ?? 2,
 			"Reset-Decrement-Brush" => $cfg["Reset-Decrement-Brush"] ?? true,
 			"Maximum-Clone-Size" => $cfg["Maximum-Clone-Size"] ?? 60,
 			"Save-Brush-Properties" => $cfg["Save-Brush-Properties"] ?? true,
 			"Drop-Leafblower-Plants" => $cfg["Drop-Leafblower-Plants"] ?? true,
-			"Save-Air-In-Copy" => $cfg["Save-Air-In-Copy"] ?? false
+			"Save-Air-In-Copy" => $cfg["Save-Air-In-Copy"] ?? false,
+			"Asynchronous-Operation-Size" => $cfg["Asynchronous-Operation-Size"] ?? 15
 		];
 		if($cfg["Configuration-Version"] !== Loader::CONFIGURATION_VERSION) {
 			$autoUpdate = $cfg["Auto-Configuration-Update"];
@@ -64,42 +62,28 @@ class ConfigData {
 	 * @return string
 	 */
 	public function getLanguage(): string {
-		return $this->settings["Message-Language"];
+		return (string) $this->settings["Message-Language"];
 	}
 
 	/**
 	 * @return int
 	 */
 	public function getBrushItem(): int {
-		return $this->settings["Brush-Item"];
+		return (int) $this->settings["Brush-Item"];
 	}
 
 	/**
 	 * @return int
 	 */
 	public function getMaxRadius(): int {
-		return $this->settings["Maximum-Radius"];
+		return (int) $this->settings["Maximum-Size"];
 	}
 
 	/**
 	 * @return int
 	 */
 	public function getMaxUndoStores(): int {
-		return $this->settings["Maximum-Undo-Stores"];
-	}
-
-	/**
-	 * @return int
-	 */
-	public function getBrushLevel(): int {
-		return $this->settings["Tick-Spread-Brush"];
-	}
-
-	/**
-	 * @return int
-	 */
-	public function getBlocksPerTick(): int {
-		return $this->settings["Blocks-Per-Tick"];
+		return (int) $this->settings["Maximum-Undo-Stores"];
 	}
 
 	/**
@@ -136,14 +120,7 @@ class ConfigData {
 	public function saveAirInCopy(): bool {
 		return (bool) $this->settings["Save-Air-In-Copy"];
 	}
-	
-	/**
-	 * @return int
-	 */
-	public function getTickSpreadWorkers(): int {
-		return $this->settings["Tick-Spread-Workers"];
-	}
-	
+
 	/**
 	 * @param string $key
 	 *
@@ -155,7 +132,7 @@ class ConfigData {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * @param string $key
 	 * @param        $value
@@ -163,7 +140,14 @@ class ConfigData {
 	public function set(string $key, $value) {
 		$this->settings[$key] = $value;
 	}
-	
+
+	/**
+	 * @return int
+	 */
+	public function getMinimumAsynchronousSize(): int {
+		return (int) $this->settings["Asynchronous-Operation-Size"];
+	}
+
 	public function save() {
 		yaml_emit_file($this->getLoader()->getDataFolder() . "settings.yml", $this->settings);
 	}

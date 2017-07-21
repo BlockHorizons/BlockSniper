@@ -4,18 +4,14 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\brush;
 
-use BlockHorizons\BlockSniper\brush\types\BiomeType;
-use BlockHorizons\BlockSniper\brush\types\FlattenallType;
-use BlockHorizons\BlockSniper\brush\types\FlattenType;
-use BlockHorizons\BlockSniper\brush\types\LayerType;
-use BlockHorizons\BlockSniper\brush\types\ReplaceType;
-use BlockHorizons\BlockSniper\brush\types\TreeType;
+use BlockHorizons\BlockSniper\brush\async\BlockSniperChunkManager;
 use pocketmine\block\Block;
-use pocketmine\level\generator\biome\Biome;
-use pocketmine\level\generator\object\Tree;
+use pocketmine\level\ChunkManager;
+use pocketmine\level\format\Chunk;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\Player;
+use pocketmine\Server;
 
 abstract class BaseType {
 
@@ -38,26 +34,43 @@ abstract class BaseType {
 	const TYPE_SNOWCONE = 16;
 	const TYPE_TREE = 17;
 
-	public $player;
-
-	protected $level;
-	protected $biome;
-	protected $blocks;
-	protected $center;
-	protected $obsolete;
-	protected $tree;
+	/** @var int */
+	protected $level = 0;
+	/** @var int */
+	protected $biome = 0;
+	/** @var Block[] */
+	protected $blocks = [];
+	/** @var Position|null */
+	protected $center = null;
+	/** @var Block[]|array */
+	protected $obsolete = [];
+	/** @var int */
+	protected $tree = 0;
+	/** @var Block[] */
+	protected $brushBlocks = [];
+	/** @var int */
+	protected $height = 0;
+	/** @var null|BlockSniperChunkManager */
+	protected $chunkManager = null;
+	/** @var bool */
+	private $async = false;
 
 	/**
-	 * @param Player     $player
-	 * @param Level      $level
-	 * @param Block[]    $blocks
+	 * @param Player       $player
+	 * @param ChunkManager $manager
+	 * @param Block[]      $blocks
 	 */
-	public function __construct(Player $player, Level $level, array $blocks) {
-		$this->player = $player;
-		$this->level = $level;
+	public function __construct(Player $player, ChunkManager $manager, array $blocks) {
+		if($manager instanceof Level) {
+			$this->level = $manager->getId();
+		} else {
+			$this->async = true;
+			$this->chunkManager = $manager;
+		}
 		$this->blocks = $blocks;
+		$this->brushBlocks = BrushManager::get($player)->getBlocks();
 	}
-	
+
 	/**
 	 * @param string $type
 	 *
@@ -70,7 +83,7 @@ abstract class BaseType {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Registers a new Type. Example:
 	 * Raise, 12
@@ -91,17 +104,42 @@ abstract class BaseType {
 		define(('BlockHorizons\BlockSniper\brush\BaseType\\' . $typeConst), $number);
 		return true;
 	}
-	
-	public abstract function getName(): string;
-	
+
+	/**
+	 * @param Chunk[] $chunks
+	 *
+	 * @return BlockSniperChunkManager
+	 */
+	public static function establishChunkManager(array $chunks): BlockSniperChunkManager {
+		$manager = new BlockSniperChunkManager(0);
+		foreach($chunks as $chunk) {
+			$manager->setChunk($chunk->getX(), $chunk->getZ(), $chunk);
+		}
+		return $manager;
+	}
+
 	public abstract function fillShape(): array;
-	
+
 	/**
 	 * Returns the level the type is used in.
 	 *
 	 * @return Level
 	 */
 	public function getLevel(): Level {
+		return Server::getInstance()->getLevel($this->level);
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function canExecuteAsynchronously(): bool {
+		return true;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getLevelId(): int {
 		return $this->level;
 	}
 
@@ -111,28 +149,7 @@ abstract class BaseType {
 	public function setBlocksInside(array $blocks) {
 		$this->blocks = $blocks;
 	}
-	
-	/**
-	 * Returns the player that used the type.
-	 *
-	 * @return Player
-	 */
-	public function getPlayer(): Player {
-		return $this->player;
-	}
-	
-	/**
-	 * Returns the biome ID in case of a BiomeType
-	 *
-	 * @return int|null
-	 */
-	public function getBiome(): int {
-		if($this instanceof BiomeType) {
-			return $this->biome;
-		}
-		return Biome::OCEAN;
-	}
-	
+
 	/**
 	 * Returns the blocks the type is being executed upon.
 	 *
@@ -141,41 +158,12 @@ abstract class BaseType {
 	public function getBlocks(): array {
 		return $this->blocks;
 	}
-	
+
 	/**
-	 * Returns the center in case of a Flatten-, Tree- or LayerType.
-	 *
-	 * @return Position|null
-	 */
-	public function getCenter(): Position {
-		if($this instanceof FlattenType || $this instanceof FlattenallType || $this instanceof LayerType) {
-			return $this->center;
-		}
-		return null;
-	}
-	
-	/**
-	 * Returns the obsolete blocks in case of a ReplaceType.
-	 *
 	 * @return array
 	 */
-	public function getObsolete(): array {
-		if($this instanceof ReplaceType) {
-			return $this->obsolete;
-		}
-		return [];
-	}
-	
-	/**
-	 * Returns the tree ID of the tree type in case of a TreeType.
-	 *
-	 * @return int
-	 */
-	public function getTree(): int {
-		if($this instanceof TreeType) {
-			return $this->tree;
-		}
-		return 0;
+	public function getBrushBlocks(): array {
+		return $this->brushBlocks;
 	}
 
 	/**
@@ -185,5 +173,35 @@ abstract class BaseType {
 	 */
 	public function getPermission(): string {
 		return "blocksniper.type." . str_replace("hollow", "", str_replace(" ", "_", strtolower($this->getName())));
+	}
+
+	public abstract function getName(): string;
+
+	/**
+	 * @return bool
+	 */
+	public function isAsynchronous(): bool {
+		return $this->async;
+	}
+
+	/**
+	 * @param bool $value
+	 */
+	public function setAsynchronous(bool $value = true) {
+		$this->async = $value;
+	}
+
+	/**
+	 * @return BlockSniperChunkManager
+	 */
+	public function getChunkManager(): BlockSniperChunkManager {
+		return $this->chunkManager;
+	}
+
+	/**
+	 * @param ChunkManager $manager
+	 */
+	public function setChunkManager(ChunkManager $manager) {
+		$this->chunkManager = $manager;
 	}
 }

@@ -9,15 +9,15 @@ use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
 
 class PresetManager {
-	
+
 	public $presetCreation = [];
 	private $loader;
 	private $data;
 	private $preset;
-	
+
 	public function __construct(Loader $loader) {
 		$this->loader = $loader;
-		
+
 		if(is_file($loader->getDataFolder() . "presets.yml")) {
 			$this->data = yaml_parse_file($loader->getDataFolder() . "presets.yml");
 			foreach($this->data as $name => $data) {
@@ -27,7 +27,7 @@ class PresetManager {
 			$loader->getLogger()->info(TF::GREEN . "All presets have been loaded.");
 		}
 	}
-	
+
 	/**
 	 * @param string $name
 	 */
@@ -46,7 +46,7 @@ class PresetManager {
 			$this->data[$name]["biome"]);
 		unset($this->data[$name]);
 	}
-	
+
 	/**
 	 * @param string $name
 	 *
@@ -55,7 +55,7 @@ class PresetManager {
 	public function isPreset(string $name): bool {
 		return isset($this->preset[$name]);
 	}
-	
+
 	/**
 	 * @param string $name
 	 *
@@ -64,7 +64,7 @@ class PresetManager {
 	public function getPreset(string $name): Preset {
 		return $this->preset[$name];
 	}
-	
+
 	/**
 	 * @param Player $player
 	 *
@@ -73,7 +73,7 @@ class PresetManager {
 	public function isCreatingAPreset(Player $player): bool {
 		return isset($this->presetCreation[$player->getId()]);
 	}
-	
+
 	/**
 	 * @param Player $player
 	 *
@@ -82,7 +82,7 @@ class PresetManager {
 	public function getCurrentPresetCreationProgress(Player $player): int {
 		return count($this->presetCreation[$player->getId()]);
 	}
-	
+
 	/**
 	 * @param Player $player
 	 * @param string $name
@@ -94,7 +94,7 @@ class PresetManager {
 		$this->addPreset($name);
 		unset($this->presetCreation[$player->getId()]);
 	}
-	
+
 	/**
 	 * @param Player $player
 	 * @param string $key
@@ -103,7 +103,7 @@ class PresetManager {
 	public function addToCreationData(Player $player, string $key, $value) {
 		$this->presetCreation[$player->getId()][$key] = $value;
 	}
-	
+
 	/**
 	 * @param Player $player
 	 * @param string $key
@@ -116,21 +116,21 @@ class PresetManager {
 		}
 		return $this->presetCreation[$player->getId()];
 	}
-	
+
 	/**
 	 * @param Player $player
 	 */
 	public function cancelPresetCreationProcess(Player $player) {
 		unset($this->presetCreation[$player->getId()]);
 	}
-	
+
 	/**
 	 * @param string $name
 	 */
 	public function deletePreset(string $name) {
 		unset($this->preset[$name]);
 	}
-	
+
 	public function storePresetsToFile() {
 		$data = [];
 		if(isset($this->preset)) {
@@ -142,14 +142,14 @@ class PresetManager {
 		}
 		yaml_emit_file($this->getLoader()->getDataFolder() . "presets.yml", $data);
 	}
-	
+
 	/**
 	 * @return Loader
 	 */
 	public function getLoader(): Loader {
 		return $this->loader;
 	}
-	
+
 	/**
 	 * @return array
 	 */
