@@ -56,8 +56,8 @@ class CloneCommand extends BaseCommand {
 				}
 				$shape = BrushManager::get($sender)->getShape(true, BrushManager::get($sender)->getYOffset());
 
-				new Schematic()
-					->setBlocks($shape->getBlocksInside())
+				$schematic = new Schematic();
+				$schematic->setBlocks($shape->getBlocksInside())
 					->setMaterials(Schematic::MATERIALS_ALPHA)
 					->encode()
 					->save($this->getLoader()->getDataFolder() . "schematics/" . $args[1] . ".schematic");
