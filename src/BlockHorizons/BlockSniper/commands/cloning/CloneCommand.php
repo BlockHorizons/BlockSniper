@@ -9,10 +9,10 @@ use BlockHorizons\BlockSniper\cloning\types\CopyType;
 use BlockHorizons\BlockSniper\cloning\types\TemplateType;
 use BlockHorizons\BlockSniper\commands\BaseCommand;
 use BlockHorizons\BlockSniper\Loader;
-use BlockHorizons\libschematic\Schematic;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
+use libschematic\Schematic;
 
 class CloneCommand extends BaseCommand {
 
@@ -56,12 +56,12 @@ class CloneCommand extends BaseCommand {
 				}
 				$shape = BrushManager::get($sender)->getShape(true, BrushManager::get($sender)->getYOffset());
 
-				$schematic = new Schematic("");
-				$schematic->setBlocks($shape->getBlocksInside());
-				$schematic->setMaterials(Schematic::MATERIALS_ALPHA);
-				$schematic->encode();
+				new Schematic()
+					->setBlocks($shape->getBlocksInside())
+					->setMaterials(Schematic::MATERIALS_ALPHA)
+					->encode()
+					->save($this->getLoader()->getDataFolder() . "schematics/" . $args[1] . ".schematic");
 
-				file_put_contents($this->getLoader()->getDataFolder() . "schematics/" . $args[1] . ".schematic", $schematic->raw);
 				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.clone"));
 				return true;
 
