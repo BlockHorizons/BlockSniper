@@ -80,9 +80,9 @@ class RevertTask extends AsyncBlockSniperTask {
 	 */
 	public function onProgressUpdate(Server $server, $progress): bool {
 		$loader = $server->getPluginManager()->getPlugin("BlockSniper");
-		$loader->getLogger()->debug($progress);
 		if($loader instanceof Loader) {
 			if($loader->isEnabled()) {
+				$loader->getLogger()->debug($progress);
 				return true;
 			}
 		}

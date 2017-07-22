@@ -1,3 +1,0 @@
-[submodule "src/schematic"]
-	path = src/schematic
-	url = https://github.com/BlockHorizons/Schematics-PHP

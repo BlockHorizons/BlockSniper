@@ -62,7 +62,7 @@ abstract class Revert {
 	/**
 	 * @return bool
 	 */
-public function isAsynchronous(): bool {
+	public function isAsynchronous(): bool {
 		return $this->isAsync;
 	}
 
