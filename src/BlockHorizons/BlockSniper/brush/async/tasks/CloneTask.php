@@ -114,4 +114,22 @@ class CloneTask extends AsyncBlockSniperTask {
 		}
 		return true;
 	}
+
+	/**
+	 * @param Server $server
+	 * @param mixed  $progress
+	 *
+	 * @return bool
+	 */
+	public function onProgressUpdate(Server $server, $progress): bool {
+		$loader = $server->getPluginManager()->getPlugin("BlockSniper");
+		if($loader instanceof Loader) {
+			if($loader->isEnabled()) {
+				$loader->getLogger()->debug($progress);
+				return true;
+			}
+		}
+		$this->setGarbage();
+		return false;
+	}
 }
