@@ -14,6 +14,9 @@ use pocketmine\Player;
 
 class FlattenallType extends BaseType {
 
+	/** @var Block */
+	protected $center;
+
 	/*
 	 * Flattens the terrain below the selected point and removes the blocks above it within the brush radius.
 	 */

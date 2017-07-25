@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\commands\cloning;
 
 use BlockHorizons\BlockSniper\brush\BrushManager;
+use BlockHorizons\BlockSniper\cloning\BaseClone;
 use BlockHorizons\BlockSniper\cloning\types\CopyType;
 use BlockHorizons\BlockSniper\cloning\types\TemplateType;
 use BlockHorizons\BlockSniper\commands\BaseCommand;
@@ -33,12 +34,19 @@ class CloneCommand extends BaseCommand {
 
 		$center = $sender->getTargetBlock(100);
 		$this->getLoader()->getBrushManager()->createBrush($sender);
+		$size = BrushManager::get($sender)->getSize();
 		switch(strtolower($args[0])) {
 			default:
 			case "copy":
 				$shape = BrushManager::get($sender)->getShape(true, BrushManager::get($sender)->getYOffset());
-				$cloneType = new CopyType($this->getLoader()->getCloneStorer(), $sender, $this->getSettings()->saveAirInCopy(), $center, $shape->getBlocksInside());
-				break;
+				if($size >= $this->getLoader()->getSettings()->getMinimumAsynchronousSize()) {
+					$shape->saveAsynchronously();
+				} else {
+					$cloneType = new CopyType($this->getLoader()->getCloneStorer(), $sender, $this->getSettings()->saveAirInCopy(), $center, $shape->getBlocksInside());
+					$cloneType->saveClone();
+				}
+				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.clone"));
+				return true;
 
 			case "template":
 				if(!isset($args[1])) {
@@ -46,22 +54,33 @@ class CloneCommand extends BaseCommand {
 					return true;
 				}
 				$shape = BrushManager::get($sender)->getShape(true, BrushManager::get($sender)->getYOffset());
-				$cloneType = new TemplateType($this->getLoader()->getCloneStorer(), $sender, $this->getSettings()->saveAirInCopy(), $center, $shape->getBlocksInside(), $args[1]);
-				break;
+				if($size >= $this->getLoader()->getSettings()->getMinimumAsynchronousSize()) {
+					$shape->saveAsynchronously(BaseClone::TYPE_TEMPLATE, $args[1]);
+				} else {
+					$cloneType = new TemplateType($this->getLoader()->getCloneStorer(), $sender, $this->getSettings()->saveAirInCopy(), $center, $shape->getBlocksInside(), $args[1]);
+					$cloneType->saveClone();
+				}
+				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.clone"));
+				return true;
 
+			case "scheme":
+			case "schem":
 			case "schematic":
 				if(!isset($args[1])) {
 					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.name-not-set"));
 					return true;
 				}
 				$shape = BrushManager::get($sender)->getShape(true, BrushManager::get($sender)->getYOffset());
-
-				new Schematic()
-					->setBlocks($shape->getBlocksInside())
-					->setMaterials(Schematic::MATERIALS_ALPHA)
-					->encode()
-					->save($this->getLoader()->getDataFolder() . "schematics/" . $args[1] . ".schematic");
-
+				if($size >= $this->getLoader()->getSettings()->getMinimumAsynchronousSize()) {
+					$shape->saveAsynchronously(BaseClone::TYPE_SCHEMATIC, $args[1]);
+				} else {
+					$schematic = new Schematic();
+					$schematic
+						->setBlocks($shape->getBlocksInside())
+						->setMaterials(Schematic::MATERIALS_ALPHA)
+						->encode()
+						->save($this->getLoader()->getDataFolder() . "schematics/" . $args[1] . ".schematic");
+				}
 				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.clone"));
 				return true;
 
@@ -78,8 +97,5 @@ class CloneCommand extends BaseCommand {
 				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("brush.yoffset"));
 				return true;
 		}
-		$cloneType->saveClone();
-		$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.clone"));
-		return true;
 	}
 }

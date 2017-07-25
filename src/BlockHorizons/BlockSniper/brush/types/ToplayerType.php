@@ -15,6 +15,9 @@ use pocketmine\Player;
 
 class ToplayerType extends BaseType {
 
+	/** @var int */
+	protected $height = 0;
+
 	/*
 	 * Replaces the top layer of the terrain, thickness depending on brush height, within the brush radius.
 	 */

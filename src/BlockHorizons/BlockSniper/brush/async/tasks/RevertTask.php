@@ -28,7 +28,7 @@ class RevertTask extends AsyncBlockSniperTask {
 		/** @var Undo|Redo $revert */
 		$revert = unserialize($this->revert);
 		$chunks = $revert->getTouchedChunks();
-		$revert->setManager($manager = BaseType::establishChunkManager($chunks));
+		$revert->setManager(BaseType::establishChunkManager($chunks));
 
 		$detached = $revert->getDetached();
 		$revert->restore($this);
@@ -38,7 +38,12 @@ class RevertTask extends AsyncBlockSniperTask {
 		]);
 	}
 
-	public function onCompletion(Server $server) {
+	/**
+	 * @param Server $server
+	 *
+	 * @return bool
+	 */
+	public function onCompletion(Server $server): bool {
 		/** @var Loader $loader */
 		$loader = $server->getPluginManager()->getPlugin("BlockSniper");
 		if($loader === null) {

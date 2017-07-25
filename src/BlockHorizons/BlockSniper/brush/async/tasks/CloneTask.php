@@ -5,31 +5,42 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\brush\async\tasks;
 
 use BlockHorizons\BlockSniper\brush\BaseShape;
-use BlockHorizons\BlockSniper\brush\BaseType;
+use BlockHorizons\BlockSniper\cloning\BaseClone;
+use BlockHorizons\BlockSniper\cloning\types\CopyType;
+use BlockHorizons\BlockSniper\cloning\types\TemplateType;
 use BlockHorizons\BlockSniper\Loader;
-use BlockHorizons\BlockSniper\undo\Undo;
 use pocketmine\block\Block;
 use pocketmine\level\format\Chunk;
 use pocketmine\level\Level;
 use pocketmine\Server;
+use libschematic\Schematic;
 
-class BrushTask extends AsyncBlockSniperTask {
+class CloneTask extends AsyncBlockSniperTask {
 
+	/** @var int */
+	protected $type = self::TYPE_COPY;
 	/** @var BaseShape */
-	private $shape = null;
+	protected $shape = null;
 	/** @var string */
-	private $chunks = "";
+	protected $chunks = "";
+	/** @var int */
+	protected $cloneType = 0;
+	/** @var bool */
+	protected $saveAir = false;
+	/** @var string */
+	protected $name = "";
 
-	public function __construct(BaseShape $shape, BaseType $type, array $chunks) {
+	public function __construct(BaseShape $shape, array $chunks, int $cloneType = 0, string $name = "", bool $saveAir = false) {
 		$this->shape = $shape;
-		$this->type = $type;
 		$this->chunks = serialize($chunks);
+		$this->cloneType = $cloneType;
+		$this->name = $name;
+		$this->saveAir = $saveAir;
 	}
 
 	public function onRun() {
 		$chunks = unserialize($this->chunks);
 		$processedBlocks = 0;
-		$type = $this->type;
 		$shape = $this->shape;
 		foreach($chunks as $hash => $data) {
 			$chunks[$hash] = Chunk::fastDeserialize($data);
@@ -37,7 +48,6 @@ class BrushTask extends AsyncBlockSniperTask {
 		/** @var Chunk[] $chunks */
 		$vectorsInside = $shape->getBlocksInside(true);
 		$blocks = [];
-		$manager = BaseType::establishChunkManager($chunks);
 		$i = 0;
 		foreach($vectorsInside as $vector3) {
 			$index = Level::chunkHash($vector3->x >> 4, $vector3->z >> 4);
@@ -53,19 +63,8 @@ class BrushTask extends AsyncBlockSniperTask {
 				$i = 0;
 			}
 		}
-		$type->setBlocksInside($blocks);
-		$type->setAsynchronous();
-		$type->setChunkManager($manager);
-		$undoBlocks = $type->fillShape();
-
-		$serializedChunks = $chunks;
-		foreach($serializedChunks as &$chunk) {
-			$chunk = $chunk->fastSerialize();
-		}
-
 		$this->setResult([
-			"undoBlocks" => $undoBlocks,
-			"chunks" => $serializedChunks
+			"blocks" => $blocks,
 		]);
 	}
 
@@ -75,6 +74,10 @@ class BrushTask extends AsyncBlockSniperTask {
 	 * @return bool
 	 */
 	public function onCompletion(Server $server): bool {
+		$shape = $this->shape;
+		if($shape->getPlayer($server) === null) {
+			return false;
+		}
 		/** @var Loader $loader */
 		$loader = $server->getPluginManager()->getPlugin("BlockSniper");
 		if($loader === null) {
@@ -83,41 +86,32 @@ class BrushTask extends AsyncBlockSniperTask {
 		if(!$loader->isEnabled()) {
 			return false;
 		}
-		$result = $this->getResult();
-		$chunks = $result["chunks"];
-		foreach($chunks as &$chunk) {
-			$chunk = Chunk::fastDeserialize($chunk);
-		}
-		$undoBlocks = $result["undoBlocks"];
-		$level = $server->getLevel($this->shape->getLevelId());
+		/** @var Block[] $blocks */
+		$blocks = $this->getResult()["blocks"];
+		$level = $server->getLevel($shape->getLevelId());
 		if($level instanceof Level) {
-			foreach($chunks as $hash => $chunk) {
-				$x = $z = 0;
-				Level::getXZ($hash, $x, $z);
-				$level->setChunk($x, $z, $chunk);
+			foreach($blocks as &$block) {
+				$block->setLevel($shape->getLevel());
 			}
 		}
-		if(($player = $this->shape->getPlayer($server))) {
-			$loader->getRevertStorer()->saveRevert((new Undo($undoBlocks, BaseType::establishChunkManager($chunks), $chunks))->setPlayerName($this->shape->getPlayer($server)->getName()), $player);
+		switch($this->cloneType) {
+			case BaseClone::TYPE_COPY:
+				$type = new CopyType($loader->getCloneStorer(), $shape->getPlayer($server), $this->saveAir, $shape->getCenter(), $blocks);
+				$type->saveClone();
+				break;
+			case BaseClone::TYPE_TEMPLATE:
+				$type = new TemplateType($loader->getCloneStorer(), $shape->getPlayer($server), $this->saveAir, $shape->getCenter(), $blocks, $this->name);
+				$type->saveClone();
+				break;
+			case BaseClone::TYPE_SCHEMATIC:
+				$schematic = new Schematic();
+				$schematic
+					->setBlocks($shape->getBlocksInside())
+					->setMaterials(Schematic::MATERIALS_ALPHA)
+					->encode()
+					->save($loader->getDataFolder() . "schematics/" . $this->name . ".schematic");
+				break;
 		}
 		return true;
-	}
-
-	/**
-	 * @param Server $server
-	 * @param mixed  $progress
-	 *
-	 * @return bool
-	 */
-	public function onProgressUpdate(Server $server, $progress): bool {
-		$loader = $server->getPluginManager()->getPlugin("BlockSniper");
-		if($loader instanceof Loader) {
-			if($loader->isEnabled()) {
-				$loader->getLogger()->debug($progress);
-				return true;
-			}
-		}
-		$this->setGarbage();
-		return false;
 	}
 }

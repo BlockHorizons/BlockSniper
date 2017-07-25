@@ -5,12 +5,16 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
+use pocketmine\block\Block;
 use pocketmine\level\ChunkManager;
 use pocketmine\level\Position;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 
 class LayerType extends BaseType {
+
+	/** @var Block */
+	protected $center;
 
 	/*
 	 * Lays a thin layer of blocks within the brush radius.

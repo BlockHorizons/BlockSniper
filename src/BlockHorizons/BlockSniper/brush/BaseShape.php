@@ -5,6 +5,8 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\brush;
 
 use BlockHorizons\BlockSniper\brush\async\tasks\BrushTask;
+use BlockHorizons\BlockSniper\brush\async\tasks\CloneTask;
+use BlockHorizons\BlockSniper\cloning\BaseClone;
 use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
@@ -154,6 +156,18 @@ abstract class BaseShape {
 	 */
 	public function getLevel(): Level {
 		return Server::getInstance()->getLevel($this->level);
+	}
+
+	/**
+	 * @param int    $type
+	 * @param string $name
+	 * @param bool   $saveAir
+	 *
+	 * @return bool
+	 */
+	public function saveAsynchronously(int $type = BaseClone::TYPE_COPY, string $name = "", bool $saveAir = false): bool {
+		$this->getLevel()->getServer()->getScheduler()->scheduleAsyncTask(new CloneTask($this, $this->getTouchedChunks(), $type, $name, $saveAir));
+		return true;
 	}
 
 	/**

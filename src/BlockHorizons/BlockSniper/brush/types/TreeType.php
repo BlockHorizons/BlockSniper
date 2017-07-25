@@ -15,6 +15,11 @@ use pocketmine\utils\Random;
 
 class TreeType extends BaseType {
 
+	/** @var Block */
+	protected $center;
+	/** @var int */
+	protected $tree = 0;
+
 	/*
 	 * Grows a tree on the target block. This brush can not undo.
 	 */

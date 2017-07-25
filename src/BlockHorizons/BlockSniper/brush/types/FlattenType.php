@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
+use pocketmine\block\Block;
 use pocketmine\block\Flowable;
 use pocketmine\item\Item;
 use pocketmine\level\ChunkManager;
@@ -12,6 +13,9 @@ use pocketmine\level\Position;
 use pocketmine\Player;
 
 class FlattenType extends BaseType {
+
+	/** @var Block */
+	protected $center;
 
 	/*
 	 * Flattens the terrain below the selected point within the brush radius.

@@ -6,10 +6,14 @@ namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\brush\BrushManager;
+use pocketmine\block\Block;
 use pocketmine\level\ChunkManager;
 use pocketmine\Player;
 
 class ReplaceType extends BaseType {
+
+	/** @var Block[] */
+	protected $obsolete = [];
 
 	/*
 	 * Replaces the obsolete blocks within the brush radius.

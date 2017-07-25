@@ -11,6 +11,9 @@ use pocketmine\Player;
 
 class BiomeType extends BaseType {
 
+	/** @var int */
+	protected $biome = 0;
+
 	/*
 	 * Changes the biome within the brush radius.
 	 */

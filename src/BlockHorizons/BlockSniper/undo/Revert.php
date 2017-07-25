@@ -26,10 +26,20 @@ abstract class Revert {
 	/** @var string */
 	private $playerName = "";
 
+	/**
+	 * @param array                        $blocks
+	 * @param BlockSniperChunkManager|null $manager
+	 * @param Chunk[]                      $touchedChunks
+	 * @param string                       $playerName
+	 */
 	public function __construct(array $blocks, BlockSniperChunkManager $manager = null, array $touchedChunks = [], string $playerName = "") {
 		$this->blocks = $blocks;
-		$this->manager = $manager;
-		$this->touchedChunks = $touchedChunks;
+		if(($this->manager = $manager) !== null) {
+			$this->isAsync = true;
+		}
+		foreach($touchedChunks as $index => $chunk) {
+			$this->touchedChunks[$index] = $chunk->fastSerialize();
+		}
 		$this->playerName = $playerName;
 	}
 
@@ -181,18 +191,25 @@ abstract class Revert {
 	}
 
 	/**
-	 * @return array
+	 * @return Chunk[]
 	 */
 	public function getTouchedChunks(): array {
-		return $this->touchedChunks;
+		$chunks = [];
+		foreach($this->touchedChunks as $index => $chunk) {
+			$chunks[$index] = Chunk::fastDeserialize($chunk);
+		}
+		return $chunks;
 	}
 
 	/**
-	 * @param array $chunks
+	 * @param Chunk[] $chunks
 	 *
 	 * @return $this
 	 */
 	public function setTouchedChunks(array $chunks) {
+		foreach($chunks as $index => &$chunk) {
+			$chunk = $chunk->fastSerialize();
+		}
 		$this->touchedChunks = $chunks;
 
 		return $this;

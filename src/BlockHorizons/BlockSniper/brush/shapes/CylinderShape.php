@@ -17,6 +17,8 @@ class CylinderShape extends BaseShape {
 	protected $radius = 0;
 	/** @var bool */
 	private $trueCircle = false;
+	/** @var int */
+	protected $height = 0;
 
 	public function __construct(Player $player, Level $level, int $radius = null, Position $center = null, bool $hollow = false, bool $cloneShape = false) {
 		parent::__construct($player, $level, $center, $hollow);

@@ -41,7 +41,7 @@ class BrushListener implements Listener {
 					return false;
 				}
 
-				if($brush->getSize() >= 15  && $type->canExecuteAsynchronously()) {
+				if($brush->getSize() >= $this->getLoader()->getSettings()->getMinimumAsynchronousSize()  && $type->canExecuteAsynchronously()) {
 					$shape->editAsynchronously($type);
 				} else {
 					$type->setBlocksInside($shape->getBlocksInside());

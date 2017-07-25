@@ -14,6 +14,8 @@ class PyramidShape extends BaseShape {
 
 	/** @var int */
 	protected $width = 0;
+	/** @var int */
+	protected $height = 0;
 
 	public function __construct(Player $player, Level $level, int $width = null, Position $center = null, bool $hollow = false) {
 		parent::__construct($player, $level, $center, $hollow);
