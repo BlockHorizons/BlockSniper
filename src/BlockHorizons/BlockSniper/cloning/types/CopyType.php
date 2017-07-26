@@ -26,7 +26,7 @@ class CopyType extends BaseClone {
 			if($block->getId() === Item::AIR && $this->saveAir === false) {
 				continue;
 			}
-			$templateBlocks[] = $block;
+			$copyBlocks[] = $block;
 		}
 		$this->getCloneStorer()->setOriginalCenter($this->center, $this->player);
 		$this->getCloneStorer()->saveCopy($copyBlocks, $this->player);

@@ -21,6 +21,7 @@ class RevertTask extends AsyncBlockSniperTask {
 	private $revert = "";
 
 	public function __construct(Revert $revert) {
+		$revert->secureAsyncBlocks();
 		$this->revert = serialize($revert);
 	}
 

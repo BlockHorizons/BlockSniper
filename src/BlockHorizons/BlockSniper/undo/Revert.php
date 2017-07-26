@@ -57,6 +57,7 @@ abstract class Revert {
 			foreach($this->blocks as $block) {
 				if($i++ === (int) ($this->getBlockCount() / 100)) {
 					$task->publishProgress(round($processedBlocks / $this->getBlockCount() * 100) . "%");
+					$i = 0;
 				}
 				$this->getManager()->setBlockIdAt($block->x, $block->y, $block->z, $block->getId());
 				$this->getManager()->setBlockDataAt($block->x, $block->y, $block->z, $block->getDamage());

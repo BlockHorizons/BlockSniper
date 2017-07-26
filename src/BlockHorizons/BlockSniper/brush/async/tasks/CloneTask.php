@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\brush\async\tasks;
 
 use BlockHorizons\BlockSniper\brush\BaseShape;
+use BlockHorizons\BlockSniper\brush\BrushManager;
 use BlockHorizons\BlockSniper\cloning\BaseClone;
 use BlockHorizons\BlockSniper\cloning\types\CopyType;
 use BlockHorizons\BlockSniper\cloning\types\TemplateType;
@@ -75,7 +76,7 @@ class CloneTask extends AsyncBlockSniperTask {
 	 */
 	public function onCompletion(Server $server): bool {
 		$shape = $this->shape;
-		if($shape->getPlayer($server) === null) {
+		if(($player = $shape->getPlayer($server)) === null) {
 			return false;
 		}
 		/** @var Loader $loader */
@@ -96,19 +97,23 @@ class CloneTask extends AsyncBlockSniperTask {
 		}
 		switch($this->cloneType) {
 			case BaseClone::TYPE_COPY:
-				$type = new CopyType($loader->getCloneStorer(), $shape->getPlayer($server), $this->saveAir, $shape->getCenter(), $blocks);
+				$type = new CopyType($loader->getCloneStorer(), $player, $this->saveAir, $shape->getCenter(), $blocks);
 				$type->saveClone();
 				break;
 			case BaseClone::TYPE_TEMPLATE:
-				$type = new TemplateType($loader->getCloneStorer(), $shape->getPlayer($server), $this->saveAir, $shape->getCenter(), $blocks, $this->name);
+				$type = new TemplateType($loader->getCloneStorer(), $player, $this->saveAir, $shape->getCenter(), $blocks, $this->name);
 				$type->saveClone();
 				break;
 			case BaseClone::TYPE_SCHEMATIC:
 				$schematic = new Schematic();
+				$size = BrushManager::get($player)->getSize();
 				$schematic
 					->setBlocks($shape->getBlocksInside())
 					->setMaterials(Schematic::MATERIALS_ALPHA)
 					->encode()
+					->setLength($size * 2 + 1)
+					->setHeight($size * 2 + 1)
+					->setWidth($size * 2 + 1)
 					->save($loader->getDataFolder() . "schematics/" . $this->name . ".schematic");
 				break;
 		}

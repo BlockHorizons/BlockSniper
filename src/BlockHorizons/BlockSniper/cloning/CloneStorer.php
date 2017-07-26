@@ -128,7 +128,6 @@ class CloneStorer {
 			];
 			$i++;
 		}
-		unset($i);
 		file_put_contents($this->getLoader()->getDataFolder() . "templates/" . $templateName . ".yml", serialize($template));
 		return true;
 	}
@@ -149,14 +148,14 @@ class CloneStorer {
 
 		foreach($content as $key => $block) {
 			$Id = explode("(", $key);
-			$blockId = $Id[0];
+			$blockId = (int) $Id[0];
 			$meta = explode(":", $blockId);
-			$meta = $meta[1];
-			$x = $block["x"];
-			$y = $block["y"] + 1;
-			$z = $block["z"];
+			$meta = (int) $meta[1];
+			$x = (int) $block["x"];
+			$y = (int) $block["y"] + 1;
+			$z = (int) $block["z"];
 			$finalBlock = Item::get($blockId)->getBlock();
-			$finalBlock->setDamage((int) $meta !== null ? $meta : 0);
+			$finalBlock->setDamage(!empty($meta) ? (int) $meta : 0);
 
 			$blockPos = new Vector3($x + $targetBlock->x, $y + $targetBlock->y, $z + $targetBlock->z);
 			$undoBlocks[] = $targetBlock->getLevel()->getBlock($blockPos);

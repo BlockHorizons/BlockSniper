@@ -71,6 +71,7 @@ class CloneCommand extends BaseCommand {
 					return true;
 				}
 				$shape = BrushManager::get($sender)->getShape(true, BrushManager::get($sender)->getYOffset());
+				$size = BrushManager::get($sender)->getSize();
 				if($size >= $this->getLoader()->getSettings()->getMinimumAsynchronousSize()) {
 					$shape->cloneAsynchronously(BaseClone::TYPE_SCHEMATIC, $args[1]);
 				} else {
@@ -79,6 +80,9 @@ class CloneCommand extends BaseCommand {
 						->setBlocks($shape->getBlocksInside())
 						->setMaterials(Schematic::MATERIALS_ALPHA)
 						->encode()
+						->setLength($size * 2 + 1)
+						->setHeight($size * 2 + 1)
+						->setWidth($size * 2 + 1)
 						->save($this->getLoader()->getDataFolder() . "schematics/" . $args[1] . ".schematic");
 				}
 				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.clone"));
