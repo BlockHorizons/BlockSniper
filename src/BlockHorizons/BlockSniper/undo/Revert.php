@@ -86,7 +86,7 @@ abstract class Revert {
 		if(empty($this->touchedChunks)) {
 			return false;
 		}
-		$this->setAsynchronous();
+		$this->secureAsyncBlocks();
 		$this->scheduled = true;
 		Server::getInstance()->getScheduler()->scheduleAsyncTask(new RevertTask($this));
 		return true;
@@ -94,9 +94,13 @@ abstract class Revert {
 
 	/**
 	 * @param array $blocks
+	 *
+	 * @return $this
 	 */
-	public function setBlocks(array $blocks) {
+	public function setBlocks(array $blocks): Revert {
 		$this->blocks = $blocks;
+
+		return $this;
 	}
 
 	/**
@@ -118,7 +122,7 @@ abstract class Revert {
 	 *
 	 * @return $this
 	 */
-	public function setManager(BlockSniperChunkManager $manager) {
+	public function setManager(BlockSniperChunkManager $manager): Revert {
 		$this->manager = $manager;
 
 		return $this;
@@ -159,15 +163,8 @@ abstract class Revert {
 	 *
 	 * @return $this
 	 */
-	public function setAsynchronous(bool $value = true) {
+	public function setAsynchronous(bool $value = true): Revert {
 		$this->isAsync = $value;
-		if($value) {
-			$blocks = [];
-			foreach($this->blocks as $block) {
-				$blocks[] = Block::get($block->getId(), $block->getDamage())->setComponents($block->x, $block->y, $block->z);
-			}
-			$this->setBlocks($blocks);
-		}
 
 		return $this;
 	}
@@ -184,7 +181,7 @@ abstract class Revert {
 	 *
 	 * @return $this
 	 */
-	public function setPlayerName(string $name) {
+	public function setPlayerName(string $name): Revert {
 		$this->playerName = $name;
 
 		return $this;
@@ -206,12 +203,22 @@ abstract class Revert {
 	 *
 	 * @return $this
 	 */
-	public function setTouchedChunks(array $chunks) {
+	public function setTouchedChunks(array $chunks): Revert {
 		foreach($chunks as $index => &$chunk) {
 			$chunk = $chunk->fastSerialize();
 		}
 		$this->touchedChunks = $chunks;
 
+		return $this;
+	}
+
+	/**
+	 * @return $this
+	 */
+	public function secureAsyncBlocks(): Revert {
+		foreach($this->blocks as &$block) {
+			$block = Block::get($block->getId(), $block->getDamage())->setComponents($block->x, $block->y, $block->z);
+		}
 		return $this;
 	}
 }

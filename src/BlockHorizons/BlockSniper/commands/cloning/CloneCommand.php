@@ -40,7 +40,7 @@ class CloneCommand extends BaseCommand {
 			case "copy":
 				$shape = BrushManager::get($sender)->getShape(true, BrushManager::get($sender)->getYOffset());
 				if($size >= $this->getLoader()->getSettings()->getMinimumAsynchronousSize()) {
-					$shape->saveAsynchronously();
+					$shape->cloneAsynchronously();
 				} else {
 					$cloneType = new CopyType($this->getLoader()->getCloneStorer(), $sender, $this->getSettings()->saveAirInCopy(), $center, $shape->getBlocksInside());
 					$cloneType->saveClone();
@@ -55,7 +55,7 @@ class CloneCommand extends BaseCommand {
 				}
 				$shape = BrushManager::get($sender)->getShape(true, BrushManager::get($sender)->getYOffset());
 				if($size >= $this->getLoader()->getSettings()->getMinimumAsynchronousSize()) {
-					$shape->saveAsynchronously(BaseClone::TYPE_TEMPLATE, $args[1]);
+					$shape->cloneAsynchronously(BaseClone::TYPE_TEMPLATE, $args[1]);
 				} else {
 					$cloneType = new TemplateType($this->getLoader()->getCloneStorer(), $sender, $this->getSettings()->saveAirInCopy(), $center, $shape->getBlocksInside(), $args[1]);
 					$cloneType->saveClone();
@@ -72,7 +72,7 @@ class CloneCommand extends BaseCommand {
 				}
 				$shape = BrushManager::get($sender)->getShape(true, BrushManager::get($sender)->getYOffset());
 				if($size >= $this->getLoader()->getSettings()->getMinimumAsynchronousSize()) {
-					$shape->saveAsynchronously(BaseClone::TYPE_SCHEMATIC, $args[1]);
+					$shape->cloneAsynchronously(BaseClone::TYPE_SCHEMATIC, $args[1]);
 				} else {
 					$schematic = new Schematic();
 					$schematic
