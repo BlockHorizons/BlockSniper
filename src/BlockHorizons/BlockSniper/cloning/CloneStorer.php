@@ -148,7 +148,7 @@ class CloneStorer {
 
 		foreach($content as $key => $block) {
 			$Id = explode("(", $key);
-			$blockId = (int) $Id[0];
+			$blockId = $Id[0];
 			$meta = explode(":", $blockId);
 			$meta = (int) $meta[1];
 			$x = (int) $block["x"];

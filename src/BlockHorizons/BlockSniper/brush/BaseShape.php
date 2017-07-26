@@ -159,18 +159,6 @@ abstract class BaseShape {
 	}
 
 	/**
-	 * @param int    $type
-	 * @param string $name
-	 * @param bool   $saveAir
-	 *
-	 * @return bool
-	 */
-	public function cloneAsynchronously(int $type = BaseClone::TYPE_COPY, string $name = "", bool $saveAir = false): bool {
-		$this->getLevel()->getServer()->getScheduler()->scheduleAsyncTask(new CloneTask($this, $this->getTouchedChunks(), $type, $name, $saveAir));
-		return true;
-	}
-
-	/**
 	 * @return array
 	 */
 	public abstract function getTouchedChunks(): array;

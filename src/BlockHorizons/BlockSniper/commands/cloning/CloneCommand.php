@@ -39,12 +39,8 @@ class CloneCommand extends BaseCommand {
 			default:
 			case "copy":
 				$shape = BrushManager::get($sender)->getShape(true, BrushManager::get($sender)->getYOffset());
-				if($size >= $this->getLoader()->getSettings()->getMinimumAsynchronousSize()) {
-					$shape->cloneAsynchronously();
-				} else {
-					$cloneType = new CopyType($this->getLoader()->getCloneStorer(), $sender, $this->getSettings()->saveAirInCopy(), $center, $shape->getBlocksInside());
-					$cloneType->saveClone();
-				}
+				$cloneType = new CopyType($this->getLoader()->getCloneStorer(), $sender, $this->getSettings()->saveAirInCopy(), $center, $shape->getBlocksInside());
+				$cloneType->saveClone();
 				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.clone"));
 				return true;
 
@@ -54,12 +50,8 @@ class CloneCommand extends BaseCommand {
 					return true;
 				}
 				$shape = BrushManager::get($sender)->getShape(true, BrushManager::get($sender)->getYOffset());
-				if($size >= $this->getLoader()->getSettings()->getMinimumAsynchronousSize()) {
-					$shape->cloneAsynchronously(BaseClone::TYPE_TEMPLATE, $args[1]);
-				} else {
-					$cloneType = new TemplateType($this->getLoader()->getCloneStorer(), $sender, $this->getSettings()->saveAirInCopy(), $center, $shape->getBlocksInside(), $args[1]);
-					$cloneType->saveClone();
-				}
+				$cloneType = new TemplateType($this->getLoader()->getCloneStorer(), $sender, $this->getSettings()->saveAirInCopy(), $center, $shape->getBlocksInside(), $args[1]);
+				$cloneType->saveClone();
 				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.clone"));
 				return true;
 
@@ -72,19 +64,15 @@ class CloneCommand extends BaseCommand {
 				}
 				$shape = BrushManager::get($sender)->getShape(true, BrushManager::get($sender)->getYOffset());
 				$size = BrushManager::get($sender)->getSize();
-				if($size >= $this->getLoader()->getSettings()->getMinimumAsynchronousSize()) {
-					$shape->cloneAsynchronously(BaseClone::TYPE_SCHEMATIC, $args[1]);
-				} else {
-					$schematic = new Schematic();
-					$schematic
-						->setBlocks($shape->getBlocksInside())
-						->setMaterials(Schematic::MATERIALS_ALPHA)
-						->encode()
-						->setLength($size * 2 + 1)
-						->setHeight($size * 2 + 1)
-						->setWidth($size * 2 + 1)
-						->save($this->getLoader()->getDataFolder() . "schematics/" . $args[1] . ".schematic");
-				}
+				$schematic = new Schematic();
+				$schematic
+					->setBlocks($shape->getBlocksInside())
+					->setMaterials(Schematic::MATERIALS_ALPHA)
+					->encode()
+					->setLength($size * 2 + 1)
+					->setHeight($size * 2 + 1)
+					->setWidth($size * 2 + 1)
+					->save($this->getLoader()->getDataFolder() . "schematics/" . $args[1] . ".schematic");
 				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.clone"));
 				return true;
 
