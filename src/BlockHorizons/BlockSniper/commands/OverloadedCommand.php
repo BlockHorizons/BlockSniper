@@ -8,6 +8,11 @@ use pocketmine\Player;
 
 interface OverloadedCommand {
 
+	/**
+	 * @param Player $player
+	 *
+	 * @return array
+	 */
 	public function generateCustomCommandData(Player $player): array;
 
 }

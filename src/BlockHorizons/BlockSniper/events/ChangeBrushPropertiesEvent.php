@@ -23,11 +23,15 @@ class ChangeBrushPropertiesEvent extends PluginEvent {
 	const ACTION_CHANGE_HOLLOW = 9;
 	const ACTION_CHANGE_TREE = 10;
 
+	/** @var null */
 	public static $handlerList = null;
 
-	public $player;
-	public $action;
-	public $value;
+	/** @var Player */
+	public $player = null;
+	/** @var int */
+	public $action = 0;
+	/** @var mixed */
+	public $value = null;
 
 	public function __construct(Loader $loader, Player $player, int $action, $value) {
 		parent::__construct($loader);

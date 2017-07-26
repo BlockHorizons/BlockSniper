@@ -13,11 +13,15 @@ use pocketmine\Player;
 
 class BrushUseEvent extends BaseEvent implements Cancellable {
 
+	/** @var null */
 	public static $handlerList = null;
 
-	public $player;
-	public $type;
-	public $shape;
+	/** @var Player */
+	public $player = null;
+	/** @var BaseType */
+	public $type = null;
+	/** @var BaseShape */
+	public $shape = null;
 
 	public function __construct(Loader $loader, Player $player, BaseShape $shape, BaseType $type) {
 		parent::__construct($loader);

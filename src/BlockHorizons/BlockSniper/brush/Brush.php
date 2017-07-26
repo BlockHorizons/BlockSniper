@@ -11,10 +11,35 @@ use pocketmine\Server;
 
 class Brush {
 
-	public $player;
+	/** @var string */
+	public $player = "";
+	/** @var int */
 	public $resetSize = 0;
-	private $type = "fill", $shape = "sphere", $size = 1, $hollow = false, $decrement = false;
-	private $height = 1, $perfect = true, $blocks = [], $obsolete = [], $biome = "plains", $tree = "oak", $yOffset = 0;
+
+	/** @var string */
+	private $type = "fill";
+	/** @var string */
+	private $shape = "sphere";
+	/** @var int */
+	private $size = 1;
+	/** @var bool */
+	private $hollow = false;
+	/** @var bool */
+	private $decrement = false;
+	/** @var int */
+	private $height = 0;
+	/** @var bool */
+	private $perfect = true;
+	/** @var array */
+	private $blocks = [];
+	/** @var array */
+	private $obsolete = [];
+	/** @var string */
+	private $biome = "plains";
+	/** @var string */
+	private $tree = "oak";
+	/** @var int */
+	private $yOffset = 0;
 
 	public function __construct(string $player) {
 		$this->player = $player;

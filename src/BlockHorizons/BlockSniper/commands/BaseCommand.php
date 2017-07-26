@@ -15,7 +15,8 @@ use pocketmine\utils\TextFormat as TF;
 
 abstract class BaseCommand extends Command implements PluginIdentifiableCommand, OverloadedCommand {
 
-	protected $loader;
+	/** @var Loader */
+	protected $loader = null;
 
 	public function __construct(Loader $loader, $name, $description = "", $usageMessage = null, array $aliases = []) {
 		parent::__construct($name, $description, $usageMessage, $aliases);

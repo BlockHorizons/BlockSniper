@@ -11,10 +11,13 @@ use pocketmine\event\plugin\PluginEvent;
 
 class BrushRecoverEvent extends PluginEvent implements Cancellable {
 
-	public static $handlerList;
+	/** @var null */
+	public static $handlerList = null;
 
-	public $player;
-	public $brush;
+	/** @var string */
+	public $player = "";
+	/** @var Brush */
+	public $brush = null;
 
 	public function __construct(Loader $loader, string $player, Brush $brush) {
 		parent::__construct($loader);

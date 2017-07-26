@@ -14,7 +14,7 @@ abstract class Revert {
 	const TYPE_REDO = 1;
 
 	/** @var Block[] */
-	protected $blocks;
+	protected $blocks = [];
 	/** @var bool */
 	protected $isAsync = false;
 	/** @var BlockSniperChunkManager|null */

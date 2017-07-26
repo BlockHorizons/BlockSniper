@@ -14,7 +14,8 @@ use pocketmine\utils\TextFormat as TF;
 
 class PresetListener implements Listener {
 
-	private $loader;
+	/** @var Loader */
+	private $loader = null;
 
 	public function __construct(Loader $loader) {
 		$this->loader = $loader;
@@ -34,7 +35,6 @@ class PresetListener implements Listener {
 			return true;
 		}
 
-		// Ew... I know.
 		switch($this->getLoader()->getPresetManager()->getCurrentPresetCreationProgress($player)) {
 			case 0:
 				$player->sendMessage(TF::AQUA . $message[0]);

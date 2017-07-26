@@ -11,6 +11,7 @@ use pocketmine\utils\TextFormat as TF;
 
 class BrushManager {
 
+	/** @var Brush[] */
 	private static $brush = [];
 
 	public function __construct(Loader $loader) {

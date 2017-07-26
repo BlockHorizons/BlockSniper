@@ -9,6 +9,7 @@ use BlockHorizons\BlockSniper\Loader;
 
 class CommandOverloads {
 
+	/** @var array */
 	private static $commandOverloads = [];
 
 	/**

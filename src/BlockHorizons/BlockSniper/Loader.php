@@ -43,15 +43,15 @@ class Loader extends PluginBase {
 	public $language = "";
 
 	/** @var RevertStorer */
-	private $revertStorer;
+	private $revertStorer = null;
 	/** @var CloneStorer */
-	private $cloneStorer;
+	private $cloneStorer = null;
 	/** @var ConfigData */
-	private $settings;
+	private $settings = null;
 	/** @var BrushManager */
-	private $brushManager;
+	private $brushManager = null;
 	/** @var PresetManager */
-	private $presetManager;
+	private $presetManager = null;
 
 	/**
 	 * @return array

@@ -11,10 +11,13 @@ use pocketmine\Player;
 
 class PresetCreationEvent extends PluginEvent implements Cancellable {
 
-	public static $handlerList;
+	/** @var null */
+	public static $handlerList = null;
 
-	private $player;
-	private $presetData;
+	/** @var Player */
+	private $player = null;
+	/** @var array */
+	private $presetData = [];
 
 	public function __construct(Loader $loader, Player $player, array $presetData) {
 		parent::__construct($loader);

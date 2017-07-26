@@ -9,7 +9,8 @@ use pocketmine\event\plugin\PluginEvent;
 
 abstract class BaseEvent extends PluginEvent {
 
-	protected $loader;
+	/** @var Loader */
+	protected $loader = null;
 
 	public function __construct(Loader $loader) {
 		parent::__construct($loader);

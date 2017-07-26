@@ -15,11 +15,11 @@ class RevertStorer {
 	/** @var Redo[][] */
 	private $redoStack = [];
 	/** @var array */
-	private $lastUndo;
+	private $lastUndo = [];
 	/** @var array */
-	private $lastRedo;
+	private $lastRedo = [];
 	/** @var Loader */
-	private $loader;
+	private $loader = null;
 
 	public function __construct(Loader $loader) {
 		$this->loader = $loader;

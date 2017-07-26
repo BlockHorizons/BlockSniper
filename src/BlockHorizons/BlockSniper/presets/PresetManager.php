@@ -10,10 +10,14 @@ use pocketmine\utils\TextFormat as TF;
 
 class PresetManager {
 
+	/** @var array */
 	public $presetCreation = [];
-	private $loader;
-	private $data;
-	private $preset;
+	/** @var Loader */
+	private $loader = null;
+	/** @var array */
+	private $data = [];
+	/** @var array */
+	private $preset = [];
 
 	public function __construct(Loader $loader) {
 		$this->loader = $loader;
@@ -43,7 +47,8 @@ class PresetManager {
 			$this->data[$name]["blocks"],
 			$this->data[$name]["obsolete"],
 			$this->data[$name]["height"],
-			$this->data[$name]["biome"]);
+			$this->data[$name]["biome"]
+		);
 		unset($this->data[$name]);
 	}
 
@@ -110,7 +115,7 @@ class PresetManager {
 	 *
 	 * @return mixed
 	 */
-	public function getCreationData(Player $player, string $key = null) {
+	public function getCreationData(Player $player, string $key = "") {
 		if(isset($key)) {
 			return $this->presetCreation[$player->getId()][$key];
 		}

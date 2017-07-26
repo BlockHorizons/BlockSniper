@@ -15,7 +15,8 @@ use pocketmine\utils\TextFormat as TF;
 
 class BrushListener implements Listener {
 
-	private $loader;
+	/** @var Loader */
+	private $loader = null;
 
 	public function __construct(Loader $loader) {
 		$this->loader = $loader;

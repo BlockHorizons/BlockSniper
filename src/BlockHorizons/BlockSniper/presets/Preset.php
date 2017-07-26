@@ -9,10 +9,27 @@ use pocketmine\Player;
 
 class Preset {
 
-	public $name;
+	/** @var string */
+	public $name = "";
 
-	private $shape, $type, $size, $hollow, $decrement;
-	private $height, $biome, $obsolete, $blocks;
+	/** @var string */
+	private $shape = "";
+	/** @var string */
+	private $type = "";
+	/** @var int */
+	private $size = 0;
+	/** @var bool */
+	private $hollow = false;
+	/** @var bool */
+	private $decrement = false;
+	/** @var int */
+	private $height = 0;
+	/** @var string */
+	private $biome = "";
+	/** @var array */
+	private $obsolete = [];
+	/** @var array */
+	private $blocks = [];
 
 	public function __construct(string $name, string $shape = null, string $type = null, bool $decrement = null, bool $perfect = null, int $size = null, bool $hollow = null, array $blocks = null, array $obsolete = null, int $height = null, string $biome = null) {
 		$this->name = $name;

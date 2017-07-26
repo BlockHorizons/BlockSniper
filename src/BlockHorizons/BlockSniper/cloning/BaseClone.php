@@ -15,14 +15,21 @@ abstract class BaseClone {
 	const TYPE_TEMPLATE = 1;
 	const TYPE_SCHEMATIC = 2;
 
-	public $cloneStorer;
-	public $level;
+	/** @var CloneStorer */
+	public $cloneStorer = null;
+	/** @var Level */
+	public $level = null;
 
-	protected $player;
-	protected $name;
-	protected $center;
-	protected $saveAir;
-	protected $blocks;
+	/** @var Player */
+	protected $player = null;
+	/** @var string */
+	protected $name = "";
+	/** @var Position */
+	protected $center = null;
+	/** @var bool */
+	protected $saveAir = false;
+	/** @var Block[] */
+	protected $blocks = [];
 
 	/**
 	 * @param CloneStorer $cloneStorer

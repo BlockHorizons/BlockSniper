@@ -8,15 +8,18 @@ use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\undo\Undo;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
+use pocketmine\level\Position;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 
 class CloneStorer {
 
+	/** @var Block[][] */
 	private $copyStore = [];
+	/** @var Position */
 	private $originalCenter = null;
-	private $loader;
-	private $target;
+	/** @var Loader */
+	private $loader = null;
 
 	public function __construct(Loader $loader) {
 		$this->loader = $loader;
@@ -29,7 +32,8 @@ class CloneStorer {
 	public function saveCopy(array $blocks, Player $player) {
 		$this->unsetCopy($player);
 		foreach($blocks as $block) {
-			$this->copyStore[$player->getName()][] = $block->subtract($this->getOriginalCenter($player));
+			$block->subtract($this->getOriginalCenter($player));
+			$this->copyStore[$player->getName()][] = $block;
 		}
 	}
 
@@ -81,7 +85,6 @@ class CloneStorer {
 	public function resetCopyStorage() {
 		$this->copyStore = [];
 		$this->originalCenter = null;
-		$this->target = null;
 	}
 
 	/**
@@ -148,8 +151,9 @@ class CloneStorer {
 
 		foreach($content as $key => $block) {
 			$Id = explode("(", $key);
-			$blockId = $Id[0];
-			$meta = explode(":", $blockId);
+			$blockData = $Id[0];
+			$meta = explode(":", $blockData);
+			$blockId = (int) $meta[0];
 			$meta = (int) $meta[1];
 			$x = (int) $block["x"];
 			$y = (int) $block["y"] + 1;
