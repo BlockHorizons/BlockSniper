@@ -12,7 +12,7 @@ use pocketmine\Server;
 class Brush {
 
 	/** @var string */
-	public $player = "";
+	private $player = "";
 	/** @var int */
 	public $resetSize = 0;
 
@@ -43,6 +43,13 @@ class Brush {
 
 	public function __construct(string $player) {
 		$this->player = $player;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getPlayerName(): string {
+		return $this->player;
 	}
 
 	/**

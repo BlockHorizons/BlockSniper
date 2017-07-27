@@ -116,7 +116,7 @@ class PresetManager {
 	 * @return mixed
 	 */
 	public function getCreationData(Player $player, string $key = "") {
-		if(isset($key)) {
+		if(!empty($key)) {
 			return $this->presetCreation[$player->getId()][$key];
 		}
 		return $this->presetCreation[$player->getId()];

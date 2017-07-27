@@ -17,6 +17,7 @@ use BlockHorizons\BlockSniper\data\ConfigData;
 use BlockHorizons\BlockSniper\data\TranslationData;
 use BlockHorizons\BlockSniper\listeners\BrushListener;
 use BlockHorizons\BlockSniper\listeners\PresetListener;
+use BlockHorizons\BlockSniper\operation\Operator;
 use BlockHorizons\BlockSniper\presets\PresetManager;
 use BlockHorizons\BlockSniper\tasks\UndoDiminishTask;
 use BlockHorizons\BlockSniper\undo\RevertStorer;
@@ -52,6 +53,8 @@ class Loader extends PluginBase {
 	private $brushManager = null;
 	/** @var PresetManager */
 	private $presetManager = null;
+	/** @var Operator */
+	private $operator = null;
 
 	/**
 	 * @return array
@@ -80,6 +83,7 @@ class Loader extends PluginBase {
 
 		$this->revertStorer = new RevertStorer($this);
 		$this->cloneStorer = new CloneStorer($this);
+		$this->operator = new Operator($this);
 
 		if(!is_dir($this->getDataFolder())) {
 			mkdir($this->getDataFolder());
@@ -95,7 +99,8 @@ class Loader extends PluginBase {
 		}
 
 		if(!$this->language->collectTranslations()) {
-			$this->getLogger()->info(TF::AQUA . "[BlockSniper] No valid language selected, English has been auto-selected.\n" . TF::AQUA . "Please setup a language by using /blocksniper language <lang>.");
+			$this->getLogger()->info(TF::AQUA . "[BlockSniper] No valid language selected, English has been auto-selected.");
+			$this->getLogger()->info(TF::AQUA . "Please setup a language by using /blocksniper language <lang>.");
 		} else {
 			$this->getLogger()->info(TF::AQUA . "[BlockSniper] Language selected: " . TF::GREEN . $this->getSettings()->getLanguage());
 		}
@@ -178,5 +183,12 @@ class Loader extends PluginBase {
 	 */
 	public function getRevertStorer(): RevertStorer {
 		return $this->revertStorer;
+	}
+
+	/**
+	 * @return Operator
+	 */
+	public function getOperator(): Operator {
+		return $this->operator;
 	}
 }

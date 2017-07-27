@@ -29,6 +29,7 @@ class BlockSniperCommand extends BaseCommand {
 		}
 
 		switch(strtolower($args[0])) {
+			case "lang":
 			case "language":
 				$this->getSettings()->set("Message-Language", $args[1]);
 				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.language"));
