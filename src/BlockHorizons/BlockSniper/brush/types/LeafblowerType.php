@@ -15,6 +15,9 @@ use pocketmine\Server;
 
 class LeafblowerType extends BaseType {
 
+	/** @var int */
+	protected $id = self::TYPE_LEAFBLOWER;
+
 	/*
 	 * Blows away all plants and flowers within the brush radius.
 	 */

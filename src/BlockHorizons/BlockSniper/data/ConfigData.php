@@ -148,6 +148,10 @@ class ConfigData {
 		return (int) $this->settings["Asynchronous-Operation-Size"];
 	}
 
+	public function updatesAutomatically(): bool {
+		return (bool) $this->settings["Auto-Configuration-Update"];
+	}
+
 	public function save() {
 		yaml_emit_file($this->getLoader()->getDataFolder() . "settings.yml", $this->settings);
 	}

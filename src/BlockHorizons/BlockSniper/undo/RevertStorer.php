@@ -74,12 +74,11 @@ class RevertStorer {
 				return 0;
 			}
 			return count($this->undoStack[$player->getName()]);
-		} else {
-			if(!isset($this->redoStack[$player->getName()])) {
-				return 0;
-			}
-			return count($this->redoStack[$player->getName()]);
 		}
+		if(!isset($this->redoStack[$player->getName()])) {
+			return 0;
+		}
+		return count($this->redoStack[$player->getName()]);
 	}
 
 	/**
@@ -127,7 +126,7 @@ class RevertStorer {
 	 *
 	 * @return bool
 	 */
-	public function undoStorageExists(Player $player) {
+	public function undoStorageExists(Player $player): bool {
 		if(!isset($this->undoStack[$player->getName()])) {
 			return false;
 		}
@@ -142,7 +141,7 @@ class RevertStorer {
 	 *
 	 * @return bool
 	 */
-	public function redoStorageExists(Player $player) {
+	public function redoStorageExists(Player $player): bool {
 		if(!isset($this->redoStack[$player->getName()])) {
 			return false;
 		}

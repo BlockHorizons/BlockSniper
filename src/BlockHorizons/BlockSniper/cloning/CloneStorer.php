@@ -93,10 +93,7 @@ class CloneStorer {
 	 * @return bool
 	 */
 	public function copyStoreExists(Player $player): bool {
-		if(!is_array($this->copyStore[$player->getName()]) || empty($this->copyStore[$player->getName()])) {
-			return false;
-		}
-		return true;
+		return !(!is_array($this->copyStore[$player->getName()]) || empty($this->copyStore[$player->getName()]));
 	}
 
 	/**
@@ -159,11 +156,11 @@ class CloneStorer {
 			$y = (int) $block["y"] + 1;
 			$z = (int) $block["z"];
 			$finalBlock = Item::get($blockId)->getBlock();
-			$finalBlock->setDamage(!empty($meta) ? (int) $meta : 0);
+			$finalBlock->setDamage(!empty($meta) ? $meta : 0);
 
 			$blockPos = new Vector3($x + $targetBlock->x, $y + $targetBlock->y, $z + $targetBlock->z);
 			$undoBlocks[] = $targetBlock->getLevel()->getBlock($blockPos);
-			$targetBlock->getLevel()->setBlock($blockPos, Block::get((int) $blockId, (int) $meta), false, false);
+			$targetBlock->getLevel()->setBlock($blockPos, Block::get($blockId, $meta), false, false);
 		}
 		$this->getLoader()->getRevertStorer()->saveRevert(new Undo($undoBlocks), $player);
 		return true;

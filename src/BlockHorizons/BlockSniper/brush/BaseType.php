@@ -15,24 +15,23 @@ use pocketmine\Server;
 
 abstract class BaseType {
 
-	const TYPE_FILL = 0;
-	const TYPE_OVERLAY = 1;
-	const TYPE_LAYER = 2;
-	const TYPE_REPLACE = 3;
-	const TYPE_REPLACEALL = 4;
-	const TYPE_FLATTEN = 5;
+	const TYPE_BIOME = 0;
+	const TYPE_CLEANENTITIES = 1;
+	const TYPE_CLEAN = 2;
+	const TYPE_DRAIN = 3;
+	const TYPE_EXPAND = 4;
+	const TYPE_FILL = 5;
 	const TYPE_FLATTENALL = 6;
-	const TYPE_DRAIN = 7;
-	const TYPE_LEAFBLOWER = 8;
-	const TYPE_CLEAN = 9;
-	const TYPE_BIOME = 10;
-	const TYPE_CLEANENTITIES = 11;
-	const TYPE_MELT = 12;
-	const TYPE_EXPAND = 13;
-	const TYPE_RAISE = 14;
+	const TYPE_FLATTEN = 7;
+	const TYPE_LAYER = 8;
+	const TYPE_LEAFBLOWER = 9;
+	const TYPE_MELT = 10;
+	const TYPE_OVERLAY = 11;
+	const TYPE_REPLACEALL = 12;
+	const TYPE_REPLACE = 13;
+	const TYPE_SNOWCONE = 14;
 	const TYPE_TOPLAYER = 15;
-	const TYPE_SNOWCONE = 16;
-	const TYPE_TREE = 17;
+	const TYPE_TREE = 16;
 
 	/** @var int */
 	protected $level = 0;
@@ -54,6 +53,8 @@ abstract class BaseType {
 	protected $chunkManager = null;
 	/** @var bool */
 	private $async = false;
+	/** @var int */
+	protected $id = -1;
 
 	/**
 	 * @param Player       $player
@@ -101,7 +102,7 @@ abstract class BaseType {
 		if(defined("self::$typeConst")) {
 			return false;
 		}
-		define(('BlockHorizons\BlockSniper\brush\BaseType\\' . $typeConst), $number);
+		define('BlockHorizons\BlockSniper\brush\BaseType\\' . $typeConst, $number);
 		return true;
 	}
 
@@ -127,6 +128,13 @@ abstract class BaseType {
 	 */
 	public function getLevel(): Level {
 		return Server::getInstance()->getLevel($this->level);
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getId(): int {
+		return $this->id;
 	}
 
 	/**

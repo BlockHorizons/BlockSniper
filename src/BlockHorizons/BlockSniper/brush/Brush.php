@@ -5,17 +5,18 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\brush;
 
 use pocketmine\block\Block;
+use pocketmine\block\Sapling;
 use pocketmine\item\Item;
+use pocketmine\level\generator\biome\Biome;
 use pocketmine\level\Position;
 use pocketmine\Server;
 
 class Brush {
 
-	/** @var string */
-	private $player = "";
 	/** @var int */
 	public $resetSize = 0;
-
+	/** @var string */
+	private $player = "";
 	/** @var string */
 	private $type = "fill";
 	/** @var string */
@@ -67,13 +68,6 @@ class Brush {
 	}
 
 	/**
-	 * @param array $blocks
-	 */
-	public function setBlocks(array $blocks) {
-		$this->blocks = $blocks;
-	}
-
-	/**
 	 * @param bool $value
 	 */
 	public function setDecrementing(bool $value) {
@@ -88,17 +82,17 @@ class Brush {
 	}
 
 	/**
-	 * @param bool $value
-	 */
-	public function setPerfect(bool $value) {
-		$this->perfect = $value;
-	}
-
-	/**
 	 * @return bool
 	 */
 	public function getPerfect(): bool {
 		return $this->perfect;
+	}
+
+	/**
+	 * @param bool $value
+	 */
+	public function setPerfect(bool $value) {
+		$this->perfect = $value;
 	}
 
 	/**
@@ -145,17 +139,10 @@ class Brush {
 	}
 
 	/**
-	 * @param int $size
+	 * @param array $blocks
 	 */
-	public function setSize(int $size) {
-		$this->size = $size;
-	}
-
-	/**
-	 * @param string $shape
-	 */
-	public function setShape(string $shape) {
-		$this->shape = $shape;
+	public function setBlocks(array $blocks) {
+		$this->blocks = $blocks;
 	}
 
 	/**
@@ -174,6 +161,13 @@ class Brush {
 	}
 
 	/**
+	 * @param string $shape
+	 */
+	public function setShape(string $shape) {
+		$this->shape = $shape;
+	}
+
+	/**
 	 * @return int
 	 */
 	public function getSize(): int {
@@ -181,10 +175,24 @@ class Brush {
 	}
 
 	/**
+	 * @param int $size
+	 */
+	public function setSize(int $size) {
+		$this->size = $size;
+	}
+
+	/**
 	 * @return bool
 	 */
 	public function getHollow(): bool {
 		return $this->hollow;
+	}
+
+	/**
+	 * @param bool $value
+	 */
+	public function setHollow(bool $value) {
+		$this->hollow = $value;
 	}
 
 	/**
@@ -234,20 +242,13 @@ class Brush {
 		if(is_numeric($this->biome)) {
 			return (int) $this->biome;
 		}
-		$biomes = new \ReflectionClass('pocketmine\level\generator\biome\Biome');
+		$biomes = new \ReflectionClass(Biome::class);
 		$const = strtoupper(str_replace(" ", "_", $this->biome));
 		if($biomes->hasConstant($const)) {
 			$biome = $biomes->getConstant($const);
 			return (int) $biome;
 		}
 		return 0;
-	}
-
-	/**
-	 * @param bool $value
-	 */
-	public function setHollow(bool $value) {
-		$this->hollow = $value;
 	}
 
 	/**
@@ -264,7 +265,7 @@ class Brush {
 		if(is_numeric($this->tree)) {
 			return (int) $this->tree;
 		}
-		$saplings = new \ReflectionClass('pocketmine\block\Sapling');
+		$saplings = new \ReflectionClass(Sapling::class);
 		$treeConst = strtoupper(str_replace(" ", "_", $this->tree));
 		if($saplings->hasConstant($treeConst)) {
 			$treeType = $saplings->getConstant($treeConst);

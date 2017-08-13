@@ -13,6 +13,8 @@ use pocketmine\Player;
 
 class LayerType extends BaseType {
 
+	/** @var int */
+	protected $id = self::TYPE_LAYER;
 	/** @var Block */
 	protected $center;
 

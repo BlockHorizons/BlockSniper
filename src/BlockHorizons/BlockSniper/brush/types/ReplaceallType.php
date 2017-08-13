@@ -12,6 +12,9 @@ use pocketmine\Player;
 
 class ReplaceallType extends BaseType {
 
+	/** @var int */
+	protected $id = self::TYPE_REPLACEALL;
+
 	/*
 	 * Replaces every solid block within the brush radius.
 	 */

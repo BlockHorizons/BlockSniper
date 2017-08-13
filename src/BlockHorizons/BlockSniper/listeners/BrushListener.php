@@ -29,11 +29,6 @@ class BrushListener implements Listener {
 				$this->getLoader()->getBrushManager()->createBrush($player);
 
 				$brush = BrushManager::get($player);
-				if($brush->getSize() > $this->getLoader()->getSettings()->getMaxRadius() || $brush->getHeight() > $this->getLoader()->getSettings()->getMaxRadius()) {
-					$player->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.radius-too-big"));
-					return false;
-				}
-
 				$shape = $brush->getShape();
 				$type = $brush->getType();
 
@@ -42,7 +37,7 @@ class BrushListener implements Listener {
 					return false;
 				}
 
-				if($brush->getSize() >= $this->getLoader()->getSettings()->getMinimumAsynchronousSize()  && $type->canExecuteAsynchronously()) {
+				if($brush->getSize() >= $this->getLoader()->getSettings()->getMinimumAsynchronousSize() && $type->canExecuteAsynchronously()) {
 					$shape->editAsynchronously($type);
 				} else {
 					$type->setBlocksInside($shape->getBlocksInside());
@@ -71,8 +66,8 @@ class BrushListener implements Listener {
 	public function decrementBrush(Player $player): bool {
 		if(BrushManager::get($player)->isDecrementing()) {
 			if(BrushManager::get($player)->getSize() <= 1) {
-				if($this->getLoader()->getSettings()->get("Reset-Decrement-Brush") !== false) {
-					BrushManager::get($player)->setSize(BrushManager::get($player)->resetSize[$player->getId()]);
+				if($this->getLoader()->getSettings()->resetDecrementBrush() !== false) {
+					BrushManager::get($player)->setSize(BrushManager::get($player)->resetSize);
 					$player->sendPopup(TF::GREEN . "Brush reset to original size.");
 					return true;
 				}

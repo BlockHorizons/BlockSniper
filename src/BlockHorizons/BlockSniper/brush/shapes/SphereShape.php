@@ -17,6 +17,8 @@ class SphereShape extends BaseShape {
 	protected $radius = 0;
 	/** @var bool */
 	private $trueSphere = false;
+	/** @var int */
+	protected $id = self::SHAPE_SPHERE;
 
 	public function __construct(Player $player, Level $level, int $radius = null, Position $center = null, bool $hollow = false, bool $cloneShape = false) {
 		parent::__construct($player, $level, $center, $hollow);
@@ -33,11 +35,8 @@ class SphereShape extends BaseShape {
 	 * @return array
 	 */
 	public function getBlocksInside(bool $vectorOnly = false): array {
-		$radiusSquared = pow($this->radius + ($this->trueSphere ? 0 : -0.5), 2) + ($this->trueSphere ? 0.5 : 0);
-
-		$targetX = $this->center[0];
-		$targetY = $this->center[1];
-		$targetZ = $this->center[2];
+		$radiusSquared = ($this->radius + ($this->trueSphere ? 0 : -0.5)) ** 2 + ($this->trueSphere ? 0.5 : 0);
+		list($targetX, $targetY, $targetZ) = $this->center;
 
 		$minX = $targetX - $this->radius;
 		$minZ = $targetZ - $this->radius;
@@ -82,7 +81,7 @@ class SphereShape extends BaseShape {
 		if($this->hollow) {
 			$blockCount = 4 * M_PI * $this->radius;
 		} else {
-			$blockCount = 4 / 3 * M_PI * pow($this->radius, 3);
+			$blockCount = 4 / 3 * M_PI * ($this->radius) ** 3;
 		}
 
 		return (int) ceil($blockCount);

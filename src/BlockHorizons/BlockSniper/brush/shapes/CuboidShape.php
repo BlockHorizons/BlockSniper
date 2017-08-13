@@ -17,6 +17,8 @@ class CuboidShape extends BaseShape {
 	protected $width = 0;
 	/** @var int */
 	protected $height = 0;
+	/** @var int */
+	protected $id = self::SHAPE_CUBOID;
 
 	public function __construct(Player $player, Level $level, int $width = null, Position $center = null, bool $hollow = false, bool $cloneShape = false) {
 		parent::__construct($player, $level, $center, $hollow);
@@ -33,9 +35,7 @@ class CuboidShape extends BaseShape {
 	 * @return array
 	 */
 	public function getBlocksInside(bool $vectorOnly = false): array {
-		$targetX = $this->center[0];
-		$targetY = $this->center[1];
-		$targetZ = $this->center[2];
+		list($targetX, $targetY, $targetZ) = $this->center;
 
 		$minX = $targetX - $this->width;
 		$minY = $targetY - $this->height;
@@ -73,7 +73,7 @@ class CuboidShape extends BaseShape {
 	 */
 	public function getApproximateProcessedBlocks(): int {
 		if($this->hollow) {
-			$blockCount = (pow($this->width * 2, 2) * 2) + (($this->width * 2) * ($this->height * 2) * 4);
+			$blockCount = (($this->width * 2) ** 2 * 2) + (($this->width * 2) * ($this->height * 2) * 4);
 		} else {
 			$blockCount = ($this->width * 2) * ($this->width * 2) * ($this->height * 2);
 		}

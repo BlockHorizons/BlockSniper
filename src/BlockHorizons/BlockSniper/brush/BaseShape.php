@@ -5,8 +5,6 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\brush;
 
 use BlockHorizons\BlockSniper\brush\async\tasks\BrushTask;
-use BlockHorizons\BlockSniper\brush\async\tasks\CloneTask;
-use BlockHorizons\BlockSniper\cloning\BaseClone;
 use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
@@ -18,8 +16,8 @@ abstract class BaseShape {
 
 	const SHAPE_SPHERE = 0;
 	const SHAPE_CUBE = 1;
-	const SHAPE_CYLINDER = 2;
-	const SHAPE_CUBOID = 3;
+	const SHAPE_CUBOID = 2;
+	const SHAPE_CYLINDER = 3;
 
 	/** @var int */
 	protected $level = 0;
@@ -31,6 +29,8 @@ abstract class BaseShape {
 	protected $height = 0;
 	/** @var string */
 	protected $playerName = "";
+	/** @var int */
+	protected $id = -1;
 
 	public function __construct(Player $player, Level $level, Position $center, bool $hollow) {
 		$this->playerName = $player->getName();
@@ -69,7 +69,7 @@ abstract class BaseShape {
 		if(defined("self::$shapeConst")) {
 			return false;
 		}
-		define(('BlockHorizons\BlockSniper\brush\BaseShape\\' . $shapeConst), $number);
+		define('BlockHorizons\BlockSniper\brush\BaseShape\\' . $shapeConst, $number);
 		return true;
 	}
 
@@ -121,6 +121,13 @@ abstract class BaseShape {
 	 */
 	public function isHollow(): bool {
 		return $this->hollow;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getId(): int {
+		return $this->id;
 	}
 
 	/**

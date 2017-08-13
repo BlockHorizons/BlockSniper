@@ -30,6 +30,8 @@ class Preset {
 	private $obsolete = [];
 	/** @var array */
 	private $blocks = [];
+	/** @var bool */
+	private $perfect = true;
 
 	public function __construct(string $name, string $shape = null, string $type = null, bool $decrement = null, bool $perfect = null, int $size = null, bool $hollow = null, array $blocks = null, array $obsolete = null, int $height = null, string $biome = null) {
 		$this->name = $name;

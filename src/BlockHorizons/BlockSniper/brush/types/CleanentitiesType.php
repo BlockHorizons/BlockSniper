@@ -10,6 +10,9 @@ use pocketmine\Player;
 
 class CleanentitiesType extends BaseType {
 
+	/** @var int */
+	protected $id = self::TYPE_CLEANENTITIES;
+
 	/*
 	 * Clears all entities within the brush radius. This brush can not undo.
 	 */

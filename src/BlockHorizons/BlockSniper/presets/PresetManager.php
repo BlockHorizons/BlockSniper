@@ -138,7 +138,7 @@ class PresetManager {
 
 	public function storePresetsToFile() {
 		$data = [];
-		if(isset($this->preset)) {
+		if(!empty($this->preset)) {
 			foreach($this->preset as $name => $preset) {
 				if($preset instanceof Preset) {
 					$data[$name] = $preset->getParsedData();

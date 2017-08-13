@@ -14,6 +14,8 @@ class CubeShape extends BaseShape {
 
 	/** @var int */
 	protected $width = 0;
+	/** @var int */
+	protected $id = self::SHAPE_CUBE;
 
 	public function __construct(Player $player, Level $level, int $width = null, Position $center = null, bool $hollow = false, bool $cloneShape = false) {
 		parent::__construct($player, $level, $center, $hollow);
@@ -29,9 +31,7 @@ class CubeShape extends BaseShape {
 	 * @return array
 	 */
 	public function getBlocksInside(bool $vectorOnly = false): array {
-		$targetX = $this->center[0];
-		$targetY = $this->center[1];
-		$targetZ = $this->center[2];
+		list($targetX, $targetY, $targetZ) = $this->center;
 
 		$minX = $targetX - $this->width;
 		$minZ = $targetZ - $this->width;
@@ -69,9 +69,9 @@ class CubeShape extends BaseShape {
 	 */
 	public function getApproximateProcessedBlocks(): int {
 		if($this->hollow) {
-			$blockCount = pow($this->width * 2, 2) * 6;
+			$blockCount = ($this->width * 2) ** 2 * 6;
 		} else {
-			$blockCount = pow($this->width * 2, 3);
+			$blockCount = ($this->width * 2) ** 3;
 		}
 		return (int) ceil($blockCount);
 	}

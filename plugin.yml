@@ -28,7 +28,7 @@ permissions:
                         description: "Allows access to the redo command."
                     blocksniper.command.blocksniper:
                         default: op
-                        description: "Allows access to the BlockSniper commmand."
+                        description: "Allows access to the BlockSniper command."
                     blocksniper.command.clone:
                         default: op
                         description: "Allows access to the clone command."

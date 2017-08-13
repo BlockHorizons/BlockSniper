@@ -20,7 +20,7 @@ class TemplateType extends BaseClone {
 		return "Template";
 	}
 
-	public function saveClone() {
+	public function saveClone(): bool {
 		$templateBlocks = [];
 		foreach($this->blocks as $block) {
 			if($block->getId() === Item::AIR && $this->saveAir === false) {

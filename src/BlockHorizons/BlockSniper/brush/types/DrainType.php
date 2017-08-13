@@ -13,6 +13,9 @@ use pocketmine\Player;
 
 class DrainType extends BaseType {
 
+	/** @var int */
+	protected $id = self::TYPE_DRAIN;
+
 	/*
 	 * Removes all liquid blocks within the brush radius.
 	 */

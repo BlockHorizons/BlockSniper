@@ -4,14 +4,10 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\commands;
 
-use BlockHorizons\BlockSniper\brush\BaseShape;
-use BlockHorizons\BlockSniper\brush\BaseType;
-use BlockHorizons\BlockSniper\brush\BrushManager;
-use BlockHorizons\BlockSniper\events\ChangeBrushPropertiesEvent as Change;
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\user_interface\WindowHandler;
 use pocketmine\command\CommandSender;
-use pocketmine\item\Item;
-use pocketmine\level\generator\biome\Biome;
+use pocketmine\network\mcpe\protocol\ModalFormRequestPacket;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
 
@@ -32,19 +28,22 @@ class BrushCommand extends BaseCommand {
 			return true;
 		}
 
-		if(count($args) !== 2) {
-			if(strtolower($args[0]) !== "reset" && strtolower($args[0]) !== "re" && strtolower($args[1]) !== "delete" && strtolower($args[0]) !== "tool" && strtolower($args[0]) !== "to") {
-				$sender->sendMessage($this->getUsage());
-				return true;
-			}
+		$this->getLoader()->getBrushManager()->createBrush($sender);
+		if(!isset($args[0])) {
+			$args[0] = "menu";
 		}
 
-		$this->getLoader()->getBrushManager()->createBrush($sender);
-		$brush = BrushManager::get($sender);
-
-		$action = null;
-
 		switch(strtolower($args[0])) {
+			default:
+			case "window":
+			case "menu":
+				$windowHandler = new WindowHandler();
+				$packet = new ModalFormRequestPacket();
+				$packet->formId = $windowHandler->getWindowIdFor(WindowHandler::WINDOW_MAIN_MENU);
+				$packet->formData = $windowHandler->getWindowJson(WindowHandler::WINDOW_MAIN_MENU);
+				$sender->dataPacket($packet);
+				return true;
+
 			case "preset":
 			case "pr":
 				switch($args[1]) {
@@ -93,150 +92,6 @@ class BrushCommand extends BaseCommand {
 						}
 						return true;
 				}
-				break;
-
-			case "size":
-			case "radius":
-			case "si":
-				if(!is_numeric($args[1])) {
-					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.radius-not-numeric"));
-					return true;
-				}
-				if($args[1] > $this->getLoader()->getSettings()->getMaxCloneSize()) {
-					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.radius-too-big"));
-					return true;
-				}
-				$brush->setSize((int) $args[1]);
-				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("brush.size") . TF::AQUA . $args[1]);
-				$action = Change::ACTION_CHANGE_SIZE;
-				break;
-
-			case "sh":
-			case "shape":
-				if(!BaseShape::isShape($args[1])) {
-					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.shape-not-found"));
-					return true;
-				}
-				if(!$sender->hasPermission("blocksniper.shape." . $args[1])) {
-					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.no-permission"));
-					return true;
-				}
-				$brush->setShape($args[1]);
-				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("brush.shape") . TF::AQUA . $brush->getShape()->getName());
-				$action = Change::ACTION_CHANGE_SHAPE;
-				break;
-
-			case "ty":
-			case "type":
-				if(!BaseType::isType($args[1])) {
-					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.shape-not-found"));
-					return true;
-				}
-				if(!$sender->hasPermission("blocksniper.type." . $args[1])) {
-					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.no-permission"));
-					return true;
-				}
-				$brush->setType($args[1]);
-				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("brush.type") . TF::AQUA . $brush->getType()->getName());
-				$action = Change::ACTION_CHANGE_TYPE;
-				break;
-
-			case "he":
-			case "height":
-				if(!is_numeric($args[1])) {
-					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.radius-not-numeric"));
-					return true;
-				}
-				if($args[1] > $this->getLoader()->getSettings()->getMaxCloneSize()) {
-					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.radius-too-big"));
-					return true;
-				}
-				$brush->setHeight((int) $args[1]);
-				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("brush.height") . TF::AQUA . $args[1]);
-				$action = Change::ACTION_CHANGE_HEIGHT;
-				break;
-
-			case "bl":
-			case "block":
-			case "blocks":
-				$blocks = explode(",", $args[1]);
-				$brush->setBlocks($blocks);
-				$blocks = $brush->getBlocks();
-				$blockNames = [];
-				foreach($blocks as $block) {
-					$blockNames[] = $block->getName();
-				}
-				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("brush.blocks") . TF::AQUA . implode(", ", $blockNames));
-				$action = Change::ACTION_CHANGE_BLOCKS;
-				break;
-
-			case "ob":
-			case "obsolete":
-			case "replaced":
-				$blocks = explode(",", $args[1]);
-				$brush->setObsolete($blocks);
-				$blocks = $brush->getObsolete();
-				$blockNames = [];
-				foreach($blocks as $block) {
-					$blockNames[] = $block->getName();
-				}
-				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("brush.obsolete") . TF::AQUA . implode(", ", $blockNames));
-				$action = Change::ACTION_CHANGE_OBSOLETE;
-				break;
-
-			case "pe":
-			case "perfect":
-				$brush->setPerfect((bool) $args[1]);
-				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("brush.perfect") . TF::AQUA . $args[1]);
-				return true;
-
-			case "decrement":
-			case "decrementing":
-			case "de":
-				$brush->setDecrementing((bool) $args[1]);
-				$brush->resetSize[$sender->getId()] = $brush->getSize();
-				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("brush.decrement") . TF::AQUA . $args[1]);
-				$action = Change::ACTION_CHANGE_DECREMENT;
-				break;
-
-			case "bi":
-			case "biome":
-				$biome = array_slice($args, 1);
-				$brush->setBiome(implode(" ", $biome));
-				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("brush.biome") . TF::AQUA . Biome::getBiome($brush->getBiomeId())->getName());
-				$action = Change::ACTION_CHANGE_BIOME;
-				break;
-
-			case "re":
-			case "reset":
-				$this->getLoader()->getBrushManager()->resetBrush($sender);
-				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.brush.reset"));
-				$action = Change::ACTION_RESET_BRUSH;
-				break;
-
-			case "ho":
-			case "hollow":
-				$brush->setHollow((bool) $args[1]);
-				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("brush.hollow") . TF::AQUA . $args[1]);
-				$action = Change::ACTION_CHANGE_HOLLOW;
-				break;
-
-			case "tr":
-			case "tree":
-				$brush->setTree($args[1]);
-				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("brush.tree") . TF::AQUA . $brush->getTreeType());
-				$action = Change::ACTION_CHANGE_TREE;
-				break;
-
-			case "tool":
-			case "item":
-			case "to":
-				$brushTool = Item::get($this->getLoader()->getSettings()->getBrushItem(), 0, 1)->setCustomName(TF::BOLD . TF::YELLOW . "Brush Tool");
-				$sender->getInventory()->setItemInHand($brushTool);
-				return true;
-
 		}
-		$this->getLoader()->getServer()->getPluginManager()->callEvent(new Change($this->getLoader(), $sender, $action, $args[0]));
-		return true;
 	}
 }

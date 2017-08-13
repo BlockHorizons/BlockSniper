@@ -94,13 +94,12 @@ abstract class Revert {
 	}
 
 	/**
-	 * @param array $blocks
-	 *
 	 * @return $this
 	 */
-	public function setBlocks(array $blocks): Revert {
-		$this->blocks = $blocks;
-
+	public function secureAsyncBlocks(): Revert {
+		foreach($this->blocks as &$block) {
+			$block = Block::get($block->getId(), $block->getDamage())->setComponents($block->x, $block->y, $block->z);
+		}
 		return $this;
 	}
 
@@ -137,6 +136,17 @@ abstract class Revert {
 	}
 
 	/**
+	 * @param array $blocks
+	 *
+	 * @return $this
+	 */
+	public function setBlocks(array $blocks): Revert {
+		$this->blocks = $blocks;
+
+		return $this;
+	}
+
+	/**
 	 * @return Revert
 	 */
 	public function getDetached(): Revert {
@@ -157,17 +167,6 @@ abstract class Revert {
 			$revert->setAsynchronous()->setManager($this->getManager())->setPlayerName($this->getPlayerName())->setTouchedChunks($this->getTouchedChunks());
 		}
 		return $revert;
-	}
-
-	/**
-	 * @param bool $value
-	 *
-	 * @return $this
-	 */
-	public function setAsynchronous(bool $value = true): Revert {
-		$this->isAsync = $value;
-
-		return $this;
 	}
 
 	/**
@@ -208,18 +207,20 @@ abstract class Revert {
 		foreach($chunks as $index => &$chunk) {
 			$chunk = $chunk->fastSerialize();
 		}
+		unset($chunk);
 		$this->touchedChunks = $chunks;
 
 		return $this;
 	}
 
 	/**
+	 * @param bool $value
+	 *
 	 * @return $this
 	 */
-	public function secureAsyncBlocks(): Revert {
-		foreach($this->blocks as &$block) {
-			$block = Block::get($block->getId(), $block->getDamage())->setComponents($block->x, $block->y, $block->z);
-		}
+	public function setAsynchronous(bool $value = true): Revert {
+		$this->isAsync = $value;
+
 		return $this;
 	}
 }

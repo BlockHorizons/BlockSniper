@@ -13,6 +13,8 @@ class BrushManager {
 
 	/** @var Brush[] */
 	private static $brush = [];
+	/** @var Loader */
+	private $loader;
 
 	public function __construct(Loader $loader) {
 		$this->loader = $loader;

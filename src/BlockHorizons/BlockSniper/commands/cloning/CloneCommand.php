@@ -5,15 +5,14 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\commands\cloning;
 
 use BlockHorizons\BlockSniper\brush\BrushManager;
-use BlockHorizons\BlockSniper\cloning\BaseClone;
 use BlockHorizons\BlockSniper\cloning\types\CopyType;
 use BlockHorizons\BlockSniper\cloning\types\TemplateType;
 use BlockHorizons\BlockSniper\commands\BaseCommand;
 use BlockHorizons\BlockSniper\Loader;
+use libschematic\Schematic;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
-use libschematic\Schematic;
 
 class CloneCommand extends BaseCommand {
 
@@ -78,12 +77,11 @@ class CloneCommand extends BaseCommand {
 
 			case "offset":
 			case "yoffset":
+				$offset = 0;
 				if(!isset($args[1])) {
 					$offset = 0;
 				} elseif(is_numeric($args[1])) {
 					$offset = $args[1];
-				} else {
-					$offset = 0;
 				}
 				BrushManager::get($sender)->setYOffset($offset);
 				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("brush.yoffset"));

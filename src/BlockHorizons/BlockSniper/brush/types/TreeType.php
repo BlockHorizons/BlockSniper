@@ -15,6 +15,8 @@ use pocketmine\utils\Random;
 
 class TreeType extends BaseType {
 
+	/** @var int */
+	protected $id = self::TYPE_TREE;
 	/** @var Block */
 	protected $center;
 	/** @var int */

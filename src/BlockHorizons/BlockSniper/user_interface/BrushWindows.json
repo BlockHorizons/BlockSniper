@@ -1,0 +1,194 @@
+[
+  {
+    "type": "form",
+    "title": "BlockSniper Menu",
+    "content": "Click any button to start.",
+    "buttons": [
+      {
+        "text": "Brush",
+        "image": {
+          "type": "url",
+          "data": "https://maxcdn.icons8.com/Share/icon/DIY//paint_brush1600.png"
+        }
+      },
+      {
+        "text": "Presets",
+        "image": {
+          "type": "url",
+          "data": "http://www.sidecarpost.com/wp-content/uploads/2014/03/Icon-BaselinePreset-100x100.png"
+        }
+      },
+      {
+        "text": "Configuration",
+        "image": {
+          "type": "url",
+          "data": "http://icons.iconarchive.com/icons/dtafalonso/android-l/512/Settings-L-icon.png"
+        }
+      },
+      {
+        "text": "Exit",
+        "image": {
+          "type": "url",
+          "data": "http://www.pngmart.com/files/3/Red-Cross-Transparent-PNG.png"
+        }
+      }
+    ]
+  },
+  {
+    "type": "custom_form",
+    "title": "Brush Menu",
+    "content": [
+      {
+        "type": "slider",
+        "text": "Brush Size",
+        "min": 0,
+        "step": 1
+      },
+      {
+        "type": "dropdown",
+        "text": "Brush Shape"
+      },
+      {
+        "type": "dropdown",
+        "text": "Brush Type"
+      },
+      {
+        "type": "toggle",
+        "text": "Hollow Brush"
+      },
+      {
+        "type": "toggle",
+        "text": "Brush Decrement"
+      },
+      {
+        "type": "slider",
+        "text": "Brush Height",
+        "min": 0,
+        "step": 1
+      },
+      {
+        "type": "toggle",
+        "text": "Brush Shape Perfection"
+      },
+      {
+        "type": "input",
+        "text": "Brush Blocks",
+        "placeholder": "stone,stone_brick:1,2"
+      },
+      {
+        "type": "input",
+        "text": "Obsolete Blocks",
+        "placeholder": "stone,stone_brick:1,2"
+      },
+      {
+        "type": "input",
+        "text": "Brush Biome",
+        "placeholder": "plains"
+      },
+      {
+        "type": "input",
+        "text": "Brush Tree",
+        "placeholder": "oak"
+      }
+    ]
+  },
+  {
+    "type": "form",
+    "title": "Preset Menu",
+    "content": "Click a button to continue.",
+    "buttons": [
+      {
+        "text": "Create",
+        "image": {
+          "type": "url",
+          "data": "http://www.clker.com/cliparts/H/D/e/R/O/P/green-plus-sign-hi.png"
+        }
+      },
+      {
+        "text": "Delete",
+        "image": {
+          "type": "url",
+          "data": "http://www.pngmart.com/files/3/Red-Cross-Transparent-PNG.png"
+        }
+      },
+      {
+        "text": "Select",
+        "image": {
+          "type": "url",
+          "data": "http://www.clker.com/cliparts/k/T/w/u/G/S/transparent-yellow-checkmark-md.png"
+        }
+      },
+      {
+        "text": "List",
+        "image": {
+          "type": "url",
+          "data": "http://www.iconsdb.com/icons/preview/guacamole-green/list-xxl.png"
+        }
+      }
+      {
+        "text": "Exit",
+        "image": {
+          "type": "url",
+          "data": "http://www.pngmart.com/files/3/Red-Cross-Transparent-PNG.png"
+        }
+      }
+    ]
+  },
+  {
+    "type": "custom_form",
+    "title": "BlockSniper Configuration",
+    "content": [
+      {
+        "type": "toggle",
+        "text": "Automatically update the configuration file when a new version is found."
+      },
+      {
+        "type": "dropdown",
+        "text": "Language used for sending BlockSniper related messages."
+      },
+      {
+        "type": "slider",
+        "text": "Item ID of the item that is used to brush",
+        "min": 0,
+        "step": 1,
+        "max": 511
+      },
+      {
+        "type": "slider",
+        "text": "Maximum brush size limit",
+        "min": 0,
+        "step": 1,
+        "max": 60
+      },
+      {
+        "type": "slider",
+        "text": "Asynchronous brush size limit. If brush size is bigger than this, operations get executed asynchronously",
+        "min": 10,
+        "step": 1,
+        "max": 25
+      },
+      {
+        "type": "slider",
+        "text": "Maximum amount of Undo/Redo stores to save. Older ones get cleaned automatically",
+        "min": 0,
+        "step": 1,
+        "max": 40
+      },
+      {
+        "type": "toggle",
+        "text": "Automatically reset decrementing brush to the initial starting size."
+      },
+      {
+        "type": "toggle",
+        "text": "Save brush properties of players on server restart."
+      },
+      {
+        "type": "toggle",
+        "text": "Drop plant items destroyed/blown away by the LeafBlower type."
+      }
+    ]
+  },
+  {
+
+  }
+]

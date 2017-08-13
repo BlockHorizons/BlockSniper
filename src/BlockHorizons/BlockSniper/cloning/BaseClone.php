@@ -62,7 +62,10 @@ abstract class BaseClone {
 		return false;
 	}
 
-	public abstract function saveClone();
+	/**
+	 * @return bool
+	 */
+	public abstract function saveClone(): bool;
 
 	/**
 	 * @return CloneStorer

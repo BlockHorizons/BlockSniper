@@ -15,10 +15,12 @@ class CylinderShape extends BaseShape {
 
 	/** @var int */
 	protected $radius = 0;
+	/** @var int */
+	protected $height = 0;
 	/** @var bool */
 	private $trueCircle = false;
 	/** @var int */
-	protected $height = 0;
+	protected $id = self::SHAPE_CYLINDER;
 
 	public function __construct(Player $player, Level $level, int $radius = null, Position $center = null, bool $hollow = false, bool $cloneShape = false) {
 		parent::__construct($player, $level, $center, $hollow);
@@ -36,10 +38,8 @@ class CylinderShape extends BaseShape {
 	 * @return array
 	 */
 	public function getBlocksInside(bool $vectorOnly = false): array {
-		$radiusSquared = pow($this->radius + ($this->trueCircle ? 0 : -0.5), 2) + ($this->trueCircle ? 0.5 : 0);
-		$targetX = $this->center[0];
-		$targetY = $this->center[1];
-		$targetZ = $this->center[2];
+		$radiusSquared = ($this->radius + ($this->trueCircle ? 0 : -0.5)) ** 2 + ($this->trueCircle ? 0.5 : 0);
+		list($targetX, $targetY, $targetZ) = $this->center;
 
 		$minX = $targetX - $this->radius;
 		$minZ = $targetZ - $this->radius;
@@ -53,9 +53,9 @@ class CylinderShape extends BaseShape {
 		for($x = $minX; $x <= $maxX; $x++) {
 			for($z = $minZ; $z <= $maxZ; $z++) {
 				for($y = $minY; $y <= $maxY; $y++) {
-					if(pow($targetX - $x, 2) + pow($targetZ - $z, 2) <= $radiusSquared) {
+					if(($targetX - $x) ** 2 + ($targetZ - $z) ** 2 <= $radiusSquared) {
 						if($this->hollow === true) {
-							if($y !== $maxY && $y !== $minY && (pow($targetX - $x, 2) + pow($targetZ - $z, 2)) < $radiusSquared - 3 - $this->radius / 0.5) {
+							if($y !== $maxY && $y !== $minY && (($targetX - $x) ** 2 + ($targetZ - $z) ** 2) < $radiusSquared - 3 - $this->radius / 0.5) {
 								continue;
 							}
 						}

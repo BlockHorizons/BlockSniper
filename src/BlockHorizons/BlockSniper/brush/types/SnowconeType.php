@@ -11,6 +11,9 @@ use pocketmine\Player;
 
 class SnowconeType extends BaseType {
 
+	/** @var int */
+	protected $id = self::TYPE_SNOWCONE;
+
 	/*
 	 * Lays a layer of snow on top of the terrain, and raises it if there is snow already.
 	 */

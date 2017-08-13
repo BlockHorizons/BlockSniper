@@ -53,16 +53,15 @@ class RevertTask extends AsyncBlockSniperTask {
 		if(!$loader->isEnabled()) {
 			return false;
 		}
-		$levelId = 0;
 		$result = $this->getResult();
 		/** @var Revert $revert */
 		$revert = $result["revert"];
 		/** @var Chunk[] $chunks */
 		$chunks = $result["chunks"];
-		foreach($revert->getBlocks() as $block) {
-			$levelId = $block->getId();
-			break;
+		if($player = $server->getPlayer($revert->getPlayerName())) {
+			return false;
 		}
+		$levelId = $player->getLevel()->getId();
 		$level = $server->getLevel($levelId);
 		if($level instanceof Level) {
 			foreach($chunks as $hash => $chunk) {
@@ -71,9 +70,7 @@ class RevertTask extends AsyncBlockSniperTask {
 				$level->setChunk($x, $z, $chunk);
 			}
 		}
-		if(($player = $server->getPlayer($revert->getPlayerName()))) {
-			$loader->getRevertStorer()->saveRevert($revert, $player);
-		}
+		$loader->getRevertStorer()->saveRevert($revert, $player);
 		return true;
 	}
 

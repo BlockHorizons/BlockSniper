@@ -12,6 +12,9 @@ use pocketmine\Player;
 
 class OverlayType extends BaseType {
 
+	/** @var int */
+	protected $id = self::TYPE_OVERLAY;
+
 	/*
 	 * Lays a layer of blocks over every block within the brush radius.
 	 */
@@ -26,6 +29,14 @@ class OverlayType extends BaseType {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			if($block->getId() !== Item::AIR) {
+				$directions = [
+					$block->getSide(Block::SIDE_DOWN),
+					$block->getSide(Block::SIDE_UP),
+					$block->getSide(Block::SIDE_NORTH),
+					$block->getSide(Block::SIDE_SOUTH),
+					$block->getSide(Block::SIDE_WEST),
+					$block->getSide(Block::SIDE_EAST)
+				];
 				if($this->isAsynchronous()) {
 					$directions = [
 						$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_DOWN),
@@ -34,15 +45,6 @@ class OverlayType extends BaseType {
 						$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_SOUTH),
 						$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_WEST),
 						$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_EAST),
-					];
-				} else {
-					$directions = [
-						$block->getSide(Block::SIDE_DOWN),
-						$block->getSide(Block::SIDE_UP),
-						$block->getSide(Block::SIDE_NORTH),
-						$block->getSide(Block::SIDE_SOUTH),
-						$block->getSide(Block::SIDE_WEST),
-						$block->getSide(Block::SIDE_EAST)
 					];
 				}
 				$valid = true;

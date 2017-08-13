@@ -16,6 +16,8 @@ use pocketmine\Player;
 class ToplayerType extends BaseType {
 
 	/** @var int */
+	protected $id = self::TYPE_TOPLAYER;
+	/** @var int */
 	protected $height = 0;
 
 	/*

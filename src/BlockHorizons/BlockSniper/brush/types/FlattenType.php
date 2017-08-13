@@ -14,6 +14,8 @@ use pocketmine\Player;
 
 class FlattenType extends BaseType {
 
+	/** @var int */
+	protected $id = self::TYPE_FLATTEN;
 	/** @var Block */
 	protected $center;
 

@@ -10,6 +10,9 @@ use pocketmine\Player;
 
 class FillType extends BaseType {
 
+	/** @var int */
+	protected $id = self::TYPE_FILL;
+
 	/*
 	 * Places blocks on every location within the brush radius.
 	 */

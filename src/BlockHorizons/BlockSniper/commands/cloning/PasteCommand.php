@@ -7,12 +7,12 @@ namespace BlockHorizons\BlockSniper\commands\cloning;
 use BlockHorizons\BlockSniper\commands\BaseCommand;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\undo\Undo;
+use libschematic\Schematic;
 use pocketmine\block\Block;
 use pocketmine\command\CommandSender;
 use pocketmine\item\Item;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
-use libschematic\Schematic;
 
 class PasteCommand extends BaseCommand {
 

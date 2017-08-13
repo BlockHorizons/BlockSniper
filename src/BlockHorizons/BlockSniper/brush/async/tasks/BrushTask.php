@@ -19,6 +19,8 @@ class BrushTask extends AsyncBlockSniperTask {
 	private $shape = null;
 	/** @var string */
 	private $chunks = "";
+	/** @var BaseType */
+	private $type = null;
 
 	public function __construct(BaseShape $shape, BaseType $type, array $chunks) {
 		$this->shape = $shape;
@@ -62,6 +64,7 @@ class BrushTask extends AsyncBlockSniperTask {
 		foreach($serializedChunks as &$chunk) {
 			$chunk = $chunk->fastSerialize();
 		}
+		unset($chunk);
 
 		$this->setResult([
 			"undoBlocks" => $undoBlocks,
@@ -88,6 +91,7 @@ class BrushTask extends AsyncBlockSniperTask {
 		foreach($chunks as &$chunk) {
 			$chunk = Chunk::fastDeserialize($chunk);
 		}
+		unset($chunk);
 		$undoBlocks = $result["undoBlocks"];
 		$level = $server->getLevel($this->shape->getLevelId());
 		if($level instanceof Level) {
@@ -97,7 +101,7 @@ class BrushTask extends AsyncBlockSniperTask {
 				$level->setChunk($x, $z, $chunk);
 			}
 		}
-		if(($player = $this->shape->getPlayer($server))) {
+		if($player = $this->shape->getPlayer($server)) {
 			$loader->getRevertStorer()->saveRevert((new Undo($undoBlocks, BaseType::establishChunkManager($chunks), $chunks))->setPlayerName($this->shape->getPlayer($server)->getName()), $player);
 		}
 		return true;

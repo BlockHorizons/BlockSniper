@@ -12,6 +12,9 @@ use pocketmine\Player;
 
 class ExpandType extends BaseType {
 
+	/** @var int */
+	protected $id = self::TYPE_EXPAND;
+
 	/*
 	 * Expands the terrain with blocks below it.
 	 */
@@ -27,6 +30,14 @@ class ExpandType extends BaseType {
 		$oneHoles = [];
 		foreach($this->blocks as $block) {
 			if($block->getId() === Item::AIR) {
+				$directions = [
+					$block->getSide(Block::SIDE_DOWN),
+					$block->getSide(Block::SIDE_UP),
+					$block->getSide(Block::SIDE_NORTH),
+					$block->getSide(Block::SIDE_SOUTH),
+					$block->getSide(Block::SIDE_WEST),
+					$block->getSide(Block::SIDE_EAST)
+				];
 				if($this->isAsynchronous()) {
 					$directions = [
 						$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_DOWN),
@@ -35,15 +46,6 @@ class ExpandType extends BaseType {
 						$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_SOUTH),
 						$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_WEST),
 						$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_EAST),
-					];
-				} else {
-					$directions = [
-						$block->getSide(Block::SIDE_DOWN),
-						$block->getSide(Block::SIDE_UP),
-						$block->getSide(Block::SIDE_NORTH),
-						$block->getSide(Block::SIDE_SOUTH),
-						$block->getSide(Block::SIDE_WEST),
-						$block->getSide(Block::SIDE_EAST)
 					];
 				}
 
