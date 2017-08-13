@@ -58,7 +58,7 @@ class RevertTask extends AsyncBlockSniperTask {
 		$revert = $result["revert"];
 		/** @var Chunk[] $chunks */
 		$chunks = $result["chunks"];
-		if($player = $server->getPlayer($revert->getPlayerName())) {
+		if(!($player = $server->getPlayer($revert->getPlayerName()))) {
 			return false;
 		}
 		$levelId = $player->getLevel()->getId();
