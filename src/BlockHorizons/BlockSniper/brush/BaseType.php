@@ -86,6 +86,31 @@ abstract class BaseType {
 	}
 
 	/**
+	 * @return array
+	 */
+	public static function getTypes(): array {
+		return [
+			"Biome",
+			"CleanEntities",
+			"Clean",
+			"Drain",
+			"Expand",
+			"Fill",
+			"FlattenAll",
+			"Flatten",
+			"Layer",
+			"LeafBlower",
+			"Melt",
+			"Overlay",
+			"ReplaceAll",
+			"Replace",
+			"Snowcone",
+			"TopLayer",
+			"Tree"
+		];
+	}
+
+	/**
 	 * Registers a new Type. Example:
 	 * Raise, 12
 	 *

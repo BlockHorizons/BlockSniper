@@ -74,6 +74,18 @@ abstract class BaseShape {
 	}
 
 	/**
+	 * @return array
+	 */
+	public static function getShapes(): array {
+		return [
+			"Sphere",
+			"Cube",
+			"Cuboid",
+			"Standing Cylinder"
+		];
+	}
+
+	/**
 	 * Returns all blocks in the shape if $partially is false. If true, only returns part of the shape, specified by $blocksPerTick.
 	 *
 	 * @param $vectorOnly

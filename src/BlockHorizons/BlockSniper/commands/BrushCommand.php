@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\commands;
 
 use BlockHorizons\BlockSniper\Loader;
-use BlockHorizons\BlockSniper\user_interface\WindowHandler;
+use BlockHorizons\BlockSniper\ui\WindowHandler;
 use pocketmine\command\CommandSender;
 use pocketmine\network\mcpe\protocol\ModalFormRequestPacket;
 use pocketmine\Player;
@@ -32,7 +32,7 @@ class BrushCommand extends BaseCommand {
 		$windowHandler = new WindowHandler();
 		$packet = new ModalFormRequestPacket();
 		$packet->formId = $windowHandler->getWindowIdFor(WindowHandler::WINDOW_MAIN_MENU);
-		$packet->formData = $windowHandler->getWindowJson(WindowHandler::WINDOW_MAIN_MENU);
+		$packet->formData = $windowHandler->getWindowJson(WindowHandler::WINDOW_MAIN_MENU, $this->getLoader(), $sender);
 		$sender->dataPacket($packet);
 		return true;
 	}

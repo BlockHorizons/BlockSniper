@@ -5,7 +5,7 @@ namespace BlockHorizons\BlockSniper\listeners;
 use BlockHorizons\BlockSniper\brush\PropertyProcessor;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\presets\PresetPropertyProcessor;
-use BlockHorizons\BlockSniper\user_interface\WindowHandler;
+use BlockHorizons\BlockSniper\ui\WindowHandler;
 use pocketmine\event\Listener;
 use pocketmine\event\server\DataPacketReceiveEvent;
 use pocketmine\network\mcpe\protocol\ModalFormRequestPacket;
@@ -34,23 +34,13 @@ class UserInterfaceListener implements Listener {
 			switch($packet->formId) {
 				case 3200: // Main Menu
 					$index = (int) $packet->formData + 1;
-					switch($index) {
-						case 1:
-							$json = $windowHandler->getBrushWindowJson($event->getPlayer(), $this->loader);
-							break;
-						case 3:
-							$json = $windowHandler->getConfigurationWindowJson($this->loader);
-							break;
-						default:
-							$json = $windowHandler->getWindowJson($index);
-							break;
+					if($index === 4) {
+						return;
 					}
-					if($index !== 4) {
-						$packet = new ModalFormRequestPacket();
-						$packet->formId = $windowHandler->getWindowIdFor($index);
-						$packet->formData = $json;
-						$event->getPlayer()->dataPacket($packet);
-					}
+					$packet = new ModalFormRequestPacket();
+					$packet->formId = $windowHandler->getWindowIdFor($index);
+					$packet->formData = $windowHandler->getWindowJson($index, $this->loader, $event->getPlayer());
+					$event->getPlayer()->dataPacket($packet);
 					return;
 
 				case 3201: // Brush Menu
@@ -60,34 +50,20 @@ class UserInterfaceListener implements Listener {
 						$processor->process($key, $value);
 					}
 					$this->navigate($windowHandler::WINDOW_MAIN_MENU, $event->getPlayer(), $windowHandler);
-					break;
+					return;
 
 				case 3202: // Preset Menu
 					$index = (int) $packet->formData + 4;
 					$windowHandler = new WindowHandler();
-					switch($index) {
-						case 4:
-							$json = $windowHandler->getPresetCreationWindowJson($event->getPlayer(), $this->loader);
-							break;
-						case 5:
-							$json = $windowHandler->getPresetDeletionMenuJson($this->loader);
-							break;
-						case 6:
-							$json = $windowHandler->getPresetSelectionMenuJson($this->loader);
-							break;
-						default:
-							$json = "";
-							$index = 8;
-					}
-					if($index !== 8) {
-						$packet = new ModalFormRequestPacket();
-						$packet->formId = $windowHandler->getWindowIdFor($index);
-						$packet->formData = $json;
-						$event->getPlayer()->dataPacket($packet);
-					} else {
+					if($index === 8) {
 						$this->navigate($windowHandler::WINDOW_MAIN_MENU, $event->getPlayer(), $windowHandler);
+						return;
 					}
-					break;
+					$packet = new ModalFormRequestPacket();
+					$packet->formId = $windowHandler->getWindowIdFor($index);
+					$packet->formData = $windowHandler->getWindowJson($index, $this->loader, $event->getPlayer());
+					$event->getPlayer()->dataPacket($packet);
+					return;
 
 				case 3203: // Configuration Menu
 					$data = json_decode($packet->formData, true);
@@ -101,7 +77,7 @@ class UserInterfaceListener implements Listener {
 						$this->loader->reload();
 					}
 					$this->navigate($windowHandler::WINDOW_MAIN_MENU, $event->getPlayer(), $windowHandler);
-					break;
+					return;
 
 				case 3204: // Preset Creation Menu
 					$data = json_decode($packet->formData, true);
@@ -148,7 +124,7 @@ class UserInterfaceListener implements Listener {
 	public function navigate(int $menu, Player $player, WindowHandler $windowHandler) {
 		$packet = new ModalFormRequestPacket();
 		$packet->formId = $windowHandler->getWindowIdFor($menu);
-		$packet->formData = $windowHandler->getWindowJson($menu);
+		$packet->formData = $windowHandler->getWindowJson($menu, $this->loader, $player);
 		$player->dataPacket($packet);
 	}
 }

@@ -2,7 +2,7 @@
 # Configuration for BlockSniper: A WorldEdit plugin for PocketMine.
 
 # Internal Property: Do not change.
-Configuration-Version: "2.3.2"
+Configuration-Version: "2.4.0"
 
 # Whether to auto-update configuration when a new version is found.
 Auto-Configuration-Update: true
@@ -19,6 +19,9 @@ Maximum-Size: 30
 
 # Maximum undo and redo stores to save, old ones will get destroyed automatically. Setting this number too high could result in lag or data loss.
 Maximum-Undo-Stores: 15
+
+# Whether to open the GUI automatically when switching hotbar slot to one containing the brush item.
+Open-Gui-Automatically: true
 
 # Whether to reset the size, or make it remain the current size when smallest size with decrement brush is reached.
 Reset-Decrement-Brush: true

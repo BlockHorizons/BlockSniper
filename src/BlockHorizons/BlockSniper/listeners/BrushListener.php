@@ -7,9 +7,12 @@ namespace BlockHorizons\BlockSniper\listeners;
 use BlockHorizons\BlockSniper\brush\BrushManager;
 use BlockHorizons\BlockSniper\events\BrushUseEvent;
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\ui\WindowHandler;
 use BlockHorizons\BlockSniper\undo\Undo;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
+use pocketmine\event\player\PlayerItemHeldEvent;
+use pocketmine\network\mcpe\protocol\ModalFormRequestPacket;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
 
@@ -22,7 +25,12 @@ class BrushListener implements Listener {
 		$this->loader = $loader;
 	}
 
-	public function brush(PlayerInteractEvent $event) {
+	/**
+	 * @param PlayerInteractEvent $event
+	 *
+	 * @return bool
+	 */
+	public function brush(PlayerInteractEvent $event): bool {
 		$player = $event->getPlayer();
 		if($player->getInventory()->getItemInHand()->getId() === (int) $this->getLoader()->getSettings()->getBrushItem()) {
 			if($player->hasPermission("blocksniper.command.brush")) {
@@ -46,9 +54,30 @@ class BrushListener implements Listener {
 				}
 				$this->decrementBrush($player);
 				$event->setCancelled();
+				return true;
 			}
 		}
-		return true;
+		return false;
+	}
+
+	/**
+	 * @param PlayerItemHeldEvent $event
+	 */
+	public function onItemHeld(PlayerItemHeldEvent $event): bool {
+		$player = $event->getPlayer();
+		if($event->getItem()->getId() === $this->getLoader()->getSettings()->getBrushItem()) {
+			if($player->hasPermission("blocksniper.command.brush")) {
+				$this->getLoader()->getBrushManager()->createBrush($player);
+
+				$windowHandler = new WindowHandler();
+				$packet = new ModalFormRequestPacket();
+				$packet->formId = $windowHandler->getWindowIdFor(WindowHandler::WINDOW_MAIN_MENU);
+				$packet->formData = $windowHandler->getWindowJson(WindowHandler::WINDOW_MAIN_MENU, $this->getLoader(), $player);
+				$player->dataPacket($packet);
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

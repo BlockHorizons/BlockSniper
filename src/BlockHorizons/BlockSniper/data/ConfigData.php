@@ -20,6 +20,7 @@ class ConfigData {
 	const OPTION_RESET_DECREMENT_BRUSH = 6;
 	const OPTION_SAVE_BRUSH_PROPERTIES = 7;
 	const OPTION_DROP_LEAFBLOWER_PLANTS = 8;
+	const OPTION_OPEN_GUI_AUTOMATICALLY = 9;
 
 	/** @var array */
 	private $settings = [];
@@ -36,7 +37,8 @@ class ConfigData {
 		"Maximum-Revert-Stores" => 5,
 		"Reset-Decrement-Brush" => 6,
 		"Save-Brush-Properties" => 7,
-		"Drop-Leafblower-Plants" => 8
+		"Drop-Leafblower-Plants" => 8,
+		"Open-Gui-Automatically" => 9
 	];
 
 	public function __construct(Loader $loader) {
@@ -57,7 +59,8 @@ class ConfigData {
 			5 => $cfg["Maximum-Revert-Stores"] ?? 15,
 			6 => $cfg["Reset-Decrement-Brush"] ?? true,
 			7 => $cfg["Save-Brush-Properties"] ?? true,
-			8 => $cfg["Drop-Leafblower-Plants"] ?? true
+			8 => $cfg["Drop-Leafblower-Plants"] ?? true,
+			9 => $cfg["Open-Gui-Automatically"] ?? true
 		];
 		if($cfg["Configuration-Version"] !== Loader::CONFIGURATION_VERSION) {
 			$autoUpdate = $cfg["Auto-Configuration-Update"];
@@ -93,6 +96,13 @@ class ConfigData {
 		unlink($this->getLoader()->getDataFolder() . "settings.yml");
 		$this->settings[self::OPTION_VERSION] = Loader::CONFIGURATION_VERSION;
 		yaml_emit_file($this->getLoader()->getDataFolder() . "settings.yml", $this->settings);
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function openGuiAutomatically(): bool {
+		return $this->settings[self::OPTION_OPEN_GUI_AUTOMATICALLY];
 	}
 
 	/**
