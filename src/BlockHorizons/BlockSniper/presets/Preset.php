@@ -45,4 +45,11 @@ class Preset {
 			$processor->process($index - 1, $value);
 		}
 	}
+
+	/**
+	 * @return array
+	 */
+	public function getData(): array {
+		return $this->data;
+	}
 }

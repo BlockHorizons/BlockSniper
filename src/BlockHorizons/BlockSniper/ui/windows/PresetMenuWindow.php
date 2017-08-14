@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\ui\windows;
 
 class PresetMenuWindow extends Window {

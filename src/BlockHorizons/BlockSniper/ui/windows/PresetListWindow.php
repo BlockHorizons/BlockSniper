@@ -4,16 +4,14 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\ui\windows;
 
-class PresetDeletionWindow extends Window {
-
-	const ID = 6;
+class PresetListWindow extends Window {
 
 	public function process() {
 		$presets = $this->getLoader()->getPresetManager()->getAllPresets();
 		$this->data = [
 			"type" => "form",
-			"title" => "Preset Deletion Menu",
-			"content" => "Select a preset to delete.",
+			"title" => "Preset List Menu",
+			"content" => "Select a preset to view/edit.",
 			"buttons" => []
 		];
 		foreach($presets as $key => $name) {
@@ -21,7 +19,7 @@ class PresetDeletionWindow extends Window {
 				"text" => $name,
 				"image" => [
 					"type" => "url",
-					"data" => "http://www.pngmart.com/files/3/Red-Cross-Transparent-PNG.png"
+					"data" => "http://www.iconsdb.com/icons/preview/guacamole-green/list-xxl.png"
 				]
 			];
 		}

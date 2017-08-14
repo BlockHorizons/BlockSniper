@@ -1,16 +1,20 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\listeners;
 
 use BlockHorizons\BlockSniper\brush\PropertyProcessor;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\presets\PresetPropertyProcessor;
 use BlockHorizons\BlockSniper\ui\WindowHandler;
+use BlockHorizons\BlockSniper\ui\windows\PresetEditWindow;
 use pocketmine\event\Listener;
 use pocketmine\event\server\DataPacketReceiveEvent;
 use pocketmine\network\mcpe\protocol\ModalFormRequestPacket;
 use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
 use pocketmine\Player;
+use pocketmine\utils\TextFormat;
 
 class UserInterfaceListener implements Listener {
 
@@ -29,7 +33,7 @@ class UserInterfaceListener implements Listener {
 		if($packet instanceof ModalFormResponsePacket) {
 			if(json_decode($packet->formData, true) === null) {
 				return;
-		}
+			}
 			$windowHandler = new WindowHandler();
 			switch($packet->formId) {
 				case 3200: // Main Menu
@@ -49,14 +53,14 @@ class UserInterfaceListener implements Listener {
 					foreach($data as $key => $value) {
 						$processor->process($key, $value);
 					}
-					$this->navigate($windowHandler::WINDOW_MAIN_MENU, $event->getPlayer(), $windowHandler);
+					$this->navigate(WindowHandler::WINDOW_MAIN_MENU, $event->getPlayer(), $windowHandler);
 					return;
 
 				case 3202: // Preset Menu
 					$index = (int) $packet->formData + 4;
 					$windowHandler = new WindowHandler();
 					if($index === 8) {
-						$this->navigate($windowHandler::WINDOW_MAIN_MENU, $event->getPlayer(), $windowHandler);
+						$this->navigate(WindowHandler::WINDOW_MAIN_MENU, $event->getPlayer(), $windowHandler);
 						return;
 					}
 					$packet = new ModalFormRequestPacket();
@@ -76,17 +80,21 @@ class UserInterfaceListener implements Listener {
 					if($data[9] === true) {
 						$this->loader->reload();
 					}
-					$this->navigate($windowHandler::WINDOW_MAIN_MENU, $event->getPlayer(), $windowHandler);
+					$this->navigate(WindowHandler::WINDOW_MAIN_MENU, $event->getPlayer(), $windowHandler);
 					return;
 
 				case 3204: // Preset Creation Menu
 					$data = json_decode($packet->formData, true);
+					if($this->loader->getPresetManager()->isPreset($data[0])) {
+						$event->getPlayer()->sendMessage(TextFormat::RED . "[Warning] " . $this->loader->getTranslation("commands.errors.preset-already-exists"));
+						return;
+					}
 					$processor = new PresetPropertyProcessor($event->getPlayer(), $this->loader);
 					foreach($data as $key => $value) {
 						$processor->process($key, $value);
 					}
-					$this->navigate($windowHandler::WINDOW_PRESET_MENU, $event->getPlayer(), $windowHandler);
-					break;
+					$this->navigate(WindowHandler::WINDOW_PRESET_MENU, $event->getPlayer(), $windowHandler);
+					return;
 
 				case 3205: // Preset Deletion Menu
 					$index = (int) $packet->formData;
@@ -97,8 +105,8 @@ class UserInterfaceListener implements Listener {
 						}
 					}
 					$this->loader->getPresetManager()->deletePreset($presetName);
-					$this->navigate($windowHandler::WINDOW_PRESET_MENU, $event->getPlayer(), $windowHandler);
-					break;
+					$this->navigate(WindowHandler::WINDOW_PRESET_MENU, $event->getPlayer(), $windowHandler);
+					return;
 
 				case 3206: // Preset Selection Menu
 					$index = (int) $packet->formData;
@@ -110,8 +118,37 @@ class UserInterfaceListener implements Listener {
 					}
 					$preset = $this->loader->getPresetManager()->getPreset($presetName);
 					$preset->apply($event->getPlayer(), $this->loader);
-					$this->navigate($windowHandler::WINDOW_PRESET_MENU, $event->getPlayer(), $windowHandler);
-					break;
+					$this->navigate(WindowHandler::WINDOW_PRESET_MENU, $event->getPlayer(), $windowHandler);
+					return;
+
+				case 3207: // Preset List Menu
+					$index = (int) $packet->formData;
+					$presetName = "";
+					foreach($this->loader->getPresetManager()->getAllPresets() as $key => $name) {
+						if($key === $index) {
+							$presetName = $name;
+						}
+					}
+					$preset = $this->loader->getPresetManager()->getPreset($presetName);
+					/** @var PresetEditWindow $window */
+					$window = $windowHandler->getWindow(WindowHandler::WINDOW_PRESET_EDIT_MENU, $this->loader, $event->getPlayer());
+					$window->setPreset($preset);
+					$window->process();
+
+					$packet = new ModalFormRequestPacket();
+					$packet->formId = $windowHandler->getWindowIdFor(WindowHandler::WINDOW_PRESET_EDIT_MENU);
+					$packet->formData = $window->getJson();
+					$event->getPlayer()->dataPacket($packet);
+					return;
+
+				case 3208: // Preset Edit Menu
+					$data = json_decode($packet->formData, true);
+					$processor = new PresetPropertyProcessor($event->getPlayer(), $this->loader);
+					foreach($data as $key => $value) {
+						$processor->process($key, $value);
+					}
+					$this->navigate($windowHandler::WINDOW_PRESET_LIST_MENU, $event->getPlayer(), $windowHandler);
+					return;
 			}
 		}
 	}

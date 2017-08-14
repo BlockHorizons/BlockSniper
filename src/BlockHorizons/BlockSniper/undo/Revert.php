@@ -151,7 +151,7 @@ abstract class Revert {
 	 */
 	public function getDetached(): Revert {
 		$blocks = [];
-		if($this->isAsynchronous()) {
+		if($this->isAsynchronous() || $this->manager !== null) {
 			foreach($this->blocks as $block) {
 				$currentBlock = Block::get($this->getManager()->getBlockIdAt($block->x, $block->y, $block->z), $this->getManager()->getBlockDataAt($block->x, $block->y, $block->z));
 				$currentBlock->setComponents($block->x, $block->y, $block->z);

@@ -13,7 +13,7 @@ use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use pocketmine\utils\TextFormat as TF;
 
-abstract class BaseCommand extends Command implements PluginIdentifiableCommand, OverloadedCommand {
+abstract class BaseCommand extends Command implements PluginIdentifiableCommand {
 
 	/** @var Loader */
 	protected $loader = null;

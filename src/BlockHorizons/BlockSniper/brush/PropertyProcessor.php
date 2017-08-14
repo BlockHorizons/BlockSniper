@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\brush;
 
 use BlockHorizons\BlockSniper\events\ChangeBrushPropertiesEvent as Change;
@@ -43,7 +45,6 @@ class PropertyProcessor {
 	 */
 	public function process(int $valueType, $value) {
 		$brush = BrushManager::get($this->player);
-		$action = 0;
 		switch($valueType) {
 			case 0:
 				$brush->setSize($value);
