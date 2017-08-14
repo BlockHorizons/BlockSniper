@@ -4,111 +4,45 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\presets;
 
-use BlockHorizons\BlockSniper\brush\BrushManager;
+use BlockHorizons\BlockSniper\brush\PropertyProcessor;
+use BlockHorizons\BlockSniper\Loader;
 use pocketmine\Player;
 
 class Preset {
 
+	const VALUE_NAME = 0;
+	const VALUE_SIZE = 1;
+	const VALUE_SHAPE = 2;
+	const VALUE_TYPE = 3;
+	const VALUE_HOLLOW = 4;
+	const VALUE_DECREMENT = 5;
+	const VALUE_HEIGHT = 6;
+	const VALUE_PERFECT = 7;
+	const VALUE_BLOCKS = 8;
+	const VALUE_OBSOLETE = 9;
+	const VALUE_BIOME = 10;
+	const VALUE_TREE = 11;
+
 	/** @var string */
 	public $name = "";
-
-	/** @var string */
-	private $shape = "";
-	/** @var string */
-	private $type = "";
-	/** @var int */
-	private $size = 0;
-	/** @var bool */
-	private $hollow = false;
-	/** @var bool */
-	private $decrement = false;
-	/** @var int */
-	private $height = 0;
-	/** @var string */
-	private $biome = "";
 	/** @var array */
-	private $obsolete = [];
-	/** @var array */
-	private $blocks = [];
-	/** @var bool */
-	private $perfect = true;
+	private $data = [];
 
-	public function __construct(string $name, string $shape = null, string $type = null, bool $decrement = null, bool $perfect = null, int $size = null, bool $hollow = null, array $blocks = null, array $obsolete = null, int $height = null, string $biome = null) {
+	public function __construct(string $name, array $data) {
 		$this->name = $name;
-
-		$this->shape = $shape;
-		$this->type = $type;
-		$this->decrement = $decrement;
-		$this->size = $size;
-		$this->hollow = $hollow;
-		$this->perfect = $perfect;
-
-		$this->height = $height;
-		$this->biome = $biome;
-		$this->obsolete = $obsolete;
-		$this->blocks = $blocks;
+		$this->data = $data;
 	}
 
 	/**
 	 * Applies the preset on a player.
 	 *
 	 * @param Player $player
+	 * @param Loader $loader
 	 */
-	public function apply(Player $player) {
-		$brush = BrushManager::get($player);
-		foreach($this->getParsedData() as $property => $value) {
-			switch($property) {
-				case "shape":
-					$brush->setShape($value);
-					break;
-				case "type":
-					$brush->setType($value);
-					break;
-				case "decrement":
-					$brush->setDecrementing($value);
-					break;
-				case "size":
-					$brush->setSize($value);
-					break;
-				case "hollow":
-					$brush->setHollow($value);
-					break;
-				case "height":
-					$brush->setHeight($value);
-					break;
-				case "biome":
-					$brush->setBiome($value);
-					break;
-				case "obsolete":
-					$brush->setObsolete($value);
-					break;
-				case "blocks":
-					$brush->setBlocks($value);
-					break;
-				case "perfect":
-					$brush->setPerfect($value);
-					break;
-			}
+	public function apply(Player $player, Loader $loader) {
+		$processor = new PropertyProcessor($player, $loader);
+		foreach($this->data as $index => $value) {
+			$processor->process($index - 1, $value);
 		}
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getParsedData(): array {
-		$data = [];
-		$data["name"] = $this->name;
-		$data["shape"] = $this->shape;
-		$data["type"] = $this->type;
-		$data["decrement"] = $this->decrement;
-		$data["perfect"] = $this->perfect;
-		$data["size"] = $this->size;
-		$data["hollow"] = $this->hollow;
-		$data["blocks"] = $this->blocks;
-		$data["height"] = $this->height;
-		$data["biome"] = $this->biome;
-		$data["obsolete"] = $this->obsolete;
-
-		return $data;
 	}
 }

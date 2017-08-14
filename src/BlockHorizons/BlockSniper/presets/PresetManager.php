@@ -10,12 +10,8 @@ use pocketmine\utils\TextFormat as TF;
 
 class PresetManager {
 
-	/** @var array */
-	public $presetCreation = [];
 	/** @var Loader */
 	private $loader = null;
-	/** @var array */
-	private $data = [];
 	/** @var array */
 	private $preset = [];
 
@@ -25,7 +21,7 @@ class PresetManager {
 		if(is_file($loader->getDataFolder() . "presets.yml")) {
 			$this->data = yaml_parse_file($loader->getDataFolder() . "presets.yml");
 			foreach($this->data as $name => $data) {
-				$this->addPreset($name);
+				$this->addPreset(unserialize($data));
 				$loader->getLogger()->debug(TF::GREEN . "Preset " . $name . " has been loaded.");
 			}
 			$loader->getLogger()->info(TF::GREEN . "All presets have been loaded.");
@@ -33,23 +29,10 @@ class PresetManager {
 	}
 
 	/**
-	 * @param string $name
+	 * @param Preset $preset
 	 */
-	public function addPreset(string $name) {
-		$this->preset[$name] = new Preset(
-			$this->data[$name]["name"],
-			$this->data[$name]["shape"],
-			$this->data[$name]["type"],
-			$this->data[$name]["decrement"],
-			$this->data[$name]["perfect"],
-			$this->data[$name]["size"],
-			$this->data[$name]["hollow"],
-			$this->data[$name]["blocks"],
-			$this->data[$name]["obsolete"],
-			$this->data[$name]["height"],
-			$this->data[$name]["biome"]
-		);
-		unset($this->data[$name]);
+	public function addPreset(Preset $preset) {
+		$this->preset[$preset->name] = $preset;
 	}
 
 	/**
@@ -80,56 +63,6 @@ class PresetManager {
 	}
 
 	/**
-	 * @param Player $player
-	 *
-	 * @return int
-	 */
-	public function getCurrentPresetCreationProgress(Player $player): int {
-		return count($this->presetCreation[$player->getId()]);
-	}
-
-	/**
-	 * @param Player $player
-	 * @param string $name
-	 */
-	public function parsePresetCreationInfo(Player $player, string $name) {
-		foreach($this->presetCreation[$player->getId()] as $key => $value) {
-			$this->data[$name][$key] = $value;
-		}
-		$this->addPreset($name);
-		unset($this->presetCreation[$player->getId()]);
-	}
-
-	/**
-	 * @param Player $player
-	 * @param string $key
-	 * @param        $value
-	 */
-	public function addToCreationData(Player $player, string $key, $value) {
-		$this->presetCreation[$player->getId()][$key] = $value;
-	}
-
-	/**
-	 * @param Player $player
-	 * @param string $key
-	 *
-	 * @return mixed
-	 */
-	public function getCreationData(Player $player, string $key = "") {
-		if(!empty($key)) {
-			return $this->presetCreation[$player->getId()][$key];
-		}
-		return $this->presetCreation[$player->getId()];
-	}
-
-	/**
-	 * @param Player $player
-	 */
-	public function cancelPresetCreationProcess(Player $player) {
-		unset($this->presetCreation[$player->getId()]);
-	}
-
-	/**
 	 * @param string $name
 	 */
 	public function deletePreset(string $name) {
@@ -141,7 +74,7 @@ class PresetManager {
 		if(!empty($this->preset)) {
 			foreach($this->preset as $name => $preset) {
 				if($preset instanceof Preset) {
-					$data[$name] = $preset->getParsedData();
+					$data[$name] = serialize($preset);
 				}
 			}
 		}

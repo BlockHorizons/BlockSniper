@@ -33,7 +33,10 @@ class WindowHandler {
 	 * @return string
 	 */
 	public function getWindowJson(int $windowId): string {
-		return json_encode($this->data[$windowId]);
+		if(isset($this->data[$windowId])) {
+			return json_encode($this->data[$windowId]);
+		}
+		return "";
 	}
 
 	/**
@@ -137,5 +140,105 @@ class WindowHandler {
 		$this->data[self::WINDOW_CONFIGURATION_MENU]["content"][8]["default"] = $s->dropLeafblowerPlants();
 
 		return $this->getWindowJson(self::WINDOW_CONFIGURATION_MENU);
+	}
+
+	/**
+	 * @param Player $player
+	 * @param Loader $loader
+	 *
+	 * @return string
+	 */
+	public function getPresetCreationWindowJson(Player $player, Loader $loader): string {
+		$shapes = [
+			"Sphere",
+			"Cube",
+			"Cuboid",
+			"Standing Cylinder"
+		];
+		foreach($shapes as $key => $shape) {
+			if(!$player->hasPermission("blocksniper.shape." . strtolower(str_replace(" ", "", $shape)))) {
+				unset($shapes[$key]);
+			}
+		}
+		$types = [
+			"Biome",
+			"CleanEntities",
+			"Clean",
+			"Drain",
+			"Expand",
+			"Fill",
+			"FlattenAll",
+			"Flatten",
+			"Layer",
+			"LeafBlower",
+			"Melt",
+			"Overlay",
+			"ReplaceAll",
+			"Replace",
+			"Snowcone",
+			"TopLayer",
+			"Tree"
+		];
+		foreach($types as $key => $type) {
+			if(!$player->hasPermission("blocksniper.type." . strtolower(str_replace(" ", "", $type)))) {
+				unset($types[$key]);
+			}
+		}
+		$this->data[self::WINDOW_PRESET_CREATION_MENU]["content"][1]["max"] = $loader->getSettings()->getMaxRadius();
+		$this->data[self::WINDOW_PRESET_CREATION_MENU]["content"][2]["options"] = $shapes;
+		$this->data[self::WINDOW_PRESET_CREATION_MENU]["content"][3]["options"] = $types;
+		$this->data[self::WINDOW_PRESET_CREATION_MENU]["content"][6]["max"] = $loader->getSettings()->getMaxRadius();
+
+		return $this->getWindowJson(self::WINDOW_PRESET_CREATION_MENU);
+	}
+
+	/**
+	 * @param Loader $loader
+	 *
+	 * @return string
+	 */
+	public function getPresetSelectionMenuJson(Loader $loader): string {
+		$presets = $loader->getPresetManager()->getAllPresets();
+		$json = [
+			"type" => "form",
+			"title" => "Preset Selection Menu",
+			"content" => "Select a preset to apply.",
+			"buttons" => []
+		];
+		foreach($presets as $key => $name) {
+			$json["buttons"][$key] = [
+				"text" => $name,
+				"image" => [
+					"type" => "url",
+					"data" => "http://www.clker.com/cliparts/k/T/w/u/G/S/transparent-yellow-checkmark-md.png"
+				]
+			];
+		}
+		return json_encode($json);
+	}
+
+	/**
+	 * @param Loader $loader
+	 *
+	 * @return string
+	 */
+	public function getPresetDeletionMenuJson(Loader $loader): string {
+		$presets = $loader->getPresetManager()->getAllPresets();
+		$json = [
+			"type" => "form",
+			"title" => "Preset Deletion Menu",
+			"content" => "Select a preset to delete.",
+			"buttons" => []
+		];
+		foreach($presets as $key => $name) {
+			$json["buttons"][$key] = [
+				"text" => $name,
+				"image" => [
+					"type" => "url",
+					"data" => "http://www.pngmart.com/files/3/Red-Cross-Transparent-PNG.png"
+				]
+			];
+		}
+		return json_encode($json);
 	}
 }

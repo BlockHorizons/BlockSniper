@@ -20,7 +20,7 @@ class BrushTask extends AsyncBlockSniperTask {
 	/** @var string */
 	private $chunks = "";
 	/** @var BaseType */
-	private $type = null;
+	protected $type = null;
 
 	public function __construct(BaseShape $shape, BaseType $type, array $chunks) {
 		$this->shape = $shape;

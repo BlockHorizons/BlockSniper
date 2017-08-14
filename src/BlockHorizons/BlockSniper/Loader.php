@@ -16,7 +16,6 @@ use BlockHorizons\BlockSniper\commands\UndoCommand;
 use BlockHorizons\BlockSniper\data\ConfigData;
 use BlockHorizons\BlockSniper\data\TranslationData;
 use BlockHorizons\BlockSniper\listeners\BrushListener;
-use BlockHorizons\BlockSniper\listeners\PresetListener;
 use BlockHorizons\BlockSniper\listeners\UserInterfaceListener;
 use BlockHorizons\BlockSniper\operation\Operator;
 use BlockHorizons\BlockSniper\presets\PresetManager;
@@ -29,7 +28,7 @@ class Loader extends PluginBase {
 
 	const VERSION = "1.5.0";
 	const API_TARGET = "3.0.0-ALPHA7";
-	const CONFIGURATION_VERSION = "2.3.1";
+	const CONFIGURATION_VERSION = "2.3.2";
 
 	/** @var string[] */
 	private static $availableLanguages = [
@@ -74,7 +73,7 @@ class Loader extends PluginBase {
 		CommandOverloads::initialize();
 	}
 
-	public function reloadAll() {
+	private function reloadAll() {
 		$this->saveResource("settings.yml");
 		$this->settings = new ConfigData($this);
 		$this->language = new TranslationData($this);
@@ -107,6 +106,13 @@ class Loader extends PluginBase {
 		}
 	}
 
+	public function reload() {
+		$this->getLogger()->info(TF::AQUA . "[BlockSniper] Reloading...");
+		$this->onDisable();
+		$this->reloadAll();
+		$this->getLogger()->info(TF::AQUA . "[BlockSniper] Reload finished.");
+	}
+
 	/**
 	 * @return ConfigData
 	 */
@@ -131,7 +137,6 @@ class Loader extends PluginBase {
 	public function registerListeners() {
 		$blockSniperListeners = [
 			new BrushListener($this),
-			new PresetListener($this),
 			new UserInterfaceListener($this)
 		];
 		foreach($blockSniperListeners as $listener) {
@@ -143,8 +148,6 @@ class Loader extends PluginBase {
 		$this->getPresetManager()->storePresetsToFile();
 		$this->getBrushManager()->storeBrushesToFile();
 		$this->getSettings()->save();
-
-		$this->getLogger()->info(TF::RED . "BlockSniper has been disabled.");
 	}
 
 	/**
