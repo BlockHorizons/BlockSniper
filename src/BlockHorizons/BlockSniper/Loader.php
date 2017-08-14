@@ -28,7 +28,7 @@ class Loader extends PluginBase {
 
 	const VERSION = "1.5.0";
 	const API_TARGET = "3.0.0-ALPHA7";
-	const CONFIGURATION_VERSION = "2.3.2";
+	const CONFIGURATION_VERSION = "2.4.0";
 
 	/** @var string[] */
 	private static $availableLanguages = [

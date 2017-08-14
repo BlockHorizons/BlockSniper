@@ -16,28 +16,28 @@ class MainMenuWindow extends Window {
 					"text" => "Brush",
 					"image" => [
 						"type" => "url",
-						"data" => "https =>//maxcdn.icons8.com/Share/icon/DIY//paint_brush1600.png"
+						"data" => "https://maxcdn.icons8.com/Share/icon/DIY//paint_brush1600.png"
 					]
 				],
 				[
 					"text" => "Presets",
 					"image" => [
 						"type" => "url",
-						"data" => "http =>//www.sidecarpost.com/wp-content/uploads/2014/03/Icon-BaselinePreset-100x100.png"
+						"data" => "http://www.sidecarpost.com/wp-content/uploads/2014/03/Icon-BaselinePreset-100x100.png"
 					]
 				],
 				[
 					"text" => "Configuration",
 					"image" => [
 						"type" => "url",
-						"data" => "http =>//icons.iconarchive.com/icons/dtafalonso/android-l/512/Settings-L-icon.png"
+						"data" => "http://icons.iconarchive.com/icons/dtafalonso/android-l/512/Settings-L-icon.png"
 					]
 				],
 				[
 					"text" => "Exit",
 					"image" => [
 						"type" => "url",
-						"data" => "http =>//www.pngmart.com/files/3/Red-Cross-Transparent-PNG.png"
+						"data" => "http://www.pngmart.com/files/3/Red-Cross-Transparent-PNG.png"
 					]
 				]
 			]

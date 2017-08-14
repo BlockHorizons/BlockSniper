@@ -29,7 +29,7 @@ class UserInterfaceListener implements Listener {
 		if($packet instanceof ModalFormResponsePacket) {
 			if(json_decode($packet->formData, true) === null) {
 				return;
-			}
+		}
 			$windowHandler = new WindowHandler();
 			switch($packet->formId) {
 				case 3200: // Main Menu

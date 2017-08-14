@@ -12,6 +12,7 @@ use BlockHorizons\BlockSniper\undo\Undo;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerItemHeldEvent;
+use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\network\mcpe\protocol\ModalFormRequestPacket;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
@@ -20,6 +21,8 @@ class BrushListener implements Listener {
 
 	/** @var Loader */
 	private $loader = null;
+	/** @var array */
+	private $cancelWindow = [];
 
 	public function __construct(Loader $loader) {
 		$this->loader = $loader;
@@ -67,6 +70,9 @@ class BrushListener implements Listener {
 		$player = $event->getPlayer();
 		if($event->getItem()->getId() === $this->getLoader()->getSettings()->getBrushItem()) {
 			if($player->hasPermission("blocksniper.command.brush")) {
+				if(time() - $this->cancelWindow[$player->getLowerCaseName()] < 2) {
+					return false;
+				}
 				$this->getLoader()->getBrushManager()->createBrush($player);
 
 				$windowHandler = new WindowHandler();
@@ -78,6 +84,16 @@ class BrushListener implements Listener {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * @param PlayerJoinEvent $event
+	 *
+	 * @return bool
+	 */
+	public function onJoin(PlayerJoinEvent $event): bool {
+		$this->cancelWindow[$event->getPlayer()->getLowerCaseName()] = time();
+		return true;
 	}
 
 	/**

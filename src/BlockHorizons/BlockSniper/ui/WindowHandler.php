@@ -38,10 +38,6 @@ class WindowHandler {
 		//PresetListWindow::class
 	];
 
-	public function __construct() {
-		$this->data = json_decode(file_get_contents(__DIR__ . "\BrushWindows.json"), true);
-	}
-
 	/**
 	 * @param int    $windowId
 	 * @param Loader $loader

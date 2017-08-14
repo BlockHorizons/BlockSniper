@@ -19,7 +19,7 @@ abstract class Revert {
 	protected $isAsync = false;
 	/** @var BlockSniperChunkManager|null */
 	protected $manager = null;
-	/** @var Chunk[] */
+	/** @var string[] */
 	protected $touchedChunks = [];
 	/** @var bool */
 	protected $scheduled = false;
@@ -47,7 +47,7 @@ abstract class Revert {
 	 * @param RevertTask|null $task
 	 */
 	public function restore(RevertTask $task = null) {
-		if($this->isAsynchronous()) {
+		if($this->isAsynchronous() && $task !== null) {
 			if(!$this->scheduled) {
 				$this->scheduleAsynchronous();
 				return;

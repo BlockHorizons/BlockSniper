@@ -102,7 +102,7 @@ class BrushTask extends AsyncBlockSniperTask {
 			}
 		}
 		if($player = $this->shape->getPlayer($server)) {
-			$loader->getRevertStorer()->saveRevert((new Undo($undoBlocks, BaseType::establishChunkManager($chunks), $chunks))->setPlayerName($this->shape->getPlayer($server)->getName()), $player);
+			$loader->getRevertStorer()->saveRevert((new Undo($undoBlocks))->setPlayerName($this->shape->getPlayer($server)->getName())->setTouchedChunks($chunks), $player);
 		}
 		return true;
 	}
