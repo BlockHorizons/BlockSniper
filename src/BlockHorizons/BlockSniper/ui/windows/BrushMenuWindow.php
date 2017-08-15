@@ -4,8 +4,6 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\ui\windows;
 
-use BlockHorizons\BlockSniper\brush\BaseShape;
-use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\brush\BrushManager;
 use pocketmine\level\generator\biome\Biome;
 
@@ -15,28 +13,6 @@ class BrushMenuWindow extends Window {
 
 	public function process() {
 		$v = BrushManager::get($this->getPlayer());
-		$blocks = [];
-		foreach($v->getBlocks() as $block) {
-			$blocks[] = $block->getId() . ":" . $block->getDamage();
-		}
-		$blocks = implode(",", $blocks);
-		$obsoletes = [];
-		foreach($v->getObsolete() as $obsolete) {
-			$obsoletes[] = $obsolete->getId() . ":" . $obsolete->getDamage();
-		}
-		$obsoletes = implode(",", $obsoletes);
-		$shapes = BaseShape::getShapes();
-		foreach($shapes as $key => $shape) {
-			if(!$this->getPlayer()->hasPermission("blocksniper.shape." . strtolower(str_replace(" ", "", $shape)))) {
-				unset($shapes[$key]);
-			}
-		}
-		$types = BaseType::getTypes();
-		foreach($types as $key => $type) {
-			if(!$this->getPlayer()->hasPermission("blocksniper.type." . strtolower(str_replace(" ", "", $type)))) {
-				unset($types[$key]);
-			}
-		}
 		$this->data = [
 			"type" => "custom_form",
 			"title" => "Brush Menu",
@@ -52,13 +28,13 @@ class BrushMenuWindow extends Window {
 				[
 					"type" => "dropdown",
 					"text" => "Brush Shape",
-					"options" => $shapes,
+					"options" => $this->processShapes(),
 					"default" => $v->getShape()->getId()
 				],
 				[
 					"type" => "dropdown",
 					"text" => "Brush Type",
-					"options" => $types,
+					"options" => $this->processTypes(),
 					"default" => $v->getType()->getId()
 				],
 				[
@@ -88,13 +64,13 @@ class BrushMenuWindow extends Window {
 					"type" => "input",
 					"text" => "Brush Blocks",
 					"placeholder" => "stone,stone_brick:1,2",
-					"default" => $blocks
+					"default" => $this->processBlocks($v->getBlocks()),
 				],
 				[
 					"type" => "input",
 					"text" => "Obsolete Blocks",
 					"placeholder" => "stone,stone_brick =>1,2",
-					"default" => $obsoletes
+					"default" => $this->processBlocks($v->getObsolete()),
 				],
 				[
 					"type" => "input",

@@ -4,26 +4,11 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\ui\windows;
 
-use BlockHorizons\BlockSniper\brush\BaseShape;
-use BlockHorizons\BlockSniper\brush\BaseType;
-
 class PresetCreationWindow extends Window {
 
 	const ID = 4;
 
 	public function process() {
-		$shapes = BaseShape::getShapes();
-		foreach($shapes as $key => $shape) {
-			if(!$this->getPlayer()->hasPermission("blocksniper.shape." . strtolower(str_replace(" ", "", $shape)))) {
-				unset($shapes[$key]);
-			}
-		}
-		$types = BaseType::getTypes();
-		foreach($types as $key => $type) {
-			if(!$this->getPlayer()->hasPermission("blocksniper.type." . strtolower(str_replace(" ", "", $type)))) {
-				unset($types[$key]);
-			}
-		}
 		$this->data = [
 			"type" => "custom_form",
 			"title" => "Preset Creation Menu",
@@ -46,13 +31,13 @@ class PresetCreationWindow extends Window {
 					"type" => "dropdown",
 					"text" => "Brush Shape",
 					"default" => 0,
-					"options" => $shapes
+					"options" => $this->processShapes()
 				],
 				[
 					"type" => "dropdown",
 					"text" => "Brush Type",
 					"default" => 5,
-					"options" => $types
+					"options" => $this->processTypes()
 				],
 				[
 					"type" => "toggle",

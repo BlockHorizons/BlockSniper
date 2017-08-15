@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\ui\windows;
 
+use BlockHorizons\BlockSniper\brush\BaseShape;
+use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\Player;
 
@@ -43,6 +45,45 @@ abstract class Window {
 	 */
 	public function getPlayer(): Player {
 		return $this->player;
+	}
+
+	/**
+	 * @param array $blocks
+	 *
+	 * @return string
+	 */
+	public function processBlocks(array $blocks): string {
+		$return = [];
+		foreach($blocks as $block) {
+			$return[] = $block->getId() . ":" . $block->getDamage();
+		}
+		return implode(",", $return);
+	}
+
+	/**
+	 * @return array
+	 */
+	public function processShapes(): array {
+		$shapes = BaseShape::getShapes();
+		foreach($shapes as $key => $shape) {
+			if(!$this->getPlayer()->hasPermission("blocksniper.shape." . strtolower(str_replace(" ", "", $shape)))) {
+				unset($shapes[$key]);
+			}
+		}
+		return $shapes;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function processTypes(): array {
+		$types = BaseType::getTypes();
+		foreach($types as $key => $type) {
+			if(!$this->getPlayer()->hasPermission("blocksniper.type." . strtolower(str_replace(" ", "", $type)))) {
+				unset($types[$key]);
+			}
+		}
+		return $types;
 	}
 
 	protected abstract function process();

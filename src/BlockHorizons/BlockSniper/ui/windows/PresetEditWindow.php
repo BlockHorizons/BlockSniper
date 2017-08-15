@@ -4,8 +4,6 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\ui\windows;
 
-use BlockHorizons\BlockSniper\brush\BaseShape;
-use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\presets\Preset;
 
 class PresetEditWindow extends Window {
@@ -17,21 +15,12 @@ class PresetEditWindow extends Window {
 		if($this->preset === null) {
 			return;
 		}
-		$shapes = BaseShape::getShapes();
-		foreach($shapes as $key => $shape) {
-			if(!$this->getPlayer()->hasPermission("blocksniper.shape." . strtolower(str_replace(" ", "", $shape)))) {
-				unset($shapes[$key]);
-			}
-		}
-		$types = BaseType::getTypes();
-		foreach($types as $key => $type) {
-			if(!$this->getPlayer()->hasPermission("blocksniper.type." . strtolower(str_replace(" ", "", $type)))) {
-				unset($types[$key]);
-			}
-		}
+		$shapes = $this->processShapes();
+		$types = $this->processTypes();
 		$d = $this->preset->getData();
 		$shapeKey = array_search($d[2], $shapes);
 		$typeKey = array_search($d[3], $types);
+
 		$this->data = [
 			"type" => "custom_form",
 			"title" => "Preset Edit Menu",
