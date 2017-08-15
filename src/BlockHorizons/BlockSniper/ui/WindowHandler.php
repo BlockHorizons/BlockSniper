@@ -24,8 +24,8 @@ class WindowHandler {
 	const WINDOW_PRESET_MENU = 2;
 	const WINDOW_CONFIGURATION_MENU = 3;
 	const WINDOW_PRESET_CREATION_MENU = 4;
-	const WINDOW_PRESET_SELECTION_MENU = 5;
-	const WINDOW_PRESET_DELETION_MENU = 6;
+	const WINDOW_PRESET_DELETION_MENU = 5;
+	const WINDOW_PRESET_SELECTION_MENU = 6;
 	const WINDOW_PRESET_LIST_MENU = 7;
 	const WINDOW_PRESET_EDIT_MENU = 8;
 
@@ -36,8 +36,8 @@ class WindowHandler {
 		PresetMenuWindow::class,
 		ConfigurationMenuWindow::class,
 		PresetCreationWindow::class,
-		PresetSelectionWindow::class,
 		PresetDeletionWindow::class,
+		PresetSelectionWindow::class,
 		PresetListWindow::class,
 		PresetEditWindow::class
 	];

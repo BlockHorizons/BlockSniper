@@ -80,14 +80,14 @@ class PresetCreationWindow extends Window {
 				[
 					"type" => "input",
 					"text" => "Brush Blocks",
-					"placeholder" => "stone,stone_brick =>1,2",
-					"default" => "grass,98 =>2"
+					"placeholder" => "stone,stone_brick:1,2",
+					"default" => "grass,98:2"
 				],
 				[
 					"type" => "input",
 					"text" => "Obsolete Blocks",
-					"placeholder" => "stone,stone_brick =>1,2",
-					"default" => "grass,98 =>2"
+					"placeholder" => "stone,stone_brick:1,2",
+					"default" => "grass,98:2"
 				],
 				[
 					"type" => "input",

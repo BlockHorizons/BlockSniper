@@ -14,6 +14,9 @@ class PresetEditWindow extends Window {
 	private $preset = null;
 
 	public function process() {
+		if($this->preset === null) {
+			return;
+		}
 		$shapes = BaseShape::getShapes();
 		foreach($shapes as $key => $shape) {
 			if(!$this->getPlayer()->hasPermission("blocksniper.shape." . strtolower(str_replace(" ", "", $shape)))) {
@@ -31,7 +34,7 @@ class PresetEditWindow extends Window {
 		$typeKey = array_search($d[3], $types);
 		$this->data = [
 			"type" => "custom_form",
-			"title" => "Preset Creation Menu",
+			"title" => "Preset Edit Menu",
 			"content" => [
 				[
 					"type" => "input",

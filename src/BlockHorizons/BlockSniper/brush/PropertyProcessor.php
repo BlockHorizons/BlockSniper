@@ -47,7 +47,7 @@ class PropertyProcessor {
 		$brush = BrushManager::get($this->player);
 		switch($valueType) {
 			case 0:
-				$brush->setSize($value);
+				$brush->setSize((int) $value);
 				$action = Change::ACTION_CHANGE_SIZE;
 				break;
 
