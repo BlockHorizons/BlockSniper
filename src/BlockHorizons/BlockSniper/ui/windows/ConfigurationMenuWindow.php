@@ -8,8 +8,6 @@ use BlockHorizons\BlockSniper\Loader;
 
 class ConfigurationMenuWindow extends Window {
 
-	const ID = 3;
-
 	public function process() {
 		$s = $this->getLoader()->getSettings();
 		$key = array_search($s->getLanguage(), Loader::getAvailableLanguages());

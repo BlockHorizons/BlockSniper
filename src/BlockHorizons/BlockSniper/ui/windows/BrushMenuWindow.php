@@ -9,8 +9,6 @@ use pocketmine\level\generator\biome\Biome;
 
 class BrushMenuWindow extends Window {
 
-	const ID = 1;
-
 	public function process() {
 		$v = BrushManager::get($this->getPlayer());
 		$this->data = [
@@ -69,7 +67,7 @@ class BrushMenuWindow extends Window {
 				[
 					"type" => "input",
 					"text" => "Obsolete Blocks",
-					"placeholder" => "stone,stone_brick =>1,2",
+					"placeholder" => "stone,stone_brick:1,2",
 					"default" => $this->processBlocks($v->getObsolete()),
 				],
 				[

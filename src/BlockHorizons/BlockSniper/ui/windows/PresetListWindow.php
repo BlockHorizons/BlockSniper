@@ -7,14 +7,13 @@ namespace BlockHorizons\BlockSniper\ui\windows;
 class PresetListWindow extends Window {
 
 	public function process() {
-		$presets = $this->getLoader()->getPresetManager()->getAllPresets();
 		$this->data = [
 			"type" => "form",
 			"title" => "Preset List Menu",
 			"content" => "Select a preset to view/edit.",
 			"buttons" => []
 		];
-		foreach($presets as $key => $name) {
+		foreach($this->getLoader()->getPresetManager()->getAllPresets() as $key => $name) {
 			$this->data["buttons"][$key] = [
 				"text" => $name,
 				"image" => [

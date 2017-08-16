@@ -6,8 +6,6 @@ namespace BlockHorizons\BlockSniper\ui\windows;
 
 class PresetMenuWindow extends Window {
 
-	const ID = 2;
-
 	public function process() {
 		$this->data = [
 			"type" => "form",

@@ -66,7 +66,7 @@ class BrushManager {
 		if(isset(self::$brush[$player->getName()])) {
 			return false;
 		}
-		self::$brush[$player->getName()] = new Brush($player->getName(), $this->getLoader());
+		self::$brush[$player->getName()] = new Brush($player->getName());
 		return true;
 	}
 

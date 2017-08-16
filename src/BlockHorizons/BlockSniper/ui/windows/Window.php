@@ -11,8 +11,6 @@ use pocketmine\Player;
 
 abstract class Window {
 
-	const ID = -1;
-	
 	/** @var Loader */
 	private $loader = null;
 	/** @var Player */

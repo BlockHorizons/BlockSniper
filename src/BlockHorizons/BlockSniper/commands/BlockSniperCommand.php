@@ -5,13 +5,17 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\commands;
 
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\ui\WindowHandler;
 use pocketmine\command\CommandSender;
+use pocketmine\network\mcpe\protocol\ModalFormRequestPacket;
+use pocketmine\Player;
+use pocketmine\utils\TextFormat;
 use pocketmine\utils\TextFormat as TF;
 
 class BlockSniperCommand extends BaseCommand {
 
 	public function __construct(Loader $loader) {
-		parent::__construct($loader, "blocksniper", "Get information or change things related to BlockSniper", "/blocksniper [language|reload] [lang]", ["bs"]);
+		parent::__construct($loader, "blocksniper", "Get information or change things related to BlockSniper", "/blocksniper [menu|reload]", ["bs"]);
 	}
 
 	public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
@@ -32,6 +36,21 @@ class BlockSniperCommand extends BaseCommand {
 			case "reload":
 				$sender->sendMessage(TF::GREEN . "Reloading...");
 				$this->getLoader()->reload();
+				return true;
+
+			case "menu":
+			case "window":
+				if(!$sender instanceof Player) {
+					$sender->sendMessage(TextFormat::RED . "[Warning] This command can only be used in-game.");
+					return true;
+				}
+				$this->getLoader()->getBrushManager()->createBrush($sender);
+
+				$windowHandler = new WindowHandler();
+				$packet = new ModalFormRequestPacket();
+				$packet->formId = $windowHandler->getWindowIdFor(WindowHandler::WINDOW_MAIN_MENU);
+				$packet->formData = $windowHandler->getWindowJson(WindowHandler::WINDOW_MAIN_MENU, $this->getLoader(), $sender);
+				$sender->dataPacket($packet);
 				return true;
 
 			default:

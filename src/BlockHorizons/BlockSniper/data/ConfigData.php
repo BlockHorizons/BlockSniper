@@ -26,7 +26,7 @@ class ConfigData {
 	private $settings = [];
 	/** @var Loader */
 	private $loader = null;
-
+	/** @var array */
 	private $conversion = [
 		"Configuration-Version" => -1,
 		"Auto-Configuration-Update" => 0,

@@ -65,6 +65,8 @@ class BrushListener implements Listener {
 
 	/**
 	 * @param PlayerItemHeldEvent $event
+	 *
+	 * @return bool
 	 */
 	public function onItemHeld(PlayerItemHeldEvent $event): bool {
 		$player = $event->getPlayer();
@@ -77,8 +79,8 @@ class BrushListener implements Listener {
 
 				$windowHandler = new WindowHandler();
 				$packet = new ModalFormRequestPacket();
-				$packet->formId = $windowHandler->getWindowIdFor(WindowHandler::WINDOW_MAIN_MENU);
-				$packet->formData = $windowHandler->getWindowJson(WindowHandler::WINDOW_MAIN_MENU, $this->getLoader(), $player);
+				$packet->formId = $windowHandler->getWindowIdFor(WindowHandler::WINDOW_BRUSH_MENU);
+				$packet->formData = $windowHandler->getWindowJson(WindowHandler::WINDOW_BRUSH_MENU, $this->getLoader(), $player);
 				$player->dataPacket($packet);
 				return true;
 			}

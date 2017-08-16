@@ -6,8 +6,6 @@ namespace BlockHorizons\BlockSniper\ui\windows;
 
 class PresetCreationWindow extends Window {
 
-	const ID = 4;
-
 	public function process() {
 		$this->data = [
 			"type" => "custom_form",

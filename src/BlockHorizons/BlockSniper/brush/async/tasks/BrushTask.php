@@ -50,7 +50,7 @@ class BrushTask extends AsyncBlockSniperTask {
 				$blocks[] = $block;
 				$processedBlocks++;
 			}
-			if(++$i === (int) ($shape->getApproximateProcessedBlocks() / 100)) {
+			if(++$i === (int) ($shape->getApproximateProcessedBlocks() / 100)) { // This is messed up with hollow shapes. Got to get a fix for that.
 				$this->publishProgress(round($processedBlocks / $shape->getApproximateProcessedBlocks() * 100) . "%");
 				$i = 0;
 			}

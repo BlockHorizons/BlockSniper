@@ -62,7 +62,7 @@ class WindowHandler {
 	 */
 	public function getWindow(int $windowId, Loader $loader, Player $player): Window {
 		if(!isset($this->types[$windowId])) {
-			throw new \OutOfBoundsException("Tried to get window json of non-existing window.");
+			throw new \OutOfBoundsException("Tried to get window of non-existing window ID.");
 		}
 		return new $this->types[$windowId]($loader, $player);
 	}

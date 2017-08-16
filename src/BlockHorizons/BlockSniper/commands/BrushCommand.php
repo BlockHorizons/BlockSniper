@@ -13,7 +13,7 @@ use pocketmine\Player;
 class BrushCommand extends BaseCommand {
 
 	public function __construct(Loader $loader) {
-		parent::__construct($loader, "brush", "Change the properties of the brush", "/brush <parameter> <args>", ["b"]);
+		parent::__construct($loader, "brush", "Change the properties of the brush", "/brush", ["b"]);
 	}
 
 	public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
