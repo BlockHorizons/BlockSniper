@@ -14,12 +14,12 @@ abstract class AsyncBlockSniperTask extends AsyncTask {
 	const TYPE_PASTE = 3;
 
 	/** @var int */
-	protected $type = self::TYPE_BRUSH;
+	protected $taskType = self::TYPE_BRUSH;
 
 	/**
 	 * @return int
 	 */
 	public function getType(): int {
-		return $this->type;
+		return $this->taskType;
 	}
 }

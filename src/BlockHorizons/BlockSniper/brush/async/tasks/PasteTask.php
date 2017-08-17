@@ -4,73 +4,76 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\brush\async\tasks;
 
-use BlockHorizons\BlockSniper\brush\BaseShape;
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\undo\Undo;
+use libschematic\Schematic;
 use pocketmine\block\Block;
 use pocketmine\level\format\Chunk;
 use pocketmine\level\Level;
+use pocketmine\math\Vector3;
 use pocketmine\Server;
 
-class BrushTask extends AsyncBlockSniperTask {
+class PasteTask extends AsyncBlockSniperTask {
 
 	/** @var int */
-	protected $taskType = self::TYPE_BRUSH;
-	/** @var BaseShape */
-	private $shape = null;
+	protected $taskType = self::TYPE_PASTE;
 	/** @var string */
+	private $file = "";
+	/** @var Vector3 */
+	private $center = null;
+	/** @var string[] */
 	private $chunks = "";
-	/** @var BaseType */
-	private $type = null;
+	/** @var string */
+	private $playerName = "";
 
-	public function __construct(BaseShape $shape, BaseType $type, array $chunks) {
-		$this->shape = $shape;
-		$this->type = $type;
+	public function __construct(string $file, Vector3 $center, array $chunks, string $playerName) {
+		$this->file = $file;
+		$this->center = $center;
 		$this->chunks = serialize($chunks);
+		$this->playerName = $playerName;
 	}
 
 	public function onRun() {
 		$chunks = unserialize($this->chunks);
+		$file = $this->file;
+		$center = $this->center;
+		$schematic = new Schematic($file);
+		$schematic->decode();
+		$schematic->fixBlockIds();
+
 		$processedBlocks = 0;
-		$type = $this->type;
-		$shape = $this->shape;
 		foreach($chunks as $hash => $data) {
 			$chunks[$hash] = Chunk::fastDeserialize($data);
 		}
 		/** @var Chunk[] $chunks */
-		$vectorsInside = $shape->getBlocksInside(true);
-		$blocks = [];
+		/** @var Block[] $blocksInside */
+		$blocksInside = $schematic->getBlocks();
+		$undoBlocks = [];
 		$manager = BaseType::establishChunkManager($chunks);
 		$i = 0;
-		foreach($vectorsInside as $vector3) {
+		foreach($blocksInside as $block) {
+			$vector3 = $block->add($center);
 			$index = Level::chunkHash($vector3->x >> 4, $vector3->z >> 4);
 			if(isset($chunks[$index])) {
-				$pos = [$vector3->x & 0x0f, $vector3->y, $vector3->z & 0x0f];
-				$block = Block::get($chunks[$index]->getBlockId($pos[0], $pos[1], $pos[2]), $chunks[$index]->getBlockData($pos[0], $pos[1], $pos[2]));
-				$block->setComponents($vector3->x, $vector3->y, $vector3->z);
-				$blocks[] = $block;
+				$undoBlock = Block::get($manager->getBlockIdAt($vector3->x, $vector3->y, $vector3->z), $manager->getBlockDataAt($vector3->x, $vector3->y, $vector3->z));
+				$undoBlock->setComponents($vector3->x, $vector3->y, $vector3->z);
+				$undoBlocks[] = $undoBlock;
+
+				$manager->setBlockIdAt($vector3->x, $vector3->y, $vector3->z, $block->getId());
+				$manager->setBlockDataAt($vector3->x, $vector3->y, $vector3->z, $block->getDamage());
+
 				$processedBlocks++;
 			}
-			if(++$i === (int) ($shape->getApproximateProcessedBlocks() / 100)) { // This is messed up with hollow shapes. Got to find a fix for that.
-				$this->publishProgress(ceil($processedBlocks / $shape->getApproximateProcessedBlocks() * 100) . "%");
+			if(++$i === (int) ($schematic->getLength() * $schematic->getWidth() * $schematic->getHeight() / 100)) {
+				$this->publishProgress(ceil($processedBlocks / $schematic->getLength() * $schematic->getWidth() * $schematic->getHeight() * 100) . "%");
 				$i = 0;
 			}
 		}
-		$type->setBlocksInside($blocks);
-		$type->setAsynchronous();
-		$type->setChunkManager($manager);
-		$undoBlocks = $type->fillShape();
-
-		$serializedChunks = $chunks;
-		foreach($serializedChunks as &$chunk) {
-			$chunk = $chunk->fastSerialize();
-		}
-		unset($chunk);
 
 		$this->setResult([
-			"undoBlocks" => $undoBlocks,
-			"chunks" => $serializedChunks
+			"undoBlocks" => serialize($undoBlocks),
+			"chunks" => serialize($chunks)
 		]);
 	}
 
@@ -88,17 +91,17 @@ class BrushTask extends AsyncBlockSniperTask {
 		if(!$loader->isEnabled()) {
 			return false;
 		}
-		if(!($player = $this->shape->getPlayer($server))) {
+		if(!($player = $server->getPlayer($this->playerName))) {
 			return false;
 		}
 		$result = $this->getResult();
-		$chunks = $result["chunks"];
+		$chunks = unserialize($result["chunks"]);
 		foreach($chunks as &$chunk) {
 			$chunk = Chunk::fastDeserialize($chunk);
 		}
 		unset($chunk);
-		$undoBlocks = $result["undoBlocks"];
-		$level = $server->getLevel($this->shape->getLevelId());
+		$undoBlocks = unserialize($result["undoBlocks"]);
+		$level = $player->getLevel();
 		if($level instanceof Level) {
 			foreach($chunks as $hash => $chunk) {
 				$x = $z = 0;

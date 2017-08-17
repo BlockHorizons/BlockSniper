@@ -34,8 +34,8 @@ class RevertTask extends AsyncBlockSniperTask {
 		$detached = $revert->getDetached();
 		$revert->restore($this);
 		$this->setResult([
-			"chunks" => $chunks,
-			"revert" => $detached
+			"chunks" => serialize($chunks),
+			"revert" => serialize($detached)
 		]);
 	}
 
@@ -55,12 +55,12 @@ class RevertTask extends AsyncBlockSniperTask {
 		}
 		$result = $this->getResult();
 		/** @var Revert $revert */
-		$revert = $result["revert"];
-		/** @var Chunk[] $chunks */
-		$chunks = $result["chunks"];
+		$revert = unserialize($result["revert"]);
 		if(!($player = $server->getPlayer($revert->getPlayerName()))) {
 			return false;
 		}
+		/** @var Chunk[] $chunks */
+		$chunks = unserialize($result["chunks"]);
 		$levelId = $player->getLevel()->getId();
 		$level = $server->getLevel($levelId);
 		if($level instanceof Level) {

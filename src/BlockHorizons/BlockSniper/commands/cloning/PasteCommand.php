@@ -6,11 +6,8 @@ namespace BlockHorizons\BlockSniper\commands\cloning;
 
 use BlockHorizons\BlockSniper\commands\BaseCommand;
 use BlockHorizons\BlockSniper\Loader;
-use BlockHorizons\BlockSniper\undo\Undo;
 use libschematic\Schematic;
-use pocketmine\block\Block;
 use pocketmine\command\CommandSender;
-use pocketmine\item\Item;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
 
@@ -55,18 +52,17 @@ class PasteCommand extends BaseCommand {
 				}
 				$schematic = new Schematic($file);
 				$schematic->decode();
-				$schematic->fixBlockIds();
 
-				$undoBlocks = [];
-
-				/** @var Block $block */
-				foreach($schematic->getBlocks() as $block) {
-					if($block->getId() !== Item::AIR) {
-						$undoBlocks[] = $center->getLevel()->getBlock($target = $center->add($block->x - floor($schematic->getWidth() / 2), $block->y, $block->z - floor($schematic->getLength() / 2)));
-						$center->getLevel()->setBlock($target, $block, false, false);
+				$width = $schematic->getWidth();
+				$length = $schematic->getLength();
+				$touchedChunks = [];
+				for($x = $center->x - $width / 2; $x <= $center->x + $width / 2 + 16; $x += 16) {
+					for($z = $center->z - $length / 2; $z <= $center->z + $length / 2 + 16; $z += 16) {
+						$chunk = $sender->getLevel()->getChunk($x >> 4, $z >> 4, true);
+						$touchedChunks[] = $chunk->fastSerialize();
 					}
 				}
-				$this->getLoader()->getRevertStorer()->saveRevert(new Undo($undoBlocks), $sender);
+				$this->getLoader()->getCloneStorer()->pasteSchematic($file, $sender->getTargetBlock(100)->asVector3(), $touchedChunks, $sender);
 				break;
 		}
 		$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.paste"));

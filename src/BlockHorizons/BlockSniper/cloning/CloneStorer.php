@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\cloning;
 
+use BlockHorizons\BlockSniper\brush\async\tasks\PasteTask;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\undo\Undo;
 use pocketmine\block\Block;
@@ -166,10 +167,27 @@ class CloneStorer {
 		return true;
 	}
 
+	/**
+	 * @param string $templateName
+	 *
+	 * @return bool
+	 *
+	 * @deprecated
+	 */
 	public function templateExists(string $templateName): bool {
 		if(is_file($this->getLoader()->getDataFolder() . "templates/" . $templateName . ".yml")) {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * @param string  $file
+	 * @param Vector3 $center
+	 * @param array   $chunks
+	 * @param Player  $player
+	 */
+	public function pasteSchematic(string $file, Vector3 $center, array $chunks, Player $player) {
+		$this->getLoader()->getServer()->getScheduler()->scheduleAsyncTask(new PasteTask($file, $center, $chunks, $player->getName()));
 	}
 }
