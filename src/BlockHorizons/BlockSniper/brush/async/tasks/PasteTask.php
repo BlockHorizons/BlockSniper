@@ -66,14 +66,19 @@ class PasteTask extends AsyncBlockSniperTask {
 				$processedBlocks++;
 			}
 			if(++$i === (int) ($schematic->getLength() * $schematic->getWidth() * $schematic->getHeight() / 100)) {
-				$this->publishProgress(ceil($processedBlocks / $schematic->getLength() * $schematic->getWidth() * $schematic->getHeight() * 100) . "%");
+				$this->publishProgress(ceil($processedBlocks / ($schematic->getLength() * $schematic->getWidth() * $schematic->getHeight()) * 100) . "%");
 				$i = 0;
 			}
 		}
+		$serializedChunks = $chunks;
+		foreach($serializedChunks as &$chunk) {
+			$chunk = $chunk->fastSerialize();
+		}
+		unset($chunk);
 
 		$this->setResult([
 			"undoBlocks" => serialize($undoBlocks),
-			"chunks" => serialize($chunks)
+			"chunks" => serialize($serializedChunks)
 		]);
 	}
 
