@@ -114,7 +114,7 @@ class PasteTask extends AsyncBlockSniperTask {
 				$level->setChunk($x, $z, $chunk);
 			}
 		}
-		$loader->getRevertStorer()->saveRevert((new Undo($undoBlocks))->setPlayerName($player->getName())->setTouchedChunks($chunks)->setAsynchronous(), $player);
+		$loader->getRevertStorer()->saveRevert((new Undo($undoBlocks))->setPlayerName($player->getName())->setTouchedChunks($chunks), $player);
 		return true;
 	}
 

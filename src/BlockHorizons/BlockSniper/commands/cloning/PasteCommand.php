@@ -8,6 +8,7 @@ use BlockHorizons\BlockSniper\commands\BaseCommand;
 use BlockHorizons\BlockSniper\Loader;
 use libschematic\Schematic;
 use pocketmine\command\CommandSender;
+use pocketmine\level\Level;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
 
@@ -59,7 +60,7 @@ class PasteCommand extends BaseCommand {
 				for($x = $center->x - $width / 2; $x <= $center->x + $width / 2 + 16; $x += 16) {
 					for($z = $center->z - $length / 2; $z <= $center->z + $length / 2 + 16; $z += 16) {
 						$chunk = $sender->getLevel()->getChunk($x >> 4, $z >> 4, true);
-						$touchedChunks[] = $chunk->fastSerialize();
+						$touchedChunks[Level::chunkHash($x >> 4, $z >> 4)] = $chunk->fastSerialize();
 					}
 				}
 				$this->getLoader()->getCloneStorer()->pasteSchematic($file, $sender->getTargetBlock(100)->asVector3(), $touchedChunks, $sender);

@@ -38,7 +38,7 @@ class CloneCommand extends BaseCommand {
 			default:
 			case "copy":
 				$shape = BrushManager::get($sender)->getShape(true, BrushManager::get($sender)->getYOffset());
-				$cloneType = new CopyType($this->getLoader()->getCloneStorer(), $sender, $this->getSettings()->saveAirInCopy(), $center, $shape->getBlocksInside());
+				$cloneType = new CopyType($this->getLoader()->getCloneStorer(), $sender, false, $center, $shape->getBlocksInside());
 				$cloneType->saveClone();
 				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.clone"));
 				return true;
@@ -49,7 +49,7 @@ class CloneCommand extends BaseCommand {
 					return true;
 				}
 				$shape = BrushManager::get($sender)->getShape(true, BrushManager::get($sender)->getYOffset());
-				$cloneType = new TemplateType($this->getLoader()->getCloneStorer(), $sender, $this->getSettings()->saveAirInCopy(), $center, $shape->getBlocksInside(), $args[1]);
+				$cloneType = new TemplateType($this->getLoader()->getCloneStorer(), $sender, false, $center, $shape->getBlocksInside(), $args[1]);
 				$cloneType->saveClone();
 				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.clone"));
 				return true;
@@ -62,7 +62,6 @@ class CloneCommand extends BaseCommand {
 					return true;
 				}
 				$shape = BrushManager::get($sender)->getShape(true, BrushManager::get($sender)->getYOffset());
-				$size = BrushManager::get($sender)->getSize();
 				$schematic = new Schematic();
 				$schematic
 					->setBlocks($shape->getBlocksInside())
