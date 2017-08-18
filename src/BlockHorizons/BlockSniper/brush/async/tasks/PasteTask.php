@@ -53,7 +53,7 @@ class PasteTask extends AsyncBlockSniperTask {
 		$manager = BaseType::establishChunkManager($chunks);
 		$i = 0;
 		foreach($blocksInside as $block) {
-			$vector3 = $block->add($center);
+			$vector3 = $center->add($block->x - floor($schematic->getWidth() / 2), $block->y, $block->z - floor($schematic->getLength() / 2));
 			$index = Level::chunkHash($vector3->x >> 4, $vector3->z >> 4);
 			if(isset($chunks[$index])) {
 				$undoBlock = Block::get($manager->getBlockIdAt($vector3->x, $vector3->y, $vector3->z), $manager->getBlockDataAt($vector3->x, $vector3->y, $vector3->z));
