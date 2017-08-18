@@ -14,6 +14,7 @@ use BlockHorizons\BlockSniper\commands\CommandOverloads;
 use BlockHorizons\BlockSniper\commands\RedoCommand;
 use BlockHorizons\BlockSniper\commands\UndoCommand;
 use BlockHorizons\BlockSniper\data\ConfigData;
+use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\data\TranslationData;
 use BlockHorizons\BlockSniper\listeners\BrushListener;
 use BlockHorizons\BlockSniper\listeners\UserInterfaceListener;
@@ -25,7 +26,7 @@ use pocketmine\utils\TextFormat as TF;
 
 class Loader extends PluginBase {
 
-	const VERSION = "1.5.0";
+	const VERSION = "2.0.0";
 	const API_TARGET = "3.0.0-ALPHA7";
 	const CONFIGURATION_VERSION = "2.4.0";
 
@@ -40,7 +41,7 @@ class Loader extends PluginBase {
 		"zh_tw"
 	];
 	/** @var TranslationData */
-	public $language = "";
+	public $language = null;
 
 	/** @var RevertStorer */
 	private $revertStorer = null;
@@ -95,18 +96,18 @@ class Loader extends PluginBase {
 		}
 
 		if(!$this->language->collectTranslations()) {
-			$this->getLogger()->info(TF::AQUA . "[BlockSniper] No valid language selected, English has been auto-selected.");
-			$this->getLogger()->info(TF::AQUA . "Please setup a language by using /blocksniper language <lang>.");
+			$this->getLogger()->info(TF::AQUA . (new Translation(Translation::LOG_LANGUAGE_AUTO_SELECTED))->getMessage());
+			$this->getLogger()->info(TF::AQUA . (new Translation(Translation::LOG_LANGUAGE_USAGE))->getMessage());
 		} else {
-			$this->getLogger()->info(TF::AQUA . "[BlockSniper] Language selected: " . TF::GREEN . $this->getSettings()->getLanguage());
+			$this->getLogger()->info(TF::AQUA . (new Translation(Translation::LOG_LANGUAGE_SELECTED))->getMessage() . TF::GREEN . $this->getSettings()->getLanguage());
 		}
 	}
 
 	public function reload() {
-		$this->getLogger()->info(TF::AQUA . "[BlockSniper] Reloading...");
+		$this->getLogger()->info(TF::AQUA . (new Translation(Translation::LOG_RELOAD_START))->getMessage());
 		$this->onDisable();
 		$this->reloadAll();
-		$this->getLogger()->info(TF::AQUA . "[BlockSniper] Reload finished.");
+		$this->getLogger()->info(TF::AQUA . (new Translation(Translation::LOG_RELOAD_FINISH))->getMessage());
 	}
 
 	/**
@@ -168,15 +169,10 @@ class Loader extends PluginBase {
 	}
 
 	/**
-	 * @param string $message
-	 *
-	 * @return string
+	 * @return TranslationData
 	 */
-	public function getTranslation(string $message): string {
-		if($this->language instanceof TranslationData) {
-			return (string) $this->language->get($message);
-		}
-		return "";
+	public function getTranslationData(): TranslationData {
+		return $this->language;
 	}
 
 	/**

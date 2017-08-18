@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\ui\windows;
 
+use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
 
 class ConfigurationMenuWindow extends Window {
@@ -13,22 +14,22 @@ class ConfigurationMenuWindow extends Window {
 		$key = array_search($s->getLanguage(), Loader::getAvailableLanguages());
 		$this->data = [
 			"type" => "custom_form",
-			"title" => "BlockSniper Configuration",
+			"title" => (new Translation(Translation::UI_CONFIGURATION_MENU_TITLE))->getMessage(),
 			"content" => [
 				[
 					"type" => "toggle",
-					"text" => "Automatically update the configuration file when a new version is found.",
+					"text" => (new Translation(Translation::UI_CONFIGURATION_MENU_AUTO_UPDATE))->getMessage(),
 					"default" => $s->updatesAutomatically()
 				],
 				[
 					"type" => "dropdown",
-					"text" => "Language used for sending BlockSniper related messages.",
+					"text" => (new Translation(Translation::UI_CONFIGURATION_MENU_LANGUAGE))->getMessage(),
 					"default" => ($key === false ? 0 : $key),
 					"options" => Loader::getAvailableLanguages()
 				],
 				[
 					"type" => "slider",
-					"text" => "Item ID of the item that is used to brush",
+					"text" => (new Translation(Translation::UI_CONFIGURATION_MENU_BRUSH_ITEM))->getMessage(),
 					"min" => 0,
 					"step" => 1,
 					"max" => 511,
@@ -36,7 +37,7 @@ class ConfigurationMenuWindow extends Window {
 				],
 				[
 					"type" => "slider",
-					"text" => "Maximum brush size limit",
+					"text" => (new Translation(Translation::UI_CONFIGURATION_MENU_MAX_BRUSH_SIZE))->getMessage(),
 					"min" => 0,
 					"step" => 1,
 					"max" => 60,
@@ -44,7 +45,7 @@ class ConfigurationMenuWindow extends Window {
 				],
 				[
 					"type" => "slider",
-					"text" => "Asynchronous brush size limit. If brush size is bigger than this, operations get executed asynchronously",
+					"text" => (new Translation(Translation::UI_CONFIGURATION_MENU_MIN_ASYNC_SIZE))->getMessage(),
 					"min" => 10,
 					"step" => 1,
 					"max" => 25,
@@ -52,7 +53,7 @@ class ConfigurationMenuWindow extends Window {
 				],
 				[
 					"type" => "slider",
-					"text" => "Maximum amount of Undo/Redo stores to save. Older ones get cleaned automatically",
+					"text" => (new Translation(Translation::UI_CONFIGURATION_MENU_MAX_REVERTS))->getMessage(),
 					"min" => 0,
 					"step" => 1,
 					"max" => 40,
@@ -60,27 +61,27 @@ class ConfigurationMenuWindow extends Window {
 				],
 				[
 					"type" => "toggle",
-					"text" => "Automatically reset decrementing brush to the initial starting size.",
+					"text" => (new Translation(Translation::UI_CONFIGURATION_MENU_RESET_DECREMENT_BRUSH))->getMessage(),
 					"default" => $s->resetDecrementBrush()
 				],
 				[
 					"type" => "toggle",
-					"text" => "Save brush properties of players on server restart.",
+					"text" => (new Translation(Translation::UI_CONFIGURATION_MENU_SAVE_BRUSH))->getMessage(),
 					"default" => $s->saveBrushProperties()
 				],
 				[
 					"type" => "toggle",
-					"text" => "Drop plant items destroyed/blown away by the LeafBlower type.",
+					"text" => (new Translation(Translation::UI_CONFIGURATION_MENU_DROP_PLANTS))->getMessage(),
 					"default" => $s->dropLeafblowerPlants()
 				],
 				[
 					"type" => "toggle",
-					"text" => "Automatically open the GUI when switching hotbar slot to one containing the brush item.",
+					"text" => (new Translation(Translation::UI_CONFIGURATION_MENU_AUTO_GUI))->getMessage(),
 					"default" => $s->openGuiAutomatically()
 				],
 				[
 					"type" => "toggle",
-					"text" => "Turning this toggle will automatically reload the configuration when closing this window.",
+					"text" => (new Translation(Translation::UI_CONFIGURATION_MENU_AUTO_RELOAD))->getMessage(),
 					"default" => false
 				]
 			]

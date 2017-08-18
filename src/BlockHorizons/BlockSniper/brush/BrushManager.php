@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\brush;
 
+use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\events\BrushRecoverEvent;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\Player;
@@ -31,10 +32,10 @@ class BrushManager {
 						continue;
 					}
 					self::$brush[$playerName] = unserialize($brush);
-					$loader->getLogger()->debug(TF::GREEN . "Brush of player " . $playerName . " has been restored.");
+					$loader->getLogger()->debug(TF::GREEN . (new Translation(Translation::LOG_BRUSH_RESTORED, [$playerName]))->getMessage());
 				}
 			}
-			$loader->getLogger()->info(TF::GREEN . "All brushes have been restored.");
+			$loader->getLogger()->info(TF::GREEN . (new Translation(Translation::LOG_BRUSH_ALL_RESTORED))->getMessage());
 		}
 	}
 

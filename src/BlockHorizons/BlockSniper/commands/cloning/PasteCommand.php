@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\commands\cloning;
 
 use BlockHorizons\BlockSniper\commands\BaseCommand;
+use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
 use libschematic\Schematic;
 use pocketmine\command\CommandSender;
@@ -15,40 +16,44 @@ use pocketmine\utils\TextFormat as TF;
 class PasteCommand extends BaseCommand {
 
 	public function __construct(Loader $loader) {
-		parent::__construct($loader, "paste", "Paste the selected clone, template or schematic", "/paste <type> [name]", []);
+		parent::__construct($loader, "paste", (new Translation(Translation::COMMANDS_PASTE_DESCRIPTION))->getMessage(), "/paste <type> [name]", []);
 	}
 
 	public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
 		if(!$this->testPermission($sender)) {
 			$this->sendNoPermission($sender);
-			return true;
+			return false;
 		}
 
 		if(!$sender instanceof Player) {
 			$this->sendConsoleError($sender);
-			return true;
+			return false;
 		}
 
 		$center = $sender->getTargetBlock(100);
 		switch(strtolower($args[0])) {
 			default:
 			case "copy":
-				if($this->getLoader()->getCloneStorer()->copyStoreExists($sender)) {
-					$this->getLoader()->getCloneStorer()->pasteCopy($sender);
+				if(!$this->getLoader()->getCloneStorer()->copyStoreExists($sender)) {
+					$sender->sendMessage($this->getWarning() . (new Translation(Translation::COMMANDS_PASTE_COPY_NO_COPIES))->getMessage());
+					return false;
 				}
+				$this->getLoader()->getCloneStorer()->pasteCopy($sender);
+			$sender->sendMessage(TF::GREEN . (new Translation(Translation::COMMANDS_PASTE_COPY_SUCCESS))->getMessage());
 				break;
 
 			case "template":
 				if(!$this->getLoader()->getCloneStorer()->templateExists($args[1])) {
-					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.template-not-existing"));
-					return true;
+					$sender->sendMessage($this->getWarning() . (new Translation(Translation::COMMANDS_PASTE_TEMPLATE_NONEXISTENT, [$args[1]]))->getMessage());
+					return false;
 				}
 				$this->getLoader()->getCloneStorer()->pasteTemplate($args[1], $center, $sender);
+				$sender->sendMessage(TF::GREEN . (new Translation(Translation::COMMANDS_PASTE_TEMPLATE_SUCCESS, [$args[1]]))->getMessage());
 				break;
 
 			case "schematic":
 				if(!is_file($file = $this->getLoader()->getDataFolder() . "schematics/" . $args[1] . ".schematic")) {
-					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.template-not-existing"));
+					$sender->sendMessage($this->getWarning() . (new Translation(Translation::COMMANDS_PASTE_SCHEMATIC_NONEXISTENT, [$args[1]]))->getMessage());
 					return true;
 				}
 				$schematic = new Schematic($file);
@@ -64,9 +69,10 @@ class PasteCommand extends BaseCommand {
 					}
 				}
 				$this->getLoader()->getCloneStorer()->pasteSchematic($file, $sender->getTargetBlock(100)->asVector3(), $touchedChunks, $sender);
+				$sender->sendMessage(TF::GREEN . (new Translation(Translation::COMMANDS_PASTE_SCHEMATIC_SUCCESS, [$args[1]]))->getMessage());
 				break;
 		}
-		$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.paste"));
+
 		return true;
 	}
 }

@@ -8,8 +8,10 @@ use BlockHorizons\BlockSniper\Loader;
 
 class TranslationData {
 
+	/** @var array */
 	private $messages = [];
-	private $loader;
+	/** @var Loader */
+	private $loader = null;
 
 	public function __construct(Loader $loader) {
 		$this->loader = $loader;
@@ -22,64 +24,20 @@ class TranslationData {
 	 */
 	public function collectTranslations(): bool {
 		$languageSelected = false;
-		$language = [];
+		$language = "";
 		foreach(Loader::getAvailableLanguages() as $availableLanguage) {
 			if($this->getLoader()->getSettings()->getLanguage() === $availableLanguage) {
-				$this->getLoader()->saveResource("languages/" . $availableLanguage . ".yml");
-				$language = yaml_parse_file($this->getLoader()->getDataFolder() . "languages/" . $availableLanguage . ".yml");
+				$this->getLoader()->saveResource("languages/" . $availableLanguage . ".json");
+				$language = file_get_contents($this->getLoader()->getDataFolder() . "languages/" . $availableLanguage . ".json");
 				$languageSelected = true;
 				break;
 			}
 		}
 		if(!$languageSelected) {
-			$this->getLoader()->saveResource("languages/en.yml");
-			$language = yaml_parse_file($this->getLoader()->getDataFolder() . "languages/en.yml");
+			$this->getLoader()->saveResource("languages/en.json");
+			$language = file_get_contents($this->getLoader()->getDataFolder() . "languages/en.json");
 		}
-
-		// This is going to burn your eyes. Don't look at it for too long.
-		$this->messages = @[
-			"commands.errors.no-permission" => $language["commands"]["errors"]["no-permission"],
-			"commands.errors.console-use" => $language["commands"]["errors"]["console-use"],
-			"commands.errors.radius-not-numeric" => $language["commands"]["errors"]["radius-not-numeric"],
-			"commands.errors.radius-too-big" => $language["commands"]["errors"]["radius-too-big"],
-			"commands.errors.no-target-found" => $language["commands"]["errors"]["no-target-found"],
-			"commands.errors.no-valid-block" => $language["commands"]["errors"]["no-valid-block"],
-			"commands.errors.shape-not-found" => $language["commands"]["errors"]["shape-not-found"],
-			"commands.errors.no-modifications" => $language["commands"]["errors"]["no-modifications"],
-			"commands.errors.paste-not-found" => $language["commands"]["errors"]["paste-not-found"],
-			"commands.errors.clone-not-found" => $language["commands"]["errors"]["clone-not-found"],
-			"commands.errors.name-not-set" => $language["commands"]["errors"]["name-not-set"],
-			"commands.errors.template-not-existing" => $language["commands"]["errors"]["template-not-existing"],
-			"commands.errors.preset-already-exists" => $language["commands"]["errors"]["preset-already-exists"],
-			"commands.errors.preset-doesnt-exist" => $language["commands"]["errors"]["preset-doesnt-exist"],
-			"commands.errors.no-cancellable" => $language["commands"]["errors"]["no-cancellable"],
-
-			"commands.succeed.default" => $language["commands"]["succeed"]["default"],
-			"commands.succeed.undo" => $language["commands"]["succeed"]["undo"],
-			"commands.succeed.language" => $language["commands"]["succeed"]["language"],
-			"commands.succeed.paste" => $language["commands"]["succeed"]["paste"],
-			"commands.succeed.clone" => $language["commands"]["succeed"]["clone"],
-			"commands.succeed.brush.reset" => $language["commands"]["succeed"]["brush"]["reset"],
-			"commands.succeed.preset.name" => $language["commands"]["succeed"]["preset"]["name"],
-			"commands.succeed.preset.cancel" => $language["commands"]["succeed"]["preset"]["cancel"],
-			"commands.succeed.preset.canceled" => $language["commands"]["succeed"]["preset"]["canceled"],
-			"commands.succeed.cancel" => $language["commands"]["succeed"]["cancel"],
-
-			"brush.shape" => $language["brush"]["shape"],
-			"brush.type" => $language["brush"]["type"],
-			"brush.blocks" => $language["brush"]["blocks"],
-			"brush.size" => $language["brush"]["size"],
-			"brush.perfect" => $language["brush"]["perfect"],
-			"brush.obsolete" => $language["brush"]["obsolete"],
-			"brush.height" => $language["brush"]["height"],
-			"brush.gravity" => $language["brush"]["gravity"],
-			"brush.decrement" => $language["brush"]["decrement"],
-			"brush.biome" => $language["brush"]["biome"],
-			"brush.hollow" => $language["brush"]["hollow"],
-			"brush.preset" => $language["brush"]["preset"],
-			"brush.tree" => $language["brush"]["tree"],
-			"brush.yoffset" => $language["brush"]["yoffset"]
-		];
+		$this->messages = json_decode($language, true);
 		return $languageSelected;
 	}
 
@@ -91,14 +49,9 @@ class TranslationData {
 	}
 
 	/**
-	 * @param string $key
-	 *
-	 * @return mixed|null
+	 * @return array
 	 */
-	public function get(string $key) {
-		if(isset($this->messages[$key])) {
-			return $this->messages[$key];
-		}
-		return null;
+	public function getMessages(): array {
+		return $this->messages;
 	}
 }

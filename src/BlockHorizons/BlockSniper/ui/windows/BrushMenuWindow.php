@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\ui\windows;
 
 use BlockHorizons\BlockSniper\brush\BrushManager;
+use BlockHorizons\BlockSniper\data\Translation;
 use pocketmine\level\generator\biome\Biome;
 
 class BrushMenuWindow extends Window {
@@ -13,11 +14,11 @@ class BrushMenuWindow extends Window {
 		$v = BrushManager::get($this->getPlayer());
 		$this->data = [
 			"type" => "custom_form",
-			"title" => "Brush Menu",
+			"title" => (new Translation(Translation::UI_BRUSH_MENU_TITLE))->getMessage(),
 			"content" => [
 				[
 					"type" => "slider",
-					"text" => "Brush Size",
+					"text" => (new Translation(Translation::UI_BRUSH_MENU_SIZE))->getMessage(),
 					"min" => 0,
 					"max" => $this->getLoader()->getSettings()->getMaxRadius(),
 					"step" => 1,
@@ -25,29 +26,29 @@ class BrushMenuWindow extends Window {
 				],
 				[
 					"type" => "dropdown",
-					"text" => "Brush Shape",
+					"text" => (new Translation(Translation::UI_BRUSH_MENU_SHAPE))->getMessage(),
 					"options" => $this->processShapes(),
 					"default" => $v->getShape()->getId()
 				],
 				[
 					"type" => "dropdown",
-					"text" => "Brush Type",
+					"text" => (new Translation(Translation::UI_BRUSH_MENU_TYPE))->getMessage(),
 					"options" => $this->processTypes(),
 					"default" => $v->getType()->getId()
 				],
 				[
 					"type" => "toggle",
-					"text" => "Hollow Brush",
+					"text" => (new Translation(Translation::UI_BRUSH_MENU_HOLLOW))->getMessage(),
 					"default" => $v->getHollow()
 				],
 				[
 					"type" => "toggle",
-					"text" => "Brush Decrement",
+					"text" => (new Translation(Translation::UI_BRUSH_MENU_DECREMENT))->getMessage(),
 					"default" => $v->isDecrementing()
 				],
 				[
 					"type" => "slider",
-					"text" => "Brush Height",
+					"text" => (new Translation(Translation::UI_BRUSH_MENU_HEIGHT))->getMessage(),
 					"min" => 0,
 					"max" => $this->getLoader()->getSettings()->getMaxRadius(),
 					"default" => $v->getHeight(),
@@ -55,30 +56,30 @@ class BrushMenuWindow extends Window {
 				],
 				[
 					"type" => "toggle",
-					"text" => "Brush Shape Perfection",
+					"text" => (new Translation(Translation::UI_BRUSH_MENU_PERFECT))->getMessage(),
 					"default" => $v->getPerfect()
 				],
 				[
 					"type" => "input",
-					"text" => "Brush Blocks",
+					"text" => (new Translation(Translation::UI_BRUSH_MENU_BLOCKS))->getMessage(),
 					"placeholder" => "stone,stone_brick:1,2",
 					"default" => $this->processBlocks($v->getBlocks()),
 				],
 				[
 					"type" => "input",
-					"text" => "Obsolete Blocks",
+					"text" => (new Translation(Translation::UI_BRUSH_MENU_OBSOLETE))->getMessage(),
 					"placeholder" => "stone,stone_brick:1,2",
 					"default" => $this->processBlocks($v->getObsolete()),
 				],
 				[
 					"type" => "input",
-					"text" => "Brush Biome",
+					"text" => (new Translation(Translation::UI_BRUSH_MENU_BIOME))->getMessage(),
 					"placeholder" => "plains",
 					"default" => strtolower(Biome::getBiome($v->getBiomeId())->getName())
 				],
 				[
 					"type" => "input",
-					"text" => "Brush Tree",
+					"text" => (new Translation(Translation::UI_BRUSH_MENU_TREE))->getMessage(),
 					"placeholder" => "oak",
 					"default" => (string) $v->getTreeType()
 				]

@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\ui\windows;
 
+use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\presets\Preset;
 
 class PresetEditWindow extends Window {
@@ -23,17 +24,17 @@ class PresetEditWindow extends Window {
 
 		$this->data = [
 			"type" => "custom_form",
-			"title" => "Preset Edit Menu",
+			"title" => (new Translation(Translation::UI_PRESET_EDIT_TITLE))->getMessage(),
 			"content" => [
 				[
 					"type" => "input",
-					"text" => "Preset Name",
+					"text" => (new Translation(Translation::UI_PRESET_EDIT_NAME))->getMessage(),
 					"default" => $d[0],
-					"placeholder" => "Preset Name"
+					"placeholder" => (new Translation(Translation::UI_PRESET_EDIT_NAME))->getMessage()
 				],
 				[
 					"type" => "slider",
-					"text" => "Brush Size",
+					"text" => (new Translation(Translation::UI_PRESET_EDIT_SIZE))->getMessage(),
 					"min" => 0,
 					"max" => $this->getLoader()->getSettings()->getMaxRadius(),
 					"step" => 1,
@@ -41,29 +42,29 @@ class PresetEditWindow extends Window {
 				],
 				[
 					"type" => "dropdown",
-					"text" => "Brush Shape",
+					"text" => (new Translation(Translation::UI_PRESET_EDIT_SHAPE))->getMessage(),
 					"default" => ($shapeKey === false ? 0 : $shapeKey),
 					"options" => $shapes
 				],
 				[
 					"type" => "dropdown",
-					"text" => "Brush Type",
+					"text" => (new Translation(Translation::UI_PRESET_EDIT_TYPE))->getMessage(),
 					"default" => ($typeKey === false ? 0 : $typeKey),
 					"options" => $types
 				],
 				[
 					"type" => "toggle",
-					"text" => "Hollow Brush",
+					"text" => (new Translation(Translation::UI_PRESET_EDIT_HOLLOW))->getMessage(),
 					"default" => $d[4]
 				],
 				[
 					"type" => "toggle",
-					"text" => "Brush Decrement",
+					"text" => (new Translation(Translation::UI_PRESET_EDIT_DECREMENT))->getMessage(),
 					"default" => $d[5]
 				],
 				[
 					"type" => "slider",
-					"text" => "Brush Height",
+					"text" => (new Translation(Translation::UI_PRESET_EDIT_HEIGHT))->getMessage(),
 					"min" => 0,
 					"max" => $this->getLoader()->getSettings()->getMaxRadius(),
 					"step" => 1,
@@ -71,30 +72,30 @@ class PresetEditWindow extends Window {
 				],
 				[
 					"type" => "toggle",
-					"text" => "Brush Shape Perfection",
+					"text" => (new Translation(Translation::UI_PRESET_EDIT_PERFECT))->getMessage(),
 					"default" => $d[7]
 				],
 				[
 					"type" => "input",
-					"text" => "Brush Blocks",
+					"text" => (new Translation(Translation::UI_PRESET_EDIT_BLOCKS))->getMessage(),
 					"placeholder" => "stone,stone_brick:1,2",
 					"default" => $d[8]
 				],
 				[
 					"type" => "input",
-					"text" => "Obsolete Blocks",
+					"text" => (new Translation(Translation::UI_PRESET_EDIT_OBSOLETE))->getMessage(),
 					"placeholder" => "stone,stone_brick:1,2",
 					"default" => $d[9]
 				],
 				[
 					"type" => "input",
-					"text" => "Brush Biome",
+					"text" => (new Translation(Translation::UI_PRESET_EDIT_BIOME))->getMessage(),
 					"placeholder" => "plains",
 					"default" => $d[10]
 				],
 				[
 					"type" => "input",
-					"text" => "Brush Tree",
+					"text" => (new Translation(Translation::UI_PRESET_EDIT_TREE))->getMessage(),
 					"placeholder" => "oak",
 					"default" => $d[11]
 				]

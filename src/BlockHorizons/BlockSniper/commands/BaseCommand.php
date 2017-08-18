@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\commands;
 
 use BlockHorizons\BlockSniper\data\ConfigData;
+use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
@@ -29,7 +30,7 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand 
 	 * @param CommandSender $sender
 	 */
 	public function sendConsoleError(CommandSender $sender) {
-		$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.console-use"));
+		$sender->sendMessage($this->getWarning() . (new Translation(Translation::COMMANDS_COMMON_INVALID_SENDER))->getMessage());
 	}
 
 	/**
@@ -52,7 +53,14 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand 
 	 * @param CommandSender $sender
 	 */
 	public function sendNoPermission(CommandSender $sender) {
-		$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.no-permission"));
+		$sender->sendMessage($this->getWarning() . (new Translation(Translation::COMMANDS_COMMON_NO_PERMISSION))->getMessage());
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getWarning(): string {
+		return TF::RED . (new Translation(Translation::COMMANDS_COMMON_WARNING_PREFIX))->getMessage();
 	}
 
 	/**

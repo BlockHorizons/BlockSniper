@@ -1,0 +1,168 @@
+{
+  "commands": {
+    "common": {
+      "warning-prefix": "[Warning]",
+      "invalid-sender": "You can only execute this command as a player.",
+      "no-permission": "You do not have permission to execute this command."
+    },
+    "brush": {
+      "description": "Opens the GUI for BlockSniper."
+    },
+    "blocksniper": {
+      "description": "Displays information about BlockSniper, or reloads the plugin.",
+      "info": "Information",
+      "version": "Version: ",
+      "organisation": "Organisation: ",
+      "authors": "Authors: ",
+      "target-api": "Target API: ",
+      "reload": "Reloading BlockSniper..."
+    },
+    "redo": {
+      "description": "Redoes the last undone BlockSniper modification.",
+      "no-redo": "No modifications could be found to redo.",
+      "success": "Successfully redid the last undone modification."
+    },
+    "undo": {
+      "description": "Undoes the last BlockSniper modification.",
+      "no-undo": "No modifications could be found to undo.",
+      "success": "Successfully undid the last modification."
+    },
+    "clone": {
+      "description": "Clones an area using the specified format.",
+      "copy": {
+        "success": "Successfully copied the location looked at."
+      },
+      "template": {
+        "missing-name": "No valid name has been given for the template.",
+        "success": "Successfully saved a template file to %s."
+      },
+      "schematic": {
+        "missing-name": "No valid name has been given for the schematic.",
+        "success": "Successfully saved a schematic file to %s."
+      }
+    },
+    "paste": {
+      "description": "Pastes a previously cloned area to the world.",
+      "copy": {
+        "no-copies": "No copy could be found to paste.",
+        "success": "Successfully pasted the copy on the location looked at."
+      },
+      "template": {
+        "nonexistent": "The template %s could not be found in the template directory.",
+        "success": "Successfully pasted the template %s on the location looked at."
+      },
+      "schematic": {
+        "nonexistent": "The schematic %s could not be found in the schematic directory.",
+        "success": "Successfully pasted the schematic %s on the location looked at."
+      }
+    }
+  },
+  "ui": {
+    "preset-menu": {
+      "title": "Preset Menu",
+      "subtitle": "Click a button to continue",
+      "create": "Create",
+      "delete": "Delete",
+      "select": "Select",
+      "list": "List",
+      "exit": "Exit"
+    },
+    "preset-edit": {
+      "title": "Preset Edit Menu",
+      "name": "Preset Name",
+      "size": "Brush Size",
+      "shape": "Brush Shape",
+      "type": "Brush Type",
+      "hollow": "Hollow Brush",
+      "decrement": "Decrementing Brush",
+      "height": "Brush Height",
+      "perfect": "Brush Shape Perfection",
+      "blocks": "Brush Blocks",
+      "obsolete": "Obsolete Blocks",
+      "biome": "Brush Biome",
+      "tree": "Brush Tree"
+    },
+    "preset-selection": {
+      "title": "Preset Selection Menu",
+      "subtitle": "Click a button to apply the preset"
+    },
+    "preset-deletion": {
+      "title": "Preset Deletion Menu",
+      "subtitle": "Click a button to delete a preset"
+    },
+    "preset-list": {
+      "title": "Preset List Menu",
+      "subtitle": "Click a button to edit/view a preset"
+    },
+    "preset-creation": {
+      "title": "Preset Creation Menu",
+      "name": "Preset Name",
+      "size": "Brush Size",
+      "shape": "Brush Shape",
+      "type": "Brush Type",
+      "hollow": "Hollow Brush",
+      "decrement": "Decrementing Brush",
+      "height": "Brush Height",
+      "perfect": "Brush Shape Perfection",
+      "blocks": "Brush Blocks",
+      "obsolete": "Obsolete Blocks",
+      "biome": "Brush Biome",
+      "tree": "Brush Tree"
+    },
+    "main-menu": {
+      "title": "BlockSniper Menu",
+      "subtitle": "Click a button to continue.",
+      "brush": "Brush",
+      "config": "Configuration",
+      "presets": "Presets",
+      "exit": "Exit"
+    },
+    "brush-menu": {
+      "title": "Brush Menu",
+      "size": "Brush Size",
+      "shape": "Brush Shape",
+      "type": "Brush Type",
+      "hollow": "Hollow Brush",
+      "decrement": "Decrementing Brush",
+      "height": "Brush Height",
+      "perfect": "Brush Shape Perfection",
+      "blocks": "Brush Blocks",
+      "obsolete": "Obsolete Blocks",
+      "biome": "Brush Biome",
+      "tree": "Brush Tree"
+    },
+    "configuration-menu": {
+      "title": "BlockSniper Configuration",
+      "auto-update": "Automatically update the configuration file when a new version is found",
+      "language": "Language used for sending BlockSniper related messages",
+      "brush-item": "Item ID of the item that is used to brush",
+      "max-brush-size": "The absolute maximum size of brush",
+      "min-async-size": "Asynchronous brush size limit. If brush size is bigger than this, operations get executed asynchronously",
+      "max-reverts": "Maximum amount of Undo/Redo stores to save. Older ones get cleaned automatically",
+      "reset-decrement-brush": "Automatically reset decrementing brush to the initial starting size",
+      "save-brush": "Save brush properties of players on server restart",
+      "drop-plants": "Drop plant items destroyed/blown away by the LeafBlower type",
+      "auto-gui": "Automatically open the GUI when switching hotbar slot to one containing the brush item",
+      "auto-reload": "Turning this toggle will automatically reload the configuration when closing this window"
+    }
+  },
+  "log": {
+    "language": {
+      "auto-selected": "[BlockSniper] No valid language has been selected. English has been auto selected.",
+      "usage": "Please select a language by going to the configuration tab in-game, using /b.",
+      "selected": "[BlockSniper] Language selected: "
+    },
+    "brush": {
+      "restored": "Brush of player %s has been restored.",
+      "all-restored": "All brushes have been restored."
+    },
+    "presets": {
+      "loaded": "Preset %s has been loaded.",
+      "all-loaded": "All presets have been loaded."
+    },
+    "reload": {
+      "start": "[BlockSniper] Reloading...",
+      "finish": "[BlockSniper] Reload finished."
+    }
+  }
+}

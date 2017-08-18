@@ -94,7 +94,7 @@ class CloneStorer {
 	 * @return bool
 	 */
 	public function copyStoreExists(Player $player): bool {
-		return !(!is_array($this->copyStore[$player->getName()]) || empty($this->copyStore[$player->getName()]));
+		return isset($this->copyStore[$player->getName()]);
 	}
 
 	/**

@@ -1,6 +1,6 @@
 ---
 name: "BlockSniper"
-version: 1.5.0
+version: 2.0.0
 api: [3.0.0-ALPHA7]
 author: "BlockHorizons"
 authors:
@@ -112,14 +112,30 @@ permissions:
                     blocksniper.shape.cube:
                         default: op
                         description: "Allows access to the cube shape."
-            blocksniper.cloning:
+            blocksniper.clone:
                 default: false
                 description: "Allows access to all BlockSniper clone types."
                 children:
-                    blocksniper.cloning.copy:
+                    blocksniper.clone.copy:
                         default: op
                         description: "Allows access to the copy clone type."
-                    blocksniper.cloning.template:
+                    blocksniper.clone.template:
                         default: op
                         description: "Allows access to the template clone type."
+                    blocksniper.clone.schematic:
+                        default: op
+                        description: "Allows access to the schematic clone type."
+            blocksniper.paste:
+                default: false
+                description: "Allows access to all BlockSniper paste types."
+                children:
+                    blocksniper.paste.copy:
+                        default: op
+                        description: "Allows access to the copy paste type."
+                    blocksniper.paste.template:
+                        default: op
+                        description: "Allows access to the template paste type."
+                    blocksniper.paste.schematic:
+                        default: op
+                        description: "Allows access to the schematic paste type."
 ...

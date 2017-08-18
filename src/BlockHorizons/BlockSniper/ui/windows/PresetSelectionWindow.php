@@ -4,13 +4,15 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\ui\windows;
 
+use BlockHorizons\BlockSniper\data\Translation;
+
 class PresetSelectionWindow extends Window {
 
 	public function process() {
 		$this->data = [
 			"type" => "form",
-			"title" => "Preset Selection Menu",
-			"content" => "Select a preset to apply.",
+			"title" => (new Translation(Translation::UI_PRESET_SELECTION_TITLE))->getMessage(),
+			"content" => (new Translation(Translation::UI_PRESET_SELECTION_SUBTITLE))->getMessage(),
 			"buttons" => []
 		];
 		foreach($this->getLoader()->getPresetManager()->getAllPresets() as $key => $name) {

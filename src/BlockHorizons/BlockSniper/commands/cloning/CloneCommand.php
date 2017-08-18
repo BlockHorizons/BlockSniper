@@ -8,6 +8,7 @@ use BlockHorizons\BlockSniper\brush\BrushManager;
 use BlockHorizons\BlockSniper\cloning\types\CopyType;
 use BlockHorizons\BlockSniper\cloning\types\TemplateType;
 use BlockHorizons\BlockSniper\commands\BaseCommand;
+use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
 use libschematic\Schematic;
 use pocketmine\command\CommandSender;
@@ -17,18 +18,18 @@ use pocketmine\utils\TextFormat as TF;
 class CloneCommand extends BaseCommand {
 
 	public function __construct(Loader $loader) {
-		parent::__construct($loader, "clone", "Clone the area you're watching", "/clone <type> [name]", []);
+		parent::__construct($loader, "clone", (new Translation(Translation::COMMANDS_CLONE_DESCRIPTION))->getMessage(), "/clone <type> [name]", []);
 	}
 
 	public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
 		if(!$this->testPermission($sender)) {
 			$this->sendNoPermission($sender);
-			return true;
+			return false;
 		}
 
 		if(!$sender instanceof Player) {
 			$this->sendConsoleError($sender);
-			return true;
+			return false;
 		}
 
 		$center = $sender->getTargetBlock(100);
@@ -40,26 +41,26 @@ class CloneCommand extends BaseCommand {
 				$shape = BrushManager::get($sender)->getShape(true, BrushManager::get($sender)->getYOffset());
 				$cloneType = new CopyType($this->getLoader()->getCloneStorer(), $sender, false, $center, $shape->getBlocksInside());
 				$cloneType->saveClone();
-				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.clone"));
+				$sender->sendMessage(TF::GREEN . (new Translation(Translation::COMMANDS_CLONE_COPY_SUCCESS))->getMessage());
 				return true;
 
 			case "template":
 				if(!isset($args[1])) {
-					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.name-not-set"));
-					return true;
+					$sender->sendMessage($this->getWarning() . (new Translation(Translation::COMMANDS_CLONE_TEMPLATE_MISSING_NAME))->getMessage());
+					return false;
 				}
 				$shape = BrushManager::get($sender)->getShape(true, BrushManager::get($sender)->getYOffset());
 				$cloneType = new TemplateType($this->getLoader()->getCloneStorer(), $sender, false, $center, $shape->getBlocksInside(), $args[1]);
 				$cloneType->saveClone();
-				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.clone"));
+				$sender->sendMessage(TF::GREEN . (new Translation(Translation::COMMANDS_CLONE_TEMPLATE_SUCCESS, [$this->getLoader()->getDataFolder() . "templates/" . $args[1]]))->getMessage());
 				return true;
 
 			case "scheme":
 			case "schem":
 			case "schematic":
 				if(!isset($args[1])) {
-					$sender->sendMessage(TF::RED . "[Warning] " . $this->getLoader()->getTranslation("commands.errors.name-not-set"));
-					return true;
+					$sender->sendMessage($this->getWarning() . (new Translation(Translation::COMMANDS_CLONE_SCHEMATIC_MISSING_NAME))->getMessage());
+					return false;
 				}
 				$shape = BrushManager::get($sender)->getShape(true, BrushManager::get($sender)->getYOffset());
 				$schematic = new Schematic();
@@ -71,19 +72,7 @@ class CloneCommand extends BaseCommand {
 					->setHeight($size * 2 + 1)
 					->setWidth($size * 2 + 1)
 					->save($this->getLoader()->getDataFolder() . "schematics/" . $args[1] . ".schematic");
-				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("commands.succeed.clone"));
-				return true;
-
-			case "offset":
-			case "yoffset":
-				$offset = 0;
-				if(!isset($args[1])) {
-					$offset = 0;
-				} elseif(is_numeric($args[1])) {
-					$offset = $args[1];
-				}
-				BrushManager::get($sender)->setYOffset($offset);
-				$sender->sendMessage(TF::GREEN . $this->getLoader()->getTranslation("brush.yoffset"));
+				$sender->sendMessage(TF::GREEN . (new Translation(Translation::COMMANDS_CLONE_SCHEMATIC_SUCCESS, [$this->getLoader()->getDataFolder() . "templates/" . $args[1]]))->getMessage());
 				return true;
 		}
 	}

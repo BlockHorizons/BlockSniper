@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\presets;
 
+use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
@@ -22,9 +23,9 @@ class PresetManager {
 			$this->data = yaml_parse_file($loader->getDataFolder() . "presets.yml");
 			foreach($this->data as $name => $data) {
 				$this->addPreset(unserialize($data));
-				$loader->getLogger()->debug(TF::GREEN . "Preset " . $name . " has been loaded.");
+				$loader->getLogger()->debug(TF::GREEN . (new Translation(Translation::LOG_PRESETS_LOADED, [$name]))->getMessage());
 			}
-			$loader->getLogger()->info(TF::GREEN . "All presets have been loaded.");
+			$loader->getLogger()->info(TF::GREEN . (new Translation(Translation::LOG_PRESETS_ALL_LOADED))->getMessage());
 		}
 	}
 
