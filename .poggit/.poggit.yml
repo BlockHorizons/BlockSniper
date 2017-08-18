@@ -8,5 +8,5 @@ projects:
       - src: BlockHorizons/libgeom/libgeom
         version: ^0.1.0
       - src: libschematic/libschematic
-        version: ^0.0.5
+        version: ^0.0.6
 ...
