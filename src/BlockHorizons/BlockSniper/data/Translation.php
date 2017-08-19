@@ -130,6 +130,10 @@ class Translation {
 	private $params = [];
 
 	public function __construct(string $key, array $params = []) {
+		$reflection = new \ReflectionClass(self::class);
+		if(!in_array($key, $reflection->getConstants())) {
+			throw new \InvalidArgumentException("Invalid translation key passed to translation.");
+		}
 		$this->key = $key;
 		/** @var Loader $loader */
 		$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
@@ -143,11 +147,15 @@ class Translation {
 	public function getMessage(): string {
 		$messages = $this->data->getMessages();
 		$path = explode(".", $this->key);
-		if(count($path) === 3) {
-			$message = $messages[$path[0]][$path[1]][$path[2]];
-		} else {
-			$message = $messages[$path[0]][$path[1]][$path[2]][$path[3]];
+		$pathCount = count($path);
+
+		$array = $messages[$path[0]];
+		for($i = 1; $i < $pathCount; $i++) {
+			if(is_array($array)) {
+				$array = $array[$path[$i]];
+			}
 		}
+		$message = $array;
 		if(!empty($this->params)) {
 			return vsprintf($message, $this->params);
 		}

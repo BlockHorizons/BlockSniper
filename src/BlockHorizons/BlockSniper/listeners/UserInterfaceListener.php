@@ -77,7 +77,7 @@ class UserInterfaceListener implements Listener {
 						}
 						$this->loader->getSettings()->set($key, $value);
 					}
-					if($data[9] === true) {
+					if($data[10] === true) {
 						$this->loader->reload();
 					}
 					$this->navigate(WindowHandler::WINDOW_MAIN_MENU, $event->getPlayer(), $windowHandler);
