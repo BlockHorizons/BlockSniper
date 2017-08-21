@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\brush;
 
 use BlockHorizons\BlockSniper\brush\async\BlockSniperChunkManager;
+use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\block\Block;
 use pocketmine\level\ChunkManager;
 use pocketmine\level\format\Chunk;
@@ -69,7 +70,7 @@ abstract class BaseType {
 			$this->chunkManager = $manager;
 		}
 		$this->blocks = $blocks;
-		$this->brushBlocks = BrushManager::get($player)->getBlocks();
+		$this->brushBlocks = SessionManager::getPlayerSession($player)->getBrush()->getBlocks();
 	}
 
 	/**

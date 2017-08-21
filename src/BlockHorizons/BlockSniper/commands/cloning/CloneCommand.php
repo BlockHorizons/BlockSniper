@@ -4,12 +4,12 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\commands\cloning;
 
-use BlockHorizons\BlockSniper\brush\BrushManager;
 use BlockHorizons\BlockSniper\cloning\types\CopyType;
 use BlockHorizons\BlockSniper\cloning\types\TemplateType;
 use BlockHorizons\BlockSniper\commands\BaseCommand;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\sessions\SessionManager;
 use libschematic\Schematic;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
@@ -33,13 +33,12 @@ class CloneCommand extends BaseCommand {
 		}
 
 		$center = $sender->getTargetBlock(100);
-		$this->getLoader()->getBrushManager()->createBrush($sender);
-		$size = BrushManager::get($sender)->getSize();
+		$size = SessionManager::getPlayerSession($sender)->getBrush()->getSize();
 		switch(strtolower($args[0])) {
 			default:
 			case "copy":
-				$shape = BrushManager::get($sender)->getShape(true, BrushManager::get($sender)->getYOffset());
-				$cloneType = new CopyType($this->getLoader()->getCloneStorer(), $sender, false, $center, $shape->getBlocksInside());
+				$shape = SessionManager::getPlayerSession($sender)->getBrush()->getShape(true, SessionManager::getPlayerSession($sender)->getBrush()->getYOffset());
+				$cloneType = new CopyType($sender, false, $center, $shape->getBlocksInside());
 				$cloneType->saveClone();
 				$sender->sendMessage(TF::GREEN . (new Translation(Translation::COMMANDS_CLONE_COPY_SUCCESS))->getMessage());
 				return true;
@@ -49,8 +48,8 @@ class CloneCommand extends BaseCommand {
 					$sender->sendMessage($this->getWarning() . (new Translation(Translation::COMMANDS_CLONE_TEMPLATE_MISSING_NAME))->getMessage());
 					return false;
 				}
-				$shape = BrushManager::get($sender)->getShape(true, BrushManager::get($sender)->getYOffset());
-				$cloneType = new TemplateType($this->getLoader()->getCloneStorer(), $sender, false, $center, $shape->getBlocksInside(), $args[1]);
+				$shape = SessionManager::getPlayerSession($sender)->getBrush()->getShape(true, SessionManager::getPlayerSession($sender)->getBrush()->getYOffset());
+				$cloneType = new TemplateType($sender, false, $center, $shape->getBlocksInside(), $args[1]);
 				$cloneType->saveClone();
 				$sender->sendMessage(TF::GREEN . (new Translation(Translation::COMMANDS_CLONE_TEMPLATE_SUCCESS, [$this->getLoader()->getDataFolder() . "templates/" . $args[1]]))->getMessage());
 				return true;
@@ -62,7 +61,7 @@ class CloneCommand extends BaseCommand {
 					$sender->sendMessage($this->getWarning() . (new Translation(Translation::COMMANDS_CLONE_SCHEMATIC_MISSING_NAME))->getMessage());
 					return false;
 				}
-				$shape = BrushManager::get($sender)->getShape(true, BrushManager::get($sender)->getYOffset());
+				$shape = SessionManager::getPlayerSession($sender)->getBrush()->getShape(true, SessionManager::getPlayerSession($sender)->getBrush()->getYOffset());
 				$schematic = new Schematic();
 				$schematic
 					->setBlocks($shape->getBlocksInside())

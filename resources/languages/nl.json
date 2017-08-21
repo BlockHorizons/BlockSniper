@@ -1,7 +1,7 @@
 {
   "commands": {
     "common": {
-      "warning-prefix": "[Waarschuwing]",
+      "warning-prefix": "[Waarschuwing] ",
       "invalid-sender": "Je kan dit commando alleen als speler uitvoeren.",
       "no-permission": "Je hebt geen permissie om dit commando uit te voeren."
     },
@@ -163,6 +163,33 @@
     "reload": {
       "start": "[BlockSniper] Herladen...",
       "finish": "[BlockSniper] Herladen klaar."
+    }
+  },
+  "brush": {
+    "shape": {
+      "cube": "Kubus",
+      "cuboid": "Balk",
+      "sphere": "Bol",
+      "cylinder": "Cilinder"
+    },
+    "type": {
+      "biome": "Klimaat",
+      "cleanentities": "Wis Entiteiten",
+      "clean": "Schoon Maken",
+      "drain": "Aftappen",
+      "expand": "Uitbreiden",
+      "fill": "Vullen",
+      "flattenall": "Alles Vlak Maken",
+      "flatten": "Vlak Maken",
+      "layer": "Laag",
+      "leafblower": "Blad Blazer",
+      "melt": "Smelten",
+      "overlay": "Bedekken",
+      "replaceall": "Alles Vervangen",
+      "replace": "Vervangen",
+      "snowcone": "Sneeuw Laag",
+      "toplayer": "Bovenlaag",
+      "tree": "Boom"
     }
   }
 }

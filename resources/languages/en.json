@@ -1,7 +1,7 @@
 {
   "commands": {
     "common": {
-      "warning-prefix": "[Warning]",
+      "warning-prefix": "[Warning] ",
       "invalid-sender": "You can only execute this command as a player.",
       "no-permission": "You do not have permission to execute this command."
     },
@@ -163,6 +163,33 @@
     "reload": {
       "start": "[BlockSniper] Reloading...",
       "finish": "[BlockSniper] Reload finished."
+    }
+  },
+  "brush": {
+    "shape": {
+      "cube": "Cube",
+      "cuboid": "Cuboid",
+      "sphere": "Sphere",
+      "cylinder": "Cylinder"
+    },
+    "type": {
+      "biome": "Biome",
+      "cleanentities": "Clean Entities",
+      "clean": "Clean",
+      "drain": "Drain",
+      "expand": "Expand",
+      "fill": "Fill",
+      "flattenall": "Flatten All",
+      "flatten": "Flatten",
+      "layer": "Layer",
+      "leafblower": "Leaf Blower",
+      "melt": "Melt",
+      "overlay": "Overlay",
+      "replaceall": "Replace All",
+      "replace": "Replace",
+      "snowcone": "Snowcone",
+      "toplayer": "Top Layer",
+      "tree": "Tree"
     }
   }
 }

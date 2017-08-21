@@ -15,8 +15,6 @@ abstract class BaseClone {
 	const TYPE_TEMPLATE = 1;
 	const TYPE_SCHEMATIC = 2;
 
-	/** @var CloneStorer */
-	public $cloneStorer = null;
 	/** @var Level */
 	public $level = null;
 
@@ -32,15 +30,13 @@ abstract class BaseClone {
 	protected $blocks = [];
 
 	/**
-	 * @param CloneStorer $cloneStorer
 	 * @param Player      $player
 	 * @param bool        $saveAir
 	 * @param Position    $center
 	 * @param Block[]     $blocks
 	 * @param string      $name
 	 */
-	public function __construct(CloneStorer $cloneStorer, Player $player, bool $saveAir, Position $center, array $blocks, string $name = "") {
-		$this->cloneStorer = $cloneStorer;
+	public function __construct(Player $player, bool $saveAir, Position $center, array $blocks, string $name = "") {
 		$this->player = $player;
 		$this->level = $player->getLevel();
 		$this->saveAir = $saveAir;
@@ -66,13 +62,6 @@ abstract class BaseClone {
 	 * @return bool
 	 */
 	public abstract function saveClone(): bool;
-
-	/**
-	 * @return CloneStorer
-	 */
-	public function getCloneStorer(): CloneStorer {
-		return $this->cloneStorer;
-	}
 
 	/**
 	 * Returns the level the clone is made in.
@@ -107,7 +96,7 @@ abstract class BaseClone {
 	 * @return string
 	 */
 	public function getPermission(): string {
-		return "blocksniper.type." . strtolower($this->getName());
+		return "blocksniper.clone." . strtolower($this->getName());
 	}
 
 	public abstract function getName(): string;

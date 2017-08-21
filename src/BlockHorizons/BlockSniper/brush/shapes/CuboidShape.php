@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\brush\shapes;
 
 use BlockHorizons\BlockSniper\brush\BaseShape;
-use BlockHorizons\BlockSniper\brush\BrushManager;
+use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\math\Vector3;
@@ -20,10 +20,10 @@ class CuboidShape extends BaseShape {
 	/** @var int */
 	protected $id = self::SHAPE_CUBOID;
 
-	public function __construct(Player $player, Level $level, int $width = null, Position $center = null, bool $hollow = false, bool $cloneShape = false) {
+	public function __construct(Player $player, Level $level, int $width, Position $center, bool $hollow = false, bool $cloneShape = false) {
 		parent::__construct($player, $level, $center, $hollow);
 		$this->width = $width;
-		$this->height = BrushManager::get($player)->getHeight();
+		$this->height = SessionManager::getPlayerSession($player)->getBrush()->getHeight();
 		if($cloneShape) {
 			$this->center[1] += $this->height;
 		}

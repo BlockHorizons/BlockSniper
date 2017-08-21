@@ -4,11 +4,11 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\listeners;
 
-use BlockHorizons\BlockSniper\brush\BrushManager;
 use BlockHorizons\BlockSniper\events\BrushUseEvent;
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\sessions\SessionManager;
 use BlockHorizons\BlockSniper\ui\WindowHandler;
-use BlockHorizons\BlockSniper\undo\Undo;
+use BlockHorizons\BlockSniper\undo\sync\SyncUndo;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerItemHeldEvent;
@@ -37,9 +37,8 @@ class BrushListener implements Listener {
 		$player = $event->getPlayer();
 		if($player->getInventory()->getItemInHand()->getId() === (int) $this->getLoader()->getSettings()->getBrushItem()) {
 			if($player->hasPermission("blocksniper.command.brush")) {
-				$this->getLoader()->getBrushManager()->createBrush($player);
 
-				$brush = BrushManager::get($player);
+				$brush = SessionManager::getPlayerSession($player)->getBrush();
 				$shape = $brush->getShape();
 				$type = $brush->getType();
 
@@ -53,7 +52,7 @@ class BrushListener implements Listener {
 				} else {
 					$type->setBlocksInside($shape->getBlocksInside());
 					$undoBlocks = $type->fillShape();
-					$this->getLoader()->getRevertStorer()->saveRevert(new Undo($undoBlocks), $player);
+					SessionManager::getPlayerSession($player)->getRevertStorer()->saveRevert(new SyncUndo($undoBlocks, $player->getName()));
 				}
 				$this->decrementBrush($player);
 				$event->setCancelled();
@@ -72,11 +71,11 @@ class BrushListener implements Listener {
 		$player = $event->getPlayer();
 		if($event->getItem()->getId() === $this->getLoader()->getSettings()->getBrushItem()) {
 			if($player->hasPermission("blocksniper.command.brush")) {
-				if(time() - $this->cancelWindow[$player->getLowerCaseName()] < 2) {
-					return false;
+				if(isset($this->cancelWindow[$player->getLowerCaseName()])) {
+					if(time() - $this->cancelWindow[$player->getLowerCaseName()] < 2) {
+						return false;
+					}
 				}
-				$this->getLoader()->getBrushManager()->createBrush($player);
-
 				$windowHandler = new WindowHandler();
 				$packet = new ModalFormRequestPacket();
 				$packet->formId = $windowHandler->getWindowIdFor(WindowHandler::WINDOW_BRUSH_MENU);
@@ -111,16 +110,17 @@ class BrushListener implements Listener {
 	 * @return bool
 	 */
 	public function decrementBrush(Player $player): bool {
-		if(BrushManager::get($player)->isDecrementing()) {
-			if(BrushManager::get($player)->getSize() <= 1) {
+		$brush = SessionManager::getPlayerSession($player)->getBrush();
+		if($brush->isDecrementing()) {
+			if($brush->getSize() <= 1) {
 				if($this->getLoader()->getSettings()->resetDecrementBrush() !== false) {
-					BrushManager::get($player)->setSize(BrushManager::get($player)->resetSize);
+					$brush->setSize($brush->resetSize);
 					$player->sendPopup(TF::GREEN . "Brush reset to original size.");
 					return true;
 				}
 				return false;
 			}
-			BrushManager::get($player)->setSize(BrushManager::get($player)->getSize() - 1);
+			$brush->setSize($brush->getSize() - 1);
 			return true;
 		}
 		return false;

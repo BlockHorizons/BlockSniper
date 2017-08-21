@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
-use BlockHorizons\BlockSniper\brush\BrushManager;
+use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\block\Block;
 use pocketmine\level\ChunkManager;
 use pocketmine\Player;
@@ -22,7 +22,7 @@ class ReplaceType extends BaseType {
 	 */
 	public function __construct(Player $player, ChunkManager $level, array $blocks) {
 		parent::__construct($player, $level, $blocks);
-		$this->obsolete = BrushManager::get($player)->getObsolete();
+		$this->obsolete = SessionManager::getPlayerSession($player)->getBrush()->getObsolete();
 	}
 
 	/**

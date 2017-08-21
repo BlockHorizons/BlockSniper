@@ -24,22 +24,7 @@ class CommandOverloads {
 	public static function initialize() {
 		self::$commandOverloads = [
 			"brush" => [
-				0 => [
-					"type" => "stringenum",
-					"name" => "parameter",
-					"optional" => false,
-					"enum_values" => BrushParameters::getAliasesAndParameters()
-				],
-				1 => [
-					"type" => "rawtext",
-					"name" => "value",
-					"optional" => true
-				],
-				2 => [
-					"type" => "string",
-					"name" => "name",
-					"optional" => true
-				]
+
 			],
 
 			"blocksniper" => [
@@ -112,10 +97,6 @@ class CommandOverloads {
 					"optional" => true
 				]
 			],
-
-			"cancel" => [
-
-			]
 		];
 	}
 }

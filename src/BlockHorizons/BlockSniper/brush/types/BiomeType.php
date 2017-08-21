@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
-use BlockHorizons\BlockSniper\brush\BrushManager;
+use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\level\ChunkManager;
 use pocketmine\Player;
 
@@ -21,7 +21,7 @@ class BiomeType extends BaseType {
 	 */
 	public function __construct(Player $player, ChunkManager $level, array $blocks) {
 		parent::__construct($player, $level, $blocks);
-		$this->biome = BrushManager::get($player)->getBiomeId();
+		$this->biome = SessionManager::getPlayerSession($player)->getBrush()->getBiomeId();
 	}
 
 	/**

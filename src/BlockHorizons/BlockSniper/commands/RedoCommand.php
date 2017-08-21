@@ -6,6 +6,7 @@ namespace BlockHorizons\BlockSniper\commands;
 
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\sessions\SessionManager;
 use BlockHorizons\BlockSniper\undo\Revert;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
@@ -28,7 +29,7 @@ class RedoCommand extends BaseCommand {
 			return false;
 		}
 
-		if(!$this->getLoader()->getRevertStorer()->redoStorageExists($sender)) {
+		if(!SessionManager::getPlayerSession($sender)->getRevertStorer()->redoStorageExists()) {
 			$sender->sendMessage($this->getWarning() . (new Translation(Translation::COMMANDS_REDO_NO_REDO))->getMessage());
 			return false;
 		}
@@ -36,12 +37,11 @@ class RedoCommand extends BaseCommand {
 		$redoAmount = 1;
 		if(isset($args[0])) {
 			$redoAmount = $args[0];
-			if($redoAmount > ($totalRedo = $this->getLoader()->getRevertStorer()->getTotalStores($sender, Revert::TYPE_REDO))) {
+			if($redoAmount > ($totalRedo = SessionManager::getPlayerSession($sender)->getRevertStorer()->getTotalStores(Revert::TYPE_REDO))) {
 				$redoAmount = $totalRedo;
 			}
 		}
-
-		$this->getLoader()->getRevertStorer()->restoreLatestRevert(Revert::TYPE_REDO, $redoAmount, $sender);
+		SessionManager::getPlayerSession($sender)->getRevertStorer()->restoreLatestRevert(Revert::TYPE_REDO, $redoAmount);
 		$sender->sendMessage(TF::GREEN . (new Translation(Translation::COMMANDS_REDO_SUCCESS))->getMessage() . TF::AQUA . " (" . $redoAmount . ")");
 		return true;
 	}

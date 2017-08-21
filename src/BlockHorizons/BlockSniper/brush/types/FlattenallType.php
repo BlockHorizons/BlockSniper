@@ -10,13 +10,14 @@ use pocketmine\block\Flowable;
 use pocketmine\item\Item;
 use pocketmine\level\ChunkManager;
 use pocketmine\level\Position;
+use pocketmine\math\Vector3;
 use pocketmine\Player;
 
 class FlattenallType extends BaseType {
 
 	/** @var int */
 	protected $id = self::TYPE_FLATTENALL;
-	/** @var Block */
+	/** @var Vector3 */
 	protected $center;
 
 	/*
@@ -24,7 +25,7 @@ class FlattenallType extends BaseType {
 	 */
 	public function __construct(Player $player, ChunkManager $level, array $blocks) {
 		parent::__construct($player, $level, $blocks);
-		$this->center = $player->getTargetBlock(100);
+		$this->center = $player->getTargetBlock(100)->asVector3();
 	}
 
 	/**

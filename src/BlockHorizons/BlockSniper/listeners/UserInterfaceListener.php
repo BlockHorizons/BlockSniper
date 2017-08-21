@@ -14,7 +14,6 @@ use pocketmine\event\server\DataPacketReceiveEvent;
 use pocketmine\network\mcpe\protocol\ModalFormRequestPacket;
 use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
 use pocketmine\Player;
-use pocketmine\utils\TextFormat;
 
 class UserInterfaceListener implements Listener {
 
@@ -86,7 +85,6 @@ class UserInterfaceListener implements Listener {
 				case 3204: // Preset Creation Menu
 					$data = json_decode($packet->formData, true);
 					if($this->loader->getPresetManager()->isPreset($data[0])) {
-						$event->getPlayer()->sendMessage(TextFormat::RED . "[Warning] " . $this->loader->getTranslation("commands.errors.preset-already-exists"));
 						return;
 					}
 					$processor = new PresetPropertyProcessor($event->getPlayer(), $this->loader);

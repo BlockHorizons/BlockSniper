@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\tasks;
 
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\sessions\SessionManager;
 use BlockHorizons\BlockSniper\undo\Revert;
 
 class UndoDiminishTask extends BaseTask {
@@ -15,9 +16,12 @@ class UndoDiminishTask extends BaseTask {
 
 	public function onRun(int $currentTick) {
 		foreach($this->getLoader()->getServer()->getOnlinePlayers() as $player) {
-			if($this->getRevertStorer()->undoStorageExists($player)) {
-				if($this->getRevertStorer()->getLastUndoActivity($player) >= 180) {
-					$this->getRevertStorer()->unsetOldestRevert($player, Revert::TYPE_UNDO);
+			if(!$player->hasPermission("blocksniper.command.brush")) {
+				continue;
+			}
+			if(($storer = SessionManager::getPlayerSession($player)->getRevertStorer())->undoStorageExists()) {
+				if($storer->getLastUndoActivity() >= 180) {
+					$storer->unsetOldestRevert(Revert::TYPE_UNDO);
 				}
 			}
 		}

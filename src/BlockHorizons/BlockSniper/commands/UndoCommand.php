@@ -6,6 +6,7 @@ namespace BlockHorizons\BlockSniper\commands;
 
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\sessions\SessionManager;
 use BlockHorizons\BlockSniper\undo\Revert;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
@@ -28,7 +29,7 @@ class UndoCommand extends BaseCommand {
 			return false;
 		}
 
-		if(!$this->getLoader()->getRevertStorer()->undoStorageExists($sender)) {
+		if(!SessionManager::getPlayerSession($sender)->getRevertStorer()->undoStorageExists()) {
 			$sender->sendMessage($this->getWarning() . (new Translation(Translation::COMMANDS_UNDO_NO_UNDO))->getMessage());
 			return false;
 		}
@@ -36,12 +37,12 @@ class UndoCommand extends BaseCommand {
 		$undoAmount = 1;
 		if(isset($args[0])) {
 			$undoAmount = $args[0];
-			if($undoAmount > ($totalUndo = $this->getLoader()->getRevertStorer()->getTotalStores($sender, Revert::TYPE_UNDO))) {
+			if($undoAmount > ($totalUndo = SessionManager::getPlayerSession($sender)->getRevertStorer()->getTotalStores(Revert::TYPE_UNDO))) {
 				$undoAmount = $totalUndo;
 			}
 		}
 
-		$this->getLoader()->getRevertStorer()->restoreLatestRevert(Revert::TYPE_UNDO, $undoAmount, $sender);
+		SessionManager::getPlayerSession($sender)->getRevertStorer()->restoreLatestRevert(Revert::TYPE_UNDO, $undoAmount);
 		$sender->sendMessage(TF::GREEN . (new Translation(Translation::COMMANDS_UNDO_SUCCESS))->getMessage() . TF::AQUA . " (" . $undoAmount . ")");
 		return true;
 	}

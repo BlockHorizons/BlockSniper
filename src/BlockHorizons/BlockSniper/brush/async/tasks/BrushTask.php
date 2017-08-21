@@ -7,7 +7,8 @@ namespace BlockHorizons\BlockSniper\brush\async\tasks;
 use BlockHorizons\BlockSniper\brush\BaseShape;
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\Loader;
-use BlockHorizons\BlockSniper\undo\Undo;
+use BlockHorizons\BlockSniper\sessions\SessionManager;
+use BlockHorizons\BlockSniper\undo\async\AsyncUndo;
 use pocketmine\block\Block;
 use pocketmine\level\format\Chunk;
 use pocketmine\level\Level;
@@ -35,6 +36,7 @@ class BrushTask extends AsyncBlockSniperTask {
 		$processedBlocks = 0;
 		$type = $this->type;
 		$shape = $this->shape;
+		$undoChunks = clone($chunks);
 		foreach($chunks as $hash => $data) {
 			$chunks[$hash] = Chunk::fastDeserialize($data);
 		}
@@ -60,7 +62,7 @@ class BrushTask extends AsyncBlockSniperTask {
 		$type->setBlocksInside($blocks);
 		$type->setAsynchronous();
 		$type->setChunkManager($manager);
-		$undoBlocks = $type->fillShape();
+		$type->fillShape();
 
 		$serializedChunks = $chunks;
 		foreach($serializedChunks as &$chunk) {
@@ -69,7 +71,7 @@ class BrushTask extends AsyncBlockSniperTask {
 		unset($chunk);
 
 		$this->setResult([
-			"undoBlocks" => $undoBlocks,
+			"undoChunks" => $undoChunks,
 			"chunks" => $serializedChunks
 		]);
 	}
@@ -97,7 +99,7 @@ class BrushTask extends AsyncBlockSniperTask {
 			$chunk = Chunk::fastDeserialize($chunk);
 		}
 		unset($chunk);
-		$undoBlocks = $result["undoBlocks"];
+		$undoChunks = $result["undoChunks"];
 		$level = $server->getLevel($this->shape->getLevelId());
 		if($level instanceof Level) {
 			foreach($chunks as $hash => $chunk) {
@@ -106,7 +108,7 @@ class BrushTask extends AsyncBlockSniperTask {
 				$level->setChunk($x, $z, $chunk);
 			}
 		}
-		$loader->getRevertStorer()->saveRevert((new Undo($undoBlocks))->setPlayerName($player->getName())->setTouchedChunks($chunks)->setAsynchronous(), $player);
+		SessionManager::getPlayerSession($player)->getRevertStorer()->saveRevert(new AsyncUndo($undoChunks, $player->getName(), $player->getLevel()->getId()));
 		return true;
 	}
 

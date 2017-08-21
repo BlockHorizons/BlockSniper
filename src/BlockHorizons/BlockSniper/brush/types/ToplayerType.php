@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
-use BlockHorizons\BlockSniper\brush\BrushManager;
+use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\block\Block;
 use pocketmine\block\Flowable;
 use pocketmine\item\Item;
@@ -25,7 +25,7 @@ class ToplayerType extends BaseType {
 	 */
 	public function __construct(Player $player, ChunkManager $level, array $blocks) {
 		parent::__construct($player, $level, $blocks);
-		$this->height = BrushManager::get($player)->getHeight();
+		$this->height = SessionManager::getPlayerSession($player)->getBrush()->getHeight();
 	}
 
 	/**

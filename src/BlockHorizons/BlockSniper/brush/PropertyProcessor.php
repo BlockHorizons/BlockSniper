@@ -6,6 +6,7 @@ namespace BlockHorizons\BlockSniper\brush;
 
 use BlockHorizons\BlockSniper\events\ChangeBrushPropertiesEvent as Change;
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\Player;
 
 class PropertyProcessor {
@@ -44,7 +45,7 @@ class PropertyProcessor {
 	 * @param     $value
 	 */
 	public function process(int $valueType, $value) {
-		$brush = BrushManager::get($this->player);
+		$brush = SessionManager::getPlayerSession($this->player)->getBrush();
 		switch($valueType) {
 			case 0:
 				$brush->setSize((int) $value);

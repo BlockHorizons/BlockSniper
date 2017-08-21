@@ -7,6 +7,7 @@ namespace BlockHorizons\BlockSniper\commands\cloning;
 use BlockHorizons\BlockSniper\commands\BaseCommand;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\sessions\SessionManager;
 use libschematic\Schematic;
 use pocketmine\command\CommandSender;
 use pocketmine\level\Level;
@@ -34,20 +35,20 @@ class PasteCommand extends BaseCommand {
 		switch(strtolower($args[0])) {
 			default:
 			case "copy":
-				if(!$this->getLoader()->getCloneStorer()->copyStoreExists($sender)) {
+				if(!SessionManager::getPlayerSession($sender)->getCloneStorer()->copyStoreExists()) {
 					$sender->sendMessage($this->getWarning() . (new Translation(Translation::COMMANDS_PASTE_COPY_NO_COPIES))->getMessage());
 					return false;
 				}
-				$this->getLoader()->getCloneStorer()->pasteCopy($sender);
-			$sender->sendMessage(TF::GREEN . (new Translation(Translation::COMMANDS_PASTE_COPY_SUCCESS))->getMessage());
+				SessionManager::getPlayerSession($sender)->getCloneStorer()->pasteCopy($sender->getTargetBlock(100));
+				$sender->sendMessage(TF::GREEN . (new Translation(Translation::COMMANDS_PASTE_COPY_SUCCESS))->getMessage());
 				break;
 
 			case "template":
-				if(!$this->getLoader()->getCloneStorer()->templateExists($args[1])) {
+				if(!SessionManager::getPlayerSession($sender)->getCloneStorer()->templateExists($args[1])) {
 					$sender->sendMessage($this->getWarning() . (new Translation(Translation::COMMANDS_PASTE_TEMPLATE_NONEXISTENT, [$args[1]]))->getMessage());
 					return false;
 				}
-				$this->getLoader()->getCloneStorer()->pasteTemplate($args[1], $center, $sender);
+				SessionManager::getPlayerSession($sender)->getCloneStorer()->pasteTemplate($args[1], $center);
 				$sender->sendMessage(TF::GREEN . (new Translation(Translation::COMMANDS_PASTE_TEMPLATE_SUCCESS, [$args[1]]))->getMessage());
 				break;
 
@@ -68,11 +69,10 @@ class PasteCommand extends BaseCommand {
 						$touchedChunks[Level::chunkHash($x >> 4, $z >> 4)] = $chunk->fastSerialize();
 					}
 				}
-				$this->getLoader()->getCloneStorer()->pasteSchematic($file, $sender->getTargetBlock(100)->asVector3(), $touchedChunks, $sender);
+				SessionManager::getPlayerSession($sender)->getCloneStorer()->pasteSchematic($file, $sender->getTargetBlock(100)->asVector3(), $touchedChunks);
 				$sender->sendMessage(TF::GREEN . (new Translation(Translation::COMMANDS_PASTE_SCHEMATIC_SUCCESS, [$args[1]]))->getMessage());
 				break;
 		}
-
 		return true;
 	}
 }

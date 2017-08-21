@@ -78,7 +78,7 @@ abstract class BaseShape {
 	 */
 	public static function getShapes(): array {
 		return [
-			"Sphere",
+			"Shape",
 			"Cube",
 			"Cuboid",
 			"Standing Cylinder"

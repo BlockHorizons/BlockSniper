@@ -6,7 +6,8 @@ namespace BlockHorizons\BlockSniper\brush\async\tasks;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\Loader;
-use BlockHorizons\BlockSniper\undo\Undo;
+use BlockHorizons\BlockSniper\sessions\SessionManager;
+use BlockHorizons\BlockSniper\undo\async\AsyncUndo;
 use libschematic\Schematic;
 use pocketmine\block\Block;
 use pocketmine\level\format\Chunk;
@@ -43,6 +44,7 @@ class PasteTask extends AsyncBlockSniperTask {
 		$schematic->fixBlockIds();
 
 		$processedBlocks = 0;
+		$undoChunks = clone $chunks;
 		foreach($chunks as $hash => $data) {
 			$chunks[$hash] = Chunk::fastDeserialize($data);
 		}
@@ -56,10 +58,6 @@ class PasteTask extends AsyncBlockSniperTask {
 			$vector3 = $center->add($block->x - floor($schematic->getWidth() / 2), $block->y, $block->z - floor($schematic->getLength() / 2));
 			$index = Level::chunkHash($vector3->x >> 4, $vector3->z >> 4);
 			if(isset($chunks[$index])) {
-				$undoBlock = Block::get($manager->getBlockIdAt((int) $vector3->x, (int) $vector3->y, (int) $vector3->z), $manager->getBlockDataAt((int) $vector3->x, (int) $vector3->y, (int) $vector3->z));
-				$undoBlock->setComponents($vector3->x, $vector3->y, $vector3->z);
-				$undoBlocks[] = $undoBlock;
-
 				$manager->setBlockIdAt((int) $vector3->x, (int) $vector3->y, (int) $vector3->z, $block->getId());
 				$manager->setBlockDataAt((int) $vector3->x, (int) $vector3->y, (int) $vector3->z, $block->getDamage());
 
@@ -77,8 +75,8 @@ class PasteTask extends AsyncBlockSniperTask {
 		unset($chunk);
 
 		$this->setResult([
-			"undoBlocks" => serialize($undoBlocks),
-			"chunks" => serialize($serializedChunks)
+			"undoChunks" => $undoChunks,
+			"chunks" => $serializedChunks
 		]);
 	}
 
@@ -100,12 +98,12 @@ class PasteTask extends AsyncBlockSniperTask {
 			return false;
 		}
 		$result = $this->getResult();
-		$chunks = unserialize($result["chunks"]);
+		$chunks = $result["chunks"];
 		foreach($chunks as &$chunk) {
 			$chunk = Chunk::fastDeserialize($chunk);
 		}
 		unset($chunk);
-		$undoBlocks = unserialize($result["undoBlocks"]);
+		$undoChunks = $result["undoChunks"];
 		$level = $player->getLevel();
 		if($level instanceof Level) {
 			foreach($chunks as $hash => $chunk) {
@@ -114,7 +112,7 @@ class PasteTask extends AsyncBlockSniperTask {
 				$level->setChunk($x, $z, $chunk);
 			}
 		}
-		$loader->getRevertStorer()->saveRevert((new Undo($undoBlocks))->setPlayerName($player->getName())->setTouchedChunks($chunks), $player);
+		SessionManager::getPlayerSession($player)->getRevertStorer()->saveRevert(new AsyncUndo($undoChunks, $this->playerName, $player->getLevel()->getId()));
 		return true;
 	}
 

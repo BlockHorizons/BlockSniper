@@ -106,7 +106,7 @@ permissions:
                     blocksniper.shape.cuboid:
                         default: op
                         description: "Allows access to the cuboid shape."
-                    blocksniper.shape.standingcylinder:
+                    blocksniper.shape.cylinder:
                         default: op
                         description: "Allows access to the standing cylinder shape."
                     blocksniper.shape.cube:

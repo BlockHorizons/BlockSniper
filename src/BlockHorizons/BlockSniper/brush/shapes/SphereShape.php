@@ -6,6 +6,7 @@ namespace BlockHorizons\BlockSniper\brush\shapes;
 
 use BlockHorizons\BlockSniper\brush\BaseShape;
 use BlockHorizons\BlockSniper\brush\BrushManager;
+use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\math\Vector3;
@@ -20,13 +21,13 @@ class SphereShape extends BaseShape {
 	/** @var int */
 	protected $id = self::SHAPE_SPHERE;
 
-	public function __construct(Player $player, Level $level, int $radius = null, Position $center = null, bool $hollow = false, bool $cloneShape = false) {
+	public function __construct(Player $player, Level $level, int $radius, Position $center, bool $hollow = false, bool $cloneShape = false) {
 		parent::__construct($player, $level, $center, $hollow);
 		$this->radius = $radius;
 		if($cloneShape) {
 			$this->center[1] += $this->radius;
 		}
-		$this->trueSphere = BrushManager::get($player)->getPerfect();
+		$this->trueSphere = SessionManager::getPlayerSession($player)->getBrush()->getPerfect();
 	}
 
 	/**

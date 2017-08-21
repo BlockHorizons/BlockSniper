@@ -4,168 +4,125 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\undo;
 
-use BlockHorizons\BlockSniper\Loader;
-use pocketmine\Player;
-
 class RevertStorer {
 
-	/** @var Undo[][] */
+	/** @var IUndo[] */
 	private $undoStack = [];
-
-	/** @var Redo[][] */
+	/** @var int */
+	private $maxRevertStores = 15;
+	/** @var IRedo[][] */
 	private $redoStack = [];
-	/** @var array */
-	private $lastUndo = [];
-	/** @var array */
-	private $lastRedo = [];
-	/** @var Loader */
-	private $loader = null;
 
-	public function __construct(Loader $loader) {
-		$this->loader = $loader;
+	/** @var int */
+	private $lastUndo = 0;
+	/** @var int */
+	private $lastRedo = 0;
+
+	public function __construct(int $maxRevertStores) {
+		$this->maxRevertStores = $maxRevertStores;
 	}
 
 	/**
-	 * @param int    $type
-	 * @param int    $amount
-	 * @param Player $player
+	 * @param int $type
+	 * @param int $amount
 	 */
-	public function restoreLatestRevert(int $type, int $amount, Player $player) {
+	public function restoreLatestRevert(int $type, int $amount) {
 		for($i = 0; $i < $amount; $i++) {
 			if($type === Revert::TYPE_UNDO) {
-				$revert = $this->undoStack[$player->getName()][max(array_keys($this->undoStack[$player->getName()]))];
+				$revert = $this->undoStack[max(array_keys($this->undoStack))];
 			} else {
-				$revert = $this->redoStack[$player->getName()][max(array_keys($this->redoStack[$player->getName()]))];
+				$revert = $this->redoStack[max(array_keys($this->redoStack))];
 			}
 			$detached = $revert->getDetached();
-			$this->saveRevert($detached, $player);
+			$this->saveRevert($detached);
 			$revert->restore();
-			$this->unsetLatestRevert($player, $type);
+			$this->unsetLatestRevert($type);
 		}
 	}
 
 	/**
 	 * @param Revert $revert
-	 * @param Player $player
 	 */
-	public function saveRevert(Revert $revert, Player $player) {
-		$type = $revert instanceof Undo ? Revert::TYPE_UNDO : Revert::TYPE_REDO;
-		if($this->getTotalStores($player, $type) === $this->getLoader()->getSettings()->getMaxUndoStores()) {
-			$this->unsetOldestRevert($player, $type);
+	public function saveRevert(Revert $revert) {
+		$type = $revert instanceof IUndo ? Revert::TYPE_UNDO : Revert::TYPE_REDO;
+		if($this->getTotalStores($type) === $this->maxRevertStores) {
+			$this->unsetOldestRevert($type);
 		}
 		if($type === Revert::TYPE_UNDO) {
-			$this->undoStack[$player->getName()][] = $revert;
-			$this->lastUndo[$player->getName()] = time();
+			$this->undoStack[] = $revert;
+			$this->lastUndo = time();
 		} else {
-			$this->redoStack[$player->getName()][] = $revert;
-			$this->lastRedo[$player->getName()] = time();
+			$this->redoStack[] = $revert;
+			$this->lastRedo = time();
 		}
 	}
 
 	/**
-	 * @param Player $player
-	 * @param int    $type
+	 * @param int $type
 	 *
 	 * @return int
 	 */
-	public function getTotalStores(Player $player, int $type): int {
+	public function getTotalStores(int $type): int {
 		if($type === Revert::TYPE_UNDO) {
-			if(!isset($this->undoStack[$player->getName()])) {
-				return 0;
-			}
-			return count($this->undoStack[$player->getName()]);
+			return count($this->undoStack);
 		}
-		if(!isset($this->redoStack[$player->getName()])) {
-			return 0;
-		}
-		return count($this->redoStack[$player->getName()]);
+		return count($this->redoStack);
 	}
 
 	/**
-	 * @return Loader
+	 * @param int $type
 	 */
-	public function getLoader(): Loader {
-		return $this->loader;
-	}
-
-	/**
-	 * @param Player $player
-	 * @param int    $type
-	 *
-	 */
-	public function unsetOldestRevert(Player $player, int $type) {
+	public function unsetOldestRevert(int $type) {
 		if($type === Revert::TYPE_UNDO) {
-			unset($this->undoStack[$player->getName()][min(array_keys($this->undoStack[$player->getName()]))]);
+			unset($this->undoStack[min(array_keys($this->undoStack))]);
 		} else {
-			unset($this->redoStack[$player->getName()][min(array_keys($this->undoStack[$player->getName()]))]);
+			unset($this->redoStack[min(array_keys($this->undoStack))]);
 		}
 	}
 
 	/**
-	 * @param Player $player
-	 * @param int    $type
-	 *
+	 * @param int $type
 	 */
-	public function unsetLatestRevert(Player $player, int $type) {
+	public function unsetLatestRevert(int $type) {
 		if($type === Revert::TYPE_UNDO) {
-			unset($this->undoStack[$player->getName()][max(array_keys($this->undoStack[$player->getName()]))]);
+			unset($this->undoStack[max(array_keys($this->undoStack))]);
 		} else {
-			unset($this->redoStack[$player->getName()][max(array_keys($this->undoStack[$player->getName()]))]);
+			unset($this->redoStack[max(array_keys($this->undoStack))]);
 		}
 	}
 
 	public function resetStorage() {
 		$this->undoStack = [];
 		$this->redoStack = [];
-		$this->lastUndo = [];
-		$this->lastRedo = [];
+		$this->lastUndo = 0;
+		$this->lastRedo = 0;
 	}
 
 	/**
-	 * @param Player $player
-	 *
 	 * @return bool
 	 */
-	public function undoStorageExists(Player $player): bool {
-		if(!isset($this->undoStack[$player->getName()])) {
-			return false;
-		}
-		if(!is_array($this->undoStack[$player->getName()]) || empty($this->undoStack[$player->getName()])) {
-			return false;
-		}
-		return true;
+	public function undoStorageExists(): bool {
+		return !empty($this->undoStack);
 	}
 
 	/**
-	 * @param Player $player
-	 *
 	 * @return bool
 	 */
-	public function redoStorageExists(Player $player): bool {
-		if(!isset($this->redoStack[$player->getName()])) {
-			return false;
-		}
-		if(!is_array($this->redoStack[$player->getName()]) || empty($this->redoStack[$player->getName()])) {
-			return false;
-		}
-		return true;
+	public function redoStorageExists(): bool {
+		return !empty($this->redoStack);
 	}
 
 	/**
-	 * @param Player $player
-	 *
 	 * @return int
 	 */
-	public function getLastUndoActivity(Player $player): int {
-		return (time() - $this->lastUndo[$player->getName()]);
+	public function getLastUndoActivity(): int {
+		return (time() - $this->lastUndo);
 	}
 
 	/**
-	 * @param Player $player
-	 *
 	 * @return int
 	 */
-	public function getLastRedoActivity(Player $player): int {
-		return (time() - $this->lastRedo[$player->getName()]);
+	public function getLastRedoActivity(): int {
+		return (time() - $this->lastRedo);
 	}
 }

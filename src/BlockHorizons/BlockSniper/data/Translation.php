@@ -1,7 +1,8 @@
 <?php
 
-namespace BlockHorizons\BlockSniper\data;
+declare(strict_types = 1);
 
+namespace BlockHorizons\BlockSniper\data;
 
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\Server;

@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
-use pocketmine\block\Block;
 use pocketmine\level\ChunkManager;
 use pocketmine\level\Position;
 use pocketmine\math\Vector3;
@@ -15,7 +14,7 @@ class LayerType extends BaseType {
 
 	/** @var int */
 	protected $id = self::TYPE_LAYER;
-	/** @var Block */
+	/** @var Vector3 */
 	protected $center;
 
 	/*
@@ -23,7 +22,7 @@ class LayerType extends BaseType {
 	 */
 	public function __construct(Player $player, ChunkManager $level, array $blocks) {
 		parent::__construct($player, $level, $blocks);
-		$this->center = $player->getTargetBlock(100);
+		$this->center = $player->getTargetBlock(100)->asVector3();
 	}
 
 	/**

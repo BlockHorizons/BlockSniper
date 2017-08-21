@@ -4,6 +4,9 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\undo;
 
-class Redo extends Revert {
+interface IRedo {
 
+	public function getDetached();
+
+	public function restore();
 }

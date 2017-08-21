@@ -17,7 +17,7 @@ class CubeShape extends BaseShape {
 	/** @var int */
 	protected $id = self::SHAPE_CUBE;
 
-	public function __construct(Player $player, Level $level, int $width = null, Position $center = null, bool $hollow = false, bool $cloneShape = false) {
+	public function __construct(Player $player, Level $level, int $width, Position $center, bool $hollow = false, bool $cloneShape = false) {
 		parent::__construct($player, $level, $center, $hollow);
 		$this->width = $width;
 		if($cloneShape) {

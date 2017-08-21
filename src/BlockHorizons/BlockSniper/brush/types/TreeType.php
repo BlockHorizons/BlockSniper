@@ -5,11 +5,12 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
-use BlockHorizons\BlockSniper\brush\BrushManager;
+use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\block\Block;
 use pocketmine\block\Flowable;
 use pocketmine\level\ChunkManager;
 use pocketmine\level\generator\object\Tree;
+use pocketmine\math\Vector3;
 use pocketmine\Player;
 use pocketmine\utils\Random;
 
@@ -17,7 +18,7 @@ class TreeType extends BaseType {
 
 	/** @var int */
 	protected $id = self::TYPE_TREE;
-	/** @var Block */
+	/** @var Vector3 */
 	protected $center;
 	/** @var int */
 	protected $tree = 0;
@@ -27,8 +28,8 @@ class TreeType extends BaseType {
 	 */
 	public function __construct(Player $player, ChunkManager $level, array $blocks) {
 		parent::__construct($player, $level, $blocks);
-		$this->center = $player->getTargetBlock(100);
-		$this->tree = BrushManager::get($player)->getTreeType();
+		$this->center = $player->getTargetBlock(100)->asVector3();
+		$this->tree = SessionManager::getPlayerSession($player)->getBrush()->getTreeType();
 	}
 
 	/**

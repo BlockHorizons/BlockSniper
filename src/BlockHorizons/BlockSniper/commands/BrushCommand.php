@@ -27,9 +27,6 @@ class BrushCommand extends BaseCommand {
 			$this->sendConsoleError($sender);
 			return false;
 		}
-
-		$this->getLoader()->getBrushManager()->createBrush($sender);
-
 		$windowHandler = new WindowHandler();
 		$packet = new ModalFormRequestPacket();
 		$packet->formId = $windowHandler->getWindowIdFor(WindowHandler::WINDOW_MAIN_MENU);

@@ -6,9 +6,9 @@ namespace BlockHorizons\BlockSniper\brush\async\tasks;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\Loader;
-use BlockHorizons\BlockSniper\undo\Redo;
+use BlockHorizons\BlockSniper\sessions\SessionManager;
+use BlockHorizons\BlockSniper\undo\async\AsyncRevert;
 use BlockHorizons\BlockSniper\undo\Revert;
-use BlockHorizons\BlockSniper\undo\Undo;
 use pocketmine\level\format\Chunk;
 use pocketmine\level\Level;
 use pocketmine\Server;
@@ -20,22 +20,22 @@ class RevertTask extends AsyncBlockSniperTask {
 	/** @var string */
 	private $revert = "";
 
-	public function __construct(Revert $revert) {
-		$revert->secureAsyncBlocks();
+	public function __construct(AsyncRevert $revert, Server $server) {
 		$this->revert = serialize($revert);
 	}
 
 	public function onRun() {
-		/** @var Undo|Redo $revert */
+		/** @var AsyncRevert $revert */
 		$revert = unserialize($this->revert);
-		$chunks = $revert->getTouchedChunks();
-		$revert->setManager(BaseType::establishChunkManager($chunks));
+		$chunks = $revert->getModifiedChunks();
+		$revert->setManager($manager = BaseType::establishChunkManager($chunks));
 
 		$detached = $revert->getDetached();
-		$revert->restore($this);
+		$revert->restore();
+
 		$this->setResult([
-			"chunks" => serialize($chunks),
-			"revert" => serialize($detached)
+			"chunks" => $chunks,
+			"revert" => $detached
 		]);
 	}
 
@@ -55,12 +55,12 @@ class RevertTask extends AsyncBlockSniperTask {
 		}
 		$result = $this->getResult();
 		/** @var Revert $revert */
-		$revert = unserialize($result["revert"]);
+		$revert = $result["revert"];
 		if(!($player = $server->getPlayer($revert->getPlayerName()))) {
 			return false;
 		}
 		/** @var Chunk[] $chunks */
-		$chunks = unserialize($result["chunks"]);
+		$chunks = $result["chunks"];
 		$levelId = $player->getLevel()->getId();
 		$level = $server->getLevel($levelId);
 		if($level instanceof Level) {
@@ -70,7 +70,7 @@ class RevertTask extends AsyncBlockSniperTask {
 				$level->setChunk($x, $z, $chunk);
 			}
 		}
-		$loader->getRevertStorer()->saveRevert($revert, $player);
+		SessionManager::getPlayerSession($player)->getRevertStorer()->saveRevert($revert);
 		return true;
 	}
 

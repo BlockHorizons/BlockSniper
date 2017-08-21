@@ -1,172 +1,22 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockSniper\undo;
 
-use BlockHorizons\BlockSniper\brush\async\BlockSniperChunkManager;
-use BlockHorizons\BlockSniper\brush\async\tasks\RevertTask;
-use pocketmine\block\Block;
-use pocketmine\level\format\Chunk;
-use pocketmine\Server;
+use BlockHorizons\BlockSniper\undo\async\AsyncRevert;
+use BlockHorizons\BlockSniper\undo\sync\SyncRevert;
 
 abstract class Revert {
 
 	const TYPE_UNDO = 0;
 	const TYPE_REDO = 1;
 
-	/** @var Block[] */
-	protected $blocks = [];
-	/** @var bool */
-	protected $isAsync = false;
-	/** @var BlockSniperChunkManager|null */
-	protected $manager = null;
-	/** @var string[] */
-	protected $touchedChunks = [];
-	/** @var bool */
-	protected $scheduled = false;
 	/** @var string */
-	private $playerName = "";
+	protected $playerName = "";
 
-	/**
-	 * @param array                        $blocks
-	 * @param BlockSniperChunkManager|null $manager
-	 * @param Chunk[]                      $touchedChunks
-	 * @param string                       $playerName
-	 */
-	public function __construct(array $blocks, BlockSniperChunkManager $manager = null, array $touchedChunks = [], string $playerName = "") {
-		$this->blocks = $blocks;
-		if(($this->manager = $manager) !== null) {
-			$this->isAsync = true;
-		}
-		foreach($touchedChunks as $index => $chunk) {
-			$this->touchedChunks[$index] = $chunk->fastSerialize();
-		}
+	public function __construct(string $playerName) {
 		$this->playerName = $playerName;
-	}
-
-	/**
-	 * @param RevertTask|null $task
-	 */
-	public function restore(RevertTask $task = null) {
-		if($this->isAsynchronous() && $task !== null) {
-			if(!$this->scheduled) {
-				$this->scheduleAsynchronous();
-				return;
-			}
-			$processedBlocks = 0;
-			$i = 0;
-			foreach($this->blocks as $block) {
-				if($i++ === (int) ($this->getBlockCount() / 100)) {
-					$task->publishProgress(round($processedBlocks / $this->getBlockCount() * 100) . "%");
-					$i = 0;
-				}
-				$this->getManager()->setBlockIdAt($block->x, $block->y, $block->z, $block->getId());
-				$this->getManager()->setBlockDataAt($block->x, $block->y, $block->z, $block->getDamage());
-				$processedBlocks++;
-			}
-		} else {
-			foreach($this->blocks as $block) {
-				$block->getLevel()->setBlock($block, $block, false, false);
-			}
-		}
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function isAsynchronous(): bool {
-		return $this->isAsync;
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function scheduleAsynchronous(): bool {
-		if(!$this->isAsynchronous()) {
-			return false;
-		}
-		if(empty($this->touchedChunks)) {
-			return false;
-		}
-		$this->secureAsyncBlocks();
-		$this->scheduled = true;
-		Server::getInstance()->getScheduler()->scheduleAsyncTask(new RevertTask($this));
-		return true;
-	}
-
-	/**
-	 * @return $this
-	 */
-	public function secureAsyncBlocks(): Revert {
-		foreach($this->blocks as &$block) {
-			$block = Block::get($block->getId(), $block->getDamage())->setComponents($block->x, $block->y, $block->z);
-		}
-		return $this;
-	}
-
-	/**
-	 * @return int
-	 */
-	public function getBlockCount(): int {
-		return count($this->blocks);
-	}
-
-	/**
-	 * @return BlockSniperChunkManager
-	 */
-	public function getManager(): BlockSniperChunkManager {
-		return $this->manager;
-	}
-
-	/**
-	 * @param BlockSniperChunkManager $manager
-	 *
-	 * @return $this
-	 */
-	public function setManager(BlockSniperChunkManager $manager): Revert {
-		$this->manager = $manager;
-
-		return $this;
-	}
-
-	/**
-	 * @return Block[]
-	 */
-	public function getBlocks(): array {
-		return $this->blocks;
-	}
-
-	/**
-	 * @param array $blocks
-	 *
-	 * @return $this
-	 */
-	public function setBlocks(array $blocks): Revert {
-		$this->blocks = $blocks;
-
-		return $this;
-	}
-
-	/**
-	 * @return Revert
-	 */
-	public function getDetached(): Revert {
-		$blocks = [];
-		if($this->isAsynchronous() || $this->manager !== null) {
-			foreach($this->blocks as $block) {
-				$currentBlock = Block::get($this->getManager()->getBlockIdAt($block->x, $block->y, $block->z), $this->getManager()->getBlockDataAt($block->x, $block->y, $block->z));
-				$currentBlock->setComponents($block->x, $block->y, $block->z);
-				$blocks[] = $currentBlock;
-			}
-		} else {
-			foreach($this->blocks as $block) {
-				$blocks[] = $block->getLevel()->getBlock($block);
-			}
-		}
-		$this instanceof Undo ? $revert = new Redo($blocks) : $revert = new Undo($blocks);
-		if($this->isAsynchronous()) {
-			$revert->setAsynchronous()->setManager($this->getManager())->setPlayerName($this->getPlayerName())->setTouchedChunks($this->getTouchedChunks());
-		}
-		return $revert;
 	}
 
 	/**
@@ -179,48 +29,16 @@ abstract class Revert {
 	/**
 	 * @param string $name
 	 *
-	 * @return $this
+	 * @return Revert
 	 */
-	public function setPlayerName(string $name): Revert {
+	public function setPlayerName(string $name): self {
 		$this->playerName = $name;
 
 		return $this;
 	}
 
 	/**
-	 * @return Chunk[]
+	 * @return SyncRevert|AsyncRevert
 	 */
-	public function getTouchedChunks(): array {
-		$chunks = [];
-		foreach($this->touchedChunks as $index => $chunk) {
-			$chunks[$index] = Chunk::fastDeserialize($chunk);
-		}
-		return $chunks;
-	}
-
-	/**
-	 * @param Chunk[] $chunks
-	 *
-	 * @return $this
-	 */
-	public function setTouchedChunks(array $chunks): Revert {
-		foreach($chunks as $index => &$chunk) {
-			$chunk = $chunk->fastSerialize();
-		}
-		unset($chunk);
-		$this->touchedChunks = $chunks;
-
-		return $this;
-	}
-
-	/**
-	 * @param bool $value
-	 *
-	 * @return $this
-	 */
-	public function setAsynchronous(bool $value = true): Revert {
-		$this->isAsync = $value;
-
-		return $this;
-	}
+	public abstract function getDetached();
 }

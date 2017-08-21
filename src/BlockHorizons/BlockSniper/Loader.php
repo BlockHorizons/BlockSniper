@@ -4,8 +4,6 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper;
 
-use BlockHorizons\BlockSniper\brush\BrushManager;
-use BlockHorizons\BlockSniper\cloning\CloneStorer;
 use BlockHorizons\BlockSniper\commands\BlockSniperCommand;
 use BlockHorizons\BlockSniper\commands\BrushCommand;
 use BlockHorizons\BlockSniper\commands\cloning\CloneCommand;
@@ -20,7 +18,6 @@ use BlockHorizons\BlockSniper\listeners\BrushListener;
 use BlockHorizons\BlockSniper\listeners\UserInterfaceListener;
 use BlockHorizons\BlockSniper\presets\PresetManager;
 use BlockHorizons\BlockSniper\tasks\UndoDiminishTask;
-use BlockHorizons\BlockSniper\undo\RevertStorer;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat as TF;
 
@@ -42,17 +39,10 @@ class Loader extends PluginBase {
 	];
 	/** @var TranslationData */
 	public $language = null;
-
-	/** @var RevertStorer */
-	private $revertStorer = null;
-	/** @var CloneStorer */
-	private $cloneStorer = null;
-	/** @var ConfigData */
-	private $settings = null;
-	/** @var BrushManager */
-	private $brushManager = null;
 	/** @var PresetManager */
 	private $presetManager = null;
+	/** @var ConfigData */
+	protected $settings = null;
 
 	/**
 	 * @return array
@@ -75,12 +65,7 @@ class Loader extends PluginBase {
 		$this->saveResource("settings.yml");
 		$this->settings = new ConfigData($this);
 		$this->language = new TranslationData($this);
-
 		$this->presetManager = new PresetManager($this);
-		$this->brushManager = new BrushManager($this);
-
-		$this->revertStorer = new RevertStorer($this);
-		$this->cloneStorer = new CloneStorer($this);
 
 		if(!is_dir($this->getDataFolder())) {
 			mkdir($this->getDataFolder());
@@ -93,6 +78,10 @@ class Loader extends PluginBase {
 		}
 		if(!is_dir($this->getDataFolder() . "languages/")) {
 			mkdir($this->getDataFolder() . "languages/");
+		}
+		if(!is_dir($this->getDataFolder() . "sessions/")) {
+			mkdir($this->getDataFolder() . "sessions/");
+			file_put_contents($this->getDataFolder() . "sessions/players.json", "");
 		}
 
 		if(!$this->language->collectTranslations()) {
@@ -143,7 +132,6 @@ class Loader extends PluginBase {
 
 	public function onDisable() {
 		$this->getPresetManager()->storePresetsToFile();
-		$this->getBrushManager()->storeBrushesToFile();
 		$this->getSettings()->save();
 	}
 
@@ -155,30 +143,9 @@ class Loader extends PluginBase {
 	}
 
 	/**
-	 * @return BrushManager
-	 */
-	public function getBrushManager(): BrushManager {
-		return $this->brushManager;
-	}
-
-	/**
-	 * @return CloneStorer
-	 */
-	public function getCloneStorer(): CloneStorer {
-		return $this->cloneStorer;
-	}
-
-	/**
 	 * @return TranslationData
 	 */
 	public function getTranslationData(): TranslationData {
 		return $this->language;
-	}
-
-	/**
-	 * @return RevertStorer
-	 */
-	public function getRevertStorer(): RevertStorer {
-		return $this->revertStorer;
 	}
 }
