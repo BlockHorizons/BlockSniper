@@ -39,7 +39,7 @@ class Preset {
 	 * @param Player $player
 	 * @param Loader $loader
 	 */
-	public function apply(Player $player, Loader $loader) {
+	public function apply(Player $player, Loader $loader): void {
 		$processor = new PropertyProcessor($player, $loader);
 		foreach($this->data as $index => $value) {
 			$processor->process($index - 1, $value);

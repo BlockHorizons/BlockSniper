@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\commands;
 
-use BlockHorizons\BlockSniper\brush\BrushParameters;
 use BlockHorizons\BlockSniper\Loader;
 
 class CommandOverloads {
@@ -21,7 +20,7 @@ class CommandOverloads {
 		return self::$commandOverloads[$blockSniperCommand];
 	}
 
-	public static function initialize() {
+	public static function initialize(): void {
 		self::$commandOverloads = [
 			"brush" => [
 

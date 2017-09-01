@@ -15,7 +15,7 @@ abstract class SyncRevert extends Revert {
 		$this->blocks = $blocks;
 	}
 
-	public function restore() {
+	public function restore(): void {
 		foreach($this->blocks as $block) {
 			$block->getLevel()->setBlock($block, $block, false, false);
 		}

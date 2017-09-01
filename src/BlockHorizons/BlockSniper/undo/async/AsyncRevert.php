@@ -77,7 +77,7 @@ abstract class AsyncRevert extends Revert {
 		return $this;
 	}
 
-	public function restore() {
+	public function restore(): void {
 		Server::getInstance()->getScheduler()->scheduleAsyncTask(new RevertTask($this, Server::getInstance()));
 	}
 

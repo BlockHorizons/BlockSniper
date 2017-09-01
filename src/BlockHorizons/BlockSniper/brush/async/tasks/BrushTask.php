@@ -31,7 +31,7 @@ class BrushTask extends AsyncBlockSniperTask {
 		$this->chunks = serialize($chunks);
 	}
 
-	public function onRun() {
+	public function onRun(): void {
 		$chunks = unserialize($this->chunks);
 		$processedBlocks = 0;
 		$type = $this->type;
@@ -55,6 +55,9 @@ class BrushTask extends AsyncBlockSniperTask {
 				$processedBlocks++;
 			}
 			if(++$i === (int) ($shape->getApproximateProcessedBlocks() / 100)) { // This is messed up with hollow shapes. Got to find a fix for that.
+				if($this->isAborted()) {
+					return;
+				}
 				$this->publishProgress(ceil($processedBlocks / $shape->getApproximateProcessedBlocks() * 100) . "%");
 				$i = 0;
 			}
@@ -110,23 +113,5 @@ class BrushTask extends AsyncBlockSniperTask {
 		}
 		SessionManager::getPlayerSession($player)->getRevertStorer()->saveRevert(new AsyncUndo($undoChunks, $player->getName(), $player->getLevel()->getId()));
 		return true;
-	}
-
-	/**
-	 * @param Server $server
-	 * @param mixed  $progress
-	 *
-	 * @return bool
-	 */
-	public function onProgressUpdate(Server $server, $progress): bool {
-		$loader = $server->getPluginManager()->getPlugin("BlockSniper");
-		if($loader instanceof Loader) {
-			if($loader->isEnabled()) {
-				$loader->getLogger()->debug($progress);
-				return true;
-			}
-		}
-		$this->setGarbage();
-		return false;
 	}
 }

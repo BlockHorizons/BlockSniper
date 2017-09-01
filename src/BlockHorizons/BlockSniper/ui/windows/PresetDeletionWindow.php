@@ -8,7 +8,7 @@ use BlockHorizons\BlockSniper\data\Translation;
 
 class PresetDeletionWindow extends Window {
 
-	public function process() {
+	public function process(): void {
 		$this->data = [
 			"type" => "form",
 			"title" => (new Translation(Translation::UI_PRESET_DELETION_TITLE))->getMessage(),

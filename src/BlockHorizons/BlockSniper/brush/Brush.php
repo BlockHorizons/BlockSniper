@@ -63,14 +63,14 @@ class Brush {
 	/**
 	 * @param int $offset
 	 */
-	public function setYOffset(int $offset) {
+	public function setYOffset(int $offset): void {
 		$this->yOffset = $offset;
 	}
 
 	/**
 	 * @param bool $value
 	 */
-	public function setDecrementing(bool $value) {
+	public function setDecrementing(bool $value): void {
 		$this->decrement = $value;
 	}
 
@@ -91,7 +91,7 @@ class Brush {
 	/**
 	 * @param bool $value
 	 */
-	public function setPerfect(bool $value) {
+	public function setPerfect(bool $value): void {
 		$this->perfect = $value;
 	}
 
@@ -116,7 +116,7 @@ class Brush {
 	/**
 	 * @param array $blocks
 	 */
-	public function setObsolete(array $blocks) {
+	public function setObsolete(array $blocks): void {
 		$this->obsolete = $blocks;
 	}
 
@@ -141,7 +141,7 @@ class Brush {
 	/**
 	 * @param array $blocks
 	 */
-	public function setBlocks(array $blocks) {
+	public function setBlocks(array $blocks): void {
 		$this->blocks = $blocks;
 	}
 
@@ -163,7 +163,7 @@ class Brush {
 	/**
 	 * @param string $shape
 	 */
-	public function setShape(string $shape) {
+	public function setShape(string $shape): void {
 		$this->shape = $shape;
 	}
 
@@ -177,7 +177,7 @@ class Brush {
 	/**
 	 * @param int $size
 	 */
-	public function setSize(int $size) {
+	public function setSize(int $size): void {
 		$this->size = $size;
 	}
 
@@ -191,7 +191,7 @@ class Brush {
 	/**
 	 * @param bool $value
 	 */
-	public function setHollow(bool $value) {
+	public function setHollow(bool $value): void {
 		$this->hollow = $value;
 	}
 
@@ -205,7 +205,7 @@ class Brush {
 	/**
 	 * @param int $height
 	 */
-	public function setHeight(int $height) {
+	public function setHeight(int $height): void {
 		$this->height = $height;
 	}
 
@@ -224,14 +224,14 @@ class Brush {
 	/**
 	 * @param string $type
 	 */
-	public function setType(string $type) {
+	public function setType(string $type): void {
 		$this->type = $type;
 	}
 
 	/**
 	 * @param mixed $biome
 	 */
-	public function setBiome($biome) {
+	public function setBiome($biome): void {
 		$this->biome = $biome;
 	}
 
@@ -254,7 +254,7 @@ class Brush {
 	/**
 	 * @param $treeType
 	 */
-	public function setTree($treeType) {
+	public function setTree($treeType): void {
 		$this->tree = $treeType;
 	}
 

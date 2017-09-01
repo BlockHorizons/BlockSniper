@@ -122,6 +122,27 @@ class Translation {
 	const LOG_PRESETS_ALL_LOADED = "log.presets.all-loaded";
 	const LOG_RELOAD_START = "log.reload.start";
 	const LOG_RELOAD_FINISH = "log.reload.finish";
+	const BRUSH_SHAPE_CUBE = "brush.shape.cube";
+	const BRUSH_SHAPE_CUBOID = "brush.shape.cuboid";
+	const BRUSH_SHAPE_SPHERE = "brush.shape.sphere";
+	const BRUSH_SHAPE_CYLINDER = "brush.shape.cylinder";
+	const BRUSH_TYPE_BIOME = "brush.type.biome";
+	const BRUSH_TYPE_CLEANENTITIES = "brush.type.cleanentities";
+	const BRUSH_TYPE_CLEAN = "brush.type.clean";
+	const BRUSH_TYPE_DRAIN = "brush.type.drain";
+	const BRUSH_TYPE_EXPAND = "brush.type.expand";
+	const BRUSH_TYPE_FILL = "brush.type.fill";
+	const BRUSH_TYPE_FLATTENALL = "brush.type.flattenall";
+	const BRUSH_TYPE_FLATTEN = "brush.type.flatten";
+	const BRUSH_TYPE_LAYER = "brush.type.layer";
+	const BRUSH_TYPE_LEAFBLOWER = "brush.type.leafblower";
+	const BRUSH_TYPE_MELT = "brush.type.melt";
+	const BRUSH_TYPE_OVERLAY = "brush.type.overlay";
+	const BRUSH_TYPE_REPLACEALL = "brush.type.replaceall";
+	const BRUSH_TYPE_REPLACE = "brush.type.replace";
+	const BRUSH_TYPE_SNOWCONE = "brush.type.snowcone";
+	const BRUSH_TYPE_TOPLAYER = "brush.type.toplayer";
+	const BRUSH_TYPE_TREE = "brush.type.tree";
 
 	/** @var string */
 	private $key = "";

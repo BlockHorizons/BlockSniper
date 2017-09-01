@@ -47,7 +47,7 @@ class ConfigData {
 		$this->collectSettings();
 	}
 
-	public function collectSettings() {
+	public function collectSettings(): void {
 		$cfg = yaml_parse_file($this->getLoader()->getDataFolder() . "settings.yml");
 		$this->settings = @[
 			-1 => $cfg["Configuration-Version"],
@@ -92,7 +92,7 @@ class ConfigData {
 		return $this->loader;
 	}
 
-	public function updateConfig() {
+	public function updateConfig(): void {
 		unlink($this->getLoader()->getDataFolder() . "settings.yml");
 		$this->settings[self::OPTION_VERSION] = Loader::CONFIGURATION_VERSION;
 		yaml_emit_file($this->getLoader()->getDataFolder() . "settings.yml", $this->settings);
@@ -161,7 +161,7 @@ class ConfigData {
 	 */
 	public function get(string $key) {
 		if(isset($this->settings[$key])) {
-			return $this->settings[$key];
+			return (string) $this->settings[$key];
 		}
 		return null;
 	}
@@ -170,7 +170,7 @@ class ConfigData {
 	 * @param int $key
 	 * @param        $value
 	 */
-	public function set(int $key, $value) {
+	public function set(int $key, $value): void {
 		$this->settings[$key] = $value;
 	}
 
@@ -188,7 +188,7 @@ class ConfigData {
 		return (bool) $this->settings[self::OPTION_AUTO_UPDATE_CONFIG];
 	}
 
-	public function save() {
+	public function save(): void {
 		yaml_emit_file($this->getLoader()->getDataFolder() . "settings.yml", $this->getStoredSettingsArray());
 	}
 }

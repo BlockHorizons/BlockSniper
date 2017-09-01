@@ -27,7 +27,7 @@ class UserInterfaceListener implements Listener {
 	/**
 	 * @param DataPacketReceiveEvent $event
 	 */
-	public function onDataPacket(DataPacketReceiveEvent $event) {
+	public function onDataPacket(DataPacketReceiveEvent $event): void {
 		$packet = $event->getPacket();
 		if($packet instanceof ModalFormResponsePacket) {
 			if(json_decode($packet->formData, true) === null) {
@@ -156,7 +156,7 @@ class UserInterfaceListener implements Listener {
 	 * @param Player        $player
 	 * @param WindowHandler $windowHandler
 	 */
-	public function navigate(int $menu, Player $player, WindowHandler $windowHandler) {
+	public function navigate(int $menu, Player $player, WindowHandler $windowHandler): void {
 		$packet = new ModalFormRequestPacket();
 		$packet->formId = $windowHandler->getWindowIdFor($menu);
 		$packet->formData = $windowHandler->getWindowJson($menu, $this->loader, $player);

@@ -26,7 +26,7 @@ class RevertStorer {
 	 * @param int $type
 	 * @param int $amount
 	 */
-	public function restoreLatestRevert(int $type, int $amount) {
+	public function restoreLatestRevert(int $type, int $amount): void {
 		for($i = 0; $i < $amount; $i++) {
 			if($type === Revert::TYPE_UNDO) {
 				$revert = $this->undoStack[max(array_keys($this->undoStack))];
@@ -43,7 +43,7 @@ class RevertStorer {
 	/**
 	 * @param Revert $revert
 	 */
-	public function saveRevert(Revert $revert) {
+	public function saveRevert(Revert $revert): void {
 		$type = $revert instanceof IUndo ? Revert::TYPE_UNDO : Revert::TYPE_REDO;
 		if($this->getTotalStores($type) === $this->maxRevertStores) {
 			$this->unsetOldestRevert($type);
@@ -72,7 +72,7 @@ class RevertStorer {
 	/**
 	 * @param int $type
 	 */
-	public function unsetOldestRevert(int $type) {
+	public function unsetOldestRevert(int $type): void {
 		if($type === Revert::TYPE_UNDO) {
 			unset($this->undoStack[min(array_keys($this->undoStack))]);
 		} else {
@@ -83,7 +83,7 @@ class RevertStorer {
 	/**
 	 * @param int $type
 	 */
-	public function unsetLatestRevert(int $type) {
+	public function unsetLatestRevert(int $type): void {
 		if($type === Revert::TYPE_UNDO) {
 			unset($this->undoStack[max(array_keys($this->undoStack))]);
 		} else {
@@ -91,7 +91,7 @@ class RevertStorer {
 		}
 	}
 
-	public function resetStorage() {
+	public function resetStorage(): void {
 		$this->undoStack = [];
 		$this->redoStack = [];
 		$this->lastUndo = 0;

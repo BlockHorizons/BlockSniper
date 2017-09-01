@@ -8,7 +8,7 @@ use BlockHorizons\BlockSniper\data\Translation;
 
 class PresetMenuWindow extends Window {
 
-	public function process() {
+	public function process(): void {
 		$this->data = [
 			"type" => "form",
 			"title" => (new Translation(Translation::UI_PRESET_MENU_TITLE))->getMessage(),

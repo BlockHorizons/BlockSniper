@@ -35,35 +35,40 @@ class PasteTask extends AsyncBlockSniperTask {
 		$this->playerName = $playerName;
 	}
 
-	public function onRun() {
+	public function onRun(): void {
 		$chunks = unserialize($this->chunks);
 		$file = $this->file;
 		$center = $this->center;
 		$schematic = new Schematic($file);
 		$schematic->decode();
 		$schematic->fixBlockIds();
+		$width = $schematic->getWidth();
+		$length = $schematic->getLength();
+		$height = $schematic->getHeight();
 
 		$processedBlocks = 0;
-		$undoChunks = clone $chunks;
+		$undoChunks = $chunks;
 		foreach($chunks as $hash => $data) {
 			$chunks[$hash] = Chunk::fastDeserialize($data);
 		}
 		/** @var Chunk[] $chunks */
 		/** @var Block[] $blocksInside */
 		$blocksInside = $schematic->getBlocks();
-		$undoBlocks = [];
 		$manager = BaseType::establishChunkManager($chunks);
 		$i = 0;
+		$vector3 = new Vector3(0, 0, 0);
 		foreach($blocksInside as $block) {
-			$vector3 = $center->add($block->x - floor($schematic->getWidth() / 2), $block->y, $block->z - floor($schematic->getLength() / 2));
+			$vector3->setComponents($center->x + $block->x - (int) ($width / 2), $center->y + $block->y, $center->z + $block->z - (int) ($length / 2));
 			$index = Level::chunkHash($vector3->x >> 4, $vector3->z >> 4);
-			if(isset($chunks[$index])) {
+			if(isset($chunks[$index])) {;
 				$manager->setBlockIdAt((int) $vector3->x, (int) $vector3->y, (int) $vector3->z, $block->getId());
 				$manager->setBlockDataAt((int) $vector3->x, (int) $vector3->y, (int) $vector3->z, $block->getDamage());
-
 				$processedBlocks++;
 			}
-			if(++$i === (int) ($schematic->getLength() * $schematic->getWidth() * $schematic->getHeight() / 100)) {
+			if(++$i === (int) ($length * $width * $height / 100)) {
+				if($this->isAborted()) {
+					return;
+				}
 				$this->publishProgress(ceil($processedBlocks / ($schematic->getLength() * $schematic->getWidth() * $schematic->getHeight()) * 100) . "%");
 				$i = 0;
 			}
@@ -114,23 +119,5 @@ class PasteTask extends AsyncBlockSniperTask {
 		}
 		SessionManager::getPlayerSession($player)->getRevertStorer()->saveRevert(new AsyncUndo($undoChunks, $this->playerName, $player->getLevel()->getId()));
 		return true;
-	}
-
-	/**
-	 * @param Server $server
-	 * @param mixed  $progress
-	 *
-	 * @return bool
-	 */
-	public function onProgressUpdate(Server $server, $progress): bool {
-		$loader = $server->getPluginManager()->getPlugin("BlockSniper");
-		if($loader instanceof Loader) {
-			if($loader->isEnabled()) {
-				$loader->getLogger()->debug($progress);
-				return true;
-			}
-		}
-		$this->setGarbage();
-		return false;
 	}
 }

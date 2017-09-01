@@ -4,14 +4,14 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\ui\windows;
 
-use BlockHorizons\BlockSniper\brush\BrushManager;
 use BlockHorizons\BlockSniper\data\Translation;
+use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\level\generator\biome\Biome;
 
 class BrushMenuWindow extends Window {
 
-	public function process() {
-		$v = BrushManager::get($this->getPlayer());
+	public function process(): void {
+		$v = SessionManager::getPlayerSession($this->getPlayer())->getBrush();
 		$this->data = [
 			"type" => "custom_form",
 			"title" => (new Translation(Translation::UI_BRUSH_MENU_TITLE))->getMessage(),

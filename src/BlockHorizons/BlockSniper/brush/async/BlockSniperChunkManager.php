@@ -18,7 +18,7 @@ class BlockSniperChunkManager extends SimpleChunkManager {
 	 * @param int $z
 	 * @param int $id
 	 */
-	public function setBiomeIdAt(int $x, int $z, int $id) {
+	public function setBiomeIdAt(int $x, int $z, int $id): void {
 		if($chunk = $this->getChunk($x >> 4, $z >> 4)) {
 			$chunk->setBiomeId($x & 0x0f, $z & 0x0f, $id);
 		}

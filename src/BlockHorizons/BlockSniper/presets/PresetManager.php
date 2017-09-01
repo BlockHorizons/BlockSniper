@@ -32,7 +32,7 @@ class PresetManager {
 	/**
 	 * @param Preset $preset
 	 */
-	public function addPreset(Preset $preset) {
+	public function addPreset(Preset $preset): void {
 		$this->preset[$preset->name] = $preset;
 	}
 
@@ -66,11 +66,11 @@ class PresetManager {
 	/**
 	 * @param string $name
 	 */
-	public function deletePreset(string $name) {
+	public function deletePreset(string $name): void {
 		unset($this->preset[$name]);
 	}
 
-	public function storePresetsToFile() {
+	public function storePresetsToFile(): void {
 		$data = [];
 		if(!empty($this->preset)) {
 			foreach($this->preset as $name => $preset) {

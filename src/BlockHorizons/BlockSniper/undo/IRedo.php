@@ -8,5 +8,5 @@ interface IRedo {
 
 	public function getDetached();
 
-	public function restore();
+	public function restore(): void;
 }

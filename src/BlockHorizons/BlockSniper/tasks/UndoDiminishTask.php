@@ -14,7 +14,7 @@ class UndoDiminishTask extends BaseTask {
 		parent::__construct($loader);
 	}
 
-	public function onRun(int $currentTick) {
+	public function onRun(int $currentTick): void {
 		foreach($this->getLoader()->getServer()->getOnlinePlayers() as $player) {
 			if(!$player->hasPermission("blocksniper.command.brush")) {
 				continue;

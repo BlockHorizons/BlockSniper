@@ -180,7 +180,7 @@ abstract class BaseType {
 	/**
 	 * @param array $blocks
 	 */
-	public function setBlocksInside(array $blocks) {
+	public function setBlocksInside(array $blocks): void {
 		$this->blocks = $blocks;
 	}
 
@@ -221,7 +221,7 @@ abstract class BaseType {
 	/**
 	 * @param bool $value
 	 */
-	public function setAsynchronous(bool $value = true) {
+	public function setAsynchronous(bool $value = true): void {
 		$this->async = $value;
 	}
 
@@ -235,7 +235,7 @@ abstract class BaseType {
 	/**
 	 * @param ChunkManager $manager
 	 */
-	public function setChunkManager(ChunkManager $manager) {
+	public function setChunkManager(ChunkManager $manager): void {
 		$this->chunkManager = $manager;
 	}
 }

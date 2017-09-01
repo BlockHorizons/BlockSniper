@@ -18,7 +18,7 @@ class PlayerSessionOwner implements ISessionOwner {
 	/**
 	 * @return null|Player
 	 */
-	public function getPlayer() {
+	public function getPlayer(): ?Player {
 		return Server::getInstance()->getPlayer($this->playerName);
 	}
 

@@ -14,9 +14,11 @@ use BlockHorizons\BlockSniper\commands\UndoCommand;
 use BlockHorizons\BlockSniper\data\ConfigData;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\data\TranslationData;
+use BlockHorizons\BlockSniper\git\GitRepository;
 use BlockHorizons\BlockSniper\listeners\BrushListener;
 use BlockHorizons\BlockSniper\listeners\UserInterfaceListener;
 use BlockHorizons\BlockSniper\presets\PresetManager;
+use BlockHorizons\BlockSniper\sessions\SessionManager;
 use BlockHorizons\BlockSniper\tasks\UndoDiminishTask;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat as TF;
@@ -31,11 +33,6 @@ class Loader extends PluginBase {
 	private static $availableLanguages = [
 		"en",
 		"nl",
-		"de",
-		"fr",
-		"fa",
-		"ru",
-		"zh_tw"
 	];
 	/** @var TranslationData */
 	public $language = null;
@@ -51,7 +48,7 @@ class Loader extends PluginBase {
 		return self::$availableLanguages;
 	}
 
-	public function onEnable() {
+	public function onEnable(): void {
 		$this->reloadAll();
 
 		$this->registerCommands();
@@ -61,7 +58,7 @@ class Loader extends PluginBase {
 		CommandOverloads::initialize();
 	}
 
-	private function reloadAll() {
+	private function reloadAll(): void {
 		$this->saveResource("settings.yml");
 		$this->settings = new ConfigData($this);
 		$this->language = new TranslationData($this);
@@ -90,9 +87,10 @@ class Loader extends PluginBase {
 		} else {
 			$this->getLogger()->info(TF::AQUA . (new Translation(Translation::LOG_LANGUAGE_SELECTED))->getMessage() . TF::GREEN . $this->getSettings()->getLanguage());
 		}
+		new GitRepository($this);
 	}
 
-	public function reload() {
+	public function reload(): void {
 		$this->getLogger()->info(TF::AQUA . (new Translation(Translation::LOG_RELOAD_START))->getMessage());
 		$this->onDisable();
 		$this->reloadAll();
@@ -106,7 +104,7 @@ class Loader extends PluginBase {
 		return $this->settings;
 	}
 
-	public function registerCommands() {
+	public function registerCommands(): void {
 		$blockSniperCommands = [
 			"blocksniper" => new BlockSniperCommand($this),
 			"brush" => new BrushCommand($this),
@@ -120,17 +118,18 @@ class Loader extends PluginBase {
 		}
 	}
 
-	public function registerListeners() {
+	public function registerListeners(): void {
 		$blockSniperListeners = [
 			new BrushListener($this),
-			new UserInterfaceListener($this)
+			new UserInterfaceListener($this),
+			new SessionManager($this)
 		];
 		foreach($blockSniperListeners as $listener) {
 			$this->getServer()->getPluginManager()->registerEvents($listener, $this);
 		}
 	}
 
-	public function onDisable() {
+	public function onDisable(): void {
 		$this->getPresetManager()->storePresetsToFile();
 		$this->getSettings()->save();
 	}

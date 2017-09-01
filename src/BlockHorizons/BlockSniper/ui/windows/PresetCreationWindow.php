@@ -8,7 +8,7 @@ use BlockHorizons\BlockSniper\data\Translation;
 
 class PresetCreationWindow extends Window {
 
-	public function process() {
+	public function process(): void {
 		$this->data = [
 			"type" => "custom_form",
 			"title" => (new Translation(Translation::UI_PRESET_CREATION_TITLE))->getMessage(),

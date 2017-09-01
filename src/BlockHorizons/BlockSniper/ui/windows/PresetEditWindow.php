@@ -12,7 +12,7 @@ class PresetEditWindow extends Window {
 	/** @var null|Preset */
 	private $preset = null;
 
-	public function process() {
+	public function process(): void {
 		if($this->preset === null) {
 			return;
 		}

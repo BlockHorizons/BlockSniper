@@ -29,7 +29,7 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand 
 	/**
 	 * @param CommandSender $sender
 	 */
-	public function sendConsoleError(CommandSender $sender) {
+	public function sendConsoleError(CommandSender $sender): void {
 		$sender->sendMessage($this->getWarning() . (new Translation(Translation::COMMANDS_COMMON_INVALID_SENDER))->getMessage());
 	}
 
@@ -52,7 +52,7 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand 
 	/**
 	 * @param CommandSender $sender
 	 */
-	public function sendNoPermission(CommandSender $sender) {
+	public function sendNoPermission(CommandSender $sender): void {
 		$sender->sendMessage($this->getWarning() . (new Translation(Translation::COMMANDS_COMMON_NO_PERMISSION))->getMessage());
 	}
 

@@ -11,8 +11,8 @@ use BlockHorizons\BlockSniper\sessions\owners\PlayerSessionOwner;
 class PlayerSession extends Session implements \JsonSerializable {
 
 	public function __construct(PlayerSessionOwner $sessionOwner, Loader $loader) {
-		parent::__construct($sessionOwner, $loader);
 		$this->dataFile = $loader->getDataFolder() . "sessions/players.json";
+		parent::__construct($sessionOwner, $loader);
 	}
 
 	/**
@@ -37,7 +37,7 @@ class PlayerSession extends Session implements \JsonSerializable {
 	/**
 	 * @return array
 	 */
-	public function jsonSerialize() {
+	public function jsonSerialize(): array {
 		return [
 			"brush" => serialize($this->brush)
 		];

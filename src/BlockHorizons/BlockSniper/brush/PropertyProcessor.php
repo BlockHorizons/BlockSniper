@@ -44,7 +44,7 @@ class PropertyProcessor {
 	 * @param int $valueType
 	 * @param     $value
 	 */
-	public function process(int $valueType, $value) {
+	public function process(int $valueType, $value): void {
 		$brush = SessionManager::getPlayerSession($this->player)->getBrush();
 		switch($valueType) {
 			case 0:

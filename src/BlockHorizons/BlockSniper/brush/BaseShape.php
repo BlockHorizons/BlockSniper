@@ -78,7 +78,7 @@ abstract class BaseShape {
 	 */
 	public static function getShapes(): array {
 		return [
-			"Shape",
+			"Sphere",
 			"Cube",
 			"Cuboid",
 			"Standing Cylinder"
@@ -106,7 +106,7 @@ abstract class BaseShape {
 	 *
 	 * @return Player|null
 	 */
-	public function getPlayer(Server $server) {
+	public function getPlayer(Server $server): ?Player {
 		return $server->getPlayer($this->playerName);
 	}
 

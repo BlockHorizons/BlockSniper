@@ -45,7 +45,7 @@ class PresetPropertyProcessor {
 	 * @param int $valueType
 	 * @param     $value
 	 */
-	public function process(int $valueType, $value) {
+	public function process(int $valueType, $value): void {
 		$this->properties[$valueType] = $value;
 
 		if(count($this->properties) === 12) {

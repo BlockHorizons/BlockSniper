@@ -84,5 +84,5 @@ abstract class Window {
 		return $types;
 	}
 
-	protected abstract function process();
+	protected abstract function process(): void;
 }

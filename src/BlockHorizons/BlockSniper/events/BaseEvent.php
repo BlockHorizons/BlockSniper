@@ -17,7 +17,7 @@ abstract class BaseEvent extends PluginEvent {
 		$this->loader = $loader;
 	}
 
-	public function getLoader() {
+	public function getLoader(): Loader {
 		return $this->loader;
 	}
 }
