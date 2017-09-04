@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\events;
 
 use BlockHorizons\BlockSniper\brush\Brush;
-use BlockHorizons\BlockSniper\Loader;
 use pocketmine\event\Cancellable;
 use pocketmine\event\plugin\PluginEvent;
 
@@ -19,8 +18,7 @@ class BrushRecoverEvent extends PluginEvent implements Cancellable {
 	/** @var Brush */
 	public $brush = null;
 
-	public function __construct(Loader $loader, string $player, Brush $brush) {
-		parent::__construct($loader);
+	public function __construct(string $player, Brush $brush) {
 		$this->player = $player;
 		$this->brush = $brush;
 	}

@@ -6,7 +6,6 @@ namespace BlockHorizons\BlockSniper\events;
 
 use BlockHorizons\BlockSniper\brush\BaseShape;
 use BlockHorizons\BlockSniper\brush\BaseType;
-use BlockHorizons\BlockSniper\Loader;
 use pocketmine\event\Cancellable;
 use pocketmine\level\Level;
 use pocketmine\Player;
@@ -23,8 +22,7 @@ class BrushUseEvent extends BaseEvent implements Cancellable {
 	/** @var BaseShape */
 	public $shape = null;
 
-	public function __construct(Loader $loader, Player $player, BaseShape $shape, BaseType $type) {
-		parent::__construct($loader);
+	public function __construct(Player $player, BaseShape $shape, BaseType $type) {
 		$this->player = $player;
 		$this->type = $type;
 		$this->shape = $shape;

@@ -6,6 +6,7 @@ namespace BlockHorizons\BlockSniper\presets;
 
 use BlockHorizons\BlockSniper\brush\PropertyProcessor;
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\Player;
 
 class Preset {
@@ -40,7 +41,7 @@ class Preset {
 	 * @param Loader $loader
 	 */
 	public function apply(Player $player, Loader $loader): void {
-		$processor = new PropertyProcessor($player, $loader);
+		$processor = new PropertyProcessor(SessionManager::getPlayerSession($player), $loader);
 		foreach($this->data as $index => $value) {
 			$processor->process($index - 1, $value);
 		}

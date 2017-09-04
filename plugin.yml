@@ -1,6 +1,6 @@
 ---
 name: "BlockSniper"
-version: 2.0.0
+version: 2.0.0-INDEV
 api: [3.0.0-ALPHA7]
 author: "BlockHorizons"
 authors:

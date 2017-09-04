@@ -4,18 +4,14 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\listeners;
 
-use BlockHorizons\BlockSniper\events\BrushUseEvent;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use BlockHorizons\BlockSniper\ui\WindowHandler;
-use BlockHorizons\BlockSniper\undo\sync\SyncUndo;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerItemHeldEvent;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\network\mcpe\protocol\ModalFormRequestPacket;
-use pocketmine\Player;
-use pocketmine\utils\TextFormat as TF;
 
 class BrushListener implements Listener {
 
@@ -35,28 +31,11 @@ class BrushListener implements Listener {
 	 */
 	public function brush(PlayerInteractEvent $event): bool {
 		$player = $event->getPlayer();
-		if($player->getInventory()->getItemInHand()->getId() === (int) $this->getLoader()->getSettings()->getBrushItem()) {
+		if($player->getInventory()->getItemInHand()->getId() === $this->getLoader()->getSettings()->getBrushItem()) {
 			if($player->hasPermission("blocksniper.command.brush")) {
-
 				$brush = SessionManager::getPlayerSession($player)->getBrush();
-				$shape = $brush->getShape();
-				$type = $brush->getType();
-
-				$this->getLoader()->getServer()->getPluginManager()->callEvent($event = new BrushUseEvent($this->getLoader(), $player, $shape, $type));
-				if($event->isCancelled()) {
-					return false;
-				}
-
-				if($brush->getSize() >= $this->getLoader()->getSettings()->getMinimumAsynchronousSize() && $type->canExecuteAsynchronously()) {
-					$shape->editAsynchronously($type);
-				} else {
-					$type->setBlocksInside($shape->getBlocksInside());
-					$undoBlocks = $type->fillShape();
-					SessionManager::getPlayerSession($player)->getRevertStorer()->saveRevert(new SyncUndo($undoBlocks, $player->getName()));
-				}
-				$this->decrementBrush($player);
+				$brush->execute($player);
 				$event->setCancelled();
-				return true;
 			}
 		}
 		return false;
@@ -102,27 +81,5 @@ class BrushListener implements Listener {
 	 */
 	public function getLoader(): Loader {
 		return $this->loader;
-	}
-
-	/**
-	 * @param Player $player
-	 *
-	 * @return bool
-	 */
-	public function decrementBrush(Player $player): bool {
-		$brush = SessionManager::getPlayerSession($player)->getBrush();
-		if($brush->isDecrementing()) {
-			if($brush->getSize() <= 1) {
-				if($this->getLoader()->getSettings()->resetDecrementBrush() !== false) {
-					$brush->setSize($brush->resetSize);
-					$player->sendPopup(TF::GREEN . "Brush reset to original size.");
-					return true;
-				}
-				return false;
-			}
-			$brush->setSize($brush->getSize() - 1);
-			return true;
-		}
-		return false;
 	}
 }

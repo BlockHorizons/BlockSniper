@@ -4,14 +4,20 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\brush;
 
+use BlockHorizons\BlockSniper\events\BrushUseEvent;
+use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\sessions\PlayerSession;
+use BlockHorizons\BlockSniper\sessions\Session;
+use BlockHorizons\BlockSniper\undo\sync\SyncUndo;
 use pocketmine\block\Block;
 use pocketmine\block\Sapling;
 use pocketmine\item\Item;
 use pocketmine\level\generator\biome\Biome;
 use pocketmine\level\Position;
+use pocketmine\Player;
 use pocketmine\Server;
 
-class Brush {
+class Brush implements \JsonSerializable {
 
 	/** @var int */
 	public $resetSize = 0;
@@ -272,5 +278,77 @@ class Brush {
 			return (int) $treeType;
 		}
 		return 0;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function jsonSerialize(): array {
+		return [
+			"size" => 5,
+			"shape" => "sphere",
+			"type" => "fill",
+			"hollow" => true,
+			"decrement" => false,
+			"height" => 7,
+			"perfect" => true,
+			"blocks" => "1,98:2",
+			"obsolete" => "grass,stone:1",
+			"biome" => "plains",
+			"tree" => "oak"
+		];
+	}
+
+	/**
+	 * @param Session $session
+	 *
+	 * @return bool
+	 */
+	public function execute(Session $session): bool {
+		$shape = $this->getShape();
+		$type = $this->getType();
+		if($session instanceof PlayerSession) {
+			$player = $session->getSessionOwner()->getPlayer();
+
+			Server::getInstance()->getPluginManager()->callEvent($event = new BrushUseEvent($player, $shape, $type));
+			if($event->isCancelled()) {
+				return false;
+			}
+		}
+		$this->decrement();
+
+		/** @var Loader $loader */
+		$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
+
+		if($this->getSize() >= $loader->getSettings()->getMinimumAsynchronousSize() && $type->canExecuteAsynchronously()) {
+			$shape->editAsynchronously($type);
+		} else {
+			$type->setBlocksInside($shape->getBlocksInside());
+			$undoBlocks = $type->fillShape();
+			$session->getRevertStorer()->saveRevert(new SyncUndo($undoBlocks, $session->getSessionOwner()->getname()));
+		}
+		return true;
+	}
+
+	/**
+	 * @param Player $player
+	 *
+	 * @return bool
+	 */
+	public function decrement(): bool {
+		if($this->isDecrementing()) {
+			if($this->getSize() <= 1) {
+				/** @var Loader $loader */
+				$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
+				if($loader->getSettings()->resetDecrementBrush() !== false) {
+					$this->setSize($this->resetSize);
+					return true;
+				}
+				return false;
+			}
+			$this->setSize($this->getSize() - 1);
+			return true;
+		}
+		return false;
 	}
 }

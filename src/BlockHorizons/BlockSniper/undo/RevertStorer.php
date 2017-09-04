@@ -4,6 +4,9 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\undo;
 
+use BlockHorizons\BlockSniper\undo\async\AsyncRevert;
+use BlockHorizons\BlockSniper\undo\sync\SyncRevert;
+
 class RevertStorer {
 
 	/** @var IUndo[] */
@@ -41,7 +44,7 @@ class RevertStorer {
 	}
 
 	/**
-	 * @param Revert $revert
+	 * @param AsyncRevert|SyncRevert $revert
 	 */
 	public function saveRevert(Revert $revert): void {
 		$type = $revert instanceof IUndo ? Revert::TYPE_UNDO : Revert::TYPE_REDO;

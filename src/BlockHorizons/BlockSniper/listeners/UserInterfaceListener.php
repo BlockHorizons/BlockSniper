@@ -7,6 +7,7 @@ namespace BlockHorizons\BlockSniper\listeners;
 use BlockHorizons\BlockSniper\brush\PropertyProcessor;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\presets\PresetPropertyProcessor;
+use BlockHorizons\BlockSniper\sessions\SessionManager;
 use BlockHorizons\BlockSniper\ui\WindowHandler;
 use BlockHorizons\BlockSniper\ui\windows\PresetEditWindow;
 use pocketmine\event\Listener;
@@ -48,7 +49,7 @@ class UserInterfaceListener implements Listener {
 
 				case 3201: // Brush Menu
 					$data = json_decode($packet->formData, true);
-					$processor = new PropertyProcessor($event->getPlayer(), $this->loader);
+					$processor = new PropertyProcessor(SessionManager::getPlayerSession($event->getPlayer()), $this->loader);
 					foreach($data as $key => $value) {
 						$processor->process($key, $value);
 					}

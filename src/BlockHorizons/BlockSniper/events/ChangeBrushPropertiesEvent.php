@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\events;
 
-use BlockHorizons\BlockSniper\Loader;
 use pocketmine\event\plugin\PluginEvent;
 use pocketmine\Player;
 
@@ -34,8 +33,7 @@ class ChangeBrushPropertiesEvent extends PluginEvent {
 	/** @var mixed */
 	public $value = null;
 
-	public function __construct(Loader $loader, Player $player, int $action, $value) {
-		parent::__construct($loader);
+	public function __construct(Player $player, int $action, $value) {
 		$this->player = $player;
 		$this->action = $action;
 		$this->value = $value;
