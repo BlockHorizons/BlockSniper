@@ -26,9 +26,13 @@ class ReplaceType extends BaseType {
 	}
 
 	/**
-	 * @return array
+	 * @return Block[]|null
 	 */
-	public function fillShape(): array {
+	public function fillShape(): ?array {
+		if(!$this->isAsynchronous()) {
+			$this->fillAsynchronously();
+			return null;
+		}
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
@@ -37,16 +41,23 @@ class ReplaceType extends BaseType {
 					if($block->getId() !== $randomBlock->getId()) {
 						$undoBlocks[] = $block;
 					}
-					if($this->isAsynchronous()) {
-						$this->getChunkManager()->setBlockIdAt($block->x, $block->y, $block->z, $randomBlock->getId());
-						$this->getChunkManager()->setBlockDataAt($block->x, $block->y, $block->z, $randomBlock->getDamage());
-					} else {
-						$this->getLevel()->setBlock($block, $randomBlock, false, false);
-					}
+					$this->getLevel()->setBlock($block, $randomBlock, false, false);
 				}
 			}
 		}
 		return $undoBlocks;
+	}
+
+	public function fillAsynchronously(): void {
+		foreach($this->blocks as $block) {
+			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
+			foreach($this->obsolete as $obsolete) {
+				if($block->getId() === $obsolete->getId()) {
+					$this->getChunkManager()->setBlockIdAt($block->x, $block->y, $block->z, $randomBlock->getId());
+					$this->getChunkManager()->setBlockDataAt($block->x, $block->y, $block->z, $randomBlock->getDamage());
+				}
+			}
+		}
 	}
 
 	public function getName(): string {

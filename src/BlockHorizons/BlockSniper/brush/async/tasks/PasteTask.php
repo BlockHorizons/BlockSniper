@@ -69,7 +69,7 @@ class PasteTask extends AsyncBlockSniperTask {
 				if($this->isAborted()) {
 					return;
 				}
-				$this->publishProgress(ceil($processedBlocks / ($schematic->getLength() * $schematic->getWidth() * $schematic->getHeight()) * 100) . "%");
+				$this->publishProgress(ceil($processedBlocks / ($length * $width * $height) * 100) . "%");
 				$i = 0;
 			}
 		}

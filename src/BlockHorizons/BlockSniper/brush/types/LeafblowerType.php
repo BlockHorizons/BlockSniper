@@ -26,9 +26,13 @@ class LeafblowerType extends BaseType {
 	}
 
 	/**
-	 * @return array
+	 * @return Block[]|null
 	 */
-	public function fillShape(): array {
+	public function fillShape(): ?array {
+		if($this->isAsynchronous()) {
+			$this->fillAsynchronously();
+			return null;
+		}
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			if($block instanceof Flowable) {
@@ -38,14 +42,18 @@ class LeafblowerType extends BaseType {
 				if($loader->getSettings()->dropLeafblowerPlants()) {
 					$this->getLevel()->dropItem($block, Item::get($block->getId()));
 				}
-				if($this->isAsynchronous()) {
-					$this->getChunkManager()->setBlockIdAt($block->x, $block->y, $block->z, Block::AIR);
-				} else {
-					$this->getLevel()->setBlock($block, Block::get(Block::AIR), false, false);
-				}
+				$this->getLevel()->setBlock($block, Block::get(Block::AIR), false, false);
 			}
 		}
 		return $undoBlocks;
+	}
+
+	public function fillAsynchronously(): void {
+		foreach($this->blocks as $block) {
+			if($block instanceof Flowable) {
+				$this->getChunkManager()->setBlockIdAt($block->x, $block->y, $block->z, Block::AIR);
+			}
+		}
 	}
 
 	public function getName(): string {

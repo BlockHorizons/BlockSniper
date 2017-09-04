@@ -9,7 +9,6 @@ use pocketmine\block\Block;
 use pocketmine\block\Flowable;
 use pocketmine\item\Item;
 use pocketmine\level\ChunkManager;
-use pocketmine\level\Position;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 
@@ -17,8 +16,6 @@ class FlattenallType extends BaseType {
 
 	/** @var int */
 	protected $id = self::TYPE_FLATTENALL;
-	/** @var Vector3 */
-	protected $center;
 
 	/*
 	 * Flattens the terrain below the selected point and removes the blocks above it within the brush radius.
@@ -29,9 +26,13 @@ class FlattenallType extends BaseType {
 	}
 
 	/**
-	 * @return array
+	 * @return Block[]|null
 	 */
-	public function fillShape(): array {
+	public function fillShape(): ?array {
+		if($this->isAsynchronous()) {
+			$this->fillAsynchronously();
+			return null;
+		}
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
@@ -39,23 +40,28 @@ class FlattenallType extends BaseType {
 				if($block->getId() !== $randomBlock->getId()) {
 					$undoBlocks[] = $block;
 				}
-				if($this->isAsynchronous()) {
-					$this->getChunkManager()->setBlockIdAt($block->x, $block->y, $block->z, $randomBlock->getId());
-					$this->getChunkManager()->setBlockDataAt($block->x, $block->y, $block->z, $randomBlock->getDamage());
-				} else {
-					$this->getLevel()->setBlock($block, $randomBlock, false, false);
-				}
+				$this->getLevel()->setBlock($block, $randomBlock, false, false);
 			}
 			if($block->getId() !== Item::AIR && $block->y > $this->center->y) {
 				$undoBlocks[] = $block;
-				if($this->isAsynchronous()) {
-					$this->getChunkManager()->setBlockIdAt($block->x, $block->y, $block->z, Block::AIR);
-				} else {
-					$this->getLevel()->setBlock($block, Block::get(Block::AIR));
-				}
+				$this->getLevel()->setBlock($block, Block::get(Block::AIR));
 			}
 		}
 		return $undoBlocks;
+	}
+
+	public function fillAsynchronously(): void {
+		foreach($this->blocks as $block) {
+			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
+			if(($block->getId() === Item::AIR || $block instanceof Flowable) && $block->y <= $this->center->y) {
+				$this->getChunkManager()->setBlockIdAt($block->x, $block->y, $block->z, $randomBlock->getId());
+				$this->getChunkManager()->setBlockDataAt($block->x, $block->y, $block->z, $randomBlock->getDamage());
+			}
+			if($block->getId() !== Item::AIR && $block->y > $this->center->y) {
+				$undoBlocks[] = $block;
+				$this->getChunkManager()->setBlockIdAt($block->x, $block->y, $block->z, Block::AIR);
+			}
+		}
 	}
 
 	public function getName(): string {
@@ -65,9 +71,9 @@ class FlattenallType extends BaseType {
 	/**
 	 * Returns the center of this type.
 	 *
-	 * @return Position
+	 * @return Vector3
 	 */
-	public function getCenter(): Position {
+	public function getCenter(): Vector3 {
 		return $this->center;
 	}
 }

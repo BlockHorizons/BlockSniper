@@ -23,9 +23,13 @@ class ExpandType extends BaseType {
 	}
 
 	/**
-	 * @return array
+	 * @return Block[]|null
 	 */
-	public function fillShape(): array {
+	public function fillShape(): ?array {
+		if($this->isAsynchronous()) {
+			$this->fillAsynchronously();
+			return null;
+		}
 		$undoBlocks = [];
 		$oneHoles = [];
 		foreach($this->blocks as $block) {
@@ -38,16 +42,6 @@ class ExpandType extends BaseType {
 					$block->getSide(Block::SIDE_WEST),
 					$block->getSide(Block::SIDE_EAST)
 				];
-				if($this->isAsynchronous()) {
-					$directions = [
-						$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_DOWN),
-						$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_UP),
-						$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_NORTH),
-						$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_SOUTH),
-						$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_WEST),
-						$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_EAST),
-					];
-				}
 
 				$valid = 0;
 				foreach($directions as $direction) {
@@ -64,27 +58,55 @@ class ExpandType extends BaseType {
 			}
 		}
 		foreach($undoBlocks as $selectedBlock) {
-			if($this->isAsynchronous()) {
-				$bottom = $this->getChunkManager()->getSide($selectedBlock->x, $selectedBlock->y, $selectedBlock->z, Block::SIDE_DOWN);
-				$top = $this->getChunkManager()->getSide($selectedBlock->x, $selectedBlock->y, $selectedBlock->z, Block::SIDE_UP);
-				$this->getChunkManager()->setBlockIdAt($selectedBlock->x, $selectedBlock->y, $selectedBlock->z, $bottom->getId() === Block::AIR ? $top->getId() : $bottom->getId());
-				$this->getChunkManager()->setBlockIdAt($selectedBlock->x, $selectedBlock->y, $selectedBlock->z, $bottom->getId() === Block::AIR ? $top->getDamage() : $bottom->getDamage());
-			} else {
-				$this->getLevel()->setBlock($selectedBlock, ($selectedBlock->getSide(Block::SIDE_DOWN)->getId() === Block::AIR ? $selectedBlock->getSide(Block::SIDE_UP) : $selectedBlock->getSide(Block::SIDE_DOWN)), false, false);
-			}
+			$this->getLevel()->setBlock($selectedBlock, ($selectedBlock->getSide(Block::SIDE_DOWN)->getId() === Block::AIR ? $selectedBlock->getSide(Block::SIDE_UP) : $selectedBlock->getSide(Block::SIDE_DOWN)), false, false);
 		}
 		foreach($oneHoles as $block) {
-			if($this->isAsynchronous()) {
-				$bottom = $this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_DOWN);
-				$east = $this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_UP);
-				$this->getChunkManager()->setBlockIdAt($block->x, $block->y, $block->z, $bottom->getId() === Block::AIR ? $east->getId() : $bottom->getId());
-				$this->getChunkManager()->setBlockIdAt($block->x, $block->y, $block->z, $bottom->getId() === Block::AIR ? $east->getDamage() : $bottom->getDamage());
-			} else {
-				$this->getLevel()->setBlock($block, ($block->getSide(Block::SIDE_DOWN)->getId() === Block::AIR ? $block->getSide(Block::SIDE_EAST) : $block->getSide(Block::SIDE_DOWN)));
-			}
+			$this->getLevel()->setBlock($block, ($block->getSide(Block::SIDE_DOWN)->getId() === Block::AIR ? $block->getSide(Block::SIDE_EAST) : $block->getSide(Block::SIDE_DOWN)));
 		}
 
 		return array_merge($undoBlocks, $oneHoles);
+	}
+
+	public function fillAsynchronously(): void {
+		$oneHoles = [];
+		$blocks = [];
+		foreach($this->blocks as $block) {
+			if($block->getId() === Item::AIR) {
+				$directions = [
+					$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_DOWN),
+					$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_UP),
+					$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_NORTH),
+					$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_SOUTH),
+					$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_WEST),
+					$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_EAST),
+				];
+
+				$valid = 0;
+				foreach($directions as $direction) {
+					if($direction->getId() !== Item::AIR) {
+						$valid++;
+					}
+				}
+				if($valid >= 2) {
+					$blocks[] = $block;
+				}
+				if($valid >= 4) {
+					$oneHoles[] = $block;
+				}
+			}
+		}
+		foreach($blocks as $selectedBlock) {
+			$bottom = $this->getChunkManager()->getSide($selectedBlock->x, $selectedBlock->y, $selectedBlock->z, Block::SIDE_DOWN);
+			$top = $this->getChunkManager()->getSide($selectedBlock->x, $selectedBlock->y, $selectedBlock->z, Block::SIDE_UP);
+			$this->getChunkManager()->setBlockIdAt($selectedBlock->x, $selectedBlock->y, $selectedBlock->z, $bottom->getId() === Block::AIR ? $top->getId() : $bottom->getId());
+			$this->getChunkManager()->setBlockIdAt($selectedBlock->x, $selectedBlock->y, $selectedBlock->z, $bottom->getId() === Block::AIR ? $top->getDamage() : $bottom->getDamage());
+		}
+		foreach($oneHoles as $block) {
+			$bottom = $this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_DOWN);
+			$east = $this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_UP);
+			$this->getChunkManager()->setBlockIdAt($block->x, $block->y, $block->z, $bottom->getId() === Block::AIR ? $east->getId() : $bottom->getId());
+			$this->getChunkManager()->setBlockIdAt($block->x, $block->y, $block->z, $bottom->getId() === Block::AIR ? $east->getDamage() : $bottom->getDamage());
+		}
 	}
 
 	public function getName(): string {

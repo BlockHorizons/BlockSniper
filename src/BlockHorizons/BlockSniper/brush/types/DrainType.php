@@ -24,22 +24,32 @@ class DrainType extends BaseType {
 	}
 
 	/**
-	 * @return array
+	 * @return Block[]|null
 	 */
-	public function fillShape(): array {
+	public function fillShape(): ?array {
+		if($this->isAsynchronous()) {
+			$this->fillAsynchronously();
+			return null;
+		}
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			$blockId = $block->getId();
 			if($blockId === Item::LAVA || $blockId === Item::WATER || $blockId === Item::STILL_LAVA || $blockId === Item::STILL_WATER) {
 				$undoBlocks[] = $block;
-				if($this->isAsynchronous()) {
-					$this->getChunkManager()->setBlockIdAt($block->x, $block->y, $block->z, Block::AIR);
-				} else {
-					$this->getLevel()->setBlock(new Vector3($block->x, $block->y, $block->z), Block::get(Block::AIR), false, false);
-				}
+				$this->getLevel()->setBlock(new Vector3($block->x, $block->y, $block->z), Block::get(Block::AIR), false, false);
 			}
 		}
 		return $undoBlocks;
+	}
+
+	public function fillAsynchronously(): void {
+		foreach($this->blocks as $block) {
+			$blockId = $block->getId();
+			if($blockId === Item::LAVA || $blockId === Item::WATER || $blockId === Item::STILL_LAVA || $blockId === Item::STILL_WATER) {
+				$undoBlocks[] = $block;
+				$this->getChunkManager()->setBlockIdAt($block->x, $block->y, $block->z, Block::AIR);
+			}
+		}
 	}
 
 	public function getName(): string {

@@ -5,10 +5,10 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
+use pocketmine\block\Block;
 use pocketmine\block\Flowable;
 use pocketmine\item\Item;
 use pocketmine\level\ChunkManager;
-use pocketmine\level\Position;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 
@@ -16,8 +16,6 @@ class FlattenType extends BaseType {
 
 	/** @var int */
 	protected $id = self::TYPE_FLATTEN;
-	/** @var Vector3 */
-	protected $center;
 
 	/*
 	 * Flattens the terrain below the selected point within the brush radius.
@@ -28,9 +26,13 @@ class FlattenType extends BaseType {
 	}
 
 	/**
-	 * @return array
+	 * @return Block[]|null
 	 */
-	public function fillShape(): array {
+	public function fillShape(): ?array {
+		if($this->isAsynchronous()) {
+			$this->fillAsynchronously();
+			return null;
+		}
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
@@ -38,15 +40,20 @@ class FlattenType extends BaseType {
 				if($block->getId() !== $randomBlock->getId()) {
 					$undoBlocks[] = $block;
 				}
-				if($this->isAsynchronous()) {
-					$this->getChunkManager()->setBlockIdAt($block->x, $block->y, $block->z, $randomBlock->getId());
-					$this->getChunkManager()->setBlockDataAt($block->x, $block->y, $block->z, $randomBlock->getDamage());
-				} else {
-					$this->getLevel()->setBlock($block, $randomBlock, false, false);
-				}
+				$this->getLevel()->setBlock($block, $randomBlock, false, false);
 			}
 		}
 		return $undoBlocks;
+	}
+
+	public function fillAsynchronously(): void {
+		foreach($this->blocks as $block) {
+			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
+			if(($block->getId() === Item::AIR || $block instanceof Flowable) && $block->y <= $this->center->y) {
+				$this->getChunkManager()->setBlockIdAt($block->x, $block->y, $block->z, $randomBlock->getId());
+				$this->getChunkManager()->setBlockDataAt($block->x, $block->y, $block->z, $randomBlock->getDamage());
+			}
+		}
 	}
 
 	public function getName(): string {
@@ -56,9 +63,9 @@ class FlattenType extends BaseType {
 	/**
 	 * Returns the center of this type.
 	 *
-	 * @return Position
+	 * @return Vector3
 	 */
-	public function getCenter(): Position {
+	public function getCenter(): Vector3 {
 		return $this->center;
 	}
 }

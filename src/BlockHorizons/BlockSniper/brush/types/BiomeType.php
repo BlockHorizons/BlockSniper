@@ -38,6 +38,10 @@ class BiomeType extends BaseType {
 		return [];
 	}
 
+	public function fillAsynchronously(): void {
+		return;
+	}
+
 	public function getName(): string {
 		return "Biome";
 	}
@@ -49,5 +53,12 @@ class BiomeType extends BaseType {
 	 */
 	public function getBiome(): int {
 		return $this->biome;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function canExecuteAsynchronously(): bool {
+		return false;
 	}
 }

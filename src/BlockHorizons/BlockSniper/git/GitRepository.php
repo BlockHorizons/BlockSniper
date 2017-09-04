@@ -22,7 +22,7 @@ class GitRepository {
 	 * @return bool
 	 */
 	public static function addProject(Level $level): bool {
-		if(isset(self::$projects[$level->getId()])) {
+		if(self::projectExists($level->getId())) {
 			return false;
 		}
 		self::$projects[$level->getId()] = new Project($level);
@@ -35,7 +35,7 @@ class GitRepository {
 	 * @return bool
 	 */
 	public static function closeProject(int $projectId): bool {
-		if(!isset(self::$projects[$projectId])) {
+		if(!self::projectExists($projectId)) {
 			return false;
 		}
 		unset(self::$projects[$projectId]);
@@ -54,9 +54,9 @@ class GitRepository {
 	/**
 	 * @param int $projectId
 	 *
-	 * @return Project
+	 * @return Project|null
 	 */
-	public static function getProject(int $projectId): Project {
+	public static function getProject(int $projectId): ?Project {
 		return self::projectExists($projectId) ? self::$projects[$projectId] : null;
 	}
 }

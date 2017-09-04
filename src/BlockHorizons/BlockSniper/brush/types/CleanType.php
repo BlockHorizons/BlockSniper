@@ -23,16 +23,18 @@ class CleanType extends BaseType {
 	}
 
 	/**
-	 * @return array
+	 * @return Block[]|null
 	 */
-	public function fillShape(): array {
+	public function fillShape(): ?array {
+		if($this->isAsynchronous()) {
+			$this->fillAsynchronously();
+			return null;
+		}
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			$blockId = $block->getId();
 			if($blockId !== Block::AIR && $blockId !== Block::STONE && $blockId !== Block::GRASS && $blockId !== Block::DIRT && $blockId !== Block::GRAVEL && $blockId !== Block::SAND && $blockId !== Block::SANDSTONE) {
-				if($blockId !== Block::AIR) {
-					$undoBlocks[] = $block;
-				}
+				$undoBlocks[] = $block;
 				if($this->isAsynchronous()) {
 					$this->getChunkManager()->setBlockIdAt($block->x, $block->y, $block->z, Block::AIR);
 				} else {
@@ -41,6 +43,15 @@ class CleanType extends BaseType {
 			}
 		}
 		return $undoBlocks;
+	}
+
+	public function fillAsynchronously(): void {
+		foreach($this->blocks as $block) {
+			$blockId = $block->getId();
+			if($blockId !== Block::AIR && $blockId !== Block::STONE && $blockId !== Block::GRASS && $blockId !== Block::DIRT && $blockId !== Block::GRAVEL && $blockId !== Block::SAND && $blockId !== Block::SANDSTONE) {
+				$this->getChunkManager()->setBlockIdAt($block->x, $block->y, $block->z, Block::AIR);
+			}
+		}
 	}
 
 	public function getName(): string {

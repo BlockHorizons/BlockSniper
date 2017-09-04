@@ -145,7 +145,9 @@ abstract class BaseType {
 		return $manager;
 	}
 
-	public abstract function fillShape(): array;
+	public abstract function fillShape(): ?array;
+
+	public abstract function fillAsynchronously(): void;
 
 	/**
 	 * Returns the level the type is used in.
@@ -179,9 +181,13 @@ abstract class BaseType {
 
 	/**
 	 * @param array $blocks
+	 *
+	 * @return BaseType
 	 */
-	public function setBlocksInside(array $blocks): void {
+	public function setBlocksInside(array $blocks): self {
 		$this->blocks = $blocks;
+
+		return $this;
 	}
 
 	/**
@@ -220,9 +226,13 @@ abstract class BaseType {
 
 	/**
 	 * @param bool $value
+	 *
+	 * @return BaseType
 	 */
-	public function setAsynchronous(bool $value = true): void {
+	public function setAsynchronous(bool $value = true): self {
 		$this->async = $value;
+
+		return $this;
 	}
 
 	/**
@@ -234,8 +244,12 @@ abstract class BaseType {
 
 	/**
 	 * @param ChunkManager $manager
+	 *
+	 * @return BaseType
 	 */
-	public function setChunkManager(ChunkManager $manager): void {
+	public function setChunkManager(ChunkManager $manager): self {
 		$this->chunkManager = $manager;
+
+		return $this;
 	}
 }

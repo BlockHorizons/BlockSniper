@@ -17,8 +17,6 @@ class ToplayerType extends BaseType {
 
 	/** @var int */
 	protected $id = self::TYPE_TOPLAYER;
-	/** @var int */
-	protected $height = 0;
 
 	/*
 	 * Replaces the top layer of the terrain, thickness depending on brush height, within the brush radius.
@@ -29,32 +27,42 @@ class ToplayerType extends BaseType {
 	}
 
 	/**
-	 * @return array
+	 * @return Block[]|null
 	 */
-	public function fillShape(): array {
+	public function fillShape(): ?array {
+		if($this->isAsynchronous()) {
+			$this->fillAsynchronously();
+			return null;
+		}
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			if($block->getId() !== Item::AIR && !$block instanceof Flowable) {
-				if($this->isAsynchronous()) {
-					$up = $this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_UP);
-				} else {
-					$up = $block->getSide(Block::SIDE_UP);
-				}
+				$up = $block->getSide(Block::SIDE_UP);
 				if($up->getId() === Item::AIR || $up instanceof Flowable) {
 					$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 					for($y = $block->y; $y >= $block->y - $this->height; $y--) {
 						$undoBlocks[] = $this->getLevel()->getBlock(new Vector3($block->x, $y, $block->z));
-						if($this->isAsynchronous()) {
-							$this->getChunkManager()->setBlockIdAt($block->x, $block->y, $block->z, $randomBlock->getId());
-							$this->getChunkManager()->setBlockDataAt($block->x, $block->y, $block->z, $randomBlock->getDamage());
-						} else {
-							$this->getLevel()->setBlock($block, $randomBlock, false, false);
-						}
+						$this->getLevel()->setBlock($block, $randomBlock, false, false);
 					}
 				}
 			}
 		}
 		return $undoBlocks;
+	}
+
+	public function fillAsynchronously(): void {
+		foreach($this->blocks as $block) {
+			if($block->getId() !== Item::AIR && !$block instanceof Flowable) {
+				$up = $this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_UP);
+				if($up->getId() === Item::AIR || $up instanceof Flowable) {
+					$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
+					for($y = $block->y; $y >= $block->y - $this->height; $y--) {
+						$this->getChunkManager()->setBlockIdAt($block->x, $block->y, $block->z, $randomBlock->getId());
+						$this->getChunkManager()->setBlockDataAt($block->x, $block->y, $block->z, $randomBlock->getDamage());
+					}
+				}
+			}
+		}
 	}
 
 	public function getName(): string {

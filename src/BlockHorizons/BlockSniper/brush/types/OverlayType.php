@@ -23,9 +23,13 @@ class OverlayType extends BaseType {
 	}
 
 	/**
-	 * @return array
+	 * @return Block[]|null
 	 */
-	public function fillShape(): array {
+	public function fillShape(): ?array {
+		if($this->isAsynchronous()) {
+			$this->fillAsynchronously();
+			return null;
+		}
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			if($block->getId() !== Item::AIR) {
@@ -37,16 +41,6 @@ class OverlayType extends BaseType {
 					$block->getSide(Block::SIDE_WEST),
 					$block->getSide(Block::SIDE_EAST)
 				];
-				if($this->isAsynchronous()) {
-					$directions = [
-						$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_DOWN),
-						$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_UP),
-						$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_NORTH),
-						$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_SOUTH),
-						$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_WEST),
-						$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_EAST),
-					];
-				}
 				$valid = true;
 				foreach($this->brushBlocks as $possibleBlock) {
 					if($block->getId() === $possibleBlock->getId() && $block->getDamage() === $possibleBlock->getDamage()) {
@@ -58,18 +52,43 @@ class OverlayType extends BaseType {
 						$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 						if($block->getId() !== $randomBlock->getId()) {
 							$undoBlocks[] = $direction;
-							if($this->isAsynchronous()) {
-								$this->getChunkManager()->setBlockIdAt($block->x, $this->center->y + 1, $block->z, $randomBlock->getId());
-								$this->getChunkManager()->setBlockDataAt($block->x, $this->center->y + 1, $block->z, $randomBlock->getDamage());
-							} else {
-								$this->getLevel()->setBlock($direction, $randomBlock, false, false);
-							}
+							$this->getLevel()->setBlock($direction, $randomBlock, false, false);
 						}
 					}
 				}
 			}
 		}
 		return $undoBlocks;
+	}
+
+	public function fillAsynchronously(): void {
+		foreach($this->blocks as $block) {
+			if($block->getId() !== Item::AIR) {
+				$directions = [
+					$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_DOWN),
+					$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_UP),
+					$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_NORTH),
+					$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_SOUTH),
+					$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_WEST),
+					$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_EAST),
+				];
+				$valid = true;
+				foreach($this->brushBlocks as $possibleBlock) {
+					if($block->getId() === $possibleBlock->getId() && $block->getDamage() === $possibleBlock->getDamage()) {
+						$valid = false;
+					}
+				}
+				foreach($directions as $direction) {
+					if($this->getChunkManager()->getBlockIdAt($direction->x, $direction->y, $direction->z) === Item::AIR && $valid) {
+						$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
+						if($block->getId() !== $randomBlock->getId()) {
+							$this->getChunkManager()->setBlockIdAt($block->x, $this->center->y + 1, $block->z, $randomBlock->getId());
+							$this->getChunkManager()->setBlockDataAt($block->x, $this->center->y + 1, $block->z, $randomBlock->getDamage());
+						}
+					}
+				}
+			}
+		}
 	}
 
 	public function getName(): string {
