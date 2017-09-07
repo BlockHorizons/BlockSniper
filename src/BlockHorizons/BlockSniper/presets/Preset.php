@@ -11,7 +11,7 @@ class Preset {
 	
 	public $name;
 	
-	private $shape, $type, $size, $hollow, $decrement;
+	private $shape, $type, $size, $hollow, $perfect, $decrement;
 	private $height, $biome, $obsolete, $blocks;
 	
 	public function __construct(string $name, string $shape = null, string $type = null, bool $decrement = null, bool $perfect = null, int $size = null, bool $hollow = null, array $blocks = null, array $obsolete = null, int $height = null, string $biome = null) {
