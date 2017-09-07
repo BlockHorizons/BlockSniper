@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\tasks\spread;
 
-use BlockHorizons\BlockSniper\events\OperationFinishEvent;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\tasks\BaseTask;
 use pocketmine\block\Block;
