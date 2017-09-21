@@ -45,7 +45,8 @@ class SessionManager implements Listener {
 						"y" => 128,
 						"z" => 256
 					],
-					"brush" => (new Brush(""))->jsonSerialize()
+					"brush" => (new Brush(""))->jsonSerialize(),
+					"name" => "ExampleGlobalBrush"
 				]
 			]));
 			return true;
@@ -60,20 +61,28 @@ class SessionManager implements Listener {
 		if(!file_exists($loader->getDataFolder() . "serverSessions.json")) {
 			$this->createInitialSessionFile($loader);
 		}
-		foreach(json_decode(file_get_contents($loader->getDataFolder() . "serverSessions.json")) as $session) {
+		foreach((array) json_decode(file_get_contents($loader->getDataFolder() . "serverSessions.json")) as $session) {
 			if(($level = $loader->getServer()->getLevelByName($session["targetBlock"]["level"])) === null) {
 				continue;
 			}
 			$i = $session["targetBlock"];
 			$position = new Position((int) $i["x"], (int) $i["y"], (int) $i["z"], $level);
-			self::$serverSessions[($id = $this->serverSessionCounter++)] = new ServerSession(new ServerSessionOwner(), $loader);
+			self::$serverSessions[$id = $this->serverSessionCounter++] = new ServerSession(new ServerSessionOwner(), $loader);
 			self::$serverSessions[$id]->setTargetBlock($position);
 
 			$processor = new PropertyProcessor(self::$serverSessions[$id], $loader);
 			foreach($session["brush"] as $property => $value) {
 				$processor->process($property, $value);
 			}
+			self::$serverSessions[$id]->setName($session["name"]);
 		}
+	}
+
+	/**
+	 * @return ServerSession[]
+	 */
+	public function getServerSessions(): array {
+		return self::$serverSessions;
 	}
 
 	/**

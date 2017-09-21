@@ -4,9 +4,15 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\ui\windows;
 
+use BlockHorizons\BlockSniper\brush\PropertyProcessor;
 use BlockHorizons\BlockSniper\data\Translation;
+use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
+use BlockHorizons\BlockSniper\ui\WindowHandler;
 use pocketmine\level\generator\biome\Biome;
+use pocketmine\network\mcpe\protocol\ModalFormRequestPacket;
+use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
+use pocketmine\Player;
 
 class BrushMenuWindow extends Window {
 
@@ -85,5 +91,16 @@ class BrushMenuWindow extends Window {
 				]
 			]
 		];
+	}
+
+	public function handle(ModalFormResponsePacket $packet): bool {
+		$data = json_decode($packet->formData, true);
+		$processor = new PropertyProcessor(SessionManager::getPlayerSession($this->player), $this->loader);
+		foreach($data as $key => $value) {
+			$processor->process($key, $value);
+		}
+		$windowHandler = new WindowHandler();
+		$this->navigate(WindowHandler::WINDOW_MAIN_MENU, $this->player, $windowHandler);
+		return true;
 	}
 }

@@ -53,7 +53,9 @@ class Project {
 		foreach($this->pulls as $time => $changes) {
 			if($time > $commit->getCloneTime() && $time < $commit->getPushTime()) {
 				foreach($changes as $block) {
-					$finalChanges[] = $block;
+					if(array_key_exists(Level::chunkHash($block->x >> 4, $block->z >> 4), $commit->getChunks())) {
+						$finalChanges[] = $block;
+					}
 				}
 			}
 		}

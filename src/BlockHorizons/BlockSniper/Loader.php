@@ -35,11 +35,13 @@ class Loader extends PluginBase {
 		"nl",
 	];
 	/** @var TranslationData */
-	public $language = null;
+	private $language = null;
 	/** @var PresetManager */
 	private $presetManager = null;
 	/** @var ConfigData */
-	protected $settings = null;
+	private $settings = null;
+	/** @var SessionManager */
+	private $sessionManager = null;
 
 	/**
 	 * @return array
@@ -122,7 +124,7 @@ class Loader extends PluginBase {
 		$blockSniperListeners = [
 			new BrushListener($this),
 			new UserInterfaceListener($this),
-			new SessionManager($this)
+			$this->sessionManager = new SessionManager($this)
 		];
 		foreach($blockSniperListeners as $listener) {
 			$this->getServer()->getPluginManager()->registerEvents($listener, $this);
@@ -146,5 +148,12 @@ class Loader extends PluginBase {
 	 */
 	public function getTranslationData(): TranslationData {
 		return $this->language;
+	}
+
+	/**
+	 * @return SessionManager
+	 */
+	public function getSessionManager(): SessionManager {
+		return $this->sessionManager;
 	}
 }

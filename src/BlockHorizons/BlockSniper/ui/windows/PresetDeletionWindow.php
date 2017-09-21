@@ -5,6 +5,8 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\ui\windows;
 
 use BlockHorizons\BlockSniper\data\Translation;
+use BlockHorizons\BlockSniper\ui\WindowHandler;
+use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
 
 class PresetDeletionWindow extends Window {
 
@@ -24,5 +26,18 @@ class PresetDeletionWindow extends Window {
 				]
 			];
 		}
+	}
+
+	public function handle(ModalFormResponsePacket $packet): bool {
+		$index = (int) $packet->formData;
+		$presetName = "";
+		foreach($this->loader->getPresetManager()->getAllPresets() as $key => $name) {
+			if($key === $index) {
+				$presetName = $name;
+			}
+		}
+		$this->loader->getPresetManager()->deletePreset($presetName);
+		$this->navigate(WindowHandler::WINDOW_PRESET_MENU, $this->player, new WindowHandler());
+		return true;
 	}
 }

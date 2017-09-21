@@ -5,6 +5,12 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\ui\windows;
 
 use BlockHorizons\BlockSniper\data\Translation;
+use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\ui\WindowHandler;
+use pocketmine\block\Transparent;
+use pocketmine\network\mcpe\protocol\ModalFormRequestPacket;
+use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
+use pocketmine\Player;
 
 class MainMenuWindow extends Window {
 
@@ -36,6 +42,13 @@ class MainMenuWindow extends Window {
 					]
 				],
 				[
+					"text" => (new Translation(Translation::UI_MAIN_MENU_GLOBAL_BRUSH))->getMessage(),
+					"image" => [
+						"type" => "url",
+						"data" => "https://images-na.ssl-images-amazon.com/images/I/81KnF7yLLrL.png"
+					]
+				],
+				[
 					"text" => (new Translation(Translation::UI_MAIN_MENU_EXIT))->getMessage(),
 					"image" => [
 						"type" => "url",
@@ -44,5 +57,18 @@ class MainMenuWindow extends Window {
 				]
 			]
 		];
+	}
+
+	public function handle(ModalFormResponsePacket $packet): bool {
+		$index = (int) $packet->formData + 1;
+		if($index === 4) {
+			return false;
+		}
+		$windowHandler = new WindowHandler();
+		$packet = new ModalFormRequestPacket();
+		$packet->formId = $windowHandler->getWindowIdFor($index);
+		$packet->formData = $windowHandler->getWindowJson($index, $this->loader, $this->player);
+		$this->player->dataPacket($packet);
+		return true;
 	}
 }

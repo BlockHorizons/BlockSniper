@@ -285,17 +285,17 @@ class Brush implements \JsonSerializable {
 	 */
 	public function jsonSerialize(): array {
 		return [
-			"size" => 5,
-			"shape" => "sphere",
-			"type" => "fill",
-			"hollow" => true,
-			"decrement" => false,
-			"height" => 7,
-			"perfect" => true,
-			"blocks" => "1,98:2",
-			"obsolete" => "grass,stone:1",
-			"biome" => "plains",
-			"tree" => "oak"
+			$this->size,
+			$this->shape,
+			$this->type,
+			$this->hollow,
+			$this->decrement,
+			$this->height,
+			$this->perfect,
+			$this->blocks,
+			$this->obsolete,
+			$this->biome,
+			$this->tree
 		];
 	}
 

@@ -7,14 +7,17 @@ namespace BlockHorizons\BlockSniper\ui\windows;
 use BlockHorizons\BlockSniper\brush\BaseShape;
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\ui\WindowHandler;
+use pocketmine\network\mcpe\protocol\ModalFormRequestPacket;
+use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
 use pocketmine\Player;
 
 abstract class Window {
 
 	/** @var Loader */
-	private $loader = null;
+	protected $loader = null;
 	/** @var Player */
-	private $player = null;
+	protected $player = null;
 	/** @var array */
 	protected $data = [];
 
@@ -84,5 +87,19 @@ abstract class Window {
 		return $types;
 	}
 
+	/**
+	 * @param int           $menu
+	 * @param Player        $player
+	 * @param WindowHandler $windowHandler
+	 */
+	public function navigate(int $menu, Player $player, WindowHandler $windowHandler): void {
+		$packet = new ModalFormRequestPacket();
+		$packet->formId = $windowHandler->getWindowIdFor($menu);
+		$packet->formData = $windowHandler->getWindowJson($menu, $this->loader, $player);
+		$player->dataPacket($packet);
+	}
+
 	protected abstract function process(): void;
+
+	public abstract function handle(ModalFormResponsePacket $packet): bool;
 }

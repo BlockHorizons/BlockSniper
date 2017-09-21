@@ -6,6 +6,9 @@ namespace BlockHorizons\BlockSniper\ui\windows;
 
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\ui\WindowHandler;
+use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
+use pocketmine\Player;
 
 class ConfigurationMenuWindow extends Window {
 
@@ -86,5 +89,21 @@ class ConfigurationMenuWindow extends Window {
 				]
 			]
 		];
+	}
+
+	public function handle(ModalFormResponsePacket $packet): bool {
+		$data = json_decode($packet->formData, true);
+		foreach($data as $key => $value) {
+			if($key === 1) {
+				$value = Loader::getAvailableLanguages()[$value];
+			}
+			$this->getLoader()->getSettings()->set($key, $value);
+		}
+		if($data[10] === true) {
+			$this->loader->reload();
+		}
+		$windowHandler = new WindowHandler();
+		$this->navigate(WindowHandler::WINDOW_MAIN_MENU, $this->player, $windowHandler);
+		return true;
 	}
 }

@@ -5,6 +5,9 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\ui\windows;
 
 use BlockHorizons\BlockSniper\data\Translation;
+use BlockHorizons\BlockSniper\presets\PresetPropertyProcessor;
+use BlockHorizons\BlockSniper\ui\WindowHandler;
+use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
 
 class PresetCreationWindow extends Window {
 
@@ -88,5 +91,18 @@ class PresetCreationWindow extends Window {
 				]
 			]
 		];
+	}
+
+	public function handle(ModalFormResponsePacket $packet): bool {
+		$data = json_decode($packet->formData, true);
+		if($this->loader->getPresetManager()->isPreset($data[0])) {
+			return false;
+		}
+		$processor = new PresetPropertyProcessor($this->player, $this->loader);
+		foreach($data as $key => $value) {
+			$processor->process($key, $value);
+		}
+		$this->navigate(WindowHandler::WINDOW_PRESET_MENU, $this->player, new WindowHandler());
+		return true;
 	}
 }

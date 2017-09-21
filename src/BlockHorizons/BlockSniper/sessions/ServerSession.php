@@ -15,6 +15,8 @@ class ServerSession extends Session implements \JsonSerializable {
 	private $targetBlock = null;
 	/** @var string */
 	private $levelName = "";
+	/** @var string */
+	private $name = "";
 
 	public function __construct(ISessionOwner $sessionOwner, Loader $loader) {
 		$this->dataFile = $loader->getDataFolder() . "serverSessions.json";
@@ -22,9 +24,23 @@ class ServerSession extends Session implements \JsonSerializable {
 	}
 
 	/**
+	 * @param string $name
+	 */
+	public function setName(string $name): void {
+		$this->name = $name;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getName(): string {
+		return $this->name;
+	}
+
+	/**
 	 * @param Position $position
 	 */
-	public function setTargetBlock(Position $position) {
+	public function setTargetBlock(Position $position): void {
 		$this->levelName = $position->getLevel()->getName();
 		$this->targetBlock = $position;
 	}
@@ -55,7 +71,8 @@ class ServerSession extends Session implements \JsonSerializable {
 				"y" => $this->targetBlock->y,
 				"z" => $this->targetBlock->z
 			],
-			"brush" => $this->getBrush()->jsonSerialize()
+			"brush" => $this->getBrush()->jsonSerialize(),
+			"name" => $this->name
 		];
 	}
 
