@@ -27,7 +27,7 @@ class SessionManager implements Listener {
 
 	public function __construct(Loader $loader) {
 		$this->loader = $loader;
-		$this->fetchServerSessions($loader);
+		//$this->fetchServerSessions($loader);
 	}
 
 	/**
@@ -61,8 +61,7 @@ class SessionManager implements Listener {
 		if(!file_exists($loader->getDataFolder() . "serverSessions.json")) {
 			$this->createInitialSessionFile($loader);
 		}
-		foreach((array) json_decode(file_get_contents($loader->getDataFolder() . "serverSessions.json")) as $session) {
-			$session = (array) $session;
+		foreach(json_decode(file_get_contents($loader->getDataFolder() . "serverSessions.json"), true) as $session) {
 			if(($level = $loader->getServer()->getLevelByName($session["targetBlock"]["level"])) === null) {
 				continue;
 			}
