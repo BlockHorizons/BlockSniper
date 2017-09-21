@@ -62,6 +62,7 @@ class SessionManager implements Listener {
 			$this->createInitialSessionFile($loader);
 		}
 		foreach((array) json_decode(file_get_contents($loader->getDataFolder() . "serverSessions.json")) as $session) {
+			$session = (array) $session;
 			if(($level = $loader->getServer()->getLevelByName($session["targetBlock"]["level"])) === null) {
 				continue;
 			}
