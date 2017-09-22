@@ -33,8 +33,8 @@ class BrushListener implements Listener {
 		$player = $event->getPlayer();
 		if($player->getInventory()->getItemInHand()->getId() === $this->getLoader()->getSettings()->getBrushItem()) {
 			if($player->hasPermission("blocksniper.command.brush")) {
-				$brush = SessionManager::getPlayerSession($player)->getBrush();
-				$brush->execute($player);
+				$brush = ($session = SessionManager::getPlayerSession($player))->getBrush();
+				$brush->execute($session);
 				$event->setCancelled();
 			}
 		}

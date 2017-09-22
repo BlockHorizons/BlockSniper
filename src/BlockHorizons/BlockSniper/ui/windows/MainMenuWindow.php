@@ -42,11 +42,7 @@ class MainMenuWindow extends Window {
 					]
 				],
 				[
-					"text" => (new Translation(Translation::UI_MAIN_MENU_GLOBAL_BRUSH))->getMessage(),
-					"image" => [
-						"type" => "url",
-						"data" => "https://images-na.ssl-images-amazon.com/images/I/81KnF7yLLrL.png"
-					]
+					"text" => "Coming soon..."
 				],
 				[
 					"text" => (new Translation(Translation::UI_MAIN_MENU_EXIT))->getMessage(),

@@ -29,7 +29,7 @@ class ReplaceType extends BaseType {
 	 * @return Block[]|null
 	 */
 	public function fillShape(): ?array {
-		if(!$this->isAsynchronous()) {
+		if($this->isAsynchronous()) {
 			$this->fillAsynchronously();
 			return null;
 		}

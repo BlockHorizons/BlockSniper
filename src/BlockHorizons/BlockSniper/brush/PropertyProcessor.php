@@ -134,7 +134,7 @@ class PropertyProcessor {
 				return;
 		}
 		if($this->session instanceof PlayerSession) {
-			$this->getLoader()->getServer()->getPluginManager()->callEvent(new Change($this->getLoader(), $this->session->getSessionOwner()->getPlayer(), $action, $value));
+			$this->getLoader()->getServer()->getPluginManager()->callEvent(new Change($this->session->getSessionOwner()->getPlayer(), $action, $value));
 		}
 	}
 }

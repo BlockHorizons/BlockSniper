@@ -35,6 +35,7 @@ class UserInterfaceListener implements Listener {
 				return;
 			}
 			$windowHandler = new WindowHandler();
+			$packet->formId = $windowHandler->getWindowIdFor($packet->formId);
 			if(!$windowHandler->isInRange($packet->formId)) {
 				return;
 			}
