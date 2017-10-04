@@ -5,12 +5,9 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\ui\windows;
 
 use BlockHorizons\BlockSniper\data\Translation;
-use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\ui\WindowHandler;
-use pocketmine\block\Transparent;
 use pocketmine\network\mcpe\protocol\ModalFormRequestPacket;
 use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
-use pocketmine\Player;
 
 class MainMenuWindow extends Window {
 
@@ -40,9 +37,6 @@ class MainMenuWindow extends Window {
 						"type" => "url",
 						"data" => "http://icons.iconarchive.com/icons/dtafalonso/android-l/512/Settings-L-icon.png"
 					]
-				],
-				[
-					"text" => "Coming soon..."
 				],
 				[
 					"text" => (new Translation(Translation::UI_MAIN_MENU_EXIT))->getMessage(),

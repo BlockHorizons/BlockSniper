@@ -10,7 +10,6 @@ class AsyncUndo extends AsyncRevert implements IUndo {
 
 	/**
 	 * @param array  $chunks
-	 * @param string $playerName
 	 *
 	 * @return AsyncRevert
 	 */
