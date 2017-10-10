@@ -26,13 +26,9 @@ class LeafblowerType extends BaseType {
 	}
 
 	/**
-	 * @return Block[]|null
+	 * @return Block[]
 	 */
-	public function fillShape(): ?array {
-		if($this->isAsynchronous()) {
-			$this->fillAsynchronously();
-			return null;
-		}
+	public function fillSynchronously(): array {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			if($block instanceof Flowable) {

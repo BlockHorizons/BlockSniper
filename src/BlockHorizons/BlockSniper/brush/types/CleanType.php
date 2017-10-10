@@ -23,23 +23,15 @@ class CleanType extends BaseType {
 	}
 
 	/**
-	 * @return Block[]|null
+	 * @return Block[]
 	 */
-	public function fillShape(): ?array {
-		if($this->isAsynchronous()) {
-			$this->fillAsynchronously();
-			return null;
-		}
+	public function fillSynchronously(): array {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			$blockId = $block->getId();
 			if($blockId !== Block::AIR && $blockId !== Block::STONE && $blockId !== Block::GRASS && $blockId !== Block::DIRT && $blockId !== Block::GRAVEL && $blockId !== Block::SAND && $blockId !== Block::SANDSTONE) {
 				$undoBlocks[] = $block;
-				if($this->isAsynchronous()) {
-					$this->getChunkManager()->setBlockIdAt($block->x, $block->y, $block->z, Block::AIR);
-				} else {
-					$this->getLevel()->setBlock(new Vector3($block->x, $block->y, $block->z), Block::get(Block::AIR), false, false);
-				}
+				$this->getLevel()->setBlock(new Vector3($block->x, $block->y, $block->z), Block::get(Block::AIR), false, false);
 			}
 		}
 		return $undoBlocks;

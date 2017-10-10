@@ -111,7 +111,7 @@ class SessionManager implements Listener {
 	 * @return bool
 	 */
 	public function createPlayerSession(IPlayer $player): bool {
-		if($this->playerSessionExists($player)) {
+		if(self::playerSessionExists($player)) {
 			return false;
 		}
 		self::$playerSessions[strtolower($player->getName())] = new PlayerSession(new PlayerSessionOwner($player), $this->getLoader());
@@ -132,7 +132,7 @@ class SessionManager implements Listener {
 	 *
 	 * @return bool
 	 */
-	public function playerSessionExists(IPlayer $player): bool {
+	public static function playerSessionExists(IPlayer $player): bool {
 		return isset(self::$playerSessions[strtolower($player->getName())]);
 	}
 }

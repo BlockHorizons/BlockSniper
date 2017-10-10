@@ -145,9 +145,25 @@ abstract class BaseType {
 		return $manager;
 	}
 
-	public abstract function fillShape(): ?array;
+	/**
+	 * @return Block[]|null
+	 */
+	public function fillShape(): ?array {
+		if($this->isAsynchronous() && $this->canBeExecutedAsynchronously()) {
+			$this->fillAsynchronously();
+			return null;
+		}
+		return $this->fillSynchronously();
+	}
 
-	public abstract function fillAsynchronously(): void;
+	/**
+	 * @return Block[]
+	 */
+	public abstract function fillSynchronously(): array;
+
+	public function fillAsynchronously(): void {
+		return;
+	}
 
 	/**
 	 * Returns the level the type is used in.
@@ -168,7 +184,7 @@ abstract class BaseType {
 	/**
 	 * @return bool
 	 */
-	public function canExecuteAsynchronously(): bool {
+	public function canBeExecutedAsynchronously(): bool {
 		return true;
 	}
 
@@ -215,6 +231,9 @@ abstract class BaseType {
 		return "blocksniper.type." . str_replace("hollow", "", str_replace(" ", "_", strtolower($this->getName())));
 	}
 
+	/**
+	 * @return string
+	 */
 	public abstract function getName(): string;
 
 	/**

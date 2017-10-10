@@ -26,13 +26,9 @@ class FlattenallType extends BaseType {
 	}
 
 	/**
-	 * @return Block[]|null
+	 * @return Block[]
 	 */
-	public function fillShape(): ?array {
-		if($this->isAsynchronous()) {
-			$this->fillAsynchronously();
-			return null;
-		}
+	public function fillSynchronously(): array {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];

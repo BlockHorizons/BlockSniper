@@ -6,6 +6,7 @@ namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
+use pocketmine\block\Block;
 use pocketmine\level\ChunkManager;
 use pocketmine\Player;
 
@@ -25,21 +26,19 @@ class BiomeType extends BaseType {
 	}
 
 	/**
-	 * @return array
+	 * @return Block[]
 	 */
-	public function fillShape(): array {
+	public function fillSynchronously(): array {
 		foreach($this->blocks as $block) {
-			if($this->isAsynchronous()) {
-				$this->getChunkManager()->setBiomeIdAt($block->x & 0x0f, $block->z & 0x0f, $this->biome);
-			} else {
-				$this->getLevel()->setBiomeId($block->x, $block->z, $this->biome);
-			}
+			$this->getLevel()->setBiomeId($block->x, $block->z, $this->biome);
 		}
 		return [];
 	}
 
 	public function fillAsynchronously(): void {
-		return;
+		foreach($this->blocks as $block) {
+			$this->getChunkManager()->setBiomeIdAt($block->x & 0x0f, $block->z & 0x0f, $this->biome);
+		}
 	}
 
 	public function getName(): string {
@@ -53,12 +52,5 @@ class BiomeType extends BaseType {
 	 */
 	public function getBiome(): int {
 		return $this->biome;
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function canExecuteAsynchronously(): bool {
-		return false;
 	}
 }

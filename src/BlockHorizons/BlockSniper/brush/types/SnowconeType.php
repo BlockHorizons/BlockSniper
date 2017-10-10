@@ -22,13 +22,9 @@ class SnowconeType extends BaseType {
 	}
 
 	/**
-	 * @return Block[]|null
+	 * @return Block[]
 	 */
-	public function fillShape(): ?array {
-		if($this->isAsynchronous()) {
-			$this->fillAsynchronously();
-			return null;
-		}
+	public function fillSynchronously(): array {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			if(($id = $block->getId()) !== Block::AIR && $id !== Block::SNOW_LAYER) {

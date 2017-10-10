@@ -16,7 +16,7 @@ class RedoDiminishTask extends BaseTask {
 
 	public function onRun(int $currentTick): void {
 		foreach($this->getLoader()->getServer()->getOnlinePlayers() as $player) {
-			if(!$player->hasPermission("blocksniper.command.brush")) {
+			if(!SessionManager::playerSessionExists($player)) {
 				continue;
 			}
 			if(($storer = SessionManager::getPlayerSession($player)->getRevertStorer())->redoStorageExists()) {

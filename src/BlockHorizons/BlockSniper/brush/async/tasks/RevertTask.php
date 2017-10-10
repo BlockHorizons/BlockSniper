@@ -20,7 +20,7 @@ class RevertTask extends AsyncBlockSniperTask {
 	/** @var string */
 	private $revert = "";
 
-	public function __construct(AsyncRevert $revert, Server $server) {
+	public function __construct(AsyncRevert $revert) {
 		$this->revert = serialize($revert);
 	}
 

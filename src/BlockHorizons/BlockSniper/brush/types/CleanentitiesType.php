@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
+use pocketmine\block\Block;
 use pocketmine\level\ChunkManager;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\Player;
@@ -22,9 +23,9 @@ class CleanentitiesType extends BaseType {
 	}
 
 	/**
-	 * @return array
+	 * @return Block[]
 	 */
-	public function fillShape(): array {
+	public function fillSynchronously(): array {
 		foreach($this->blocks as $block) {
 			foreach($block->getLevel()->getNearbyEntities(new AxisAlignedBB($block->x, $block->y, $block->z, $block->x + 1, $block->y + 1, $block->z + 1)) as $entity) {
 				if(!($entity instanceof Player)) {
@@ -39,11 +40,7 @@ class CleanentitiesType extends BaseType {
 		return "Clean Entities";
 	}
 
-	public function canExecuteAsynchronously(): bool {
+	public function canBeExecutedAsynchronously(): bool {
 		return false;
-	}
-
-	public function fillAsynchronously(): void {
-		return;
 	}
 }

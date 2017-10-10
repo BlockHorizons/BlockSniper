@@ -27,13 +27,9 @@ class ToplayerType extends BaseType {
 	}
 
 	/**
-	 * @return Block[]|null
+	 * @return Block[]
 	 */
-	public function fillShape(): ?array {
-		if($this->isAsynchronous()) {
-			$this->fillAsynchronously();
-			return null;
-		}
+	public function fillSynchronously(): array {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			if($block->getId() !== Item::AIR && !$block instanceof Flowable) {
@@ -70,6 +66,8 @@ class ToplayerType extends BaseType {
 	}
 
 	/**
+	 * Returns the height/width of the top layer.
+	 *
 	 * @return int
 	 */
 	public function getHeight(): int {

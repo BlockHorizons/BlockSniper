@@ -65,7 +65,7 @@ class CloneCommand extends BaseCommand {
 				$schematic = new Schematic();
 				$schematic
 					->setBlocks($shape->getBlocksInside())
-					->setMaterials(Schematic::MATERIALS_ALPHA)
+					->setMaterials(Schematic::MATERIALS_POCKET)
 					->encode()
 					->setLength($size * 2 + 1)
 					->setHeight($size * 2 + 1)

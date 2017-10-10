@@ -63,15 +63,9 @@ class BrushTask extends AsyncBlockSniperTask {
 		}
 		$type->setBlocksInside($blocks)->setAsynchronous()->setChunkManager($manager)->fillAsynchronously();
 
-		$serializedChunks = $chunks;
-		foreach($serializedChunks as &$chunk) {
-			$chunk = $chunk->fastSerialize();
-		}
-		unset($chunk);
-
 		$this->setResult([
 			"undoChunks" => $undoChunks,
-			"chunks" => $serializedChunks
+			"chunks" => $chunks
 		]);
 	}
 
@@ -94,10 +88,6 @@ class BrushTask extends AsyncBlockSniperTask {
 		}
 		$result = $this->getResult();
 		$chunks = $result["chunks"];
-		foreach($chunks as &$chunk) {
-			$chunk = Chunk::fastDeserialize($chunk);
-		}
-		unset($chunk);
 		$undoChunks = $result["undoChunks"];
 		$level = $server->getLevel($this->shape->getLevelId());
 		if($level instanceof Level) {

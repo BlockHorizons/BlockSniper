@@ -9,7 +9,7 @@ use pocketmine\math\Vector3;
 
 class BlockSniperChunkManager extends SimpleChunkManager {
 
-	public function __construct($seed, $worldHeight = Level::Y_MAX) {
+	public function __construct($seed, int $worldHeight = Level::Y_MAX) {
 		parent::__construct($seed, $worldHeight);
 	}
 

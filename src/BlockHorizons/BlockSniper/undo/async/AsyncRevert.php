@@ -8,7 +8,6 @@ use BlockHorizons\BlockSniper\brush\async\BlockSniperChunkManager;
 use BlockHorizons\BlockSniper\brush\async\tasks\RevertTask;
 use BlockHorizons\BlockSniper\undo\Revert;
 use pocketmine\level\format\Chunk;
-use pocketmine\level\Level;
 use pocketmine\Server;
 
 abstract class AsyncRevert extends Revert {
@@ -22,7 +21,13 @@ abstract class AsyncRevert extends Revert {
 
 	public function __construct(array $chunks, string $playerName, int $levelId) {
 		parent::__construct($playerName);
-		$this->modifiedChunks = $chunks;
+		if(count(array_filter($chunks, function($value) {
+			return is_string($value);
+		})) > 0) {
+			$this->modifiedChunks = $chunks;
+		} else {
+			$this->setModifiedChunks($chunks);
+		}
 		$this->levelId = $levelId;
 	}
 
@@ -78,21 +83,14 @@ abstract class AsyncRevert extends Revert {
 	}
 
 	public function restore(): void {
-		Server::getInstance()->getScheduler()->scheduleAsyncTask(new RevertTask($this, Server::getInstance()));
+		Server::getInstance()->getScheduler()->scheduleAsyncTask(new RevertTask($this));
 	}
 
 	/**
 	 * @return AsyncRevert
 	 */
 	public function getDetached(): self {
-		$level = Server::getInstance()->getLevel($this->levelId);
-		$currentChunks = [];
-		foreach($this->modifiedChunks as $hash => $chunk) {
-			$x = $z = 0;
-			Level::getXZ($hash, $x, $z);
-			$currentChunks[$hash] = $level->getChunk($x >> 4, $z >> 4, true)->fastSerialize();
-		}
-		return $this->getDetachedClass($currentChunks);
+		return $this->getDetachedClass($this->modifiedChunks);
 	}
 
 	/**

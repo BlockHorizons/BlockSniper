@@ -19,7 +19,7 @@ class TreeType extends BaseType {
 	/** @var int */
 	protected $id = self::TYPE_TREE;
 	/** @var Vector3 */
-	protected $center;
+	protected $center = null;
 
 	/*
 	 * Grows a tree on the target block. This brush can not undo.
@@ -31,18 +31,14 @@ class TreeType extends BaseType {
 	}
 
 	/**
-	 * @return Block[]|null
+	 * @return Block[]
 	 */
-	public function fillShape(): ?array {
+	public function fillSynchronously(): array {
 		if(!($this->getLevel()->getBlock($this->center) instanceof Flowable) && $this->getLevel()->getBlock($this->center)->getId() !== Block::AIR) {
 			$this->center->y++;
 		}
 		Tree::growTree($this->getLevel(), $this->center->x, $this->center->y + 1, $this->center->z, new Random(mt_rand()), $this->tree);
 		return [];
-	}
-
-	public function fillAsynchronously(): void {
-		return;
 	}
 
 	public function getName(): string {
@@ -61,7 +57,7 @@ class TreeType extends BaseType {
 	/**
 	 * @return bool
 	 */
-	public function canExecuteAsynchronously(): bool {
+	public function canBeExecutedAsynchronously(): bool {
 		return false;
 	}
 }

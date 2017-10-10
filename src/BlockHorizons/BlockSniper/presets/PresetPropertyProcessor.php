@@ -42,8 +42,8 @@ class PresetPropertyProcessor {
 	}
 
 	/**
-	 * @param int $valueType
-	 * @param     $value
+	 * @param int   $valueType
+	 * @param mixed $value
 	 */
 	public function process(int $valueType, $value): void {
 		$this->properties[$valueType] = $value;
