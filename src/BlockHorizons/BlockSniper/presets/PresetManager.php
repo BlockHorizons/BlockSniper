@@ -6,7 +6,6 @@ namespace BlockHorizons\BlockSniper\presets;
 
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
-use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
 
 class PresetManager {

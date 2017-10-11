@@ -8,7 +8,6 @@ use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\ui\WindowHandler;
 use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
-use pocketmine\Player;
 
 class ConfigurationMenuWindow extends Window {
 
@@ -27,7 +26,7 @@ class ConfigurationMenuWindow extends Window {
 				[
 					"type" => "dropdown",
 					"text" => (new Translation(Translation::UI_CONFIGURATION_MENU_LANGUAGE))->getMessage(),
-					"default" => ($key === false ? 0 : $key),
+					"default" => $key === false ? 0 : $key,
 					"options" => Loader::getAvailableLanguages()
 				],
 				[

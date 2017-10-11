@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\brush\shapes;
 
 use BlockHorizons\BlockSniper\brush\BaseShape;
-use BlockHorizons\BlockSniper\brush\BrushManager;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
@@ -40,7 +39,7 @@ class CylinderShape extends BaseShape {
 	 */
 	public function getBlocksInside(bool $vectorOnly = false): array {
 		$radiusSquared = ($this->radius + ($this->trueCircle ? 0 : -0.5)) ** 2 + ($this->trueCircle ? 0.5 : 0);
-		list($targetX, $targetY, $targetZ) = $this->center;
+		[$targetX, $targetY, $targetZ] = $this->center;
 
 		$minX = $targetX - $this->radius;
 		$minZ = $targetZ - $this->radius;

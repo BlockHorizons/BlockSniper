@@ -37,10 +37,11 @@ abstract class AsyncRevert extends Revert {
 
 	/**
 	 * @param Chunk[] $chunks
+	 * @param bool    $oldChunks
 	 *
 	 * @return $this
 	 */
-	public function setModifiedChunks(array $chunks, $oldChunks = false): self {
+	public function setModifiedChunks(array $chunks, bool $oldChunks = false): self {
 		foreach($chunks as $index => &$chunk) {
 			$chunk = $chunk->fastSerialize();
 		}

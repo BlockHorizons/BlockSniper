@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\brush\shapes;
 
 use BlockHorizons\BlockSniper\brush\BaseShape;
-use BlockHorizons\BlockSniper\brush\BrushManager;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
@@ -37,7 +36,7 @@ class SphereShape extends BaseShape {
 	 */
 	public function getBlocksInside(bool $vectorOnly = false): array {
 		$radiusSquared = ($this->radius + ($this->trueSphere ? 0 : -0.5)) ** 2 + ($this->trueSphere ? 0.5 : 0);
-		list($targetX, $targetY, $targetZ) = $this->center;
+		[$targetX, $targetY, $targetZ] = $this->center;
 
 		$minX = $targetX - $this->radius;
 		$minZ = $targetZ - $this->radius;
@@ -82,7 +81,7 @@ class SphereShape extends BaseShape {
 		if($this->hollow) {
 			$blockCount = 4 * M_PI * $this->radius;
 		} else {
-			$blockCount = 4 / 3 * M_PI * ($this->radius) ** 3;
+			$blockCount = 4 / 3 * M_PI * $this->radius ** 3;
 		}
 
 		return (int) ceil($blockCount);

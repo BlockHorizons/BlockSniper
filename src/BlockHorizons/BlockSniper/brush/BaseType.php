@@ -162,7 +162,7 @@ abstract class BaseType {
 	public abstract function fillSynchronously(): array;
 
 	public function fillAsynchronously(): void {
-		return;
+		return null;
 	}
 
 	/**

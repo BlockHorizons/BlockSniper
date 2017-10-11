@@ -14,7 +14,6 @@ use pocketmine\block\Sapling;
 use pocketmine\item\Item;
 use pocketmine\level\generator\biome\Biome;
 use pocketmine\level\Position;
-use pocketmine\Player;
 use pocketmine\Server;
 
 class Brush implements \JsonSerializable {

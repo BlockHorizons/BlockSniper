@@ -35,7 +35,7 @@ class CuboidShape extends BaseShape {
 	 * @return array
 	 */
 	public function getBlocksInside(bool $vectorOnly = false): array {
-		list($targetX, $targetY, $targetZ) = $this->center;
+		[$targetX, $targetY, $targetZ] = $this->center;
 
 		$minX = $targetX - $this->width;
 		$minY = $targetY - $this->height;

@@ -75,8 +75,6 @@ class CloneStorer {
 	}
 
 	/**
-	 * @param Player $player
-	 *
 	 * @return bool
 	 */
 	public function copyStoreExists(): bool {
@@ -84,8 +82,6 @@ class CloneStorer {
 	}
 
 	/**
-	 * @param Player $player
-	 *
 	 * @return int
 	 */
 	public function getCopyBlockAmount(): int {
@@ -121,9 +117,8 @@ class CloneStorer {
 	}
 
 	/**
-	 * @param string $templateName
-	 * @param Block  $targetBlock
-	 * @param Player $player
+	 * @param string   $templateName
+	 * @param Position $targetBlock
 	 *
 	 * @deprecated
 	 * @return bool
@@ -172,7 +167,6 @@ class CloneStorer {
 	 * @param string  $file
 	 * @param Vector3 $center
 	 * @param array   $chunks
-	 * @param Player  $player
 	 */
 	public function pasteSchematic(string $file, Vector3 $center, array $chunks): void {
 		Server::getInstance()->getScheduler()->scheduleAsyncTask(new PasteTask($file, $center, $chunks, $this->session->getSessionOwner()->getName()));

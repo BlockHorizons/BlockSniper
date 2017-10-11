@@ -31,7 +31,7 @@ class CubeShape extends BaseShape {
 	 * @return array
 	 */
 	public function getBlocksInside(bool $vectorOnly = false): array {
-		list($targetX, $targetY, $targetZ) = $this->center;
+		[$targetX, $targetY, $targetZ] = $this->center;
 
 		$minX = $targetX - $this->width;
 		$minZ = $targetZ - $this->width;

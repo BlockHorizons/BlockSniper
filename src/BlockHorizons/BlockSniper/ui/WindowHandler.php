@@ -92,10 +92,7 @@ class WindowHandler {
 	 * @return bool
 	 */
 	public function isInRange(int $windowId): bool {
-		if(isset($this->types[$windowId]) || isset($this->types[$windowId + 3200])) {
-			return true;
-		}
-		return false;
+		return isset($this->types[$windowId]) || isset($this->types[$windowId + 3200]);
 	}
 
 	/**

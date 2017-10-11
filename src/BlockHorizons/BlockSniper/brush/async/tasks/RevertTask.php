@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\brush\async\tasks;
 
-use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use BlockHorizons\BlockSniper\undo\async\AsyncRevert;

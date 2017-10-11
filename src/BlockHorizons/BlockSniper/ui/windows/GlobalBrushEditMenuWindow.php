@@ -43,13 +43,13 @@ class GlobalBrushEditMenuWindow extends Window {
 				[
 					"type" => "dropdown",
 					"text" => (new Translation(Translation::UI_GLOBAL_BRUSH_EDIT_SHAPE))->getMessage(),
-					"default" => ($shapeKey === false ? 0 : $shapeKey),
+					"default" => $shapeKey === false ? 0 : $shapeKey,
 					"options" => $shapes
 				],
 				[
 					"type" => "dropdown",
 					"text" => (new Translation(Translation::UI_GLOBAL_BRUSH_EDIT_TYPE))->getMessage(),
-					"default" => ($typeKey === false ? 0 : $typeKey),
+					"default" => $typeKey === false ? 0 : $typeKey,
 					"options" => $types
 				],
 				[
