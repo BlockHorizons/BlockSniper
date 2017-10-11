@@ -123,7 +123,7 @@ class MyType extends BaseType {
      * This function is optional, and could be left if the function below is added.
      */
     public function fillAsynchronously(): void {
-        return null;
+        return;
     }
     
     /*
