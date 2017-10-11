@@ -39,6 +39,7 @@ class PasteTask extends AsyncBlockSniperTask {
 		$chunks = unserialize($this->chunks);
 		$file = $this->file;
 		$center = $this->center;
+
 		$schematic = new Schematic($file);
 		$schematic->decode();
 		$schematic->fixBlockIds();
@@ -46,8 +47,9 @@ class PasteTask extends AsyncBlockSniperTask {
 		$length = $schematic->getLength();
 		$height = $schematic->getHeight();
 
-		$processedBlocks = 0;
 		$undoChunks = $chunks;
+
+		$processedBlocks = 0;
 		foreach($chunks as $hash => $data) {
 			$chunks[$hash] = Chunk::fastDeserialize($data);
 		}
@@ -57,14 +59,17 @@ class PasteTask extends AsyncBlockSniperTask {
 		$manager = BaseType::establishChunkManager($chunks);
 		$i = 0;
 		$vector3 = new Vector3(0, 0, 0);
+
 		foreach($blocksInside as $block) {
 			$vector3->setComponents($center->x + $block->x - (int) ($width / 2), $center->y + $block->y, $center->z + $block->z - (int) ($length / 2));
 			$index = Level::chunkHash($vector3->x >> 4, $vector3->z >> 4);
+
 			if(isset($chunks[$index])) {
 				$manager->setBlockIdAt((int) $vector3->x, (int) $vector3->y, (int) $vector3->z, $block->getId());
 				$manager->setBlockDataAt((int) $vector3->x, (int) $vector3->y, (int) $vector3->z, $block->getDamage());
 				$processedBlocks++;
 			}
+
 			if(++$i === (int) ($length * $width * $height / 100)) {
 				if($this->isAborted()) {
 					return;
@@ -73,6 +78,7 @@ class PasteTask extends AsyncBlockSniperTask {
 				$i = 0;
 			}
 		}
+
 		$serializedChunks = $chunks;
 		foreach($serializedChunks as &$chunk) {
 			$chunk = $chunk->fastSerialize();
@@ -102,22 +108,29 @@ class PasteTask extends AsyncBlockSniperTask {
 		if(!($player = $server->getPlayer($this->playerName))) {
 			return false;
 		}
+
 		$result = $this->getResult();
 		$chunks = $result["chunks"];
 		foreach($chunks as &$chunk) {
 			$chunk = Chunk::fastDeserialize($chunk);
 		}
 		unset($chunk);
+		/** @var Chunk[] $chunks */
+
 		$undoChunks = $result["undoChunks"];
 		$level = $player->getLevel();
 		if($level instanceof Level) {
 			foreach($chunks as $hash => $chunk) {
-				$x = $z = 0;
-				Level::getXZ($hash, $x, $z);
-				$level->setChunk($x, $z, $chunk);
+				$level->setChunk($chunk->getX(), $chunk->getZ(), $chunk);
 			}
 		}
-		SessionManager::getPlayerSession($player)->getRevertStorer()->saveRevert(new AsyncUndo($undoChunks, $this->playerName, $player->getLevel()->getId()));
+
+		foreach($undoChunks as &$undoChunk) {
+			$undoChunk = Chunk::fastDeserialize($undoChunk);
+		}
+		unset($undoChunk);
+
+		SessionManager::getPlayerSession($player)->getRevertStorer()->saveRevert(new AsyncUndo($chunks, $undoChunks, $this->playerName, $player->getLevel()->getId()));
 		return true;
 	}
 }

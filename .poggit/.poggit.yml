@@ -4,6 +4,7 @@ projects:
   BlockSniper:
     path: ""
     icon: resources/BlockSniperLogo.png
+    libs:
       - src: libschematic/libschematic
         version: ^0.0.6
 ...

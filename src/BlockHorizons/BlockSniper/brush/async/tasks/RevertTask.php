@@ -27,11 +27,9 @@ class RevertTask extends AsyncBlockSniperTask {
 	public function onRun(): void {
 		/** @var AsyncRevert $revert */
 		$revert = unserialize($this->revert);
-		$chunks = $revert->getModifiedChunks();
-		$revert->setManager($manager = BaseType::establishChunkManager($chunks));
+		$chunks = $revert->getOldChunks();
 
 		$detached = $revert->getDetached();
-		$revert->restore();
 
 		$this->setResult([
 			"chunks" => $chunks,
@@ -53,23 +51,25 @@ class RevertTask extends AsyncBlockSniperTask {
 		if(!$loader->isEnabled()) {
 			return false;
 		}
+
 		$result = $this->getResult();
 		/** @var Revert $revert */
 		$revert = $result["revert"];
 		if(!($player = $server->getPlayer($revert->getPlayerName()))) {
 			return false;
 		}
+
 		/** @var Chunk[] $chunks */
 		$chunks = $result["chunks"];
 		$levelId = $player->getLevel()->getId();
 		$level = $server->getLevel($levelId);
+
 		if($level instanceof Level) {
 			foreach($chunks as $hash => $chunk) {
-				$x = $z = 0;
-				Level::getXZ($hash, $x, $z);
-				$level->setChunk($x, $z, $chunk);
+				$level->setChunk($chunk->getX(), $chunk->getZ(), $chunk);
 			}
 		}
+
 		SessionManager::getPlayerSession($player)->getRevertStorer()->saveRevert($revert);
 		return true;
 	}

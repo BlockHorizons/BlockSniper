@@ -36,22 +36,27 @@ class BrushTask extends AsyncBlockSniperTask {
 		$processedBlocks = 0;
 		$type = $this->type;
 		$shape = $this->shape;
+
 		$undoChunks = $chunks;
+
 		foreach($chunks as $hash => $data) {
 			$chunks[$hash] = Chunk::fastDeserialize($data);
 		}
 		/** @var Chunk[] $chunks */
+
 		$vectorsInside = $shape->getBlocksInside(true);
 		$blocks = [];
 		$manager = BaseType::establishChunkManager($chunks);
 		$i = 0;
 		$percentageBlocks = $shape->getApproximateProcessedBlocks() / 100;
+
 		foreach($vectorsInside as $vector3) {
 			$index = Level::chunkHash($vector3->x >> 4, $vector3->z >> 4);
 			$pos = [$vector3->x & 0x0f, $vector3->y, $vector3->z & 0x0f];
 			$block = Block::get($chunks[$index]->getBlockId($pos[0], $pos[1], $pos[2]), $chunks[$index]->getBlockData($pos[0], $pos[1], $pos[2]));
 			$block->setComponents($vector3->x, $vector3->y, $vector3->z);
 			$blocks[] = $block;
+
 			++$processedBlocks;
 			if(++$i === $percentageBlocks) { // This is messed up with hollow shapes. Got to find a fix for that.
 				if($this->isAborted()) {
@@ -86,18 +91,25 @@ class BrushTask extends AsyncBlockSniperTask {
 		if(!($player = $this->shape->getPlayer($server))) {
 			return false;
 		}
+
 		$result = $this->getResult();
+		/** @var Chunk[] $chunks */
 		$chunks = $result["chunks"];
 		$undoChunks = $result["undoChunks"];
 		$level = $server->getLevel($this->shape->getLevelId());
+
+		foreach($undoChunks as &$undoChunk) {
+			$undoChunk = Chunk::fastDeserialize($undoChunk);
+		}
+		unset($undoChunk);
+
 		if($level instanceof Level) {
 			foreach($chunks as $hash => $chunk) {
-				$x = $z = 0;
-				Level::getXZ($hash, $x, $z);
-				$level->setChunk($x, $z, $chunk);
+				$level->setChunk($chunk->getX(), $chunk->getZ(), $chunk);
 			}
 		}
-		SessionManager::getPlayerSession($player)->getRevertStorer()->saveRevert(new AsyncUndo($undoChunks, $player->getName(), $player->getLevel()->getId()));
+
+		SessionManager::getPlayerSession($player)->getRevertStorer()->saveRevert(new AsyncUndo($chunks, $undoChunks, $player->getName(), $player->getLevel()->getId()));
 		return true;
 	}
 }

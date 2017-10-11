@@ -76,7 +76,7 @@ class Brush implements \JsonSerializable {
 	/**
 	 * @param bool $value
 	 */
-	public function setDecrementing(bool $value): void {
+	public function setDecrementing(bool $value = true): void {
 		$this->decrement = $value;
 	}
 
@@ -97,7 +97,7 @@ class Brush implements \JsonSerializable {
 	/**
 	 * @param bool $value
 	 */
-	public function setPerfect(bool $value): void {
+	public function setPerfect(bool $value = true): void {
 		$this->perfect = $value;
 	}
 
@@ -197,7 +197,7 @@ class Brush implements \JsonSerializable {
 	/**
 	 * @param bool $value
 	 */
-	public function setHollow(bool $value): void {
+	public function setHollow(bool $value = true): void {
 		$this->hollow = $value;
 	}
 
@@ -320,19 +320,17 @@ class Brush implements \JsonSerializable {
 		/** @var Loader $loader */
 		$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
 
-		if($this->getSize() >= $loader->getSettings()->getMinimumAsynchronousSize() && $type->canExecuteAsynchronously()) {
+		if($this->getSize() >= $loader->getSettings()->getMinimumAsynchronousSize() && $type->canBeExecutedAsynchronously()) {
 			$shape->editAsynchronously($type);
 		} else {
 			$type->setBlocksInside($shape->getBlocksInside());
 			$undoBlocks = $type->fillShape();
-			$session->getRevertStorer()->saveRevert(new SyncUndo($undoBlocks, $session->getSessionOwner()->getname()));
+			$session->getRevertStorer()->saveRevert(new SyncUndo($undoBlocks, $session->getSessionOwner()->getName()));
 		}
 		return true;
 	}
 
 	/**
-	 * @param Player $player
-	 *
 	 * @return bool
 	 */
 	public function decrement(): bool {

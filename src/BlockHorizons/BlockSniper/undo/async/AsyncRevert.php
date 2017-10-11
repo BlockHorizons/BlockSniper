@@ -18,16 +18,13 @@ abstract class AsyncRevert extends Revert {
 	protected $modifiedChunks = [];
 	/** @var int */
 	protected $levelId = 0;
+	/** @var string[] */
+	protected $oldChunks = [];
 
-	public function __construct(array $chunks, string $playerName, int $levelId) {
+	public function __construct(array $actualChunks, array $previousChunks, string $playerName, int $levelId) {
 		parent::__construct($playerName);
-		if(count(array_filter($chunks, function($value) {
-			return is_string($value);
-		})) > 0) {
-			$this->modifiedChunks = $chunks;
-		} else {
-			$this->setModifiedChunks($chunks);
-		}
+		$this->setModifiedChunks($actualChunks);
+		$this->setModifiedChunks($previousChunks, true);
 		$this->levelId = $levelId;
 	}
 
@@ -43,12 +40,16 @@ abstract class AsyncRevert extends Revert {
 	 *
 	 * @return $this
 	 */
-	public function setModifiedChunks(array $chunks): self {
+	public function setModifiedChunks(array $chunks, $oldChunks = false): self {
 		foreach($chunks as $index => &$chunk) {
 			$chunk = $chunk->fastSerialize();
 		}
 		unset($chunk);
-		$this->modifiedChunks = $chunks;
+		if($oldChunks) {
+			$this->oldChunks = $chunks;
+		} else {
+			$this->modifiedChunks = $chunks;
+		}
 
 		return $this;
 	}
@@ -59,6 +60,17 @@ abstract class AsyncRevert extends Revert {
 	public function getModifiedChunks(): array {
 		$chunks = [];
 		foreach($this->modifiedChunks as $index => $chunk) {
+			$chunks[$index] = Chunk::fastDeserialize($chunk);
+		}
+		return $chunks;
+	}
+
+	/**
+	 * @return Chunk[]
+	 */
+	public function getOldChunks(): array {
+		$chunks = [];
+		foreach($this->oldChunks as $index => $chunk) {
 			$chunks[$index] = Chunk::fastDeserialize($chunk);
 		}
 		return $chunks;
@@ -90,13 +102,11 @@ abstract class AsyncRevert extends Revert {
 	 * @return AsyncRevert
 	 */
 	public function getDetached(): self {
-		return $this->getDetachedClass($this->modifiedChunks);
+		return $this->getDetachedClass();
 	}
 
 	/**
-	 * @param array $chunks
-	 *
 	 * @return AsyncRevert
 	 */
-	public abstract function getDetachedClass(array $chunks): self;
+	public abstract function getDetachedClass(): self;
 }

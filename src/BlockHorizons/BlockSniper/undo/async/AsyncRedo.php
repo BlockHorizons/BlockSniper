@@ -9,11 +9,9 @@ use BlockHorizons\BlockSniper\undo\IRedo;
 class AsyncRedo extends AsyncRevert implements IRedo {
 
 	/**
-	 * @param array $chunks
-	 *
 	 * @return AsyncRevert
 	 */
-	public function getDetachedClass(array $chunks): AsyncRevert {
-		return new AsyncUndo($chunks, $this->getPlayerName(), $this->getLevelId());
+	public function getDetachedClass(): AsyncRevert {
+		return new AsyncUndo($this->getOldChunks(), $this->getModifiedChunks(), $this->getPlayerName(), $this->getLevelId());
 	}
 }

@@ -115,8 +115,22 @@ class MyType extends BaseType {
     /*
      * This function should return an array containing the undo blocks.
      */
-    public function fillShape(): array {
+    public function fillSynchronously(): array {
         return [];
+    }
+    
+    /*
+     * This function is optional, and could be left if the function below is added.
+     */
+    public function fillAsynchronously(): void {
+        return;
+    }
+    
+    /*
+     * The function to specify whether this type can be executed asynchronously or not.
+     */
+    public function canBeExecutedAsynchronously(): bool {
+        return false;
     }
     
     public function getName(): string {
@@ -134,11 +148,15 @@ BaseType::registerType($typeName, $typeNumber);
 ### Getting the Brush of a player
 Getting the brush of a player is very easy. A brush object of a player can be obtained by using:
 ```php
-if(($brush = BrushManager::get($player)) === null) {
+<?php
+/** var pocketmine\Player $player */
+if(($session = \BlockHorizons\BlockSniper\sessions\SessionManager::getPlayerSession($player)) === null) {
     return false;
 }
+$brush = $session->getBrush();
 $brush->setSize(10);
 $brush->setHollow();
+?>
 ```
 Make sure to check if the brush obtained from BrushManager::get() is a Brush object, and not null, which will happen if the player has no brush initialized.
 

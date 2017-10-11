@@ -55,15 +55,6 @@ class PresetManager {
 	}
 
 	/**
-	 * @param Player $player
-	 *
-	 * @return bool
-	 */
-	public function isCreatingAPreset(Player $player): bool {
-		return isset($this->presetCreation[$player->getId()]);
-	}
-
-	/**
 	 * @param string $name
 	 */
 	public function deletePreset(string $name): void {

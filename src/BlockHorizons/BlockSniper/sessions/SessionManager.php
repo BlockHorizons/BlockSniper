@@ -121,10 +121,10 @@ class SessionManager implements Listener {
 	/**
 	 * @param IPlayer $player
 	 *
-	 * @return PlayerSession
+	 * @return PlayerSession|null
 	 */
-	public static function getPlayerSession(IPlayer $player): PlayerSession {
-		return self::$playerSessions[strtolower($player->getName())];
+	public static function getPlayerSession(IPlayer $player): ?PlayerSession {
+		return self::$playerSessions[strtolower($player->getName())] ?? null;
 	}
 
 	/**
