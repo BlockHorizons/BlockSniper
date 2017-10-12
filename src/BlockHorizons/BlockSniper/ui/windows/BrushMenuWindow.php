@@ -7,7 +7,6 @@ namespace BlockHorizons\BlockSniper\ui\windows;
 use BlockHorizons\BlockSniper\brush\PropertyProcessor;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
-use BlockHorizons\BlockSniper\ui\WindowHandler;
 use pocketmine\level\generator\biome\Biome;
 use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
 
@@ -96,8 +95,6 @@ class BrushMenuWindow extends Window {
 		foreach($data as $key => $value) {
 			$processor->process($key, $value);
 		}
-		$windowHandler = new WindowHandler();
-		$this->navigate(WindowHandler::WINDOW_MAIN_MENU, $this->player, $windowHandler);
 		return true;
 	}
 }

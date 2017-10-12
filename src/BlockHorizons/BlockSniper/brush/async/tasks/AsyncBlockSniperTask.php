@@ -10,22 +10,8 @@ use pocketmine\Server;
 
 abstract class AsyncBlockSniperTask extends AsyncTask {
 
-	const TYPE_BRUSH = 0;
-	const TYPE_REVERT = 1;
-	const TYPE_COPY = 2;
-	const TYPE_PASTE = 3;
-
-	/** @var int */
-	protected $taskType = self::TYPE_BRUSH;
 	/** @var bool */
 	private $aborted = false;
-
-	/**
-	 * @return int
-	 */
-	public function getType(): int {
-		return $this->taskType;
-	}
 
 	/**
 	 * @return bool

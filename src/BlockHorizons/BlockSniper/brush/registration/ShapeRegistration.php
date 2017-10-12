@@ -9,6 +9,7 @@ use BlockHorizons\BlockSniper\brush\shapes\CuboidShape;
 use BlockHorizons\BlockSniper\brush\shapes\CylinderShape;
 use BlockHorizons\BlockSniper\brush\shapes\SphereShape;
 use pocketmine\permission\Permission;
+use pocketmine\Server;
 
 class ShapeRegistration {
 
@@ -107,5 +108,6 @@ class ShapeRegistration {
 	private static function registerPermission(string $shapeName): void {
 		$permission = new Permission("blocksniper.shape." . $shapeName, "Allows usage to use the " . $shapeName . " shape.");
 		$permission->addParent("blocksniper.shape", Permission::DEFAULT_OP);
+		Server::getInstance()->getPluginManager()->addPermission($permission);
 	}
 }

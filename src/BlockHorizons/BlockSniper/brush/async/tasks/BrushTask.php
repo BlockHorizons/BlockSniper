@@ -16,8 +16,6 @@ use pocketmine\Server;
 
 class BrushTask extends AsyncBlockSniperTask {
 
-	/** @var int */
-	protected $taskType = self::TYPE_BRUSH;
 	/** @var BaseShape */
 	private $shape = null;
 	/** @var string */

@@ -21,13 +21,14 @@ use BlockHorizons\BlockSniper\listeners\BrushListener;
 use BlockHorizons\BlockSniper\listeners\UserInterfaceListener;
 use BlockHorizons\BlockSniper\presets\PresetManager;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
+use BlockHorizons\BlockSniper\tasks\RedoDiminishTask;
 use BlockHorizons\BlockSniper\tasks\UndoDiminishTask;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat as TF;
 
 class Loader extends PluginBase {
 
-	const VERSION = "2.1.0";
+	const VERSION = "2.1.1";
 	const API_TARGET = "3.0.0-ALPHA7 - 3.0.0-ALPHA9";
 	const CONFIGURATION_VERSION = "2.4.0";
 
@@ -59,9 +60,7 @@ class Loader extends PluginBase {
 		$this->registerListeners();
 
 		$this->getServer()->getScheduler()->scheduleRepeatingTask(new UndoDiminishTask($this), 400);
-		CommandOverloads::initialize();
-		ShapeRegistration::init();
-		TypeRegistration::init();
+		$this->getServer()->getScheduler()->scheduleRepeatingTask(new RedoDiminishTask($this), 400);
 	}
 
 	private function reloadAll(): void {
@@ -94,6 +93,9 @@ class Loader extends PluginBase {
 			$this->getLogger()->info(TF::AQUA . (new Translation(Translation::LOG_LANGUAGE_SELECTED))->getMessage() . TF::GREEN . $this->getSettings()->getLanguage());
 		}
 		new GitRepository($this);
+
+		ShapeRegistration::init();
+		TypeRegistration::init();
 	}
 
 	public function reload(): void {

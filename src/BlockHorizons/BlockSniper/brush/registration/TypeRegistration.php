@@ -23,6 +23,7 @@ use BlockHorizons\BlockSniper\brush\types\SnowConeType;
 use BlockHorizons\BlockSniper\brush\types\TopLayerType;
 use BlockHorizons\BlockSniper\brush\types\TreeType;
 use pocketmine\permission\Permission;
+use pocketmine\Server;
 
 class TypeRegistration {
 
@@ -134,5 +135,6 @@ class TypeRegistration {
 	private static function registerPermission(string $typeName): void {
 		$permission = new Permission("blocksniper.type." . $typeName, "Allows usage to use the " . $typeName . " shape.");
 		$permission->addParent("blocksniper.type", Permission::DEFAULT_OP);
+		Server::getInstance()->getPluginManager()->addPermission($permission);
 	}
 }

@@ -36,7 +36,7 @@ class UndoCommand extends BaseCommand {
 
 		$undoAmount = 1;
 		if(isset($args[0])) {
-			$undoAmount = $args[0];
+			$undoAmount = (int) $args[0];
 			if($undoAmount > ($totalUndo = SessionManager::getPlayerSession($sender)->getRevertStorer()->getTotalStores(Revert::TYPE_UNDO))) {
 				$undoAmount = $totalUndo;
 			}

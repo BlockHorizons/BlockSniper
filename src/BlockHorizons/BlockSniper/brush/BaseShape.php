@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\brush;
 
 use BlockHorizons\BlockSniper\brush\async\tasks\BrushTask;
+use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
 use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
@@ -31,60 +32,12 @@ abstract class BaseShape {
 	protected $height = 0;
 	/** @var string */
 	protected $playerName = "";
-	/** @var int */
-	protected $id = -1;
 
 	public function __construct(Player $player, Level $level, Position $center, bool $hollow) {
 		$this->playerName = $player->getName();
 		$this->level = $level->getId();
 		$this->center = [$center->x, $center->y, $center->z, $center->level->getId()];
 		$this->hollow = $hollow;
-	}
-
-	/**
-	 * @param string $shape
-	 *
-	 * @return bool
-	 */
-	public static function isShape(string $shape): bool {
-		$shapeConst = strtoupper("shape_" . $shape);
-		if(defined("self::$shapeConst")) {
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Registers a new Shape. Example:
-	 * Triangle, 4
-	 *
-	 * Defines the shape as a constant making it able to be used.
-	 *
-	 *
-	 * @param string $shape
-	 * @param int    $number
-	 *
-	 * @return bool
-	 */
-	public static function registerShape(string $shape, int $number): bool {
-		$shapeConst = strtoupper("shape_" . str_replace("_", "", $shape));
-		if(defined("self::$shapeConst")) {
-			return false;
-		}
-		define('BlockHorizons\BlockSniper\brush\BaseShape\\' . $shapeConst, $number);
-		return true;
-	}
-
-	/**
-	 * @return array
-	 */
-	public static function getShapes(): array {
-		return [
-			"Sphere",
-			"Cube",
-			"Cuboid",
-			"Standing Cylinder"
-		];
 	}
 
 	/**
@@ -138,19 +91,12 @@ abstract class BaseShape {
 	}
 
 	/**
-	 * @return int
-	 */
-	public function getId(): int {
-		return $this->id;
-	}
-
-	/**
 	 * Returns the permission required to use the shape.
 	 *
 	 * @return string
 	 */
 	public function getPermission(): string {
-		return "blocksniper.shape." . str_replace("hollow", "", str_replace(" ", "", strtolower($this->getName())));
+		return "blocksniper.shape." . strtolower(ShapeRegistration::getShapeById(self::ID, true));
 	}
 
 	/**

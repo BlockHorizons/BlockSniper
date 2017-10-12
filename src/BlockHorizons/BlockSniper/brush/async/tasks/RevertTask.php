@@ -14,8 +14,6 @@ use pocketmine\Server;
 
 class RevertTask extends AsyncBlockSniperTask {
 
-	/** @var int */
-	protected $taskType = self::TYPE_REVERT;
 	/** @var string */
 	private $revert = "";
 

@@ -41,8 +41,6 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand 
 	}
 
 	/**
-	 * Annoying we have to implement this function. Messes up code consistency.
-	 *
 	 * @return Plugin
 	 */
 	public function getPlugin(): Plugin {
@@ -68,19 +66,5 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand 
 	 */
 	public function getSettings(): ConfigData {
 		return $this->getLoader()->getSettings();
-	}
-
-	/**
-	 * @param Player $player
-	 *
-	 * @return array
-	 */
-	public function generateCustomCommandData(Player $player): array {
-		$commandData = parent::generateCustomCommandData($player);
-		$commandData["permission"] = $this->getPermission();
-		$commandData["aliases"] = $this->getAliases();
-		$commandData["overloads"]["default"]["input"]["parameters"] = CommandOverloads::getOverloads($this->getName());
-
-		return $commandData;
 	}
 }

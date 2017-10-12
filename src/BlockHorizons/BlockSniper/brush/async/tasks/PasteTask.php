@@ -17,8 +17,6 @@ use pocketmine\Server;
 
 class PasteTask extends AsyncBlockSniperTask {
 
-	/** @var int */
-	protected $taskType = self::TYPE_PASTE;
 	/** @var string */
 	private $file = "";
 	/** @var Vector3 */

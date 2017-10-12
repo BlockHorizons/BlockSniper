@@ -34,7 +34,8 @@ class CloneStorer {
 	public function saveCopy(array $blocks): void {
 		$this->unsetCopy();
 		foreach($blocks as $block) {
-			$block->subtract($this->getOriginalCenter());
+			$v3 = $block->subtract($this->getOriginalCenter());
+			$block->setComponents($v3->x, $v3->y, $v3->z);
 			$this->copyStore[] = $block;
 		}
 	}

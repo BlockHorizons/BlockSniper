@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\brush;
 
 use BlockHorizons\BlockSniper\brush\async\BlockSniperChunkManager;
+use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\block\Block;
 use pocketmine\level\ChunkManager;
@@ -57,8 +58,6 @@ abstract class BaseType {
 	protected $chunkManager = null;
 	/** @var bool */
 	private $async = false;
-	/** @var int */
-	protected $id = -1;
 
 	/**
 	 * @param Player       $player
@@ -74,65 +73,6 @@ abstract class BaseType {
 		}
 		$this->blocks = $blocks;
 		$this->brushBlocks = SessionManager::getPlayerSession($player)->getBrush()->getBlocks();
-	}
-
-	/**
-	 * @param string $type
-	 *
-	 * @return bool
-	 */
-	public static function isType(string $type): bool {
-		$typeConst = strtoupper("type_" . $type);
-		if(defined("self::$typeConst")) {
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * @return array
-	 */
-	public static function getTypes(): array {
-		return [
-			"Biome",
-			"CleanEntities",
-			"Clean",
-			"Drain",
-			"Expand",
-			"Fill",
-			"FlattenAll",
-			"Flatten",
-			"Layer",
-			"LeafBlower",
-			"Melt",
-			"Overlay",
-			"ReplaceAll",
-			"Replace",
-			"Snowcone",
-			"TopLayer",
-			"Tree"
-		];
-	}
-
-	/**
-	 * Registers a new Type. Example:
-	 * Raise, 12
-	 *
-	 * Defines the type as a constant making it able to be used.
-	 *
-	 *
-	 * @param string $type
-	 * @param int    $number
-	 *
-	 * @return bool
-	 */
-	public static function registerType(string $type, int $number): bool {
-		$typeConst = strtoupper("type_" . str_replace("_", "", $type));
-		if(defined("self::$typeConst")) {
-			return false;
-		}
-		define('BlockHorizons\BlockSniper\brush\BaseType\\' . $typeConst, $number);
-		return true;
 	}
 
 	/**
@@ -175,13 +115,6 @@ abstract class BaseType {
 	 */
 	public function getLevel(): ?Level {
 		return Server::getInstance()->getLevel($this->level);
-	}
-
-	/**
-	 * @return int
-	 */
-	public function getId(): int {
-		return $this->id;
 	}
 
 	/**
@@ -231,7 +164,7 @@ abstract class BaseType {
 	 * @return string
 	 */
 	public function getPermission(): string {
-		return "blocksniper.type." . str_replace("hollow", "", str_replace(" ", "_", strtolower($this->getName())));
+		return "blocksniper.type." . strtolower(TypeRegistration::getTypeById(self::ID, true));
 	}
 
 	/**
