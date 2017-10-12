@@ -12,8 +12,7 @@ use pocketmine\Player;
 
 class LayerType extends BaseType {
 
-	/** @var int */
-	protected $id = self::TYPE_LAYER;
+	const ID = self::TYPE_LAYER;
 
 	/*
 	 * Lays a thin layer of blocks within the brush radius.

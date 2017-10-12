@@ -2,7 +2,6 @@
 submodule: true
 projects:
   BlockSniper:
-    projectId: 95
     path: ""
     icon: resources/BlockSniperLogo.png
     libs:

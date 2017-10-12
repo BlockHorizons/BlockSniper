@@ -12,8 +12,7 @@ use pocketmine\Player;
 
 class ExpandType extends BaseType {
 
-	/** @var int */
-	protected $id = self::TYPE_EXPAND;
+	const ID = self::TYPE_EXPAND;
 
 	/*
 	 * Expands the terrain with blocks below it.

@@ -12,8 +12,7 @@ use pocketmine\Player;
 
 class OverlayType extends BaseType {
 
-	/** @var int */
-	protected $id = self::TYPE_OVERLAY;
+	const ID = self::TYPE_OVERLAY;
 
 	/*
 	 * Lays a layer of blocks over every block within the brush radius.

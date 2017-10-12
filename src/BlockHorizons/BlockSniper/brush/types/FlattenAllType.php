@@ -12,10 +12,9 @@ use pocketmine\level\ChunkManager;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 
-class FlattenallType extends BaseType {
+class FlattenAllType extends BaseType {
 
-	/** @var int */
-	protected $id = self::TYPE_FLATTENALL;
+	const ID = self::TYPE_FLATTEN_ALL;
 
 	/*
 	 * Flattens the terrain below the selected point and removes the blocks above it within the brush radius.

@@ -13,12 +13,12 @@ use pocketmine\Player;
 
 class CuboidShape extends BaseShape {
 
+	const ID = self::SHAPE_CUBOID;
+
 	/** @var int */
 	protected $width = 0;
 	/** @var int */
 	protected $height = 0;
-	/** @var int */
-	protected $id = self::SHAPE_CUBOID;
 
 	public function __construct(Player $player, Level $level, int $width, Position $center, bool $hollow = false, bool $cloneShape = false) {
 		parent::__construct($player, $level, $center, $hollow);

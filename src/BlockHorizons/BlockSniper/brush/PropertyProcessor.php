@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\brush;
 
+use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
+use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
 use BlockHorizons\BlockSniper\events\ChangeBrushPropertiesEvent as Change;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\PlayerSession;
@@ -55,26 +57,14 @@ class PropertyProcessor {
 
 			case "shape":
 			case 1:
-				$baseShape = new \ReflectionClass(BaseShape::class);
-				$name = "";
-				foreach($baseShape->getConstants() as $constant => $val) {
-					if($val === $value) {
-						$name = str_replace("shape_", "", strtolower($constant));
-					}
-				}
+				$name = ShapeRegistration::getShapeById($value, true);
 				$brush->setShape($name);
 				$action = Change::ACTION_CHANGE_SHAPE;
 				break;
 
 			case "type":
 			case 2:
-				$baseType = new \ReflectionClass(BaseType::class);
-				$name = "";
-				foreach($baseType->getConstants() as $constant => $val) {
-					if($val === $value) {
-						$name = str_replace("type_", "", strtolower($constant));
-					}
-				}
+				$name = TypeRegistration::getTypeById($value, true);
 				$brush->setType($name);
 				$action = Change::ACTION_CHANGE_TYPE;
 				break;

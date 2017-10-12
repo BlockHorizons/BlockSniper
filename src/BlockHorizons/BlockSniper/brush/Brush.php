@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\brush;
 
+use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
+use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
 use BlockHorizons\BlockSniper\events\BrushUseEvent;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\PlayerSession;
@@ -157,7 +159,7 @@ class Brush implements \JsonSerializable {
 	 * @return BaseShape
 	 */
 	public function getShape($cloneShape = false, int $yOffset = 0): BaseShape {
-		$shapeName = 'BlockHorizons\BlockSniper\brush\shapes\\' . (ucfirst($this->shape) . "Shape");
+		$shapeName = ShapeRegistration::getShape($this->shape);
 		$vector3 = Server::getInstance()->getPlayer($this->player)->getTargetBlock(100)->add(0, $yOffset);
 		$location = new Position($vector3->x, $vector3->y, $vector3->z, Server::getInstance()->getPlayer($this->player)->getLevel());
 		$shape = new $shapeName(Server::getInstance()->getPlayer($this->player), Server::getInstance()->getPlayer($this->player)->getLevel(), $this->size, $location, $this->hollow, $cloneShape);
@@ -169,7 +171,7 @@ class Brush implements \JsonSerializable {
 	 * @param string $shape
 	 */
 	public function setShape(string $shape): void {
-		$this->shape = $shape;
+		$this->shape = strtolower($shape);
 	}
 
 	/**
@@ -220,7 +222,7 @@ class Brush implements \JsonSerializable {
 	 * @return BaseType
 	 */
 	public function getType(array $blocks = []): BaseType {
-		$typeName = 'BlockHorizons\BlockSniper\brush\types\\' . (ucfirst($this->type) . "Type");
+		$typeName = TypeRegistration::getType($this->type);
 		$type = new $typeName(Server::getInstance()->getPlayer($this->player), Server::getInstance()->getPlayer($this->player)->getLevel(), $blocks);
 
 		return $type;
@@ -230,7 +232,7 @@ class Brush implements \JsonSerializable {
 	 * @param string $type
 	 */
 	public function setType(string $type): void {
-		$this->type = $type;
+		$this->type = strtolower($type);
 	}
 
 	/**

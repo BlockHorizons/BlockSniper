@@ -12,8 +12,7 @@ use pocketmine\Player;
 
 class CleanType extends BaseType {
 
-	/** @var int */
-	protected $id = self::TYPE_CLEAN;
+	const ID = self::TYPE_CLEAN;
 
 	/*
 	 * Removes all non-natural blocks within the brush radius.

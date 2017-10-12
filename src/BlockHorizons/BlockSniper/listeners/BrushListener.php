@@ -17,8 +17,6 @@ class BrushListener implements Listener {
 
 	/** @var Loader */
 	private $loader = null;
-	/** @var array */
-	private $cancelWindow = [];
 
 	public function __construct(Loader $loader) {
 		$this->loader = $loader;
@@ -50,11 +48,6 @@ class BrushListener implements Listener {
 		$player = $event->getPlayer();
 		if($event->getItem()->getId() === $this->getLoader()->getSettings()->getBrushItem()) {
 			if($player->hasPermission("blocksniper.command.brush")) {
-				if(isset($this->cancelWindow[$player->getLowerCaseName()])) {
-					if(time() - $this->cancelWindow[$player->getLowerCaseName()] < 2) {
-						return false;
-					}
-				}
 				$windowHandler = new WindowHandler();
 				$packet = new ModalFormRequestPacket();
 				$packet->formId = $windowHandler->getWindowIdFor(WindowHandler::WINDOW_BRUSH_MENU);
@@ -64,16 +57,6 @@ class BrushListener implements Listener {
 			}
 		}
 		return false;
-	}
-
-	/**
-	 * @param PlayerJoinEvent $event
-	 *
-	 * @return bool
-	 */
-	public function onJoin(PlayerJoinEvent $event): bool {
-		$this->cancelWindow[$event->getPlayer()->getLowerCaseName()] = time();
-		return true;
 	}
 
 	/**

@@ -13,10 +13,9 @@ use pocketmine\level\ChunkManager;
 use pocketmine\Player;
 use pocketmine\Server;
 
-class LeafblowerType extends BaseType {
+class LeafBlowerType extends BaseType {
 
-	/** @var int */
-	protected $id = self::TYPE_LEAFBLOWER;
+	const ID = self::TYPE_LEAF_BLOWER;
 
 	/*
 	 * Blows away all plants and flowers within the brush radius.

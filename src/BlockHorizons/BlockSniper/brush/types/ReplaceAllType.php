@@ -10,10 +10,9 @@ use pocketmine\block\Flowable;
 use pocketmine\level\ChunkManager;
 use pocketmine\Player;
 
-class ReplaceallType extends BaseType {
+class ReplaceAllType extends BaseType {
 
-	/** @var int */
-	protected $id = self::TYPE_REPLACEALL;
+	const ID = self::TYPE_REPLACE_ALL;
 
 	/*
 	 * Replaces every solid block within the brush radius.

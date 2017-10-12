@@ -12,8 +12,7 @@ use pocketmine\Player;
 
 class MeltType extends BaseType {
 
-	/** @var int */
-	protected $id = self::TYPE_MELT;
+	const ID = self::TYPE_MELT;
 
 	/*
 	 * Melts away every block with more than 2 open sides within the brush radius.

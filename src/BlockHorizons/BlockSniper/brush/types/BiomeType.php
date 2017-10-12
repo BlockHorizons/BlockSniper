@@ -12,8 +12,8 @@ use pocketmine\Player;
 
 class BiomeType extends BaseType {
 
-	/** @var int */
-	protected $id = self::TYPE_BIOME;
+	const ID = self::TYPE_BIOME;
+
 	/** @var int */
 	protected $biome = 0;
 

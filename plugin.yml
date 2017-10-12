@@ -1,142 +1,103 @@
----
-name: "BlockSniper"
-version: 2.0.0
-api: [3.0.0-ALPHA7, 3.0.0-ALPHA8, 3.0.0-ALPHA9]
-author: "BlockHorizons"
-authors:
-- "Sandertv (@Sandertv)"
-- "Chris-Prime (@PrimusLV)"
-main: BlockHorizons\BlockSniper\Loader
-load: POSTWORLD
+{
+    "name": "BlockSniper",
+    "version": "2.1.0",
+    "api": [
+        "3.0.0-ALPHA7",
+        "3.0.0-ALPHA8",
+        "3.0.0-ALPHA9"
+    ],
+    "author": "BlockHorizons",
+    "authors": [
+      "Sandertv (@Sandertv)",
+      "Chris-Prime (@PrimusLV"
+    ],
+    "main": "BlockHorizons\\BlockSniper\\Loader",
+    "load": "POSTWORLD",
 
-permissions:
-    blocksniper:
-        default: false
-        description: "Allows access to all BlockSniper features."
-        children:
-            blocksniper.command:
-                default: false
-                description: "Allows access to all BlockSniper command features."
-                children:
-                    blocksniper.command.brush:
-                        default: op
-                        description: "Allows access to the brush wand command."
-                    blocksniper.command.undo:
-                        default: op
-                        description: "Allows access to the undo command."
-                    blocksniper.command.redo:
-                        default: op
-                        description: "Allows access to the redo command."
-                    blocksniper.command.blocksniper:
-                        default: op
-                        description: "Allows access to the BlockSniper command."
-                    blocksniper.command.clone:
-                        default: op
-                        description: "Allows access to the clone command."
-                    blocksniper.command.paste:
-                        default: op
-                        description: "Allows access to the paste command."
-                    blocksniper.command.cancel:
-                        default: op
-                        description: "Allows access to the cancel command."
-            blocksniper.type:
-                default: false
-                description: "Allows access to all BlockSniper types."
-                children:
-                    blocksniper.type.fill:
-                        default: op
-                        description: "Allows access to the fill type."
-                    blocksniper.type.overlay:
-                        default: op
-                        description: "Allows access to the overlay type."
-                    blocksniper.type.layer:
-                        default: op
-                        description: "Allows access to the layer type."
-                    blocksniper.type.replace:
-                        default: op
-                        description: "Allows access to the replace type."
-                    blocksniper.type.clean:
-                        default: op
-                        description: "Allows access to the clean type."
-                    blocksniper.type.drain:
-                        default: op
-                        description: "Allows access to the drain type."
-                    blocksniper.type.leafblower:
-                        default: op
-                        description: "Allows access to the leaf blower type."
-                    blocksniper.type.flatten:
-                        default: op
-                        description: "Allows access to the flatten type."
-                    blocksniper.type.flattenall:
-                        default: op
-                        description: "Allows access to the flatten all type."
-                    blocksniper.type.expand:
-                        default: op
-                        description: "Allows access to the expand type."
-                    blocksniper.type.melt:
-                        default: op
-                        description: "Allows access to the melt type."
-                    blocksniper.type.cleanentities:
-                        default: op
-                        description: "Allows access to the clean entities type."
-                    blocksniper.type.biome:
-                        default: op
-                        description: "Allows access to the biome type."
-                    blocksniper.type.raise:
-                        default: op
-                        description: "Allows access to the raise type."
-                    blocksniper.type.toplayer:
-                        default: op
-                        description: "Allows access to the top layer type."
-                    blocksniper.type.replaceall:
-                        default: op
-                        description: "Allows access to the replace all type."
-                    blocksniper.type.snowcone:
-                        default: op
-                        description: "Allows access to the snow cone type."
-                    blocksniper.type.tree:
-                        default: op
-                        description: "Allows access to the tree type."
-            blocksniper.shape:
-                default: false
-                description: "Allows access to all BlockSniper shapes."
-                children:
-                    blocksniper.shape.sphere:
-                        default: op
-                        description: "Allows access to the sphere shape."
-                    blocksniper.shape.cuboid:
-                        default: op
-                        description: "Allows access to the cuboid shape."
-                    blocksniper.shape.cylinder:
-                        default: op
-                        description: "Allows access to the standing cylinder shape."
-                    blocksniper.shape.cube:
-                        default: op
-                        description: "Allows access to the cube shape."
-            blocksniper.clone:
-                default: false
-                description: "Allows access to all BlockSniper clone types."
-                children:
-                    blocksniper.clone.copy:
-                        default: op
-                        description: "Allows access to the copy clone type."
-                    blocksniper.clone.template:
-                        default: op
-                        description: "Allows access to the template clone type."
-                    blocksniper.clone.schematic:
-                        default: op
-                        description: "Allows access to the schematic clone type."
-            blocksniper.paste:
-                default: false
-                description: "Allows access to all BlockSniper paste types."
-                children:
-                    blocksniper.paste.copy:
-                        default: op
-                        description: "Allows access to the copy paste type."
-                    blocksniper.paste.template:
-                        default: op
-                        description: "Allows access to the template paste type."
-                    blocksniper.paste.schematic:
-                        default: op
-                        description: "Allows access to the schematic paste type."
-...
+    "permissions": {
+        "blocksniper": {
+            "default": false,
+            "description": "Allows access to all BlockSniper features.",
+            "children": {
+                "blocksniper.command": {
+                    "default": false,
+                    "description": "Allows access to all BlockSniper command features.",
+                    "children": {
+                        "blocksniper.command.brush": {
+                            "default": "op",
+                            "description": "Allows access to the brush wand command."
+                        },
+                        "blocksniper.command.undo": {
+                            "default": "op",
+                            "description": "Allows access to the undo command."
+                        },
+                        "blocksniper.command.redo": {
+                            "default": "op",
+                            "description": "Allows access to the redo command."
+                        },
+                        "blocksniper.command.blocksniper": {
+                            "default": "op",
+                            "description": "Allows access to the BlockSniper command."
+                        },
+                        "blocksniper.command.clone": {
+                            "default": "op",
+                            "description": "Allows access to the clone command."
+                        },
+                        "blocksniper.command.paste": {
+                            "default": "op",
+                            "description": "Allows access to the paste command."
+                        },
+                        "blocksniper.command.cancel": {
+                            "default": "op",
+                            "description": "Allows access to the cancel command."
+                        }
+                    }
+                },
+                "blocksniper.type": {
+                    "default": false,
+                    "description": "Allows access to all BlockSniper types."
+                },
+                "blocksniper.shape": {
+                    "default": false,
+                    "description": "Allows access to all BlockSniper shapes."
+                },
+                "blocksniper.clone": {
+                    "default": false,
+                    "description": "Allows access to all BlockSniper clone types.",
+                    "children": {
+                        "blocksniper.clone.copy": {
+                            "default": "op",
+                            "description": "Allows access to the copy clone type."
+                        },
+                        "blocksniper.clone.template": {
+                            "default": "op",
+                            "description": "Allows access to the template clone type."
+                        },
+                        "blocksniper.clone.schematic": {
+                            "default": "op",
+                            "description": "Allows access to the schematic clone type."
+                        }
+                    }
+                },
+                "blocksniper.paste": {
+                    "default": false,
+                    "description": "Allows access to all BlockSniper paste types.",
+                    "children": {
+                        "blocksniper.paste.copy": {
+                            "default": "op",
+                            "description": "Allows access to the copy paste type."
+                        },
+                        "blocksniper.paste.template": {
+                            "default": "op",
+                            "description": "Allows access to the template paste type."
+                        },
+                        "blocksniper.paste.schematic": {
+                            "default": "op",
+                            "description": "Allows access to the schematic paste type."
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

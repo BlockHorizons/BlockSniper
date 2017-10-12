@@ -12,8 +12,8 @@ use pocketmine\Player;
 
 class ReplaceType extends BaseType {
 
-	/** @var int */
-	protected $id = self::TYPE_REPLACE;
+	const ID = self::TYPE_REPLACE;
+
 	/** @var Block[] */
 	protected $obsolete = [];
 

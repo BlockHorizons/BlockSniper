@@ -13,14 +13,14 @@ use pocketmine\Player;
 
 class CylinderShape extends BaseShape {
 
+	const ID = self::SHAPE_CYLINDER;
+
 	/** @var int */
 	protected $radius = 0;
 	/** @var int */
 	protected $height = 0;
 	/** @var bool */
 	private $trueCircle = false;
-	/** @var int */
-	protected $id = self::SHAPE_CYLINDER;
 
 	public function __construct(Player $player, Level $level, int $radius, Position $center, bool $hollow = false, bool $cloneShape = false) {
 		parent::__construct($player, $level, $center, $hollow);

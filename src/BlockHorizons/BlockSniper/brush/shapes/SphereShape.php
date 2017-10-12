@@ -13,12 +13,12 @@ use pocketmine\Player;
 
 class SphereShape extends BaseShape {
 
+	const ID = self::SHAPE_SPHERE;
+
 	/** @var int */
 	protected $radius = 0;
 	/** @var bool */
 	private $trueSphere = false;
-	/** @var int */
-	protected $id = self::SHAPE_SPHERE;
 
 	public function __construct(Player $player, Level $level, int $radius, Position $center, bool $hollow = false, bool $cloneShape = false) {
 		parent::__construct($player, $level, $center, $hollow);

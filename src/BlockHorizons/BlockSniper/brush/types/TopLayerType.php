@@ -13,10 +13,9 @@ use pocketmine\level\ChunkManager;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 
-class ToplayerType extends BaseType {
+class TopLayerType extends BaseType {
 
-	/** @var int */
-	protected $id = self::TYPE_TOPLAYER;
+	const ID = self::TYPE_TOP_LAYER;
 
 	/*
 	 * Replaces the top layer of the terrain, thickness depending on brush height, within the brush radius.

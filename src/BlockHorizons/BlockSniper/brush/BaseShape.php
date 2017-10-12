@@ -14,6 +14,8 @@ use pocketmine\Server;
 
 abstract class BaseShape {
 
+	const ID = -1;
+
 	const SHAPE_SPHERE = 0;
 	const SHAPE_CUBE = 1;
 	const SHAPE_CUBOID = 2;

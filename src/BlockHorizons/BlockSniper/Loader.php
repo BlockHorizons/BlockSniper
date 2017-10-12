@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper;
 
+use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
+use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
 use BlockHorizons\BlockSniper\commands\BlockSniperCommand;
 use BlockHorizons\BlockSniper\commands\BrushCommand;
 use BlockHorizons\BlockSniper\commands\cloning\CloneCommand;
@@ -25,7 +27,7 @@ use pocketmine\utils\TextFormat as TF;
 
 class Loader extends PluginBase {
 
-	const VERSION = "2.0.0";
+	const VERSION = "2.1.0";
 	const API_TARGET = "3.0.0-ALPHA7 - 3.0.0-ALPHA9";
 	const CONFIGURATION_VERSION = "2.4.0";
 
@@ -58,6 +60,8 @@ class Loader extends PluginBase {
 
 		$this->getServer()->getScheduler()->scheduleRepeatingTask(new UndoDiminishTask($this), 400);
 		CommandOverloads::initialize();
+		ShapeRegistration::init();
+		TypeRegistration::init();
 	}
 
 	private function reloadAll(): void {
@@ -107,17 +111,14 @@ class Loader extends PluginBase {
 	}
 
 	public function registerCommands(): void {
-		$blockSniperCommands = [
-			"blocksniper" => new BlockSniperCommand($this),
-			"brush" => new BrushCommand($this),
-			"undo" => new UndoCommand($this),
-			"redo" => new RedoCommand($this),
-			"clone" => new CloneCommand($this),
-			"paste" => new PasteCommand($this)
-		];
-		foreach($blockSniperCommands as $name => $class) {
-			$this->getServer()->getCommandMap()->register($name, $class);
-		}
+		$this->getServer()->getCommandMap()->registerAll("blocksniper", [
+			new BlockSniperCommand($this),
+			new BrushCommand($this),
+			new UndoCommand($this),
+			new RedoCommand($this),
+			new CloneCommand($this),
+			new PasteCommand($this)
+		]);
 	}
 
 	public function registerListeners(): void {

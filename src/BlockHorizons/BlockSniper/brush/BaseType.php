@@ -16,23 +16,26 @@ use pocketmine\Server;
 
 abstract class BaseType {
 
+	const ID = -1;
+
 	const TYPE_BIOME = 0;
-	const TYPE_CLEANENTITIES = 1;
+	const TYPE_CLEAN_ENTITIES = 1;
 	const TYPE_CLEAN = 2;
 	const TYPE_DRAIN = 3;
 	const TYPE_EXPAND = 4;
 	const TYPE_FILL = 5;
-	const TYPE_FLATTENALL = 6;
+	const TYPE_FLATTEN_ALL = 6;
 	const TYPE_FLATTEN = 7;
 	const TYPE_LAYER = 8;
-	const TYPE_LEAFBLOWER = 9;
+	const TYPE_LEAF_BLOWER = 9;
 	const TYPE_MELT = 10;
 	const TYPE_OVERLAY = 11;
-	const TYPE_REPLACEALL = 12;
+	const TYPE_REPLACE_ALL = 12;
 	const TYPE_REPLACE = 13;
-	const TYPE_SNOWCONE = 14;
-	const TYPE_TOPLAYER = 15;
+	const TYPE_SNOW_CONE = 14;
+	const TYPE_TOP_LAYER = 15;
 	const TYPE_TREE = 16;
+	const TYPE_REGENERATE = 17;
 
 	/** @var int */
 	protected $level = 0;
@@ -148,7 +151,7 @@ abstract class BaseType {
 	/**
 	 * @return Block[]|null
 	 */
-	public function fillShape(): ?array {
+	public final function fillShape(): ?array {
 		if($this->isAsynchronous() && $this->canBeExecutedAsynchronously()) {
 			$this->fillAsynchronously();
 			return null;
@@ -168,9 +171,9 @@ abstract class BaseType {
 	/**
 	 * Returns the level the type is used in.
 	 *
-	 * @return Level
+	 * @return Level|null
 	 */
-	public function getLevel(): Level {
+	public function getLevel(): ?Level {
 		return Server::getInstance()->getLevel($this->level);
 	}
 

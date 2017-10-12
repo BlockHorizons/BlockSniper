@@ -10,10 +10,9 @@ use pocketmine\level\ChunkManager;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\Player;
 
-class CleanentitiesType extends BaseType {
+class CleanEntitiesType extends BaseType {
 
-	/** @var int */
-	protected $id = self::TYPE_CLEANENTITIES;
+	const ID = self::TYPE_CLEAN_ENTITIES;
 
 	/*
 	 * Clears all entities within the brush radius. This brush can not undo.

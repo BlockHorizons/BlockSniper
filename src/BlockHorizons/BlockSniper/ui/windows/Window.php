@@ -6,6 +6,8 @@ namespace BlockHorizons\BlockSniper\ui\windows;
 
 use BlockHorizons\BlockSniper\brush\BaseShape;
 use BlockHorizons\BlockSniper\brush\BaseType;
+use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
+use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\ui\WindowHandler;
 use pocketmine\network\mcpe\protocol\ModalFormRequestPacket;
@@ -62,26 +64,26 @@ abstract class Window {
 	}
 
 	/**
-	 * @return array
+	 * @return string[]
 	 */
 	public function processShapes(): array {
-		$shapes = BaseShape::getShapes();
-		foreach($shapes as $key => $shape) {
-			if(!$this->getPlayer()->hasPermission("blocksniper.shape." . strtolower(str_replace(" ", "", $shape)))) {
-				unset($shapes[$key]);
+		$shapes = ShapeRegistration::getShapeIds();
+		foreach($shapes as $id => $name) {
+			if(!$this->getPlayer()->hasPermission("blocksniper.shape." . str_replace(" ", "", strtolower($name)))) {
+				unset($shapes[$id]);
 			}
 		}
 		return $shapes;
 	}
 
 	/**
-	 * @return array
+	 * @return string[]
 	 */
 	public function processTypes(): array {
-		$types = BaseType::getTypes();
-		foreach($types as $key => $type) {
-			if(!$this->getPlayer()->hasPermission("blocksniper.type." . strtolower(str_replace(" ", "", $type)))) {
-				unset($types[$key]);
+		$types = TypeRegistration::getTypes();
+		foreach($types as $id => $name) {
+			if(!$this->getPlayer()->hasPermission("blocksniper.type." . str_replace(" ", "", strtolower($name)))) {
+				unset($types[$id]);
 			}
 		}
 		return $types;
@@ -101,5 +103,10 @@ abstract class Window {
 
 	protected abstract function process(): void;
 
+	/**
+	 * @param ModalFormResponsePacket $packet
+	 *
+	 * @return bool
+	 */
 	public abstract function handle(ModalFormResponsePacket $packet): bool;
 }

@@ -14,8 +14,7 @@ use pocketmine\Player;
 
 class FlattenType extends BaseType {
 
-	/** @var int */
-	protected $id = self::TYPE_FLATTEN;
+	const ID = self::TYPE_FLATTEN;
 
 	/*
 	 * Flattens the terrain below the selected point within the brush radius.

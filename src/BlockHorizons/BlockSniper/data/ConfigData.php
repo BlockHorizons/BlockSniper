@@ -167,8 +167,8 @@ class ConfigData {
 	}
 
 	/**
-	 * @param int $key
-	 * @param        $value
+	 * @param int   $key
+	 * @param mixed $value
 	 */
 	public function set(int $key, $value): void {
 		$this->settings[$key] = $value;
