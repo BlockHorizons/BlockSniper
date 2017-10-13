@@ -191,7 +191,7 @@ class Brush implements \JsonSerializable {
 	/**
 	 * @return bool
 	 */
-	public function getHollow(): bool {
+	public function isHollow(): bool {
 		return $this->hollow;
 	}
 

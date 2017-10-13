@@ -30,18 +30,18 @@ class BrushMenuWindow extends Window {
 					"type" => "dropdown",
 					"text" => (new Translation(Translation::UI_BRUSH_MENU_SHAPE))->getMessage(),
 					"options" => $this->processShapes(),
-					"default" => $v->getShape()->getId()
+					"default" => $v->getShape()::ID
 				],
 				[
 					"type" => "dropdown",
 					"text" => (new Translation(Translation::UI_BRUSH_MENU_TYPE))->getMessage(),
 					"options" => $this->processTypes(),
-					"default" => $v->getType()->getId()
+					"default" => $v->getType()::ID
 				],
 				[
 					"type" => "toggle",
 					"text" => (new Translation(Translation::UI_BRUSH_MENU_HOLLOW))->getMessage(),
-					"default" => $v->getHollow()
+					"default" => $v->isHollow()
 				],
 				[
 					"type" => "toggle",
