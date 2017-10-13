@@ -18,7 +18,7 @@
       "reload": "Rechargement BlockSniper..."
     },
     "redo": {
-      "description": "Relance la dernière modification de BlockSniper annulée.",
+      "description": "Relance la dernière modification annulée de BlockSniper.",
       "no-redo": "Aucune modification n'a pu être trouvée pour relancer.",
       "success": "Réécrit avec succès la dernière modification annulée."
     },
@@ -96,7 +96,7 @@
     },
     "preset-creation": {
       "title": "PMenu de création de préfabriqué",
-      "name": "Nom du Preset",
+      "name": "Nom du préfabriqué",
       "size": "Taille du pinceau",
       "shape": "Forme du pinceau",
       "type": "Type de pinceau",
@@ -112,13 +112,13 @@
     "main-menu": {
       "title": "Menu BlockSniper",
       "subtitle": "Cliquez sur un bouton pour continuer.",
-      "brush": "pinceau",
+      "brush": "pinceau (Brush)",
       "config": "Configuration",
-      "presets": "préfabriqué (preset)",
+      "presets": "préfabriqué (Preset)",
       "exit": "Quitter"
     },
     "brush-menu": {
-      "title": "Menu",
+      "title": "Menu pinceau (Brush)",
       "size": "Taille du pinceau",
       "shape": "Forme du pinceau",
       "type": "Type de pinceau",
@@ -174,22 +174,22 @@
     },
     "type": {
       "biome": "Biome",
-      "cleanentities": "Nettoyer les entités",
-      "clean": "Nettoyer",
-      "drain": "Drain",
-      "expand": "Expand",
-      "fill": "Remplir",
-      "flattenall": "Aplatir tout",
-      "flatten": "aplatir",
-      "layer": "Couche",
+      "cleanentities": "Nettoyer les entités (cleanentities)",
+      "clean": "Nettoyer (clean)",
+      "drain": "Vider (drain)",
+      "expand": "Étendre (expand)",
+      "fill": "Remplir (fill)",
+      "flattenall": "Aplatir tout (flattenall)",
+      "flatten": "aplatir (flatten)",
+      "layer": "Couche (layer)",
       "leafblower": "souffleur de feuilles (LeafBlower)",
-      "melt": "fondre",
-      "overlay": "Superposition",
-      "replaceall": "Remplacer tout",
-      "replace": "Remplacer",
-      "snowcone": "Couche de neige",
-      "toplayer": "Couche supérieure",
-      "tree": "Arbre"
+      "melt": "fondre (melt)",
+      "overlay": "Superposition (overlay)",
+      "replaceall": "Remplacer tout (replaceall)",
+      "replace": "Remplacer (replace)",
+      "snowcone": "Couche de neige (snowcone)",
+      "toplayer": "Couche supérieure (toplayer)",
+      "tree": "Arbre (tree)"
     }
   }
 }
