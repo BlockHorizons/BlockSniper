@@ -60,7 +60,7 @@ class PropertyProcessor {
 			case "shape":
 			case 1:
 				$name = ShapeRegistration::getShapeById($value, true);
-				if(!ShapeRegistration::shapeExists($value)) {
+				if(!ShapeRegistration::shapeExists($name)) {
 					throw new InvalidShapeException("Invalid shape passed to property processor.");
 				}
 				$brush->setShape($name);
@@ -70,7 +70,7 @@ class PropertyProcessor {
 			case "type":
 			case 2:
 				$name = TypeRegistration::getTypeById($value, true);
-				if(!TypeRegistration::typeExists($value)) {
+				if(!TypeRegistration::typeExists($name)) {
 					throw new InvalidTypeException("Invalid type passed to property processor.");
 				}
 				$brush->setType($name);
