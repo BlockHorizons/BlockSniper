@@ -45,12 +45,12 @@ class TypeRegistration {
 		self::registerType(LeafBlowerType::class, LeafBlowerType::ID);
 		self::registerType(MeltType::class, MeltType::ID);
 		self::registerType(OverlayType::class, OverlayType::ID);
-		self::registerType(RegenerateType::class, RegenerateType::ID);
 		self::registerType(ReplaceAllType::class, ReplaceAllType::ID);
 		self::registerType(ReplaceType::class, ReplaceType::ID);
 		self::registerType(SnowConeType::class, SnowConeType::ID);
 		self::registerType(TopLayerType::class, TopLayerType::ID);
 		self::registerType(TreeType::class, TreeType::ID);
+		self::registerType(RegenerateType::class, RegenerateType::ID);
 	}
 
 	/**
