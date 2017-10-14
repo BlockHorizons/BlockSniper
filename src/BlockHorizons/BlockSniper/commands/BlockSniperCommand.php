@@ -24,7 +24,7 @@ class BlockSniperCommand extends BaseCommand {
 			return false;
 		}
 		if(!isset($args[0])) {
-			$args[0] = "info";
+			$args[0] = "";
 		}
 
 		switch(strtolower($args[0])) {

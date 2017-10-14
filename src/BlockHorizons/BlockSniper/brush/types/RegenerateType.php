@@ -27,7 +27,7 @@ class RegenerateType extends BaseType {
 	 * @return Block[]
 	 */
 	public function fillSynchronously(): array {
-		$this->getLevel()->regenerateChunk($this->center->x << 4, $this->center->z << 4);
+		$this->getLevel()->regenerateChunk($this->center->x >> 4, $this->center->z >> 4);
 		return [];
 	}
 

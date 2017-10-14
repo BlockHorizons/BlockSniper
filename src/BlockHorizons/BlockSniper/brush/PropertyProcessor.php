@@ -46,7 +46,7 @@ class PropertyProcessor {
 
 	/**
 	 * @param int|string $valueType
-	 * @param            $value
+	 * @param mixed      $value
 	 */
 	public function process($valueType, $value): void {
 		$brush = $this->session->getBrush();
