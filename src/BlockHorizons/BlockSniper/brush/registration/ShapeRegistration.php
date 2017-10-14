@@ -19,10 +19,10 @@ class ShapeRegistration {
 	private static $shapesIds = [];
 
 	public static function init(): void {
+		self::registerShape(SphereShape::class, SphereShape::ID);
 		self::registerShape(CubeShape::class, CubeShape::ID);
 		self::registerShape(CuboidShape::class, CuboidShape::ID);
 		self::registerShape(CylinderShape::class, CylinderShape::ID);
-		self::registerShape(SphereShape::class, SphereShape::ID);
 	}
 
 	/**
@@ -36,8 +36,8 @@ class ShapeRegistration {
 	 * @return bool
 	 */
 	public static function registerShape(string $class, int $id, bool $overwrite = false): bool {
-		$shortName = str_replace("shape", "", (new \ReflectionClass($class))->getShortName());
-		if(self::shapeExists($shortName, $id) && !$overwrite) {
+		$shortName = str_replace("Shape", "", (new \ReflectionClass($class))->getShortName());
+		if(self::shapeExists(strtolower($shortName), $id) && !$overwrite) {
 			return false;
 		}
 		self::$shapesIds[$id] = $shortName;
@@ -84,7 +84,7 @@ class ShapeRegistration {
 	 * @return null|string
 	 */
 	public static function getShape(string $shortName): ?string {
-		return self::$shapes[$shortName] ?? null;
+		return self::$shapes[strtolower($shortName)] ?? null;
 	}
 
 	/**
@@ -99,7 +99,7 @@ class ShapeRegistration {
 		if(!isset(self::$shapesIds[$id])) {
 			return null;
 		}
-		return $name ? self::getShape(strtolower(self::$shapesIds[$id])) : self::$shapesIds[$id];
+		return $name ? self::$shapesIds[$id] : self::getShape(strtolower(self::$shapesIds[$id]));
 	}
 
 	/**

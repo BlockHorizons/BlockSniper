@@ -7,6 +7,8 @@ namespace BlockHorizons\BlockSniper\brush;
 use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
 use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
 use BlockHorizons\BlockSniper\events\ChangeBrushPropertiesEvent as Change;
+use BlockHorizons\BlockSniper\InvalidShapeException;
+use BlockHorizons\BlockSniper\InvalidTypeException;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\PlayerSession;
 use BlockHorizons\BlockSniper\sessions\Session;
@@ -58,6 +60,9 @@ class PropertyProcessor {
 			case "shape":
 			case 1:
 				$name = ShapeRegistration::getShapeById($value, true);
+				if(!ShapeRegistration::shapeExists($value)) {
+					throw new InvalidShapeException("Invalid shape passed to property processor.");
+				}
 				$brush->setShape($name);
 				$action = Change::ACTION_CHANGE_SHAPE;
 				break;
@@ -65,6 +70,9 @@ class PropertyProcessor {
 			case "type":
 			case 2:
 				$name = TypeRegistration::getTypeById($value, true);
+				if(!TypeRegistration::typeExists($value)) {
+					throw new InvalidTypeException("Invalid type passed to property processor.");
+				}
 				$brush->setType($name);
 				$action = Change::ACTION_CHANGE_TYPE;
 				break;

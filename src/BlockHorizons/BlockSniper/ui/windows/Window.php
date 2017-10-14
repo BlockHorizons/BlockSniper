@@ -73,20 +73,20 @@ abstract class Window {
 				unset($shapes[$id]);
 			}
 		}
-		return $shapes;
+		return array_values($shapes);
 	}
 
 	/**
 	 * @return string[]
 	 */
 	public function processTypes(): array {
-		$types = TypeRegistration::getTypes();
+		$types = TypeRegistration::getTypeIds();
 		foreach($types as $id => $name) {
 			if(!$this->getPlayer()->hasPermission("blocksniper.type." . str_replace(" ", "", strtolower($name)))) {
 				unset($types[$id]);
 			}
 		}
-		return $types;
+		return array_values($types);
 	}
 
 	/**
