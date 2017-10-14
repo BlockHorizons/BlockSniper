@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace BlockHorizons\BlockSniper;
+namespace BlockHorizons\BlockSniper\exceptions;
 
 use pocketmine\plugin\PluginException;
 
