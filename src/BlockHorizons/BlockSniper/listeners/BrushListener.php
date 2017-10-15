@@ -34,7 +34,7 @@ class BrushListener implements Listener {
 		if($player->getInventory()->getItemInHand()->getId() === $this->getLoader()->getSettings()->getBrushItem()) {
 			if($player->hasPermission("blocksniper.command.brush")) {
 				$brush = ($session = SessionManager::getPlayerSession($player))->getBrush();
-				$brush->execute($session);
+				$brush->execute($session, $this->getPlotPoints($player));
 				$event->setCancelled();
 			}
 		}
@@ -56,6 +56,9 @@ class BrushListener implements Listener {
 			$minVec = new Vector2($plot->X, $plot->Z);
 			$maxVec = new Vector2($plot->X + $plotSize, $plot->Z + $plotSize);
 			$plotPoints[] = [$minVec, $maxVec];
+		}
+		if(empty($plotPoints)) {
+			$plotPoints[] = [new Vector2(), new Vector2()];
 		}
 		return $plotPoints;
 	}
