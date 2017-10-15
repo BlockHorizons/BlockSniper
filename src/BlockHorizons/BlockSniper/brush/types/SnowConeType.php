@@ -31,10 +31,10 @@ class SnowConeType extends BaseType {
 				if(($topId = $topBlock->getId()) === Block::AIR || $topId === Block::SNOW_LAYER) {
 					if($topBlock->getDamage() < 7 && $topBlock->getId() === Block::SNOW_LAYER) {
 						$undoBlocks[] = $topBlock;
-						$this->getLevel()->setBlockDataAt($topBlock->x, $topBlock->y, $topBlock->z, $topBlock->getDamage() + 1);
+						$this->putBlock($topBlock, $topBlock->getId(), $topBlock->getDamage() + 1);
 					} elseif($topId !== Block::SNOW_LAYER) {
 						$undoBlocks[] = $topBlock;
-						$this->getLevel()->setBlock($topBlock, Block::get(Block::SNOW_LAYER), false, false);
+						$this->putBlock($topBlock, Block::SNOW_LAYER);
 					}
 				}
 			}
@@ -48,10 +48,9 @@ class SnowConeType extends BaseType {
 				$topBlock = $this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_UP);
 				if(($topId = $topBlock->getId()) === Block::AIR || $topId === Block::SNOW_LAYER) {
 					if($topBlock->getDamage() < 7 && $topBlock->getId() === Block::SNOW_LAYER) {
-						$this->getChunkManager()->setBlockDataAt($topBlock->x, $topBlock->y, $topBlock->z, $this->getChunkManager()->getBlockDataAt($topBlock->x, $topBlock->y, $topBlock->z) + 1);
+						$this->putBlock($topBlock, $topBlock->getId(), $topBlock->getDamage() + 1);
 					} elseif($topId !== Block::SNOW_LAYER) {
-						$this->getChunkManager()->setBlockIdAt($topBlock->x, $topBlock->y, $topBlock->z, Block::SNOW_LAYER);
-						$this->getChunkManager()->setBlockDataAt($topBlock->x, $topBlock->y, $topBlock->z, 0);
+						$this->putBlock($topBlock, Block::SNOW_LAYER);
 					}
 				}
 			}

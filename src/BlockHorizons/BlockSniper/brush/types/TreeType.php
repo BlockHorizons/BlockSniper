@@ -34,6 +34,9 @@ class TreeType extends BaseType {
 	 * @return Block[]
 	 */
 	public function fillSynchronously(): array {
+		if($this->myPlotChecked) {
+			return [];
+		}
 		if(!($this->getLevel()->getBlock($this->center) instanceof Flowable) && $this->getLevel()->getBlock($this->center)->getId() !== Block::AIR) {
 			$this->center->y++;
 		}

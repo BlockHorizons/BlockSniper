@@ -22,14 +22,15 @@ use BlockHorizons\BlockSniper\presets\PresetManager;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use BlockHorizons\BlockSniper\tasks\RedoDiminishTask;
 use BlockHorizons\BlockSniper\tasks\UndoDiminishTask;
+use MyPlot\MyPlot;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat as TF;
 
 class Loader extends PluginBase {
 
-	const VERSION = "2.1.2";
+	const VERSION = "2.2.0";
 	const API_TARGET = "3.0.0-ALPHA7 - 3.0.0-ALPHA9";
-	const CONFIGURATION_VERSION = "2.4.0";
+	const CONFIGURATION_VERSION = "2.5.0";
 
 	/** @var string[] */
 	private static $availableLanguages = [
@@ -45,8 +46,11 @@ class Loader extends PluginBase {
 	/** @var SessionManager */
 	private $sessionManager = null;
 
+	/** @var null|MyPlot */
+	private $myPlot = null;
+
 	/**
-	 * @return array
+	 * @return string[]
 	 */
 	public static function getAvailableLanguages(): array {
 		return self::$availableLanguages;
@@ -63,11 +67,6 @@ class Loader extends PluginBase {
 	}
 
 	private function reloadAll(): void {
-		$this->saveResource("settings.yml");
-		$this->settings = new ConfigData($this);
-		$this->language = new TranslationData($this);
-		$this->presetManager = new PresetManager($this);
-
 		if(!is_dir($this->getDataFolder())) {
 			mkdir($this->getDataFolder());
 		}
@@ -85,6 +84,11 @@ class Loader extends PluginBase {
 			file_put_contents($this->getDataFolder() . "sessions/players.json", "");
 		}
 
+		$this->saveResource("settings.yml");
+		$this->settings = new ConfigData($this);
+		$this->language = new TranslationData($this);
+		$this->presetManager = new PresetManager($this);
+
 		if(!$this->language->collectTranslations()) {
 			$this->getLogger()->info(TF::AQUA . (new Translation(Translation::LOG_LANGUAGE_AUTO_SELECTED))->getMessage());
 			$this->getLogger()->info(TF::AQUA . (new Translation(Translation::LOG_LANGUAGE_USAGE))->getMessage());
@@ -95,6 +99,10 @@ class Loader extends PluginBase {
 
 		ShapeRegistration::init();
 		TypeRegistration::init();
+
+		if($this->getSettings()->hasMyPlotSupport()) {
+			$this->myPlot = $this->getServer()->getPluginManager()->getPlugin("MyPlot");
+		}
 	}
 
 	public function reload(): void {
@@ -157,5 +165,19 @@ class Loader extends PluginBase {
 	 */
 	public function getSessionManager(): SessionManager {
 		return $this->sessionManager;
+	}
+
+	/**
+	 * @return MyPlot|null
+	 */
+	public function getMyPlot(): ?MyPlot {
+		return $this->myPlot;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isMyPlotAvailable(): bool {
+		return $this->myPlot !== null;
 	}
 }

@@ -24,7 +24,7 @@ class CleanEntitiesType extends BaseType {
 	/**
 	 * @return Block[]
 	 */
-	public function fillSynchronously(): array {
+	protected function fillSynchronously(): array {
 		foreach($this->blocks as $block) {
 			foreach($block->getLevel()->getNearbyEntities(new AxisAlignedBB($block->x, $block->y, $block->z, $block->x + 1, $block->y + 1, $block->z + 1)) as $entity) {
 				if(!($entity instanceof Player)) {

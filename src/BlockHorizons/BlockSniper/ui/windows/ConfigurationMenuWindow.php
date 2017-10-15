@@ -83,6 +83,11 @@ class ConfigurationMenuWindow extends Window {
 				],
 				[
 					"type" => "toggle",
+					"text" => "MyPlot Support",
+					"default" => $s->hasMyPlotSupport()
+				],
+				[
+					"type" => "toggle",
 					"text" => (new Translation(Translation::UI_CONFIGURATION_MENU_AUTO_RELOAD))->getMessage(),
 					"default" => false
 				]
@@ -98,7 +103,7 @@ class ConfigurationMenuWindow extends Window {
 			}
 			$this->getLoader()->getSettings()->set($key, $value);
 		}
-		if($data[10] === true) {
+		if($data[11] === true) {
 			$this->loader->reload();
 		}
 		$windowHandler = new WindowHandler();

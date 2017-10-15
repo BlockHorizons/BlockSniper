@@ -7,8 +7,6 @@ namespace BlockHorizons\BlockSniper\brush;
 use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
 use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
 use BlockHorizons\BlockSniper\events\ChangeBrushPropertiesEvent as Change;
-use BlockHorizons\BlockSniper\exceptions\InvalidShapeException;
-use BlockHorizons\BlockSniper\exceptions\InvalidTypeException;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\PlayerSession;
 use BlockHorizons\BlockSniper\sessions\Session;

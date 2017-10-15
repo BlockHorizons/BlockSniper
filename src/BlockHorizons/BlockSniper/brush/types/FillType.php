@@ -28,7 +28,7 @@ class FillType extends BaseType {
 		foreach($this->blocks as $block) {
 			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 			$undoBlocks[] = $block;
-			$this->getLevel()->setBlock($block, $randomBlock, false, false);
+			$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());
 		}
 		return $undoBlocks;
 	}
@@ -36,8 +36,7 @@ class FillType extends BaseType {
 	public function fillAsynchronously(): void {
 		foreach($this->blocks as $block) {
 			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
-			$this->getChunkManager()->setBlockIdAt($block->x, $block->y, $block->z, $randomBlock->getId());
-			$this->getChunkManager()->setBlockDataAt($block->x, $block->y, $block->z, $randomBlock->getDamage());
+			$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());
 		}
 	}
 

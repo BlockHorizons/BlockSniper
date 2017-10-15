@@ -12,6 +12,7 @@ use BlockHorizons\BlockSniper\undo\async\AsyncUndo;
 use pocketmine\block\Block;
 use pocketmine\level\format\Chunk;
 use pocketmine\level\Level;
+use pocketmine\math\Vector2;
 use pocketmine\Server;
 
 class BrushTask extends AsyncBlockSniperTask {
@@ -22,11 +23,14 @@ class BrushTask extends AsyncBlockSniperTask {
 	private $chunks = "";
 	/** @var BaseType */
 	private $type = null;
+	/** @var Vector2[][] */
+	private $plotPoints = [];
 
-	public function __construct(BaseShape $shape, BaseType $type, array $chunks) {
+	public function __construct(BaseShape $shape, BaseType $type, array $chunks, array $plotPoints) {
 		$this->shape = $shape;
 		$this->type = $type;
 		$this->chunks = serialize($chunks);
+		$this->plotPoints = $plotPoints;
 	}
 
 	public function onRun(): void {
@@ -64,7 +68,7 @@ class BrushTask extends AsyncBlockSniperTask {
 				$i = 0;
 			}
 		}
-		$type->setBlocksInside($blocks)->setAsynchronous()->setChunkManager($manager)->fillAsynchronously();
+		$type->setBlocksInside($blocks)->setAsynchronous()->setChunkManager($manager)->fillShape($this->plotPoints);
 
 		$this->setResult([
 			"undoChunks" => $undoChunks,

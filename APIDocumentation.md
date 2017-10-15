@@ -53,14 +53,16 @@ BlockSniper adds very easy to use API for adding new Shapes and Types. A new Sha
 ```php
 <?php
     
-namespace BlockHorizons\BlockSniper\brush\shapes;
+namespace MyPlugin\MyShapes;
     
 use BlockHorizons\BlockSniper\brush\BaseShape;
 use pocketmine\Player;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
     
-class ExampleShape extends BaseShape {
+class MyShape extends BaseShape {
+	
+	const ID = 5;
     
     public function __construct(Player $player, Level $level, Position $center, bool $hollow) {
         parent::__construct($player, $level, $center, $hollow);
@@ -86,11 +88,10 @@ class ExampleShape extends BaseShape {
     }
 }
 ```
-Note the namespace should always be like this for the shape to get registered correctly.<br>
 
 In order to make this new shape able to be used, the following code should be executed anywhere in your plugin:
 ```php
-BaseShape::registerShape($shapeName, $shapeNumber);
+\BlockHorizons\BlockSniper\brush\registration\ShapeRegistration::registerShape(MyShape::class, MyShape::ID);
 ```
 
 <br>
@@ -100,7 +101,7 @@ Registering new types is very similar to the registering of types. Only a couple
 ```php
 <?php
     
-namespace BlockHorizons\BlockSniper\brush\types;
+namespace MyPlugin\MyTypes;
     
 use BlockHorizons\BlockSniper\brush\BaseType;
 use pocketmine\level\Level;
@@ -138,9 +139,9 @@ class MyType extends BaseType {
     }
 }
 ```
-And again, take note of the correct namespace. To register a new type, use:
+To register a new type, use:
 ```php
-BaseType::registerType($typeName, $typeNumber);
+\BlockHorizons\BlockSniper\brush\registration\TypeRegistration::registerType(MyType::class, MyType::ID);
 ```
 
 <br>

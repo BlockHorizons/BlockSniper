@@ -16,6 +16,7 @@ use pocketmine\block\Sapling;
 use pocketmine\item\Item;
 use pocketmine\level\generator\biome\Biome;
 use pocketmine\level\Position;
+use pocketmine\math\Vector2;
 use pocketmine\Server;
 
 class Brush implements \JsonSerializable {
@@ -301,11 +302,12 @@ class Brush implements \JsonSerializable {
 	}
 
 	/**
-	 * @param Session $session
+	 * @param Session     $session
+	 * @param Vector2[][] $plotPoints
 	 *
 	 * @return bool
 	 */
-	public function execute(Session $session): bool {
+	public function execute(Session $session, array $plotPoints = []): bool {
 		$shape = $this->getShape();
 		$type = $this->getType();
 		if($session instanceof PlayerSession) {
@@ -322,10 +324,10 @@ class Brush implements \JsonSerializable {
 		$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
 
 		if($this->getSize() >= $loader->getSettings()->getMinimumAsynchronousSize() && $type->canBeExecutedAsynchronously()) {
-			$shape->editAsynchronously($type);
+			$shape->editAsynchronously($type, $plotPoints);
 		} else {
 			$type->setBlocksInside($shape->getBlocksInside());
-			$undoBlocks = $type->fillShape();
+			$undoBlocks = $type->fillShape($plotPoints);
 			$session->getRevertStorer()->saveRevert(new SyncUndo($undoBlocks, $session->getSessionOwner()->getName()));
 		}
 		return true;

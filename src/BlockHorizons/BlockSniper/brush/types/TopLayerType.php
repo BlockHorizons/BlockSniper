@@ -37,7 +37,7 @@ class TopLayerType extends BaseType {
 					$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 					for($y = $block->y; $y >= $block->y - $this->height; $y--) {
 						$undoBlocks[] = $this->getLevel()->getBlock(new Vector3($block->x, $y, $block->z));
-						$this->getLevel()->setBlock($block, $randomBlock, false, false);
+						$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());
 					}
 				}
 			}
@@ -52,8 +52,7 @@ class TopLayerType extends BaseType {
 				if($up->getId() === Item::AIR || $up instanceof Flowable) {
 					$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 					for($y = $block->y; $y >= $block->y - $this->height; $y--) {
-						$this->getChunkManager()->setBlockIdAt($block->x, $block->y, $block->z, $randomBlock->getId());
-						$this->getChunkManager()->setBlockDataAt($block->x, $block->y, $block->z, $randomBlock->getDamage());
+						$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());
 					}
 				}
 			}

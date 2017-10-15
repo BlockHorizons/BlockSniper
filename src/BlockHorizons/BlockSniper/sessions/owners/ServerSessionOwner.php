@@ -6,6 +6,13 @@ use pocketmine\Server;
 
 class ServerSessionOwner implements ISessionOwner {
 
+	/** @var int */
+	private static $id = 0;
+
+	public function __construct() {
+		self::$id++;
+	}
+
 	/**
 	 * @return Server
 	 */
@@ -14,9 +21,16 @@ class ServerSessionOwner implements ISessionOwner {
 	}
 
 	/**
+	 * @return int
+	 */
+	public function getId(): int {
+		return self::$id;
+	}
+
+	/**
 	 * @return string
 	 */
 	public function getName(): string {
-		return "SERVER";
+		return "Server Session #" . self::$id;
 	}
 }

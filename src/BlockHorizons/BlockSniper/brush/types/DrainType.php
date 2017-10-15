@@ -31,7 +31,7 @@ class DrainType extends BaseType {
 			$blockId = $block->getId();
 			if($blockId === Item::LAVA || $blockId === Item::WATER || $blockId === Item::STILL_LAVA || $blockId === Item::STILL_WATER) {
 				$undoBlocks[] = $block;
-				$this->getLevel()->setBlock(new Vector3($block->x, $block->y, $block->z), Block::get(Block::AIR), false, false);
+				$this->putBlock($block, 0);
 			}
 		}
 		return $undoBlocks;
@@ -41,8 +41,7 @@ class DrainType extends BaseType {
 		foreach($this->blocks as $block) {
 			$blockId = $block->getId();
 			if($blockId === Item::LAVA || $blockId === Item::WATER || $blockId === Item::STILL_LAVA || $blockId === Item::STILL_WATER) {
-				$undoBlocks[] = $block;
-				$this->getChunkManager()->setBlockIdAt($block->x, $block->y, $block->z, Block::AIR);
+				$this->putBlock($block, 0);
 			}
 		}
 	}

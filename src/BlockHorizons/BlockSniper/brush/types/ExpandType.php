@@ -53,10 +53,14 @@ class ExpandType extends BaseType {
 			}
 		}
 		foreach($undoBlocks as $selectedBlock) {
-			$this->getLevel()->setBlock($selectedBlock, ($selectedBlock->getSide(Block::SIDE_DOWN)->getId() === Block::AIR ? $selectedBlock->getSide(Block::SIDE_UP) : $selectedBlock->getSide(Block::SIDE_DOWN)), false, false);
+			/** @var Block $undoBlock */
+			$undoBlock = ($selectedBlock->getSide(Block::SIDE_DOWN)->getId() === Block::AIR ? $selectedBlock->getSide(Block::SIDE_UP) : $selectedBlock->getSide(Block::SIDE_DOWN));
+			$this->putBlock($selectedBlock, $undoBlock->getId(), $undoBlock->getDamage());
 		}
 		foreach($oneHoles as $block) {
-			$this->getLevel()->setBlock($block, ($block->getSide(Block::SIDE_DOWN)->getId() === Block::AIR ? $block->getSide(Block::SIDE_EAST) : $block->getSide(Block::SIDE_DOWN)));
+			/** @var Block $oneHole */
+			$oneHole = ($block->getSide(Block::SIDE_DOWN)->getId() === Block::AIR ? $block->getSide(Block::SIDE_EAST) : $block->getSide(Block::SIDE_DOWN));
+			$this->putBlock($block, $oneHole->getId(), $oneHole->getDamage());
 		}
 
 		return array_merge($undoBlocks, $oneHoles);
@@ -93,14 +97,12 @@ class ExpandType extends BaseType {
 		foreach($blocks as $selectedBlock) {
 			$bottom = $this->getChunkManager()->getSide($selectedBlock->x, $selectedBlock->y, $selectedBlock->z, Block::SIDE_DOWN);
 			$top = $this->getChunkManager()->getSide($selectedBlock->x, $selectedBlock->y, $selectedBlock->z, Block::SIDE_UP);
-			$this->getChunkManager()->setBlockIdAt($selectedBlock->x, $selectedBlock->y, $selectedBlock->z, $bottom->getId() === Block::AIR ? $top->getId() : $bottom->getId());
-			$this->getChunkManager()->setBlockIdAt($selectedBlock->x, $selectedBlock->y, $selectedBlock->z, $bottom->getId() === Block::AIR ? $top->getDamage() : $bottom->getDamage());
+			$this->putBlock($selectedBlock, $bottom->getId() === Block::AIR ? $top->getId() : $bottom->getId(), $bottom->getId() === Block::AIR ? $top->getDamage() : $bottom->getDamage());
 		}
 		foreach($oneHoles as $block) {
 			$bottom = $this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_DOWN);
 			$east = $this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_UP);
-			$this->getChunkManager()->setBlockIdAt($block->x, $block->y, $block->z, $bottom->getId() === Block::AIR ? $east->getId() : $bottom->getId());
-			$this->getChunkManager()->setBlockIdAt($block->x, $block->y, $block->z, $bottom->getId() === Block::AIR ? $east->getDamage() : $bottom->getDamage());
+			$this->putBlock($block, $bottom->getId() === Block::AIR ? $east->getId() : $bottom->getId(), $bottom->getId() === Block::AIR ? $east->getDamage() : $bottom->getDamage());
 		}
 	}
 

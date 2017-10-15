@@ -2,7 +2,7 @@
 # Configuration for BlockSniper: A WorldEdit plugin for PocketMine.
 
 # Internal Property: Do not change.
-Configuration-Version: "2.4.0"
+Configuration-Version: "2.5.0"
 
 # Whether to auto-update configuration when a new version is found.
 Auto-Configuration-Update: true
@@ -34,4 +34,7 @@ Drop-Leafblower-Plants: true
 
 # The size above which modifications get executed asynchronously, meaning it won't get executed on the main thread.
 Asynchronous-Operation-Size: 15
+
+# Whether to
+MyPlot-Support: false
 ...

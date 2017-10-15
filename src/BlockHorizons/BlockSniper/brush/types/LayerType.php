@@ -29,10 +29,9 @@ class LayerType extends BaseType {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
-			if($block->getId() !== $randomBlock->getId()) {
-				$undoBlocks[] = $block;
-			}
-			$this->getLevel()->setBlock(new Vector3($block->x, $this->center->y + 1, $block->z), $randomBlock, false, false);
+			$undoBlocks[] = $block;
+			$vec = new Vector3($block->x, $this->center->y + 1, $block->z);
+			$this->putBlock($vec, $randomBlock->getId(), $randomBlock->getDamage());
 		}
 		return $undoBlocks;
 	}
@@ -40,8 +39,8 @@ class LayerType extends BaseType {
 	public function fillAsynchronously(): void {
 		foreach($this->blocks as $block) {
 			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
-			$this->getChunkManager()->setBlockIdAt($block->x, $this->center->y + 1, $block->z, $randomBlock->getId());
-			$this->getChunkManager()->setBlockDataAt($block->x, $this->center->y + 1, $block->z, $randomBlock->getDamage());
+			$vec = new Vector3($block->x, $this->center->y + 1, $block->z);
+			$this->putBlock($vec, $randomBlock->getId(), $randomBlock->getDamage());
 		}
 	}
 

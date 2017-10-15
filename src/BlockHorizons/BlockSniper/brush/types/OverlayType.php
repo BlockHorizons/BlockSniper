@@ -47,7 +47,7 @@ class OverlayType extends BaseType {
 						$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 						if($block->getId() !== $randomBlock->getId()) {
 							$undoBlocks[] = $direction;
-							$this->getLevel()->setBlock($direction, $randomBlock, false, false);
+							$this->putBlock($direction, $randomBlock->getId(), $randomBlock->getDamage());
 						}
 					}
 				}
@@ -77,8 +77,7 @@ class OverlayType extends BaseType {
 					if($this->getChunkManager()->getBlockIdAt($direction->x, $direction->y, $direction->z) === Item::AIR && $valid) {
 						$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 						if($block->getId() !== $randomBlock->getId()) {
-							$this->getChunkManager()->setBlockIdAt($block->x, $this->center->y + 1, $block->z, $randomBlock->getId());
-							$this->getChunkManager()->setBlockDataAt($block->x, $this->center->y + 1, $block->z, $randomBlock->getDamage());
+							$this->putBlock($direction, $randomBlock->getId(), $randomBlock->getDamage());
 						}
 					}
 				}

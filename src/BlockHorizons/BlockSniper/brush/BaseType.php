@@ -12,6 +12,8 @@ use pocketmine\level\ChunkManager;
 use pocketmine\level\format\Chunk;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
+use pocketmine\math\Vector2;
+use pocketmine\math\Vector3;
 use pocketmine\Player;
 use pocketmine\Server;
 
@@ -59,6 +61,11 @@ abstract class BaseType {
 	/** @var bool */
 	private $async = false;
 
+	/** @var Vector2[][] */
+	private $plotPoints = [];
+	/** @var bool */
+	protected $myPlotChecked = false;
+
 	/**
 	 * @param Player       $player
 	 * @param ChunkManager $manager
@@ -89,9 +96,15 @@ abstract class BaseType {
 	}
 
 	/**
+	 * @param Vector2[][] $plotPoints
+	 *
 	 * @return Block[]|null
 	 */
-	public final function fillShape(): ?array {
+	public final function fillShape(array $plotPoints = []): ?array {
+		$this->plotPoints = $plotPoints;
+		if(!empty($plotPoints)) {
+			$this->myPlotChecked = true;
+		}
 		if($this->isAsynchronous() && $this->canBeExecutedAsynchronously()) {
 			$this->fillAsynchronously();
 			return null;
@@ -100,11 +113,53 @@ abstract class BaseType {
 	}
 
 	/**
+	 * Puts a block at the given location either asynchronously or synchronously with MyPlot checks (if relevant)
+	 *
+	 * @param Vector3 $pos
+	 * @param int     $id
+	 * @param int     $meta
+	 */
+	protected function putBlock(Vector3 $pos, int $id, int $meta = 0): void {
+		if($this->myPlotChecked) {
+			foreach($this->plotPoints as $plotCorners) {
+				if($pos->x < $plotCorners[0]->x || $pos->z < $plotCorners[0]->z || $pos->x > $plotCorners[1]->x || $pos->z > $plotCorners[1]->z) {
+					return;
+				}
+			}
+		}
+		if($this->isAsynchronous()) {
+			$this->getChunkManager()->setBlockIdAt($pos->x, $pos->y, $pos->z, $id);
+			$this->getChunkManager()->setBlockDataAt($pos->x, $pos->y, $pos->z, $meta);
+		} else {
+			$this->getLevel()->setBlock($pos, Block::get($id, $meta), false, false);
+		}
+	}
+
+	/**
+	 * @param Vector3 $pos
+	 * @param int     $biomeId
+	 */
+	protected function putBiome(Vector3 $pos, int $biomeId): void {
+		if($this->myPlotChecked) {
+			foreach($this->plotPoints as $plotCorners) {
+				if($pos->x < $plotCorners[0]->x || $pos->z < $plotCorners[0]->z || $pos->x > $plotCorners[1]->x || $pos->z > $plotCorners[1]->z) {
+					return;
+				}
+			}
+		}
+		if($this->isAsynchronous()) {
+			$this->getChunkManager()->setBiomeIdAt($pos->x, $pos->z, $biomeId);
+		} else {
+			$this->getLevel()->setBiomeId($pos->x, $pos->z, $biomeId);
+		}
+	}
+
+	/**
 	 * @return Block[]
 	 */
-	public abstract function fillSynchronously(): array;
+	protected abstract function fillSynchronously(): array;
 
-	public function fillAsynchronously(): void {
+	protected function fillAsynchronously(): void {
 		return;
 	}
 

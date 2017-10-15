@@ -9,6 +9,7 @@ use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
 use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
+use pocketmine\math\Vector2;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 use pocketmine\Server;
@@ -107,12 +108,13 @@ abstract class BaseShape {
 	public abstract function getName(): string;
 
 	/**
-	 * @param BaseType $type
+	 * @param BaseType    $type
+	 * @param Vector2[][] $plotPoints
 	 *
 	 * @return bool
 	 */
-	public function editAsynchronously(BaseType $type): bool {
-		$this->getLevel()->getServer()->getScheduler()->scheduleAsyncTask(new BrushTask($this, $type, $this->getTouchedChunks()));
+	public function editAsynchronously(BaseType $type, array $plotPoints = []): bool {
+		$this->getLevel()->getServer()->getScheduler()->scheduleAsyncTask(new BrushTask($this, $type, $this->getTouchedChunks(), $plotPoints));
 		return true;
 	}
 

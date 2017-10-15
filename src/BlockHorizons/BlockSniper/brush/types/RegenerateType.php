@@ -27,7 +27,13 @@ class RegenerateType extends BaseType {
 	 * @return Block[]
 	 */
 	public function fillSynchronously(): array {
-		$this->getLevel()->regenerateChunk($this->center->x >> 4, $this->center->z >> 4);
+		if($this->myPlotChecked) {
+			return [];
+		}
+		$x = $this->center->x >> 4;
+		$z = $this->center->z >> 4;
+		$this->getLevel()->getChunk($x, $z)->setPopulated(false);
+		$this->getLevel()->regenerateChunk($x, $z);
 		return [];
 	}
 

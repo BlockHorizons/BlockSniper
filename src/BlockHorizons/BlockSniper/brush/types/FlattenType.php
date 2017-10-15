@@ -31,11 +31,9 @@ class FlattenType extends BaseType {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
 			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
-			if(($block->getId() === Item::AIR || $block instanceof Flowable) && $block->y <= $this->center->y) {
-				if($block->getId() !== $randomBlock->getId()) {
-					$undoBlocks[] = $block;
-				}
-				$this->getLevel()->setBlock($block, $randomBlock, false, false);
+			if($block->y <= $this->center->y && ($block->getId() === Item::AIR || $block instanceof Flowable)) {
+				$undoBlocks[] = $block;
+				$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());
 			}
 		}
 		return $undoBlocks;
@@ -44,9 +42,8 @@ class FlattenType extends BaseType {
 	public function fillAsynchronously(): void {
 		foreach($this->blocks as $block) {
 			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
-			if(($block->getId() === Item::AIR || $block instanceof Flowable) && $block->y <= $this->center->y) {
-				$this->getChunkManager()->setBlockIdAt($block->x, $block->y, $block->z, $randomBlock->getId());
-				$this->getChunkManager()->setBlockDataAt($block->x, $block->y, $block->z, $randomBlock->getDamage());
+			if($block->y <= $this->center->y && ($block->getId() === Item::AIR || $block instanceof Flowable)) {
+				$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());
 			}
 		}
 	}

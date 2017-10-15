@@ -28,16 +28,16 @@ class BiomeType extends BaseType {
 	/**
 	 * @return Block[]
 	 */
-	public function fillSynchronously(): array {
+	protected function fillSynchronously(): array {
 		foreach($this->blocks as $block) {
-			$this->getLevel()->setBiomeId($block->x, $block->z, $this->biome);
+			$this->putBiome($block, $this->biome);
 		}
 		return [];
 	}
 
-	public function fillAsynchronously(): void {
+	protected function fillAsynchronously(): void {
 		foreach($this->blocks as $block) {
-			$this->getChunkManager()->setBiomeIdAt($block->x & 0x0f, $block->z & 0x0f, $this->biome);
+			$this->putBiome($block, $this->biome);
 		}
 	}
 

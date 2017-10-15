@@ -30,7 +30,7 @@ class ReplaceAllType extends BaseType {
 			if($block->getId() !== Block::AIR && !$block instanceof Flowable) {
 				$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 				$undoBlocks[] = $block;
-				$this->getLevel()->setBlock($block, $randomBlock, false, false);
+				$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());
 			}
 		}
 		return $undoBlocks;
@@ -40,8 +40,7 @@ class ReplaceAllType extends BaseType {
 		foreach($this->blocks as $block) {
 			if($block->getId() !== Block::AIR && !$block instanceof Flowable) {
 				$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
-				$this->getChunkManager()->setBlockIdAt($block->x, $block->y, $block->z, $randomBlock->getId());
-				$this->getChunkManager()->setBlockDataAt($block->x, $block->y, $block->z, $randomBlock->getDamage());
+				$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());
 			}
 		}
 	}

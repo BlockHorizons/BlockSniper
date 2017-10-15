@@ -37,7 +37,7 @@ class LeafBlowerType extends BaseType {
 				if($loader->getSettings()->dropLeafblowerPlants()) {
 					$this->getLevel()->dropItem($block, Item::get($block->getId()));
 				}
-				$this->getLevel()->setBlock($block, Block::get(Block::AIR), false, false);
+				$this->putBlock($block, 0);
 			}
 		}
 		return $undoBlocks;
@@ -46,7 +46,7 @@ class LeafBlowerType extends BaseType {
 	public function fillAsynchronously(): void {
 		foreach($this->blocks as $block) {
 			if($block instanceof Flowable) {
-				$this->getChunkManager()->setBlockIdAt($block->x, $block->y, $block->z, Block::AIR);
+				$this->putBlock($block, 0);
 			}
 		}
 	}

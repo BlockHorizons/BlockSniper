@@ -11,7 +11,9 @@ use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerItemHeldEvent;
 use pocketmine\event\player\PlayerJoinEvent;
+use pocketmine\math\Vector2;
 use pocketmine\network\mcpe\protocol\ModalFormRequestPacket;
+use pocketmine\Player;
 
 class BrushListener implements Listener {
 
@@ -37,6 +39,25 @@ class BrushListener implements Listener {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * @param Player $player
+	 *
+	 * @return Vector2[][]
+	 */
+	public function getPlotPoints(Player $player): array {
+		if($player->hasPermission("blocksniper.myplot-bypass") || !$this->getLoader()->isMyPlotAvailable()) {
+			return [];
+		}
+		$plotPoints = [];
+		$plotSize = $this->getLoader()->getMyPlot()->getLevelSettings($player->getLevel()->getName())->plotSize;
+		foreach($this->getLoader()->getMyPlot()->getPlotsOfPlayer($player->getName(), $player->getLevel()->getName()) as $plot) {
+			$minVec = new Vector2($plot->X, $plot->Z);
+			$maxVec = new Vector2($plot->X + $plotSize, $plot->Z + $plotSize);
+			$plotPoints[] = [$minVec, $maxVec];
+		}
+		return $plotPoints;
 	}
 
 	/**

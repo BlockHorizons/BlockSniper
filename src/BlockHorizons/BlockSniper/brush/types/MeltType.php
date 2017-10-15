@@ -48,7 +48,7 @@ class MeltType extends BaseType {
 			}
 		}
 		foreach($undoBlocks as $selectedBlock) {
-			$this->getLevel()->setBlock($selectedBlock, Block::get(Block::AIR), false, false);
+			$this->putBlock($selectedBlock, 0);
 		}
 		return $undoBlocks;
 	}
@@ -77,7 +77,7 @@ class MeltType extends BaseType {
 			}
 		}
 		foreach($blocks as $selectedBlock) {
-			$this->getChunkManager()->setBlockIdAt($selectedBlock->x, $selectedBlock->y, $selectedBlock->z, Block::AIR);
+			$this->putBlock($selectedBlock, 0);
 		}
 	}
 
