@@ -18,14 +18,14 @@
     ],
 
     "permissions": {
+        "blocksniper-myplot-bypass": {
+            "default": "op",
+            "description": "Allows bypassing MyPlot plot borders."
+        },
         "blocksniper": {
             "default": false,
             "description": "Allows access to all BlockSniper features.",
             "children": {
-                "blocksniper.myplot-bypass": {
-                    "default": "op",
-                    "description": "Allows bypassing MyPlot plot borders."
-                },
                 "blocksniper.command": {
                     "default": false,
                     "description": "Allows access to all BlockSniper command features.",

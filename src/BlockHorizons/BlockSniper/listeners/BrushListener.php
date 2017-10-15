@@ -47,7 +47,7 @@ class BrushListener implements Listener {
 	 * @return Vector2[][]
 	 */
 	public function getPlotPoints(Player $player): array {
-		if($player->hasPermission("blocksniper.myplot-bypass") || !$this->getLoader()->isMyPlotAvailable()) {
+		if($player->hasPermission("blocksniper-myplot-bypass") || !$this->getLoader()->isMyPlotAvailable()) {
 			return [];
 		}
 		$plotPoints = [];
