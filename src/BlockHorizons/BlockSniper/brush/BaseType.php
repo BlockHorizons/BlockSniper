@@ -122,7 +122,7 @@ abstract class BaseType {
 	protected function putBlock(Vector3 $pos, int $id, int $meta = 0): void {
 		if($this->myPlotChecked) {
 			foreach($this->plotPoints as $plotCorners) {
-				if($pos->x < $plotCorners[0]->x || $pos->z < $plotCorners[0]->z || $pos->x > $plotCorners[1]->x || $pos->z > $plotCorners[1]->z) {
+				if($pos->x < $plotCorners[0]->x || $pos->z < $plotCorners[0]->y || $pos->x > $plotCorners[1]->x || $pos->z > $plotCorners[1]->y) {
 					return;
 				}
 			}
