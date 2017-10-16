@@ -180,20 +180,4 @@ class Loader extends PluginBase {
 	public function isMyPlotAvailable(): bool {
 		return $this->myPlot !== null;
 	}
-
-	public function getCelestialAngle(int $x = 14000): float {
-		$x = 12000;
-		$x /= 24000; // Divide by total time to get a float 0.0 - 1.0
-					                      // 0.5
-		$x += ($x < 0.25 ? 0.75 : -0.25); // 0.5 - 0.25 = 0.25.                         Range between: 0 - 0.99, 0.99 for Noon,
-		$cos = cos($x * M_PI);        // 0.25 * pi = 0.7854, cos(0.7854) = 0.7071
-		$cos += 1;                        // 0.7071 + 1 = 1.7071
-		$cos /= 2;                        // 1.7071 / 2 = 0.8536
-		$cos = 1 - $cos;                  // 1 - 0.8536 = 0.1464
-		$cos -= $x;                       // 0.1464 - 0.2500 = -0.1036
-		$cos /= 3;                        // -0.1036 / 3 = -0.0345333333
-		$celestialAngle = $x + $cos;      // 0.25 + -0.0345333333 = 0.2155
-		var_dump($celestialAngle);
-		var_dump($x + (((1 - ((cos($x * M_PI) + 1) / 2)) - $x) / 3));
-	}
 }
