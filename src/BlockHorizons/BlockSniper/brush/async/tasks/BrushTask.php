@@ -23,14 +23,14 @@ class BrushTask extends AsyncBlockSniperTask {
 	private $chunks = "";
 	/** @var BaseType */
 	private $type = null;
-	/** @var Vector2[][] */
-	private $plotPoints = [];
+	/** @var string */
+	private $plotPoints = "";
 
 	public function __construct(BaseShape $shape, BaseType $type, array $chunks, array $plotPoints) {
 		$this->shape = $shape;
 		$this->type = $type;
 		$this->chunks = serialize($chunks);
-		$this->plotPoints = $plotPoints;
+		$this->plotPoints = serialize($plotPoints);
 	}
 
 	public function onRun(): void {
@@ -68,7 +68,7 @@ class BrushTask extends AsyncBlockSniperTask {
 				$i = 0;
 			}
 		}
-		$type->setBlocksInside($blocks)->setAsynchronous()->setChunkManager($manager)->fillShape($this->plotPoints);
+		$type->setBlocksInside($blocks)->setAsynchronous()->setChunkManager($manager)->fillShape(unserialize($this->plotPoints));
 
 		$this->setResult([
 			"undoChunks" => $undoChunks,

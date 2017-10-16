@@ -32,8 +32,14 @@ class RevertStorer {
 	public function restoreLatestRevert(int $type, int $amount): void {
 		for($i = 0; $i < $amount; $i++) {
 			if($type === Revert::TYPE_UNDO) {
+				if(empty($this->undoStack)) {
+					return;
+				}
 				$revert = $this->undoStack[max(array_keys($this->undoStack))];
 			} else {
+				if(empty($this->redoStack)) {
+					return;
+				}
 				$revert = $this->redoStack[max(array_keys($this->redoStack))];
 			}
 			$detached = $revert->getDetached();
@@ -77,9 +83,13 @@ class RevertStorer {
 	 */
 	public function unsetOldestRevert(int $type): void {
 		if($type === Revert::TYPE_UNDO) {
-			unset($this->undoStack[min(array_keys($this->undoStack))]);
+			if(!empty($this->undoStack)) {
+				unset($this->undoStack[min(array_keys($this->undoStack))]);
+			}
 		} else {
-			unset($this->redoStack[min(array_keys($this->undoStack))]);
+			if(!empty($this->redoStack)) {
+				unset($this->redoStack[min(array_keys($this->undoStack))]);
+			}
 		}
 	}
 
@@ -88,9 +98,13 @@ class RevertStorer {
 	 */
 	public function unsetLatestRevert(int $type): void {
 		if($type === Revert::TYPE_UNDO) {
-			unset($this->undoStack[max(array_keys($this->undoStack))]);
+			if(!empty($this->undoStack)) {
+				unset($this->undoStack[max(array_keys($this->undoStack))]);
+			}
 		} else {
-			unset($this->redoStack[max(array_keys($this->undoStack))]);
+			if(!empty($this->redoStack)) {
+				unset($this->redoStack[max(array_keys($this->undoStack))]);
+			}
 		}
 	}
 

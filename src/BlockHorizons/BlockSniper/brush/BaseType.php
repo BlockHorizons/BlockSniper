@@ -6,6 +6,7 @@ namespace BlockHorizons\BlockSniper\brush;
 
 use BlockHorizons\BlockSniper\brush\async\BlockSniperChunkManager;
 use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
+use BlockHorizons\BlockSniper\exceptions\BlockSniperException;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\block\Block;
 use pocketmine\level\ChunkManager;
@@ -120,12 +121,18 @@ abstract class BaseType {
 	 * @param int     $meta
 	 */
 	protected function putBlock(Vector3 $pos, int $id, int $meta = 0): void {
+		$valid = false;
 		if($this->myPlotChecked) {
 			foreach($this->plotPoints as $plotCorners) {
 				if($pos->x < $plotCorners[0]->x || $pos->z < $plotCorners[0]->y || $pos->x > $plotCorners[1]->x || $pos->z > $plotCorners[1]->y) {
-					return;
+					continue;
 				}
+				$valid = true;
+				break;
 			}
+		}
+		if(!$valid) {
+			return;
 		}
 		if($this->isAsynchronous()) {
 			$this->getChunkManager()->setBlockIdAt($pos->x, $pos->y, $pos->z, $id);

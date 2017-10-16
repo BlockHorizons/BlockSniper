@@ -21,7 +21,7 @@ class RedoDiminishTask extends BaseTask {
 				continue;
 			}
 			if(($storer = SessionManager::getPlayerSession($player)->getRevertStorer())->redoStorageExists()) {
-				if($storer->getLastRedoActivity() >= 180 && $storer->getTotalStores(Revert::TYPE_REDO) > 0) {
+				if($storer->getLastRedoActivity() >= 180) {
 					$storer->unsetOldestRevert(Revert::TYPE_REDO);
 				}
 			}
