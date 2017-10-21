@@ -106,7 +106,7 @@ class ShapeRegistration {
 	 * @param string $shapeName
 	 */
 	private static function registerPermission(string $shapeName): void {
-		$permission = new Permission("blocksniper.shape." . $shapeName, "Allows permission to use the " . $shapeName . " shape.");
+		$permission = new Permission("blocksniper.shape." . $shapeName, "Allows usage to use the " . $shapeName . " shape.");
 		$permission->addParent("blocksniper.shape", Permission::DEFAULT_OP);
 		Server::getInstance()->getPluginManager()->addPermission($permission);
 	}

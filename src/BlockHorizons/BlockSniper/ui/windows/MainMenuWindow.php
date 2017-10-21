@@ -32,6 +32,13 @@ class MainMenuWindow extends Window {
 					]
 				],
 				[
+					"text" => (new Translation(Translation::UI_MAIN_MENU_CONFIG))->getMessage(),
+					"image" => [
+						"type" => "url",
+						"data" => "http://icons.iconarchive.com/icons/dtafalonso/android-l/512/Settings-L-icon.png"
+					]
+				],
+				[
 					"text" => (new Translation(Translation::UI_MAIN_MENU_EXIT))->getMessage(),
 					"image" => [
 						"type" => "url",
@@ -40,16 +47,6 @@ class MainMenuWindow extends Window {
 				]
 			]
 		];
-		if($this->getPlayer()->hasPermission("blocksniper.configuration")) {
-			$this->data[3] = $this->data[2];
-			$this->data[2] = [
-				"text" => (new Translation(Translation::UI_MAIN_MENU_CONFIG))->getMessage(),
-				"image" => [
-					"type" => "url",
-					"data" => "http://icons.iconarchive.com/icons/dtafalonso/android-l/512/Settings-L-icon.png"
-				]
-			];
-		}
 	}
 
 	public function handle(ModalFormResponsePacket $packet): bool {
