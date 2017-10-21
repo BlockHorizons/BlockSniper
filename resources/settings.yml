@@ -8,7 +8,7 @@ Configuration-Version: "2.5.0"
 Auto-Configuration-Update: true
 
 # Language in which messages are displayed. Available languages:
-# en (English), nl (Dutch)
+# en (English), nl (Dutch), ko (Korean), fr (French)
 Message-Language: ""
 
 # Item ID of the item that is used to brush. (Golden carrot by default)
