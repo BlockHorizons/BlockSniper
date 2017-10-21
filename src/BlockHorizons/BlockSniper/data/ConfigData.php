@@ -164,7 +164,7 @@ class ConfigData {
 	 */
 	public function get(string $key) {
 		if(isset($this->settings[$key])) {
-			return (string) $this->settings[$key];
+			return $this->settings[$key];
 		}
 		return null;
 	}

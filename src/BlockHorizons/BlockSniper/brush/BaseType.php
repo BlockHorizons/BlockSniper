@@ -130,6 +130,8 @@ abstract class BaseType {
 				$valid = true;
 				break;
 			}
+		} else {
+			$valid = true;
 		}
 		if(!$valid) {
 			return;
@@ -147,12 +149,20 @@ abstract class BaseType {
 	 * @param int     $biomeId
 	 */
 	protected function putBiome(Vector3 $pos, int $biomeId): void {
+		$valid = false;
 		if($this->myPlotChecked) {
 			foreach($this->plotPoints as $plotCorners) {
 				if($pos->x < $plotCorners[0]->x || $pos->z < $plotCorners[0]->z || $pos->x > $plotCorners[1]->x || $pos->z > $plotCorners[1]->z) {
-					return;
+					continue;
 				}
+				$valid = true;
+				break;
 			}
+		} else {
+			$valid = true;
+		}
+		if(!$valid) {
+			return;
 		}
 		if($this->isAsynchronous()) {
 			$this->getChunkManager()->setBiomeIdAt($pos->x, $pos->z, $biomeId);
