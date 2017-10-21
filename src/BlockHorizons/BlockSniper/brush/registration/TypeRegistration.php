@@ -133,7 +133,7 @@ class TypeRegistration {
 	 * @param string $typeName
 	 */
 	private static function registerPermission(string $typeName): void {
-		$permission = new Permission("blocksniper.type." . $typeName, "Allows usage to use the " . $typeName . " shape.");
+		$permission = new Permission("blocksniper.type." . $typeName, "Allows permission to use the " . $typeName . " shape.");
 		$permission->addParent("blocksniper.type", Permission::DEFAULT_OP);
 		Server::getInstance()->getPluginManager()->addPermission($permission);
 	}

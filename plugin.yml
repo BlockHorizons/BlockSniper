@@ -1,6 +1,6 @@
 {
     "name": "BlockSniper",
-    "version": "2.2.0",
+    "version": "2.2.1",
     "api": [
         "3.0.0-ALPHA7",
         "3.0.0-ALPHA8",
@@ -20,12 +20,16 @@
     "permissions": {
         "blocksniper-myplot-bypass": {
             "default": "op",
-            "description": "Allows bypassing MyPlot plot borders."
+            "description": "Allows bypassing MyPlot plot borders with BlockSniper."
         },
         "blocksniper": {
             "default": false,
             "description": "Allows access to all BlockSniper features.",
             "children": {
+                "blocksniper.configuration": {
+                    "default": "op",
+                    "description": "Allows modifying the configuration in-game."
+                }
                 "blocksniper.command": {
                     "default": false,
                     "description": "Allows access to all BlockSniper command features.",
