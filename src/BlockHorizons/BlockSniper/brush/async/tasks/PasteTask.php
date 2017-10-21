@@ -56,18 +56,22 @@ class PasteTask extends AsyncBlockSniperTask {
 		$blocksInside = $schematic->getBlocks();
 		$manager = BaseType::establishChunkManager($chunks);
 		$i = 0;
-		$vector3 = new Vector3(0, 0, 0);
+
+		$baseWidth = $center->x - (int) ($width / 2);
+		$baseLength = $center->z - (int) ($length / 2);
 
 		foreach($blocksInside as $block) {
 			if($block->getId() === Block::AIR) {
 				continue;
 			}
-			$vector3->setComponents($center->x + $block->x - (int) ($width / 2), $center->y + $block->y, $center->z + $block->z - (int) ($length / 2));
-			$index = Level::chunkHash($vector3->x >> 4, $vector3->z >> 4);
+			$tempX = $baseWidth + $block->x;
+			$tempY = $center->y + $block->y;
+			$tempZ = $baseLength + $block->z;
+			$index = Level::chunkHash($tempX >> 4, $tempZ >> 4);
 
 			if(isset($chunks[$index])) {
-				$manager->setBlockIdAt((int) $vector3->x, (int) $vector3->y, (int) $vector3->z, $block->getId());
-				$manager->setBlockDataAt((int) $vector3->x, (int) $vector3->y, (int) $vector3->z, $block->getDamage());
+				$manager->setBlockIdAt($tempX, $tempY, $tempZ, $block->getId());
+				$manager->setBlockDataAt($tempX, $tempY, $tempZ, $block->getDamage());
 				$processedBlocks++;
 			}
 

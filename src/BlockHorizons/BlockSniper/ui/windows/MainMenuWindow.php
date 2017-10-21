@@ -41,8 +41,8 @@ class MainMenuWindow extends Window {
 			]
 		];
 		if($this->getPlayer()->hasPermission("blocksniper.configuration")) {
-			$this->data[3] = $this->data[2];
-			$this->data[2] = [
+			$this->data["buttons"][3] = $this->data["buttons"][2];
+			$this->data["buttons"][2] = [
 				"text" => (new Translation(Translation::UI_MAIN_MENU_CONFIG))->getMessage(),
 				"image" => [
 					"type" => "url",
