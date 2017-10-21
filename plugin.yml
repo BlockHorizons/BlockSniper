@@ -29,7 +29,7 @@
                 "blocksniper.configuration": {
                     "default": "op",
                     "description": "Allows modifying the configuration in-game."
-                }
+                },
                 "blocksniper.command": {
                     "default": false,
                     "description": "Allows access to all BlockSniper command features.",
