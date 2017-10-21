@@ -13,6 +13,7 @@ use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
 class BrushMenuWindow extends Window {
 
 	public function process(): void {
+		$this->getLoader()->getSessionManager()->createPlayerSession($this->getPlayer());
 		$v = SessionManager::getPlayerSession($this->getPlayer())->getBrush();
 		$this->data = [
 			"type" => "custom_form",
