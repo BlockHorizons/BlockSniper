@@ -88,7 +88,7 @@ class RevertStorer {
 			}
 		} else {
 			if(!empty($this->redoStack)) {
-				unset($this->redoStack[min(array_keys($this->undoStack))]);
+				unset($this->redoStack[min(array_keys($this->redoStack))]);
 			}
 		}
 	}
@@ -103,7 +103,7 @@ class RevertStorer {
 			}
 		} else {
 			if(!empty($this->redoStack)) {
-				unset($this->redoStack[max(array_keys($this->undoStack))]);
+				unset($this->redoStack[max(array_keys($this->redoStack))]);
 			}
 		}
 	}
