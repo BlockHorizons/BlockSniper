@@ -14,9 +14,6 @@ class CubeShape extends BaseShape {
 
 	const ID = self::SHAPE_CUBE;
 
-	/** @var int */
-	protected $width = 0;
-
 	public function __construct(Player $player, Level $level, int $width, Position $center, bool $hollow = false, bool $cloneShape = false) {
 		parent::__construct($player, $level, $center, $hollow);
 		$this->width = $width;
@@ -32,13 +29,7 @@ class CubeShape extends BaseShape {
 	 */
 	public function getBlocksInside(bool $vectorOnly = false): array {
 		[$targetX, $targetY, $targetZ] = $this->center;
-
-		$minX = $targetX - $this->width;
-		$minZ = $targetZ - $this->width;
-		$minY = $targetY - $this->width;
-		$maxX = $targetX + $this->width;
-		$maxZ = $targetZ + $this->width;
-		$maxY = $targetY + $this->width;
+		[$minX, $minY, $minZ, $maxX, $maxY, $maxZ] = $this->calculateBoundaryBlocks($targetX, $targetY, $targetZ, $this->width, $this->width);
 
 		$blocksInside = [];
 

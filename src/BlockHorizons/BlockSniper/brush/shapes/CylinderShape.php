@@ -15,10 +15,6 @@ class CylinderShape extends BaseShape {
 
 	const ID = self::SHAPE_CYLINDER;
 
-	/** @var int */
-	protected $radius = 0;
-	/** @var int */
-	protected $height = 0;
 	/** @var bool */
 	private $trueCircle = false;
 
@@ -40,13 +36,7 @@ class CylinderShape extends BaseShape {
 	public function getBlocksInside(bool $vectorOnly = false): array {
 		$radiusSquared = ($this->radius + ($this->trueCircle ? 0 : -0.5)) ** 2 + ($this->trueCircle ? 0.5 : 0);
 		[$targetX, $targetY, $targetZ] = $this->center;
-
-		$minX = $targetX - $this->radius;
-		$minZ = $targetZ - $this->radius;
-		$minY = $targetY - $this->height;
-		$maxX = $targetX + $this->radius;
-		$maxZ = $targetZ + $this->radius;
-		$maxY = $targetY + $this->height;
+		[$minX, $minY, $minZ, $maxX, $maxY, $maxZ] = $this->calculateBoundaryBlocks($targetX, $targetY, $targetZ, $this->radius, $this->height);
 
 		$blocksInside = [];
 

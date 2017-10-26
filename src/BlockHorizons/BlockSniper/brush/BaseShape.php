@@ -31,6 +31,10 @@ abstract class BaseShape {
 	protected $hollow = false;
 	/** @var int */
 	protected $height = 0;
+	/** @var int */
+	protected $radius = 0;
+	/** @var int */
+	protected $width = 0;
 	/** @var string */
 	protected $playerName = "";
 
@@ -125,6 +129,26 @@ abstract class BaseShape {
 	 */
 	public function getLevel(): Level {
 		return Server::getInstance()->getLevel($this->level);
+	}
+
+	/**
+	 * @param int $targetX
+	 * @param int $targetY
+	 * @param int $targetZ
+	 * @param int $width
+	 * @param int $height
+	 *
+	 * @return array
+	 */
+	protected function calculateBoundaryBlocks(int $targetX, int $targetY, int $targetZ, int $width, int $height): array {
+		$minX = $targetX - $this->width;
+		$minZ = $targetZ - $this->width;
+		$minY = $targetY - $this->width;
+		$maxX = $targetX + $this->width;
+		$maxZ = $targetZ + $this->width;
+		$maxY = $targetY + $this->width;
+
+		return [$minX, $minY, $minZ, $maxX, $maxY, $maxZ];
 	}
 
 	/**

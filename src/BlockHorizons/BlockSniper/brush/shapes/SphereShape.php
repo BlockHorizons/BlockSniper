@@ -15,8 +15,6 @@ class SphereShape extends BaseShape {
 
 	const ID = self::SHAPE_SPHERE;
 
-	/** @var int */
-	protected $radius = 0;
 	/** @var bool */
 	private $trueSphere = false;
 

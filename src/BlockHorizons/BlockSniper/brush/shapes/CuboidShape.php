@@ -15,11 +15,6 @@ class CuboidShape extends BaseShape {
 
 	const ID = self::SHAPE_CUBOID;
 
-	/** @var int */
-	protected $width = 0;
-	/** @var int */
-	protected $height = 0;
-
 	public function __construct(Player $player, Level $level, int $width, Position $center, bool $hollow = false, bool $cloneShape = false) {
 		parent::__construct($player, $level, $center, $hollow);
 		$this->width = $width;
@@ -36,13 +31,7 @@ class CuboidShape extends BaseShape {
 	 */
 	public function getBlocksInside(bool $vectorOnly = false): array {
 		[$targetX, $targetY, $targetZ] = $this->center;
-
-		$minX = $targetX - $this->width;
-		$minY = $targetY - $this->height;
-		$minZ = $targetZ - $this->width;
-		$maxX = $targetX + $this->width;
-		$maxY = $targetY + $this->height;
-		$maxZ = $targetZ + $this->width;
+		[$minX, $minY, $minZ, $maxX, $maxY, $maxZ] = $this->calculateBoundaryBlocks($targetX, $targetY, $targetZ, $this->width, $this->height);
 
 		$blocksInside = [];
 
