@@ -1,6 +1,5 @@
 # BlockSniper<a href="https://github.com/BlockHorizons/BlockSniper"><img src="https://github.com/BlockHorizons/BlockSniper/blob/master/resources/BlockSniperLogo.png" width="60" height="60" align="right"></a>
 
-[![Join the chat at https://gitter.im/BlockHorizons/BlockSniper](https://badges.gitter.im/BlockHorizons/BlockSniper.svg)](https://gitter.im/BlockHorizons/BlockSniper?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)<br>
 An innovative brush world editing tool, made for PocketMine-MP: An MCPE server software written in PHP.
 
 > Third party versions, forks or spoons of PocketMine are **not** supported.
@@ -41,3 +40,9 @@ Some permissions are also registered dynamically. The permissions of shapes cons
 ### Reviews
 BlockSniper can be reviewed at the poggit release page [here](https://poggit.pmmp.io/p/BlockSniper/).
 Any feedback given is very welcome and appreciated. Don't hesitate to share what you think about this plugin.
+
+### Contact
+BlockHorizons can be contacted at both Gitter and Discord. There are more users in the Discord room, so you'll often get a quicker reply there.
+<br><br>
+[![Join the chat at https://gitter.im/BlockHorizons/BlockSniper](https://badges.gitter.im/BlockHorizons/BlockSniper.svg)](https://gitter.im/BlockHorizons/BlockSniper?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Chat](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/YynM57V)
