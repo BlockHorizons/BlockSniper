@@ -141,12 +141,12 @@ abstract class BaseShape {
 	 * @return array
 	 */
 	protected function calculateBoundaryBlocks(int $targetX, int $targetY, int $targetZ, int $width, int $height): array {
-		$minX = $targetX - $this->width;
-		$minZ = $targetZ - $this->width;
-		$minY = $targetY - $this->width;
-		$maxX = $targetX + $this->width;
-		$maxZ = $targetZ + $this->width;
-		$maxY = $targetY + $this->width;
+		$minX = $targetX - $width;
+		$minZ = $targetZ - $width;
+		$minY = $targetY - $height;
+		$maxX = $targetX + $width;
+		$maxZ = $targetZ + $width;
+		$maxY = $targetY + $height;
 
 		return [$minX, $minY, $minZ, $maxX, $maxY, $maxZ];
 	}
