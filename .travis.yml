@@ -32,10 +32,10 @@ before_script:
 - cp -rf BlockHorizons/BlockSniper/LICENSE PocketMine-MP/plugins/BlockSniper
 - cp -rf BlockHorizons/BlockSniper/travis.php PocketMine-MP/plugins/BlockSniper
 
-- cd PocketMine-MP/plugins/BlockSniper
+- cd PocketMine-MP/
 
 script:
-- php travis.php
+- php plugins/travis.php
 
 notifications:
   email:
