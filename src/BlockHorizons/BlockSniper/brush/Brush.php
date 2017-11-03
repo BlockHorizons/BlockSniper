@@ -10,7 +10,7 @@ use BlockHorizons\BlockSniper\events\BrushUseEvent;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\PlayerSession;
 use BlockHorizons\BlockSniper\sessions\Session;
-use BlockHorizons\BlockSniper\undo\sync\SyncUndo;
+use BlockHorizons\BlockSniper\revert\sync\SyncUndo;
 use pocketmine\block\Block;
 use pocketmine\block\Sapling;
 use pocketmine\item\Item;
@@ -283,6 +283,7 @@ class Brush implements \JsonSerializable {
 	public function getShape($cloneShape = false, int $yOffset = 0): BaseShape {
 		$shapeName = ShapeRegistration::getShape($this->shape);
 		$vector3 = Server::getInstance()->getPlayer($this->player)->getTargetBlock(100)->add(0, $yOffset);
+
 		$location = new Position($vector3->x, $vector3->y, $vector3->z, Server::getInstance()->getPlayer($this->player)->getLevel());
 		$shape = new $shapeName(Server::getInstance()->getPlayer($this->player), Server::getInstance()->getPlayer($this->player)->getLevel(), $this->size, $location, $this->hollow, $cloneShape);
 

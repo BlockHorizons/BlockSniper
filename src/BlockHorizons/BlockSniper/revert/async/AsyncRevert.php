@@ -2,11 +2,11 @@
 
 declare(strict_types = 1);
 
-namespace BlockHorizons\BlockSniper\undo\async;
+namespace BlockHorizons\BlockSniper\revert\async;
 
 use BlockHorizons\BlockSniper\brush\async\BlockSniperChunkManager;
 use BlockHorizons\BlockSniper\brush\async\tasks\RevertTask;
-use BlockHorizons\BlockSniper\undo\Revert;
+use BlockHorizons\BlockSniper\revert\Revert;
 use pocketmine\level\format\Chunk;
 use pocketmine\Server;
 

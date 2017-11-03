@@ -6,7 +6,7 @@ namespace BlockHorizons\BlockSniper\cloning;
 
 use BlockHorizons\BlockSniper\brush\async\tasks\PasteTask;
 use BlockHorizons\BlockSniper\sessions\Session;
-use BlockHorizons\BlockSniper\undo\sync\SyncUndo;
+use BlockHorizons\BlockSniper\revert\sync\SyncUndo;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\level\Position;

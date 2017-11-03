@@ -1,8 +1,8 @@
 <?php
 
-namespace BlockHorizons\BlockSniper\undo\sync;
+namespace BlockHorizons\BlockSniper\revert\sync;
 
-use BlockHorizons\BlockSniper\undo\Revert;
+use BlockHorizons\BlockSniper\revert\Revert;
 use pocketmine\block\Block;
 
 abstract class SyncRevert extends Revert {

@@ -8,7 +8,7 @@ use BlockHorizons\BlockSniper\brush\BaseShape;
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
-use BlockHorizons\BlockSniper\undo\async\AsyncUndo;
+use BlockHorizons\BlockSniper\revert\async\AsyncUndo;
 use pocketmine\block\Block;
 use pocketmine\level\format\Chunk;
 use pocketmine\level\Level;

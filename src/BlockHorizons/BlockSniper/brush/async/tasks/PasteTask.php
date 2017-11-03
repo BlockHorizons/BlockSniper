@@ -7,7 +7,7 @@ namespace BlockHorizons\BlockSniper\brush\async\tasks;
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
-use BlockHorizons\BlockSniper\undo\async\AsyncUndo;
+use BlockHorizons\BlockSniper\revert\async\AsyncUndo;
 use Schematic\Schematic;
 use pocketmine\block\Block;
 use pocketmine\level\format\Chunk;

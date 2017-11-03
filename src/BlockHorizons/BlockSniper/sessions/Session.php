@@ -9,7 +9,7 @@ use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\owners\ISessionOwner;
 use BlockHorizons\BlockSniper\sessions\owners\PlayerSessionOwner;
 use BlockHorizons\BlockSniper\sessions\owners\ServerSessionOwner;
-use BlockHorizons\BlockSniper\undo\RevertStorer;
+use BlockHorizons\BlockSniper\revert\RevertStorer;
 use pocketmine\utils\TextFormat;
 
 abstract class Session {

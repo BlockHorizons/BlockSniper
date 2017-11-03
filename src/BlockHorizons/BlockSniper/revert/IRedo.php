@@ -2,9 +2,9 @@
 
 declare(strict_types = 1);
 
-namespace BlockHorizons\BlockSniper\undo;
+namespace BlockHorizons\BlockSniper\revert;
 
-interface IUndo {
+interface IRedo {
 
 	public function getDetached();
 

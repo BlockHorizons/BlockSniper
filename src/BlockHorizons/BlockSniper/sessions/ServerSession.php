@@ -6,7 +6,7 @@ namespace BlockHorizons\BlockSniper\sessions;
 
 use BlockHorizons\BlockSniper\brush\Brush;
 use BlockHorizons\BlockSniper\Loader;
-use BlockHorizons\BlockSniper\sessions\owners\ISessionOwner;
+use BlockHorizons\BlockSniper\sessions\owners\ServerSessionOwner;
 use pocketmine\level\Position;
 
 class ServerSession extends Session implements \JsonSerializable {
@@ -18,7 +18,7 @@ class ServerSession extends Session implements \JsonSerializable {
 	/** @var string */
 	private $name = "";
 
-	public function __construct(ISessionOwner $sessionOwner, Loader $loader) {
+	public function __construct(ServerSessionOwner $sessionOwner, Loader $loader) {
 		$this->dataFile = $loader->getDataFolder() . "serverSessions.json";
 		parent::__construct($sessionOwner, $loader);
 	}

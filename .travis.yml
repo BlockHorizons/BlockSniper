@@ -1,0 +1,34 @@
+# Travis CI
+
+language: php
+dist: trusty
+sudo: false
+php:
+- 7.2.0
+
+before_script:
+- cd /home/travis/build/
+- pecl install channel://pecl.php.net/pthreads-3.1.6
+- pecl install channel://pecl.php.net/weakref-0.3.3
+- echo | pecl install channel://pecl.php.net/yaml-2.0.0
+
+- mkdir -p PocketMine-MP/plugins/BlockSniper
+- git clone --recursive https://github.com/pmmp/PocketMine-MP
+
+- cd PocketMine-MP/plugins/
+- wget -O DevTools.phar https://poggit.pmmp.io/r/1582/PocketMine-DevTools.phar
+- cd /home/travis/build/
+
+- cp -rf BlockHorizons/BlockSniper/src PocketMine-MP/plugins/BlockSniper
+- cp -rf BlockHorizons/BlockSniper/resources PocketMine-MP/plugins/BlockSniper
+- cp -rf BlockHorizons/BlockSniper/plugin.yml PocketMine-MP/plugins/BlockSniper
+- cp -rf BlockHorizons/BlockSniper/LICENSE PocketMine-MP/plugins/BlockSniper
+- cp -rf BlockHorizons/BlockSniper/travis.php PocketMine-MP/
+
+script:
+- php travis.php
+
+notifications:
+  email:
+    on_failure: always
+    on_success: never

@@ -6,7 +6,7 @@ namespace BlockHorizons\BlockSniper\tasks;
 
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
-use BlockHorizons\BlockSniper\undo\Revert;
+use BlockHorizons\BlockSniper\revert\Revert;
 
 class RedoDiminishTask extends BaseTask {
 

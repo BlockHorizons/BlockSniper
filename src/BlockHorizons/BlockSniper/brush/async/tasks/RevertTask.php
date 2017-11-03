@@ -6,8 +6,8 @@ namespace BlockHorizons\BlockSniper\brush\async\tasks;
 
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
-use BlockHorizons\BlockSniper\undo\async\AsyncRevert;
-use BlockHorizons\BlockSniper\undo\Revert;
+use BlockHorizons\BlockSniper\revert\async\AsyncRevert;
+use BlockHorizons\BlockSniper\revert\Revert;
 use pocketmine\level\format\Chunk;
 use pocketmine\level\Level;
 use pocketmine\Server;
