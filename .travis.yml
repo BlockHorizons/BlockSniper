@@ -18,6 +18,7 @@ before_script:
 - make
 - make install
 - cd ..
+- echo "extension=pthreads.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
 - git clone --recursive https://github.com/pmmp/PocketMine-MP.git
 - mkdir -p PocketMine-MP/plugins/BlockSniper
