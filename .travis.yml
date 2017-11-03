@@ -19,8 +19,8 @@ before_script:
 - make install
 - cd ..
 
-- mkdir -p PocketMine-MP/plugins/BlockSniper
 - git clone --recursive https://github.com/pmmp/PocketMine-MP.git
+- mkdir -p PocketMine-MP/plugins/BlockSniper
 
 - cd PocketMine-MP/plugins/
 - wget -O DevTools.phar https://poggit.pmmp.io/r/1582/PocketMine-DevTools.phar
