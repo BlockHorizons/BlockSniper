@@ -24,17 +24,17 @@ class GlobalBrushEditMenuWindow extends Window {
 
 		$this->data = [
 			"type" => "custom_form",
-			"title" => (new Translation(Translation::UI_GLOBAL_BRUSH_EDIT_TITLE))->getMessage(),
+			"title" => Translation::get(Translation::UI_GLOBAL_BRUSH_EDIT_TITLE),
 			"content" => [
 				[
 					"type" => "input",
-					"text" => (new Translation(Translation::UI_GLOBAL_BRUSH_EDIT_NAME))->getMessage(),
+					"text" => Translation::get(Translation::UI_GLOBAL_BRUSH_EDIT_NAME),
 					"default" => $d[0],
-					"placeholder" => (new Translation(Translation::UI_GLOBAL_BRUSH_EDIT_NAME))->getMessage()
+					"placeholder" => Translation::get(Translation::UI_GLOBAL_BRUSH_EDIT_NAME)
 				],
 				[
 					"type" => "slider",
-					"text" => (new Translation(Translation::UI_GLOBAL_BRUSH_EDIT_SIZE))->getMessage(),
+					"text" => Translation::get(Translation::UI_GLOBAL_BRUSH_EDIT_SIZE),
 					"min" => 0,
 					"max" => $this->getLoader()->getSettings()->getMaxRadius(),
 					"step" => 1,
@@ -42,29 +42,29 @@ class GlobalBrushEditMenuWindow extends Window {
 				],
 				[
 					"type" => "dropdown",
-					"text" => (new Translation(Translation::UI_GLOBAL_BRUSH_EDIT_SHAPE))->getMessage(),
+					"text" => Translation::get(Translation::UI_GLOBAL_BRUSH_EDIT_SHAPE),
 					"default" => $shapeKey === false ? 0 : $shapeKey,
 					"options" => $shapes
 				],
 				[
 					"type" => "dropdown",
-					"text" => (new Translation(Translation::UI_GLOBAL_BRUSH_EDIT_TYPE))->getMessage(),
+					"text" => Translation::get(Translation::UI_GLOBAL_BRUSH_EDIT_TYPE),
 					"default" => $typeKey === false ? 0 : $typeKey,
 					"options" => $types
 				],
 				[
 					"type" => "toggle",
-					"text" => (new Translation(Translation::UI_GLOBAL_BRUSH_EDIT_HOLLOW))->getMessage(),
+					"text" => Translation::get(Translation::UI_GLOBAL_BRUSH_EDIT_HOLLOW),
 					"default" => $d[4]
 				],
 				[
 					"type" => "toggle",
-					"text" => (new Translation(Translation::UI_GLOBAL_BRUSH_EDIT_DECREMENT))->getMessage(),
+					"text" => Translation::get(Translation::UI_GLOBAL_BRUSH_EDIT_DECREMENT),
 					"default" => $d[5]
 				],
 				[
 					"type" => "slider",
-					"text" => (new Translation(Translation::UI_GLOBAL_BRUSH_EDIT_HEIGHT))->getMessage(),
+					"text" => Translation::get(Translation::UI_GLOBAL_BRUSH_EDIT_HEIGHT),
 					"min" => 0,
 					"max" => $this->getLoader()->getSettings()->getMaxRadius(),
 					"step" => 1,
@@ -72,30 +72,30 @@ class GlobalBrushEditMenuWindow extends Window {
 				],
 				[
 					"type" => "toggle",
-					"text" => (new Translation(Translation::UI_GLOBAL_BRUSH_EDIT_PERFECT))->getMessage(),
+					"text" => Translation::get(Translation::UI_GLOBAL_BRUSH_EDIT_PERFECT),
 					"default" => $d[7]
 				],
 				[
 					"type" => "input",
-					"text" => (new Translation(Translation::UI_GLOBAL_BRUSH_EDIT_BLOCKS))->getMessage(),
+					"text" => Translation::get(Translation::UI_GLOBAL_BRUSH_EDIT_BLOCKS),
 					"placeholder" => "stone,stone_brick:1,2",
 					"default" => $d[8]
 				],
 				[
 					"type" => "input",
-					"text" => (new Translation(Translation::UI_GLOBAL_BRUSH_EDIT_OBSOLETE))->getMessage(),
+					"text" => Translation::get(Translation::UI_GLOBAL_BRUSH_EDIT_OBSOLETE),
 					"placeholder" => "stone,stone_brick:1,2",
 					"default" => $d[9]
 				],
 				[
 					"type" => "input",
-					"text" => (new Translation(Translation::UI_GLOBAL_BRUSH_EDIT_BIOME))->getMessage(),
+					"text" => Translation::get(Translation::UI_GLOBAL_BRUSH_EDIT_BIOME),
 					"placeholder" => "plains",
 					"default" => $d[10]
 				],
 				[
 					"type" => "input",
-					"text" => (new Translation(Translation::UI_GLOBAL_BRUSH_EDIT_TREE))->getMessage(),
+					"text" => Translation::get(Translation::UI_GLOBAL_BRUSH_EDIT_TREE),
 					"placeholder" => "oak",
 					"default" => $d[11]
 				]

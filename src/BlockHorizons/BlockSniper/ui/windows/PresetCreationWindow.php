@@ -14,17 +14,17 @@ class PresetCreationWindow extends Window {
 	public function process(): void {
 		$this->data = [
 			"type" => "custom_form",
-			"title" => (new Translation(Translation::UI_PRESET_CREATION_TITLE))->getMessage(),
+			"title" => Translation::get(Translation::UI_PRESET_CREATION_TITLE),
 			"content" => [
 				[
 					"type" => "input",
-					"text" => (new Translation(Translation::UI_PRESET_CREATION_NAME))->getMessage(),
+					"text" => Translation::get(Translation::UI_PRESET_CREATION_NAME),
 					"default" => "New Preset",
-					"placeholder" => (new Translation(Translation::UI_PRESET_CREATION_NAME))->getMessage()
+					"placeholder" => Translation::get(Translation::UI_PRESET_CREATION_NAME)
 				],
 				[
 					"type" => "slider",
-					"text" => (new Translation(Translation::UI_PRESET_CREATION_SIZE))->getMessage(),
+					"text" => Translation::get(Translation::UI_PRESET_CREATION_SIZE),
 					"min" => 0,
 					"max" => $this->getLoader()->getSettings()->getMaxRadius(),
 					"step" => 1,
@@ -32,29 +32,29 @@ class PresetCreationWindow extends Window {
 				],
 				[
 					"type" => "dropdown",
-					"text" => (new Translation(Translation::UI_PRESET_CREATION_SHAPE))->getMessage(),
+					"text" => Translation::get(Translation::UI_PRESET_CREATION_SHAPE),
 					"default" => 0,
 					"options" => $this->processShapes()
 				],
 				[
 					"type" => "dropdown",
-					"text" => (new Translation(Translation::UI_PRESET_CREATION_TYPE))->getMessage(),
+					"text" => Translation::get(Translation::UI_PRESET_CREATION_TYPE),
 					"default" => 5,
 					"options" => $this->processTypes()
 				],
 				[
 					"type" => "toggle",
-					"text" => (new Translation(Translation::UI_PRESET_CREATION_HOLLOW))->getMessage(),
+					"text" => Translation::get(Translation::UI_PRESET_CREATION_HOLLOW),
 					"default" => false
 				],
 				[
 					"type" => "toggle",
-					"text" => (new Translation(Translation::UI_PRESET_CREATION_DECREMENT))->getMessage(),
+					"text" => Translation::get(Translation::UI_PRESET_CREATION_DECREMENT),
 					"default" => false
 				],
 				[
 					"type" => "slider",
-					"text" => (new Translation(Translation::UI_PRESET_CREATION_HEIGHT))->getMessage(),
+					"text" => Translation::get(Translation::UI_PRESET_CREATION_HEIGHT),
 					"min" => 0,
 					"max" => $this->getLoader()->getSettings()->getMaxRadius(),
 					"step" => 1,
@@ -62,30 +62,30 @@ class PresetCreationWindow extends Window {
 				],
 				[
 					"type" => "toggle",
-					"text" => (new Translation(Translation::UI_PRESET_CREATION_PERFECT))->getMessage(),
+					"text" => Translation::get(Translation::UI_PRESET_CREATION_PERFECT),
 					"default" => true
 				],
 				[
 					"type" => "input",
-					"text" => (new Translation(Translation::UI_PRESET_CREATION_BLOCKS))->getMessage(),
+					"text" => Translation::get(Translation::UI_PRESET_CREATION_BLOCKS),
 					"placeholder" => "stone,stone_brick:1,2",
 					"default" => "grass,98:2"
 				],
 				[
 					"type" => "input",
-					"text" => (new Translation(Translation::UI_PRESET_CREATION_OBSOLETE))->getMessage(),
+					"text" => Translation::get(Translation::UI_PRESET_CREATION_OBSOLETE),
 					"placeholder" => "stone,stone_brick:1,2",
 					"default" => "grass,98:2"
 				],
 				[
 					"type" => "input",
-					"text" => (new Translation(Translation::UI_PRESET_CREATION_BIOME))->getMessage(),
+					"text" => Translation::get(Translation::UI_PRESET_CREATION_BIOME),
 					"placeholder" => "plains",
 					"default" => "plains"
 				],
 				[
 					"type" => "input",
-					"text" => (new Translation(Translation::UI_PRESET_CREATION_TREE))->getMessage(),
+					"text" => Translation::get(Translation::UI_PRESET_CREATION_TREE),
 					"placeholder" => "oak",
 					"default" => "oak"
 				]
