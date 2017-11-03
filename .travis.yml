@@ -35,7 +35,7 @@ before_script:
 - cd PocketMine-MP/
 
 script:
-- php plugins/travis.php
+- php plugins/BlockSniper/travis.php
 
 notifications:
   email:
