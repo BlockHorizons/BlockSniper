@@ -31,9 +31,14 @@ abstract class Session {
 		$this->cloneStorer = new CloneStorer($this, $loader->getDataFolder());
 
 		if($this->initializeBrush()) {
-			$loader->getLogger()->debug(TextFormat::GREEN . (new Translation(Translation::LOG_BRUSH_RESTORED, [$this->getSessionOwner()->getName()]))->getMessage());
+			$loader->getLogger()->debug(TextFormat::GREEN . Translation::get(Translation::LOG_BRUSH_RESTORED, [$this->getSessionOwner()->getName()]));
 		}
 	}
+
+	/**
+	 * @return bool
+	 */
+	protected abstract function initializeBrush(): bool;
 
 	/**
 	 * @return PlayerSessionOwner|ServerSessionOwner
@@ -69,9 +74,4 @@ abstract class Session {
 	public function getCloneStorer(): CloneStorer {
 		return $this->cloneStorer;
 	}
-
-	/**
-	 * @return bool
-	 */
-	protected abstract function initializeBrush(): bool;
 }

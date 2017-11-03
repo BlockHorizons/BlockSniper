@@ -15,7 +15,7 @@ use pocketmine\utils\TextFormat as TF;
 class BlockSniperCommand extends BaseCommand {
 
 	public function __construct(Loader $loader) {
-		parent::__construct($loader, "blocksniper", (new Translation(Translation::COMMANDS_BLOCKSNIPER_DESCRIPTION))->getMessage(), "/blocksniper [menu|reload]", ["bs"]);
+		parent::__construct($loader, "blocksniper", Translation::get(Translation::COMMANDS_BLOCKSNIPER_DESCRIPTION), "/blocksniper [menu|reload]", ["bs"]);
 	}
 
 	public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
@@ -29,7 +29,7 @@ class BlockSniperCommand extends BaseCommand {
 
 		switch(strtolower($args[0])) {
 			case "reload":
-				$sender->sendMessage(TF::GREEN . (new Translation(Translation::COMMANDS_BLOCKSNIPER_RELOAD))->getMessage());
+				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_BLOCKSNIPER_RELOAD));
 				$this->getLoader()->reload();
 				return true;
 
@@ -47,11 +47,11 @@ class BlockSniperCommand extends BaseCommand {
 				return true;
 
 			default:
-				$sender->sendMessage(TF::AQUA . "[BlockSniper] " . (new Translation(Translation::COMMANDS_BLOCKSNIPER_INFO))->getMessage() . "\n" .
-					TF::GREEN . (new Translation(Translation::COMMANDS_BLOCKSNIPER_VERSION))->getMessage() . TF::YELLOW . Loader::VERSION . "\n" .
-					TF::GREEN . (new Translation(Translation::COMMANDS_BLOCKSNIPER_TARGET_API))->getMessage() . TF::YELLOW . Loader::API_TARGET . "\n" .
-					TF::GREEN . (new Translation(Translation::COMMANDS_BLOCKSNIPER_ORGANISATION))->getMessage() . TF::YELLOW . "BlockHorizons (https://github.com/BlockHorizons/BlockSniper)\n" .
-					TF::GREEN . (new Translation(Translation::COMMANDS_BLOCKSNIPER_AUTHORS))->getMessage() . TF::YELLOW . "Sandertv (@Sandertv), Chris-Prime (@PrimusLV)");
+				$sender->sendMessage(TF::AQUA . "[BlockSniper] " . Translation::get(Translation::COMMANDS_BLOCKSNIPER_INFO) . "\n" .
+					TF::GREEN . Translation::get(Translation::COMMANDS_BLOCKSNIPER_VERSION) . TF::YELLOW . Loader::VERSION . "\n" .
+					TF::GREEN . Translation::get(Translation::COMMANDS_BLOCKSNIPER_TARGET_API) . TF::YELLOW . Loader::API_TARGET . "\n" .
+					TF::GREEN . Translation::get(Translation::COMMANDS_BLOCKSNIPER_ORGANISATION) . TF::YELLOW . "BlockHorizons (https://github.com/BlockHorizons/BlockSniper)\n" .
+					TF::GREEN . Translation::get(Translation::COMMANDS_BLOCKSNIPER_AUTHORS) . TF::YELLOW . "Sandertv (@Sandertv), Chris-Prime (@PrimusLV)");
 				return true;
 		}
 	}

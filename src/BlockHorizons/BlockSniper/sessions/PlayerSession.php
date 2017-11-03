@@ -24,7 +24,7 @@ class PlayerSession extends Session implements \JsonSerializable {
 			$this->brush = new Brush($this->getSessionOwner()->getPlayerName());
 			return false;
 		}
-		$this->brush = unserialize($data[$this->getSessionOwner()->getPlayerName()]["brush"]);
+		$this->brush = unserialize($data[$this->getSessionOwner()->getPlayerName()]["brush"], ["allowed_classes" => [Brush::class]]);
 		return true;
 	}
 

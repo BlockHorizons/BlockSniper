@@ -85,13 +85,6 @@ class Brush implements \JsonSerializable {
 	/**
 	 * @return bool
 	 */
-	public function isDecrementing(): bool {
-		return $this->decrement;
-	}
-
-	/**
-	 * @return bool
-	 */
 	public function getPerfect(): bool {
 		return $this->perfect;
 	}
@@ -154,42 +147,6 @@ class Brush implements \JsonSerializable {
 	}
 
 	/**
-	 * @param bool $cloneShape
-	 * @param int  $yOffset
-	 *
-	 * @return BaseShape
-	 */
-	public function getShape($cloneShape = false, int $yOffset = 0): BaseShape {
-		$shapeName = ShapeRegistration::getShape($this->shape);
-		$vector3 = Server::getInstance()->getPlayer($this->player)->getTargetBlock(100)->add(0, $yOffset);
-		$location = new Position($vector3->x, $vector3->y, $vector3->z, Server::getInstance()->getPlayer($this->player)->getLevel());
-		$shape = new $shapeName(Server::getInstance()->getPlayer($this->player), Server::getInstance()->getPlayer($this->player)->getLevel(), $this->size, $location, $this->hollow, $cloneShape);
-
-		return $shape;
-	}
-
-	/**
-	 * @param string $shape
-	 */
-	public function setShape(string $shape): void {
-		$this->shape = strtolower($shape);
-	}
-
-	/**
-	 * @return int
-	 */
-	public function getSize(): int {
-		return $this->size;
-	}
-
-	/**
-	 * @param int $size
-	 */
-	public function setSize(int $size): void {
-		$this->size = $size;
-	}
-
-	/**
 	 * @return bool
 	 */
 	public function isHollow(): bool {
@@ -215,25 +172,6 @@ class Brush implements \JsonSerializable {
 	 */
 	public function setHeight(int $height): void {
 		$this->height = $height;
-	}
-
-	/**
-	 * @param array $blocks
-	 *
-	 * @return BaseType
-	 */
-	public function getType(array $blocks = []): BaseType {
-		$typeName = TypeRegistration::getType($this->type);
-		$type = new $typeName(Server::getInstance()->getPlayer($this->player), Server::getInstance()->getPlayer($this->player)->getLevel(), $blocks);
-
-		return $type;
-	}
-
-	/**
-	 * @param string $type
-	 */
-	public function setType(string $type): void {
-		$this->type = strtolower($type);
 	}
 
 	/**
@@ -322,8 +260,11 @@ class Brush implements \JsonSerializable {
 
 		/** @var Loader $loader */
 		$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
+		if($loader === null) {
+			return false;
+		}
 
-		if($this->getSize() >= $loader->getSettings()->getMinimumAsynchronousSize() && $type->canBeExecutedAsynchronously()) {
+		if($type->canBeExecutedAsynchronously() && $this->getSize() >= $loader->getSettings()->getMinimumAsynchronousSize()) {
 			$shape->editAsynchronously($type, $plotPoints);
 		} else {
 			$type->setBlocksInside($shape->getBlocksInside());
@@ -331,6 +272,47 @@ class Brush implements \JsonSerializable {
 			$session->getRevertStorer()->saveRevert(new SyncUndo($undoBlocks, $session->getSessionOwner()->getName()));
 		}
 		return true;
+	}
+
+	/**
+	 * @param bool $cloneShape
+	 * @param int  $yOffset
+	 *
+	 * @return BaseShape
+	 */
+	public function getShape($cloneShape = false, int $yOffset = 0): BaseShape {
+		$shapeName = ShapeRegistration::getShape($this->shape);
+		$vector3 = Server::getInstance()->getPlayer($this->player)->getTargetBlock(100)->add(0, $yOffset);
+		$location = new Position($vector3->x, $vector3->y, $vector3->z, Server::getInstance()->getPlayer($this->player)->getLevel());
+		$shape = new $shapeName(Server::getInstance()->getPlayer($this->player), Server::getInstance()->getPlayer($this->player)->getLevel(), $this->size, $location, $this->hollow, $cloneShape);
+
+		return $shape;
+	}
+
+	/**
+	 * @param string $shape
+	 */
+	public function setShape(string $shape): void {
+		$this->shape = strtolower($shape);
+	}
+
+	/**
+	 * @param array $blocks
+	 *
+	 * @return BaseType
+	 */
+	public function getType(array $blocks = []): BaseType {
+		$typeName = TypeRegistration::getType($this->type);
+		$type = new $typeName(Server::getInstance()->getPlayer($this->player), Server::getInstance()->getPlayer($this->player)->getLevel(), $blocks);
+
+		return $type;
+	}
+
+	/**
+	 * @param string $type
+	 */
+	public function setType(string $type): void {
+		$this->type = strtolower($type);
 	}
 
 	/**
@@ -351,5 +333,26 @@ class Brush implements \JsonSerializable {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isDecrementing(): bool {
+		return $this->decrement;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getSize(): int {
+		return $this->size;
+	}
+
+	/**
+	 * @param int $size
+	 */
+	public function setSize(int $size): void {
+		$this->size = $size;
 	}
 }

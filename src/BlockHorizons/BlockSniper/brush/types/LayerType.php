@@ -10,13 +10,13 @@ use pocketmine\level\ChunkManager;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 
+/*
+ * Lays a thin layer of blocks within the brush radius.
+ */
 class LayerType extends BaseType {
 
 	const ID = self::TYPE_LAYER;
 
-	/*
-	 * Lays a thin layer of blocks within the brush radius.
-	 */
 	public function __construct(Player $player, ChunkManager $level, array $blocks) {
 		parent::__construct($player, $level, $blocks);
 		$this->center = $player->getTargetBlock(100)->asVector3();

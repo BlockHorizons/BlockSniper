@@ -16,22 +16,22 @@ class ConfigurationMenuWindow extends Window {
 		$key = array_search($s->getLanguage(), Loader::getAvailableLanguages());
 		$this->data = [
 			"type" => "custom_form",
-			"title" => (new Translation(Translation::UI_CONFIGURATION_MENU_TITLE))->getMessage(),
+			"title" => Translation::get(Translation::UI_CONFIGURATION_MENU_TITLE),
 			"content" => [
 				[
 					"type" => "toggle",
-					"text" => (new Translation(Translation::UI_CONFIGURATION_MENU_AUTO_UPDATE))->getMessage(),
+					"text" => Translation::get(Translation::UI_CONFIGURATION_MENU_AUTO_UPDATE),
 					"default" => $s->updatesAutomatically()
 				],
 				[
 					"type" => "dropdown",
-					"text" => (new Translation(Translation::UI_CONFIGURATION_MENU_LANGUAGE))->getMessage(),
+					"text" => Translation::get(Translation::UI_CONFIGURATION_MENU_LANGUAGE),
 					"default" => $key === false ? 0 : $key,
 					"options" => Loader::getAvailableLanguages()
 				],
 				[
 					"type" => "slider",
-					"text" => (new Translation(Translation::UI_CONFIGURATION_MENU_BRUSH_ITEM))->getMessage(),
+					"text" => Translation::get(Translation::UI_CONFIGURATION_MENU_BRUSH_ITEM),
 					"min" => 0,
 					"step" => 1,
 					"max" => 511,
@@ -39,7 +39,7 @@ class ConfigurationMenuWindow extends Window {
 				],
 				[
 					"type" => "slider",
-					"text" => (new Translation(Translation::UI_CONFIGURATION_MENU_MAX_BRUSH_SIZE))->getMessage(),
+					"text" => Translation::get(Translation::UI_CONFIGURATION_MENU_MAX_BRUSH_SIZE),
 					"min" => 0,
 					"step" => 1,
 					"max" => 60,
@@ -47,7 +47,7 @@ class ConfigurationMenuWindow extends Window {
 				],
 				[
 					"type" => "slider",
-					"text" => (new Translation(Translation::UI_CONFIGURATION_MENU_MIN_ASYNC_SIZE))->getMessage(),
+					"text" => Translation::get(Translation::UI_CONFIGURATION_MENU_MIN_ASYNC_SIZE),
 					"min" => 10,
 					"step" => 1,
 					"max" => 25,
@@ -55,7 +55,7 @@ class ConfigurationMenuWindow extends Window {
 				],
 				[
 					"type" => "slider",
-					"text" => (new Translation(Translation::UI_CONFIGURATION_MENU_MAX_REVERTS))->getMessage(),
+					"text" => Translation::get(Translation::UI_CONFIGURATION_MENU_MAX_REVERTS),
 					"min" => 0,
 					"step" => 1,
 					"max" => 40,
@@ -63,32 +63,32 @@ class ConfigurationMenuWindow extends Window {
 				],
 				[
 					"type" => "toggle",
-					"text" => (new Translation(Translation::UI_CONFIGURATION_MENU_RESET_DECREMENT_BRUSH))->getMessage(),
+					"text" => Translation::get(Translation::UI_CONFIGURATION_MENU_RESET_DECREMENT_BRUSH),
 					"default" => $s->resetDecrementBrush()
 				],
 				[
 					"type" => "toggle",
-					"text" => (new Translation(Translation::UI_CONFIGURATION_MENU_SAVE_BRUSH))->getMessage(),
+					"text" => Translation::get(Translation::UI_CONFIGURATION_MENU_SAVE_BRUSH),
 					"default" => $s->saveBrushProperties()
 				],
 				[
 					"type" => "toggle",
-					"text" => (new Translation(Translation::UI_CONFIGURATION_MENU_DROP_PLANTS))->getMessage(),
+					"text" => Translation::get(Translation::UI_CONFIGURATION_MENU_DROP_PLANTS),
 					"default" => $s->dropLeafblowerPlants()
 				],
 				[
 					"type" => "toggle",
-					"text" => (new Translation(Translation::UI_CONFIGURATION_MENU_AUTO_GUI))->getMessage(),
+					"text" => Translation::get(Translation::UI_CONFIGURATION_MENU_AUTO_GUI),
 					"default" => $s->openGuiAutomatically()
 				],
 				[
 					"type" => "toggle",
-					"text" => "MyPlot Support",
+					"text" => Translation::get(Translation::UI_CONFIGURATION_MENU_MYPLOT_SUPPORT),
 					"default" => $s->hasMyPlotSupport()
 				],
 				[
 					"type" => "toggle",
-					"text" => (new Translation(Translation::UI_CONFIGURATION_MENU_AUTO_RELOAD))->getMessage(),
+					"text" => Translation::get(Translation::UI_CONFIGURATION_MENU_AUTO_RELOAD),
 					"default" => false
 				]
 			]

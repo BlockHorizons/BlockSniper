@@ -1,0 +1,3 @@
+[submodule "src/Schematic"]
+	path = src/Schematic
+	url = https://github.com/BlockHorizons/libschematic

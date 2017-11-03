@@ -15,7 +15,7 @@ use pocketmine\utils\TextFormat as TF;
 class UndoCommand extends BaseCommand {
 
 	public function __construct(Loader $loader) {
-		parent::__construct($loader, "undo", (new Translation(Translation::COMMANDS_UNDO_DESCRIPTION))->getMessage(), "/undo [amount]", ["u"]);
+		parent::__construct($loader, "undo", Translation::get(Translation::COMMANDS_UNDO_DESCRIPTION), "/undo [amount]", ["u"]);
 	}
 
 	public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
@@ -30,7 +30,7 @@ class UndoCommand extends BaseCommand {
 		}
 
 		if(!SessionManager::getPlayerSession($sender)->getRevertStorer()->undoStorageExists()) {
-			$sender->sendMessage($this->getWarning() . (new Translation(Translation::COMMANDS_UNDO_NO_UNDO))->getMessage());
+			$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_UNDO_NO_UNDO));
 			return false;
 		}
 
@@ -43,7 +43,7 @@ class UndoCommand extends BaseCommand {
 		}
 
 		SessionManager::getPlayerSession($sender)->getRevertStorer()->restoreLatestRevert(Revert::TYPE_UNDO, $undoAmount);
-		$sender->sendMessage(TF::GREEN . (new Translation(Translation::COMMANDS_UNDO_SUCCESS))->getMessage() . TF::AQUA . " (" . $undoAmount . ")");
+		$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_UNDO_SUCCESS) . TF::AQUA . " (" . $undoAmount . ")");
 		return true;
 	}
 }

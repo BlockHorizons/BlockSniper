@@ -34,12 +34,8 @@ class GitRepository {
 	 *
 	 * @return bool
 	 */
-	public static function closeProject(int $projectId): bool {
-		if(!self::projectExists($projectId)) {
-			return false;
-		}
-		unset(self::$projects[$projectId]);
-		return true;
+	public static function projectExists(int $projectId): bool {
+		return isset(self::$projects[$projectId]);
 	}
 
 	/**
@@ -47,8 +43,12 @@ class GitRepository {
 	 *
 	 * @return bool
 	 */
-	public static function projectExists(int $projectId): bool {
-		return isset(self::$projects[$projectId]);
+	public static function closeProject(int $projectId): bool {
+		if(!self::projectExists($projectId)) {
+			return false;
+		}
+		unset(self::$projects[$projectId]);
+		return true;
 	}
 
 	/**

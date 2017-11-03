@@ -104,16 +104,16 @@ class GlobalBrushEditMenuWindow extends Window {
 	}
 
 	/**
-	 * @param Brush $brush
-	 */
-	public function setBrush(Brush $brush) {
-		$this->brush = $brush;
-	}
-
-	/**
 	 * @return Brush|null
 	 */
 	public function getBrush(): ?Brush {
 		return $this->brush;
+	}
+
+	/**
+	 * @param Brush $brush
+	 */
+	public function setBrush(Brush $brush) {
+		$this->brush = $brush;
 	}
 }

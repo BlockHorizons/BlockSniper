@@ -24,13 +24,6 @@ class ServerSession extends Session implements \JsonSerializable {
 	}
 
 	/**
-	 * @param string $name
-	 */
-	public function setName(string $name): void {
-		$this->name = $name;
-	}
-
-	/**
 	 * @return string
 	 */
 	public function getName(): string {
@@ -38,11 +31,10 @@ class ServerSession extends Session implements \JsonSerializable {
 	}
 
 	/**
-	 * @param Position $position
+	 * @param string $name
 	 */
-	public function setTargetBlock(Position $position): void {
-		$this->levelName = $position->getLevel()->getName();
-		$this->targetBlock = $position;
+	public function setName(string $name): void {
+		$this->name = $name;
 	}
 
 	/**
@@ -53,11 +45,17 @@ class ServerSession extends Session implements \JsonSerializable {
 	}
 
 	/**
-	 * @return bool
+	 * @param Position $position
 	 */
-	protected function initializeBrush(): bool {
-		$this->brush = new Brush($this->getSessionOwner()->getName());
-		return true;
+	public function setTargetBlock(Position $position): void {
+		$this->levelName = $position->getLevel()->getName();
+		$this->targetBlock = $position;
+	}
+
+	public function __destruct() {
+		$data = json_decode(file_get_contents($this->getDataFile()), true);
+		$data[] = $this->jsonSerialize();
+		file_put_contents($this->getDataFile(), json_encode($data));
 	}
 
 	/**
@@ -76,9 +74,11 @@ class ServerSession extends Session implements \JsonSerializable {
 		];
 	}
 
-	public function __destruct() {
-		$data = json_decode(file_get_contents($this->getDataFile()), true);
-		$data[] = $this->jsonSerialize();
-		file_put_contents($this->getDataFile(), json_encode($data));
+	/**
+	 * @return bool
+	 */
+	protected function initializeBrush(): bool {
+		$this->brush = new Brush($this->getSessionOwner()->getName());
+		return true;
 	}
 }

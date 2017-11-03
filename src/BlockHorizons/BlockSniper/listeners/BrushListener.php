@@ -10,7 +10,6 @@ use BlockHorizons\BlockSniper\ui\WindowHandler;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerItemHeldEvent;
-use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\math\Vector2;
 use pocketmine\network\mcpe\protocol\ModalFormRequestPacket;
 use pocketmine\Player;
@@ -39,6 +38,13 @@ class BrushListener implements Listener {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * @return Loader
+	 */
+	public function getLoader(): Loader {
+		return $this->loader;
 	}
 
 	/**
@@ -85,12 +91,5 @@ class BrushListener implements Listener {
 			}
 		}
 		return false;
-	}
-
-	/**
-	 * @return Loader
-	 */
-	public function getLoader(): Loader {
-		return $this->loader;
 	}
 }

@@ -36,6 +36,17 @@ abstract class AsyncRevert extends Revert {
 	}
 
 	/**
+	 * @return Chunk[]
+	 */
+	public function getModifiedChunks(): array {
+		$chunks = [];
+		foreach($this->modifiedChunks as $index => $chunk) {
+			$chunks[$index] = Chunk::fastDeserialize($chunk);
+		}
+		return $chunks;
+	}
+
+	/**
 	 * @param Chunk[] $chunks
 	 * @param bool    $oldChunks
 	 *
@@ -53,17 +64,6 @@ abstract class AsyncRevert extends Revert {
 		}
 
 		return $this;
-	}
-
-	/**
-	 * @return Chunk[]
-	 */
-	public function getModifiedChunks(): array {
-		$chunks = [];
-		foreach($this->modifiedChunks as $index => $chunk) {
-			$chunks[$index] = Chunk::fastDeserialize($chunk);
-		}
-		return $chunks;
 	}
 
 	/**

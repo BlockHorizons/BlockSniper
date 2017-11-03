@@ -23,7 +23,7 @@ class CopyType extends BaseClone {
 	public function saveClone(): bool {
 		$copyBlocks = [];
 		foreach($this->blocks as $block) {
-			if($block->getId() === Item::AIR && $this->saveAir === false) {
+			if($this->saveAir === false && $block->getId() === Item::AIR) {
 				continue;
 			}
 			$copyBlocks[] = $block;

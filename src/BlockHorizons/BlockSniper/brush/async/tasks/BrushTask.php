@@ -34,7 +34,7 @@ class BrushTask extends AsyncBlockSniperTask {
 	}
 
 	public function onRun(): void {
-		$chunks = unserialize($this->chunks);
+		$chunks = unserialize($this->chunks, ["allowed_classes" => [Chunk::class]]);
 		$processedBlocks = 0;
 		$type = $this->type;
 		$shape = $this->shape;
@@ -69,12 +69,9 @@ class BrushTask extends AsyncBlockSniperTask {
 				$i = 0;
 			}
 		}
-		$type->setBlocksInside($blocks)->setAsynchronous()->setChunkManager($manager)->fillShape(unserialize($this->plotPoints));
+		$type->setBlocksInside($blocks)->setAsynchronous()->setChunkManager($manager)->fillShape(unserialize($this->plotPoints, ["allowed_classes" => [Vector2::class]]));
 
-		$this->setResult([
-			"undoChunks" => $undoChunks,
-			"chunks" => $chunks
-		]);
+		$this->setResult(compact("undoChunks", "chunks"));
 	}
 
 	/**

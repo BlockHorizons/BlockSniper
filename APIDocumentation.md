@@ -64,10 +64,6 @@ class MyShape extends BaseShape {
 	
 	const ID = 5;
     
-    public function __construct(Player $player, Level $level, Position $center, bool $hollow) {
-        parent::__construct($player, $level, $center, $hollow);
-    }
-    
     /*
      * This function should return an array containing the blocks collected in the shape.
      */
@@ -124,7 +120,7 @@ class MyType extends BaseType {
      * This function is optional, and could be left if the function below is added.
      */
     public function fillAsynchronously(): void {
-        return;
+        
     }
     
     /*

@@ -115,6 +115,7 @@
       "brush": "pinceau (Brush)",
       "config": "Configuration",
       "presets": "préfabriqué (Preset)",
+      "global-brush": "Global Brush",
       "exit": "Quitter"
     },
     "brush-menu": {
@@ -143,6 +144,7 @@
       "save-brush": "Enregistrer les propriétés du pinceau des joueurs lors du redémarrage du serveur",
       "drop-plants": "Dropper les plantes détruites/soufflées par le type LeafBlower",
       "auto-gui": "ouvre automatiquement l'interface graphique lors du passage du curseur dans la hotbar à l'une contenant l'élément pinceau",
+      "myplot-support": "Whether to turn on MyPlot support or not",
       "auto-reload": "Activer cette bascule rechargera automatiquement la configuration lors de la fermeture de cette fenêtre"
     }
   },

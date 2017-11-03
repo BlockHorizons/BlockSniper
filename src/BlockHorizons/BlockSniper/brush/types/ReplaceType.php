@@ -10,16 +10,13 @@ use pocketmine\block\Block;
 use pocketmine\level\ChunkManager;
 use pocketmine\Player;
 
+/*
+ * Replaces the obsolete blocks within the brush radius.
+ */
 class ReplaceType extends BaseType {
 
 	const ID = self::TYPE_REPLACE;
 
-	/** @var Block[] */
-	protected $obsolete = [];
-
-	/*
-	 * Replaces the obsolete blocks within the brush radius.
-	 */
 	public function __construct(Player $player, ChunkManager $level, array $blocks) {
 		parent::__construct($player, $level, $blocks);
 		$this->obsolete = SessionManager::getPlayerSession($player)->getBrush()->getObsolete();

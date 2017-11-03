@@ -12,13 +12,13 @@ use pocketmine\level\ChunkManager;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 
+/*
+ * Flattens the terrain below the selected point within the brush radius.
+ */
 class FlattenType extends BaseType {
 
 	const ID = self::TYPE_FLATTEN;
 
-	/*
-	 * Flattens the terrain below the selected point within the brush radius.
-	 */
 	public function __construct(Player $player, ChunkManager $level, array $blocks) {
 		parent::__construct($player, $level, $blocks);
 		$this->center = $player->getTargetBlock(100)->asVector3();

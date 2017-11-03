@@ -22,23 +22,13 @@ class PresetPropertyProcessor {
 	const VALUE_BIOME = 10;
 	const VALUE_TREE = 11;
 
-	/** @var Player */
-	private $player = null;
 	/** @var Loader */
 	private $loader = null;
 	/** @var array */
 	private $properties = [];
 
 	public function __construct(Player $player, Loader $loader) {
-		$this->player = $player;
 		$this->loader = $loader;
-	}
-
-	/**
-	 * @return Loader
-	 */
-	public function getLoader(): Loader {
-		return $this->loader;
 	}
 
 	/**
@@ -51,5 +41,12 @@ class PresetPropertyProcessor {
 		if(count($this->properties) === 12) {
 			$this->getLoader()->getPresetManager()->addPreset(new Preset($this->properties[self::VALUE_NAME], $this->properties));
 		}
+	}
+
+	/**
+	 * @return Loader
+	 */
+	public function getLoader(): Loader {
+		return $this->loader;
 	}
 }

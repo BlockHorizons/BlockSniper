@@ -6,19 +6,13 @@ namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
 use pocketmine\block\Block;
-use pocketmine\level\ChunkManager;
-use pocketmine\Player;
 
+/*
+ * Lays a layer of snow on top of the terrain, and raises it if there is snow already.
+ */
 class SnowConeType extends BaseType {
 
 	const ID = self::TYPE_SNOW_CONE;
-
-	/*
-	 * Lays a layer of snow on top of the terrain, and raises it if there is snow already.
-	 */
-	public function __construct(Player $player, ChunkManager $level, array $blocks) {
-		parent::__construct($player, $level, $blocks);
-	}
 
 	/**
 	 * @return Block[]

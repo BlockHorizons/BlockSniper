@@ -10,14 +10,14 @@ use pocketmine\level\ChunkManager;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 
+/*
+ * Regenerates the chunk looked at.
+ * This brush can NOT undo.
+ */
 class RegenerateType extends BaseType {
 
 	const ID = self::TYPE_REGENERATE;
 
-	/*
-	 * Regenerates the chunk looked at.
-	 * This brush can NOT undo.
-	 */
 	public function __construct(Player $player, ChunkManager $manager, array $blocks) {
 		parent::__construct($player, $manager, $blocks);
 		$this->center = $player->getTargetBlock(100)->asVector3();

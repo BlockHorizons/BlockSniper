@@ -77,18 +77,6 @@ class ConfigData {
 	}
 
 	/**
-	 * @return array
-	 */
-	public function getStoredSettingsArray(): array {
-		$settings = [];
-		foreach($this->settings as $key => $setting) {
-			$key = array_search($key, $this->conversion);
-			$settings[$key] = $setting;
-		}
-		return $settings;
-	}
-
-	/**
 	 * @return Loader
 	 */
 	public function getLoader(): Loader {
@@ -200,5 +188,17 @@ class ConfigData {
 
 	public function save(): void {
 		yaml_emit_file($this->getLoader()->getDataFolder() . "settings.yml", $this->getStoredSettingsArray());
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getStoredSettingsArray(): array {
+		$settings = [];
+		foreach($this->settings as $key => $setting) {
+			$key = array_search($key, $this->conversion, true);
+			$settings[$key] = $setting;
+		}
+		return $settings;
 	}
 }

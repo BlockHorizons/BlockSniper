@@ -6,9 +6,10 @@ namespace BlockHorizons\BlockSniper\commands\cloning;
 
 use BlockHorizons\BlockSniper\commands\BaseCommand;
 use BlockHorizons\BlockSniper\data\Translation;
+use BlockHorizons\BlockSniper\exceptions\InvalidBlockException;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
-use libschematic\Schematic;
+use Schematic\Schematic;
 use pocketmine\command\CommandSender;
 use pocketmine\level\Level;
 use pocketmine\Player;
@@ -17,7 +18,7 @@ use pocketmine\utils\TextFormat as TF;
 class PasteCommand extends BaseCommand {
 
 	public function __construct(Loader $loader) {
-		parent::__construct($loader, "paste", (new Translation(Translation::COMMANDS_PASTE_DESCRIPTION))->getMessage(), "/paste <type> [name]", []);
+		parent::__construct($loader, "paste", Translation::get(Translation::COMMANDS_PASTE_DESCRIPTION), "/paste <type> [name]");
 	}
 
 	public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
@@ -32,29 +33,33 @@ class PasteCommand extends BaseCommand {
 		}
 
 		$center = $sender->getTargetBlock(100);
+		if($center === null) {
+			throw new InvalidBlockException("No valid block could be found when attempting to paste.");
+		}
+
 		switch(strtolower($args[0])) {
 			default:
 			case "copy":
 				if(!SessionManager::getPlayerSession($sender)->getCloneStorer()->copyStoreExists()) {
-					$sender->sendMessage($this->getWarning() . (new Translation(Translation::COMMANDS_PASTE_COPY_NO_COPIES))->getMessage());
+					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_PASTE_COPY_NO_COPIES));
 					return false;
 				}
 				SessionManager::getPlayerSession($sender)->getCloneStorer()->pasteCopy($sender->getTargetBlock(100));
-				$sender->sendMessage(TF::GREEN . (new Translation(Translation::COMMANDS_PASTE_COPY_SUCCESS))->getMessage());
+				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_PASTE_COPY_SUCCESS));
 				break;
 
 			case "template":
 				if(!SessionManager::getPlayerSession($sender)->getCloneStorer()->templateExists($args[1])) {
-					$sender->sendMessage($this->getWarning() . (new Translation(Translation::COMMANDS_PASTE_TEMPLATE_NONEXISTENT, [$args[1]]))->getMessage());
+					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_PASTE_TEMPLATE_NONEXISTENT, [$args[1]]));
 					return false;
 				}
 				SessionManager::getPlayerSession($sender)->getCloneStorer()->pasteTemplate($args[1], $center);
-				$sender->sendMessage(TF::GREEN . (new Translation(Translation::COMMANDS_PASTE_TEMPLATE_SUCCESS, [$args[1]]))->getMessage());
+				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_PASTE_TEMPLATE_SUCCESS, [$args[1]]));
 				break;
 
 			case "schematic":
 				if(!is_file($file = $this->getLoader()->getDataFolder() . "schematics/" . $args[1] . ".schematic")) {
-					$sender->sendMessage($this->getWarning() . (new Translation(Translation::COMMANDS_PASTE_SCHEMATIC_NONEXISTENT, [$args[1]]))->getMessage());
+					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_PASTE_SCHEMATIC_NONEXISTENT, [$args[1]]));
 					return true;
 				}
 				$schematic = new Schematic($file);
@@ -66,11 +71,14 @@ class PasteCommand extends BaseCommand {
 				for($x = $center->x - $width / 2; $x <= $center->x + $width / 2 + 16; $x += 16) {
 					for($z = $center->z - $length / 2; $z <= $center->z + $length / 2 + 16; $z += 16) {
 						$chunk = $sender->getLevel()->getChunk($x >> 4, $z >> 4, true);
+						if($chunk === null) {
+							continue;
+						}
 						$touchedChunks[Level::chunkHash($x >> 4, $z >> 4)] = $chunk->fastSerialize();
 					}
 				}
 				SessionManager::getPlayerSession($sender)->getCloneStorer()->pasteSchematic($file, $sender->getTargetBlock(100)->asVector3(), $touchedChunks);
-				$sender->sendMessage(TF::GREEN . (new Translation(Translation::COMMANDS_PASTE_SCHEMATIC_SUCCESS, [$args[1]]))->getMessage());
+				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_PASTE_SCHEMATIC_SUCCESS, [$args[1]]));
 				break;
 		}
 		return true;

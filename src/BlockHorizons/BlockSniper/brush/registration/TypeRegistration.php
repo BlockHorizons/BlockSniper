@@ -22,6 +22,7 @@ use BlockHorizons\BlockSniper\brush\types\ReplaceType;
 use BlockHorizons\BlockSniper\brush\types\SnowConeType;
 use BlockHorizons\BlockSniper\brush\types\TopLayerType;
 use BlockHorizons\BlockSniper\brush\types\TreeType;
+use BlockHorizons\BlockSniper\exceptions\InvalidIdException;
 use pocketmine\permission\Permission;
 use pocketmine\Server;
 
@@ -65,13 +66,36 @@ class TypeRegistration {
 	 */
 	public static function registerType(string $class, int $id, bool $overwrite = false): bool {
 		$shortName = str_replace("Type", "", (new \ReflectionClass($class))->getShortName());
-		if(self::typeExists(strtolower($shortName), $id) && !$overwrite) {
+		if(!$overwrite && self::typeExists(strtolower($shortName), $id)) {
 			return false;
+		}
+		if($id < 0) {
+			throw new InvalidIdException("A shape ID should be positive.");
 		}
 		self::$typesIds[$id] = $shortName;
 		self::$types[strtolower($shortName)] = $class;
 		self::registerPermission(strtolower($shortName));
 		return true;
+	}
+
+	/**
+	 * Returns whether a type with the given name exists or not.
+	 *
+	 * @param string $typeName
+	 *
+	 * @return bool
+	 */
+	public static function typeExists(string $typeName, int $id = -1): bool {
+		return isset(self::$types[$typeName]) || isset(self::$typesIds[$id]);
+	}
+
+	/**
+	 * @param string $typeName
+	 */
+	private static function registerPermission(string $typeName): void {
+		$permission = new Permission("blocksniper.type." . $typeName, "Allows permission to use the " . $typeName . " shape.");
+		$permission->addParent("blocksniper.type", Permission::DEFAULT_OP);
+		Server::getInstance()->getPluginManager()->addPermission($permission);
 	}
 
 	/**
@@ -93,28 +117,6 @@ class TypeRegistration {
 	}
 
 	/**
-	 * Returns whether a type with the given name exists or not.
-	 *
-	 * @param string $typeName
-	 *
-	 * @return bool
-	 */
-	public static function typeExists(string $typeName, int $id = -1): bool {
-		return isset(self::$types[$typeName]) || isset(self::$typesIds[$id]);
-	}
-
-	/**
-	 * Returns the class string of the requested type.
-	 *
-	 * @param string $shortName
-	 *
-	 * @return null|string
-	 */
-	public static function getType(string $shortName): ?string {
-		return self::$types[$shortName] ?? null;
-	}
-
-	/**
 	 * Returns a type class name by ID.
 	 *
 	 * @param int  $id
@@ -130,11 +132,13 @@ class TypeRegistration {
 	}
 
 	/**
-	 * @param string $typeName
+	 * Returns the class string of the requested type.
+	 *
+	 * @param string $shortName
+	 *
+	 * @return null|string
 	 */
-	private static function registerPermission(string $typeName): void {
-		$permission = new Permission("blocksniper.type." . $typeName, "Allows permission to use the " . $typeName . " shape.");
-		$permission->addParent("blocksniper.type", Permission::DEFAULT_OP);
-		Server::getInstance()->getPluginManager()->addPermission($permission);
+	public static function getType(string $shortName): ?string {
+		return self::$types[$shortName] ?? null;
 	}
 }

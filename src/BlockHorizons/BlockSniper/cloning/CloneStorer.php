@@ -11,7 +11,6 @@ use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\level\Position;
 use pocketmine\math\Vector3;
-use pocketmine\Player;
 use pocketmine\Server;
 
 class CloneStorer {
@@ -126,7 +125,7 @@ class CloneStorer {
 	 */
 	public function pasteTemplate(string $templateName, Position $targetBlock): bool {
 		$data = file_get_contents($this->path . "templates/" . $templateName . ".yml");
-		$content = unserialize($data);
+		$content = unserialize($data, ["allowed_classes" => false]);
 
 		$undoBlocks = [];
 

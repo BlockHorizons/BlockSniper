@@ -17,11 +17,11 @@ class BrushMenuWindow extends Window {
 		$v = SessionManager::getPlayerSession($this->getPlayer())->getBrush();
 		$this->data = [
 			"type" => "custom_form",
-			"title" => (new Translation(Translation::UI_BRUSH_MENU_TITLE))->getMessage(),
+			"title" => Translation::get(Translation::UI_BRUSH_MENU_TITLE),
 			"content" => [
 				[
 					"type" => "slider",
-					"text" => (new Translation(Translation::UI_BRUSH_MENU_SIZE))->getMessage(),
+					"text" => Translation::get(Translation::UI_BRUSH_MENU_SIZE),
 					"min" => 0,
 					"max" => $this->getLoader()->getSettings()->getMaxRadius(),
 					"step" => 1,
@@ -29,29 +29,29 @@ class BrushMenuWindow extends Window {
 				],
 				[
 					"type" => "dropdown",
-					"text" => (new Translation(Translation::UI_BRUSH_MENU_SHAPE))->getMessage(),
+					"text" => Translation::get(Translation::UI_BRUSH_MENU_SHAPE),
 					"options" => $this->processShapes(),
 					"default" => $v->getShape()::ID
 				],
 				[
 					"type" => "dropdown",
-					"text" => (new Translation(Translation::UI_BRUSH_MENU_TYPE))->getMessage(),
+					"text" => Translation::get(Translation::UI_BRUSH_MENU_TYPE),
 					"options" => $this->processTypes(),
 					"default" => $v->getType()::ID
 				],
 				[
 					"type" => "toggle",
-					"text" => (new Translation(Translation::UI_BRUSH_MENU_HOLLOW))->getMessage(),
+					"text" => Translation::get(Translation::UI_BRUSH_MENU_HOLLOW),
 					"default" => $v->isHollow()
 				],
 				[
 					"type" => "toggle",
-					"text" => (new Translation(Translation::UI_BRUSH_MENU_DECREMENT))->getMessage(),
+					"text" => Translation::get(Translation::UI_BRUSH_MENU_DECREMENT),
 					"default" => $v->isDecrementing()
 				],
 				[
 					"type" => "slider",
-					"text" => (new Translation(Translation::UI_BRUSH_MENU_HEIGHT))->getMessage(),
+					"text" => Translation::get(Translation::UI_BRUSH_MENU_HEIGHT),
 					"min" => 0,
 					"max" => $this->getLoader()->getSettings()->getMaxRadius(),
 					"default" => $v->getHeight(),
@@ -59,30 +59,30 @@ class BrushMenuWindow extends Window {
 				],
 				[
 					"type" => "toggle",
-					"text" => (new Translation(Translation::UI_BRUSH_MENU_PERFECT))->getMessage(),
+					"text" => Translation::get(Translation::UI_BRUSH_MENU_PERFECT),
 					"default" => $v->getPerfect()
 				],
 				[
 					"type" => "input",
-					"text" => (new Translation(Translation::UI_BRUSH_MENU_BLOCKS))->getMessage(),
+					"text" => Translation::get(Translation::UI_BRUSH_MENU_BLOCKS),
 					"placeholder" => "stone,stone_brick:1,2",
 					"default" => $this->processBlocks($v->getBlocks()),
 				],
 				[
 					"type" => "input",
-					"text" => (new Translation(Translation::UI_BRUSH_MENU_OBSOLETE))->getMessage(),
+					"text" => Translation::get(Translation::UI_BRUSH_MENU_OBSOLETE),
 					"placeholder" => "stone,stone_brick:1,2",
 					"default" => $this->processBlocks($v->getObsolete()),
 				],
 				[
 					"type" => "input",
-					"text" => (new Translation(Translation::UI_BRUSH_MENU_BIOME))->getMessage(),
+					"text" => Translation::get(Translation::UI_BRUSH_MENU_BIOME),
 					"placeholder" => "plains",
 					"default" => strtolower(Biome::getBiome($v->getBiomeId())->getName())
 				],
 				[
 					"type" => "input",
-					"text" => (new Translation(Translation::UI_BRUSH_MENU_TREE))->getMessage(),
+					"text" => Translation::get(Translation::UI_BRUSH_MENU_TREE),
 					"placeholder" => "oak",
 					"default" => (string) $v->getTreeType()
 				]
