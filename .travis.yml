@@ -20,7 +20,7 @@ before_script:
 - cd ..
 
 - mkdir -p PocketMine-MP/plugins/BlockSniper
-- git clone --recursive https://github.com/pmmp/PocketMine-MP
+- git clone --recursive https://github.com/pmmp/PocketMine-MP.git
 
 - cd PocketMine-MP/plugins/
 - wget -O DevTools.phar https://poggit.pmmp.io/r/1582/PocketMine-DevTools.phar
