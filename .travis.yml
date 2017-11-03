@@ -30,7 +30,9 @@ before_script:
 - cp -rf BlockHorizons/BlockSniper/resources PocketMine-MP/plugins/BlockSniper
 - cp -rf BlockHorizons/BlockSniper/plugin.yml PocketMine-MP/plugins/BlockSniper
 - cp -rf BlockHorizons/BlockSniper/LICENSE PocketMine-MP/plugins/BlockSniper
-- cp -rf BlockHorizons/BlockSniper/travis.php PocketMine-MP/
+- cp -rf BlockHorizons/BlockSniper/travis.php PocketMine-MP/plugins/BlockSniper
+
+- cd PocketMine-MP/plugins/BlockSniper
 
 script:
 - php travis.php
