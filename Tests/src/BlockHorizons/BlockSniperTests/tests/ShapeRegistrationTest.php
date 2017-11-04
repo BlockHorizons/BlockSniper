@@ -16,6 +16,7 @@ class ShapeRegistrationTest extends Test {
 		if($shape === null) {
 			var_dump(ShapeRegistration::getShapes());
 		}
+		$shape = new $shape;
 		return $shape instanceof BaseShape;
 	}
 }
