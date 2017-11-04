@@ -4,9 +4,8 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\tasks;
 
-use BlockHorizons\BlockSniper\Loader;
-use BlockHorizons\BlockSniper\sessions\SessionManager;
 use BlockHorizons\BlockSniper\revert\Revert;
+use BlockHorizons\BlockSniper\sessions\SessionManager;
 
 class UndoDiminishTask extends BaseTask {
 

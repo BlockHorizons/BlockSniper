@@ -13,6 +13,7 @@ use pocketmine\Player;
 /*
  * Replaces the obsolete blocks within the brush radius.
  */
+
 class ReplaceType extends BaseType {
 
 	const ID = self::TYPE_REPLACE;

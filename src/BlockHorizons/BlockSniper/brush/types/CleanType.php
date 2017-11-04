@@ -10,6 +10,7 @@ use pocketmine\block\Block;
 /*
  * Removes all non-natural blocks within the brush radius.
  */
+
 class CleanType extends BaseType {
 
 	const ID = self::TYPE_CLEAN;

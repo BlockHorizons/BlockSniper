@@ -11,6 +11,7 @@ use pocketmine\block\Flowable;
 /*
  * Replaces every solid block within the brush radius.
  */
+
 class ReplaceAllType extends BaseType {
 
 	const ID = self::TYPE_REPLACE_ALL;

@@ -11,6 +11,7 @@ use pocketmine\item\Item;
 /*
  * Lays a layer of blocks over every block within the brush radius.
  */
+
 class OverlayType extends BaseType {
 
 	const ID = self::TYPE_OVERLAY;

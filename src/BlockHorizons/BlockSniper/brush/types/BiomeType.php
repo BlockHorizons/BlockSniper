@@ -13,6 +13,7 @@ use pocketmine\Player;
 /*
  * Changes the biome within the brush radius.
  */
+
 class BiomeType extends BaseType {
 
 	const ID = self::TYPE_BIOME;
@@ -33,7 +34,7 @@ class BiomeType extends BaseType {
 	 */
 	public function getBiome(): int {
 		return $this->biome;
-}
+	}
 
 	/**
 	 * @return Block[]

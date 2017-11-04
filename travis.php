@@ -6,7 +6,7 @@ $server = proc_open(PHP_BINARY . ' src/pocketmine/PocketMine.php --no-wizard --d
 	2 => ['pipe', 'w'],
 ], $pipes);
 
-fwrite($pipes[0], "makeplugin BlockSniper\nstop\n\n");
+fwrite($pipes[0], "blocksniper\nmakeplugin BlockSniper\nstop\n\n");
 while(!feof($pipes[1])) {
 	echo fgets($pipes[1]);
 }

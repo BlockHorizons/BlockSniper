@@ -9,11 +9,11 @@ use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\exceptions\InvalidBlockException;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
-use Schematic\Schematic;
 use pocketmine\command\CommandSender;
 use pocketmine\level\Level;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
+use Schematic\Schematic;
 
 class PasteCommand extends BaseCommand {
 

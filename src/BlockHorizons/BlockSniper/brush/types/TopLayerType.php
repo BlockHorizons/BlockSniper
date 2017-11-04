@@ -16,6 +16,7 @@ use pocketmine\Player;
 /*
  * Replaces the top layer of the terrain, thickness depending on brush height, within the brush radius.
  */
+
 class TopLayerType extends BaseType {
 
 	const ID = self::TYPE_TOP_LAYER;

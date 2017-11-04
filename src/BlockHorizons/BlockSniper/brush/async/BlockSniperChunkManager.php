@@ -3,7 +3,6 @@
 namespace BlockHorizons\BlockSniper\brush\async;
 
 use pocketmine\block\Block;
-use pocketmine\level\Level;
 use pocketmine\level\SimpleChunkManager;
 use pocketmine\math\Vector3;
 

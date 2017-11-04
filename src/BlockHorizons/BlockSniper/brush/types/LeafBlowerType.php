@@ -14,6 +14,7 @@ use pocketmine\Server;
 /*
  * Blows away all plants and flowers within the brush radius.
  */
+
 class LeafBlowerType extends BaseType {
 
 	const ID = self::TYPE_LEAF_BLOWER;

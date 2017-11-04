@@ -10,6 +10,7 @@ use pocketmine\block\Block;
 /*
  * Lays a layer of snow on top of the terrain, and raises it if there is snow already.
  */
+
 class SnowConeType extends BaseType {
 
 	const ID = self::TYPE_SNOW_CONE;

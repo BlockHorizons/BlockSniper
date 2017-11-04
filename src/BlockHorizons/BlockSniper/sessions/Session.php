@@ -6,10 +6,10 @@ use BlockHorizons\BlockSniper\brush\Brush;
 use BlockHorizons\BlockSniper\cloning\CloneStorer;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\revert\RevertStorer;
 use BlockHorizons\BlockSniper\sessions\owners\ISessionOwner;
 use BlockHorizons\BlockSniper\sessions\owners\PlayerSessionOwner;
 use BlockHorizons\BlockSniper\sessions\owners\ServerSessionOwner;
-use BlockHorizons\BlockSniper\revert\RevertStorer;
 use pocketmine\utils\TextFormat;
 
 abstract class Session {

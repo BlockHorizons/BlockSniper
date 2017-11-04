@@ -11,6 +11,7 @@ use pocketmine\item\Item;
 /*
  * Melts away every block with more than 2 open sides within the brush radius.
  */
+
 class MeltType extends BaseType {
 
 	const ID = self::TYPE_MELT;

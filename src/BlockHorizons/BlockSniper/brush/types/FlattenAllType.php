@@ -15,6 +15,7 @@ use pocketmine\Player;
 /*
  * Flattens the terrain below the selected point and removes the blocks above it within the brush radius.
  */
+
 class FlattenAllType extends BaseType {
 
 	const ID = self::TYPE_FLATTEN_ALL;

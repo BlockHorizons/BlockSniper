@@ -142,11 +142,10 @@ class Translation {
 	const BRUSH_TYPE_SNOWCONE = "brush.type.snowcone";
 	const BRUSH_TYPE_TOPLAYER = "brush.type.toplayer";
 	const BRUSH_TYPE_TREE = "brush.type.tree";
-
-	/** @var array */
-	private $messageData = [];
 	/** @var string[] */
 	private static $translations = [];
+	/** @var array */
+	private $messageData = [];
 
 	public function __construct(TranslationData $data) {
 		$this->messageData = $data->getMessages();
@@ -154,19 +153,6 @@ class Translation {
 		foreach($reflection->getConstants() as $constant => $value) {
 			self::$translations[$value] = $this->putMessage($value);
 		}
-	}
-
-	/**
-	 * @param string $key
-	 * @param array  $params
-	 *
-	 * @return string
-	 */
-	public static function get(string $key, array $params = []): string {
-		if(!empty($params)) {
-			return vsprintf(self::$translations[$key], $params);
-		}
-		return self::$translations[$key];
 	}
 
 	/**
@@ -184,5 +170,18 @@ class Translation {
 			}
 		}
 		return $message;
+	}
+
+	/**
+	 * @param string $key
+	 * @param array  $params
+	 *
+	 * @return string
+	 */
+	public static function get(string $key, array $params = []): string {
+		if(!empty($params)) {
+			return vsprintf(self::$translations[$key], $params);
+		}
+		return self::$translations[$key];
 	}
 }

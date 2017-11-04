@@ -6,14 +6,14 @@ namespace BlockHorizons\BlockSniper\brush\async\tasks;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\Loader;
-use BlockHorizons\BlockSniper\sessions\SessionManager;
 use BlockHorizons\BlockSniper\revert\async\AsyncUndo;
-use Schematic\Schematic;
+use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\block\Block;
 use pocketmine\level\format\Chunk;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use pocketmine\Server;
+use Schematic\Schematic;
 
 class PasteTask extends AsyncBlockSniperTask {
 

@@ -58,13 +58,6 @@ class Loader extends PluginBase {
 		return self::$availableLanguages;
 	}
 
-	/**
-	 * @return ConfigData
-	 */
-	public function getSettings(): ConfigData {
-		return $this->settings;
-	}
-
 	public function reload(): void {
 		$this->getLogger()->info(TF::AQUA . Translation::get(Translation::LOG_RELOAD_START));
 		$this->onDisable();
@@ -72,11 +65,66 @@ class Loader extends PluginBase {
 		$this->getLogger()->info(TF::AQUA . Translation::get(Translation::LOG_RELOAD_FINISH));
 	}
 
+	public function onDisable(): void {
+		$this->getPresetManager()->storePresetsToFile();
+		$this->getSettings()->save();
+	}
+
 	/**
 	 * @return PresetManager
 	 */
 	public function getPresetManager(): PresetManager {
 		return $this->presetManager;
+	}
+
+	/**
+	 * @return ConfigData
+	 */
+	public function getSettings(): ConfigData {
+		return $this->settings;
+	}
+
+	private function reloadAll(): void {
+		$this->initializeDirectories();
+
+		$this->saveResource("settings.yml");
+		$this->settings = new ConfigData($this);
+		$this->language = new TranslationData($this);
+		$this->presetManager = new PresetManager($this);
+
+		if(!$this->language->collectTranslations()) {
+			$this->getLogger()->info(TF::AQUA . Translation::get(Translation::LOG_LANGUAGE_AUTO_SELECTED));
+			$this->getLogger()->info(TF::AQUA . Translation::get(Translation::LOG_LANGUAGE_USAGE));
+		} else {
+			$this->getLogger()->info(TF::AQUA . Translation::get(Translation::LOG_LANGUAGE_SELECTED) . TF::GREEN . $this->getSettings()->getLanguage());
+		}
+		new GitRepository($this);
+
+		ShapeRegistration::init();
+		TypeRegistration::init();
+
+		if($this->getSettings()->hasMyPlotSupport()) {
+			$this->myPlot = $this->getServer()->getPluginManager()->getPlugin("MyPlot");
+		}
+	}
+
+	public function initializeDirectories(): void {
+		if(!is_dir($this->getDataFolder())) {
+			mkdir($this->getDataFolder());
+		}
+		if(!is_dir($this->getDataFolder() . "templates/")) {
+			mkdir($this->getDataFolder() . "templates/");
+		}
+		if(!is_dir($this->getDataFolder() . "schematics/")) {
+			mkdir($this->getDataFolder() . "schematics/");
+		}
+		if(!is_dir($this->getDataFolder() . "languages/")) {
+			mkdir($this->getDataFolder() . "languages/");
+		}
+		if(!is_dir($this->getDataFolder() . "sessions/")) {
+			mkdir($this->getDataFolder() . "sessions/");
+			file_put_contents($this->getDataFolder() . "sessions/players.json", "");
+		}
 	}
 
 	/**
@@ -107,28 +155,14 @@ class Loader extends PluginBase {
 		return $this->myPlot !== null;
 	}
 
-	public function initializeDirectories(): void {
-		if(!is_dir($this->getDataFolder())) {
-			mkdir($this->getDataFolder());
-		}
-		if(!is_dir($this->getDataFolder() . "templates/")) {
-			mkdir($this->getDataFolder() . "templates/");
-		}
-		if(!is_dir($this->getDataFolder() . "schematics/")) {
-			mkdir($this->getDataFolder() . "schematics/");
-		}
-		if(!is_dir($this->getDataFolder() . "languages/")) {
-			mkdir($this->getDataFolder() . "languages/");
-		}
-		if(!is_dir($this->getDataFolder() . "sessions/")) {
-			mkdir($this->getDataFolder() . "sessions/");
-			file_put_contents($this->getDataFolder() . "sessions/players.json", "");
-		}
-	}
+	public function onEnable(): void {
+		$this->reloadAll();
 
-	public function onDisable(): void {
-		$this->getPresetManager()->storePresetsToFile();
-		$this->getSettings()->save();
+		$this->registerCommands();
+		$this->registerListeners();
+
+		$this->getServer()->getScheduler()->scheduleRepeatingTask(new UndoDiminishTask($this), 400);
+		$this->getServer()->getScheduler()->scheduleRepeatingTask(new RedoDiminishTask($this), 400);
 	}
 
 	private function registerCommands(): void {
@@ -150,40 +184,6 @@ class Loader extends PluginBase {
 		];
 		foreach($blockSniperListeners as $listener) {
 			$this->getServer()->getPluginManager()->registerEvents($listener, $this);
-		}
-	}
-
-	public function onEnable(): void {
-		$this->reloadAll();
-
-		$this->registerCommands();
-		$this->registerListeners();
-
-		$this->getServer()->getScheduler()->scheduleRepeatingTask(new UndoDiminishTask($this), 400);
-		$this->getServer()->getScheduler()->scheduleRepeatingTask(new RedoDiminishTask($this), 400);
-	}
-
-	private function reloadAll(): void {
-		$this->initializeDirectories();
-
-		$this->saveResource("settings.yml");
-		$this->settings = new ConfigData($this);
-		$this->language = new TranslationData($this);
-		$this->presetManager = new PresetManager($this);
-
-		if(!$this->language->collectTranslations()) {
-			$this->getLogger()->info(TF::AQUA . Translation::get(Translation::LOG_LANGUAGE_AUTO_SELECTED));
-			$this->getLogger()->info(TF::AQUA . Translation::get(Translation::LOG_LANGUAGE_USAGE));
-		} else {
-			$this->getLogger()->info(TF::AQUA . Translation::get(Translation::LOG_LANGUAGE_SELECTED) . TF::GREEN . $this->getSettings()->getLanguage());
-		}
-		new GitRepository($this);
-
-		ShapeRegistration::init();
-		TypeRegistration::init();
-
-		if($this->getSettings()->hasMyPlotSupport()) {
-			$this->myPlot = $this->getServer()->getPluginManager()->getPlugin("MyPlot");
 		}
 	}
 }

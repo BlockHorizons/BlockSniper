@@ -7,7 +7,6 @@ namespace BlockHorizons\BlockSniper\brush\types;
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\block\Block;
-use pocketmine\block\Flowable;
 use pocketmine\level\ChunkManager;
 use pocketmine\level\generator\object\Tree;
 use pocketmine\Player;
@@ -17,6 +16,7 @@ use pocketmine\utils\Random;
  * Grows a tree on the target block.
  * This brush can NOT undo.
  */
+
 class TreeType extends BaseType {
 
 	const ID = self::TYPE_TREE;

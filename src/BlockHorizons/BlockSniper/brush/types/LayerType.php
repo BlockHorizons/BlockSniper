@@ -13,6 +13,7 @@ use pocketmine\Player;
 /*
  * Lays a thin layer of blocks within the brush radius.
  */
+
 class LayerType extends BaseType {
 
 	const ID = self::TYPE_LAYER;

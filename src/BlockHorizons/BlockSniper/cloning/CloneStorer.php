@@ -5,8 +5,8 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\cloning;
 
 use BlockHorizons\BlockSniper\brush\async\tasks\PasteTask;
-use BlockHorizons\BlockSniper\sessions\Session;
 use BlockHorizons\BlockSniper\revert\sync\SyncUndo;
+use BlockHorizons\BlockSniper\sessions\Session;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\level\Position;

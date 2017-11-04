@@ -14,6 +14,7 @@ use pocketmine\Player;
  * Regenerates the chunk looked at.
  * This brush can NOT undo.
  */
+
 class RegenerateType extends BaseType {
 
 	const ID = self::TYPE_REGENERATE;

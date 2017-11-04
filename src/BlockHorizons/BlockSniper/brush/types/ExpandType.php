@@ -11,6 +11,7 @@ use pocketmine\item\Item;
 /*
  * Expands the terrain with blocks below it.
  */
+
 class ExpandType extends BaseType {
 
 	const ID = self::TYPE_EXPAND;

@@ -15,6 +15,7 @@ use BlockHorizons\BlockSniper\sessions\Session;
  * An ugly class for processing values for a session.
  * This might damage you permanently, I don't recommend looking at it for too long.
  */
+
 class PropertyProcessor {
 
 	const VALUE_SIZE = 0;

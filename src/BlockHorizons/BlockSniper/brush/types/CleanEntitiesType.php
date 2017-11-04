@@ -12,6 +12,7 @@ use pocketmine\Player;
 /*
  * Clears all entities within the brush radius. This brush can not undo.
  */
+
 class CleanEntitiesType extends BaseType {
 
 	const ID = self::TYPE_CLEAN_ENTITIES;

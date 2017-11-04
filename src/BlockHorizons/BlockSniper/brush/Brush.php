@@ -8,9 +8,9 @@ use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
 use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
 use BlockHorizons\BlockSniper\events\BrushUseEvent;
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\revert\sync\SyncUndo;
 use BlockHorizons\BlockSniper\sessions\PlayerSession;
 use BlockHorizons\BlockSniper\sessions\Session;
-use BlockHorizons\BlockSniper\revert\sync\SyncUndo;
 use pocketmine\block\Block;
 use pocketmine\block\Sapling;
 use pocketmine\item\Item;
@@ -324,6 +324,9 @@ class Brush implements \JsonSerializable {
 			if($this->getSize() <= 1) {
 				/** @var Loader $loader */
 				$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
+				if($loader === null) {
+					return false;
+				}
 				if($loader->getSettings()->resetDecrementBrush() !== false) {
 					$this->setSize($this->resetSize);
 					return true;

@@ -5,9 +5,9 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\brush\async\tasks;
 
 use BlockHorizons\BlockSniper\Loader;
-use BlockHorizons\BlockSniper\sessions\SessionManager;
 use BlockHorizons\BlockSniper\revert\async\AsyncRevert;
 use BlockHorizons\BlockSniper\revert\Revert;
+use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\level\format\Chunk;
 use pocketmine\level\Level;
 use pocketmine\Server;

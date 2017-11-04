@@ -11,6 +11,7 @@ use pocketmine\item\Item;
 /*
  * Removes all liquid blocks within the brush radius.
  */
+
 class DrainType extends BaseType {
 
 	const ID = self::TYPE_DRAIN;

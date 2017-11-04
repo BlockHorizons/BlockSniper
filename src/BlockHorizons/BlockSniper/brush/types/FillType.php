@@ -10,6 +10,7 @@ use pocketmine\block\Block;
 /*
  * Places blocks on every location within the brush radius.
  */
+
 class FillType extends BaseType {
 
 	const ID = self::TYPE_FILL;
