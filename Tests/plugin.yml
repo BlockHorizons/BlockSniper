@@ -5,4 +5,6 @@ version: 0.1.0
 api:
 - 3.0.0-ALPHA9
 main: BlockHorizons\BlockSniperTests\Loader
+depend:
+- BlockSniper
 ...
