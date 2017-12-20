@@ -21,10 +21,10 @@ class PresetManager {
 		if(is_file($loader->getDataFolder() . "presets.yml")) {
 			$this->data = yaml_parse_file($loader->getDataFolder() . "presets.yml");
 			foreach($this->data as $name => $data) {
-				$this->addPreset(unserialize($data));
-				$loader->getLogger()->debug(TF::GREEN . (new Translation(Translation::LOG_PRESETS_LOADED, [$name]))->getMessage());
+				$this->addPreset(unserialize($data, ["allowed_classes" => [Preset::class]]));
+				$loader->getLogger()->debug(TF::GREEN . Translation::get(Translation::LOG_PRESETS_LOADED, [$name]));
 			}
-			$loader->getLogger()->info(TF::GREEN . (new Translation(Translation::LOG_PRESETS_ALL_LOADED))->getMessage());
+			$loader->getLogger()->info(TF::GREEN . Translation::get(Translation::LOG_PRESETS_ALL_LOADED));
 		}
 	}
 

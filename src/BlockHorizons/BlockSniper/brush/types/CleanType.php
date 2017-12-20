@@ -6,19 +6,17 @@ namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
 use pocketmine\block\Block;
-use pocketmine\level\ChunkManager;
-use pocketmine\math\Vector3;
-use pocketmine\Player;
+
+/*
+ * Removes all non-natural blocks within the brush radius.
+ */
 
 class CleanType extends BaseType {
 
 	const ID = self::TYPE_CLEAN;
 
-	/*
-	 * Removes all non-natural blocks within the brush radius.
-	 */
-	public function __construct(Player $player, ChunkManager $level, array $blocks) {
-		parent::__construct($player, $level, $blocks);
+	public function getName(): string {
+		return "Clean";
 	}
 
 	/**
@@ -43,9 +41,5 @@ class CleanType extends BaseType {
 				$this->putBlock($block, $blockId);
 			}
 		}
-	}
-
-	public function getName(): string {
-		return "Clean";
 	}
 }

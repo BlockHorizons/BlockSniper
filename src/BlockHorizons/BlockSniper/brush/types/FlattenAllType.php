@@ -12,13 +12,14 @@ use pocketmine\level\ChunkManager;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 
+/*
+ * Flattens the terrain below the selected point and removes the blocks above it within the brush radius.
+ */
+
 class FlattenAllType extends BaseType {
 
 	const ID = self::TYPE_FLATTEN_ALL;
 
-	/*
-	 * Flattens the terrain below the selected point and removes the blocks above it within the brush radius.
-	 */
 	public function __construct(Player $player, ChunkManager $level, array $blocks) {
 		parent::__construct($player, $level, $blocks);
 		$this->center = $player->getTargetBlock(100)->asVector3();

@@ -2,9 +2,9 @@
 
 declare(strict_types = 1);
 
-namespace BlockHorizons\BlockSniper\undo\async;
+namespace BlockHorizons\BlockSniper\revert\async;
 
-use BlockHorizons\BlockSniper\undo\IUndo;
+use BlockHorizons\BlockSniper\revert\IUndo;
 
 class AsyncUndo extends AsyncRevert implements IUndo {
 

@@ -13,13 +13,14 @@ use pocketmine\level\ChunkManager;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 
+/*
+ * Replaces the top layer of the terrain, thickness depending on brush height, within the brush radius.
+ */
+
 class TopLayerType extends BaseType {
 
 	const ID = self::TYPE_TOP_LAYER;
 
-	/*
-	 * Replaces the top layer of the terrain, thickness depending on brush height, within the brush radius.
-	 */
 	public function __construct(Player $player, ChunkManager $level, array $blocks) {
 		parent::__construct($player, $level, $blocks);
 		$this->height = SessionManager::getPlayerSession($player)->getBrush()->getHeight();
@@ -31,9 +32,9 @@ class TopLayerType extends BaseType {
 	public function fillSynchronously(): array {
 		$undoBlocks = [];
 		foreach($this->blocks as $block) {
-			if($block->getId() !== Item::AIR && !$block instanceof Flowable) {
+			if(!$block instanceof Flowable && $block->getId() !== Item::AIR) {
 				$up = $block->getSide(Block::SIDE_UP);
-				if($up->getId() === Item::AIR || $up instanceof Flowable) {
+				if($up instanceof Flowable || $up->getId() === Item::AIR) {
 					$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 					for($y = $block->y; $y >= $block->y - $this->height; $y--) {
 						$undoBlocks[] = $this->getLevel()->getBlock(new Vector3($block->x, $y, $block->z));
@@ -47,9 +48,9 @@ class TopLayerType extends BaseType {
 
 	public function fillAsynchronously(): void {
 		foreach($this->blocks as $block) {
-			if($block->getId() !== Item::AIR && !$block instanceof Flowable) {
+			if(!$block instanceof Flowable && $block->getId() !== Item::AIR) {
 				$up = $this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_UP);
-				if($up->getId() === Item::AIR || $up instanceof Flowable) {
+				if($up instanceof Flowable || $up->getId() === Item::AIR) {
 					$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 					for($y = $block->y; $y >= $block->y - $this->height; $y--) {
 						$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());

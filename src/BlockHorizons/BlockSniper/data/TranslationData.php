@@ -17,6 +17,7 @@ class TranslationData {
 		$this->loader = $loader;
 
 		$this->collectTranslations();
+		new Translation($this);
 	}
 
 	/**

@@ -6,7 +6,7 @@ namespace BlockHorizons\BlockSniper\sessions;
 
 use BlockHorizons\BlockSniper\brush\Brush;
 use BlockHorizons\BlockSniper\Loader;
-use BlockHorizons\BlockSniper\sessions\owners\ISessionOwner;
+use BlockHorizons\BlockSniper\sessions\owners\ServerSessionOwner;
 use pocketmine\level\Position;
 
 class ServerSession extends Session implements \JsonSerializable {
@@ -18,16 +18,9 @@ class ServerSession extends Session implements \JsonSerializable {
 	/** @var string */
 	private $name = "";
 
-	public function __construct(ISessionOwner $sessionOwner, Loader $loader) {
+	public function __construct(ServerSessionOwner $sessionOwner, Loader $loader) {
 		$this->dataFile = $loader->getDataFolder() . "serverSessions.json";
 		parent::__construct($sessionOwner, $loader);
-	}
-
-	/**
-	 * @param string $name
-	 */
-	public function setName(string $name): void {
-		$this->name = $name;
 	}
 
 	/**
@@ -38,11 +31,10 @@ class ServerSession extends Session implements \JsonSerializable {
 	}
 
 	/**
-	 * @param Position $position
+	 * @param string $name
 	 */
-	public function setTargetBlock(Position $position): void {
-		$this->levelName = $position->getLevel()->getName();
-		$this->targetBlock = $position;
+	public function setName(string $name): void {
+		$this->name = $name;
 	}
 
 	/**
@@ -53,11 +45,17 @@ class ServerSession extends Session implements \JsonSerializable {
 	}
 
 	/**
-	 * @return bool
+	 * @param Position $position
 	 */
-	protected function initializeBrush(): bool {
-		$this->brush = new Brush($this->getSessionOwner()->getName());
-		return true;
+	public function setTargetBlock(Position $position): void {
+		$this->levelName = $position->getLevel()->getName();
+		$this->targetBlock = $position;
+	}
+
+	public function __destruct() {
+		$data = json_decode(file_get_contents($this->getDataFile()), true);
+		$data[] = $this->jsonSerialize();
+		file_put_contents($this->getDataFile(), json_encode($data));
 	}
 
 	/**
@@ -76,9 +74,11 @@ class ServerSession extends Session implements \JsonSerializable {
 		];
 	}
 
-	public function __destruct() {
-		$data = json_decode(file_get_contents($this->getDataFile()), true);
-		$data[] = $this->jsonSerialize();
-		file_put_contents($this->getDataFile(), json_encode($data));
+	/**
+	 * @return bool
+	 */
+	protected function initializeBrush(): bool {
+		$this->brush = new Brush($this->getSessionOwner()->getName());
+		return true;
 	}
 }

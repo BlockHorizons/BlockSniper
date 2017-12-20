@@ -30,11 +30,11 @@ abstract class BaseClone {
 	protected $blocks = [];
 
 	/**
-	 * @param Player      $player
-	 * @param bool        $saveAir
-	 * @param Position    $center
-	 * @param Block[]     $blocks
-	 * @param string      $name
+	 * @param Player   $player
+	 * @param bool     $saveAir
+	 * @param Position $center
+	 * @param Block[]  $blocks
+	 * @param string   $name
 	 */
 	public function __construct(Player $player, bool $saveAir, Position $center, array $blocks, string $name = "") {
 		$this->player = $player;

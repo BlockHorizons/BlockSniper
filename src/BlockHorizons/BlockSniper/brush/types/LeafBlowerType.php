@@ -9,32 +9,31 @@ use BlockHorizons\BlockSniper\Loader;
 use pocketmine\block\Block;
 use pocketmine\block\Flowable;
 use pocketmine\item\Item;
-use pocketmine\level\ChunkManager;
-use pocketmine\Player;
 use pocketmine\Server;
+
+/*
+ * Blows away all plants and flowers within the brush radius.
+ */
 
 class LeafBlowerType extends BaseType {
 
 	const ID = self::TYPE_LEAF_BLOWER;
-
-	/*
-	 * Blows away all plants and flowers within the brush radius.
-	 */
-	public function __construct(Player $player, ChunkManager $level, array $blocks) {
-		parent::__construct($player, $level, $blocks);
-	}
 
 	/**
 	 * @return Block[]
 	 */
 	public function fillSynchronously(): array {
 		$undoBlocks = [];
+		/** @var Loader $loader */
+		$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
+		if($loader === null) {
+			return [];
+		}
+		$dropPlants = $loader->getSettings()->dropLeafblowerPlants();
 		foreach($this->blocks as $block) {
 			if($block instanceof Flowable) {
 				$undoBlocks[] = $block;
-				/** @var Loader $loader */
-				$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
-				if($loader->getSettings()->dropLeafblowerPlants()) {
+				if($dropPlants) {
 					$this->getLevel()->dropItem($block, Item::get($block->getId()));
 				}
 				$this->putBlock($block, 0);

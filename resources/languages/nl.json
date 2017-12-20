@@ -115,6 +115,7 @@
       "brush": "Verf",
       "config": "Configuratie",
       "presets": "Voorinstellingen",
+      "global-brush": "Globale Verf",
       "exit": "Verlaat"
     },
     "brush-menu": {
@@ -143,6 +144,7 @@
       "save-brush": "Sla verf instellingen op als de server herstart",
       "drop-plants": "Laat planten voorwerpen vallen wanneer het blad blazer type wordt gebruikt",
       "auto-gui": "Open de GUI automatisch wanneer het hotbar vakje wordt verplaatst naar een vak met het brush voorwerp",
+      "myplot-support": "MyPlot ondersteuning aanzetten of niet",
       "auto-reload": "Omzetten van deze knop zal de plugin automatisch herladen wanneer je dit scherm sluit"
     }
   },

@@ -7,20 +7,14 @@ namespace BlockHorizons\BlockSniper\brush\types;
 use BlockHorizons\BlockSniper\brush\BaseType;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
-use pocketmine\level\ChunkManager;
-use pocketmine\math\Vector3;
-use pocketmine\Player;
+
+/*
+ * Removes all liquid blocks within the brush radius.
+ */
 
 class DrainType extends BaseType {
 
 	const ID = self::TYPE_DRAIN;
-
-	/*
-	 * Removes all liquid blocks within the brush radius.
-	 */
-	public function __construct(Player $player, ChunkManager $level, array $blocks) {
-		parent::__construct($player, $level, $blocks);
-	}
 
 	/**
 	 * @return Block[]

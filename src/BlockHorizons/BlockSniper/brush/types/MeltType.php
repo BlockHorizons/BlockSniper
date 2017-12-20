@@ -7,19 +7,14 @@ namespace BlockHorizons\BlockSniper\brush\types;
 use BlockHorizons\BlockSniper\brush\BaseType;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
-use pocketmine\level\ChunkManager;
-use pocketmine\Player;
+
+/*
+ * Melts away every block with more than 2 open sides within the brush radius.
+ */
 
 class MeltType extends BaseType {
 
 	const ID = self::TYPE_MELT;
-
-	/*
-	 * Melts away every block with more than 2 open sides within the brush radius.
-	 */
-	public function __construct(Player $player, ChunkManager $level, array $blocks) {
-		parent::__construct($player, $level, $blocks);
-	}
 
 	/**
 	 * @return Block[]

@@ -7,19 +7,14 @@ namespace BlockHorizons\BlockSniper\brush\types;
 use BlockHorizons\BlockSniper\brush\BaseType;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
-use pocketmine\level\ChunkManager;
-use pocketmine\Player;
+
+/*
+ * Lays a layer of blocks over every block within the brush radius.
+ */
 
 class OverlayType extends BaseType {
 
 	const ID = self::TYPE_OVERLAY;
-
-	/*
-	 * Lays a layer of blocks over every block within the brush radius.
-	 */
-	public function __construct(Player $player, ChunkManager $level, array $blocks) {
-		parent::__construct($player, $level, $blocks);
-	}
 
 	/**
 	 * @return Block[]
@@ -43,7 +38,7 @@ class OverlayType extends BaseType {
 					}
 				}
 				foreach($directions as $direction) {
-					if($this->getLevel()->getBlock($direction)->getId() === Item::AIR && $valid) {
+					if($valid && $this->getLevel()->getBlock($direction)->getId() === Item::AIR) {
 						$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 						if($block->getId() !== $randomBlock->getId()) {
 							$undoBlocks[] = $direction;
@@ -74,7 +69,7 @@ class OverlayType extends BaseType {
 					}
 				}
 				foreach($directions as $direction) {
-					if($this->getChunkManager()->getBlockIdAt($direction->x, $direction->y, $direction->z) === Item::AIR && $valid) {
+					if($valid && $this->getChunkManager()->getBlockIdAt($direction->x, $direction->y, $direction->z) === Item::AIR) {
 						$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 						if($block->getId() !== $randomBlock->getId()) {
 							$this->putBlock($direction, $randomBlock->getId(), $randomBlock->getDamage());

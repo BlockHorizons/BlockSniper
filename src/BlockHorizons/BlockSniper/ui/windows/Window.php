@@ -4,8 +4,6 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\ui\windows;
 
-use BlockHorizons\BlockSniper\brush\BaseShape;
-use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
 use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
 use BlockHorizons\BlockSniper\Loader;
@@ -29,6 +27,8 @@ abstract class Window {
 		$this->process();
 	}
 
+	protected abstract function process(): void;
+
 	/**
 	 * @return string
 	 */
@@ -41,13 +41,6 @@ abstract class Window {
 	 */
 	public function getLoader(): Loader {
 		return $this->loader;
-	}
-
-	/**
-	 * @return Player
-	 */
-	public function getPlayer(): Player {
-		return $this->player;
 	}
 
 	/**
@@ -77,6 +70,13 @@ abstract class Window {
 	}
 
 	/**
+	 * @return Player
+	 */
+	public function getPlayer(): Player {
+		return $this->player;
+	}
+
+	/**
 	 * @return string[]
 	 */
 	public function processTypes(): array {
@@ -100,8 +100,6 @@ abstract class Window {
 		$packet->formData = $windowHandler->getWindowJson($menu, $this->loader, $player);
 		$player->dataPacket($packet);
 	}
-
-	protected abstract function process(): void;
 
 	/**
 	 * @param ModalFormResponsePacket $packet

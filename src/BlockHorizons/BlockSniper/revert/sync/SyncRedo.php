@@ -2,11 +2,11 @@
 
 declare(strict_types = 1);
 
-namespace BlockHorizons\BlockSniper\undo\sync;
+namespace BlockHorizons\BlockSniper\revert\sync;
 
-use BlockHorizons\BlockSniper\undo\IUndo;
+use BlockHorizons\BlockSniper\revert\IRedo;
 
-class SyncUndo extends SyncRevert implements IUndo {
+class SyncRedo extends SyncRevert implements IRedo {
 
 	/**
 	 * @param array  $blocks
@@ -15,6 +15,6 @@ class SyncUndo extends SyncRevert implements IUndo {
 	 * @return SyncRevert
 	 */
 	public function getDetachedClass(array $blocks, string $playerName): SyncRevert {
-		return new SyncRedo($blocks, $playerName);
+		return new SyncUndo($blocks, $playerName);
 	}
 }

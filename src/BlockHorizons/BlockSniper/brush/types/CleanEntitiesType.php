@@ -6,19 +6,23 @@ namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
 use pocketmine\block\Block;
-use pocketmine\level\ChunkManager;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\Player;
+
+/*
+ * Clears all entities within the brush radius. This brush can not undo.
+ */
 
 class CleanEntitiesType extends BaseType {
 
 	const ID = self::TYPE_CLEAN_ENTITIES;
 
-	/*
-	 * Clears all entities within the brush radius. This brush can not undo.
-	 */
-	public function __construct(Player $player, ChunkManager $level, array $blocks) {
-		parent::__construct($player, $level, $blocks);
+	public function getName(): string {
+		return "Clean Entities";
+	}
+
+	public function canBeExecutedAsynchronously(): bool {
+		return false;
 	}
 
 	/**
@@ -33,13 +37,5 @@ class CleanEntitiesType extends BaseType {
 			}
 		}
 		return [];
-	}
-
-	public function getName(): string {
-		return "Clean Entities";
-	}
-
-	public function canBeExecutedAsynchronously(): bool {
-		return false;
 	}
 }

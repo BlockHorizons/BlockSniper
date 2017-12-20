@@ -3,15 +3,10 @@
 namespace BlockHorizons\BlockSniper\brush\async;
 
 use pocketmine\block\Block;
-use pocketmine\level\Level;
 use pocketmine\level\SimpleChunkManager;
 use pocketmine\math\Vector3;
 
 class BlockSniperChunkManager extends SimpleChunkManager {
-
-	public function __construct($seed, int $worldHeight = Level::Y_MAX) {
-		parent::__construct($seed, $worldHeight);
-	}
 
 	/**
 	 * @param int $x

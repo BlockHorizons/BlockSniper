@@ -16,14 +16,14 @@ use pocketmine\level\Position;
 
 class SessionManager implements Listener {
 
-	/** @var Loader */
-	private $loader = null;
-	/** @var int */
-	private $serverSessionCounter = 0;
 	/** @var PlayerSession[] */
 	private static $playerSessions = [];
 	/** @var ServerSession[] */
 	private static $serverSessions = [];
+	/** @var Loader */
+	private $loader = null;
+	/** @var int */
+	private $serverSessionCounter = 0;
 
 	public function __construct(Loader $loader) {
 		$this->loader = $loader;
@@ -31,27 +31,12 @@ class SessionManager implements Listener {
 	}
 
 	/**
-	 * @param Loader $loader
+	 * @param IPlayer $player
 	 *
-	 * @return bool
+	 * @return PlayerSession|null
 	 */
-	private function createInitialSessionFile(Loader $loader): bool {
-		if(!file_exists($loader->getDataFolder() . "serverSessions.json")) {
-			file_put_contents($loader->getDataFolder() . "serverSessions.json", json_encode([
-				[
-					"targetBlock" => [
-						"level" => "MyWorld",
-						"x" => 256,
-						"y" => 128,
-						"z" => 256
-					],
-					"brush" => (new Brush(""))->jsonSerialize(),
-					"name" => "ExampleGlobalBrush"
-				]
-			]));
-			return true;
-		}
-		return false;
+	public static function getPlayerSession(IPlayer $player): ?PlayerSession {
+		return self::$playerSessions[strtolower($player->getName())] ?? null;
 	}
 
 	/**
@@ -79,17 +64,34 @@ class SessionManager implements Listener {
 	}
 
 	/**
+	 * @param Loader $loader
+	 *
+	 * @return bool
+	 */
+	private function createInitialSessionFile(Loader $loader): bool {
+		if(!file_exists($loader->getDataFolder() . "serverSessions.json")) {
+			file_put_contents($loader->getDataFolder() . "serverSessions.json", json_encode([
+				[
+					"targetBlock" => [
+						"level" => "MyWorld",
+						"x" => 256,
+						"y" => 128,
+						"z" => 256
+					],
+					"brush" => (new Brush(""))->jsonSerialize(),
+					"name" => "ExampleGlobalBrush"
+				]
+			]));
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * @return ServerSession[]
 	 */
 	public function getServerSessions(): array {
 		return self::$serverSessions;
-	}
-
-	/**
-	 * @return Loader
-	 */
-	public function getLoader(): Loader {
-		return $this->loader;
 	}
 
 	/**
@@ -121,18 +123,16 @@ class SessionManager implements Listener {
 	/**
 	 * @param IPlayer $player
 	 *
-	 * @return PlayerSession|null
-	 */
-	public static function getPlayerSession(IPlayer $player): ?PlayerSession {
-		return self::$playerSessions[strtolower($player->getName())] ?? null;
-	}
-
-	/**
-	 * @param IPlayer $player
-	 *
 	 * @return bool
 	 */
 	public static function playerSessionExists(IPlayer $player): bool {
 		return isset(self::$playerSessions[strtolower($player->getName())]);
+	}
+
+	/**
+	 * @return Loader
+	 */
+	public function getLoader(): Loader {
+		return $this->loader;
 	}
 }

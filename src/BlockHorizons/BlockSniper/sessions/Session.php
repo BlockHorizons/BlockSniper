@@ -6,10 +6,10 @@ use BlockHorizons\BlockSniper\brush\Brush;
 use BlockHorizons\BlockSniper\cloning\CloneStorer;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\revert\RevertStorer;
 use BlockHorizons\BlockSniper\sessions\owners\ISessionOwner;
 use BlockHorizons\BlockSniper\sessions\owners\PlayerSessionOwner;
 use BlockHorizons\BlockSniper\sessions\owners\ServerSessionOwner;
-use BlockHorizons\BlockSniper\undo\RevertStorer;
 use pocketmine\utils\TextFormat;
 
 abstract class Session {
@@ -31,9 +31,14 @@ abstract class Session {
 		$this->cloneStorer = new CloneStorer($this, $loader->getDataFolder());
 
 		if($this->initializeBrush()) {
-			$loader->getLogger()->debug(TextFormat::GREEN . (new Translation(Translation::LOG_BRUSH_RESTORED, [$this->getSessionOwner()->getName()]))->getMessage());
+			$loader->getLogger()->debug(TextFormat::GREEN . Translation::get(Translation::LOG_BRUSH_RESTORED, [$this->getSessionOwner()->getName()]));
 		}
 	}
+
+	/**
+	 * @return bool
+	 */
+	protected abstract function initializeBrush(): bool;
 
 	/**
 	 * @return PlayerSessionOwner|ServerSessionOwner
@@ -69,9 +74,4 @@ abstract class Session {
 	public function getCloneStorer(): CloneStorer {
 		return $this->cloneStorer;
 	}
-
-	/**
-	 * @return bool
-	 */
-	protected abstract function initializeBrush(): bool;
 }

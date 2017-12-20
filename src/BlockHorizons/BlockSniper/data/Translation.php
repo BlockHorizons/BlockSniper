@@ -4,9 +4,6 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\data;
 
-use BlockHorizons\BlockSniper\Loader;
-use pocketmine\Server;
-
 class Translation {
 
 	/**
@@ -88,6 +85,7 @@ class Translation {
 	const UI_MAIN_MENU_BRUSH = "ui.main-menu.brush";
 	const UI_MAIN_MENU_CONFIG = "ui.main-menu.config";
 	const UI_MAIN_MENU_PRESETS = "ui.main-menu.presets";
+	const UI_MAIN_MENU_GLOBAL_BRUSH = "ui.main-menu.global-brush";
 	const UI_MAIN_MENU_EXIT = "ui.main-menu.exit";
 	const UI_BRUSH_MENU_TITLE = "ui.brush-menu.title";
 	const UI_BRUSH_MENU_SIZE = "ui.brush-menu.size";
@@ -112,6 +110,7 @@ class Translation {
 	const UI_CONFIGURATION_MENU_SAVE_BRUSH = "ui.configuration-menu.save-brush";
 	const UI_CONFIGURATION_MENU_DROP_PLANTS = "ui.configuration-menu.drop-plants";
 	const UI_CONFIGURATION_MENU_AUTO_GUI = "ui.configuration-menu.auto-gui";
+	const UI_CONFIGURATION_MENU_MYPLOT_SUPPORT = "ui.configuration-menu.myplot-support";
 	const UI_CONFIGURATION_MENU_AUTO_RELOAD = "ui.configuration-menu.auto-reload";
 	const LOG_LANGUAGE_AUTO_SELECTED = "log.language.auto-selected";
 	const LOG_LANGUAGE_USAGE = "log.language.usage";
@@ -143,44 +142,46 @@ class Translation {
 	const BRUSH_TYPE_SNOWCONE = "brush.type.snowcone";
 	const BRUSH_TYPE_TOPLAYER = "brush.type.toplayer";
 	const BRUSH_TYPE_TREE = "brush.type.tree";
-
-	/** @var string */
-	private $key = "";
-	/** @var TranslationData */
-	private $data = null;
+	/** @var string[] */
+	private static $translations = [];
 	/** @var array */
-	private $params = [];
+	private $messageData = [];
 
-	public function __construct(string $key, array $params = []) {
+	public function __construct(TranslationData $data) {
+		$this->messageData = $data->getMessages();
 		$reflection = new \ReflectionClass(self::class);
-		if(!in_array($key, $reflection->getConstants())) {
-			throw new \InvalidArgumentException("Invalid translation key passed to translation.");
+		foreach($reflection->getConstants() as $constant => $value) {
+			self::$translations[$value] = $this->putMessage($value);
 		}
-		$this->key = $key;
-		/** @var Loader $loader */
-		$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
-		$this->data = $loader->getTranslationData();
-		$this->params = $params;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getMessage(): string {
-		$messages = $this->data->getMessages();
-		$path = explode(".", $this->key);
+	private function putMessage(string $key): string {
+		$messages = $this->messageData;
+		$path = explode(".", $key);
 		$pathCount = count($path);
 
-		$array = $messages[$path[0]];
+		$message = $messages[$path[0]];
 		for($i = 1; $i < $pathCount; $i++) {
-			if(is_array($array)) {
-				$array = $array[$path[$i]];
+			if(is_array($message)) {
+				$message = $message[$path[$i]];
 			}
 		}
-		$message = $array;
-		if(!empty($this->params)) {
-			return vsprintf($message, $this->params);
-		}
 		return $message;
+	}
+
+	/**
+	 * @param string $key
+	 * @param array  $params
+	 *
+	 * @return string
+	 */
+	public static function get(string $key, array $params = []): string {
+		if(!empty($params)) {
+			return vsprintf(self::$translations[$key], $params);
+		}
+		return self::$translations[$key];
 	}
 }

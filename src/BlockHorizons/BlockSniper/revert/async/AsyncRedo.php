@@ -2,9 +2,9 @@
 
 declare(strict_types = 1);
 
-namespace BlockHorizons\BlockSniper\undo\async;
+namespace BlockHorizons\BlockSniper\revert\async;
 
-use BlockHorizons\BlockSniper\undo\IRedo;
+use BlockHorizons\BlockSniper\revert\IRedo;
 
 class AsyncRedo extends AsyncRevert implements IRedo {
 

@@ -11,6 +11,11 @@ use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\PlayerSession;
 use BlockHorizons\BlockSniper\sessions\Session;
 
+/*
+ * An ugly class for processing values for a session.
+ * This might damage you permanently, I don't recommend looking at it for too long.
+ */
+
 class PropertyProcessor {
 
 	const VALUE_SIZE = 0;
@@ -24,7 +29,7 @@ class PropertyProcessor {
 	const VALUE_OBSOLETE = 8;
 	const VALUE_BIOME = 9;
 	const VALUE_TREE = 10;
-	
+
 	/** @var Session */
 	private $session = null;
 	/** @var Loader */
@@ -33,13 +38,6 @@ class PropertyProcessor {
 	public function __construct(Session $session, Loader $loader) {
 		$this->session = $session;
 		$this->loader = $loader;
-	}
-
-	/**
-	 * @return Loader
-	 */
-	public function getLoader(): Loader {
-		return $this->loader;
 	}
 
 	/**
@@ -126,5 +124,12 @@ class PropertyProcessor {
 		if($this->session instanceof PlayerSession) {
 			$this->getLoader()->getServer()->getPluginManager()->callEvent(new Change($this->session->getSessionOwner()->getPlayer(), $action, $value));
 		}
+	}
+
+	/**
+	 * @return Loader
+	 */
+	public function getLoader(): Loader {
+		return $this->loader;
 	}
 }

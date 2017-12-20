@@ -5,9 +5,9 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\brush\async\tasks;
 
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\revert\async\AsyncRevert;
+use BlockHorizons\BlockSniper\revert\Revert;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
-use BlockHorizons\BlockSniper\undo\async\AsyncRevert;
-use BlockHorizons\BlockSniper\undo\Revert;
 use pocketmine\level\format\Chunk;
 use pocketmine\level\Level;
 use pocketmine\Server;
@@ -23,7 +23,7 @@ class RevertTask extends AsyncBlockSniperTask {
 
 	public function onRun(): void {
 		/** @var AsyncRevert $revert */
-		$revert = unserialize($this->revert);
+		$revert = unserialize($this->revert, ["allowed_classes" => [AsyncRevert::class]]);
 		$chunks = $revert->getOldChunks();
 
 		$detached = $revert->getDetached();

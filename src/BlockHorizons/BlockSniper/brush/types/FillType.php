@@ -6,19 +6,14 @@ namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
 use pocketmine\block\Block;
-use pocketmine\level\ChunkManager;
-use pocketmine\Player;
+
+/*
+ * Places blocks on every location within the brush radius.
+ */
 
 class FillType extends BaseType {
 
 	const ID = self::TYPE_FILL;
-
-	/*
-	 * Places blocks on every location within the brush radius.
-	 */
-	public function __construct(Player $player, ChunkManager $level, array $blocks) {
-		parent::__construct($player, $level, $blocks);
-	}
 
 	/**
 	 * @return Block[]

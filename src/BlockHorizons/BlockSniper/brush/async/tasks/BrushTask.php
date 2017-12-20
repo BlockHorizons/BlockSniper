@@ -7,8 +7,8 @@ namespace BlockHorizons\BlockSniper\brush\async\tasks;
 use BlockHorizons\BlockSniper\brush\BaseShape;
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\revert\async\AsyncUndo;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
-use BlockHorizons\BlockSniper\undo\async\AsyncUndo;
 use pocketmine\block\Block;
 use pocketmine\level\format\Chunk;
 use pocketmine\level\Level;
@@ -34,7 +34,7 @@ class BrushTask extends AsyncBlockSniperTask {
 	}
 
 	public function onRun(): void {
-		$chunks = unserialize($this->chunks);
+		$chunks = unserialize($this->chunks, ["allowed_classes" => [Chunk::class]]);
 		$processedBlocks = 0;
 		$type = $this->type;
 		$shape = $this->shape;
@@ -69,12 +69,9 @@ class BrushTask extends AsyncBlockSniperTask {
 				$i = 0;
 			}
 		}
-		$type->setBlocksInside($blocks)->setAsynchronous()->setChunkManager($manager)->fillShape(unserialize($this->plotPoints));
+		$type->setBlocksInside($blocks)->setAsynchronous()->setChunkManager($manager)->fillShape(unserialize($this->plotPoints, ["allowed_classes" => [Vector2::class]]));
 
-		$this->setResult([
-			"undoChunks" => $undoChunks,
-			"chunks" => $chunks
-		]);
+		$this->setResult(compact("undoChunks", "chunks"));
 	}
 
 	/**

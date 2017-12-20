@@ -14,8 +14,8 @@ class PresetListWindow extends Window {
 	public function process(): void {
 		$this->data = [
 			"type" => "form",
-			"title" => (new Translation(Translation::UI_PRESET_LIST_TITLE))->getMessage(),
-			"content" => (new Translation(Translation::UI_PRESET_LIST_SUBTITLE))->getMessage(),
+			"title" => Translation::get(Translation::UI_PRESET_LIST_TITLE),
+			"content" => Translation::get(Translation::UI_PRESET_LIST_SUBTITLE),
 			"buttons" => []
 		];
 		foreach($this->getLoader()->getPresetManager()->getAllPresets() as $key => $name) {

@@ -101,6 +101,9 @@ class CuboidShape extends BaseShape {
 		for($x = $minX; $x <= $maxX + 16; $x += 16) {
 			for($z = $minZ; $z <= $maxZ + 16; $z += 16) {
 				$chunk = $this->getLevel()->getChunk($x >> 4, $z >> 4, true);
+				if($chunk === null) {
+					continue;
+				}
 				$touchedChunks[Level::chunkHash($x >> 4, $z >> 4)] = $chunk->fastSerialize();
 			}
 		}

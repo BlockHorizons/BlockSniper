@@ -6,14 +6,14 @@ namespace BlockHorizons\BlockSniper\brush\async\tasks;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\revert\async\AsyncUndo;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
-use BlockHorizons\BlockSniper\undo\async\AsyncUndo;
-use libschematic\Schematic;
 use pocketmine\block\Block;
 use pocketmine\level\format\Chunk;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use pocketmine\Server;
+use Schematic\Schematic;
 
 class PasteTask extends AsyncBlockSniperTask {
 
@@ -34,7 +34,7 @@ class PasteTask extends AsyncBlockSniperTask {
 	}
 
 	public function onRun(): void {
-		$chunks = unserialize($this->chunks);
+		$chunks = unserialize($this->chunks, ["allowed_classes" => [Chunk::class]]);
 		$file = $this->file;
 		$center = $this->center;
 

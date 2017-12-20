@@ -10,7 +10,6 @@ use BlockHorizons\BlockSniper\Loader;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\command\PluginIdentifiableCommand;
-use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use pocketmine\utils\TextFormat as TF;
 
@@ -30,14 +29,14 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand 
 	 * @param CommandSender $sender
 	 */
 	public function sendConsoleError(CommandSender $sender): void {
-		$sender->sendMessage($this->getWarning() . (new Translation(Translation::COMMANDS_COMMON_INVALID_SENDER))->getMessage());
+		$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_COMMON_INVALID_SENDER));
 	}
 
 	/**
-	 * @return Loader
+	 * @return string
 	 */
-	public function getLoader(): Loader {
-		return $this->loader;
+	public function getWarning(): string {
+		return TF::RED . Translation::get(Translation::COMMANDS_COMMON_WARNING_PREFIX);
 	}
 
 	/**
@@ -51,14 +50,7 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand 
 	 * @param CommandSender $sender
 	 */
 	public function sendNoPermission(CommandSender $sender): void {
-		$sender->sendMessage($this->getWarning() . (new Translation(Translation::COMMANDS_COMMON_NO_PERMISSION))->getMessage());
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getWarning(): string {
-		return TF::RED . (new Translation(Translation::COMMANDS_COMMON_WARNING_PREFIX))->getMessage();
+		$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_COMMON_NO_PERMISSION));
 	}
 
 	/**
@@ -66,5 +58,12 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand 
 	 */
 	public function getSettings(): ConfigData {
 		return $this->getLoader()->getSettings();
+	}
+
+	/**
+	 * @return Loader
+	 */
+	public function getLoader(): Loader {
+		return $this->loader;
 	}
 }

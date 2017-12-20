@@ -132,6 +132,11 @@ abstract class BaseShape {
 	}
 
 	/**
+	 * @return array
+	 */
+	public abstract function getTouchedChunks(): array;
+
+	/**
 	 * @param int $targetX
 	 * @param int $targetY
 	 * @param int $targetZ
@@ -150,9 +155,4 @@ abstract class BaseShape {
 
 		return [$minX, $minY, $minZ, $maxX, $maxY, $maxZ];
 	}
-
-	/**
-	 * @return array
-	 */
-	public abstract function getTouchedChunks(): array;
 }
