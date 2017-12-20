@@ -17,7 +17,7 @@ Apart from just brushing, BlockSniper also features things such as copying and p
 <br>
 **For more information, make sure to check the [Wiki](https://github.com/Blockhorizons/BlockSniper/wiki).**
 
-### Installation and Development builds.
+### Installation and Development Builds
 Stable releases will be drafted at [Releases](https://github.com/BlockHorizons/BlockSniper/releases) or at the [release page](https://poggit.pmmp.io/p/BlockSniper/) at Poggit.
 To install a version:
  - Go to releases from either GitHub or Poggit.
