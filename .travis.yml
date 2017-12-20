@@ -33,7 +33,7 @@ before_script:
 - cp -rf BlockHorizons/BlockSniper/LICENSE PocketMine-MP/plugins/BlockSniper
 - cp -rf BlockHorizons/BlockSniper/travis.php PocketMine-MP/plugins/BlockSniper
 
-- cp -rf BlockHorizons/BlockSniper/Tests PocketMine-MP/plugins/
+- cp -rf BlockHorizons/BlockSniper/tests PocketMine-MP/plugins/
 
 - cd PocketMine-MP/
 - composer install
