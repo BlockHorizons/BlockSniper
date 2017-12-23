@@ -189,7 +189,11 @@
       "replace": "置き換える",
       "snowcone": "スノーコーン",
       "toplayer": "上のレイヤー",
-      "tree": "木"
+      "tree": "木",
+      "regenerate": "Regenerate",
+      "freeze": "Freeze",
+      "warm": "Warm",
+      "heat": "Heat"
     }
   }
 }

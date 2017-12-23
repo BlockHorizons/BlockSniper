@@ -12,6 +12,8 @@ use BlockHorizons\BlockSniper\brush\types\ExpandType;
 use BlockHorizons\BlockSniper\brush\types\FillType;
 use BlockHorizons\BlockSniper\brush\types\FlattenAllType;
 use BlockHorizons\BlockSniper\brush\types\FlattenType;
+use BlockHorizons\BlockSniper\brush\types\FreezeType;
+use BlockHorizons\BlockSniper\brush\types\HeatType;
 use BlockHorizons\BlockSniper\brush\types\LayerType;
 use BlockHorizons\BlockSniper\brush\types\LeafBlowerType;
 use BlockHorizons\BlockSniper\brush\types\MeltType;
@@ -22,6 +24,7 @@ use BlockHorizons\BlockSniper\brush\types\ReplaceType;
 use BlockHorizons\BlockSniper\brush\types\SnowConeType;
 use BlockHorizons\BlockSniper\brush\types\TopLayerType;
 use BlockHorizons\BlockSniper\brush\types\TreeType;
+use BlockHorizons\BlockSniper\brush\types\WarmType;
 use BlockHorizons\BlockSniper\exceptions\InvalidIdException;
 use pocketmine\permission\Permission;
 use pocketmine\permission\PermissionManager;
@@ -52,6 +55,9 @@ class TypeRegistration {
 		self::registerType(TopLayerType::class, TopLayerType::ID);
 		self::registerType(TreeType::class, TreeType::ID);
 		self::registerType(RegenerateType::class, RegenerateType::ID);
+		self::registerType(FreezeType::class, FreezeType::ID);
+		self::registerType(WarmType::class, WarmType::ID);
+		self::registerType(HeatType::class, HeatType::ID);
 	}
 
 	/**

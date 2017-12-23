@@ -191,7 +191,11 @@
       "replace": "Vervangen",
       "snowcone": "Sneeuw Laag",
       "toplayer": "Bovenlaag",
-      "tree": "Boom"
+      "tree": "Boom",
+      "regenerate": "Vernieuwen",
+      "freeze": "Bevriezen",
+      "warm": "Verwarmen",
+      "heat": "Verhitten"
     }
   }
 }

@@ -191,7 +191,11 @@
       "replace": "Remplacer (replace)",
       "snowcone": "Couche de neige (snowcone)",
       "toplayer": "Couche supérieure (toplayer)",
-      "tree": "Arbre (tree)"
+      "tree": "Arbre (tree)",
+      "regenerate": "Regenerate",
+      "freeze": "Freeze",
+      "warm": "Warm",
+      "heat": "Heat"
     }
   }
 }

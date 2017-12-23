@@ -39,6 +39,9 @@ abstract class BaseType {
 	const TYPE_TOP_LAYER = 15;
 	const TYPE_TREE = 16;
 	const TYPE_REGENERATE = 17;
+	const TYPE_FREEZE = 18;
+	const TYPE_WARM = 19;
+	const TYPE_HEAT = 20;
 
 	/** @var int */
 	protected $level = 0;
