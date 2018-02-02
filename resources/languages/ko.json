@@ -115,7 +115,7 @@
       "brush": "브러시",
       "config": "구성",
       "presets": "프리셋",
-      "global-brush": "Global Brush",
+      "global-brush": "광범위한 브러쉬",
       "exit": "나가기"
     },
     "brush-menu": {
@@ -143,8 +143,8 @@
       "reset-decrement-brush": "감소 브러시를 초기 시작 크기로 자동 재설정",
       "save-brush": "서버 재시작시 플레이어의 브러시 속성 저장",
       "drop-plants": "드래프러/블로워 타입의 destrow를 제거한 후 LeafBlowertype으로 멀리 떨어져 있습니다.",
-      "auto-gui": "핫 바 슬롯을 브러시 항목을 포함하는 것으로 전환 할 때 GUI를 자동으로 엽니 다.",
-      "myplot-support": "Whether to turn on MyPlot support or not",
+      "auto-gui": "핫 바 슬롯을 브러시 항목을 포함하는 것으로 전환 할 때 GUI를 자동으로 엽니다.",
+      "myplot-support": "MyPlot지원을 사용할지 여부",
       "auto-reload": "이 창을 닫을 때이 토글을 켜면 구성이 자동으로 다시로드됩니다."
     }
   },
@@ -180,18 +180,18 @@
       "clean": "청소",
       "drain": "Drain",
       "expand": "넓히다",
-      "fill": "Fill",
-      "flattenall": "Flatten All",
-      "flatten": "Flatten",
-      "layer": "Layer",
+      "fill": "채우다",
+      "flattenall": "모두 ",
+      "flatten": "평지화",
+      "layer": "층",
       "leafblower": "Leaf Blower",
-      "melt": "Melt",
+      "melt": "녹이기",
       "overlay": "Overlay",
-      "replaceall": "Replace All",
-      "replace": "Replace",
+      "replaceall": "모두 재배치",
+      "replace": "재배치",
       "snowcone": "Snowcone",
       "toplayer": "상단 레이어",
-      "tree": "Tree"
+      "tree": "나무"
     }
   }
 }
