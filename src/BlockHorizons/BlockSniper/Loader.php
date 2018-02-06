@@ -40,7 +40,7 @@ class Loader extends PluginBase {
 		"ko",
 		"ja",
         "zh",
-        "zho"
+        "zh-hant"
 	];
 	/** @var TranslationData */
 	private $language = null;
