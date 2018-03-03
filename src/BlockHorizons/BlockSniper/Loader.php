@@ -39,7 +39,7 @@ class Loader extends PluginBase {
 		"fr",
 		"ko",
 		"ja",
-        "zh",
+        "zh-hans",
         "zh-hant"
 	];
 	/** @var TranslationData */
