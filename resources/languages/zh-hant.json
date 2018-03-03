@@ -1,0 +1,197 @@
+{
+  "commands": {
+    "common": {
+      "warning-prefix": "[警告] ",
+      "invalid-sender": "你只能在遊戲中執行這條指令。",
+      "no-permission": "你沒有權限執行這條指令。"
+    },
+    "brush": {
+      "description": "打開 BlockSniper 圖形界面。"
+    },
+    "blocksniper": {
+      "description": "顯示 BlockSniper 的相關信息，或重新加載插件。",
+      "info": "信息",
+      "version": "版本: ",
+      "organisation": "組織: ",
+      "authors": "作者: ",
+      "target-api": "目標 API: ",
+      "reload": "正在重新加載 BlockSniper..."
+    },
+    "redo": {
+      "description": "恢復上一次 BlockSniper 撤銷的操作。",
+      "no-redo": "沒有可以被恢復的操作。",
+      "success": "成功恢復上一次撤銷的操作。"
+    },
+    "undo": {
+      "description": "撤銷上一次 BlockSniper 的操作。",
+      "no-undo": "沒有可以被撤銷的操作。",
+      "success": "成功撤銷上一次操作。"
+    },
+    "clone": {
+      "description": "以指定格式克隆一個區域。",
+      "copy": {
+        "success": "成功複製你看向的位置。"
+      },
+      "template": {
+        "missing-name": "沒有為模板指定有效的名稱。",
+        "success": "成功存儲模板文件至 %s。"
+      },
+      "schematic": {
+        "missing-name": "沒有為概要指定有效的名稱。",
+        "success": "成功存儲概要文件至 %s."
+      }
+    },
+    "paste": {
+      "description": "粘貼一個已克隆的區域到世界中。",
+      "copy": {
+        "no-copies": "沒有可以被粘貼的複製樣本。",
+        "success": "成功粘貼複製樣本至你看向的位置。"
+      },
+      "template": {
+        "nonexistent": "無法在模板目錄中找到 %s 模板。",
+        "success": "成功複製模板 %s 至你看向的位置。"
+      },
+      "schematic": {
+        "nonexistent": "無法在概要目錄中找到 %s 概要。",
+        "success": "成功複製概要 %s 至你看向的位置。"
+      }
+    }
+  },
+  "ui": {
+    "preset-menu": {
+      "title": "預設選項",
+      "subtitle": "點擊一個按鈕以繼續。",
+      "create": "新建",
+      "delete": "刪除",
+      "select": "選擇",
+      "list": "列表",
+      "exit": "退出"
+    },
+    "preset-edit": {
+      "title": "編輯預設選項",
+      "name": "預設選項名稱",
+      "size": "大小",
+      "shape": "形狀",
+      "type": "操作類型",
+      "hollow": "不填充內部",
+      "decrement": "尺寸遞減",
+      "height": "高度",
+      "perfect": "完善形狀",
+      "blocks": "目標方塊",
+      "obsolete": "替換方塊",
+      "biome": "生物群落",
+      "tree": "樹木類型"
+    },
+    "preset-selection": {
+      "title": "選擇預設選項",
+      "subtitle": "點擊一個按鈕以應用預設選項。"
+    },
+    "preset-deletion": {
+      "title": "刪除預設選項",
+      "subtitle": "點擊一個按鈕以刪除預設選項。"
+    },
+    "preset-list": {
+      "title": "預設選項列表",
+      "subtitle": "點擊一個按鈕以編輯/查看預設選項。"
+    },
+    "preset-creation": {
+      "title": "新建預設選項",
+      "name": "預設選項名稱",
+      "size": "大小",
+      "shape": "形狀",
+      "type": "操作類型",
+      "hollow": "不填充內部",
+      "decrement": "尺寸遞減",
+      "height": "高度",
+      "perfect": "完善形狀",
+      "blocks": "目標方塊",
+      "obsolete": "替換方塊",
+      "biome": "生物群落",
+      "tree": "樹木類型"
+    },
+    "main-menu": {
+      "title": "BlockSniper 菜單",
+      "subtitle": "點擊一個按鈕以繼續。",
+      "brush": "畫筆選項",
+      "config": "設置",
+      "presets": "預設選項",
+      "global-brush": "全局畫筆",
+      "exit": "退出"
+    },
+    "brush-menu": {
+      "title": "畫筆選項",
+      "size": "大小",
+      "shape": "形狀",
+      "type": "操作類型",
+      "hollow": "不填充內部",
+      "decrement": "尺寸遞減",
+      "height": "高度",
+      "perfect": "完善形狀",
+      "blocks": "目標方塊",
+      "obsolete": "替換方塊",
+      "biome": "生物群落",
+      "tree": "樹木類型"
+    },
+    "configuration-menu": {
+      "title": "BlockSniper 設置",
+      "auto-update": "新版本自動更新配置文件",
+      "language": "BlockSniper 相關信息使用的語言",
+      "brush-item": "畫筆物品 ID",
+      "max-brush-size": "畫筆絕對大小上限",
+      "min-async-size": "異步畫筆操作大小限制。如果畫筆大小高於這個數值，操作將被異步執行",
+      "max-reverts": "撤銷/恢復操作最大保存數量。更早的操作將被自動清理",
+      "reset-decrement-brush": "自動重置尺寸遞減至最初值",
+      "save-brush": "服務器重啟時保存用戶畫筆數據",
+      "drop-plants": "掉落清除植物類型操作移除的植物物品",
+      "auto-gui": "切換到畫筆物品欄時自動打開畫筆圖形界面",
+      "myplot-support": "是否啟用 MyPlot 支持",
+      "auto-reload": "打開此開關後將在這個窗口關閉時重新加載配置"
+    }
+  },
+  "log": {
+    "language": {
+      "auto-selected": "[BlockSniper] No valid language has been selected. English has been auto selected.",
+      "usage": "請到遊戲中設置頁面使用 /b 選擇語言。",
+      "selected": "[BlockSniper] 已選擇語言: "
+    },
+    "brush": {
+      "restored": "玩家 %s 的畫筆已被恢復。",
+      "all-restored": "所有的畫筆已被恢復。"
+    },
+    "presets": {
+      "loaded": "預設選項 %s 已被加載。",
+      "all-loaded": "所有預設選項已被加載。"
+    },
+    "reload": {
+      "start": "[BlockSniper] 重新加載中...",
+      "finish": "[BlockSniper] 已重新加載。"
+    }
+  },
+  "brush": {
+    "shape": {
+      "cube": "立方體",
+      "cuboid": "長方體",
+      "sphere": "球體",
+      "cylinder": "圓柱體"
+    },
+    "type": {
+      "biome": "生物群落",
+      "cleanentities": "清除實體",
+      "clean": "清理",
+      "drain": "清除液體",
+      "expand": "地形擴展",
+      "fill": "填充",
+      "flattenall": "高級扁平化",
+      "flatten": "扁平化",
+      "layer": "鋪設",
+      "leafblower": "清除植物",
+      "melt": "熔化",
+      "overlay": "覆蓋",
+      "replaceall": "全部替換",
+      "replace": "替換",
+      "snowcone": "降雪",
+      "toplayer": "頂層",
+      "tree": "樹木"
+    }
+  }
+}

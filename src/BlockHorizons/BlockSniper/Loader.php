@@ -38,7 +38,9 @@ class Loader extends PluginBase {
 		"nl",
 		"fr",
 		"ko",
-		"ja"
+		"ja",
+        "zh-hans",
+        "zh-hant"
 	];
 	/** @var TranslationData */
 	private $language = null;
