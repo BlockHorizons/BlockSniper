@@ -24,7 +24,7 @@ before_script:
 - mkdir -p PocketMine-MP/plugins/BlockSniper
 
 - cd PocketMine-MP/plugins/
-- wget -O DevTools.phar https://poggit.pmmp.io/r/15272/PocketMine-DevTools.phar
+- wget -O DevTools.phar https://poggit.pmmp.io/r/22356/PocketMine-DevTools.phar
 - cd /home/travis/build/
 
 - cp -rf BlockHorizons/BlockSniper/src PocketMine-MP/plugins/BlockSniper
