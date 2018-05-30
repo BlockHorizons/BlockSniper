@@ -43,7 +43,7 @@ class Brush implements \JsonSerializable {
 	private $blocks = [];
 	/** @var array */
 	private $obsolete = [];
-	/** @var string */
+    /** @var string|int */
 	private $biome = "plains";
 	/** @var string */
 	private $tree = "oak";
@@ -181,9 +181,10 @@ class Brush implements \JsonSerializable {
 		$this->biome = $biome;
 	}
 
-	/**
-	 * @return int
-	 */
+    /**
+     * @return int
+     * @throws \ReflectionException
+     */
 	public function getBiomeId(): int {
 		if(is_numeric($this->biome)) {
 			return (int) $this->biome;
@@ -204,9 +205,10 @@ class Brush implements \JsonSerializable {
 		$this->tree = $treeType;
 	}
 
-	/**
-	 * @return int
-	 */
+    /**
+     * @return int
+     * @throws \ReflectionException
+     */
 	public function getTreeType(): int {
 		if(is_numeric($this->tree)) {
 			return (int) $this->tree;
@@ -280,7 +282,8 @@ class Brush implements \JsonSerializable {
 	 *
 	 * @return BaseShape
 	 */
-	public function getShape($cloneShape = false, int $yOffset = 0): BaseShape {
+    public function getShape(bool $cloneShape = false, int $yOffset = 0): BaseShape
+    {
 		$shapeName = ShapeRegistration::getShape($this->shape);
 		$vector3 = Server::getInstance()->getPlayer($this->player)->getTargetBlock(100)->add(0, $yOffset);
 
@@ -316,27 +319,22 @@ class Brush implements \JsonSerializable {
 		$this->type = strtolower($type);
 	}
 
-	/**
-	 * @return bool
-	 */
-	public function decrement(): bool {
+    public function decrement()
+    {
 		if($this->isDecrementing()) {
 			if($this->getSize() <= 1) {
 				/** @var Loader $loader */
 				$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
 				if($loader === null) {
-					return false;
+                    return;
 				}
-				if($loader->getSettings()->resetDecrementBrush() !== false) {
+                if ($loader->getSettings()->resetDecrementBrush()) {
 					$this->setSize($this->resetSize);
-					return true;
 				}
-				return false;
+                return;
 			}
 			$this->setSize($this->getSize() - 1);
-			return true;
 		}
-		return false;
 	}
 
 	/**

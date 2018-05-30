@@ -62,7 +62,7 @@ class BrushListener implements Listener {
 			return [[new Vector2(), new Vector2()]];
 		}
 		$plotSize = $settings->plotSize;
-		foreach($this->getLoader()->getMyPlot()->getPlotsOfPlayer($player->getName(), $player->getLevel()->getName()) as $plot) {
+        foreach ($this->getLoader()->getMyPlot()->getPlotsOfPlayer($player->getName(), $player->getLevel()->getFolderName()) as $plot) {
 			$minVec = new Vector2($plot->X, $plot->Z);
 			$maxVec = new Vector2($plot->X + $plotSize, $plot->Z + $plotSize);
 			$plotPoints[] = [$minVec, $maxVec];

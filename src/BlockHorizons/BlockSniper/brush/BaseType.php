@@ -214,7 +214,7 @@ abstract class BaseType {
 			$valid = true;
 		}
 		if(!$valid) {
-			return;
+            return;
 		}
 		if($this->isAsynchronous()) {
 			$this->getChunkManager()->setBlockIdAt($pos->x, $pos->y, $pos->z, $id);

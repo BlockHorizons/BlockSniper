@@ -142,6 +142,7 @@ class Translation {
 	const BRUSH_TYPE_SNOWCONE = "brush.type.snowcone";
 	const BRUSH_TYPE_TOPLAYER = "brush.type.toplayer";
 	const BRUSH_TYPE_TREE = "brush.type.tree";
+
 	/** @var string[] */
 	private static $translations = [];
 	/** @var array */
@@ -155,9 +156,10 @@ class Translation {
 		}
 	}
 
-	/**
-	 * @return string
-	 */
+    /**
+     * @param string $key
+     * @return string
+     */
 	private function putMessage(string $key): string {
 		$messages = $this->messageData;
 		$path = explode(".", $key);
