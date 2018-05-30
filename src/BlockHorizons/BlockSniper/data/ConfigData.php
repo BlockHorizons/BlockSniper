@@ -67,12 +67,12 @@ class ConfigData {
 		];
 		if($cfg["Configuration-Version"] !== Loader::CONFIGURATION_VERSION) {
 			$autoUpdate = $cfg["Auto-Configuration-Update"];
-            $this->getLoader()->getLogger()->info("[BlockSniper] A new Configuration version was found. " . ($autoUpdate ? "Updating Configuration file..." : ""));
+			$this->getLoader()->getLogger()->info("[BlockSniper] A new Configuration version was found. " . ($autoUpdate ? "Updating Configuration file..." : ""));
 			if($autoUpdate) {
 				$this->updateConfig();
 			}
 		} else {
-            $this->getLoader()->getLogger()->debug("[BlockSniper] No new Configuration version found, Configuration is up to date.");
+			$this->getLoader()->getLogger()->debug("[BlockSniper] No new Configuration version found, Configuration is up to date.");
 		}
 	}
 

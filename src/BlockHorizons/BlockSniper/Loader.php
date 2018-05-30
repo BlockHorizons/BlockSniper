@@ -28,7 +28,7 @@ use pocketmine\utils\TextFormat as TF;
 class Loader extends PluginBase {
 
 	const VERSION = "2.3.1";
-    const API_TARGET = "3.0.0-ALPHA10 - 3.0.0-ALPHA12";
+	const API_TARGET = "3.0.0-ALPHA10 - 3.0.0-ALPHA12";
 	const CONFIGURATION_VERSION = "2.5.0";
 
 	/** @var string[] */
@@ -38,8 +38,8 @@ class Loader extends PluginBase {
 		"fr",
 		"ko",
 		"ja",
-        "zh-hans",
-        "zh-hant"
+		"zh-hans",
+		"zh-hant"
 	];
 	/** @var TranslationData */
 	private $language = null;
@@ -93,10 +93,10 @@ class Loader extends PluginBase {
 		$this->presetManager = new PresetManager($this);
 
 		if(!$this->language->collectTranslations()) {
-            $this->getLogger()->info(Translation::get(Translation::LOG_LANGUAGE_AUTO_SELECTED));
-            $this->getLogger()->info(Translation::get(Translation::LOG_LANGUAGE_USAGE));
+			$this->getLogger()->info(Translation::get(Translation::LOG_LANGUAGE_AUTO_SELECTED));
+			$this->getLogger()->info(Translation::get(Translation::LOG_LANGUAGE_USAGE));
 		} else {
-            $this->getLogger()->info(Translation::get(Translation::LOG_LANGUAGE_SELECTED) . TF::GREEN . $this->getSettings()->getLanguage());
+			$this->getLogger()->info(Translation::get(Translation::LOG_LANGUAGE_SELECTED) . TF::GREEN . $this->getSettings()->getLanguage());
 		}
 
 		ShapeRegistration::init();

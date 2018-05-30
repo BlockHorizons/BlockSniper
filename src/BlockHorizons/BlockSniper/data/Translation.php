@@ -156,10 +156,10 @@ class Translation {
 		}
 	}
 
-    /**
-     * @param string $key
-     * @return string
-     */
+	/**
+	 * @param string $key
+	 * @return string
+	 */
 	private function putMessage(string $key): string {
 		$messages = $this->messageData;
 		$path = explode(".", $key);
