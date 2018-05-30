@@ -15,7 +15,6 @@ use BlockHorizons\BlockSniper\commands\UndoCommand;
 use BlockHorizons\BlockSniper\data\ConfigData;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\data\TranslationData;
-use BlockHorizons\BlockSniper\git\GitRepository;
 use BlockHorizons\BlockSniper\listeners\BrushListener;
 use BlockHorizons\BlockSniper\listeners\UserInterfaceListener;
 use BlockHorizons\BlockSniper\presets\PresetManager;
@@ -99,7 +98,6 @@ class Loader extends PluginBase {
 		} else {
             $this->getLogger()->info(Translation::get(Translation::LOG_LANGUAGE_SELECTED) . TF::GREEN . $this->getSettings()->getLanguage());
 		}
-		new GitRepository($this);
 
 		ShapeRegistration::init();
 		TypeRegistration::init();
