@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\listeners;
 
-use BlockHorizons\BlockSniper\git\GitRepository;
+//use BlockHorizons\BlockSniper\git\GitRepository;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\event\level\LevelLoadEvent;
 use pocketmine\event\Listener;
@@ -29,6 +29,6 @@ class LevelListener implements Listener {
 	 * @param LevelLoadEvent $event
 	 */
 	public function addProject(LevelLoadEvent $event): void {
-		GitRepository::addProject($event->getLevel());
+		//GitRepository::addProject($event->getLevel());
 	}
 }

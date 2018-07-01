@@ -160,8 +160,8 @@ class Loader extends PluginBase {
 		$this->registerCommands();
 		$this->registerListeners();
 
-		$this->getServer()->getScheduler()->scheduleRepeatingTask(new UndoDiminishTask($this), 400);
-		$this->getServer()->getScheduler()->scheduleRepeatingTask(new RedoDiminishTask($this), 400);
+		$this->getScheduler()->scheduleRepeatingTask(new UndoDiminishTask($this), 400);
+		$this->getScheduler()->scheduleRepeatingTask(new RedoDiminishTask($this), 400);
 	}
 
 	private function registerCommands(): void {
