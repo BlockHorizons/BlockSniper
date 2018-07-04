@@ -14,7 +14,7 @@ use BlockHorizons\BlockSniper\sessions\Session;
 use pocketmine\block\Block;
 use pocketmine\block\Sapling;
 use pocketmine\item\Item;
-use pocketmine\level\generator\biome\Biome;
+use pocketmine\level\biome\Biome;
 use pocketmine\level\Position;
 use pocketmine\math\Vector2;
 use pocketmine\Server;

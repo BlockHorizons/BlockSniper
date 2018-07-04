@@ -7,7 +7,7 @@ namespace BlockHorizons\BlockSniper\ui\windows;
 use BlockHorizons\BlockSniper\brush\PropertyProcessor;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
-use pocketmine\level\generator\biome\Biome;
+use pocketmine\level\biome\Biome;
 use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
 
 class BrushMenuWindow extends Window {

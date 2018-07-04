@@ -1,11 +1,7 @@
 {
     "name": "BlockSniper",
     "version": "2.3.1",
-    "api": [
-        "3.0.0-ALPHA10",
-        "3.0.0-ALPHA11",
-        "3.0.0-ALPHA12"
-    ],
+    "api": 3.0.0,
     "author": "BlockHorizons",
     "authors": [
         "Sandertv (@Sandertv)",
