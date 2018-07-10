@@ -118,7 +118,7 @@ abstract class BaseShape {
 	 * @return bool
 	 */
 	public function editAsynchronously(BaseType $type, array $plotPoints = []): bool {
-		$this->getLevel()->getServer()->getScheduler()->scheduleAsyncTask(new BrushTask($this, $type, $this->getTouchedChunks(), $plotPoints));
+		$this->getLevel()->getServer()->getAsyncPool()->scheduleAsyncTask(new BrushTask($this, $type, $this->getTouchedChunks(), $plotPoints));
 		return true;
 	}
 
