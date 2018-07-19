@@ -31,7 +31,7 @@ class ReplaceType extends BaseType {
 		foreach($this->blocks as $block) {
 			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 			foreach($this->obsolete as $obsolete) {
-				if($block->getId() === $obsolete->getId()) {
+				if($block->getId() === $obsolete->getId() and $block->getDamage() === $obsolete->getDamage()) {
 					$undoBlocks[] = $block;
 					$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());
 				}
@@ -44,7 +44,7 @@ class ReplaceType extends BaseType {
 		foreach($this->blocks as $block) {
 			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 			foreach($this->obsolete as $obsolete) {
-				if($block->getId() === $obsolete->getId()) {
+				if($block->getId() === $obsolete->getId() and $block->getDamage() === $obsolete->getDamage()) {
 					$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());
 				}
 			}
