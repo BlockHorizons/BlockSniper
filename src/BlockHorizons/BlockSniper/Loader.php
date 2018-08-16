@@ -27,8 +27,8 @@ use pocketmine\utils\TextFormat as TF;
 
 class Loader extends PluginBase {
 
-	const VERSION = "2.3.1";
-	const API_TARGET = "3.0.0-ALPHA10 - 3.0.0-ALPHA12";
+	const VERSION = "3.0.0";
+	const API_TARGET = "3.0.0";
 	const CONFIGURATION_VERSION = "3.0.0";
 
 	/** @var string[] */

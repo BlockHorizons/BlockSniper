@@ -17,7 +17,7 @@ use Sandertv\Marshal\Unmarshal;
 class ConfigData {
 	private $filePath = "";
 
-	public $ConfigurationVersion = Loader::CONFIGURATION_VERSION;
+	public $ConfigurationVersion = ""; // Default to an outdated version, so we can properly detect outdated configs.
 	public $MessageLanguage = "en";
 	/** @var BrushItem */
 	public $BrushItem;
@@ -37,10 +37,25 @@ class ConfigData {
 		try {
 			Unmarshal::YamlFile($this->filePath, $this);
 		} catch(FileNotFoundException $exception) {
+			// Make sure to set the right version right off the bat.
+			$this->ConfigurationVersion = Loader::CONFIGURATION_VERSION;
 			Marshal::YamlFile($this->filePath, $this);
-		} catch(DecodeException $exception) {
+		} catch(\ErrorException $exception) {
+			// PM's error handler will create this error exception, causing the DecodeException not to be thrown at all.
 			$loader->getLogger()->error("Configuration corrupted. config.yml has been renamed to config_corrupted.yml and a new config.yml has been generated.");
 			rename($this->filePath, $loader->getDataFolder() . "config_corrupted.yml");
+			// Make sure to set the right version right off the bat.
+			$this->ConfigurationVersion = Loader::CONFIGURATION_VERSION;
+			Marshal::YamlFile($this->filePath, $this);
+		} catch(DecodeException $e){}
+
+		// We can retain backwards compatibility with old configuration most of the times, but the fact that the version
+		// was empty means that the configuration was completely unrecoverable. We'll generate a new one.
+		if($this->ConfigurationVersion === "") {
+			$loader->getLogger()->notice("Outdated configuration. config.yml has been renamed to config_old.yml and a new config.yml has been generated.");
+			rename($this->filePath, $loader->getDataFolder() . "config_old.yml");
+			// Set the new configuration version so we don't end in an infinite loop.
+			$this->ConfigurationVersion = Loader::CONFIGURATION_VERSION;
 			Marshal::YamlFile($this->filePath, $this);
 		}
 	}

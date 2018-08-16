@@ -35,9 +35,14 @@ abstract class Test {
 	 * @return bool
 	 */
 	public function run(): bool {
-		$this->getBlockSniper()->getLogger()->info("Test " . (new \ReflectionClass(static::class))->getShortName() . " is now running...");
-		$return = $this->onRun();
-		$this->getBlockSniper()->getLogger()->info("Test " . (new \ReflectionClass(static::class))->getShortName() . " finished with return value: " . ($return ? "Succeeded" : "Failed"));
+		try {
+			$this->getBlockSniper()->getLogger()->info("Test " . (new \ReflectionClass(static::class))->getShortName() . " is now running...");
+			$return = $this->onRun();
+			$this->getBlockSniper()->getLogger()->info("Test " . (new \ReflectionClass(static::class))->getShortName() . " finished with return value: " . ($return ? "Succeeded" : "Failed"));
+		} catch(\ReflectionException $exception) {
+			$return = false;
+		}
+
 		return $return;
 	}
 
