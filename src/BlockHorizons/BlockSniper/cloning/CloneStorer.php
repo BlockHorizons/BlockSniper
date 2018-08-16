@@ -112,7 +112,7 @@ class CloneStorer {
 			];
 			$i++;
 		}
-		file_put_contents($this->path . "templates/" . $templateName . ".yml", serialize($template));
+		file_put_contents($this->path . "templates/" . $templateName . ".template", serialize($template));
 		return true;
 	}
 
@@ -169,6 +169,6 @@ class CloneStorer {
 	 * @param array   $chunks
 	 */
 	public function pasteSchematic(string $file, Vector3 $center, array $chunks): void {
-		Server::getInstance()->getScheduler()->scheduleAsyncTask(new PasteTask($file, $center, $chunks, $this->session->getSessionOwner()->getName()));
+		Server::getInstance()->getAsyncPool()->submitTask(new PasteTask($file, $center, $chunks, $this->session->getSessionOwner()->getName()));
 	}
 }

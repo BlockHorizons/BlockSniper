@@ -11,10 +11,10 @@ use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\exceptions\InvalidBlockException;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
+use BlockHorizons\libschematic\Schematic;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
-use Schematic\Schematic;
 
 class CloneCommand extends BaseCommand {
 
@@ -56,7 +56,7 @@ class CloneCommand extends BaseCommand {
 				$shape = SessionManager::getPlayerSession($sender)->getBrush()->getShape(true, SessionManager::getPlayerSession($sender)->getBrush()->yOffset);
 				$cloneType = new TemplateType($sender, false, $center, $shape->getBlocksInside(), $args[1]);
 				$cloneType->saveClone();
-				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_CLONE_TEMPLATE_SUCCESS, [$this->loader->getDataFolder() . "templates/" . $args[1]]));
+				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_CLONE_TEMPLATE_SUCCESS, [$this->loader->getDataFolder() . "templates/" . $args[1] . ".template"]));
 				return true;
 
 			case "scheme":
@@ -76,7 +76,7 @@ class CloneCommand extends BaseCommand {
 					->setHeight($size * 2 + 1)
 					->setWidth($size * 2 + 1)
 					->save($this->loader->getDataFolder() . "schematics/" . $args[1] . ".schematic");
-				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_CLONE_SCHEMATIC_SUCCESS, [$this->loader->getDataFolder() . "templates/" . $args[1]]));
+				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_CLONE_SCHEMATIC_SUCCESS, [$this->loader->getDataFolder() . "templates/" . $args[1] . ".schematic"]));
 				return true;
 		}
 	}

@@ -155,7 +155,8 @@ class Translation {
 			foreach($reflection->getConstants() as $constant => $value) {
 				self::$translations[$value] = $this->putMessage($value);
 			}
-		} catch(\ReflectionException $exception){}
+		} catch(\ReflectionException $exception) {
+		}
 	}
 
 	/**

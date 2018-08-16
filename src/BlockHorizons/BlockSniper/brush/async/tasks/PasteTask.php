@@ -4,16 +4,18 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\brush\async\tasks;
 
+require_once("plugins/BlockSniper/src/schematic/src/BlockHorizons/libschematic/Schematic.php");
+
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\revert\async\AsyncUndo;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
+use BlockHorizons\libschematic\Schematic;
 use pocketmine\block\Block;
 use pocketmine\level\format\Chunk;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use pocketmine\Server;
-use Schematic\Schematic;
 
 class PasteTask extends AsyncBlockSniperTask {
 

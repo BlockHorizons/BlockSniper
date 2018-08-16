@@ -28,7 +28,7 @@ class CubeShape extends BaseShape {
 	 * @return array
 	 */
 	public function getBlocksInside(bool $vectorOnly = false): array {
-		[$targetX, $targetY, $targetZ] = $this->center;
+		[$targetX, $targetY, $targetZ] = $this->arrayVec($this->center);
 		[$minX, $minY, $minZ, $maxX, $maxY, $maxZ] = $this->calculateBoundaryBlocks($targetX, $targetY, $targetZ, $this->width, $this->width);
 
 		$blocksInside = [];

@@ -155,4 +155,12 @@ abstract class BaseShape {
 
 		return [$minX, $minY, $minZ, $maxX, $maxY, $maxZ];
 	}
+
+	/**
+	 * @param Vector3 $vector
+	 * @return array
+	 */
+	protected function arrayVec(Vector3 $vector): array {
+		return [$vector->x, $vector->y, $vector->z];
+	}
 }

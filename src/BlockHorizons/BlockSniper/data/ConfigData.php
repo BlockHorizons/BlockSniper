@@ -47,7 +47,8 @@ class ConfigData {
 			// Make sure to set the right version right off the bat.
 			$this->ConfigurationVersion = Loader::CONFIGURATION_VERSION;
 			Marshal::yamlFile($this->filePath, $this);
-		} catch(DecodeException $e){}
+		} catch(DecodeException $e) {
+		}
 
 		// We can retain backwards compatibility with old configuration most of the times, but the fact that the version
 		// was empty means that the configuration was completely unrecoverable. We'll generate a new one.

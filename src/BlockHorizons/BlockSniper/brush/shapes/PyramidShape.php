@@ -28,7 +28,7 @@ class PyramidShape extends BaseShape {
 	 * @return array
 	 */
 	public function getBlocksInside(bool $vectorOnly = false): array {
-		[$targetX, $targetY, $targetZ] = $this->center;
+		[$targetX, $targetY, $targetZ] = $this->arrayVec($this->center);
 
 		$minX = $targetX - $this->width;
 		$minY = $targetY - $this->height;

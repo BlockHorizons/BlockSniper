@@ -30,9 +30,9 @@ class Brush {
 	private $player = "";
 
 	/** @var string */
-	public $type;
+	public $type = FillType::class;
 	/** @var string */
-	public $shape;
+	public $shape = SphereShape::class;
 	/** @var int */
 	public $size = 1;
 	/** @var bool */

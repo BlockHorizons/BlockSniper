@@ -29,7 +29,7 @@ class SphereShape extends BaseShape {
 	 */
 	public function getBlocksInside(bool $vectorOnly = false): array {
 		$radiusSquared = $this->radius ** 2 + 0.5;
-		[$targetX, $targetY, $targetZ] = $this->center;
+		[$targetX, $targetY, $targetZ] = $this->arrayVec($this->center);
 
 		$minX = $targetX - $this->radius;
 		$minZ = $targetZ - $this->radius;

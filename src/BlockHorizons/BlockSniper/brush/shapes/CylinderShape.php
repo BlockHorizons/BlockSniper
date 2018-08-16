@@ -31,7 +31,7 @@ class CylinderShape extends BaseShape {
 	 */
 	public function getBlocksInside(bool $vectorOnly = false): array {
 		$radiusSquared = $this->radius ** 2 + 0.5;
-		[$targetX, $targetY, $targetZ] = $this->center;
+		[$targetX, $targetY, $targetZ] = $this->arrayVec($this->center);
 		[$minX, $minY, $minZ, $maxX, $maxY, $maxZ] = $this->calculateBoundaryBlocks($targetX, $targetY, $targetZ, $this->radius, $this->height);
 
 		$blocksInside = [];
