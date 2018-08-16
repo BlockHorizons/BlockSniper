@@ -60,14 +60,24 @@ class Loader extends PluginBase {
 		return self::$availableLanguages;
 	}
 
-	public function reload(): void {
-		$this->onDisable();
-		$this->reloadAll();
+	public function onEnable(): void {
+		$this->load();
+
+		$this->registerCommands();
+		$this->registerListeners();
+
+		$this->getScheduler()->scheduleRepeatingTask(new UndoDiminishTask($this), 400);
+		$this->getScheduler()->scheduleRepeatingTask(new RedoDiminishTask($this), 400);
 	}
 
 	public function onDisable(): void {
-		$this->config->__destruct();
 		$this->getPresetManager()->storePresetsToFile();
+	}
+
+	public function reload(): void {
+		$this->onDisable();
+		$this->config->__destruct();
+		$this->load();
 	}
 
 	/**
@@ -77,7 +87,7 @@ class Loader extends PluginBase {
 		return $this->presetManager;
 	}
 
-	private function reloadAll(): void {
+	private function load(): void {
 		$this->initializeDirectories();
 
 		$this->config = new ConfigData($this);
@@ -144,16 +154,6 @@ class Loader extends PluginBase {
 	 */
 	public function isMyPlotAvailable(): bool {
 		return $this->myPlot !== null;
-	}
-
-	public function onEnable(): void {
-		$this->reloadAll();
-
-		$this->registerCommands();
-		$this->registerListeners();
-
-		$this->getScheduler()->scheduleRepeatingTask(new UndoDiminishTask($this), 400);
-		$this->getScheduler()->scheduleRepeatingTask(new RedoDiminishTask($this), 400);
 	}
 
 	private function registerCommands(): void {
