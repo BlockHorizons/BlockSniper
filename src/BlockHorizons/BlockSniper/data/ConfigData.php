@@ -4,8 +4,8 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\data;
 
-require("plugins/BlockSniper/src/marshal/src/Sandertv/Marshal/Unmarshal.php");
-require("plugins/BlockSniper/src/marshal/src/Sandertv/Marshal/Marshal.php");
+require_once("plugins/BlockSniper/src/marshal/src/Sandertv/Marshal/Unmarshal.php");
+require_once("plugins/BlockSniper/src/marshal/src/Sandertv/Marshal/Marshal.php");
 
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\item\Item;

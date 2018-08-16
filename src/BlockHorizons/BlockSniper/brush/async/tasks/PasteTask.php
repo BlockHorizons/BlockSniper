@@ -4,8 +4,6 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\brush\async\tasks;
 
-require_once("plugins/BlockSniper/src/schematic/src/BlockHorizons/libschematic/Schematic.php");
-
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\revert\async\AsyncUndo;
@@ -36,6 +34,8 @@ class PasteTask extends AsyncBlockSniperTask {
 	}
 
 	public function onRun(): void {
+		require_once("plugins/BlockSniper/src/schematic/src/BlockHorizons/libschematic/Schematic.php");
+
 		$chunks = unserialize($this->chunks, ["allowed_classes" => [Chunk::class]]);
 		$file = $this->file;
 		$center = $this->center;
