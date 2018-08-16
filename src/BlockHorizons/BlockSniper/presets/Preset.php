@@ -5,29 +5,26 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\presets;
 
 use BlockHorizons\BlockSniper\brush\PropertyProcessor;
+use BlockHorizons\BlockSniper\brush\shapes\SphereShape;
+use BlockHorizons\BlockSniper\brush\types\FillType;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\Player;
 
 class Preset {
-
-	const VALUE_NAME = 0;
-	const VALUE_SIZE = 1;
-	const VALUE_SHAPE = 2;
-	const VALUE_TYPE = 3;
-	const VALUE_HOLLOW = 4;
-	const VALUE_DECREMENT = 5;
-	const VALUE_HEIGHT = 6;
-	const VALUE_PERFECT = 7;
-	const VALUE_BLOCKS = 8;
-	const VALUE_OBSOLETE = 9;
-	const VALUE_BIOME = 10;
-	const VALUE_TREE = 11;
+	public $size = 0;
+	public $shape = SphereShape::ID;
+	public $type = FillType::ID;
+	public $hollow = false;
+	public $decrement = false;
+	public $height = 0;
+	public $blocks = "stone";
+	public $obsolete = "stone";
+	public $biome = "plains";
+	public $tree = "oak";
 
 	/** @var string */
 	public $name = "";
-	/** @var array */
-	private $data = [];
 
 	public function __construct(string $name, array $data) {
 		$this->name = $name;

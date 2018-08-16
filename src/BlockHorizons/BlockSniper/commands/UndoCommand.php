@@ -15,7 +15,7 @@ use pocketmine\utils\TextFormat as TF;
 class UndoCommand extends BaseCommand {
 
 	public function __construct(Loader $loader) {
-		parent::__construct($loader, "undo", Translation::get(Translation::COMMANDS_UNDO_DESCRIPTION), "/undo [amount]", ["u"]);
+		parent::__construct($loader, "undo", Translation::COMMANDS_UNDO_DESCRIPTION, "/undo [amount]", ["u"]);
 	}
 
 	public function execute(CommandSender $sender, string $commandLabel, array $args): bool {

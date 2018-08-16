@@ -49,72 +49,64 @@ class PropertyProcessor {
 		switch($valueType) {
 			case "size":
 			case 0:
-				$brush->setSize((int) $value);
+				$brush->size = (int) $value;
 				$action = Change::ACTION_CHANGE_SIZE;
 				break;
 
 			case "shape":
 			case 1:
-				$name = ShapeRegistration::getShapeById($value, true);
-				$brush->setShape($name);
+				$name = ShapeRegistration::getShapeById((int) $value, true);
+				$brush->shape = $name;
 				$action = Change::ACTION_CHANGE_SHAPE;
 				break;
 
 			case "type":
 			case 2:
-				$name = TypeRegistration::getTypeById($value, true);
-				$brush->setType($name);
+				$name = TypeRegistration::getTypeById((int) $value, true);
+				$brush->type = $name;
 				$action = Change::ACTION_CHANGE_TYPE;
 				break;
 
 			case "hollow":
 			case 3:
-				$brush->setHollow((bool) $value);
+				$brush->hollow = (bool) $value;
 				$action = Change::ACTION_CHANGE_HOLLOW;
 				break;
 
 			case "decrement":
 			case 4:
-				$brush->setDecrementing((bool) $value);
-				$brush->resetSize = $brush->getSize();
+				$brush->decrementing = (bool) $value;
+				$brush->resetSize = $brush->size;
 				$action = Change::ACTION_CHANGE_DECREMENT;
 				break;
 
 			case "height":
 			case 5:
-				$brush->setHeight((int) $value);
+				$brush->height = (int) $value;
 				$action = Change::ACTION_CHANGE_HEIGHT;
-				break;
-
-			case "perfect":
-			case 6:
-				$brush->setPerfect((bool) $value);
-				$action = Change::ACTION_CHANGE_PERFECT;
 				break;
 
 			case "blocks":
 			case 7:
-				$blocks = explode(",", $value);
-				$brush->setBlocks($blocks);
+				$brush->blocks = $brush->parseBlocks($value);
 				$action = Change::ACTION_CHANGE_BLOCKS;
 				break;
 
 			case "obsolete":
 			case 8:
-				$blocks = explode(",", $value);
-				$brush->setObsolete($blocks);
+				$brush->obsolete = $brush->parseBlocks($value);
 				$action = Change::ACTION_CHANGE_OBSOLETE;
 				break;
 
 			case "biome":
 			case 9:
-				$brush->setBiome($value);
+				$brush->biome = $brush->parseBiome($value);
 				$action = Change::ACTION_CHANGE_BIOME;
 				break;
 
 			case "tree":
 			case 10:
-				$brush->setTree($value);
+				$brush->tree = $brush->parseTree($value);
 				$action = Change::ACTION_CHANGE_TREE;
 				break;
 
@@ -122,14 +114,7 @@ class PropertyProcessor {
 				return;
 		}
 		if($this->session instanceof PlayerSession) {
-			$this->getLoader()->getServer()->getPluginManager()->callEvent(new Change($this->session->getSessionOwner()->getPlayer(), $action, $value));
+			$this->loader->getServer()->getPluginManager()->callEvent(new Change($this->session->getSessionOwner()->getPlayer(), $action, $value));
 		}
-	}
-
-	/**
-	 * @return Loader
-	 */
-	public function getLoader(): Loader {
-		return $this->loader;
 	}
 }

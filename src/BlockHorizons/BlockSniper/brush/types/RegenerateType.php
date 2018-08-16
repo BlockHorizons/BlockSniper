@@ -34,7 +34,8 @@ class RegenerateType extends BaseType {
 		$x = $this->center->x >> 4;
 		$z = $this->center->z >> 4;
 		$this->getLevel()->getChunk($x, $z)->setPopulated(false);
-		$this->getLevel()->regenerateChunk($x, $z);
+		$this->getLevel()->getChunk($x, $z)->setGenerated(false);
+
 		return [];
 	}
 

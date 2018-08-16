@@ -16,9 +16,9 @@ class PyramidShape extends BaseShape {
 	public function __construct(Player $player, Level $level, int $width, Position $center, bool $hollow = false, bool $cloneShape = false) {
 		parent::__construct($player, $level, $center, $hollow);
 		$this->width = $width;
-		$this->height = SessionManager::getPlayerSession($player)->getBrush()->getHeight();
+		$this->height = SessionManager::getPlayerSession($player)->getBrush()->height;
 		if($cloneShape) {
-			$this->center[1] += $this->height;
+			$this->center->y += $this->height;
 		}
 	}
 
@@ -69,15 +69,15 @@ class PyramidShape extends BaseShape {
 	 * @return array
 	 */
 	public function getTouchedChunks(): array {
-		$maxX = $this->center[0] + $this->width;
-		$minX = $this->center[0] - $this->width;
-		$maxZ = $this->center[2] + $this->width;
-		$minZ = $this->center[2] - $this->width;
+		$maxX = $this->center->x + $this->width;
+		$minX = $this->center->x - $this->width;
+		$maxZ = $this->center->z + $this->width;
+		$minZ = $this->center->z - $this->width;
 
 		$touchedChunks = [];
 		for($x = $minX; $x <= $maxX + 16; $x += 16) {
 			for($z = $minZ; $z <= $maxZ + 16; $z += 16) {
-				$chunk = $this->getLevel()->getChunk($x >> 4, $z >> 4, true);
+				$chunk = $this->getLevel()->getChunk($x >> 4, $z >> 4, false);
 				if($chunk === null) {
 					continue;
 				}

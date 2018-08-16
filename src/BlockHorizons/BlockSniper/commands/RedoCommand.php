@@ -15,7 +15,7 @@ use pocketmine\utils\TextFormat as TF;
 class RedoCommand extends BaseCommand {
 
 	public function __construct(Loader $loader) {
-		parent::__construct($loader, "redo", Translation::get(Translation::COMMANDS_REDO_DESCRIPTION), "/redo [amount]");
+		parent::__construct($loader, "redo", Translation::COMMANDS_REDO_DESCRIPTION, "/redo [amount]");
 	}
 
 	public function execute(CommandSender $sender, string $commandLabel, array $args): bool {

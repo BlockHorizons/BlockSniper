@@ -37,11 +37,4 @@ class UserInterfaceListener implements Listener {
 			$window->handle($packet);
 		}
 	}
-
-	/**
-	 * @return Loader
-	 */
-	public function getLoader(): Loader {
-		return $this->loader;
-	}
 }

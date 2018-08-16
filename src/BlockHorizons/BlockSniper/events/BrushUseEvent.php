@@ -10,7 +10,7 @@ use pocketmine\event\Cancellable;
 use pocketmine\level\Level;
 use pocketmine\Player;
 
-class BrushUseEvent extends BaseEvent implements Cancellable {
+class BrushUseEvent extends BlockSniperEvent implements Cancellable {
 
 	/** @var null */
 	public static $handlerList = null;

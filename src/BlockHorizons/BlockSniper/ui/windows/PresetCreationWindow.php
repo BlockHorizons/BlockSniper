@@ -26,7 +26,7 @@ class PresetCreationWindow extends Window {
 					"type" => "slider",
 					"text" => Translation::get(Translation::UI_PRESET_CREATION_SIZE),
 					"min" => 0,
-					"max" => $this->getLoader()->getSettings()->getMaxRadius(),
+					"max" => $this->loader->config->MaximumSize,
 					"step" => 1,
 					"default" => 0
 				],
@@ -56,7 +56,7 @@ class PresetCreationWindow extends Window {
 					"type" => "slider",
 					"text" => Translation::get(Translation::UI_PRESET_CREATION_HEIGHT),
 					"min" => 0,
-					"max" => $this->getLoader()->getSettings()->getMaxRadius(),
+					"max" => $this->loader->config->MaximumSize,
 					"step" => 1,
 					"default" => 0
 				],

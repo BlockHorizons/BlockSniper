@@ -126,7 +126,7 @@ class PasteTask extends AsyncBlockSniperTask {
 		$level = $player->getLevel();
 		if($level instanceof Level) {
 			foreach($chunks as $hash => $chunk) {
-				$level->setChunk($chunk->getX(), $chunk->getZ(), $chunk);
+				$level->setChunk($chunk->getX(), $chunk->getZ(), $chunk, false);
 			}
 		}
 

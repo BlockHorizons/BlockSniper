@@ -36,7 +36,7 @@ class GlobalBrushEditMenuWindow extends Window {
 					"type" => "slider",
 					"text" => Translation::get(Translation::UI_GLOBAL_BRUSH_EDIT_SIZE),
 					"min" => 0,
-					"max" => $this->getLoader()->getSettings()->getMaxRadius(),
+					"max" => $this->getLoader()->getConfig()->getMaxRadius(),
 					"step" => 1,
 					"default" => $d[1]
 				],
@@ -66,7 +66,7 @@ class GlobalBrushEditMenuWindow extends Window {
 					"type" => "slider",
 					"text" => Translation::get(Translation::UI_GLOBAL_BRUSH_EDIT_HEIGHT),
 					"min" => 0,
-					"max" => $this->getLoader()->getSettings()->getMaxRadius(),
+					"max" => $this->getLoader()->getConfig()->getMaxRadius(),
 					"step" => 1,
 					"default" => $d[6]
 				],

@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\commands;
 
-use BlockHorizons\BlockSniper\data\ConfigData;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\command\Command;
@@ -18,8 +17,8 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand 
 	/** @var Loader */
 	protected $loader = null;
 
-	public function __construct(Loader $loader, $name, $description = "", $usageMessage = null, array $aliases = []) {
-		parent::__construct($name, $description, $usageMessage, $aliases);
+	public function __construct(Loader $loader, string $name, string $description = "", string $usageMessage, array $aliases = []) {
+		parent::__construct($name, Translation::get($description), $usageMessage, $aliases);
 		$this->loader = $loader;
 		$this->setPermission("blocksniper.command." . $name);
 		$this->setUsage(TF::RED . "[Usage] " . $usageMessage);
@@ -51,19 +50,5 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand 
 	 */
 	public function sendNoPermission(CommandSender $sender): void {
 		$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_COMMON_NO_PERMISSION));
-	}
-
-	/**
-	 * @return ConfigData
-	 */
-	public function getSettings(): ConfigData {
-		return $this->getLoader()->getSettings();
-	}
-
-	/**
-	 * @return Loader
-	 */
-	public function getLoader(): Loader {
-		return $this->loader;
 	}
 }

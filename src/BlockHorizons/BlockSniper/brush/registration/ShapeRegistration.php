@@ -37,7 +37,12 @@ class ShapeRegistration {
 	 * @return bool
 	 */
 	public static function registerShape(string $class, int $id, bool $overwrite = false): bool {
-		$shortName = str_replace("Shape", "", (new \ReflectionClass($class))->getShortName());
+		$shortName = "";
+		try {
+			$shortName = str_replace("Shape", "", (new \ReflectionClass($class))->getShortName());
+		} catch(\ReflectionException $e) {
+		}
+
 		if(!$overwrite && self::shapeExists(strtolower($shortName), $id)) {
 			return false;
 		}

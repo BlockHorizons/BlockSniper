@@ -6,9 +6,8 @@ namespace BlockHorizons\BlockSniper\events;
 
 use BlockHorizons\BlockSniper\brush\Brush;
 use pocketmine\event\Cancellable;
-use pocketmine\event\plugin\PluginEvent;
 
-class BrushRecoverEvent extends PluginEvent implements Cancellable {
+class BrushRecoverEvent extends BlockSniperEvent implements Cancellable {
 
 	/** @var null */
 	public static $handlerList = null;

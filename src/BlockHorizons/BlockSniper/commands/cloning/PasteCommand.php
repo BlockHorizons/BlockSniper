@@ -18,7 +18,7 @@ use Schematic\Schematic;
 class PasteCommand extends BaseCommand {
 
 	public function __construct(Loader $loader) {
-		parent::__construct($loader, "paste", Translation::get(Translation::COMMANDS_PASTE_DESCRIPTION), "/paste <type> [name]");
+		parent::__construct($loader, "paste", Translation::COMMANDS_PASTE_DESCRIPTION, "/paste <type> [name]");
 	}
 
 	public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
@@ -58,7 +58,7 @@ class PasteCommand extends BaseCommand {
 				break;
 
 			case "schematic":
-				if(!is_file($file = $this->getLoader()->getDataFolder() . "schematics/" . $args[1] . ".schematic")) {
+				if(!is_file($file = $this->loader->getDataFolder() . "schematics/" . $args[1] . ".schematic")) {
 					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_PASTE_SCHEMATIC_NONEXISTENT, [$args[1]]));
 					return true;
 				}

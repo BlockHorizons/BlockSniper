@@ -30,7 +30,7 @@ class BrushCommand extends BaseCommand {
 		$windowHandler = new WindowHandler();
 		$packet = new ModalFormRequestPacket();
 		$packet->formId = $windowHandler->getWindowIdFor(WindowHandler::WINDOW_MAIN_MENU);
-		$packet->formData = $windowHandler->getWindowJson(WindowHandler::WINDOW_MAIN_MENU, $this->getLoader(), $sender);
+		$packet->formData = $windowHandler->getWindowJson(WindowHandler::WINDOW_MAIN_MENU, $this->loader, $sender);
 		$sender->dataPacket($packet);
 		return true;
 	}

@@ -27,7 +27,7 @@ class TranslationData {
 		$languageSelected = false;
 		$language = "";
 		foreach(Loader::getAvailableLanguages() as $availableLanguage) {
-			if($this->getLoader()->getSettings()->getLanguage() === $availableLanguage) {
+			if($this->getLoader()->config->MessageLanguage === $availableLanguage) {
 				$this->getLoader()->saveResource("languages/" . $availableLanguage . ".json");
 				$language = file_get_contents($this->getLoader()->getDataFolder() . "languages/" . $availableLanguage . ".json");
 				$languageSelected = true;

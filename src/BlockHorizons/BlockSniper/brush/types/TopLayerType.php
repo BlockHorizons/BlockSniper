@@ -23,7 +23,7 @@ class TopLayerType extends BaseType {
 
 	public function __construct(Player $player, ChunkManager $level, array $blocks) {
 		parent::__construct($player, $level, $blocks);
-		$this->height = SessionManager::getPlayerSession($player)->getBrush()->getHeight();
+		$this->height = SessionManager::getPlayerSession($player)->getBrush()->height;
 	}
 
 	/**

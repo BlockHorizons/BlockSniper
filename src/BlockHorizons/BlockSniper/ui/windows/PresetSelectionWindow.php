@@ -17,7 +17,7 @@ class PresetSelectionWindow extends Window {
 			"content" => Translation::get(Translation::UI_PRESET_SELECTION_SUBTITLE),
 			"buttons" => []
 		];
-		foreach($this->getLoader()->getPresetManager()->getAllPresets() as $key => $name) {
+		foreach($this->loader->getPresetManager()->getAllPresets() as $key => $name) {
 			$this->data["buttons"][$key] = [
 				"text" => $name,
 				"image" => [

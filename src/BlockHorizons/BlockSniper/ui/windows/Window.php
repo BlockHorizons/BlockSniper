@@ -98,7 +98,7 @@ abstract class Window {
 		$packet = new ModalFormRequestPacket();
 		$packet->formId = $windowHandler->getWindowIdFor($menu);
 		$packet->formData = $windowHandler->getWindowJson($menu, $this->loader, $player);
-		$player->dataPacket($packet);
+		$player->sendDataPacket($packet);
 	}
 
 	/**

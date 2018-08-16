@@ -6,7 +6,6 @@ namespace BlockHorizons\BlockSniper\ui\windows;
 
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\ui\WindowHandler;
-use pocketmine\network\mcpe\protocol\ModalFormRequestPacket;
 use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
 
 class MainMenuWindow extends Window {
@@ -57,11 +56,7 @@ class MainMenuWindow extends Window {
 		if($index === 4) {
 			return false;
 		}
-		$windowHandler = new WindowHandler();
-		$packet = new ModalFormRequestPacket();
-		$packet->formId = $windowHandler->getWindowIdFor($index);
-		$packet->formData = $windowHandler->getWindowJson($index, $this->loader, $this->player);
-		$this->player->dataPacket($packet);
+		$this->navigate($index, $this->player, new WindowHandler());
 		return true;
 	}
 }

@@ -105,7 +105,7 @@ class BrushTask extends AsyncBlockSniperTask {
 
 		if($level instanceof Level) {
 			foreach($chunks as $hash => $chunk) {
-				$level->setChunk($chunk->getX(), $chunk->getZ(), $chunk);
+				$level->setChunk($chunk->getX(), $chunk->getZ(), $chunk, false);
 			}
 		}
 

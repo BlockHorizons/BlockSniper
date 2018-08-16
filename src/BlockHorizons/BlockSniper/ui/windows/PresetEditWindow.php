@@ -39,7 +39,7 @@ class PresetEditWindow extends Window {
 					"type" => "slider",
 					"text" => Translation::get(Translation::UI_PRESET_EDIT_SIZE),
 					"min" => 0,
-					"max" => $this->getLoader()->getSettings()->getMaxRadius(),
+					"max" => $this->loader->config->MaximumSize,
 					"step" => 1,
 					"default" => $d[1]
 				],
@@ -69,7 +69,7 @@ class PresetEditWindow extends Window {
 					"type" => "slider",
 					"text" => Translation::get(Translation::UI_PRESET_EDIT_HEIGHT),
 					"min" => 0,
-					"max" => $this->getLoader()->getSettings()->getMaxRadius(),
+					"max" => $this->loader->config->MaximumSize,
 					"step" => 1,
 					"default" => $d[6]
 				],

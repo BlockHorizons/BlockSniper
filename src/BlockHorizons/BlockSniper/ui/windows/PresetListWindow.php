@@ -18,7 +18,7 @@ class PresetListWindow extends Window {
 			"content" => Translation::get(Translation::UI_PRESET_LIST_SUBTITLE),
 			"buttons" => []
 		];
-		foreach($this->getLoader()->getPresetManager()->getAllPresets() as $key => $name) {
+		foreach($this->loader->getPresetManager()->getAllPresets() as $key => $name) {
 			$this->data["buttons"][$key] = [
 				"text" => $name,
 				"image" => [
@@ -47,7 +47,7 @@ class PresetListWindow extends Window {
 		$packet = new ModalFormRequestPacket();
 		$packet->formId = $windowHandler->getWindowIdFor(WindowHandler::WINDOW_PRESET_EDIT_MENU);
 		$packet->formData = $window->getJson();
-		$this->player->dataPacket($packet);
+		$this->player->sendDataPacket($packet);
 		return true;
 	}
 }

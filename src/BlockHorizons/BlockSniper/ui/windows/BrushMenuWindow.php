@@ -7,13 +7,12 @@ namespace BlockHorizons\BlockSniper\ui\windows;
 use BlockHorizons\BlockSniper\brush\PropertyProcessor;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
-use pocketmine\level\biome\Biome;
 use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
 
 class BrushMenuWindow extends Window {
 
 	public function process(): void {
-		$this->getLoader()->getSessionManager()->createPlayerSession($this->getPlayer());
+		$this->loader->getSessionManager()->createPlayerSession($this->getPlayer());
 		$v = SessionManager::getPlayerSession($this->getPlayer())->getBrush();
 		$this->data = [
 			"type" => "custom_form",
@@ -23,9 +22,9 @@ class BrushMenuWindow extends Window {
 					"type" => "slider",
 					"text" => Translation::get(Translation::UI_BRUSH_MENU_SIZE),
 					"min" => 0,
-					"max" => $this->getLoader()->getSettings()->getMaxRadius(),
+					"max" => $this->loader->config->MaximumSize,
 					"step" => 1,
-					"default" => $v->getSize()
+					"default" => $v->size
 				],
 				[
 					"type" => "dropdown",
@@ -42,49 +41,44 @@ class BrushMenuWindow extends Window {
 				[
 					"type" => "toggle",
 					"text" => Translation::get(Translation::UI_BRUSH_MENU_HOLLOW),
-					"default" => $v->isHollow()
+					"default" => $v->hollow
 				],
 				[
 					"type" => "toggle",
 					"text" => Translation::get(Translation::UI_BRUSH_MENU_DECREMENT),
-					"default" => $v->isDecrementing()
+					"default" => $v->decrementing
 				],
 				[
 					"type" => "slider",
 					"text" => Translation::get(Translation::UI_BRUSH_MENU_HEIGHT),
 					"min" => 0,
-					"max" => $this->getLoader()->getSettings()->getMaxRadius(),
-					"default" => $v->getHeight(),
+					"max" => $this->loader->config->MaximumSize,
+					"default" => $v->height,
 					"step" => 1
-				],
-				[
-					"type" => "toggle",
-					"text" => Translation::get(Translation::UI_BRUSH_MENU_PERFECT),
-					"default" => $v->getPerfect()
 				],
 				[
 					"type" => "input",
 					"text" => Translation::get(Translation::UI_BRUSH_MENU_BLOCKS),
 					"placeholder" => "stone,stone_brick:1,2",
-					"default" => $this->processBlocks($v->getBlocks()),
+					"default" => $this->processBlocks($v->blocks),
 				],
 				[
 					"type" => "input",
 					"text" => Translation::get(Translation::UI_BRUSH_MENU_OBSOLETE),
 					"placeholder" => "stone,stone_brick:1,2",
-					"default" => $this->processBlocks($v->getObsolete()),
+					"default" => $this->processBlocks($v->obsolete),
 				],
 				[
 					"type" => "input",
 					"text" => Translation::get(Translation::UI_BRUSH_MENU_BIOME),
 					"placeholder" => "plains",
-					"default" => strtolower(Biome::getBiome($v->getBiomeId())->getName())
+					"default" => strtolower($v->biome->getName())
 				],
 				[
 					"type" => "input",
 					"text" => Translation::get(Translation::UI_BRUSH_MENU_TREE),
 					"placeholder" => "oak",
-					"default" => (string) $v->getTreeType()
+					"default" => (string) $v->tree->type
 				]
 			]
 		];

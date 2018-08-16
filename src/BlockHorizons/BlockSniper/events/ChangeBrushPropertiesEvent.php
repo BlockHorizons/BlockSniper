@@ -4,10 +4,9 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\events;
 
-use pocketmine\event\plugin\PluginEvent;
 use pocketmine\Player;
 
-class ChangeBrushPropertiesEvent extends PluginEvent {
+class ChangeBrushPropertiesEvent extends BlockSniperEvent {
 
 	const ACTION_RESET_BRUSH = 0;
 	const ACTION_CHANGE_SIZE = 1;

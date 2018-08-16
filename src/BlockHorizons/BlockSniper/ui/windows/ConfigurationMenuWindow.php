@@ -12,17 +12,12 @@ use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
 class ConfigurationMenuWindow extends Window {
 
 	public function process(): void {
-		$s = $this->getLoader()->getSettings();
-		$key = array_search($s->getLanguage(), Loader::getAvailableLanguages());
+		$s = $this->loader->config;
+		$key = array_search($s->MessageLanguage, Loader::getAvailableLanguages());
 		$this->data = [
 			"type" => "custom_form",
 			"title" => Translation::get(Translation::UI_CONFIGURATION_MENU_TITLE),
 			"content" => [
-				[
-					"type" => "toggle",
-					"text" => Translation::get(Translation::UI_CONFIGURATION_MENU_AUTO_UPDATE),
-					"default" => $s->updatesAutomatically()
-				],
 				[
 					"type" => "dropdown",
 					"text" => Translation::get(Translation::UI_CONFIGURATION_MENU_LANGUAGE),
@@ -43,7 +38,7 @@ class ConfigurationMenuWindow extends Window {
 					"min" => 0,
 					"step" => 1,
 					"max" => 60,
-					"default" => $s->getMaxRadius()
+					"default" => $s->MaximumSize
 				],
 				[
 					"type" => "slider",
@@ -51,7 +46,7 @@ class ConfigurationMenuWindow extends Window {
 					"min" => 10,
 					"step" => 1,
 					"max" => 25,
-					"default" => $s->getMinimumAsynchronousSize()
+					"default" => $s->AsynchronousOperationSize
 				],
 				[
 					"type" => "slider",
@@ -59,32 +54,32 @@ class ConfigurationMenuWindow extends Window {
 					"min" => 0,
 					"step" => 1,
 					"max" => 40,
-					"default" => $s->getMaxUndoStores()
+					"default" => $s->MaximumRevertStores
 				],
 				[
 					"type" => "toggle",
 					"text" => Translation::get(Translation::UI_CONFIGURATION_MENU_RESET_DECREMENT_BRUSH),
-					"default" => $s->resetDecrementBrush()
+					"default" => $s->ResetDecrementBrush
 				],
 				[
 					"type" => "toggle",
 					"text" => Translation::get(Translation::UI_CONFIGURATION_MENU_SAVE_BRUSH),
-					"default" => $s->saveBrushProperties()
+					"default" => $s->SaveBrushProperties
 				],
 				[
 					"type" => "toggle",
 					"text" => Translation::get(Translation::UI_CONFIGURATION_MENU_DROP_PLANTS),
-					"default" => $s->dropLeafblowerPlants()
+					"default" => $s->DropLeafBlowerPlants
 				],
 				[
 					"type" => "toggle",
 					"text" => Translation::get(Translation::UI_CONFIGURATION_MENU_AUTO_GUI),
-					"default" => $s->openGuiAutomatically()
+					"default" => $s->OpenGUIAutomatically
 				],
 				[
 					"type" => "toggle",
 					"text" => Translation::get(Translation::UI_CONFIGURATION_MENU_MYPLOT_SUPPORT),
-					"default" => $s->hasMyPlotSupport()
+					"default" => $s->MyPlotSupport
 				],
 				[
 					"type" => "toggle",
@@ -101,7 +96,7 @@ class ConfigurationMenuWindow extends Window {
 			if($key === 1) {
 				$value = Loader::getAvailableLanguages()[$value];
 			}
-			$this->getLoader()->getSettings()->set($key, $value);
+			$this->loader->getConfig()->set($key, $value);
 		}
 		if($data[11] === true) {
 			$this->loader->reload();

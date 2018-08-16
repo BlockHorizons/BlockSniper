@@ -5,10 +5,9 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\events;
 
 use pocketmine\event\Cancellable;
-use pocketmine\event\plugin\PluginEvent;
 use pocketmine\Player;
 
-class PresetCreationEvent extends PluginEvent implements Cancellable {
+class PresetCreationEvent extends BlockSniperEvent implements Cancellable {
 
 	/** @var null */
 	public static $handlerList = null;

@@ -20,7 +20,7 @@ class ReplaceType extends BaseType {
 
 	public function __construct(Player $player, ChunkManager $level, array $blocks) {
 		parent::__construct($player, $level, $blocks);
-		$this->obsolete = SessionManager::getPlayerSession($player)->getBrush()->getObsolete();
+		$this->obsolete = SessionManager::getPlayerSession($player)->getBrush()->obsolete;
 	}
 
 	/**

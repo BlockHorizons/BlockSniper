@@ -30,7 +30,9 @@ class BrushListener implements Listener {
 	 */
 	public function brush(PlayerInteractEvent $event): bool {
 		$player = $event->getPlayer();
-		if($player->getInventory()->getItemInHand()->getId() === $this->getLoader()->getSettings()->getBrushItem()) {
+		$hand = $player->getInventory()->getItemInHand();
+		$brush = $this->loader->config->BrushItem->parse();
+		if($hand->getId() === $brush->getId() && $hand->getDamage() === $brush->getDamage()) {
 			if($player->hasPermission("blocksniper.command.brush")) {
 				$brush = ($session = SessionManager::getPlayerSession($player))->getBrush();
 				$brush->execute($session, $this->getPlotPoints($player));
@@ -41,28 +43,21 @@ class BrushListener implements Listener {
 	}
 
 	/**
-	 * @return Loader
-	 */
-	public function getLoader(): Loader {
-		return $this->loader;
-	}
-
-	/**
 	 * @param Player $player
 	 *
 	 * @return Vector2[][]
 	 */
 	public function getPlotPoints(Player $player): array {
-		if($player->hasPermission("blocksniper-myplot-bypass") || !$this->getLoader()->isMyPlotAvailable()) {
+		if($player->hasPermission("blocksniper-myplot-bypass") || !$this->loader->isMyPlotAvailable()) {
 			return [];
 		}
 		$plotPoints = [];
-		$settings = $this->getLoader()->getMyPlot()->getLevelSettings($player->getLevel()->getName());
+		$settings = $this->loader->getMyPlot()->getLevelSettings($player->getLevel()->getName());
 		if($settings === null) {
 			return [[new Vector2(), new Vector2()]];
 		}
 		$plotSize = $settings->plotSize;
-		foreach($this->getLoader()->getMyPlot()->getPlotsOfPlayer($player->getName(), $player->getLevel()->getFolderName()) as $plot) {
+		foreach($this->loader->getMyPlot()->getPlotsOfPlayer($player->getName(), $player->getLevel()->getFolderName()) as $plot) {
 			$minVec = new Vector2($plot->X, $plot->Z);
 			$maxVec = new Vector2($plot->X + $plotSize, $plot->Z + $plotSize);
 			$plotPoints[] = [$minVec, $maxVec];
@@ -80,13 +75,15 @@ class BrushListener implements Listener {
 	 */
 	public function onItemHeld(PlayerItemHeldEvent $event): bool {
 		$player = $event->getPlayer();
-		if($event->getItem()->getId() === $this->getLoader()->getSettings()->getBrushItem()) {
+		$hand = $player->getInventory()->getItemInHand();
+		$brush = $this->loader->config->BrushItem->parse();
+		if($hand->getId() === $brush->getId() && $hand->getDamage() === $brush->getDamage()) {
 			if($player->hasPermission("blocksniper.command.brush")) {
 				$windowHandler = new WindowHandler();
 				$packet = new ModalFormRequestPacket();
 				$packet->formId = $windowHandler->getWindowIdFor(WindowHandler::WINDOW_BRUSH_MENU);
-				$packet->formData = $windowHandler->getWindowJson(WindowHandler::WINDOW_BRUSH_MENU, $this->getLoader(), $player);
-				$player->dataPacket($packet);
+				$packet->formData = $windowHandler->getWindowJson(WindowHandler::WINDOW_BRUSH_MENU, $this->loader, $player);
+				$player->sendDataPacket($packet);
 				return true;
 			}
 		}

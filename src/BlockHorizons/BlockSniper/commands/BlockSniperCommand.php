@@ -15,7 +15,7 @@ use pocketmine\utils\TextFormat as TF;
 class BlockSniperCommand extends BaseCommand {
 
 	public function __construct(Loader $loader) {
-		parent::__construct($loader, "blocksniper", Translation::get(Translation::COMMANDS_BLOCKSNIPER_DESCRIPTION), "/blocksniper [menu|reload]", ["bs"]);
+		parent::__construct($loader, "blocksniper", Translation::COMMANDS_BLOCKSNIPER_DESCRIPTION, "/blocksniper [menu|reload]", ["bs"]);
 	}
 
 	public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
@@ -30,7 +30,7 @@ class BlockSniperCommand extends BaseCommand {
 		switch(strtolower($args[0])) {
 			case "reload":
 				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_BLOCKSNIPER_RELOAD));
-				$this->getLoader()->reload();
+				$this->loader->reload();
 				return true;
 
 			case "menu":
@@ -42,8 +42,8 @@ class BlockSniperCommand extends BaseCommand {
 				$windowHandler = new WindowHandler();
 				$packet = new ModalFormRequestPacket();
 				$packet->formId = $windowHandler->getWindowIdFor(WindowHandler::WINDOW_MAIN_MENU);
-				$packet->formData = $windowHandler->getWindowJson(WindowHandler::WINDOW_MAIN_MENU, $this->getLoader(), $sender);
-				$sender->dataPacket($packet);
+				$packet->formData = $windowHandler->getWindowJson(WindowHandler::WINDOW_MAIN_MENU, $this->loader, $sender);
+				$sender->sendDataPacket($packet);
 				return true;
 
 			default:

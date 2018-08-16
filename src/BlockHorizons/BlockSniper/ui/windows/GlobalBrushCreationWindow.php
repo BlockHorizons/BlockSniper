@@ -23,7 +23,7 @@ class GlobalBrushCreationWindow extends Window {
 					"type" => "slider",
 					"text" => (new Translation(Translation::UI_GLOBAL_BRUSH_CREATION_SIZE))->getMessage(),
 					"min" => 0,
-					"max" => $this->getLoader()->getSettings()->getMaxRadius(),
+					"max" => $this->getLoader()->getConfig()->getMaxRadius(),
 					"step" => 1,
 					"default" => 0
 				],
@@ -53,7 +53,7 @@ class GlobalBrushCreationWindow extends Window {
 					"type" => "slider",
 					"text" => (new Translation(Translation::UI_GLOBAL_BRUSH_CREATION_HEIGHT))->getMessage(),
 					"min" => 0,
-					"max" => $this->getLoader()->getSettings()->getMaxRadius(),
+					"max" => $this->getLoader()->getConfig()->getMaxRadius(),
 					"step" => 1,
 					"default" => 0
 				],

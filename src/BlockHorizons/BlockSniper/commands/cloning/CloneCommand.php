@@ -19,7 +19,7 @@ use Schematic\Schematic;
 class CloneCommand extends BaseCommand {
 
 	public function __construct(Loader $loader) {
-		parent::__construct($loader, "clone", Translation::get(Translation::COMMANDS_CLONE_DESCRIPTION), "/clone <type> [name]");
+		parent::__construct($loader, "clone", Translation::COMMANDS_CLONE_DESCRIPTION, "/clone <type> [name]");
 	}
 
 	public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
@@ -38,11 +38,11 @@ class CloneCommand extends BaseCommand {
 			throw new InvalidBlockException("No valid block could be found when attempting to clone.");
 		}
 
-		$size = SessionManager::getPlayerSession($sender)->getBrush()->getSize();
+		$size = SessionManager::getPlayerSession($sender)->getBrush()->size;
 		switch(strtolower($args[0])) {
 			default:
 			case "copy":
-				$shape = SessionManager::getPlayerSession($sender)->getBrush()->getShape(true, SessionManager::getPlayerSession($sender)->getBrush()->getYOffset());
+				$shape = SessionManager::getPlayerSession($sender)->getBrush()->getShape(true, SessionManager::getPlayerSession($sender)->getBrush()->yOffset);
 				$cloneType = new CopyType($sender, false, $center, $shape->getBlocksInside());
 				$cloneType->saveClone();
 				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_CLONE_COPY_SUCCESS));
@@ -53,10 +53,10 @@ class CloneCommand extends BaseCommand {
 					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_CLONE_TEMPLATE_MISSING_NAME));
 					return false;
 				}
-				$shape = SessionManager::getPlayerSession($sender)->getBrush()->getShape(true, SessionManager::getPlayerSession($sender)->getBrush()->getYOffset());
+				$shape = SessionManager::getPlayerSession($sender)->getBrush()->getShape(true, SessionManager::getPlayerSession($sender)->getBrush()->yOffset);
 				$cloneType = new TemplateType($sender, false, $center, $shape->getBlocksInside(), $args[1]);
 				$cloneType->saveClone();
-				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_CLONE_TEMPLATE_SUCCESS, [$this->getLoader()->getDataFolder() . "templates/" . $args[1]]));
+				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_CLONE_TEMPLATE_SUCCESS, [$this->loader->getDataFolder() . "templates/" . $args[1]]));
 				return true;
 
 			case "scheme":
@@ -66,7 +66,7 @@ class CloneCommand extends BaseCommand {
 					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_CLONE_SCHEMATIC_MISSING_NAME));
 					return false;
 				}
-				$shape = SessionManager::getPlayerSession($sender)->getBrush()->getShape(true, SessionManager::getPlayerSession($sender)->getBrush()->getYOffset());
+				$shape = SessionManager::getPlayerSession($sender)->getBrush()->getShape(true, SessionManager::getPlayerSession($sender)->getBrush()->yOffset);
 				$schematic = new Schematic();
 				$schematic
 					->setBlocks($shape->getBlocksInside())
@@ -75,8 +75,8 @@ class CloneCommand extends BaseCommand {
 					->setLength($size * 2 + 1)
 					->setHeight($size * 2 + 1)
 					->setWidth($size * 2 + 1)
-					->save($this->getLoader()->getDataFolder() . "schematics/" . $args[1] . ".schematic");
-				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_CLONE_SCHEMATIC_SUCCESS, [$this->getLoader()->getDataFolder() . "templates/" . $args[1]]));
+					->save($this->loader->getDataFolder() . "schematics/" . $args[1] . ".schematic");
+				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_CLONE_SCHEMATIC_SUCCESS, [$this->loader->getDataFolder() . "templates/" . $args[1]]));
 				return true;
 		}
 	}

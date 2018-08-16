@@ -29,7 +29,7 @@ class Loader extends PluginBase {
 
 	const VERSION = "2.3.1";
 	const API_TARGET = "3.0.0-ALPHA10 - 3.0.0-ALPHA12";
-	const CONFIGURATION_VERSION = "2.5.0";
+	const CONFIGURATION_VERSION = "3.0.0";
 
 	/** @var string[] */
 	private static $availableLanguages = [
@@ -46,7 +46,7 @@ class Loader extends PluginBase {
 	/** @var PresetManager */
 	private $presetManager = null;
 	/** @var ConfigData */
-	private $settings = null;
+	public $config = null;
 	/** @var SessionManager */
 	private $sessionManager = null;
 
@@ -66,8 +66,8 @@ class Loader extends PluginBase {
 	}
 
 	public function onDisable(): void {
+		$this->config->__destruct();
 		$this->getPresetManager()->storePresetsToFile();
-		$this->getSettings()->save();
 	}
 
 	/**
@@ -77,18 +77,10 @@ class Loader extends PluginBase {
 		return $this->presetManager;
 	}
 
-	/**
-	 * @return ConfigData
-	 */
-	public function getSettings(): ConfigData {
-		return $this->settings;
-	}
-
 	private function reloadAll(): void {
 		$this->initializeDirectories();
 
-		$this->saveResource("settings.yml");
-		$this->settings = new ConfigData($this);
+		$this->config = new ConfigData($this);
 		$this->language = new TranslationData($this);
 		$this->presetManager = new PresetManager($this);
 
@@ -96,13 +88,13 @@ class Loader extends PluginBase {
 			$this->getLogger()->info(Translation::get(Translation::LOG_LANGUAGE_AUTO_SELECTED));
 			$this->getLogger()->info(Translation::get(Translation::LOG_LANGUAGE_USAGE));
 		} else {
-			$this->getLogger()->info(Translation::get(Translation::LOG_LANGUAGE_SELECTED) . TF::GREEN . $this->getSettings()->getLanguage());
+			$this->getLogger()->info(Translation::get(Translation::LOG_LANGUAGE_SELECTED) . TF::GREEN . $this->config->MessageLanguage);
 		}
 
 		ShapeRegistration::init();
 		TypeRegistration::init();
 
-		if($this->getSettings()->hasMyPlotSupport()) {
+		if($this->config->MyPlotSupport) {
 			$this->myPlot = $this->getServer()->getPluginManager()->getPlugin("MyPlot");
 		}
 	}
