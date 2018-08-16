@@ -150,10 +150,12 @@ class Translation {
 
 	public function __construct(TranslationData $data) {
 		$this->messageData = $data->getMessages();
-		$reflection = new \ReflectionClass(self::class);
-		foreach($reflection->getConstants() as $constant => $value) {
-			self::$translations[$value] = $this->putMessage($value);
-		}
+		try {
+			$reflection = new \ReflectionClass(self::class);
+			foreach($reflection->getConstants() as $constant => $value) {
+				self::$translations[$value] = $this->putMessage($value);
+			}
+		} catch(\ReflectionException $exception){}
 	}
 
 	/**

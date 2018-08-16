@@ -35,18 +35,18 @@ class ConfigData {
 		$this->filePath = $loader->getDataFolder() . "config.yml";
 
 		try {
-			Unmarshal::YamlFile($this->filePath, $this);
+			Unmarshal::yamlFile($this->filePath, $this);
 		} catch(FileNotFoundException $exception) {
 			// Make sure to set the right version right off the bat.
 			$this->ConfigurationVersion = Loader::CONFIGURATION_VERSION;
-			Marshal::YamlFile($this->filePath, $this);
+			Marshal::yamlFile($this->filePath, $this);
 		} catch(\ErrorException $exception) {
 			// PM's error handler will create this error exception, causing the DecodeException not to be thrown at all.
 			$loader->getLogger()->error("Configuration corrupted. config.yml has been renamed to config_corrupted.yml and a new config.yml has been generated.");
 			rename($this->filePath, $loader->getDataFolder() . "config_corrupted.yml");
 			// Make sure to set the right version right off the bat.
 			$this->ConfigurationVersion = Loader::CONFIGURATION_VERSION;
-			Marshal::YamlFile($this->filePath, $this);
+			Marshal::yamlFile($this->filePath, $this);
 		} catch(DecodeException $e){}
 
 		// We can retain backwards compatibility with old configuration most of the times, but the fact that the version
@@ -56,12 +56,12 @@ class ConfigData {
 			rename($this->filePath, $loader->getDataFolder() . "config_old.yml");
 			// Set the new configuration version so we don't end in an infinite loop.
 			$this->ConfigurationVersion = Loader::CONFIGURATION_VERSION;
-			Marshal::YamlFile($this->filePath, $this);
+			Marshal::yamlFile($this->filePath, $this);
 		}
 	}
 
 	public function __destruct() {
-		Marshal::YamlFile($this->filePath, $this);
+		Marshal::yamlFile($this->filePath, $this);
 	}
 }
 
