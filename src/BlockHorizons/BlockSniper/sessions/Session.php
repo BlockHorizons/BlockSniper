@@ -34,7 +34,7 @@ abstract class Session {
 		$this->cloneStorer = new CloneStorer($this, $loader->getDataFolder());
 		$this->loader = $loader;
 		if($this->initializeBrush()) {
-			$loader->getLogger()->debug(TextFormat::GREEN . Translation::get(Translation::LOG_BRUSH_RESTORED, [$this->getSessionOwner()->getName()]));
+			$loader->getLogger()->debug(Translation::get(Translation::LOG_BRUSH_RESTORED, [$this->getSessionOwner()->getName()]));
 		}
 	}
 
