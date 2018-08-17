@@ -20,7 +20,7 @@ use pocketmine\utils\TextFormat as TF;
 class PasteCommand extends BaseCommand {
 
 	public function __construct(Loader $loader) {
-		parent::__construct($loader, "paste", Translation::COMMANDS_PASTE_DESCRIPTION, "/paste <type> [name]");
+		parent::__construct($loader, "paste", Translation::COMMANDS_PASTE_DESCRIPTION, "/paste <copy|template|schematic> [name]");
 	}
 
 	public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
@@ -31,6 +31,11 @@ class PasteCommand extends BaseCommand {
 
 		if(!$sender instanceof Player) {
 			$this->sendConsoleError($sender);
+			return false;
+		}
+
+		if(!isset($args[0])){
+			$sender->sendMessage($this->getUsage());
 			return false;
 		}
 
@@ -51,6 +56,10 @@ class PasteCommand extends BaseCommand {
 				break;
 
 			case "template":
+				if(!isset($args[1])) {
+					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_CLONE_TEMPLATE_MISSING_NAME));
+					return false;
+				}
 				if(!SessionManager::getPlayerSession($sender)->getCloneStorer()->templateExists($args[1])) {
 					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_PASTE_TEMPLATE_NONEXISTENT, [$args[1]]));
 					return false;
@@ -60,6 +69,10 @@ class PasteCommand extends BaseCommand {
 				break;
 
 			case "schematic":
+				if(!isset($args[1])) {
+					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_CLONE_SCHEMATIC_MISSING_NAME));
+					return false;
+				}
 				if(!is_file($file = $this->loader->getDataFolder() . "schematics/" . $args[1] . ".schematic")) {
 					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_PASTE_SCHEMATIC_NONEXISTENT, [$args[1]]));
 					return true;

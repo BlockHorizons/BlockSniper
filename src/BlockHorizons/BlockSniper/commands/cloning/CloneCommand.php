@@ -19,7 +19,7 @@ use pocketmine\utils\TextFormat as TF;
 class CloneCommand extends BaseCommand {
 
 	public function __construct(Loader $loader) {
-		parent::__construct($loader, "clone", Translation::COMMANDS_CLONE_DESCRIPTION, "/clone <type> [name]");
+		parent::__construct($loader, "clone", Translation::COMMANDS_CLONE_DESCRIPTION, "/clone <copy|schematic|template> [name]");
 	}
 
 	public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
@@ -30,6 +30,11 @@ class CloneCommand extends BaseCommand {
 
 		if(!$sender instanceof Player) {
 			$this->sendConsoleError($sender);
+			return false;
+		}
+
+		if(!isset($args[0])){
+			$sender->sendMessage($this->getUsage());
 			return false;
 		}
 
