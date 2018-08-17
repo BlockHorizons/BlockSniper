@@ -34,7 +34,7 @@ class TreeType extends BaseType {
 		if($this->myPlotChecked) {
 			return [];
 		}
-		$this->tree->placeObject($this->getLevel(), $this->center->x, $this->center->y + 1, $this->center->z, new Random(mt_rand()));
+		Tree::growTree($this->getLevel(), $this->center->x, $this->center->y, $this->center->z, new Random(mt_rand()), $this->tree);
 		return [];
 	}
 

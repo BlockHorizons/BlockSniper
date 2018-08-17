@@ -13,13 +13,10 @@ use pocketmine\Player;
 
 class PyramidShape extends BaseShape {
 
-	public function __construct(Player $player, Level $level, int $width, Position $center, bool $hollow = false, bool $cloneShape = false) {
+	public function __construct(Player $player, Level $level, int $width, Position $center, bool $hollow = false) {
 		parent::__construct($player, $level, $center, $hollow);
 		$this->width = $width;
 		$this->height = SessionManager::getPlayerSession($player)->getBrush()->height;
-		if($cloneShape) {
-			$this->center->y += $this->height;
-		}
 	}
 
 	/**

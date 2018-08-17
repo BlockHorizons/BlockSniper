@@ -4,9 +4,15 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\sessions;
 
+require_once("plugins/BlockSniper/src/marshal/src/Sandertv/Marshal/Unmarshal.php");
+require_once("plugins/BlockSniper/src/marshal/src/Sandertv/Marshal/Marshal.php");
+require_once("plugins/BlockSniper/src/marshal/src/Sandertv/Marshal/DecodeException.php");
+
 use BlockHorizons\BlockSniper\brush\Brush;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\owners\PlayerSessionOwner;
+use Sandertv\Marshal\DecodeException;
+use Sandertv\Marshal\Unmarshal;
 
 class PlayerSession extends Session implements \JsonSerializable {
 
@@ -24,7 +30,12 @@ class PlayerSession extends Session implements \JsonSerializable {
 			$this->brush = new Brush($this->getSessionOwner()->getPlayerName());
 			return false;
 		}
-		$this->brush = unserialize($data[$this->getSessionOwner()->getPlayerName()]["brush"], ["allowed_classes" => [Brush::class]]);
+		$this->brush = new Brush("");
+		try {
+			Unmarshal::json($data[$this->getSessionOwner()->getPlayerName()]["brush"], $this->brush);
+		} catch(DecodeException $exception) {
+		}
+
 		return true;
 	}
 
@@ -39,7 +50,7 @@ class PlayerSession extends Session implements \JsonSerializable {
 	 */
 	public function jsonSerialize(): array {
 		return [
-			"brush" => serialize($this->brush)
+			"brush" => json_encode($this->brush)
 		];
 	}
 }

@@ -4,23 +4,35 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\presets;
 
+require_once("plugins/BlockSniper/src/marshal/src/Sandertv/Marshal/Unmarshal.php");
+require_once("plugins/BlockSniper/src/marshal/src/Sandertv/Marshal/DecodeException.php");
+
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
+use Sandertv\Marshal\DecodeException;
+use Sandertv\Marshal\Unmarshal;
 
 class PresetManager {
 
 	/** @var Loader */
 	private $loader = null;
-	/** @var array */
-	private $preset = [];
+	/** @var Preset[] */
+	private $presets = [];
 
 	public function __construct(Loader $loader) {
 		$this->loader = $loader;
 
 		if(is_file($loader->getDataFolder() . "presets.yml")) {
-			$data = yaml_parse_file($loader->getDataFolder() . "presets.yml");
+			$data = json_decode(file_get_contents($loader->getDataFolder() . "presets.json"));
 			foreach($data as $name => $datum) {
-				$this->addPreset(unserialize($datum, ["allowed_classes" => [Preset::class]]));
+				$preset = new Preset($name);
+				try {
+					Unmarshal::json($datum, $preset);
+				} catch(DecodeException $exception) {
+					continue;
+				}
+
+				$this->addPreset($preset);
 				$loader->getLogger()->debug(Translation::get(Translation::LOG_PRESETS_LOADED, [$name]));
 			}
 			$loader->getLogger()->debug(Translation::get(Translation::LOG_PRESETS_ALL_LOADED));
@@ -31,7 +43,7 @@ class PresetManager {
 	 * @param Preset $preset
 	 */
 	public function addPreset(Preset $preset): void {
-		$this->preset[$preset->name] = $preset;
+		$this->presets[] = $preset;
 	}
 
 	/**
@@ -40,35 +52,36 @@ class PresetManager {
 	 * @return bool
 	 */
 	public function isPreset(string $name): bool {
-		return isset($this->preset[$name]);
+		foreach($this->presets as $preset) {
+			if($name === $preset->name) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
-	 * @param string $name
+	 * @param int $index
 	 *
 	 * @return Preset
 	 */
-	public function getPreset(string $name): Preset {
-		return $this->preset[$name];
+	public function getPreset(int $index): Preset {
+		return $this->presets[$index];
 	}
 
 	/**
-	 * @param string $name
+	 * @param int $offset
 	 */
-	public function deletePreset(string $name): void {
-		unset($this->preset[$name]);
+	public function deletePreset(int $offset): void {
+		unset($this->presets[$offset]);
 	}
 
 	public function storePresetsToFile(): void {
 		$data = [];
-		if(!empty($this->preset)) {
-			foreach($this->preset as $name => $preset) {
-				if($preset instanceof Preset) {
-					$data[$name] = serialize($preset);
-				}
-			}
+		foreach($this->presets as $index => $preset) {
+			$data[$preset->name] = json_encode($preset);
 		}
-		yaml_emit_file($this->getLoader()->getDataFolder() . "presets.yml", $data);
+		file_put_contents($this->getLoader()->getDataFolder() . "presets.yml", json_encode($data));
 	}
 
 	/**
@@ -79,11 +92,11 @@ class PresetManager {
 	}
 
 	/**
-	 * @return array
+	 * @return Preset[]
 	 */
 	public function getAllPresets(): array {
 		$presets = [];
-		foreach($this->preset as $name => $preset) {
+		foreach($this->presets as $name => $preset) {
 			$presets[] = $name;
 		}
 		return $presets;

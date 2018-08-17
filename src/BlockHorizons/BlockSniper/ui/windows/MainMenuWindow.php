@@ -19,15 +19,15 @@ class MainMenuWindow extends MenuForm {
 	public function __construct(Loader $loader, Player $requester) {
 		parent::__construct($this->t(Translation::UI_MAIN_MENU_TITLE), $this->t(Translation::UI_MAIN_MENU_SUBTITLE));
 
-		$this->addOption($this->t(Translation::UI_MAIN_MENU_BRUSH), self::BRUSH_ICON, "url", function(Player $player) use ($loader, $requester) {
-			$this->setResponseForm(new BrushMenuWindow($loader, $requester));
+		$this->addOption($this->t(Translation::UI_MAIN_MENU_BRUSH), self::BRUSH_ICON, "url", function(Player $player) use ($loader) {
+			$this->setResponseForm(new BrushMenuWindow($loader, $player));
 		});
-		$this->addOption($this->t(Translation::UI_MAIN_MENU_PRESETS), self::PRESET_ICON, "url", function(Player $player) use ($loader, $requester) {
-			$this->setResponseForm(new PresetMenuWindow($loader, $requester));
+		$this->addOption($this->t(Translation::UI_MAIN_MENU_PRESETS), self::PRESET_ICON, "url", function(Player $player) use ($loader) {
+			$this->setResponseForm(new PresetMenuWindow($loader, $player));
 		});
 		if($requester->hasPermission("blocksniper.configuration")) {
-			$this->addOption($this->t(Translation::UI_MAIN_MENU_CONFIG), self::CONFIG_ICON, "url", function(Player $player) use ($loader, $requester) {
-				$this->setResponseForm(new ConfigurationMenuWindow($loader, $requester));
+			$this->addOption($this->t(Translation::UI_MAIN_MENU_CONFIG), self::CONFIG_ICON, "url", function(Player $player) use ($loader) {
+				$this->setResponseForm(new ConfigurationMenuWindow($loader, $player));
 			});
 		}
 

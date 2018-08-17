@@ -15,13 +15,10 @@ class CylinderShape extends BaseShape {
 
 	const ID = self::SHAPE_CYLINDER;
 
-	public function __construct(Player $player, Level $level, int $radius, Position $center, bool $hollow = false, bool $cloneShape = false) {
+	public function __construct(Player $player, Level $level, int $radius, Position $center, bool $hollow = false) {
 		parent::__construct($player, $level, $center, $hollow);
 		$this->radius = $radius;
 		$this->height = SessionManager::getPlayerSession($player)->getBrush()->height;
-		if($cloneShape) {
-			$this->center->y += $this->height;
-		}
 	}
 
 	/**

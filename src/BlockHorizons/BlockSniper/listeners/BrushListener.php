@@ -75,9 +75,8 @@ class BrushListener implements Listener {
 	 */
 	public function onItemHeld(PlayerItemHeldEvent $event): bool {
 		$player = $event->getPlayer();
-		$hand = $player->getInventory()->getItemInHand();
 		$brush = $this->loader->config->BrushItem->parse();
-		if($hand->getId() === $brush->getId() && $hand->getDamage() === $brush->getDamage()) {
+		if($event->getItem()->getId() === $brush->getId() && $event->getItem()->getDamage() === $brush->getDamage()) {
 			if($player->hasPermission("blocksniper.command.brush")) {
 				$player->sendForm(new BrushMenuWindow($this->loader, $player));
 				return true;

@@ -6,7 +6,6 @@ namespace BlockHorizons\BlockSniper\ui\windows;
 
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
-use BlockHorizons\BlockSniper\ui\WindowHandler;
 use pocketmine\item\Item;
 use pocketmine\Player;
 

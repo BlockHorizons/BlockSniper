@@ -36,7 +36,7 @@ class MenuForm extends Form implements FormInterface {
 
 	public function handleResponse(Player $player, $data): ?FormInterface {
 		if($data !== null) {
-			$this->buttons[(int) $data]($player);
+			$this->buttons[(int) $data]($player, (int) $data);
 		}
 		return $this->responseForm;
 	}

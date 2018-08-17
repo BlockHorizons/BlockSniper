@@ -8,10 +8,8 @@ use BlockHorizons\BlockSniper\brush\async\BlockSniperChunkManager;
 use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\block\Block;
-use pocketmine\level\biome\Biome;
 use pocketmine\level\ChunkManager;
 use pocketmine\level\format\Chunk;
-use pocketmine\level\generator\object\Tree;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\math\Vector2;
@@ -44,7 +42,7 @@ abstract class BaseType {
 
 	/** @var int */
 	protected $level = 0;
-	/** @var Biome */
+	/** @var int */
 	protected $biome = 0;
 	/** @var Block[] */
 	protected $blocks = [];
@@ -52,7 +50,7 @@ abstract class BaseType {
 	protected $center = null;
 	/** @var Block[]|array */
 	protected $obsolete = [];
-	/** @var Tree */
+	/** @var int */
 	protected $tree = 0;
 	/** @var Block[] */
 	protected $brushBlocks = [];
@@ -80,7 +78,7 @@ abstract class BaseType {
 			$this->chunkManager = $manager;
 		}
 		$this->blocks = $blocks;
-		$this->brushBlocks = SessionManager::getPlayerSession($player)->getBrush()->blocks;
+		$this->brushBlocks = SessionManager::getPlayerSession($player)->getBrush()->getBlocks();
 	}
 
 	/**

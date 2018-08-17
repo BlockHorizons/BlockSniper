@@ -5,12 +5,17 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\ui\windows;
 
 use BlockHorizons\BlockSniper\data\Translation;
+use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\presets\Preset;
 use BlockHorizons\BlockSniper\presets\PresetPropertyProcessor;
-use BlockHorizons\BlockSniper\ui\WindowHandler;
 use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
+use pocketmine\Player;
 
 class PresetEditWindow extends CustomWindow {
+
+	public function __construct(Loader $loader, Player $requester, Preset $preset) {
+		parent::__construct($this->t(Translation::UI_PRESET_EDIT_TITLE));
+	}
 
 	/** @var null|Preset */
 	private $preset = null;

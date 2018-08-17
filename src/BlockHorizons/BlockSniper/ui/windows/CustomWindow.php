@@ -7,7 +7,6 @@ namespace BlockHorizons\BlockSniper\ui\windows;
 use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
 use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
 use BlockHorizons\BlockSniper\ui\forms\CustomForm;
-use BlockHorizons\BlockSniper\ui\WindowHandler;
 use pocketmine\Player;
 
 abstract class CustomWindow extends CustomForm {

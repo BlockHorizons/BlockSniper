@@ -14,12 +14,9 @@ class SphereShape extends BaseShape {
 
 	const ID = self::SHAPE_SPHERE;
 
-	public function __construct(Player $player, Level $level, int $radius, Position $center, bool $hollow = false, bool $cloneShape = false) {
+	public function __construct(Player $player, Level $level, int $radius, Position $center, bool $hollow = false) {
 		parent::__construct($player, $level, $center, $hollow);
 		$this->radius = $radius;
-		if($cloneShape) {
-			$this->center->y += $this->radius;
-		}
 	}
 
 	/**
