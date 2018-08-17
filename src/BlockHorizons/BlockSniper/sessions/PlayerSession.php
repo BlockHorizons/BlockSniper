@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace BlockHorizons\BlockSniper\sessions;
 
 require_once("plugins/BlockSniper/src/marshal/src/Sandertv/Marshal/Unmarshal.php");
-require_once("plugins/BlockSniper/src/marshal/src/Sandertv/Marshal/Marshal.php");
 require_once("plugins/BlockSniper/src/marshal/src/Sandertv/Marshal/DecodeException.php");
 
 use BlockHorizons\BlockSniper\brush\Brush;
@@ -16,8 +15,12 @@ use Sandertv\Marshal\Unmarshal;
 
 class PlayerSession extends Session implements \JsonSerializable {
 
+	/** @var bool */
+	private $save = true;
+
 	public function __construct(PlayerSessionOwner $sessionOwner, Loader $loader) {
-		$this->dataFile = $loader->getDataFolder() . "sessions/players.json";
+		$this->save = $loader->config->SaveBrushProperties;
+		$this->dataFile = $loader->getDataFolder() . "sessions/" . $sessionOwner->getName() . ".json";
 		parent::__construct($sessionOwner, $loader);
 	}
 
@@ -25,32 +28,37 @@ class PlayerSession extends Session implements \JsonSerializable {
 	 * @return bool
 	 */
 	public function initializeBrush(): bool {
-		$data = json_decode(file_get_contents($this->getDataFile()), true);
-		if(!isset($data[$this->getSessionOwner()->getPlayerName()])) {
-			$this->brush = new Brush($this->getSessionOwner()->getPlayerName());
-			return false;
-		}
-		$this->brush = new Brush("");
-		try {
-			Unmarshal::json($data[$this->getSessionOwner()->getPlayerName()]["brush"], $this->brush);
-		} catch(DecodeException $exception) {
-		}
+		$this->brush = new Brush($this->getSessionOwner()->getPlayerName());
 
-		return true;
+		if($this->save) {
+			if(!file_exists($this->dataFile)) {
+				file_put_contents($this->dataFile, "{}");
+			}
+			$data = file_get_contents($this->dataFile);
+			$this->loader->getLogger()->debug("Brush recovered:" . $data);
+			try {
+				Unmarshal::json($data, $this->brush);
+			} catch(DecodeException $exception) {
+				$this->loader->getLogger()->logException($exception);
+				return false;
+			}
+			return true;
+		}
+		return false;
 	}
 
 	public function __destruct() {
-		$data = json_decode(file_get_contents($this->getDataFile()), true);
-		$data[$this->getSessionOwner()->getPlayerName()] = $this->jsonSerialize();
-		file_put_contents($this->getDataFile(), json_encode($data));
+		if($this->save){
+			$data = json_encode($this);
+			$this->loader->getLogger()->debug("Saved brush:" . $data);
+			file_put_contents($this->dataFile, $data);
+		}
 	}
 
 	/**
 	 * @return array
 	 */
 	public function jsonSerialize(): array {
-		return [
-			"brush" => json_encode($this->brush)
-		];
+		return $this->brush->jsonSerialize();
 	}
 }

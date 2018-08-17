@@ -18,14 +18,12 @@ use pocketmine\Server;
 class Brush extends BrushProperties {
 
 	/** @var int */
-	private $resetSize = 0;
+	public $resetSize = 0;
 	/** @var string */
 	public $player = "";
 
 	public function __construct(string $player) {
 		$this->player = $player;
-		$this->tree = new OakTree();
-		$this->biomeId = Biome::PLAINS;
 	}
 
 	/**
@@ -74,7 +72,7 @@ class Brush extends BrushProperties {
 	 * @return BaseShape
 	 */
 	public function getShape(): BaseShape {
-		$vector3 = Server::getInstance()->getPlayer($this->player)->getTargetBlock(100);
+		$vector3 = Server::getInstance()->getPlayerExact($this->player)->getTargetBlock(100);
 
 		$location = new Position($vector3->x, $vector3->y, $vector3->z, Server::getInstance()->getPlayer($this->player)->getLevel());
 		$shape = new $this->shape(Server::getInstance()->getPlayer($this->player), Server::getInstance()->getPlayer($this->player)->getLevel(), $this->size, $location, $this->hollow);

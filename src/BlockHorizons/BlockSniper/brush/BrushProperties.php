@@ -28,13 +28,13 @@ class BrushProperties implements \JsonSerializable {
 	/** @var int */
 	public $height = 0;
 	/** @var string */
-	public $blocks = [];
+	public $blocks = "stone";
 	/** @var string */
-	public $obsolete = [];
+	public $obsolete = "air";
 	/** @var int */
-	public $biomeId = 1;
+	public $biomeId = Biome::PLAINS;
 	/** @var int */
-	public $tree = 1;
+	public $tree = 0;
 
 	public function jsonSerialize(): array {
 		return (array) $this;

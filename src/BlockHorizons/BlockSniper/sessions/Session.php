@@ -10,6 +10,7 @@ use BlockHorizons\BlockSniper\revert\RevertStorer;
 use BlockHorizons\BlockSniper\sessions\owners\ISessionOwner;
 use BlockHorizons\BlockSniper\sessions\owners\PlayerSessionOwner;
 use BlockHorizons\BlockSniper\sessions\owners\ServerSessionOwner;
+use pocketmine\block\LapisOre;
 use pocketmine\utils\TextFormat;
 
 abstract class Session {
@@ -24,12 +25,14 @@ abstract class Session {
 	protected $revertStorer = null;
 	/** @var CloneStorer */
 	protected $cloneStorer = null;
+	/** @var Loader */
+	protected $loader;
 
 	public function __construct(ISessionOwner $sessionOwner, Loader $loader) {
 		$this->sessionOwner = $sessionOwner;
 		$this->revertStorer = new RevertStorer($loader->config->MaximumRevertStores);
 		$this->cloneStorer = new CloneStorer($this, $loader->getDataFolder());
-
+		$this->loader = $loader;
 		if($this->initializeBrush()) {
 			$loader->getLogger()->debug(TextFormat::GREEN . Translation::get(Translation::LOG_BRUSH_RESTORED, [$this->getSessionOwner()->getName()]));
 		}

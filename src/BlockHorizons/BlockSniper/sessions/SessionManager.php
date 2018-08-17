@@ -11,6 +11,7 @@ use BlockHorizons\BlockSniper\sessions\owners\PlayerSessionOwner;
 use BlockHorizons\BlockSniper\sessions\owners\ServerSessionOwner;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerJoinEvent;
+use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\IPlayer;
 use pocketmine\level\Position;
 
@@ -104,6 +105,15 @@ class SessionManager implements Listener {
 			return false;
 		}
 		$this->createPlayerSession($event->getPlayer());
+		return true;
+	}
+
+	/**
+	 * @param PlayerQuitEvent $event
+	 * @return bool
+	 */
+	public function onQuit(PlayerQuitEvent $event): bool {
+		unset(self::$playerSessions[$event->getPlayer()->getLowerCaseName()]);
 		return true;
 	}
 

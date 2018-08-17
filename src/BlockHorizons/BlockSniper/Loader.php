@@ -123,7 +123,9 @@ class Loader extends PluginBase {
 		}
 		if(!is_dir($this->getDataFolder() . "sessions/")) {
 			mkdir($this->getDataFolder() . "sessions/");
-			file_put_contents($this->getDataFolder() . "sessions/players.json", "");
+		}
+		if(!is_dir($this->getDataFolder() . "presets/")) {
+			mkdir($this->getDataFolder() . "presets/");
 		}
 	}
 

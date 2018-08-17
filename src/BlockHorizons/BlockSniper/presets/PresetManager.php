@@ -4,12 +4,15 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\presets;
 
+require_once("plugins/BlockSniper/src/marshal/src/Sandertv/Marshal/Marshal.php");
 require_once("plugins/BlockSniper/src/marshal/src/Sandertv/Marshal/Unmarshal.php");
 require_once("plugins/BlockSniper/src/marshal/src/Sandertv/Marshal/DecodeException.php");
 
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
 use Sandertv\Marshal\DecodeException;
+use Sandertv\Marshal\FileNotFoundException;
+use Sandertv\Marshal\Marshal;
 use Sandertv\Marshal\Unmarshal;
 
 class PresetManager {
@@ -22,21 +25,25 @@ class PresetManager {
 	public function __construct(Loader $loader) {
 		$this->loader = $loader;
 
-		if(is_file($loader->getDataFolder() . "presets.json")) {
-			$data = json_decode(file_get_contents($loader->getDataFolder() . "presets.json"));
-			foreach($data as $name => $datum) {
-				$preset = new Preset($name);
-				try {
-					Unmarshal::json($datum, $preset);
-				} catch(DecodeException $exception) {
-					continue;
-				}
-
-				$this->addPreset($preset);
-				$loader->getLogger()->debug(Translation::get(Translation::LOG_PRESETS_LOADED, [$name]));
+		foreach(scandir($loader->getDataFolder() . "presets") as $fileName) {
+			if($fileName === "." || $fileName === "..") {
+				continue;
 			}
-			$loader->getLogger()->debug(Translation::get(Translation::LOG_PRESETS_ALL_LOADED));
+			if(!is_file($loader->getDataFolder() . "presets/" . $fileName)){
+				continue;
+			}
+			$preset = new Preset("");
+			try {
+				Unmarshal::jsonFile($loader->getDataFolder() . "presets/" . $fileName, $preset);
+			} catch(DecodeException $exception){
+				$loader->getLogger()->logException($exception);
+			} catch(FileNotFoundException $exception){
+				$loader->getLogger()->logException($exception);
+			}
+			$this->presets[] = $preset;
+			$loader->getLogger()->debug(Translation::get(Translation::LOG_PRESETS_LOADED, [$preset->name]) . " (" . json_encode($preset) . ")");
 		}
+		$loader->getLogger()->debug(Translation::get(Translation::LOG_PRESETS_ALL_LOADED));
 	}
 
 	/**
@@ -77,11 +84,9 @@ class PresetManager {
 	}
 
 	public function storePresetsToFile(): void {
-		$data = [];
 		foreach($this->presets as $index => $preset) {
-			$data[$preset->name] = json_encode($preset);
+			Marshal::jsonFile($this->loader->getDataFolder() . "presets/" . $preset->name . ".json", $preset);
 		}
-		file_put_contents($this->getLoader()->getDataFolder() . "presets.yml", json_encode($data));
 	}
 
 	/**
@@ -95,10 +100,6 @@ class PresetManager {
 	 * @return Preset[]
 	 */
 	public function getAllPresets(): array {
-		$presets = [];
-		foreach($this->presets as $name => $preset) {
-			$presets[] = $name;
-		}
-		return $presets;
+		return $this->presets;
 	}
 }
