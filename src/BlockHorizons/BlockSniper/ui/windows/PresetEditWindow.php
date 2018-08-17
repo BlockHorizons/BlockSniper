@@ -4,134 +4,55 @@ declare(strict_types = 1);
 
 namespace BlockHorizons\BlockSniper\ui\windows;
 
+use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
+use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\presets\Preset;
-use BlockHorizons\BlockSniper\presets\PresetPropertyProcessor;
-use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
 use pocketmine\Player;
 
 class PresetEditWindow extends CustomWindow {
 
+	/** @var Preset */
+	private $preset;
+
 	public function __construct(Loader $loader, Player $requester, Preset $preset) {
 		parent::__construct($this->t(Translation::UI_PRESET_EDIT_TITLE));
-	}
-
-	/** @var null|Preset */
-	private $preset = null;
-
-	public function process(): void {
-		if($this->preset === null) {
-			return;
-		}
-		$shapes = $this->processShapes();
-		$types = $this->processTypes();
-		$d = $this->preset->getData();
-		$shapeKey = array_search($d[2], $shapes, true);
-		$typeKey = array_search($d[3], $types, true);
-
-		$this->data = [
-			"type" => "custom_form",
-			"title" => Translation::get(Translation::UI_PRESET_EDIT_TITLE),
-			"content" => [
-				[
-					"type" => "input",
-					"text" => Translation::get(Translation::UI_PRESET_EDIT_NAME),
-					"default" => $d[0],
-					"placeholder" => Translation::get(Translation::UI_PRESET_EDIT_NAME)
-				],
-				[
-					"type" => "slider",
-					"text" => Translation::get(Translation::UI_PRESET_EDIT_SIZE),
-					"min" => 0,
-					"max" => $this->loader->config->MaximumSize,
-					"step" => 1,
-					"default" => $d[1]
-				],
-				[
-					"type" => "dropdown",
-					"text" => Translation::get(Translation::UI_PRESET_EDIT_SHAPE),
-					"default" => $shapeKey === false ? 0 : $shapeKey,
-					"options" => $shapes
-				],
-				[
-					"type" => "dropdown",
-					"text" => Translation::get(Translation::UI_PRESET_EDIT_TYPE),
-					"default" => $typeKey === false ? 0 : $typeKey,
-					"options" => $types
-				],
-				[
-					"type" => "toggle",
-					"text" => Translation::get(Translation::UI_PRESET_EDIT_HOLLOW),
-					"default" => $d[4]
-				],
-				[
-					"type" => "toggle",
-					"text" => Translation::get(Translation::UI_PRESET_EDIT_DECREMENT),
-					"default" => $d[5]
-				],
-				[
-					"type" => "slider",
-					"text" => Translation::get(Translation::UI_PRESET_EDIT_HEIGHT),
-					"min" => 0,
-					"max" => $this->loader->config->MaximumSize,
-					"step" => 1,
-					"default" => $d[6]
-				],
-				[
-					"type" => "toggle",
-					"text" => Translation::get(Translation::UI_PRESET_EDIT_PERFECT),
-					"default" => $d[7]
-				],
-				[
-					"type" => "input",
-					"text" => Translation::get(Translation::UI_PRESET_EDIT_BLOCKS),
-					"placeholder" => "stone,stone_brick:1,2",
-					"default" => $d[8]
-				],
-				[
-					"type" => "input",
-					"text" => Translation::get(Translation::UI_PRESET_EDIT_OBSOLETE),
-					"placeholder" => "stone,stone_brick:1,2",
-					"default" => $d[9]
-				],
-				[
-					"type" => "input",
-					"text" => Translation::get(Translation::UI_PRESET_EDIT_BIOME),
-					"placeholder" => "plains",
-					"default" => $d[10]
-				],
-				[
-					"type" => "input",
-					"text" => Translation::get(Translation::UI_PRESET_EDIT_TREE),
-					"placeholder" => "oak",
-					"default" => $d[11]
-				]
-			]
-		];
-	}
-
-	/**
-	 * @return Preset
-	 */
-	public function getPreset(): Preset {
-		return $this->preset;
-	}
-
-	/**
-	 * @param Preset $preset
-	 */
-	public function setPreset(Preset $preset) {
 		$this->preset = $preset;
-	}
 
-	public function handle(ModalFormResponsePacket $packet): bool {
-		$data = json_decode($packet->formData, true);
-		$processor = new PresetPropertyProcessor($this->player, $this->loader);
-		foreach($data as $key => $value) {
-			$processor->process($key, $value);
-		}
-		$this->navigate(WindowHandler::WINDOW_PRESET_LIST_MENU, $this->player, new WindowHandler());
-		return true;
+		$this->addInput($this->t(Translation::UI_PRESET_CREATION_NAME), $preset->name, $this->t(Translation::UI_PRESET_CREATION_NAME), function(Player $player, string $value) {
+			$this->preset->name = $value;
+		});
+		$this->addSlider($this->t(Translation::UI_PRESET_CREATION_SIZE), 0, $loader->config->MaximumSize, 1, $preset->properties->size, function(Player $player, float $value) {
+			$this->preset->properties->size = (int) $value;
+		});
+		$this->addDropdown($this->t(Translation::UI_PRESET_CREATION_SHAPE), $this->processShapes($requester), ($preset->properties->shape)::ID, function(Player $player, int $value) {
+			$this->preset->properties->shape = ShapeRegistration::getShapeById($value);
+		});
+		$this->addDropdown($this->t(Translation::UI_PRESET_CREATION_TYPE), $this->processTypes($requester), ($preset->properties->type)::ID, function(Player $player, int $value) {
+			$this->preset->properties->type = TypeRegistration::getTypeById($value);
+		});
+		$this->addToggle($this->t(Translation::UI_PRESET_CREATION_HOLLOW), $preset->properties->hollow, function(Player $player, bool $value) {
+			$this->preset->properties->hollow = $value;
+		});
+		$this->addToggle($this->t(Translation::UI_PRESET_CREATION_DECREMENT), $preset->properties->decrementing, function(Player $player, bool $value) {
+			$this->preset->properties->decrementing = $value;
+		});
+		$this->addSlider($this->t(Translation::UI_PRESET_CREATION_HEIGHT), 0, $loader->config->MaximumSize, 1, $preset->properties->height, function(Player $player, float $value) {
+			$this->preset->properties->height = (int) $value;
+		});
+		$this->addInput($this->t(Translation::UI_PRESET_CREATION_BLOCKS), $preset->properties->blocks, "stone,stone_brick:1,2", function(Player $player, string $value) {
+			$this->preset->properties->blocks = $value;
+		});
+		$this->addInput($this->t(Translation::UI_PRESET_CREATION_OBSOLETE), $preset->properties->obsolete, "stone,stone_brick:1,2", function(Player $player, string $value) {
+			$this->preset->properties->obsolete = $value;
+		});
+		$this->addInput($this->t(Translation::UI_PRESET_CREATION_BIOME), (string) $preset->properties->biomeId, "plains", function(Player $player, string $value) {
+			$this->preset->properties->biome = $this->preset->properties->parseBiomeId($value);
+		});
+		$this->addInput($this->t(Translation::UI_PRESET_CREATION_TREE), (string) $preset->properties->tree, "oak", function(Player $player, string $value) use ($loader) {
+			$this->preset->properties->tree = $this->preset->properties->parseTreeId($value);
+		});
+		$this->setResponseForm(new PresetMenuWindow($loader, $requester));
 	}
 }

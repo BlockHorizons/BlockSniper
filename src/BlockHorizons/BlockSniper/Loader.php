@@ -71,6 +71,7 @@ class Loader extends PluginBase {
 
 	public function onDisable(): void {
 		$this->getPresetManager()->storePresetsToFile();
+		$this->sessionManager->close();
 	}
 
 	public function reload(): void {

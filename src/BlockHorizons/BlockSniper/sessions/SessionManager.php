@@ -31,6 +31,12 @@ class SessionManager implements Listener {
 		//$this->fetchServerSessions($loader);
 	}
 
+	public function close() : void {
+		foreach(self::$playerSessions as $session) {
+			$session->__destruct();
+		}
+	}
+
 	/**
 	 * @param IPlayer $player
 	 *
