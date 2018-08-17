@@ -22,7 +22,7 @@ class PresetManager {
 	public function __construct(Loader $loader) {
 		$this->loader = $loader;
 
-		if(is_file($loader->getDataFolder() . "presets.yml")) {
+		if(is_file($loader->getDataFolder() . "presets.json")) {
 			$data = json_decode(file_get_contents($loader->getDataFolder() . "presets.json"));
 			foreach($data as $name => $datum) {
 				$preset = new Preset($name);
