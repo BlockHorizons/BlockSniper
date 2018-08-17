@@ -24,7 +24,7 @@ use BlockHorizons\BlockSniper\brush\types\TopLayerType;
 use BlockHorizons\BlockSniper\brush\types\TreeType;
 use BlockHorizons\BlockSniper\exceptions\InvalidIdException;
 use pocketmine\permission\Permission;
-use pocketmine\Server;
+use pocketmine\permission\PermissionManager;
 
 class TypeRegistration {
 
@@ -87,6 +87,7 @@ class TypeRegistration {
 	 * Returns whether a type with the given name exists or not.
 	 *
 	 * @param string $typeName
+	 * @param int    $id
 	 *
 	 * @return bool
 	 */
@@ -100,7 +101,7 @@ class TypeRegistration {
 	private static function registerPermission(string $typeName): void {
 		$permission = new Permission("blocksniper.type." . $typeName, "Allows permission to use the " . $typeName . " shape.", Permission::DEFAULT_OP);
 		$permission->addParent("blocksniper.type", true);
-		Server::getInstance()->getPluginManager()->addPermission($permission);
+		PermissionManager::getInstance()->addPermission($permission);
 	}
 
 	/**

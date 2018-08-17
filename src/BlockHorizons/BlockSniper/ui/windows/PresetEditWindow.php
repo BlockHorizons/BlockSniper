@@ -10,7 +10,7 @@ use BlockHorizons\BlockSniper\presets\PresetPropertyProcessor;
 use BlockHorizons\BlockSniper\ui\WindowHandler;
 use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
 
-class PresetEditWindow extends Window {
+class PresetEditWindow extends CustomWindow {
 
 	/** @var null|Preset */
 	private $preset = null;

@@ -7,7 +7,6 @@ namespace BlockHorizons\BlockSniper\brush\types;
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\block\Block;
-use pocketmine\level\biome\Biome;
 use pocketmine\level\ChunkManager;
 use pocketmine\Player;
 
@@ -21,7 +20,7 @@ class BiomeType extends BaseType {
 
 	public function __construct(Player $player, ChunkManager $level, array $blocks) {
 		parent::__construct($player, $level, $blocks);
-		$this->biome = SessionManager::getPlayerSession($player)->getBrush()->biome;
+		$this->biome = SessionManager::getPlayerSession($player)->getBrush()->biomeId;
 	}
 
 	public function getName(): string {
@@ -31,9 +30,9 @@ class BiomeType extends BaseType {
 	/**
 	 * Returns the biome of this type.
 	 *
-	 * @return Biome
+	 * @return int
 	 */
-	public function getBiome(): Biome {
+	public function getBiome(): int {
 		return $this->biome;
 	}
 
@@ -42,14 +41,14 @@ class BiomeType extends BaseType {
 	 */
 	protected function fillSynchronously(): array {
 		foreach($this->blocks as $block) {
-			$this->putBiome($block, $this->biome->getId());
+			$this->putBiome($block, $this->biome);
 		}
 		return [];
 	}
 
 	protected function fillAsynchronously(): void {
 		foreach($this->blocks as $block) {
-			$this->putBiome($block, $this->biome->getId());
+			$this->putBiome($block, $this->biome);
 		}
 	}
 }

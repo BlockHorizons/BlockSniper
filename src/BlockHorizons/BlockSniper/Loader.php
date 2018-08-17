@@ -16,7 +16,6 @@ use BlockHorizons\BlockSniper\data\ConfigData;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\data\TranslationData;
 use BlockHorizons\BlockSniper\listeners\BrushListener;
-use BlockHorizons\BlockSniper\listeners\UserInterfaceListener;
 use BlockHorizons\BlockSniper\presets\PresetManager;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use BlockHorizons\BlockSniper\tasks\RedoDiminishTask;
@@ -170,7 +169,6 @@ class Loader extends PluginBase {
 	private function registerListeners(): void {
 		$blockSniperListeners = [
 			new BrushListener($this),
-			new UserInterfaceListener($this),
 			$this->sessionManager = new SessionManager($this)
 		];
 		foreach($blockSniperListeners as $listener) {

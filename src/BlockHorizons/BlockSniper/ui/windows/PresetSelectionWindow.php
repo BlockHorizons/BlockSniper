@@ -8,7 +8,7 @@ use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\ui\WindowHandler;
 use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
 
-class PresetSelectionWindow extends Window {
+class PresetSelectionWindow extends CustomWindow {
 
 	public function process(): void {
 		$this->data = [

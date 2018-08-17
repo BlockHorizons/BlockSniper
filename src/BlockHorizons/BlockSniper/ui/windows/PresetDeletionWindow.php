@@ -8,7 +8,7 @@ use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\ui\WindowHandler;
 use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
 
-class PresetDeletionWindow extends Window {
+class PresetDeletionWindow extends CustomWindow {
 
 	public function process(): void {
 		$this->data = [

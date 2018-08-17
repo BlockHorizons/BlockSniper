@@ -45,8 +45,8 @@ class Brush {
 	public $blocks = [];
 	/** @var Block[] */
 	public $obsolete = [];
-	/** @var Biome */
-	public $biome;
+	/** @var int */
+	public $biomeId;
 	/** @var Tree */
 	public $tree;
 	/** @var int */
@@ -54,6 +54,8 @@ class Brush {
 
 	public function __construct(string $player) {
 		$this->player = $player;
+		$this->tree = new OakTree();
+		$this->biomeId = Biome::PLAINS;
 	}
 
 	/**
@@ -71,6 +73,9 @@ class Brush {
 		$blocks = [];
 		$fragments = explode(",", $data);
 		foreach($fragments as $itemString) {
+			if($itemString === "") {
+				continue;
+			}
 			if(is_numeric($itemString)) {
 				$blocks[] = Item::get((int) $itemString)->getBlock();
 			} else {
@@ -85,11 +90,11 @@ class Brush {
 
 	/**
 	 * @param string $data
-	 * @return Biome
+	 * @return int
 	 */
-	public function parseBiome(string $data): Biome {
+	public function parseBiomeId(string $data): int {
 		if(is_numeric($data)) {
-			return Biome::getBiome((int) $data);
+			return (int) $data;
 		}
 		$biomes = null;
 		try {
@@ -98,10 +103,9 @@ class Brush {
 		}
 		$const = strtoupper(str_replace(" ", "_", $data));
 		if($biomes->hasConstant($const)) {
-			$biomeId = $biomes->getConstant($const);
-			return Biome::getBiome($biomeId);
+			return $biomes->getConstant($const);
 		}
-		return Biome::getBiome(0);
+		return 0;
 	}
 
 	/**

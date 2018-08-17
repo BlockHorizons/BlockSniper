@@ -7,11 +7,11 @@ namespace BlockHorizons\BlockSniper\listeners;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use BlockHorizons\BlockSniper\ui\WindowHandler;
+use BlockHorizons\BlockSniper\ui\windows\BrushMenuWindow;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerItemHeldEvent;
 use pocketmine\math\Vector2;
-use pocketmine\network\mcpe\protocol\ModalFormRequestPacket;
 use pocketmine\Player;
 
 class BrushListener implements Listener {
@@ -79,11 +79,7 @@ class BrushListener implements Listener {
 		$brush = $this->loader->config->BrushItem->parse();
 		if($hand->getId() === $brush->getId() && $hand->getDamage() === $brush->getDamage()) {
 			if($player->hasPermission("blocksniper.command.brush")) {
-				$windowHandler = new WindowHandler();
-				$packet = new ModalFormRequestPacket();
-				$packet->formId = $windowHandler->getWindowIdFor(WindowHandler::WINDOW_BRUSH_MENU);
-				$packet->formData = $windowHandler->getWindowJson(WindowHandler::WINDOW_BRUSH_MENU, $this->loader, $player);
-				$player->sendDataPacket($packet);
+				$player->sendForm(new BrushMenuWindow($this->loader, $player));
 				return true;
 			}
 		}

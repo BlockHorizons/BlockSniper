@@ -9,7 +9,7 @@ use BlockHorizons\BlockSniper\presets\PresetPropertyProcessor;
 use BlockHorizons\BlockSniper\ui\WindowHandler;
 use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
 
-class PresetCreationWindow extends Window {
+class PresetCreationWindow extends CustomWindow {
 
 	public function process(): void {
 		$this->data = [

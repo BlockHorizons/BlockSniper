@@ -7,8 +7,8 @@ namespace BlockHorizons\BlockSniper\commands;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\ui\WindowHandler;
+use BlockHorizons\BlockSniper\ui\windows\MainMenuWindow;
 use pocketmine\command\CommandSender;
-use pocketmine\network\mcpe\protocol\ModalFormRequestPacket;
 use pocketmine\Player;
 
 class BrushCommand extends BaseCommand {
@@ -27,11 +27,7 @@ class BrushCommand extends BaseCommand {
 			$this->sendConsoleError($sender);
 			return false;
 		}
-		$windowHandler = new WindowHandler();
-		$packet = new ModalFormRequestPacket();
-		$packet->formId = $windowHandler->getWindowIdFor(WindowHandler::WINDOW_MAIN_MENU);
-		$packet->formData = $windowHandler->getWindowJson(WindowHandler::WINDOW_MAIN_MENU, $this->loader, $sender);
-		$sender->dataPacket($packet);
+		$sender->sendForm(new MainMenuWindow($this->loader, $sender));
 		return true;
 	}
 }
