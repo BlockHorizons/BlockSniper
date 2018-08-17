@@ -39,11 +39,11 @@ It contains the most up to date permissions, so every permission available can b
 Some permissions are also registered dynamically. The permissions of shapes consist out of: `blocksniper.shape.<lowercase shapename>`, whereas the permissions of types consist out of `blocksniper.type.<lowercase typename>`.
 
 ### Reviews
-BlockSniper can be reviewed at the poggit release page [here](https://poggit.pmmp.io/p/BlockSniper/).
+BlockSniper can be reviewed at the Poggit release page [here](https://poggit.pmmp.io/p/BlockSniper/).
 Any feedback given is very welcome and appreciated. Don't hesitate to share what you think about this plugin.
 
 ### Contact
-BlockHorizons can be contacted at both Gitter and Discord. There are more users in the Discord room, so you'll often get a quicker reply there.
+BlockHorizons can be contacted in the Discord server below.
 <br><br>
 
 [![Chat](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/YynM57V)
