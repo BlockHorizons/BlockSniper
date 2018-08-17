@@ -191,7 +191,11 @@
       "replace": "재배치",
       "snowcone": "Snowcone",
       "toplayer": "상단 레이어",
-      "tree": "나무"
+      "tree": "나무",
+      "regenerate": "Regenerate",
+      "freeze": "Freeze",
+      "warm": "Warm",
+      "heat": "Heat"
     }
   }
 }

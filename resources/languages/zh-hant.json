@@ -191,7 +191,11 @@
       "replace": "替換",
       "snowcone": "降雪",
       "toplayer": "頂層",
-      "tree": "樹木"
+      "tree": "樹木",
+      "regenerate": "Regenerate",
+      "freeze": "Freeze",
+      "warm": "Warm",
+      "heat": "Heat"
     }
   }
 }
