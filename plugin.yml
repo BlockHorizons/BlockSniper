@@ -16,7 +16,7 @@
     "permissions": {
         "blocksniper-myplot": {
             "default": false,
-            "description": "Allows bypassing MyPlot plot borders with BlockSniper."
+            "description": "Allows bypassing MyPlot plot borders with BlockSniper.",
             "children": {
                 "blocksniper-myplot.bypass": {
                     "default": false,
