@@ -2,6 +2,6 @@
 
 namespace BlockHorizons\BlockSniper\sessions\owners;
 
-interface ISessionOwner {
+interface ISessionOwner{
 
 }

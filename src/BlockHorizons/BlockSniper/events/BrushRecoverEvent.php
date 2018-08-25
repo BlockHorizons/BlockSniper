@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\events;
 
 use BlockHorizons\BlockSniper\brush\Brush;
 use pocketmine\event\Cancellable;
 
-class BrushRecoverEvent extends BlockSniperEvent implements Cancellable {
+class BrushRecoverEvent extends BlockSniperEvent implements Cancellable{
 
 	/** @var null */
 	public static $handlerList = null;
@@ -17,7 +17,7 @@ class BrushRecoverEvent extends BlockSniperEvent implements Cancellable {
 	/** @var Brush */
 	public $brush = null;
 
-	public function __construct(string $player, Brush $brush) {
+	public function __construct(string $player, Brush $brush){
 		$this->player = $player;
 		$this->brush = $brush;
 	}
@@ -27,7 +27,7 @@ class BrushRecoverEvent extends BlockSniperEvent implements Cancellable {
 	 *
 	 * @return Brush
 	 */
-	public function getBrush(): Brush {
+	public function getBrush() : Brush{
 		return $this->brush;
 	}
 
@@ -37,7 +37,7 @@ class BrushRecoverEvent extends BlockSniperEvent implements Cancellable {
 	 *
 	 * @return string
 	 */
-	public function getPlayer(): string {
+	public function getPlayer() : string{
 		return $this->player;
 	}
 }

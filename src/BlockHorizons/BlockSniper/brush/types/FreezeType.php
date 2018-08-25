@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
@@ -11,14 +11,14 @@ use pocketmine\block\Block;
  * Freezes the terrain, causing water to become ice, lava to become obsidian and extinguishes fire.
  */
 
-class FreezeType extends BaseType {
+class FreezeType extends BaseType{
 
 	const ID = self::TYPE_FREEZE;
 
-	public function fillSynchronously(): array {
+	public function fillSynchronously() : array{
 		$undoBlocks = [];
-		foreach($this->blocks as $block) {
-			switch($block->getId()) {
+		foreach($this->blocks as $block){
+			switch($block->getId()){
 				case Block::WATER:
 				case Block::FLOWING_WATER:
 					$undoBlocks[] = $block;
@@ -38,12 +38,13 @@ class FreezeType extends BaseType {
 					$this->putBlock($block, Block::PACKED_ICE);
 			}
 		}
+
 		return $undoBlocks;
 	}
 
-	public function fillAsynchronously(): void {
-		foreach($this->blocks as $block) {
-			switch($block->getId()) {
+	public function fillAsynchronously() : void{
+		foreach($this->blocks as $block){
+			switch($block->getId()){
 				case Block::WATER:
 				case Block::FLOWING_WATER:
 					$this->putBlock($block, Block::ICE);
@@ -61,7 +62,7 @@ class FreezeType extends BaseType {
 		}
 	}
 
-	public function getName(): string {
+	public function getName() : string{
 		return "Freeze";
 	}
 }

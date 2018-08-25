@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\registration;
 
@@ -29,14 +29,14 @@ use BlockHorizons\BlockSniper\exceptions\InvalidIdException;
 use pocketmine\permission\Permission;
 use pocketmine\permission\PermissionManager;
 
-class TypeRegistration {
+class TypeRegistration{
 
 	/** @var string[] */
 	private static $types = [];
 	/** @var string[] */
 	private static $typesIds = [];
 
-	public static function init(): void {
+	public static function init() : void{
 		self::registerType(BiomeType::class, BiomeType::ID);
 		self::registerType(CleanEntitiesType::class, CleanEntitiesType::ID);
 		self::registerType(CleanType::class, CleanType::ID);
@@ -70,22 +70,23 @@ class TypeRegistration {
 	 *
 	 * @return bool
 	 */
-	public static function registerType(string $class, int $id, bool $overwrite = false): bool {
+	public static function registerType(string $class, int $id, bool $overwrite = false) : bool{
 		$shortName = "";
-		try {
+		try{
 			$shortName = str_replace("Type", "", (new \ReflectionClass($class))->getShortName());
-		} catch(\ReflectionException $e) {
+		}catch(\ReflectionException $e){
 		};
 
-		if(!$overwrite && self::typeExists(strtolower($shortName), $id)) {
+		if(!$overwrite && self::typeExists(strtolower($shortName), $id)){
 			return false;
 		}
-		if($id < 0) {
+		if($id < 0){
 			throw new InvalidIdException("A shape ID should be positive.");
 		}
 		self::$typesIds[$id] = $shortName;
 		self::$types[strtolower($shortName)] = $class;
 		self::registerPermission(strtolower($shortName));
+
 		return true;
 	}
 
@@ -97,14 +98,14 @@ class TypeRegistration {
 	 *
 	 * @return bool
 	 */
-	public static function typeExists(string $typeName, int $id = -1): bool {
+	public static function typeExists(string $typeName, int $id = -1) : bool{
 		return isset(self::$types[$typeName]) || isset(self::$typesIds[$id]);
 	}
 
 	/**
 	 * @param string $typeName
 	 */
-	private static function registerPermission(string $typeName): void {
+	private static function registerPermission(string $typeName) : void{
 		$permission = new Permission("blocksniper.type." . $typeName, "Allows permission to use the " . $typeName . " shape.", Permission::DEFAULT_OP);
 		$permission->addParent("blocksniper.type", true);
 		PermissionManager::getInstance()->addPermission($permission);
@@ -115,7 +116,7 @@ class TypeRegistration {
 	 *
 	 * @return string[]
 	 */
-	public static function getTypes(): array {
+	public static function getTypes() : array{
 		return self::$types;
 	}
 
@@ -124,7 +125,7 @@ class TypeRegistration {
 	 *
 	 * @return string[]
 	 */
-	public static function getTypeIds(): array {
+	public static function getTypeIds() : array{
 		return self::$typesIds;
 	}
 
@@ -136,10 +137,11 @@ class TypeRegistration {
 	 *
 	 * @return null|string
 	 */
-	public static function getTypeById(int $id, bool $name = false): ?string {
-		if(!isset(self::$typesIds[$id])) {
+	public static function getTypeById(int $id, bool $name = false) : ?string{
+		if(!isset(self::$typesIds[$id])){
 			return null;
 		}
+
 		return $name ? self::$typesIds[$id] : self::getType(strtolower(self::$typesIds[$id]));
 	}
 
@@ -150,7 +152,7 @@ class TypeRegistration {
 	 *
 	 * @return null|string
 	 */
-	public static function getType(string $shortName): ?string {
+	public static function getType(string $shortName) : ?string{
 		return self::$types[$shortName] ?? null;
 	}
 }

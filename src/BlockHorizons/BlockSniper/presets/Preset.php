@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\presets;
 
@@ -8,18 +8,18 @@ use BlockHorizons\BlockSniper\brush\BrushProperties;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\Player;
 
-class Preset {
+class Preset{
 
 	/** @var string */
 	public $name = "";
 	/** @var BrushProperties */
 	public $properties;
 
-	public function __construct(string $name, BrushProperties $properties = null) {
+	public function __construct(string $name, BrushProperties $properties = null){
 		$this->name = $name;
-		if($properties === null) {
+		if($properties === null){
 			$this->properties = new BrushProperties();
-		} else {
+		}else{
 			$this->properties = $properties;
 		}
 	}
@@ -29,9 +29,9 @@ class Preset {
 	 *
 	 * @param Player $player
 	 */
-	public function apply(Player $player): void {
+	public function apply(Player $player) : void{
 		$brush = SessionManager::getPlayerSession($player)->getBrush();
-		foreach($this->properties as $property => $value) {
+		foreach($this->properties as $property => $value){
 			$brush->{$property} = $value;
 		}
 	}

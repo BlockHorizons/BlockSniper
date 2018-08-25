@@ -1,20 +1,20 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
 use pocketmine\block\Block;
 
-class WarmType extends BaseType {
+class WarmType extends BaseType{
 
 	const ID = self::TYPE_WARM;
 
-	public function fillSynchronously(): array {
+	public function fillSynchronously() : array{
 		$undoBlocks = [];
-		foreach($this->blocks as $block) {
-			switch($block->getId()) {
+		foreach($this->blocks as $block){
+			switch($block->getId()){
 				case Block::ICE:
 					$undoBlocks[] = $block;
 					$this->putBlock($block, Block::WATER);
@@ -28,12 +28,13 @@ class WarmType extends BaseType {
 					$this->putBlock($block, Block::ICE);
 			}
 		}
+
 		return $undoBlocks;
 	}
 
-	public function fillAsynchronously(): void {
-		foreach($this->blocks as $block) {
-			switch($block->getId()) {
+	public function fillAsynchronously() : void{
+		foreach($this->blocks as $block){
+			switch($block->getId()){
 				case Block::ICE:
 					$this->putBlock($block, Block::WATER);
 					break;
@@ -46,7 +47,7 @@ class WarmType extends BaseType {
 		}
 	}
 
-	public function getName(): string {
+	public function getName() : string{
 		return "Warm";
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\data;
 
@@ -14,7 +14,7 @@ use Sandertv\Marshal\FileNotFoundException;
 use Sandertv\Marshal\Marshal;
 use Sandertv\Marshal\Unmarshal;
 
-class ConfigData {
+class ConfigData{
 	private $filePath = "";
 
 	public $ConfigurationVersion = ""; // Default to an outdated version, so we can properly detect outdated configs.
@@ -30,29 +30,29 @@ class ConfigData {
 	public $OpenGUIAutomatically = true;
 	public $MyPlotSupport = false;
 
-	public function __construct(Loader $loader) {
+	public function __construct(Loader $loader){
 		$this->BrushItem = new BrushItem();
 		$this->filePath = $loader->getDataFolder() . "config.yml";
 
-		try {
+		try{
 			Unmarshal::yamlFile($this->filePath, $this);
-		} catch(FileNotFoundException $exception) {
+		}catch(FileNotFoundException $exception){
 			// Make sure to set the right version right off the bat.
 			$this->ConfigurationVersion = Loader::CONFIGURATION_VERSION;
 			Marshal::yamlFile($this->filePath, $this);
-		} catch(\ErrorException $exception) {
+		}catch(\ErrorException $exception){
 			// PM's error handler will create this error exception, causing the DecodeException not to be thrown at all.
 			$loader->getLogger()->error("Configuration corrupted. config.yml has been renamed to config_corrupted.yml and a new config.yml has been generated.");
 			rename($this->filePath, $loader->getDataFolder() . "config_corrupted.yml");
 			// Make sure to set the right version right off the bat.
 			$this->ConfigurationVersion = Loader::CONFIGURATION_VERSION;
 			Marshal::yamlFile($this->filePath, $this);
-		} catch(DecodeException $e) {
+		}catch(DecodeException $e){
 		}
 
 		// We can retain backwards compatibility with old configuration most of the times, but the fact that the version
 		// was empty means that the configuration was completely unrecoverable. We'll generate a new one.
-		if($this->ConfigurationVersion === "") {
+		if($this->ConfigurationVersion === ""){
 			$loader->getLogger()->notice("Outdated configuration. config.yml has been renamed to config_old.yml and a new config.yml has been generated.");
 			rename($this->filePath, $loader->getDataFolder() . "config_old.yml");
 			// Set the new configuration version so we don't end in an infinite loop.
@@ -61,16 +61,16 @@ class ConfigData {
 		}
 	}
 
-	public function __destruct() {
+	public function __destruct(){
 		Marshal::yamlFile($this->filePath, $this);
 	}
 }
 
-class BrushItem {
+class BrushItem{
 	public $ItemID = 396;
 	public $ItemData = 0;
 
-	public function parse(): Item {
+	public function parse() : Item{
 		return Item::get($this->ItemID, $this->ItemData);
 	}
 }

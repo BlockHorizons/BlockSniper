@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\presets;
 
@@ -15,29 +15,29 @@ use Sandertv\Marshal\FileNotFoundException;
 use Sandertv\Marshal\Marshal;
 use Sandertv\Marshal\Unmarshal;
 
-class PresetManager {
+class PresetManager{
 
 	/** @var Loader */
 	private $loader = null;
 	/** @var Preset[] */
 	private $presets = [];
 
-	public function __construct(Loader $loader) {
+	public function __construct(Loader $loader){
 		$this->loader = $loader;
 
-		foreach(scandir($loader->getDataFolder() . "presets") as $fileName) {
-			if($fileName === "." || $fileName === "..") {
+		foreach(scandir($loader->getDataFolder() . "presets") as $fileName){
+			if($fileName === "." || $fileName === ".."){
 				continue;
 			}
 			if(!is_file($loader->getDataFolder() . "presets/" . $fileName)){
 				continue;
 			}
 			$preset = new Preset("");
-			try {
+			try{
 				Unmarshal::jsonFile($loader->getDataFolder() . "presets/" . $fileName, $preset);
-			} catch(DecodeException $exception){
+			}catch(DecodeException $exception){
 				$loader->getLogger()->logException($exception);
-			} catch(FileNotFoundException $exception){
+			}catch(FileNotFoundException $exception){
 				$loader->getLogger()->logException($exception);
 			}
 			$this->presets[] = $preset;
@@ -49,7 +49,7 @@ class PresetManager {
 	/**
 	 * @param Preset $preset
 	 */
-	public function addPreset(Preset $preset): void {
+	public function addPreset(Preset $preset) : void{
 		$this->presets[] = $preset;
 	}
 
@@ -58,12 +58,13 @@ class PresetManager {
 	 *
 	 * @return bool
 	 */
-	public function isPreset(string $name): bool {
-		foreach($this->presets as $preset) {
-			if($name === $preset->name) {
+	public function isPreset(string $name) : bool{
+		foreach($this->presets as $preset){
+			if($name === $preset->name){
 				return true;
 			}
 		}
+
 		return false;
 	}
 
@@ -72,19 +73,19 @@ class PresetManager {
 	 *
 	 * @return Preset
 	 */
-	public function getPreset(int $index): Preset {
+	public function getPreset(int $index) : Preset{
 		return $this->presets[$index];
 	}
 
 	/**
 	 * @param int $offset
 	 */
-	public function deletePreset(int $offset): void {
+	public function deletePreset(int $offset) : void{
 		unset($this->presets[$offset]);
 	}
 
-	public function storePresetsToFile(): void {
-		foreach($this->presets as $index => $preset) {
+	public function storePresetsToFile() : void{
+		foreach($this->presets as $index => $preset){
 			Marshal::jsonFile($this->loader->getDataFolder() . "presets/" . $preset->name . ".json", $preset);
 		}
 	}
@@ -92,14 +93,14 @@ class PresetManager {
 	/**
 	 * @return Loader
 	 */
-	public function getLoader(): Loader {
+	public function getLoader() : Loader{
 		return $this->loader;
 	}
 
 	/**
 	 * @return Preset[]
 	 */
-	public function getAllPresets(): array {
+	public function getAllPresets() : array{
 		return $this->presets;
 	}
 }

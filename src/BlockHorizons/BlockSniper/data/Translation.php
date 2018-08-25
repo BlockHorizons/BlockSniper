@@ -1,10 +1,10 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\data;
 
-class Translation {
+class Translation{
 
 	/**
 	 * These constants are AUTOMATICALLY GENERATED.
@@ -148,32 +148,34 @@ class Translation {
 	/** @var array */
 	private $messageData = [];
 
-	public function __construct(TranslationData $data) {
+	public function __construct(TranslationData $data){
 		$this->messageData = $data->getMessages();
-		try {
+		try{
 			$reflection = new \ReflectionClass(self::class);
-			foreach($reflection->getConstants() as $constant => $value) {
+			foreach($reflection->getConstants() as $constant => $value){
 				self::$translations[$value] = $this->putMessage($value);
 			}
-		} catch(\ReflectionException $exception) {
+		}catch(\ReflectionException $exception){
 		}
 	}
 
 	/**
 	 * @param string $key
+	 *
 	 * @return string
 	 */
-	private function putMessage(string $key): string {
+	private function putMessage(string $key) : string{
 		$messages = $this->messageData;
 		$path = explode(".", $key);
 		$pathCount = count($path);
 
 		$message = $messages[$path[0]];
-		for($i = 1; $i < $pathCount; $i++) {
-			if(is_array($message)) {
+		for($i = 1; $i < $pathCount; $i++){
+			if(is_array($message)){
 				$message = $message[$path[$i]];
 			}
 		}
+
 		return $message;
 	}
 
@@ -183,10 +185,11 @@ class Translation {
 	 *
 	 * @return string
 	 */
-	public static function get(string $key, array $params = []): string {
-		if(!empty($params)) {
+	public static function get(string $key, array $params = []) : string{
+		if(!empty($params)){
 			return vsprintf(self::$translations[$key], $params);
 		}
+
 		return self::$translations[$key];
 	}
 }

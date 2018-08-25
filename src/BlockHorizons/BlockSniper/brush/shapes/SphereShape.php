@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\shapes;
 
@@ -10,11 +10,11 @@ use pocketmine\level\Position;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 
-class SphereShape extends BaseShape {
+class SphereShape extends BaseShape{
 
 	const ID = self::SHAPE_SPHERE;
 
-	public function __construct(Player $player, Level $level, int $radius, Position $center, bool $hollow = false) {
+	public function __construct(Player $player, Level $level, int $radius, Position $center, bool $hollow = false){
 		parent::__construct($player, $level, $center, $hollow);
 		$this->radius = $radius;
 	}
@@ -24,7 +24,7 @@ class SphereShape extends BaseShape {
 	 *
 	 * @return array
 	 */
-	public function getBlocksInside(bool $vectorOnly = false): array {
+	public function getBlocksInside(bool $vectorOnly = false) : array{
 		$radiusSquared = $this->radius ** 2 + 0.5;
 		[$targetX, $targetY, $targetZ] = $this->arrayVec($this->center);
 
@@ -37,15 +37,15 @@ class SphereShape extends BaseShape {
 
 		$blocksInside = [];
 
-		for($x = $maxX; $x >= $minX; $x--) {
+		for($x = $maxX; $x >= $minX; $x--){
 			$xs = ($targetX - $x) * ($targetX - $x);
-			for($y = $maxY; $y >= $minY; $y--) {
+			for($y = $maxY; $y >= $minY; $y--){
 				$ys = ($targetY - $y) * ($targetY - $y);
-				for($z = $maxZ; $z >= $minZ; $z--) {
+				for($z = $maxZ; $z >= $minZ; $z--){
 					$zs = ($targetZ - $z) * ($targetZ - $z);
-					if($xs + $ys + $zs < $radiusSquared) {
-						if($this->hollow === true) {
-							if($y !== $maxY && $y !== $minY && ($xs + $ys + $zs) < $radiusSquared - 3 - $this->radius / 0.5) {
+					if($xs + $ys + $zs < $radiusSquared){
+						if($this->hollow === true){
+							if($y !== $maxY && $y !== $minY && ($xs + $ys + $zs) < $radiusSquared - 3 - $this->radius / 0.5){
 								continue;
 							}
 						}
@@ -54,23 +54,24 @@ class SphereShape extends BaseShape {
 				}
 			}
 		}
+
 		return $blocksInside;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getName(): string {
+	public function getName() : string{
 		return $this->hollow ? "Hollow Sphere" : "Sphere";
 	}
 
 	/**
 	 * @return int
 	 */
-	public function getApproximateProcessedBlocks(): int {
-		if($this->hollow) {
+	public function getApproximateProcessedBlocks() : int{
+		if($this->hollow){
 			$blockCount = 4 * M_PI * $this->radius;
-		} else {
+		}else{
 			$blockCount = 4 / 3 * M_PI * $this->radius ** 3;
 		}
 
@@ -82,29 +83,30 @@ class SphereShape extends BaseShape {
 	 *
 	 * @return int
 	 */
-	public function getRadius(): int {
+	public function getRadius() : int{
 		return $this->radius;
 	}
 
 	/**
 	 * @return array
 	 */
-	public function getTouchedChunks(): array {
+	public function getTouchedChunks() : array{
 		$maxX = $this->center->x + $this->radius;
 		$minX = $this->center->x - $this->radius;
 		$maxZ = $this->center->z + $this->radius;
 		$minZ = $this->center->z - $this->radius;
 
 		$touchedChunks = [];
-		for($x = $minX; $x <= $maxX + 16; $x += 16) {
-			for($z = $minZ; $z <= $maxZ + 16; $z += 16) {
+		for($x = $minX; $x <= $maxX + 16; $x += 16){
+			for($z = $minZ; $z <= $maxZ + 16; $z += 16){
 				$chunk = $this->getLevel()->getChunk($x >> 4, $z >> 4, false);
-				if($chunk === null) {
+				if($chunk === null){
 					continue;
 				}
 				$touchedChunks[Level::chunkHash($x >> 4, $z >> 4)] = $chunk->fastSerialize();
 			}
 		}
+
 		return $touchedChunks;
 	}
 }

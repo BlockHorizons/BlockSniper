@@ -1,12 +1,12 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\revert;
 
-interface IUndo {
+interface IUndo{
 
 	public function getDetached();
 
-	public function restore(): void;
+	public function restore() : void;
 }

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush;
 
@@ -16,7 +16,7 @@ use BlockHorizons\BlockSniper\sessions\Session;
  * This might damage you permanently, I don't recommend looking at it for too long.
  */
 
-class PropertyProcessor {
+class PropertyProcessor{
 
 	const VALUE_SIZE = 0;
 	const VALUE_SHAPE = 1;
@@ -35,7 +35,7 @@ class PropertyProcessor {
 	/** @var Loader */
 	private $loader = null;
 
-	public function __construct(Session $session, Loader $loader) {
+	public function __construct(Session $session, Loader $loader){
 		$this->session = $session;
 		$this->loader = $loader;
 	}
@@ -44,9 +44,9 @@ class PropertyProcessor {
 	 * @param int|string $valueType
 	 * @param mixed      $value
 	 */
-	public function process($valueType, $value): void {
+	public function process($valueType, $value) : void{
 		$brush = $this->session->getBrush();
-		switch($valueType) {
+		switch($valueType){
 			case "size":
 			case 0:
 				$brush->size = (int) $value;
@@ -113,7 +113,7 @@ class PropertyProcessor {
 			default:
 				return;
 		}
-		if($this->session instanceof PlayerSession) {
+		if($this->session instanceof PlayerSession){
 			$this->loader->getServer()->getPluginManager()->callEvent(new Change($this->session->getSessionOwner()->getPlayer(), $action, $value));
 		}
 	}

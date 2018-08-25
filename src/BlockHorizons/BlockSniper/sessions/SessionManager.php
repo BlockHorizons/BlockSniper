@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\sessions;
 
@@ -15,7 +15,7 @@ use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\IPlayer;
 use pocketmine\level\Position;
 
-class SessionManager implements Listener {
+class SessionManager implements Listener{
 
 	/** @var PlayerSession[] */
 	private static $playerSessions = [];
@@ -26,13 +26,13 @@ class SessionManager implements Listener {
 	/** @var int */
 	private $serverSessionCounter = 0;
 
-	public function __construct(Loader $loader) {
+	public function __construct(Loader $loader){
 		$this->loader = $loader;
 		//$this->fetchServerSessions($loader);
 	}
 
-	public function close() : void {
-		foreach(self::$playerSessions as $session) {
+	public function close() : void{
+		foreach(self::$playerSessions as $session){
 			$session->__destruct();
 		}
 	}
@@ -42,19 +42,19 @@ class SessionManager implements Listener {
 	 *
 	 * @return PlayerSession|null
 	 */
-	public static function getPlayerSession(IPlayer $player): ?PlayerSession {
+	public static function getPlayerSession(IPlayer $player) : ?PlayerSession{
 		return self::$playerSessions[strtolower($player->getName())] ?? null;
 	}
 
 	/**
 	 * @param Loader $loader
 	 */
-	public function fetchServerSessions(Loader $loader): void {
-		if(!file_exists($loader->getDataFolder() . "serverSessions.json")) {
+	public function fetchServerSessions(Loader $loader) : void{
+		if(!file_exists($loader->getDataFolder() . "serverSessions.json")){
 			$this->createInitialSessionFile($loader);
 		}
-		foreach(json_decode(file_get_contents($loader->getDataFolder() . "serverSessions.json"), true) as $session) {
-			if(($level = $loader->getServer()->getLevelByName($session["targetBlock"]["level"])) === null) {
+		foreach(json_decode(file_get_contents($loader->getDataFolder() . "serverSessions.json"), true) as $session){
+			if(($level = $loader->getServer()->getLevelByName($session["targetBlock"]["level"])) === null){
 				continue;
 			}
 			$i = $session["targetBlock"];
@@ -63,7 +63,7 @@ class SessionManager implements Listener {
 			self::$serverSessions[$id]->setTargetBlock($position);
 
 			$processor = new PropertyProcessor(self::$serverSessions[$id], $loader);
-			foreach($session["brush"] as $property => $value) {
+			foreach($session["brush"] as $property => $value){
 				$processor->process($property, $value);
 			}
 			self::$serverSessions[$id]->setName($session["name"]);
@@ -75,29 +75,31 @@ class SessionManager implements Listener {
 	 *
 	 * @return bool
 	 */
-	private function createInitialSessionFile(Loader $loader): bool {
-		if(!file_exists($loader->getDataFolder() . "serverSessions.json")) {
+	private function createInitialSessionFile(Loader $loader) : bool{
+		if(!file_exists($loader->getDataFolder() . "serverSessions.json")){
 			file_put_contents($loader->getDataFolder() . "serverSessions.json", json_encode([
-				[
-					"targetBlock" => [
-						"level" => "MyWorld",
-						"x" => 256,
-						"y" => 128,
-						"z" => 256
-					],
-					"brush" => (new Brush(""))->jsonSerialize(),
-					"name" => "ExampleGlobalBrush"
-				]
-			]));
+																								[
+																									"targetBlock" => [
+																										"level" => "MyWorld",
+																										"x" => 256,
+																										"y" => 128,
+																										"z" => 256
+																									],
+																									"brush" => (new Brush(""))->jsonSerialize(),
+																									"name" => "ExampleGlobalBrush"
+																								]
+																							]));
+
 			return true;
 		}
+
 		return false;
 	}
 
 	/**
 	 * @return ServerSession[]
 	 */
-	public function getServerSessions(): array {
+	public function getServerSessions() : array{
 		return self::$serverSessions;
 	}
 
@@ -106,20 +108,23 @@ class SessionManager implements Listener {
 	 *
 	 * @return bool
 	 */
-	public function initialSessionJoin(PlayerJoinEvent $event): bool {
-		if(!$event->getPlayer()->hasPermission("blocksniper.command.brush")) {
+	public function initialSessionJoin(PlayerJoinEvent $event) : bool{
+		if(!$event->getPlayer()->hasPermission("blocksniper.command.brush")){
 			return false;
 		}
 		$this->createPlayerSession($event->getPlayer());
+
 		return true;
 	}
 
 	/**
 	 * @param PlayerQuitEvent $event
+	 *
 	 * @return bool
 	 */
-	public function onQuit(PlayerQuitEvent $event): bool {
+	public function onQuit(PlayerQuitEvent $event) : bool{
 		unset(self::$playerSessions[$event->getPlayer()->getLowerCaseName()]);
+
 		return true;
 	}
 
@@ -128,11 +133,12 @@ class SessionManager implements Listener {
 	 *
 	 * @return bool
 	 */
-	public function createPlayerSession(IPlayer $player): bool {
-		if(self::playerSessionExists($player)) {
+	public function createPlayerSession(IPlayer $player) : bool{
+		if(self::playerSessionExists($player)){
 			return false;
 		}
 		self::$playerSessions[strtolower($player->getName())] = new PlayerSession(new PlayerSessionOwner($player), $this->getLoader());
+
 		return true;
 	}
 
@@ -141,14 +147,14 @@ class SessionManager implements Listener {
 	 *
 	 * @return bool
 	 */
-	public static function playerSessionExists(IPlayer $player): bool {
+	public static function playerSessionExists(IPlayer $player) : bool{
 		return isset(self::$playerSessions[strtolower($player->getName())]);
 	}
 
 	/**
 	 * @return Loader
 	 */
-	public function getLoader(): Loader {
+	public function getLoader() : Loader{
 		return $this->loader;
 	}
 }

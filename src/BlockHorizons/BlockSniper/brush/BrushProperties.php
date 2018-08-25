@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush;
 
@@ -13,7 +13,7 @@ use pocketmine\item\Item;
 use pocketmine\level\biome\Biome;
 use pocketmine\level\generator\object\Tree;
 
-class BrushProperties implements \JsonSerializable {
+class BrushProperties implements \JsonSerializable{
 
 	/** @var string */
 	public $type = FillType::class;
@@ -36,102 +36,113 @@ class BrushProperties implements \JsonSerializable {
 	/** @var int */
 	public $tree = 0;
 
-	public function jsonSerialize(): array {
+	public function jsonSerialize() : array{
 		return (array) $this;
 	}
 
 	/**
 	 * @param string $data
+	 *
 	 * @return Block[]
 	 */
-	private function parseBlocks(string $data): array {
+	private function parseBlocks(string $data) : array{
 		$blocks = [];
 		$fragments = explode(",", $data);
-		foreach($fragments as $itemString) {
-			if($itemString === "") {
+		foreach($fragments as $itemString){
+			if($itemString === ""){
 				continue;
 			}
-			if(is_numeric($itemString)) {
+			if(is_numeric($itemString)){
 				$blocks[] = Item::get((int) $itemString)->getBlock();
-			} else {
+			}else{
 				$blocks[] = Item::fromString($itemString)->getBlock();
 			}
 		}
-		if(empty($blocks)) {
+		if(empty($blocks)){
 			$blocks[] = Block::get(Block::AIR);
 		}
+
 		return $blocks;
 	}
 
 	/**
 	 * @return Block[]
 	 */
-	public function getBlocks(): array {
+	public function getBlocks() : array{
 		return $this->parseBlocks($this->blocks);
 	}
 
 	/**
 	 * @return Block[]
 	 */
-	public function getObsolete(): array {
+	public function getObsolete() : array{
 		return $this->parseBlocks($this->obsolete);
 	}
 
 	/**
 	 * @param string $data
+	 *
 	 * @return string
 	 */
-	public function parseType(string $data): string {
-		if(($type = TypeRegistration::getType($data)) === null) {
+	public function parseType(string $data) : string{
+		if(($type = TypeRegistration::getType($data)) === null){
 			return FillType::class;
 		}
+
 		return $type;
 	}
 
 	/**
 	 * @param string $data
+	 *
 	 * @return string
 	 */
-	public function parseShape(string $data): string {
-		if(($shape = ShapeRegistration::getShape($data)) === null) {
+	public function parseShape(string $data) : string{
+		if(($shape = ShapeRegistration::getShape($data)) === null){
 			return SphereShape::class;
 		}
+
 		return $shape;
 	}
 
 	/**
 	 * @param string $data
+	 *
 	 * @return int
 	 */
-	public function parseBiomeId(string $data): int {
-		if(is_numeric($data)) {
+	public function parseBiomeId(string $data) : int{
+		if(is_numeric($data)){
 			return (int) $data;
 		}
 		$biomes = null;
-		try {
+		try{
 			$biomes = new \ReflectionClass(Biome::class);
-		} catch(\ReflectionException $e) {
+		}catch(\ReflectionException $e){
 		}
 		$const = strtoupper(str_replace(" ", "_", $data));
-		if($biomes->hasConstant($const)) {
+		if($biomes->hasConstant($const)){
 			return $biomes->getConstant($const);
 		}
+
 		return 0;
 	}
 
 	/**
 	 * @param string $data
+	 *
 	 * @return int
 	 */
-	public function parseTreeId(string $data): int {
-		try {
+	public function parseTreeId(string $data) : int{
+		try{
 			$tree = str_replace("_", "", ucwords($data, "_"));
 			$class = "pocketmine\\level\\generator\\object\\" . $tree . "Tree";
 			/** @var Tree $c */
 			$c = new $class();
+
 			return $c->type;
-		} catch(\Error $error) {
+		}catch(\Error $error){
 		}
+
 		return 0;
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
@@ -13,14 +13,14 @@ use pocketmine\block\Leaves;
 use pocketmine\block\Leaves2;
 use pocketmine\block\TallGrass;
 
-class HeatType extends BaseType {
+class HeatType extends BaseType{
 
 	const ID = self::TYPE_HEAT;
 
-	public function fillSynchronously(): array {
+	public function fillSynchronously() : array{
 		$undoBlocks = [];
-		foreach($this->blocks as $block) {
-			switch($block->getId()) {
+		foreach($this->blocks as $block){
+			switch($block->getId()){
 				case Block::ICE:
 					$undoBlocks[] = $block;
 					$this->putBlock($block, Block::WATER);
@@ -39,23 +39,23 @@ class HeatType extends BaseType {
 					break;
 				case Block::WATER:
 				case Block::FLOWING_WATER:
-					if(random_int(0, 4) === 0) {
+					if(random_int(0, 4) === 0){
 						$undoBlocks[] = $block;
 						$this->putBlock($block, 0);
 					}
 					break;
 				case Block::GRASS:
 					$random = random_int(0, 8);
-					if($random === 0) {
+					if($random === 0){
 						$undoBlocks[] = $block;
 						$this->putBlock($block, Block::DIRT);
-					} elseif($random === 1) {
+					}elseif($random === 1){
 						$undoBlocks[] = $block;
 						$this->putBlock($block, Block::DIRT, 1);
 					}
 					break;
 				case $block instanceof Leaves || $block instanceof Leaves2:
-					if(random_int(0, 4) === 0) {
+					if(random_int(0, 4) === 0){
 						$undoBlocks[] = $block;
 						$this->putBlock($block, 0);
 					}
@@ -66,12 +66,13 @@ class HeatType extends BaseType {
 					break;
 			}
 		}
+
 		return $undoBlocks;
 	}
 
-	public function fillAsynchronously(): void {
-		foreach($this->blocks as $block) {
-			switch($block->getId()) {
+	public function fillAsynchronously() : void{
+		foreach($this->blocks as $block){
+			switch($block->getId()){
 				case Block::ICE:
 					$this->putBlock($block, Block::WATER);
 					break;
@@ -86,20 +87,20 @@ class HeatType extends BaseType {
 					break;
 				case Block::WATER:
 				case Block::FLOWING_WATER:
-					if(random_int(0, 4) === 0) {
+					if(random_int(0, 4) === 0){
 						$this->putBlock($block, 0);
 					}
 					break;
 				case Block::GRASS:
 					$random = random_int(0, 8);
-					if($random === 0) {
+					if($random === 0){
 						$this->putBlock($block, Block::DIRT);
-					} elseif($random === 1) {
+					}elseif($random === 1){
 						$this->putBlock($block, Block::DIRT, 1);
 					}
 					break;
 				case $block instanceof Leaves || $block instanceof Leaves2:
-					if(random_int(0, 4) === 0) {
+					if(random_int(0, 4) === 0){
 						$this->putBlock($block, 0);
 					}
 					break;
@@ -110,7 +111,7 @@ class HeatType extends BaseType {
 		}
 	}
 
-	public function getName(): string {
+	public function getName() : string{
 		return "Heat";
 	}
 }

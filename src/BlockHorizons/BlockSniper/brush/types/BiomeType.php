@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
@@ -14,16 +14,16 @@ use pocketmine\Player;
  * Changes the biome within the brush radius.
  */
 
-class BiomeType extends BaseType {
+class BiomeType extends BaseType{
 
 	const ID = self::TYPE_BIOME;
 
-	public function __construct(Player $player, ChunkManager $level, array $blocks) {
+	public function __construct(Player $player, ChunkManager $level, array $blocks){
 		parent::__construct($player, $level, $blocks);
 		$this->biome = SessionManager::getPlayerSession($player)->getBrush()->biomeId;
 	}
 
-	public function getName(): string {
+	public function getName() : string{
 		return "Biome";
 	}
 
@@ -32,22 +32,23 @@ class BiomeType extends BaseType {
 	 *
 	 * @return int
 	 */
-	public function getBiome(): int {
+	public function getBiome() : int{
 		return $this->biome;
 	}
 
 	/**
 	 * @return Block[]
 	 */
-	protected function fillSynchronously(): array {
-		foreach($this->blocks as $block) {
+	protected function fillSynchronously() : array{
+		foreach($this->blocks as $block){
 			$this->putBiome($block, $this->biome);
 		}
+
 		return [];
 	}
 
-	protected function fillAsynchronously(): void {
-		foreach($this->blocks as $block) {
+	protected function fillAsynchronously() : void{
+		foreach($this->blocks as $block){
 			$this->putBiome($block, $this->biome);
 		}
 	}

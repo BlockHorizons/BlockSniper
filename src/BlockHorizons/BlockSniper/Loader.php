@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper;
 
@@ -24,7 +24,7 @@ use MyPlot\MyPlot;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat as TF;
 
-class Loader extends PluginBase {
+class Loader extends PluginBase{
 
 	const VERSION = "3.0.0";
 	const API_TARGET = "3.0.0";
@@ -55,11 +55,11 @@ class Loader extends PluginBase {
 	/**
 	 * @return string[]
 	 */
-	public static function getAvailableLanguages(): array {
+	public static function getAvailableLanguages() : array{
 		return self::$availableLanguages;
 	}
 
-	public function onEnable(): void {
+	public function onEnable() : void{
 		$this->load();
 
 		$this->registerCommands();
@@ -69,12 +69,12 @@ class Loader extends PluginBase {
 		$this->getScheduler()->scheduleRepeatingTask(new RedoDiminishTask($this), 400);
 	}
 
-	public function onDisable(): void {
+	public function onDisable() : void{
 		$this->getPresetManager()->storePresetsToFile();
 		$this->sessionManager->close();
 	}
 
-	public function reload(): void {
+	public function reload() : void{
 		$this->onDisable();
 		$this->config->__destruct();
 		$this->load();
@@ -83,49 +83,49 @@ class Loader extends PluginBase {
 	/**
 	 * @return PresetManager
 	 */
-	public function getPresetManager(): PresetManager {
+	public function getPresetManager() : PresetManager{
 		return $this->presetManager;
 	}
 
-	private function load(): void {
+	private function load() : void{
 		$this->initializeDirectories();
 
 		$this->config = new ConfigData($this);
 		$this->language = new TranslationData($this);
 		$this->presetManager = new PresetManager($this);
 
-		if(!$this->language->collectTranslations()) {
+		if(!$this->language->collectTranslations()){
 			$this->getLogger()->info(Translation::get(Translation::LOG_LANGUAGE_AUTO_SELECTED));
 			$this->getLogger()->info(Translation::get(Translation::LOG_LANGUAGE_USAGE));
-		} else {
+		}else{
 			$this->getLogger()->info(Translation::get(Translation::LOG_LANGUAGE_SELECTED) . TF::GREEN . $this->config->MessageLanguage);
 		}
 
 		ShapeRegistration::init();
 		TypeRegistration::init();
 
-		if($this->config->MyPlotSupport) {
+		if($this->config->MyPlotSupport){
 			$this->myPlot = $this->getServer()->getPluginManager()->getPlugin("MyPlot");
 		}
 	}
 
-	public function initializeDirectories(): void {
-		if(!is_dir($this->getDataFolder())) {
+	public function initializeDirectories() : void{
+		if(!is_dir($this->getDataFolder())){
 			mkdir($this->getDataFolder());
 		}
-		if(!is_dir($this->getDataFolder() . "templates/")) {
+		if(!is_dir($this->getDataFolder() . "templates/")){
 			mkdir($this->getDataFolder() . "templates/");
 		}
-		if(!is_dir($this->getDataFolder() . "schematics/")) {
+		if(!is_dir($this->getDataFolder() . "schematics/")){
 			mkdir($this->getDataFolder() . "schematics/");
 		}
-		if(!is_dir($this->getDataFolder() . "languages/")) {
+		if(!is_dir($this->getDataFolder() . "languages/")){
 			mkdir($this->getDataFolder() . "languages/");
 		}
-		if(!is_dir($this->getDataFolder() . "sessions/")) {
+		if(!is_dir($this->getDataFolder() . "sessions/")){
 			mkdir($this->getDataFolder() . "sessions/");
 		}
-		if(!is_dir($this->getDataFolder() . "presets/")) {
+		if(!is_dir($this->getDataFolder() . "presets/")){
 			mkdir($this->getDataFolder() . "presets/");
 		}
 	}
@@ -133,32 +133,32 @@ class Loader extends PluginBase {
 	/**
 	 * @return TranslationData
 	 */
-	public function getTranslationData(): TranslationData {
+	public function getTranslationData() : TranslationData{
 		return $this->language;
 	}
 
 	/**
 	 * @return SessionManager
 	 */
-	public function getSessionManager(): SessionManager {
+	public function getSessionManager() : SessionManager{
 		return $this->sessionManager;
 	}
 
 	/**
 	 * @return MyPlot|null
 	 */
-	public function getMyPlot(): ?MyPlot {
+	public function getMyPlot() : ?MyPlot{
 		return $this->myPlot;
 	}
 
 	/**
 	 * @return bool
 	 */
-	public function isMyPlotAvailable(): bool {
+	public function isMyPlotAvailable() : bool{
 		return $this->myPlot !== null;
 	}
 
-	private function registerCommands(): void {
+	private function registerCommands() : void{
 		$this->getServer()->getCommandMap()->registerAll("blocksniper", [
 			new BlockSniperCommand($this),
 			new BrushCommand($this),
@@ -169,12 +169,12 @@ class Loader extends PluginBase {
 		]);
 	}
 
-	private function registerListeners(): void {
+	private function registerListeners() : void{
 		$blockSniperListeners = [
 			new BrushListener($this),
 			$this->sessionManager = new SessionManager($this)
 		];
-		foreach($blockSniperListeners as $listener) {
+		foreach($blockSniperListeners as $listener){
 			$this->getServer()->getPluginManager()->registerEvents($listener, $this);
 		}
 	}

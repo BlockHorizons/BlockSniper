@@ -1,12 +1,12 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\events;
 
 use pocketmine\Player;
 
-class ChangeBrushPropertiesEvent extends BlockSniperEvent {
+class ChangeBrushPropertiesEvent extends BlockSniperEvent{
 
 	const ACTION_RESET_BRUSH = 0;
 	const ACTION_CHANGE_SIZE = 1;
@@ -32,7 +32,7 @@ class ChangeBrushPropertiesEvent extends BlockSniperEvent {
 	/** @var mixed */
 	public $value = null;
 
-	public function __construct(Player $player, int $action, $value) {
+	public function __construct(Player $player, int $action, $value){
 		$this->player = $player;
 		$this->action = $action;
 		$this->value = $value;
@@ -43,7 +43,7 @@ class ChangeBrushPropertiesEvent extends BlockSniperEvent {
 	 *
 	 * @return Player
 	 */
-	public function getPlayer(): Player {
+	public function getPlayer() : Player{
 		return $this->player;
 	}
 
@@ -52,7 +52,7 @@ class ChangeBrushPropertiesEvent extends BlockSniperEvent {
 	 *
 	 * @return int
 	 */
-	public function getAction(): int {
+	public function getAction() : int{
 		return $this->action;
 	}
 
@@ -61,7 +61,7 @@ class ChangeBrushPropertiesEvent extends BlockSniperEvent {
 	 *
 	 * @return mixed
 	 */
-	public function getActionValue() {
+	public function getActionValue(){
 		return $this->value;
 	}
 }

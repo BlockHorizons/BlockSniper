@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush;
 
@@ -17,7 +17,7 @@ use pocketmine\math\Vector3;
 use pocketmine\Player;
 use pocketmine\Server;
 
-abstract class BaseType {
+abstract class BaseType{
 
 	const ID = -1;
 
@@ -73,10 +73,10 @@ abstract class BaseType {
 	 * @param ChunkManager $manager
 	 * @param Block[]      $blocks
 	 */
-	public function __construct(Player $player, ChunkManager $manager, array $blocks) {
-		if($manager instanceof Level) {
+	public function __construct(Player $player, ChunkManager $manager, array $blocks){
+		if($manager instanceof Level){
 			$this->level = $manager->getId();
-		} else {
+		}else{
 			$this->async = true;
 			$this->chunkManager = $manager;
 		}
@@ -89,11 +89,12 @@ abstract class BaseType {
 	 *
 	 * @return BlockSniperChunkManager
 	 */
-	public static function establishChunkManager(array $chunks): BlockSniperChunkManager {
+	public static function establishChunkManager(array $chunks) : BlockSniperChunkManager{
 		$manager = new BlockSniperChunkManager(0);
-		foreach($chunks as $chunk) {
+		foreach($chunks as $chunk){
 			$manager->setChunk($chunk->getX(), $chunk->getZ(), $chunk);
 		}
+
 		return $manager;
 	}
 
@@ -102,45 +103,47 @@ abstract class BaseType {
 	 *
 	 * @return Block[]|null
 	 */
-	public final function fillShape(array $plotPoints = []): ?array {
+	public final function fillShape(array $plotPoints = []) : ?array{
 		$this->plotPoints = $plotPoints;
-		if(!empty($plotPoints)) {
+		if(!empty($plotPoints)){
 			$this->myPlotChecked = true;
 		}
-		if($this->isAsynchronous() && $this->canBeExecutedAsynchronously()) {
+		if($this->isAsynchronous() && $this->canBeExecutedAsynchronously()){
 			$this->fillAsynchronously();
+
 			return null;
 		}
+
 		return $this->fillSynchronously();
 	}
 
 	/**
 	 * @return bool
 	 */
-	public function isAsynchronous(): bool {
+	public function isAsynchronous() : bool{
 		return $this->async;
 	}
 
 	/**
 	 * @return bool
 	 */
-	public function canBeExecutedAsynchronously(): bool {
+	public function canBeExecutedAsynchronously() : bool{
 		return true;
 	}
 
-	protected function fillAsynchronously(): void {
+	protected function fillAsynchronously() : void{
 
 	}
 
 	/**
 	 * @return Block[]
 	 */
-	protected abstract function fillSynchronously(): array;
+	protected abstract function fillSynchronously() : array;
 
 	/**
 	 * @return int
 	 */
-	public function getLevelId(): int {
+	public function getLevelId() : int{
 		return $this->level;
 	}
 
@@ -149,7 +152,7 @@ abstract class BaseType {
 	 *
 	 * @return BaseType
 	 */
-	public function setBlocksInside(array $blocks): self {
+	public function setBlocksInside(array $blocks) : self{
 		$this->blocks = $blocks;
 
 		return $this;
@@ -160,14 +163,14 @@ abstract class BaseType {
 	 *
 	 * @return array
 	 */
-	public function getBlocks(): array {
+	public function getBlocks() : array{
 		return $this->blocks;
 	}
 
 	/**
 	 * @return array
 	 */
-	public function getBrushBlocks(): array {
+	public function getBrushBlocks() : array{
 		return $this->brushBlocks;
 	}
 
@@ -176,21 +179,21 @@ abstract class BaseType {
 	 *
 	 * @return string
 	 */
-	public function getPermission(): string {
+	public function getPermission() : string{
 		return "blocksniper.type." . strtolower(TypeRegistration::getTypeById(self::ID, true));
 	}
 
 	/**
 	 * @return string
 	 */
-	public abstract function getName(): string;
+	public abstract function getName() : string;
 
 	/**
 	 * @param bool $value
 	 *
 	 * @return BaseType
 	 */
-	public function setAsynchronous(bool $value = true): self {
+	public function setAsynchronous(bool $value = true) : self{
 		$this->async = $value;
 
 		return $this;
@@ -203,26 +206,26 @@ abstract class BaseType {
 	 * @param int     $id
 	 * @param int     $meta
 	 */
-	protected function putBlock(Vector3 $pos, int $id, int $meta = 0): void {
+	protected function putBlock(Vector3 $pos, int $id, int $meta = 0) : void{
 		$valid = false;
-		if($this->myPlotChecked) {
-			foreach($this->plotPoints as $plotCorners) {
-				if($pos->x < $plotCorners[0]->x || $pos->z < $plotCorners[0]->y || $pos->x > $plotCorners[1]->x || $pos->z > $plotCorners[1]->y) {
+		if($this->myPlotChecked){
+			foreach($this->plotPoints as $plotCorners){
+				if($pos->x < $plotCorners[0]->x || $pos->z < $plotCorners[0]->y || $pos->x > $plotCorners[1]->x || $pos->z > $plotCorners[1]->y){
 					continue;
 				}
 				$valid = true;
 				break;
 			}
-		} else {
+		}else{
 			$valid = true;
 		}
-		if(!$valid) {
+		if(!$valid){
 			return;
 		}
-		if($this->isAsynchronous()) {
+		if($this->isAsynchronous()){
 			$this->getChunkManager()->setBlockIdAt($pos->x, $pos->y, $pos->z, $id);
 			$this->getChunkManager()->setBlockDataAt($pos->x, $pos->y, $pos->z, $meta);
-		} else {
+		}else{
 			$this->getLevel()->setBlock($pos, Block::get($id, $meta), false, false);
 		}
 	}
@@ -230,7 +233,7 @@ abstract class BaseType {
 	/**
 	 * @return BlockSniperChunkManager
 	 */
-	public function getChunkManager(): BlockSniperChunkManager {
+	public function getChunkManager() : BlockSniperChunkManager{
 		return $this->chunkManager;
 	}
 
@@ -239,7 +242,7 @@ abstract class BaseType {
 	 *
 	 * @return BaseType
 	 */
-	public function setChunkManager(ChunkManager $manager): self {
+	public function setChunkManager(ChunkManager $manager) : self{
 		$this->chunkManager = $manager;
 
 		return $this;
@@ -250,7 +253,7 @@ abstract class BaseType {
 	 *
 	 * @return Level|null
 	 */
-	public function getLevel(): ?Level {
+	public function getLevel() : ?Level{
 		return Server::getInstance()->getLevel($this->level);
 	}
 
@@ -258,25 +261,25 @@ abstract class BaseType {
 	 * @param Vector3 $pos
 	 * @param int     $biomeId
 	 */
-	protected function putBiome(Vector3 $pos, int $biomeId): void {
+	protected function putBiome(Vector3 $pos, int $biomeId) : void{
 		$valid = false;
-		if($this->myPlotChecked) {
-			foreach($this->plotPoints as $plotCorners) {
-				if($pos->x < $plotCorners[0]->x || $pos->z < $plotCorners[0]->z || $pos->x > $plotCorners[1]->x || $pos->z > $plotCorners[1]->z) {
+		if($this->myPlotChecked){
+			foreach($this->plotPoints as $plotCorners){
+				if($pos->x < $plotCorners[0]->x || $pos->z < $plotCorners[0]->z || $pos->x > $plotCorners[1]->x || $pos->z > $plotCorners[1]->z){
 					continue;
 				}
 				$valid = true;
 				break;
 			}
-		} else {
+		}else{
 			$valid = true;
 		}
-		if(!$valid) {
+		if(!$valid){
 			return;
 		}
-		if($this->isAsynchronous()) {
+		if($this->isAsynchronous()){
 			$this->getChunkManager()->setBiomeIdAt($pos->x, $pos->z, $biomeId);
-		} else {
+		}else{
 			$this->getLevel()->setBiomeId($pos->x, $pos->z, $biomeId);
 		}
 	}

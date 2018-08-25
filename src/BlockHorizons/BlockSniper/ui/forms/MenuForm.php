@@ -1,18 +1,18 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\ui\forms;
 
 use pocketmine\form\Form as FormInterface;
 use pocketmine\Player;
 
-class MenuForm extends Form implements FormInterface {
+class MenuForm extends Form implements FormInterface{
 
 	/** @var callable[] */
 	private $buttons = [];
 
-	public function __construct(string $title, string $content) {
+	public function __construct(string $title, string $content){
 		$this->data = [
 			"type" => "form",
 			"title" => $title,
@@ -22,7 +22,7 @@ class MenuForm extends Form implements FormInterface {
 	}
 
 	// callable: function(Player $player)
-	public function addOption(string $text, string $iconPath = "", string $iconType = "url", callable $c = null): void {
+	public function addOption(string $text, string $iconPath = "", string $iconType = "url", callable $c = null) : void{
 		$this->data["buttons"][] = [
 			"text" => $text,
 			"image" => [
@@ -30,14 +30,15 @@ class MenuForm extends Form implements FormInterface {
 				"data" => $iconPath,
 			]
 		];
-		$this->buttons[] = $c ?? function() {
+		$this->buttons[] = $c ?? function(){
 			};
 	}
 
-	public function handleResponse(Player $player, $data): ?FormInterface {
-		if($data !== null) {
+	public function handleResponse(Player $player, $data) : ?FormInterface{
+		if($data !== null){
 			$this->buttons[(int) $data]($player, (int) $data);
 		}
+
 		return $this->responseForm;
 	}
 }

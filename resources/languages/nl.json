@@ -1,201 +1,201 @@
 {
-  "commands": {
-    "common": {
-      "warning-prefix": "[Waarschuwing] ",
-      "invalid-sender": "Je kan dit commando alleen als speler uitvoeren.",
-      "no-permission": "Je hebt geen permissie om dit commando uit te voeren."
-    },
-    "brush": {
-      "description": "Opent de GUI van BlockSniper."
-    },
-    "blocksniper": {
-      "description": "Geeft informatie over BlockSniper, of herlaadt de plugin.",
-      "info": "Informatie",
-      "version": "Versie: ",
-      "organisation": "Organisatie: ",
-      "authors": "Auteurs: ",
-      "target-api": "API Richtlijn: ",
-      "reload": "BlockSniper herladen..."
-    },
-    "redo": {
-      "description": "Herhaalt de laatste ongedaan gemaakte modificatie van BlockSniper.",
-      "no-redo": "Geen ongedaan gemaakte modificaties konden gevonden worden.",
-      "success": "Herhalen van laatste ongedaan gemaakte modificatie geslaagd."
-    },
-    "undo": {
-      "description": "Maakt de laatste BlockSniper modificatie ongedaan.",
-      "no-undo": "Geen modificaties om ongedaan te maken konden gevonden worden.",
-      "success": "Ongedaan maken van laatste modificatie geslaagd."
-    },
-    "clone": {
-      "description": "Kopieert een zone met de aangegeven type.",
-      "copy": {
-        "success": "Kopiëren van de zone waar je naar kijkt geslaagd."
-      },
-      "template": {
-        "missing-name": "Er is geen geldige naam gegeven voor de template.",
-        "success": "Template bestand is opgeslagen naar %s."
-      },
-      "schematic": {
-        "missing-name": "Geen geldige naam is gegeven voor de schematic",
-        "success": "Schematic bestand is opgeslagen naar %s."
-      }
-    },
-    "paste": {
-      "description": "Plakt een gekopieert bestand in de wereld.",
-      "copy": {
-        "no-copies": "Geen kopie kon worden gevonden om te plakken.",
-        "success": "Plakken van copie op de locatie waar je naar kijkt geslaagd."
-      },
-      "template": {
-        "nonexistent": "De template %s kon niet worden gevonden in de template folder.",
-        "success": "Plakken van de template %s op de locatie waar je naar kijkt geslaagd."
-      },
-      "schematic": {
-        "nonexistent": "De schematic %s kon niet worden gevonden in de schematic folder.",
-        "success": "Plakken van de schematic %s op de locatie waar je naar kijkt geslaagd."
-      }
-    }
-  },
-  "ui": {
-    "preset-menu": {
-      "title": "Voorinstellingen Menu",
-      "subtitle": "Klik een knop om door te gaan",
-      "create": "Maak",
-      "delete": "Verwijder",
-      "select": "Kies",
-      "list": "Lijst",
-      "exit": "Verlaat"
-    },
-    "preset-edit": {
-      "title": "Voorinstellingen Maak Menu",
-      "name": "Voorinstellingen Naam",
-      "size": "Verf Grootte",
-      "shape": "Verf Vorm",
-      "type": "Verf Type",
-      "hollow": "Holle Verf",
-      "decrement": "Verkleinende Verf",
-      "height": "Verf Hoogte",
-      "perfect": "Verf Vorm Perfectie",
-      "blocks": "Verf Blokken",
-      "obsolete": "Herplaats Blokken",
-      "biome": "Verf Biome",
-      "tree": "Verf Boom"
-    },
-    "preset-selection": {
-      "title": "Voorinstellingen Selectie Menu",
-      "subtitle": "Klik een knop om de voorinstellingen toe te passen"
-    },
-    "preset-deletion": {
-      "title": "Voorinstellingen Verwijder Menu",
-      "subtitle": "Klik een knop om de voorinstellingen te verwijderen"
-    },
-    "preset-list": {
-      "title": "Voorinstellingen Lijst Menu",
-      "subtitle": "Klik een knop om de voorinstellingen te bekijken/bewerken"
-    },
-    "preset-creation": {
-      "title": "Voorinstellingen Maak Menu",
-      "name": "Voorinstellingen Naam",
-      "size": "Verf Grootte",
-      "shape": "Verf Vorm",
-      "type": "Verf Type",
-      "hollow": "Holle Verf",
-      "decrement": "Verkleinende Verf",
-      "height": "Verf Hoogte",
-      "perfect": "Verf Vorm Perfectie",
-      "blocks": "Verf Blokken",
-      "obsolete": "Herplaats Blokken",
-      "biome": "Verf Biome",
-      "tree": "Verf Boom"
-    },
-    "main-menu": {
-      "title": "BlockSniper Menu",
-      "subtitle": "Klik een knop om door te gaan.",
-      "brush": "Verf",
-      "config": "Configuratie",
-      "presets": "Voorinstellingen",
-      "global-brush": "Globale Verf",
-      "exit": "Verlaat"
-    },
-    "brush-menu": {
-      "title": "Verf Menu",
-      "size": "Verf Grootte",
-      "shape": "Verf Vorm",
-      "type": "Verf Type",
-      "hollow": "Holle Verf",
-      "decrement": "Verkleinende Verf",
-      "height": "Verf Hoogte",
-      "perfect": "Verf Vorm Perfectie",
-      "blocks": "Verf Blokken",
-      "obsolete": "Herplaats Blokken",
-      "biome": "Verf Biome",
-      "tree": "Verf Boom"
-    },
-    "configuration-menu": {
-      "title": "BlockSniper Configuratie",
-      "auto-update": "Update automatisch als een nieuwe update wordt gevonden",
-      "language": "Taal waarin BlockSniper berichten worden weergeven",
-      "brush-item": "ID van het voorwerp waarmee er wordt geverft",
-      "max-brush-size": "De absolute maximale verf grootte",
-      "min-async-size": "Asynchrone verf limiet. Als de verf grootte groter is dan dit, worden operaties asynchroon gedaan",
-      "max-reverts": "De maximale hoeveelheid van ongedaanmakingen. Oudere ongedaanmakingen worden vanzelf verwijderd",
-      "reset-decrement-brush": "Zet verkleinende verf automatisch terug naar de originele grootte",
-      "save-brush": "Sla verf instellingen op als de server herstart",
-      "drop-plants": "Laat planten voorwerpen vallen wanneer het blad blazer type wordt gebruikt",
-      "auto-gui": "Open de GUI automatisch wanneer het hotbar vakje wordt verplaatst naar een vak met het brush voorwerp",
-      "myplot-support": "MyPlot ondersteuning aanzetten of niet",
-      "auto-reload": "Omzetten van deze knop zal de plugin automatisch herladen wanneer je dit scherm sluit"
-    }
-  },
-  "log": {
-    "language": {
-      "auto-selected": "[BlockSniper] Geen geldige taal is geselecteerd. Engels is automatisch geselecteerd.",
-      "usage": "Kies alstublieft een taal door in-game naar het configuratie scherm te gaan, door /b te gebruiken.",
-      "selected": "[BlockSniper] Language selected: "
-    },
-    "brush": {
-      "restored": "Verf van speler %s is hersteld.",
-      "all-restored": "Alle verven zijn hersteld."
-    },
-    "presets": {
-      "loaded": "Voorinstellingen %s zijn geladen.",
-      "all-loaded": "Alle voorinstellingen zijn geladen."
-    },
-    "reload": {
-      "start": "[BlockSniper] Herladen...",
-      "finish": "[BlockSniper] Herladen klaar."
-    }
-  },
-  "brush": {
-    "shape": {
-      "cube": "Kubus",
-      "cuboid": "Balk",
-      "sphere": "Bol",
-      "cylinder": "Cilinder"
-    },
-    "type": {
-      "biome": "Klimaat",
-      "cleanentities": "Wis Entiteiten",
-      "clean": "Schoon Maken",
-      "drain": "Aftappen",
-      "expand": "Uitbreiden",
-      "fill": "Vullen",
-      "flattenall": "Alles Vlak Maken",
-      "flatten": "Vlak Maken",
-      "layer": "Laag",
-      "leafblower": "Blad Blazer",
-      "melt": "Smelten",
-      "overlay": "Bedekken",
-      "replaceall": "Alles Vervangen",
-      "replace": "Vervangen",
-      "snowcone": "Sneeuw Laag",
-      "toplayer": "Bovenlaag",
-      "tree": "Boom",
-      "regenerate": "Vernieuwen",
-      "freeze": "Bevriezen",
-      "warm": "Verwarmen",
-      "heat": "Verhitten"
-    }
-  }
+	"commands": {
+		"common": {
+			"warning-prefix": "[Waarschuwing] ",
+			"invalid-sender": "Je kan dit commando alleen als speler uitvoeren.",
+			"no-permission": "Je hebt geen permissie om dit commando uit te voeren."
+		},
+		"brush": {
+			"description": "Opent de GUI van BlockSniper."
+		},
+		"blocksniper": {
+			"description": "Geeft informatie over BlockSniper, of herlaadt de plugin.",
+			"info": "Informatie",
+			"version": "Versie: ",
+			"organisation": "Organisatie: ",
+			"authors": "Auteurs: ",
+			"target-api": "API Richtlijn: ",
+			"reload": "BlockSniper herladen..."
+		},
+		"redo": {
+			"description": "Herhaalt de laatste ongedaan gemaakte modificatie van BlockSniper.",
+			"no-redo": "Geen ongedaan gemaakte modificaties konden gevonden worden.",
+			"success": "Herhalen van laatste ongedaan gemaakte modificatie geslaagd."
+		},
+		"undo": {
+			"description": "Maakt de laatste BlockSniper modificatie ongedaan.",
+			"no-undo": "Geen modificaties om ongedaan te maken konden gevonden worden.",
+			"success": "Ongedaan maken van laatste modificatie geslaagd."
+		},
+		"clone": {
+			"description": "Kopieert een zone met de aangegeven type.",
+			"copy": {
+				"success": "Kopiëren van de zone waar je naar kijkt geslaagd."
+			},
+			"template": {
+				"missing-name": "Er is geen geldige naam gegeven voor de template.",
+				"success": "Template bestand is opgeslagen naar %s."
+			},
+			"schematic": {
+				"missing-name": "Geen geldige naam is gegeven voor de schematic",
+				"success": "Schematic bestand is opgeslagen naar %s."
+			}
+		},
+		"paste": {
+			"description": "Plakt een gekopieert bestand in de wereld.",
+			"copy": {
+				"no-copies": "Geen kopie kon worden gevonden om te plakken.",
+				"success": "Plakken van copie op de locatie waar je naar kijkt geslaagd."
+			},
+			"template": {
+				"nonexistent": "De template %s kon niet worden gevonden in de template folder.",
+				"success": "Plakken van de template %s op de locatie waar je naar kijkt geslaagd."
+			},
+			"schematic": {
+				"nonexistent": "De schematic %s kon niet worden gevonden in de schematic folder.",
+				"success": "Plakken van de schematic %s op de locatie waar je naar kijkt geslaagd."
+			}
+		}
+	},
+	"ui": {
+		"preset-menu": {
+			"title": "Voorinstellingen Menu",
+			"subtitle": "Klik een knop om door te gaan",
+			"create": "Maak",
+			"delete": "Verwijder",
+			"select": "Kies",
+			"list": "Lijst",
+			"exit": "Verlaat"
+		},
+		"preset-edit": {
+			"title": "Voorinstellingen Maak Menu",
+			"name": "Voorinstellingen Naam",
+			"size": "Verf Grootte",
+			"shape": "Verf Vorm",
+			"type": "Verf Type",
+			"hollow": "Holle Verf",
+			"decrement": "Verkleinende Verf",
+			"height": "Verf Hoogte",
+			"perfect": "Verf Vorm Perfectie",
+			"blocks": "Verf Blokken",
+			"obsolete": "Herplaats Blokken",
+			"biome": "Verf Biome",
+			"tree": "Verf Boom"
+		},
+		"preset-selection": {
+			"title": "Voorinstellingen Selectie Menu",
+			"subtitle": "Klik een knop om de voorinstellingen toe te passen"
+		},
+		"preset-deletion": {
+			"title": "Voorinstellingen Verwijder Menu",
+			"subtitle": "Klik een knop om de voorinstellingen te verwijderen"
+		},
+		"preset-list": {
+			"title": "Voorinstellingen Lijst Menu",
+			"subtitle": "Klik een knop om de voorinstellingen te bekijken/bewerken"
+		},
+		"preset-creation": {
+			"title": "Voorinstellingen Maak Menu",
+			"name": "Voorinstellingen Naam",
+			"size": "Verf Grootte",
+			"shape": "Verf Vorm",
+			"type": "Verf Type",
+			"hollow": "Holle Verf",
+			"decrement": "Verkleinende Verf",
+			"height": "Verf Hoogte",
+			"perfect": "Verf Vorm Perfectie",
+			"blocks": "Verf Blokken",
+			"obsolete": "Herplaats Blokken",
+			"biome": "Verf Biome",
+			"tree": "Verf Boom"
+		},
+		"main-menu": {
+			"title": "BlockSniper Menu",
+			"subtitle": "Klik een knop om door te gaan.",
+			"brush": "Verf",
+			"config": "Configuratie",
+			"presets": "Voorinstellingen",
+			"global-brush": "Globale Verf",
+			"exit": "Verlaat"
+		},
+		"brush-menu": {
+			"title": "Verf Menu",
+			"size": "Verf Grootte",
+			"shape": "Verf Vorm",
+			"type": "Verf Type",
+			"hollow": "Holle Verf",
+			"decrement": "Verkleinende Verf",
+			"height": "Verf Hoogte",
+			"perfect": "Verf Vorm Perfectie",
+			"blocks": "Verf Blokken",
+			"obsolete": "Herplaats Blokken",
+			"biome": "Verf Biome",
+			"tree": "Verf Boom"
+		},
+		"configuration-menu": {
+			"title": "BlockSniper Configuratie",
+			"auto-update": "Update automatisch als een nieuwe update wordt gevonden",
+			"language": "Taal waarin BlockSniper berichten worden weergeven",
+			"brush-item": "ID van het voorwerp waarmee er wordt geverft",
+			"max-brush-size": "De absolute maximale verf grootte",
+			"min-async-size": "Asynchrone verf limiet. Als de verf grootte groter is dan dit, worden operaties asynchroon gedaan",
+			"max-reverts": "De maximale hoeveelheid van ongedaanmakingen. Oudere ongedaanmakingen worden vanzelf verwijderd",
+			"reset-decrement-brush": "Zet verkleinende verf automatisch terug naar de originele grootte",
+			"save-brush": "Sla verf instellingen op als de server herstart",
+			"drop-plants": "Laat planten voorwerpen vallen wanneer het blad blazer type wordt gebruikt",
+			"auto-gui": "Open de GUI automatisch wanneer het hotbar vakje wordt verplaatst naar een vak met het brush voorwerp",
+			"myplot-support": "MyPlot ondersteuning aanzetten of niet",
+			"auto-reload": "Omzetten van deze knop zal de plugin automatisch herladen wanneer je dit scherm sluit"
+		}
+	},
+	"log": {
+		"language": {
+			"auto-selected": "[BlockSniper] Geen geldige taal is geselecteerd. Engels is automatisch geselecteerd.",
+			"usage": "Kies alstublieft een taal door in-game naar het configuratie scherm te gaan, door /b te gebruiken.",
+			"selected": "[BlockSniper] Language selected: "
+		},
+		"brush": {
+			"restored": "Verf van speler %s is hersteld.",
+			"all-restored": "Alle verven zijn hersteld."
+		},
+		"presets": {
+			"loaded": "Voorinstellingen %s zijn geladen.",
+			"all-loaded": "Alle voorinstellingen zijn geladen."
+		},
+		"reload": {
+			"start": "[BlockSniper] Herladen...",
+			"finish": "[BlockSniper] Herladen klaar."
+		}
+	},
+	"brush": {
+		"shape": {
+			"cube": "Kubus",
+			"cuboid": "Balk",
+			"sphere": "Bol",
+			"cylinder": "Cilinder"
+		},
+		"type": {
+			"biome": "Klimaat",
+			"cleanentities": "Wis Entiteiten",
+			"clean": "Schoon Maken",
+			"drain": "Aftappen",
+			"expand": "Uitbreiden",
+			"fill": "Vullen",
+			"flattenall": "Alles Vlak Maken",
+			"flatten": "Vlak Maken",
+			"layer": "Laag",
+			"leafblower": "Blad Blazer",
+			"melt": "Smelten",
+			"overlay": "Bedekken",
+			"replaceall": "Alles Vervangen",
+			"replace": "Vervangen",
+			"snowcone": "Sneeuw Laag",
+			"toplayer": "Bovenlaag",
+			"tree": "Boom",
+			"regenerate": "Vernieuwen",
+			"freeze": "Bevriezen",
+			"warm": "Verwarmen",
+			"heat": "Verhitten"
+		}
+	}
 }

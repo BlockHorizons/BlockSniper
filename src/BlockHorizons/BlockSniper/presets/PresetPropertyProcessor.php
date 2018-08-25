@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\presets;
 
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\Player;
 
-class PresetPropertyProcessor {
+class PresetPropertyProcessor{
 
 	const VALUE_NAME = 0;
 	const VALUE_SIZE = 1;
@@ -27,7 +27,7 @@ class PresetPropertyProcessor {
 	/** @var array */
 	private $properties = [];
 
-	public function __construct(Player $player, Loader $loader) {
+	public function __construct(Player $player, Loader $loader){
 		$this->loader = $loader;
 	}
 
@@ -35,10 +35,10 @@ class PresetPropertyProcessor {
 	 * @param int   $valueType
 	 * @param mixed $value
 	 */
-	public function process(int $valueType, $value): void {
+	public function process(int $valueType, $value) : void{
 		$this->properties[$valueType] = $value;
 
-		if(count($this->properties) === 12) {
+		if(count($this->properties) === 12){
 			$this->getLoader()->getPresetManager()->addPreset(new Preset($this->properties[self::VALUE_NAME], $this->properties));
 		}
 	}
@@ -46,7 +46,7 @@ class PresetPropertyProcessor {
 	/**
 	 * @return Loader
 	 */
-	public function getLoader(): Loader {
+	public function getLoader() : Loader{
 		return $this->loader;
 	}
 }

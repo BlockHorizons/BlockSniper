@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\shapes;
 
@@ -11,11 +11,11 @@ use pocketmine\level\Position;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 
-class CylinderShape extends BaseShape {
+class CylinderShape extends BaseShape{
 
 	const ID = self::SHAPE_CYLINDER;
 
-	public function __construct(Player $player, Level $level, int $radius, Position $center, bool $hollow = false) {
+	public function __construct(Player $player, Level $level, int $radius, Position $center, bool $hollow = false){
 		parent::__construct($player, $level, $center, $hollow);
 		$this->radius = $radius;
 		$this->height = SessionManager::getPlayerSession($player)->getBrush()->height;
@@ -26,19 +26,19 @@ class CylinderShape extends BaseShape {
 	 *
 	 * @return array
 	 */
-	public function getBlocksInside(bool $vectorOnly = false): array {
+	public function getBlocksInside(bool $vectorOnly = false) : array{
 		$radiusSquared = $this->radius ** 2 + 0.5;
 		[$targetX, $targetY, $targetZ] = $this->arrayVec($this->center);
 		[$minX, $minY, $minZ, $maxX, $maxY, $maxZ] = $this->calculateBoundaryBlocks($targetX, $targetY, $targetZ, $this->radius, $this->height);
 
 		$blocksInside = [];
 
-		for($x = $minX; $x <= $maxX; $x++) {
-			for($z = $minZ; $z <= $maxZ; $z++) {
-				for($y = $minY; $y <= $maxY; $y++) {
-					if(($targetX - $x) ** 2 + ($targetZ - $z) ** 2 <= $radiusSquared) {
-						if($this->hollow === true) {
-							if($y !== $maxY && $y !== $minY && (($targetX - $x) ** 2 + ($targetZ - $z) ** 2) < $radiusSquared - 3 - $this->radius / 0.5) {
+		for($x = $minX; $x <= $maxX; $x++){
+			for($z = $minZ; $z <= $maxZ; $z++){
+				for($y = $minY; $y <= $maxY; $y++){
+					if(($targetX - $x) ** 2 + ($targetZ - $z) ** 2 <= $radiusSquared){
+						if($this->hollow === true){
+							if($y !== $maxY && $y !== $minY && (($targetX - $x) ** 2 + ($targetZ - $z) ** 2) < $radiusSquared - 3 - $this->radius / 0.5){
 								continue;
 							}
 						}
@@ -47,23 +47,24 @@ class CylinderShape extends BaseShape {
 				}
 			}
 		}
+
 		return $blocksInside;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getName(): string {
+	public function getName() : string{
 		return $this->hollow ? "Hollow Standing Cylinder" : "Standing Cylinder";
 	}
 
 	/**
 	 * @return int
 	 */
-	public function getApproximateProcessedBlocks(): int {
-		if($this->hollow) {
+	public function getApproximateProcessedBlocks() : int{
+		if($this->hollow){
 			$blockCount = (M_PI * $this->radius * $this->radius * 2) + (2 * M_PI * $this->radius * $this->height * 2);
-		} else {
+		}else{
 			$blockCount = $this->radius * $this->radius * M_PI * $this->height;
 		}
 
@@ -75,7 +76,7 @@ class CylinderShape extends BaseShape {
 	 *
 	 * @return int
 	 */
-	public function getHeight(): int {
+	public function getHeight() : int{
 		return $this->height;
 	}
 
@@ -84,29 +85,30 @@ class CylinderShape extends BaseShape {
 	 *
 	 * @return int
 	 */
-	public function getRadius(): int {
+	public function getRadius() : int{
 		return $this->radius;
 	}
 
 	/**
 	 * @return array
 	 */
-	public function getTouchedChunks(): array {
+	public function getTouchedChunks() : array{
 		$maxX = $this->center->x + $this->radius;
 		$minX = $this->center->x - $this->radius;
 		$maxZ = $this->center->z + $this->radius;
 		$minZ = $this->center->z - $this->radius;
 
 		$touchedChunks = [];
-		for($x = $minX; $x <= $maxX + 16; $x += 16) {
-			for($z = $minZ; $z <= $maxZ + 16; $z += 16) {
+		for($x = $minX; $x <= $maxX + 16; $x += 16){
+			for($z = $minZ; $z <= $maxZ + 16; $z += 16){
 				$chunk = $this->getLevel()->getChunk($x >> 4, $z >> 4, false);
-				if($chunk === null) {
+				if($chunk === null){
 					continue;
 				}
 				$touchedChunks[Level::chunkHash($x >> 4, $z >> 4)] = $chunk->fastSerialize();
 			}
 		}
+
 		return $touchedChunks;
 	}
 }
