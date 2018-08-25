@@ -15,11 +15,7 @@ use Sandertv\Marshal\Unmarshal;
 
 class PlayerSession extends Session implements \JsonSerializable{
 
-	/** @var bool */
-	private $save = true;
-
 	public function __construct(PlayerSessionOwner $sessionOwner, Loader $loader){
-		$this->save = $loader->config->SaveBrushProperties;
 		$this->dataFile = $loader->getDataFolder() . "sessions/" . $sessionOwner->getName() . ".json";
 		parent::__construct($sessionOwner, $loader);
 	}
@@ -30,7 +26,7 @@ class PlayerSession extends Session implements \JsonSerializable{
 	public function initializeBrush() : bool{
 		$this->brush = new Brush($this->getSessionOwner()->getPlayerName());
 
-		if($this->save){
+		if($this->loader->config->SaveBrushProperties){
 			if(!file_exists($this->dataFile)){
 				file_put_contents($this->dataFile, "{}");
 			}
@@ -50,8 +46,8 @@ class PlayerSession extends Session implements \JsonSerializable{
 		return false;
 	}
 
-	public function __destruct(){
-		if($this->save){
+	public function close(){
+		if($this->loader->config->SaveBrushProperties){
 			$data = json_encode($this);
 			$this->loader->getLogger()->debug("Saved brush:" . $data);
 			file_put_contents($this->dataFile, $data);

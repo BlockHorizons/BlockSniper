@@ -19,21 +19,16 @@ class SessionManager implements Listener{
 
 	/** @var PlayerSession[] */
 	private static $playerSessions = [];
-	/** @var ServerSession[] */
-	private static $serverSessions = [];
 	/** @var Loader */
 	private $loader = null;
-	/** @var int */
-	private $serverSessionCounter = 0;
 
 	public function __construct(Loader $loader){
 		$this->loader = $loader;
-		//$this->fetchServerSessions($loader);
 	}
 
 	public function close() : void{
 		foreach(self::$playerSessions as $session){
-			$session->__destruct();
+			$session->close();
 		}
 	}
 
@@ -44,63 +39,6 @@ class SessionManager implements Listener{
 	 */
 	public static function getPlayerSession(IPlayer $player) : ?PlayerSession{
 		return self::$playerSessions[strtolower($player->getName())] ?? null;
-	}
-
-	/**
-	 * @param Loader $loader
-	 */
-	public function fetchServerSessions(Loader $loader) : void{
-		if(!file_exists($loader->getDataFolder() . "serverSessions.json")){
-			$this->createInitialSessionFile($loader);
-		}
-		foreach(json_decode(file_get_contents($loader->getDataFolder() . "serverSessions.json"), true) as $session){
-			if(($level = $loader->getServer()->getLevelByName($session["targetBlock"]["level"])) === null){
-				continue;
-			}
-			$i = $session["targetBlock"];
-			$position = new Position((int) $i["x"], (int) $i["y"], (int) $i["z"], $level);
-			self::$serverSessions[$id = $this->serverSessionCounter++] = new ServerSession(new ServerSessionOwner(), $loader);
-			self::$serverSessions[$id]->setTargetBlock($position);
-
-			$processor = new PropertyProcessor(self::$serverSessions[$id], $loader);
-			foreach($session["brush"] as $property => $value){
-				$processor->process($property, $value);
-			}
-			self::$serverSessions[$id]->setName($session["name"]);
-		}
-	}
-
-	/**
-	 * @param Loader $loader
-	 *
-	 * @return bool
-	 */
-	private function createInitialSessionFile(Loader $loader) : bool{
-		if(!file_exists($loader->getDataFolder() . "serverSessions.json")){
-			file_put_contents($loader->getDataFolder() . "serverSessions.json", json_encode([
-																								[
-																									"targetBlock" => [
-																										"level" => "MyWorld",
-																										"x" => 256,
-																										"y" => 128,
-																										"z" => 256
-																									],
-																									"brush" => (new Brush(""))->jsonSerialize(),
-																									"name" => "ExampleGlobalBrush"
-																								]
-																							]));
-
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * @return ServerSession[]
-	 */
-	public function getServerSessions() : array{
-		return self::$serverSessions;
 	}
 
 	/**
@@ -123,6 +61,7 @@ class SessionManager implements Listener{
 	 * @return bool
 	 */
 	public function onQuit(PlayerQuitEvent $event) : bool{
+		self::$playerSessions[$event->getPlayer()->getLowerCaseName()]->close();
 		unset(self::$playerSessions[$event->getPlayer()->getLowerCaseName()]);
 
 		return true;

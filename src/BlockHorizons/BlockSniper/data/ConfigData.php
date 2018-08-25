@@ -48,6 +48,7 @@ class ConfigData{
 			$this->ConfigurationVersion = Loader::CONFIGURATION_VERSION;
 			Marshal::yamlFile($this->filePath, $this);
 		}catch(DecodeException $e){
+			// Never hit because of the block above.
 		}
 
 		// We can retain backwards compatibility with old configuration most of the times, but the fact that the version
@@ -61,7 +62,7 @@ class ConfigData{
 		}
 	}
 
-	public function __destruct(){
+	public function close(){
 		Marshal::yamlFile($this->filePath, $this);
 	}
 }
