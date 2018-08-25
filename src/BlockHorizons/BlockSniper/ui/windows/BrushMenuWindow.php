@@ -31,6 +31,8 @@ class BrushMenuWindow extends CustomWindow{
 		});
 		$this->addToggle($this->t(Translation::UI_BRUSH_MENU_DECREMENT), $b->decrementing, function(Player $player, bool $value) use ($b){
 			$b->decrementing = $value;
+			// Set the size the brush will reset to after reaching a size of 0.
+			$b->resetSize = $b->size;
 		});
 		$this->addSlider($this->t(Translation::UI_BRUSH_MENU_HEIGHT), 0, $loader->config->MaximumSize, 1, $b->height, function(Player $player, float $value) use ($b){
 			$b->height = (int) $value;
