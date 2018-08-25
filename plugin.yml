@@ -21,7 +21,7 @@
                 "blocksniper-myplot.bypass": {
                     "default": false,
                     "description": "Allows bypassing MyPlot plot protection."
-                }
+                },
                 "blocksniper-myplot.allow-outside": {
                     "default": "op",
                     "description": "Allows using BlockSniper outside of plot worlds limitlessly."
