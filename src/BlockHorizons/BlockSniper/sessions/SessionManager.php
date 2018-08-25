@@ -4,16 +4,9 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\sessions;
 
-use BlockHorizons\BlockSniper\brush\Brush;
-use BlockHorizons\BlockSniper\brush\PropertyProcessor;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\owners\PlayerSessionOwner;
-use BlockHorizons\BlockSniper\sessions\owners\ServerSessionOwner;
-use pocketmine\event\Listener;
-use pocketmine\event\player\PlayerJoinEvent;
-use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\IPlayer;
-use pocketmine\level\Position;
 
 class SessionManager {
 
