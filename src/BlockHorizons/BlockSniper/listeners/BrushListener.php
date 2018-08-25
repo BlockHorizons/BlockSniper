@@ -54,12 +54,15 @@ class BrushListener implements Listener{
 	 * @return Vector2[][]
 	 */
 	public function getPlotPoints(Player $player) : array{
-		if($player->hasPermission("blocksniper-myplot-bypass") || !$this->loader->isMyPlotAvailable()){
+		if($player->hasPermission("blocksniper-myplot.bypass") || !$this->loader->isMyPlotAvailable()){
 			return [];
 		}
 		$plotPoints = [];
 		$settings = $this->loader->getMyPlot()->getLevelSettings($player->getLevel()->getName());
 		if($settings === null){
+			if($player->hasPermission("blocksniper-myplot.allow-outside")) {
+				return [];
+			}
 			return [[new Vector2(), new Vector2()]];
 		}
 		$plotSize = $settings->plotSize;
