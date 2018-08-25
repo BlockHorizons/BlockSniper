@@ -11,6 +11,7 @@ use BlockHorizons\BlockSniper\ui\windows\BrushMenuWindow;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerItemHeldEvent;
+use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\math\Vector2;
 use pocketmine\Player;
 
@@ -34,6 +35,9 @@ class BrushListener implements Listener{
 		$brush = $this->loader->config->BrushItem->parse();
 		if($hand->getId() === $brush->getId() && $hand->getDamage() === $brush->getDamage()){
 			if($player->hasPermission("blocksniper.command.brush")){
+				if(!SessionManager::playerSessionExists($player)){
+					SessionManager::createPlayerSession($player, $this->loader);
+				}
 				$brush = ($session = SessionManager::getPlayerSession($player))->getBrush();
 				$brush->execute($session, $this->getPlotPoints($player));
 				$event->setCancelled();
@@ -80,6 +84,9 @@ class BrushListener implements Listener{
 		$brush = $this->loader->config->BrushItem->parse();
 		if($event->getItem()->getId() === $brush->getId() && $event->getItem()->getDamage() === $brush->getDamage()){
 			if($player->hasPermission("blocksniper.command.brush")){
+				if(!SessionManager::playerSessionExists($player)){
+					SessionManager::createPlayerSession($player, $this->loader);
+				}
 				$player->sendForm(new BrushMenuWindow($this->loader, $player));
 
 				return true;
@@ -87,5 +94,16 @@ class BrushListener implements Listener{
 		}
 
 		return false;
+	}
+
+	/**
+	 * @param PlayerQuitEvent $event
+	 *
+	 * @return bool
+	 */
+	public function onQuit(PlayerQuitEvent $event) : bool{
+		SessionManager::closeSession($event->getPlayer());
+
+		return true;
 	}
 }

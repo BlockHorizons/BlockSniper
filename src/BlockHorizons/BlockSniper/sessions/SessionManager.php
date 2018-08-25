@@ -15,16 +15,10 @@ use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\IPlayer;
 use pocketmine\level\Position;
 
-class SessionManager implements Listener{
+class SessionManager {
 
 	/** @var PlayerSession[] */
 	private static $playerSessions = [];
-	/** @var Loader */
-	private $loader = null;
-
-	public function __construct(Loader $loader){
-		$this->loader = $loader;
-	}
 
 	public function close() : void{
 		foreach(self::$playerSessions as $session){
@@ -42,41 +36,16 @@ class SessionManager implements Listener{
 	}
 
 	/**
-	 * @param PlayerJoinEvent $event
-	 *
-	 * @return bool
-	 */
-	public function initialSessionJoin(PlayerJoinEvent $event) : bool{
-		if(!$event->getPlayer()->hasPermission("blocksniper.command.brush")){
-			return false;
-		}
-		$this->createPlayerSession($event->getPlayer());
-
-		return true;
-	}
-
-	/**
-	 * @param PlayerQuitEvent $event
-	 *
-	 * @return bool
-	 */
-	public function onQuit(PlayerQuitEvent $event) : bool{
-		self::$playerSessions[$event->getPlayer()->getLowerCaseName()]->close();
-		unset(self::$playerSessions[$event->getPlayer()->getLowerCaseName()]);
-
-		return true;
-	}
-
-	/**
 	 * @param IPlayer $player
+	 * @param Loader  $loader
 	 *
 	 * @return bool
 	 */
-	public function createPlayerSession(IPlayer $player) : bool{
+	public static function createPlayerSession(IPlayer $player, Loader $loader) : bool{
 		if(self::playerSessionExists($player)){
 			return false;
 		}
-		self::$playerSessions[strtolower($player->getName())] = new PlayerSession(new PlayerSessionOwner($player), $this->getLoader());
+		self::$playerSessions[strtolower($player->getName())] = new PlayerSession(new PlayerSessionOwner($player), $loader);
 
 		return true;
 	}
@@ -91,9 +60,10 @@ class SessionManager implements Listener{
 	}
 
 	/**
-	 * @return Loader
+	 * @param IPlayer $player
 	 */
-	public function getLoader() : Loader{
-		return $this->loader;
+	public static function closeSession(IPlayer $player) : void{
+		self::$playerSessions[strtolower($player->getName())]->close();
+		unset(self::$playerSessions[strtolower($player->getName())]);
 	}
 }

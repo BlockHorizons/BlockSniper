@@ -138,13 +138,6 @@ class Loader extends PluginBase{
 	}
 
 	/**
-	 * @return SessionManager
-	 */
-	public function getSessionManager() : SessionManager{
-		return $this->sessionManager;
-	}
-
-	/**
 	 * @return MyPlot|null
 	 */
 	public function getMyPlot() : ?MyPlot{
@@ -172,7 +165,6 @@ class Loader extends PluginBase{
 	private function registerListeners() : void{
 		$blockSniperListeners = [
 			new BrushListener($this),
-			$this->sessionManager = new SessionManager($this)
 		];
 		foreach($blockSniperListeners as $listener){
 			$this->getServer()->getPluginManager()->registerEvents($listener, $this);
