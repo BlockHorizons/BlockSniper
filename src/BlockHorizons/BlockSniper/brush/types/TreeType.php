@@ -34,6 +34,7 @@ class TreeType extends BaseType{
 		if($this->myPlotChecked){
 			return [];
 		}
+		// No need to cast these positions to integers. They are block positions and thus guaranteed to be integers.
 		Tree::growTree($this->getLevel(), $this->center->x, $this->center->y, $this->center->z, new Random(mt_rand()), $this->tree);
 
 		return [];
@@ -46,9 +47,9 @@ class TreeType extends BaseType{
 	/**
 	 * Returns the tree ID of this type.
 	 *
-	 * @return Tree
+	 * @return int
 	 */
-	public function getTree() : Tree{
+	public function getTree() : int{
 		return $this->tree;
 	}
 

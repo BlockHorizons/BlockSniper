@@ -6,8 +6,12 @@ namespace BlockHorizons\BlockSniper\commands;
 
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\presets\Preset;
 use BlockHorizons\BlockSniper\ui\WindowHandler;
+use BlockHorizons\BlockSniper\ui\windows\ConfigurationMenuWindow;
+use BlockHorizons\BlockSniper\ui\windows\MainMenuWindow;
 use pocketmine\command\CommandSender;
+use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\network\mcpe\protocol\ModalFormRequestPacket;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
@@ -42,13 +46,16 @@ class BlockSniperCommand extends BaseCommand{
 
 					return false;
 				}
-				$windowHandler = new WindowHandler();
-				$packet = new ModalFormRequestPacket();
-				$packet->formId = $windowHandler->getWindowIdFor(WindowHandler::WINDOW_MAIN_MENU);
-				$packet->formData = $windowHandler->getWindowJson(WindowHandler::WINDOW_MAIN_MENU, $this->loader, $sender);
-				$sender->sendDataPacket($packet);
+				$sender->sendForm(new MainMenuWindow($this->loader, $sender));
 
 				return true;
+
+			case "config":
+				if(!$sender instanceof Player){
+					$this->sendConsoleError($sender);
+					return false;
+				}
+				$sender->sendForm(new ConfigurationMenuWindow($this->loader, $sender));
 
 			default:
 				$sender->sendMessage(TF::AQUA . "[BlockSniper] " . Translation::get(Translation::COMMANDS_BLOCKSNIPER_INFO) . "\n" .
@@ -56,8 +63,7 @@ class BlockSniperCommand extends BaseCommand{
 									 TF::GREEN . Translation::get(Translation::COMMANDS_BLOCKSNIPER_TARGET_API) . TF::YELLOW . Loader::API_TARGET . "\n" .
 									 TF::GREEN . Translation::get(Translation::COMMANDS_BLOCKSNIPER_ORGANISATION) . TF::YELLOW . "BlockHorizons (https://github.com/BlockHorizons/BlockSniper)\n" .
 									 TF::GREEN . Translation::get(Translation::COMMANDS_BLOCKSNIPER_AUTHORS) . TF::YELLOW . "Sandertv (@Sandertv), Chris-Prime (@PrimusLV)");
-
-				return true;
 		}
+		return true;
 	}
 }
