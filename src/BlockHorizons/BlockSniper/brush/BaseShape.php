@@ -41,7 +41,7 @@ abstract class BaseShape{
 	public function __construct(Player $player, Level $level, Position $center, bool $hollow){
 		$this->playerName = $player->getName();
 		$this->level = $level->getId();
-		$this->center = new Vector3($center->x, $center->y, $center->z);
+		$this->center = $center->asVector3();
 		$this->hollow = $hollow;
 	}
 
