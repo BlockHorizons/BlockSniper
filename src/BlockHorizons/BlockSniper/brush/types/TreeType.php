@@ -40,6 +40,9 @@ class TreeType extends BaseType{
 		return [];
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getName() : string{
 		return "Tree";
 	}

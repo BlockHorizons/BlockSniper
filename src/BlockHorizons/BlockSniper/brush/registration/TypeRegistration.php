@@ -71,11 +71,7 @@ class TypeRegistration{
 	 * @return bool
 	 */
 	public static function registerType(string $class, int $id, bool $overwrite = false) : bool{
-		$shortName = "";
-		try{
-			$shortName = str_replace("Type", "", (new \ReflectionClass($class))->getShortName());
-		}catch(\ReflectionException $e){
-		};
+		$shortName = str_replace("Type", "", (new \ReflectionClass($class))->getShortName());
 
 		if(!$overwrite && self::typeExists(strtolower($shortName), $id)){
 			return false;

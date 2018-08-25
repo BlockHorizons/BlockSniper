@@ -114,11 +114,7 @@ class BrushProperties implements \JsonSerializable{
 		if(is_numeric($data)){
 			return (int) $data;
 		}
-		$biomes = null;
-		try{
-			$biomes = new \ReflectionClass(Biome::class);
-		}catch(\ReflectionException $e){
-		}
+		$biomes = new \ReflectionClass(Biome::class);
 		$const = strtoupper(str_replace(" ", "_", $data));
 		if($biomes->hasConstant($const)){
 			return $biomes->getConstant($const);
