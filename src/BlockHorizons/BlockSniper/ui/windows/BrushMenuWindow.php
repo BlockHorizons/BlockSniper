@@ -17,7 +17,7 @@ class BrushMenuWindow extends CustomWindow{
 		parent::__construct($this->t(Translation::UI_BRUSH_MENU_TITLE));
 
 		$b = SessionManager::getPlayerSession($requester)->getBrush();
-		$this->addSlider($this->t(Translation::UI_BRUSH_MENU_SIZE), 0, $loader->config->MaximumSize, 1, $b->size, function(Player $player, float $value) use ($b){
+		$this->addSlider($this->t(Translation::UI_BRUSH_MENU_SIZE), 0, $loader->config->maxSize, 1, $b->size, function(Player $player, float $value) use ($b){
 			$b->size = (int) $value;
 		});
 		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_SHAPE), $this->processShapes($requester), $b->getShape()::ID, function(Player $player, int $value) use ($b){
@@ -34,7 +34,7 @@ class BrushMenuWindow extends CustomWindow{
 			// Set the size the brush will reset to after reaching a size of 0.
 			$b->resetSize = $b->size;
 		});
-		$this->addSlider($this->t(Translation::UI_BRUSH_MENU_HEIGHT), 0, $loader->config->MaximumSize, 1, $b->height, function(Player $player, float $value) use ($b){
+		$this->addSlider($this->t(Translation::UI_BRUSH_MENU_HEIGHT), 0, $loader->config->maxSize, 1, $b->height, function(Player $player, float $value) use ($b){
 			$b->height = (int) $value;
 		});
 		$this->addInput($this->t(Translation::UI_BRUSH_MENU_BLOCKS), $this->processBlocks($b->getBlocks()), "stone,stone_brick:1,2", function(Player $player, string $value) use ($b){

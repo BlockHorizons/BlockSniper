@@ -26,7 +26,7 @@ class PlayerSession extends Session implements \JsonSerializable{
 	public function initializeBrush() : bool{
 		$this->brush = new Brush($this->getSessionOwner()->getPlayerName());
 
-		if($this->loader->config->SaveBrushProperties){
+		if($this->loader->config->saveBrushProperties){
 			if(!file_exists($this->dataFile)){
 				file_put_contents($this->dataFile, "{}");
 			} else {
@@ -48,7 +48,7 @@ class PlayerSession extends Session implements \JsonSerializable{
 	}
 
 	public function close(){
-		if($this->loader->config->SaveBrushProperties){
+		if($this->loader->config->saveBrushProperties){
 			$data = json_encode($this);
 			$this->loader->getLogger()->debug("Saved brush:" . $data);
 			file_put_contents($this->dataFile, $data);

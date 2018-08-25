@@ -56,7 +56,7 @@ class Brush extends BrushProperties{
 			return false;
 		}
 
-		if($type->canBeExecutedAsynchronously() && $this->size >= $loader->config->AsynchronousOperationSize){
+		if($type->canBeExecutedAsynchronously() && $this->size >= $loader->config->asyncOperationSize){
 			$shape->editAsynchronously($type, $plotPoints);
 		}else{
 			$type->setBlocksInside($shape->getBlocksInside());
@@ -98,7 +98,7 @@ class Brush extends BrushProperties{
 				if($loader === null){
 					return;
 				}
-				if($loader->config->ResetDecrementBrush){
+				if($loader->config->resetDecrementBrush){
 					$this->size = $this->resetSize;
 				}
 

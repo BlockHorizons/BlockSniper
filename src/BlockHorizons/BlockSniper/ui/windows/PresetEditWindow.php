@@ -23,7 +23,7 @@ class PresetEditWindow extends CustomWindow{
 		$this->addInput($this->t(Translation::UI_PRESET_CREATION_NAME), $preset->name, $this->t(Translation::UI_PRESET_CREATION_NAME), function(Player $player, string $value){
 			$this->preset->name = $value;
 		});
-		$this->addSlider($this->t(Translation::UI_PRESET_CREATION_SIZE), 0, $loader->config->MaximumSize, 1, $preset->properties->size, function(Player $player, float $value){
+		$this->addSlider($this->t(Translation::UI_PRESET_CREATION_SIZE), 0, $loader->config->maxSize, 1, $preset->properties->size, function(Player $player, float $value){
 			$this->preset->properties->size = (int) $value;
 		});
 		$this->addDropdown($this->t(Translation::UI_PRESET_CREATION_SHAPE), $this->processShapes($requester), ($preset->properties->shape)::ID, function(Player $player, int $value){
@@ -38,7 +38,7 @@ class PresetEditWindow extends CustomWindow{
 		$this->addToggle($this->t(Translation::UI_PRESET_CREATION_DECREMENT), $preset->properties->decrementing, function(Player $player, bool $value){
 			$this->preset->properties->decrementing = $value;
 		});
-		$this->addSlider($this->t(Translation::UI_PRESET_CREATION_HEIGHT), 0, $loader->config->MaximumSize, 1, $preset->properties->height, function(Player $player, float $value){
+		$this->addSlider($this->t(Translation::UI_PRESET_CREATION_HEIGHT), 0, $loader->config->maxSize, 1, $preset->properties->height, function(Player $player, float $value){
 			$this->preset->properties->height = (int) $value;
 		});
 		$this->addInput($this->t(Translation::UI_PRESET_CREATION_BLOCKS), $preset->properties->blocks, "stone,stone_brick:1,2", function(Player $player, string $value){

@@ -30,7 +30,7 @@ abstract class Session{
 
 	public function __construct(ISessionOwner $sessionOwner, Loader $loader){
 		$this->sessionOwner = $sessionOwner;
-		$this->revertStorer = new RevertStorer($loader->config->MaximumRevertStores);
+		$this->revertStorer = new RevertStorer($loader->config->maxRevertStores);
 		$this->cloneStorer = new CloneStorer($this, $loader->getDataFolder());
 		$this->loader = $loader;
 		if($this->initializeBrush()){

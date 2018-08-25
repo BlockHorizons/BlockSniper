@@ -28,7 +28,7 @@ class Loader extends PluginBase{
 
 	const VERSION = "3.0.0";
 	const API_TARGET = "3.2.0";
-	const CONFIGURATION_VERSION = "3.0.0";
+	const CONFIGURATION_VERSION = "4.0.0";
 
 	/** @var string[] */
 	private static $availableLanguages = [
@@ -96,13 +96,13 @@ class Loader extends PluginBase{
 			$this->getLogger()->info(Translation::get(Translation::LOG_LANGUAGE_AUTO_SELECTED));
 			$this->getLogger()->info(Translation::get(Translation::LOG_LANGUAGE_USAGE));
 		}else{
-			$this->getLogger()->info(Translation::get(Translation::LOG_LANGUAGE_SELECTED) . TF::GREEN . $this->config->MessageLanguage);
+			$this->getLogger()->info(Translation::get(Translation::LOG_LANGUAGE_SELECTED) . TF::GREEN . $this->config->messageLanguage);
 		}
 
 		ShapeRegistration::init();
 		TypeRegistration::init();
 
-		if($this->config->MyPlotSupport){
+		if($this->config->myPlotSupport){
 			$this->myPlot = $this->getServer()->getPluginManager()->getPlugin("MyPlot");
 		}
 	}

@@ -29,7 +29,7 @@ class LeafBlowerType extends BaseType{
 		if($loader === null){
 			return [];
 		}
-		$dropPlants = $loader->config->DropLeafBlowerPlants;
+		$dropPlants = $loader->config->dropLeafBlowerPlants;
 		foreach($this->blocks as $block){
 			if($block instanceof Flowable){
 				$undoBlocks[] = $block;

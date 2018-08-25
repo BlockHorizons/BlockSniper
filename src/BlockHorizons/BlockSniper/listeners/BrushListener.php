@@ -7,7 +7,6 @@ namespace BlockHorizons\BlockSniper\listeners;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use BlockHorizons\BlockSniper\ui\windows\BrushMenuWindow;
-use MyPlot\Plot;
 use MyPlot\PlotLevelSettings;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
@@ -33,7 +32,7 @@ class BrushListener implements Listener{
 	public function brush(PlayerInteractEvent $event) : bool{
 		$player = $event->getPlayer();
 		$hand = $player->getInventory()->getItemInHand();
-		$brush = $this->loader->config->BrushItem->parse();
+		$brush = $this->loader->config->brushItem->parse();
 		if($hand->getId() === $brush->getId() && $hand->getDamage() === $brush->getDamage()){
 			if($player->hasPermission("blocksniper.command.brush")){
 				if(!SessionManager::playerSessionExists($player)){
@@ -90,7 +89,7 @@ class BrushListener implements Listener{
 	 */
 	public function onItemHeld(PlayerItemHeldEvent $event) : bool{
 		$player = $event->getPlayer();
-		$brush = $this->loader->config->BrushItem->parse();
+		$brush = $this->loader->config->brushItem->parse();
 		if($event->getItem()->getId() === $brush->getId() && $event->getItem()->getDamage() === $brush->getDamage()){
 			if($player->hasPermission("blocksniper.command.brush")){
 				if(!SessionManager::playerSessionExists($player)){
