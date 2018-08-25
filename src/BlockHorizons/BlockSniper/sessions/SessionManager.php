@@ -13,7 +13,7 @@ class SessionManager {
 	/** @var PlayerSession[] */
 	private static $playerSessions = [];
 
-	public function close() : void{
+	public static function close() : void{
 		foreach(self::$playerSessions as $session){
 			$session->close();
 		}
@@ -56,7 +56,9 @@ class SessionManager {
 	 * @param IPlayer $player
 	 */
 	public static function closeSession(IPlayer $player) : void{
-		self::$playerSessions[strtolower($player->getName())]->close();
-		unset(self::$playerSessions[strtolower($player->getName())]);
+		if(self::playerSessionExists($player)){
+			self::$playerSessions[strtolower($player->getName())]->close();
+			unset(self::$playerSessions[strtolower($player->getName())]);
+		}
 	}
 }

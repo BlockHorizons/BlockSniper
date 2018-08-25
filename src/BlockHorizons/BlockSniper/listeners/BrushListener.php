@@ -6,8 +6,9 @@ namespace BlockHorizons\BlockSniper\listeners;
 
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
-use BlockHorizons\BlockSniper\ui\WindowHandler;
 use BlockHorizons\BlockSniper\ui\windows\BrushMenuWindow;
+use MyPlot\Plot;
+use MyPlot\PlotLevelSettings;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerItemHeldEvent;
@@ -63,8 +64,8 @@ class BrushListener implements Listener{
 		}
 		$plotSize = $settings->plotSize;
 		foreach($this->loader->getMyPlot()->getPlotsOfPlayer($player->getName(), $player->getLevel()->getFolderName()) as $plot){
-			$minVec = new Vector2($plot->X, $plot->Z);
-			$maxVec = new Vector2($plot->X + $plotSize, $plot->Z + $plotSize);
+			$minVec = new Vector2($this->calcActual($plot->X, $settings) - $plotSize, $this->calcActual($plot->Z, $settings) - $plotSize);
+			$maxVec = new Vector2($this->calcActual($plot->X, $settings) - 1, $this->calcActual($plot->Z, $settings) - 1);
 			$plotPoints[] = [$minVec, $maxVec];
 		}
 		if(empty($plotPoints)){
@@ -72,6 +73,11 @@ class BrushListener implements Listener{
 		}
 
 		return $plotPoints;
+	}
+
+	private function calcActual(int $coordinate, PlotLevelSettings $settings) : int {
+		$coordinate += 1;
+		return $coordinate * $settings->plotSize + ($coordinate - 1) * $settings->roadWidth;
 	}
 
 	/**

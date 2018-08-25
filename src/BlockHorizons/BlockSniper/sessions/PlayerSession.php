@@ -29,15 +29,16 @@ class PlayerSession extends Session implements \JsonSerializable{
 		if($this->loader->config->SaveBrushProperties){
 			if(!file_exists($this->dataFile)){
 				file_put_contents($this->dataFile, "{}");
-			}
-			$data = file_get_contents($this->dataFile);
-			$this->loader->getLogger()->debug("Brush recovered:" . $data);
-			try{
-				Unmarshal::json($data, $this->brush);
-			}catch(DecodeException $exception){
-				$this->loader->getLogger()->logException($exception);
+			} else {
+				$data = file_get_contents($this->dataFile);
+				try{
+					Unmarshal::json($data, $this->brush);
+					$this->loader->getLogger()->debug("Brush recovered:" . $data);
+				}catch(DecodeException $exception){
+					$this->loader->getLogger()->logException($exception);
 
-				return false;
+					return false;
+				}
 			}
 
 			return true;

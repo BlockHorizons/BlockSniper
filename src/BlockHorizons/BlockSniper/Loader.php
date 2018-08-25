@@ -46,8 +46,6 @@ class Loader extends PluginBase{
 	private $presetManager = null;
 	/** @var ConfigData */
 	public $config = null;
-	/** @var SessionManager */
-	private $sessionManager = null;
 
 	/** @var null|MyPlot */
 	private $myPlot = null;
@@ -71,7 +69,7 @@ class Loader extends PluginBase{
 
 	public function onDisable() : void{
 		$this->getPresetManager()->storePresetsToFile();
-		$this->sessionManager->close();
+		SessionManager::close();
 		$this->config->close();
 	}
 
