@@ -109,7 +109,7 @@ class BrushTask extends AsyncBlockSniperTask{
 			}
 		}
 
-		SessionManager::getPlayerSession($player)->getRevertStorer()->saveRevert(new AsyncUndo($chunks, $undoChunks, $player->getName(), $player->getLevel()->getId()));
+		SessionManager::getPlayerSession($player)->getRevertStore()->saveRevert(new AsyncUndo($chunks, $undoChunks, $player->getName(), $player->getLevel()->getId()));
 
 		return true;
 	}

@@ -104,7 +104,7 @@ abstract class AsyncRevert extends Revert{
 	/**
 	 * @return AsyncRevert
 	 */
-	public function getDetached() : self{
+	public function getDetached() : Revert{
 		return $this->getDetachedClass();
 	}
 

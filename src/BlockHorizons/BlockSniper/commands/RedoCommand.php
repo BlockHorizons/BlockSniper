@@ -20,7 +20,7 @@ class RedoCommand extends BaseCommand{
 
 	public function onExecute(CommandSender $sender, string $commandLabel, array $args) : void{
 		/** @var Player $sender */
-		if(!SessionManager::getPlayerSession($sender)->getRevertStorer()->redoStorageExists()){
+		if(!SessionManager::getPlayerSession($sender)->getRevertStore()->redoStorageExists()){
 			$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_REDO_NO_REDO));
 
 			return;
@@ -29,11 +29,11 @@ class RedoCommand extends BaseCommand{
 		$redoAmount = 1;
 		if(isset($args[0])){
 			$redoAmount = (int) $args[0];
-			if($redoAmount > ($totalRedo = SessionManager::getPlayerSession($sender)->getRevertStorer()->getTotalStores(Revert::TYPE_REDO))){
+			if($redoAmount > ($totalRedo = SessionManager::getPlayerSession($sender)->getRevertStore()->getTotalStores(Revert::TYPE_REDO))){
 				$redoAmount = $totalRedo;
 			}
 		}
-		SessionManager::getPlayerSession($sender)->getRevertStorer()->restoreLatestRevert(Revert::TYPE_REDO, $redoAmount);
+		SessionManager::getPlayerSession($sender)->getRevertStore()->restoreLatestRevert(Revert::TYPE_REDO, $redoAmount);
 		$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_REDO_SUCCESS) . TF::AQUA . " (" . $redoAmount . ")");
 	}
 }

@@ -7,7 +7,7 @@ namespace BlockHorizons\BlockSniper\revert;
 use BlockHorizons\BlockSniper\revert\async\AsyncRevert;
 use BlockHorizons\BlockSniper\revert\sync\SyncRevert;
 
-class RevertStorer{
+class RevertStore{
 
 	/** @var IUndo[] */
 	private $undoStack = [];

@@ -40,5 +40,5 @@ abstract class Revert{
 	/**
 	 * @return SyncRevert|AsyncRevert
 	 */
-	public abstract function getDetached();
+	public abstract function getDetached() : Revert;
 }

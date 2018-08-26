@@ -20,7 +20,7 @@ class CopyType extends BaseClone{
 		return "Copy";
 	}
 
-	public function saveClone() : bool{
+	public function saveClone() : void{
 		$copyBlocks = [];
 		foreach($this->blocks as $block){
 			if($this->saveAir === false && $block->getId() === Item::AIR){
@@ -28,9 +28,7 @@ class CopyType extends BaseClone{
 			}
 			$copyBlocks[] = $block;
 		}
-		SessionManager::getPlayerSession($this->player)->getCloneStorer()->setOriginalCenter($this->center);
-		SessionManager::getPlayerSession($this->player)->getCloneStorer()->saveCopy($copyBlocks);
-
-		return true;
+		SessionManager::getPlayerSession($this->player)->getCloneStore()->setOriginalCenter($this->center);
+		SessionManager::getPlayerSession($this->player)->getCloneStore()->saveCopy($copyBlocks);
 	}
 }

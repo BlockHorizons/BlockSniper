@@ -14,7 +14,7 @@ class UndoDiminishTask extends BaseTask{
 			if(!SessionManager::playerSessionExists($player)){
 				continue;
 			}
-			if(($store = SessionManager::getPlayerSession($player)->getRevertStorer())->undoStorageExists()){
+			if(($store = SessionManager::getPlayerSession($player)->getRevertStore())->undoStorageExists()){
 				if($store->getLastUndoActivity() >= 180){
 					$store->unsetOldestRevert(Revert::TYPE_UNDO);
 				}

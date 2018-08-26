@@ -20,7 +20,7 @@ class UndoCommand extends BaseCommand{
 
 	public function onExecute(CommandSender $sender, string $commandLabel, array $args) : void{
 		/** @var Player $sender */
-		if(!SessionManager::getPlayerSession($sender)->getRevertStorer()->undoStorageExists()){
+		if(!SessionManager::getPlayerSession($sender)->getRevertStore()->undoStorageExists()){
 			$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_UNDO_NO_UNDO));
 
 			return;
@@ -29,12 +29,12 @@ class UndoCommand extends BaseCommand{
 		$undoAmount = 1;
 		if(isset($args[0])){
 			$undoAmount = (int) $args[0];
-			if($undoAmount > ($totalUndo = SessionManager::getPlayerSession($sender)->getRevertStorer()->getTotalStores(Revert::TYPE_UNDO))){
+			if($undoAmount > ($totalUndo = SessionManager::getPlayerSession($sender)->getRevertStore()->getTotalStores(Revert::TYPE_UNDO))){
 				$undoAmount = $totalUndo;
 			}
 		}
 
-		SessionManager::getPlayerSession($sender)->getRevertStorer()->restoreLatestRevert(Revert::TYPE_UNDO, $undoAmount);
+		SessionManager::getPlayerSession($sender)->getRevertStore()->restoreLatestRevert(Revert::TYPE_UNDO, $undoAmount);
 		$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_UNDO_SUCCESS) . TF::AQUA . " (" . $undoAmount . ")");
 	}
 }

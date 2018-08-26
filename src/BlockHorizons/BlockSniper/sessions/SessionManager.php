@@ -31,16 +31,12 @@ class SessionManager {
 	/**
 	 * @param IPlayer $player
 	 * @param Loader  $loader
-	 *
-	 * @return bool
 	 */
-	public static function createPlayerSession(IPlayer $player, Loader $loader) : bool{
+	public static function createPlayerSession(IPlayer $player, Loader $loader) : void{
 		if(self::playerSessionExists($player)){
-			return false;
+			return;
 		}
 		self::$playerSessions[strtolower($player->getName())] = new PlayerSession(new PlayerSessionOwner($player), $loader);
-
-		return true;
 	}
 
 	/**

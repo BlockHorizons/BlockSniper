@@ -34,10 +34,8 @@ class Brush extends BrushProperties{
 	/**
 	 * @param Session     $session
 	 * @param Vector2[][] $plotPoints
-	 *
-	 * @return bool
 	 */
-	public function execute(Session $session, array $plotPoints = []) : bool{
+	public function execute(Session $session, array $plotPoints = []) : void{
 		$shape = $this->getShape();
 		$type = $this->getType();
 		if($session instanceof PlayerSession){
@@ -45,7 +43,7 @@ class Brush extends BrushProperties{
 
 			Server::getInstance()->getPluginManager()->callEvent($event = new BrushUseEvent($player, $shape, $type));
 			if($event->isCancelled()){
-				return false;
+				return;
 			}
 		}
 		$this->decrement();
@@ -53,7 +51,7 @@ class Brush extends BrushProperties{
 		/** @var Loader $loader */
 		$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
 		if($loader === null){
-			return false;
+			return;
 		}
 
 		if($type->canBeExecutedAsynchronously() && $this->size >= $loader->config->asyncOperationSize){
@@ -61,10 +59,8 @@ class Brush extends BrushProperties{
 		}else{
 			$type->setBlocksInside($shape->getBlocksInside());
 			$undoBlocks = $type->fillShape($plotPoints);
-			$session->getRevertStorer()->saveRevert(new SyncUndo($undoBlocks, $session->getSessionOwner()->getName()));
+			$session->getRevertStore()->saveRevert(new SyncUndo($undoBlocks, $session->getSessionOwner()->getName()));
 		}
-
-		return true;
 	}
 
 	/**
@@ -90,7 +86,7 @@ class Brush extends BrushProperties{
 		return $type;
 	}
 
-	public function decrement(){
+	public function decrement() : void{
 		if($this->decrementing){
 			if($this->size <= 1){
 				/** @var Loader $loader */

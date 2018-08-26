@@ -67,7 +67,7 @@ class RevertTask extends AsyncBlockSniperTask{
 			}
 		}
 
-		SessionManager::getPlayerSession($player)->getRevertStorer()->saveRevert($revert);
+		SessionManager::getPlayerSession($player)->getRevertStore()->saveRevert($revert);
 
 		return true;
 	}

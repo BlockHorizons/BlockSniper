@@ -29,7 +29,7 @@ class BrushListener implements Listener{
 	 *
 	 * @return bool
 	 */
-	public function brush(PlayerInteractEvent $event) : bool{
+	public function brush(PlayerInteractEvent $event) : void{
 		$player = $event->getPlayer();
 		$hand = $player->getInventory()->getItemInHand();
 		$brush = $this->loader->config->brushItem->parse();
@@ -43,8 +43,6 @@ class BrushListener implements Listener{
 				$event->setCancelled();
 			}
 		}
-
-		return false;
 	}
 
 	/**
@@ -77,6 +75,12 @@ class BrushListener implements Listener{
 		return $plotPoints;
 	}
 
+	/**
+	 * @param int               $coordinate
+	 * @param PlotLevelSettings $settings
+	 *
+	 * @return int
+	 */
 	private function calcActual(int $coordinate, PlotLevelSettings $settings) : int {
 		$coordinate += 1;
 		return $coordinate * $settings->plotSize + ($coordinate - 1) * $settings->roadWidth;
@@ -84,10 +88,8 @@ class BrushListener implements Listener{
 
 	/**
 	 * @param PlayerItemHeldEvent $event
-	 *
-	 * @return bool
 	 */
-	public function onItemHeld(PlayerItemHeldEvent $event) : bool{
+	public function onItemHeld(PlayerItemHeldEvent $event) : void{
 		$player = $event->getPlayer();
 		$brush = $this->loader->config->brushItem->parse();
 		if($event->getItem()->getId() === $brush->getId() && $event->getItem()->getDamage() === $brush->getDamage()){
@@ -96,22 +98,14 @@ class BrushListener implements Listener{
 					SessionManager::createPlayerSession($player, $this->loader);
 				}
 				$player->sendForm(new BrushMenuWindow($this->loader, $player));
-
-				return true;
 			}
 		}
-
-		return false;
 	}
 
 	/**
 	 * @param PlayerQuitEvent $event
-	 *
-	 * @return bool
 	 */
-	public function onQuit(PlayerQuitEvent $event) : bool{
+	public function onQuit(PlayerQuitEvent $event) : void{
 		SessionManager::closeSession($event->getPlayer());
-
-		return true;
 	}
 }

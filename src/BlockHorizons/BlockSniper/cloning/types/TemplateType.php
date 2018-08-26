@@ -20,7 +20,7 @@ class TemplateType extends BaseClone{
 		return "Template";
 	}
 
-	public function saveClone() : bool{
+	public function saveClone() : void{
 		$templateBlocks = [];
 		foreach($this->blocks as $block){
 			if($this->saveAir === false && $block->getId() === Item::AIR){
@@ -28,8 +28,6 @@ class TemplateType extends BaseClone{
 			}
 			$templateBlocks[] = $block;
 		}
-		SessionManager::getPlayerSession($this->player)->getCloneStorer()->saveTemplate($this->name, $templateBlocks, $this->center);
-
-		return true;
+		SessionManager::getPlayerSession($this->player)->getCloneStore()->saveTemplate($this->name, $templateBlocks, $this->center);
 	}
 }

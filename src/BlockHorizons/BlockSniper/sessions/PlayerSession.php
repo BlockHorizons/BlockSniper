@@ -21,7 +21,7 @@ class PlayerSession extends Session implements \JsonSerializable{
 	}
 
 	/**
-	 * @return bool
+	 * @return bool true if the brush could be recovered from a file.
 	 */
 	public function initializeBrush() : bool{
 		$this->brush = new Brush($this->getSessionOwner()->getPlayerName());
@@ -47,7 +47,7 @@ class PlayerSession extends Session implements \JsonSerializable{
 		return false;
 	}
 
-	public function close(){
+	public function close() : void{
 		if($this->loader->config->saveBrushProperties){
 			$data = json_encode($this);
 			$this->loader->getLogger()->debug("Saved brush:" . $data);

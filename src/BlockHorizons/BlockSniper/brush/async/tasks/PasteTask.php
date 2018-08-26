@@ -137,7 +137,7 @@ class PasteTask extends AsyncBlockSniperTask{
 		}
 		unset($undoChunk);
 
-		SessionManager::getPlayerSession($player)->getRevertStorer()->saveRevert(new AsyncUndo($chunks, $undoChunks, $this->playerName, $player->getLevel()->getId()));
+		SessionManager::getPlayerSession($player)->getRevertStore()->saveRevert(new AsyncUndo($chunks, $undoChunks, $this->playerName, $player->getLevel()->getId()));
 
 		return true;
 	}

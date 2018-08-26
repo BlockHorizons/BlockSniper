@@ -60,11 +60,6 @@ abstract class BaseClone{
 	}
 
 	/**
-	 * @return bool
-	 */
-	public abstract function saveClone() : bool;
-
-	/**
 	 * Returns the level the clone is made in.
 	 *
 	 * @return Level
@@ -101,4 +96,6 @@ abstract class BaseClone{
 	}
 
 	public abstract function getName() : string;
+
+	public abstract function saveClone() : void;
 }

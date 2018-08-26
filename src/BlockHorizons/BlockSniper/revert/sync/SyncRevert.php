@@ -49,7 +49,7 @@ abstract class SyncRevert extends Revert{
 	/**
 	 * @return SyncRevert
 	 */
-	public function getDetached() : SyncRevert{
+	public function getDetached() : Revert{
 		$blocks = [];
 		foreach($this->blocks as $block){
 			$blocks[] = $block->getLevel()->getBlock($block);

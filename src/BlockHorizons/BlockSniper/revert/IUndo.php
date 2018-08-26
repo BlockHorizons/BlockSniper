@@ -6,7 +6,7 @@ namespace BlockHorizons\BlockSniper\revert;
 
 interface IUndo{
 
-	public function getDetached();
+	public function getDetached() : Revert;
 
 	public function restore() : void;
 }

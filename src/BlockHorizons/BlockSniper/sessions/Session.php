@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\sessions;
 
 use BlockHorizons\BlockSniper\brush\Brush;
-use BlockHorizons\BlockSniper\cloning\CloneStorer;
+use BlockHorizons\BlockSniper\cloning\CloneStore;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
-use BlockHorizons\BlockSniper\revert\RevertStorer;
+use BlockHorizons\BlockSniper\revert\RevertStore;
 use BlockHorizons\BlockSniper\sessions\owners\ISessionOwner;
 use BlockHorizons\BlockSniper\sessions\owners\PlayerSessionOwner;
 use BlockHorizons\BlockSniper\sessions\owners\ServerSessionOwner;
@@ -21,17 +21,17 @@ abstract class Session{
 	protected $dataFile = "";
 	/** @var Brush */
 	protected $brush = null;
-	/** @var RevertStorer */
-	protected $revertStorer = null;
-	/** @var CloneStorer */
-	protected $cloneStorer = null;
+	/** @var RevertStore */
+	protected $revertStore = null;
+	/** @var CloneStore */
+	protected $cloneStore = null;
 	/** @var Loader */
 	protected $loader;
 
 	public function __construct(ISessionOwner $sessionOwner, Loader $loader){
 		$this->sessionOwner = $sessionOwner;
-		$this->revertStorer = new RevertStorer($loader->config->maxRevertStores);
-		$this->cloneStorer = new CloneStorer($this, $loader->getDataFolder());
+		$this->revertStore = new RevertStore($loader->config->maxRevertStores);
+		$this->cloneStore = new CloneStore($this, $loader->getDataFolder());
 		$this->loader = $loader;
 		if($this->initializeBrush()){
 			$loader->getLogger()->debug(Translation::get(Translation::LOG_BRUSH_RESTORED, [$this->getSessionOwner()->getName()]));
@@ -65,16 +65,16 @@ abstract class Session{
 	}
 
 	/**
-	 * @return RevertStorer
+	 * @return RevertStore
 	 */
-	public function getRevertStorer() : RevertStorer{
-		return $this->revertStorer;
+	public function getRevertStore() : RevertStore{
+		return $this->revertStore;
 	}
 
 	/**
-	 * @return CloneStorer
+	 * @return CloneStore
 	 */
-	public function getCloneStorer() : CloneStorer{
-		return $this->cloneStorer;
+	public function getCloneStore() : CloneStore{
+		return $this->cloneStore;
 	}
 }

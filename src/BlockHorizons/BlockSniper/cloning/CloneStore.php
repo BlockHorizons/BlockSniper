@@ -13,7 +13,7 @@ use pocketmine\level\Position;
 use pocketmine\math\Vector3;
 use pocketmine\Server;
 
-class CloneStorer{
+class CloneStore{
 
 	/** @var Block[] */
 	private $copyStore = [];
@@ -66,7 +66,7 @@ class CloneStorer{
 			$undoBlocks[] = $targetBlock->level->getBlock($targetBlock->add($block));
 			$targetBlock->level->setBlock($targetBlock->add($block), $block, false, false);
 		}
-		$this->session->getRevertStorer()->saveRevert(new SyncUndo($undoBlocks, $this->session->getSessionOwner()->getPlayerName()));
+		$this->session->getRevertStore()->saveRevert(new SyncUndo($undoBlocks, $this->session->getSessionOwner()->getPlayerName()));
 	}
 
 	public function resetCopyStorage() : void{
@@ -97,11 +97,9 @@ class CloneStorer{
 	 * @param array   $blocks
 	 * @param Vector3 $targetBlock
 	 *
-	 * @return bool
-	 *
 	 * @deprecated
 	 */
-	public function saveTemplate(string $templateName, array $blocks, Vector3 $targetBlock) : bool{
+	public function saveTemplate(string $templateName, array $blocks, Vector3 $targetBlock) : void{
 		$template = [];
 		$i = 0;
 		foreach($blocks as $block){
@@ -113,8 +111,6 @@ class CloneStorer{
 			$i++;
 		}
 		file_put_contents($this->path . "templates/" . $templateName . ".template", serialize($template));
-
-		return true;
 	}
 
 	/**
@@ -122,9 +118,8 @@ class CloneStorer{
 	 * @param Position $targetBlock
 	 *
 	 * @deprecated
-	 * @return bool
 	 */
-	public function pasteTemplate(string $templateName, Position $targetBlock) : bool{
+	public function pasteTemplate(string $templateName, Position $targetBlock) : void{
 		$data = file_get_contents($this->path . "templates/" . $templateName . ".yml");
 		$content = unserialize($data, ["allowed_classes" => false]);
 
@@ -146,9 +141,7 @@ class CloneStorer{
 			$undoBlocks[] = $targetBlock->getLevel()->getBlock($blockPos);
 			$targetBlock->getLevel()->setBlock($blockPos, Block::get($blockId, $meta), false, false);
 		}
-		$this->session->getRevertStorer()->saveRevert(new SyncUndo($undoBlocks, $this->session->getSessionOwner()->getPlayerName()));
-
-		return true;
+		$this->session->getRevertStore()->saveRevert(new SyncUndo($undoBlocks, $this->session->getSessionOwner()->getPlayerName()));
 	}
 
 	/**
