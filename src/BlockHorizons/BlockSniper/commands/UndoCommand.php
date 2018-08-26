@@ -18,23 +18,12 @@ class UndoCommand extends BaseCommand{
 		parent::__construct($loader, "undo", Translation::COMMANDS_UNDO_DESCRIPTION, "/undo [amount]", ["u"]);
 	}
 
-	public function execute(CommandSender $sender, string $commandLabel, array $args) : bool{
-		if(!$this->testPermission($sender)){
-			$this->sendNoPermission($sender);
-
-			return false;
-		}
-
-		if(!$sender instanceof Player){
-			$this->sendConsoleError($sender);
-
-			return false;
-		}
-
+	public function onExecute(CommandSender $sender, string $commandLabel, array $args) : void{
+		/** @var Player $sender */
 		if(!SessionManager::getPlayerSession($sender)->getRevertStorer()->undoStorageExists()){
 			$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_UNDO_NO_UNDO));
 
-			return false;
+			return;
 		}
 
 		$undoAmount = 1;
@@ -47,7 +36,5 @@ class UndoCommand extends BaseCommand{
 
 		SessionManager::getPlayerSession($sender)->getRevertStorer()->restoreLatestRevert(Revert::TYPE_UNDO, $undoAmount);
 		$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_UNDO_SUCCESS) . TF::AQUA . " (" . $undoAmount . ")");
-
-		return true;
 	}
 }

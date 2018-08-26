@@ -22,23 +22,12 @@ class CloneCommand extends BaseCommand{
 		parent::__construct($loader, "clone", Translation::COMMANDS_CLONE_DESCRIPTION, "/clone <copy|schematic|template> [name]");
 	}
 
-	public function execute(CommandSender $sender, string $commandLabel, array $args) : bool{
-		if(!$this->testPermission($sender)){
-			$this->sendNoPermission($sender);
-
-			return false;
-		}
-
-		if(!$sender instanceof Player){
-			$this->sendConsoleError($sender);
-
-			return false;
-		}
-
+	public function onExecute(CommandSender $sender, string $commandLabel, array $args) : void{
+		/** @var Player $sender */
 		if(!isset($args[0])){
 			$sender->sendMessage($this->getUsage());
 
-			return false;
+			return;
 		}
 
 		$center = $sender->getTargetBlock(100);
@@ -55,20 +44,20 @@ class CloneCommand extends BaseCommand{
 				$cloneType->saveClone();
 				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_CLONE_COPY_SUCCESS));
 
-				return true;
+				return;
 
 			case "template":
 				if(!isset($args[1])){
 					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_CLONE_TEMPLATE_MISSING_NAME));
 
-					return false;
+					return;
 				}
 				$shape = SessionManager::getPlayerSession($sender)->getBrush()->getShape();
 				$cloneType = new TemplateType($sender, false, $center, $shape->getBlocksInside(), $args[1]);
 				$cloneType->saveClone();
 				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_CLONE_TEMPLATE_SUCCESS, [$this->loader->getDataFolder() . "templates/" . $args[1] . ".template"]));
 
-				return true;
+				return;
 
 			case "scheme":
 			case "schem":
@@ -76,7 +65,7 @@ class CloneCommand extends BaseCommand{
 				if(!isset($args[1])){
 					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_CLONE_SCHEMATIC_MISSING_NAME));
 
-					return false;
+					return;
 				}
 				$shape = SessionManager::getPlayerSession($sender)->getBrush()->getShape();
 				$schematic = new Schematic();
@@ -89,8 +78,6 @@ class CloneCommand extends BaseCommand{
 					->setWidth($size * 2 + 1)
 					->save($this->loader->getDataFolder() . "schematics/" . $args[1] . ".schematic");
 				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_CLONE_SCHEMATIC_SUCCESS, [$this->loader->getDataFolder() . "templates/" . $args[1] . ".schematic"]));
-
-				return true;
 		}
 	}
 }

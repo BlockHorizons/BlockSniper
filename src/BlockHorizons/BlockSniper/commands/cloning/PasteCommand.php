@@ -23,23 +23,12 @@ class PasteCommand extends BaseCommand{
 		parent::__construct($loader, "paste", Translation::COMMANDS_PASTE_DESCRIPTION, "/paste <copy|template|schematic> [name]");
 	}
 
-	public function execute(CommandSender $sender, string $commandLabel, array $args) : bool{
-		if(!$this->testPermission($sender)){
-			$this->sendNoPermission($sender);
-
-			return false;
-		}
-
-		if(!$sender instanceof Player){
-			$this->sendConsoleError($sender);
-
-			return false;
-		}
-
+	public function onExecute(CommandSender $sender, string $commandLabel, array $args) : void{
+		/** @var Player $sender */
 		if(!isset($args[0])){
 			$sender->sendMessage($this->getUsage());
 
-			return false;
+			return;
 		}
 
 		$center = $sender->getTargetBlock(100);
@@ -53,37 +42,39 @@ class PasteCommand extends BaseCommand{
 				if(!SessionManager::getPlayerSession($sender)->getCloneStorer()->copyStoreExists()){
 					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_PASTE_COPY_NO_COPIES));
 
-					return false;
+					return;
 				}
 				SessionManager::getPlayerSession($sender)->getCloneStorer()->pasteCopy($sender->getTargetBlock(100));
 				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_PASTE_COPY_SUCCESS));
-				break;
+
+				return;
 
 			case "template":
 				if(!isset($args[1])){
 					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_CLONE_TEMPLATE_MISSING_NAME));
 
-					return false;
+					return;
 				}
 				if(!SessionManager::getPlayerSession($sender)->getCloneStorer()->templateExists($args[1])){
 					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_PASTE_TEMPLATE_NONEXISTENT, [$args[1]]));
 
-					return false;
+					return;
 				}
 				SessionManager::getPlayerSession($sender)->getCloneStorer()->pasteTemplate($args[1], $center);
 				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_PASTE_TEMPLATE_SUCCESS, [$args[1]]));
-				break;
+
+				return;
 
 			case "schematic":
 				if(!isset($args[1])){
 					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_CLONE_SCHEMATIC_MISSING_NAME));
 
-					return false;
+					return;
 				}
 				if(!is_file($file = $this->loader->getDataFolder() . "schematics/" . $args[1] . ".schematic")){
 					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_PASTE_SCHEMATIC_NONEXISTENT, [$args[1]]));
 
-					return true;
+					return;
 				}
 				$schematic = new Schematic($file);
 				$schematic->decodeSizes();
@@ -102,9 +93,6 @@ class PasteCommand extends BaseCommand{
 				}
 				SessionManager::getPlayerSession($sender)->getCloneStorer()->pasteSchematic($file, $sender->getTargetBlock(100)->asVector3(), $touchedChunks);
 				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_PASTE_SCHEMATIC_SUCCESS, [$args[1]]));
-				break;
 		}
-
-		return true;
 	}
 }
