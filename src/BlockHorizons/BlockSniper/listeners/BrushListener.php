@@ -35,9 +35,6 @@ class BrushListener implements Listener{
 		$brush = $this->loader->config->brushItem->parse();
 		if($hand->getId() === $brush->getId() && $hand->getDamage() === $brush->getDamage()){
 			if($player->hasPermission("blocksniper.command.brush")){
-				if(!SessionManager::playerSessionExists($player)){
-					SessionManager::createPlayerSession($player, $this->loader);
-				}
 				$brush = ($session = SessionManager::getPlayerSession($player))->getBrush();
 				$brush->execute($session, $this->getPlotPoints($player));
 				$event->setCancelled();
@@ -94,9 +91,6 @@ class BrushListener implements Listener{
 		$brush = $this->loader->config->brushItem->parse();
 		if($event->getItem()->getId() === $brush->getId() && $event->getItem()->getDamage() === $brush->getDamage()){
 			if($player->hasPermission("blocksniper.command.brush")){
-				if(!SessionManager::playerSessionExists($player)){
-					SessionManager::createPlayerSession($player, $this->loader);
-				}
 				$player->sendForm(new BrushMenuWindow($this->loader, $player));
 			}
 		}

@@ -7,6 +7,7 @@ namespace BlockHorizons\BlockSniper\sessions;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\owners\PlayerSessionOwner;
 use pocketmine\IPlayer;
+use pocketmine\Player;
 
 class SessionManager {
 
@@ -20,11 +21,16 @@ class SessionManager {
 	}
 
 	/**
-	 * @param IPlayer $player
+	 * @param Player $player
 	 *
 	 * @return PlayerSession|null
 	 */
-	public static function getPlayerSession(IPlayer $player) : ?PlayerSession{
+	public static function getPlayerSession(Player $player) : ?PlayerSession{
+		if($player->hasPermission("blocksniper.command.brush")){
+			/** @var Loader $plugin */
+			$plugin = $player->getServer()->getPluginManager()->getPlugin("BlockSniper");
+			self::createPlayerSession($player, $plugin);
+		}
 		return self::$playerSessions[strtolower($player->getName())] ?? null;
 	}
 

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\commands\cloning;
 
-require_once("plugins/BlockSniper/src/schematic/src/BlockHorizons/libschematic/Schematic.php");
-
 use BlockHorizons\BlockSniper\commands\BaseCommand;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\exceptions\InvalidBlockException;

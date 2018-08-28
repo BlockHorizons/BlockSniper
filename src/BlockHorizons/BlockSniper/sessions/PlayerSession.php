@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\sessions;
 
-require_once("plugins/BlockSniper/src/marshal/src/Sandertv/Marshal/Unmarshal.php");
-require_once("plugins/BlockSniper/src/marshal/src/Sandertv/Marshal/DecodeException.php");
-
 use BlockHorizons\BlockSniper\brush\Brush;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\owners\PlayerSessionOwner;

@@ -34,8 +34,6 @@ class PasteTask extends AsyncBlockSniperTask{
 	}
 
 	public function onRun() : void{
-		require_once("plugins/BlockSniper/src/schematic/src/BlockHorizons/libschematic/Schematic.php");
-
 		$chunks = unserialize($this->chunks, ["allowed_classes" => [Chunk::class]]);
 		$file = $this->file;
 		$center = $this->center;

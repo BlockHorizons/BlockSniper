@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\data;
 
-require_once("plugins/BlockSniper/src/marshal/src/Sandertv/Marshal/Unmarshal.php");
-require_once("plugins/BlockSniper/src/marshal/src/Sandertv/Marshal/Marshal.php");
-
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\item\Item;
 use Sandertv\Marshal\DecodeException;
