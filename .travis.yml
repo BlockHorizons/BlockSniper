@@ -20,10 +20,13 @@ before_script:
 - cd ..
 - echo "extension=pthreads.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
-- git clone --recursive https://github.com/pmmp/PocketMine-MP.git
-- mkdir -p PocketMine-MP/plugins/BlockSniper
+- mkdir PocketMine-MP
+- cd PocketMine-MP
+- wget -O PocketMine-MP.phar | curl -s https://api.github.com/repos/pmmp/PocketMine-MP/releases/latest | grep browser_download_url | cut -d '"' -f 4
+- composer install
+- mkdir -p plugins/BlockSniper
 
-- cd PocketMine-MP/plugins/
+- cd plugins/
 - wget -O DevTools.phar https://poggit.pmmp.io/r/22356/PocketMine-DevTools.phar
 - cd /home/travis/build/
 
@@ -34,9 +37,6 @@ before_script:
 - cp -rf BlockHorizons/BlockSniper/travis.php PocketMine-MP/plugins/BlockSniper
 
 - cp -rf BlockHorizons/BlockSniper/tests PocketMine-MP/plugins/
-
-- cd PocketMine-MP/
-- composer install
 
 script:
 - php plugins/BlockSniper/travis.php
