@@ -1,6 +1,6 @@
 <?php
 
-$server = proc_open(PHP_BINARY . ' PocketMine-MP/PocketMine-MP.phar --no-wizard --disable-readline', [
+$server = proc_open(PHP_BINARY . " PocketMine-MP/PocketMine-MP.phar --no-wizard --disable-readline", [
 	0 => ['pipe', 'r'],
 	1 => ['pipe', 'w'],
 	2 => ['pipe', 'w'],
