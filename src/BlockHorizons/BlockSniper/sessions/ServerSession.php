@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\sessions;
 
@@ -9,7 +9,7 @@ use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\owners\ServerSessionOwner;
 use pocketmine\level\Position;
 
-class ServerSession extends Session implements \JsonSerializable {
+class ServerSession extends Session implements \JsonSerializable{
 
 	/** @var Position */
 	private $targetBlock = null;
@@ -18,7 +18,7 @@ class ServerSession extends Session implements \JsonSerializable {
 	/** @var string */
 	private $name = "";
 
-	public function __construct(ServerSessionOwner $sessionOwner, Loader $loader) {
+	public function __construct(ServerSessionOwner $sessionOwner, Loader $loader){
 		$this->dataFile = $loader->getDataFolder() . "serverSessions.json";
 		parent::__construct($sessionOwner, $loader);
 	}
@@ -26,33 +26,33 @@ class ServerSession extends Session implements \JsonSerializable {
 	/**
 	 * @return string
 	 */
-	public function getName(): string {
+	public function getName() : string{
 		return $this->name;
 	}
 
 	/**
 	 * @param string $name
 	 */
-	public function setName(string $name): void {
+	public function setName(string $name) : void{
 		$this->name = $name;
 	}
 
 	/**
 	 * @return Position
 	 */
-	public function getTargetBlock(): Position {
+	public function getTargetBlock() : Position{
 		return $this->targetBlock;
 	}
 
 	/**
 	 * @param Position $position
 	 */
-	public function setTargetBlock(Position $position): void {
+	public function setTargetBlock(Position $position) : void{
 		$this->levelName = $position->getLevel()->getName();
 		$this->targetBlock = $position;
 	}
 
-	public function __destruct() {
+	public function __destruct(){
 		$data = json_decode(file_get_contents($this->getDataFile()), true);
 		$data[] = $this->jsonSerialize();
 		file_put_contents($this->getDataFile(), json_encode($data));
@@ -61,7 +61,7 @@ class ServerSession extends Session implements \JsonSerializable {
 	/**
 	 * @return array
 	 */
-	public function jsonSerialize(): array {
+	public function jsonSerialize() : array{
 		return [
 			"targetBlock" => [
 				"level" => $this->levelName,
@@ -77,8 +77,9 @@ class ServerSession extends Session implements \JsonSerializable {
 	/**
 	 * @return bool
 	 */
-	protected function initializeBrush(): bool {
+	protected function initializeBrush() : bool{
 		$this->brush = new Brush($this->getSessionOwner()->getName());
+
 		return true;
 	}
 }

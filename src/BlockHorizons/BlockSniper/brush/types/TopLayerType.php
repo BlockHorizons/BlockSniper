@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
@@ -17,42 +17,43 @@ use pocketmine\Player;
  * Replaces the top layer of the terrain, thickness depending on brush height, within the brush radius.
  */
 
-class TopLayerType extends BaseType {
+class TopLayerType extends BaseType{
 
 	const ID = self::TYPE_TOP_LAYER;
 
-	public function __construct(Player $player, ChunkManager $level, array $blocks) {
+	public function __construct(Player $player, ChunkManager $level, array $blocks){
 		parent::__construct($player, $level, $blocks);
-		$this->height = SessionManager::getPlayerSession($player)->getBrush()->getHeight();
+		$this->height = SessionManager::getPlayerSession($player)->getBrush()->height;
 	}
 
 	/**
 	 * @return Block[]
 	 */
-	public function fillSynchronously(): array {
+	public function fillSynchronously() : array{
 		$undoBlocks = [];
-		foreach($this->blocks as $block) {
-			if(!$block instanceof Flowable && $block->getId() !== Item::AIR) {
+		foreach($this->blocks as $block){
+			if(!$block instanceof Flowable && $block->getId() !== Item::AIR){
 				$up = $block->getSide(Block::SIDE_UP);
-				if($up instanceof Flowable || $up->getId() === Item::AIR) {
+				if($up instanceof Flowable || $up->getId() === Item::AIR){
 					$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
-					for($y = $block->y; $y >= $block->y - $this->height; $y--) {
+					for($y = $block->y; $y >= $block->y - $this->height; $y--){
 						$undoBlocks[] = $this->getLevel()->getBlock(new Vector3($block->x, $y, $block->z));
 						$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());
 					}
 				}
 			}
 		}
+
 		return $undoBlocks;
 	}
 
-	public function fillAsynchronously(): void {
-		foreach($this->blocks as $block) {
-			if(!$block instanceof Flowable && $block->getId() !== Item::AIR) {
+	public function fillAsynchronously() : void{
+		foreach($this->blocks as $block){
+			if(!$block instanceof Flowable && $block->getId() !== Item::AIR){
 				$up = $this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_UP);
-				if($up instanceof Flowable || $up->getId() === Item::AIR) {
+				if($up instanceof Flowable || $up->getId() === Item::AIR){
 					$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
-					for($y = $block->y; $y >= $block->y - $this->height; $y--) {
+					for($y = $block->y; $y >= $block->y - $this->height; $y--){
 						$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());
 					}
 				}
@@ -60,7 +61,7 @@ class TopLayerType extends BaseType {
 		}
 	}
 
-	public function getName(): string {
+	public function getName() : string{
 		return "Top Layer";
 	}
 
@@ -69,7 +70,7 @@ class TopLayerType extends BaseType {
 	 *
 	 * @return int
 	 */
-	public function getHeight(): int {
+	public function getHeight() : int{
 		return $this->height;
 	}
 }

@@ -1,9 +1,9 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\exceptions;
 
-class InvalidBlockException extends BlockSniperException {
+class InvalidBlockException extends BlockSniperException{
 
 }

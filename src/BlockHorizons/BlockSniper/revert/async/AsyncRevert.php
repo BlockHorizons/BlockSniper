@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\revert\async;
 
@@ -10,7 +10,7 @@ use BlockHorizons\BlockSniper\revert\Revert;
 use pocketmine\level\format\Chunk;
 use pocketmine\Server;
 
-abstract class AsyncRevert extends Revert {
+abstract class AsyncRevert extends Revert{
 
 	/** @var BlockSniperChunkManager */
 	protected $manager = null;
@@ -21,7 +21,7 @@ abstract class AsyncRevert extends Revert {
 	/** @var string[] */
 	protected $oldChunks = [];
 
-	public function __construct(array $actualChunks, array $previousChunks, string $playerName, int $levelId) {
+	public function __construct(array $actualChunks, array $previousChunks, string $playerName, int $levelId){
 		parent::__construct($playerName);
 		$this->setModifiedChunks($actualChunks);
 		$this->setModifiedChunks($previousChunks, true);
@@ -31,18 +31,19 @@ abstract class AsyncRevert extends Revert {
 	/**
 	 * @return int
 	 */
-	public function getLevelId(): int {
+	public function getLevelId() : int{
 		return $this->levelId;
 	}
 
 	/**
 	 * @return Chunk[]
 	 */
-	public function getModifiedChunks(): array {
+	public function getModifiedChunks() : array{
 		$chunks = [];
-		foreach($this->modifiedChunks as $index => $chunk) {
+		foreach($this->modifiedChunks as $index => $chunk){
 			$chunks[$index] = Chunk::fastDeserialize($chunk);
 		}
+
 		return $chunks;
 	}
 
@@ -52,14 +53,14 @@ abstract class AsyncRevert extends Revert {
 	 *
 	 * @return $this
 	 */
-	public function setModifiedChunks(array $chunks, bool $oldChunks = false): self {
-		foreach($chunks as $index => &$chunk) {
+	public function setModifiedChunks(array $chunks, bool $oldChunks = false) : self{
+		foreach($chunks as $index => &$chunk){
 			$chunk = $chunk->fastSerialize();
 		}
 		unset($chunk);
-		if($oldChunks) {
+		if($oldChunks){
 			$this->oldChunks = $chunks;
-		} else {
+		}else{
 			$this->modifiedChunks = $chunks;
 		}
 
@@ -69,18 +70,19 @@ abstract class AsyncRevert extends Revert {
 	/**
 	 * @return Chunk[]
 	 */
-	public function getOldChunks(): array {
+	public function getOldChunks() : array{
 		$chunks = [];
-		foreach($this->oldChunks as $index => $chunk) {
+		foreach($this->oldChunks as $index => $chunk){
 			$chunks[$index] = Chunk::fastDeserialize($chunk);
 		}
+
 		return $chunks;
 	}
 
 	/**
 	 * @return BlockSniperChunkManager
 	 */
-	public function getManager(): BlockSniperChunkManager {
+	public function getManager() : BlockSniperChunkManager{
 		return $this->manager;
 	}
 
@@ -89,25 +91,25 @@ abstract class AsyncRevert extends Revert {
 	 *
 	 * @return $this
 	 */
-	public function setManager(BlockSniperChunkManager $manager): self {
+	public function setManager(BlockSniperChunkManager $manager) : self{
 		$this->manager = $manager;
 
 		return $this;
 	}
 
-	public function restore(): void {
+	public function restore() : void{
 		Server::getInstance()->getAsyncPool()->submitTask(new RevertTask($this));
 	}
 
 	/**
 	 * @return AsyncRevert
 	 */
-	public function getDetached(): self {
+	public function getDetached() : Revert{
 		return $this->getDetachedClass();
 	}
 
 	/**
 	 * @return AsyncRevert
 	 */
-	public abstract function getDetachedClass(): self;
+	public abstract function getDetachedClass() : self;
 }

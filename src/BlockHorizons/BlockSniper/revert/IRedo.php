@@ -1,12 +1,12 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\revert;
 
-interface IRedo {
+interface IRedo{
 
-	public function getDetached();
+	public function getDetached() : Revert;
 
-	public function restore(): void;
+	public function restore() : void;
 }

@@ -1,195 +1,199 @@
 {
-  "commands": {
-    "common": {
-      "warning-prefix": "[警告] ",
-      "invalid-sender": "このコマンドはプレーヤーとしてのみ実行できます。",
-      "no-permission": "このコマンドを実行する権限がありません。"
-    },
-    "brush": {
-      "description": "BlockSniperのGUIを開きます。"
-    },
-    "blocksniper": {
-      "description": "BlockSniperに関する情報を表示するか、プラグインをリロードします。",
-      "info": "情報",
-      "version": "バージョン: ",
-      "organisation": "構成: ",
-      "authors": "作者: ",
-      "target-api": "対象のAPI: ",
-      "reload": "BlockSniperを再読み込みしています..."
-    },
-    "redo": {
-      "description": "最後に取り消したBlockSniperの修正をやり直します。",
-      "no-redo": "変更は見つかりませんでした。",
-      "success": "最後に取り消した変更を正常に再作成しました。"
-    },
-    "undo": {
-      "description": "最後のBlockSniperの変更を元に戻します。",
-      "no-undo": "変更は見つかりませんでした。",
-      "success": "最後の変更を正常に終了しました。"
-    },
-    "clone": {
-      "description": "指定された形式を使用して領域をクローンします。",
-      "copy": {
-        "success": "選択範囲を正常にコピーしました。"
-      },
-      "template": {
-        "missing-name": "テンプレートに有効な名前が指定されていません。",
-        "success": "テンプレートファイルを%sに保存しました。."
-      },
-      "schematic": {
-        "missing-name": "回路図には有効な名前はありません。",
-        "success": "%sに回路図のファイルを保存しました。"
-      }
-    },
-    "paste": {
-      "description": "前にクローンされた領域をワールドに貼り付けます。",
-      "copy": {
-        "no-copies": "コピーが見つかりませんでした。",
-        "success": "選択範囲にコピーを貼り付けました。"
-      },
-      "template": {
-        "nonexistent": "テンプレート%sはテンプレートディレクトリに見つかりませんでした。",
-        "success": "テンプレート%sを選択範囲に貼り付けました。"
-      },
-      "schematic": {
-        "nonexistent": "回路図ディレクトリ%sが回路図ディレクトリに見つかりませんでした。",
-        "success": "選択範囲に回路図%sを貼り付けました。"
-      }
-    }
-  },
-  "ui": {
-    "preset-menu": {
-      "title": "プリセットメニュー",
-      "subtitle": "続行するにはボタンをクリックしてください",
-      "create": "作成",
-      "delete": "削除",
-      "select": "選択",
-      "list": "リスト",
-      "exit": "終了"
-    },
-    "preset-edit": {
-      "title": "プリセット編集メニュー",
-      "name": "プリセットの名前",
-      "size": "大きさ",
-      "shape": "形",
-      "type": "種類",
-      "hollow": "空洞",
-      "decrement": "デクリメント",
-      "height": "高さ",
-      "perfect": "形の完全性",
-      "blocks": "使用するブロック",
-      "obsolete": "使用しないブロック",
-      "biome": "バイオーム",
-      "tree": "木"
-    },
-    "preset-selection": {
-      "title": "プリセット選択メニュー",
-      "subtitle": "ボタンをクリックしてプリセットを適用。"
-    },
-    "preset-deletion": {
-      "title": "プリセット削除メニュー",
-      "subtitle": "ボタンをクリックしてプリセットを削除。"
-    },
-    "preset-list": {
-      "title": "プリセット一覧メニュー",
-      "subtitle": "ボタンをクリックすると、プリセットを編集/表示できます。"
-    },
-    "preset-creation": {
-      "title": "プリセット作成メニュー",
-      "name": "プリセットの名前",
-      "size": "大きさ",
-      "shape": "形",
-      "type": "種類",
-      "hollow": "空洞",
-      "decrement": "デクリメント",
-      "height": "高さ",
-      "perfect": "形の完全性",
-      "blocks": "使用するブロック",
-      "obsolete": "使用しないブロック",
-      "biome": "バイオーム",
-      "tree": "木"
-    },
-    "main-menu": {
-      "title": "BlockSniperメニュー",
-      "subtitle": "続行するにはボタンをクリックしてください。",
-      "brush": "ブラシ",
-      "config": "設定",
-      "presets": "プリセット",
-      "exit": "終了"
-    },
-    "brush-menu": {
-      "title": "ブラシメニュー",
-      "size": "大きさ",
-      "shape": "形",
-      "type": "種類",
-      "hollow": "空洞",
-      "decrement": "デクリメント",
-      "height": "高さ",
-      "perfect": "形の完全性",
-      "blocks": "使用するブロック",
-      "obsolete": "使用しないブロック",
-      "biome": "バイオーム",
-      "tree": "木"
-    },
-    "configuration-menu": {
-      "title": "BlockSniper 設定",
-      "auto-update": "新しいバージョンが見つかったときに設定ファイルを自動的に更新する",
-      "language": "BlockSniperのメッセージ送信に使用する言語",
-      "brush-item": "ブラシに使用するアイテムのID",
-      "max-brush-size": "ブラシの最大サイズ",
-      "min-async-size": "非同期ブラシサイズの制限。ブラシのサイズがこれより大きい場合、操作は非同期に実行されます。",
-      "max-reverts": "やり直しの保存の最大量。古いものは自動的に削除されます。",
-      "reset-decrement-brush": "デクリメントのブラシを初期開始サイズに自動的にリセットする",
-      "save-brush": "サーバーの再起動時にプレイヤーのブラシ設定を保存する。",
-      "drop-plants": "葉を吹き飛ばすタイプで破壊/吹き飛ばされた植物アイテムを落とす",
-      "auto-gui": "ホット・バー・スロットをブラシ項目を含むものに切り替えるときに、GUIを自動的に開きます。",
-      "auto-reload": "このチェックをオンにすると、このウィンドウを閉じるときに自動的に設定が再読み込みされます"
-    }
-  },
-  "log": {
-    "language": {
-      "auto-selected": "[BlockSniper]有効な言語が選択されていません。英語が自動的に選択されました。",
-      "usage": "/bを使用して、ゲーム内の設定タブに移動して言語を選択してください。",
-      "selected": "[BlockSniper]選択した言語："
-    },
-    "brush": {
-      "restored": "プレーヤー%sのブラシが復元されました。",
-      "all-restored": "すべてのブラシが復元されました。"
-    },
-    "presets": {
-      "loaded": "プリセット%sが読み込まれました",
-      "all-loaded": "すべてのプリセットがロードされています。"
-    },
-    "reload": {
-      "start": "[BlockSniper] 再読み込みしています...",
-      "finish": "[BlockSniper] 再読み込みが完了しました。"
-    }
-  },
-  "brush": {
-    "shape": {
-      "cube": "立方体",
-      "cuboid": "直方体",
-      "sphere": "球体",
-      "cylinder": "円柱"
-    },
-    "type": {
-      "biome": "バイオーム",
-      "cleanentities": "エンティティ削除",
-      "clean": "削除",
-      "drain": "Drain",
-      "expand": "拡大",
-      "fill": "埋める",
-      "flattenall": "全てを平らにする",
-      "flatten": "平らにする",
-      "layer": "レイヤー",
-      "leafblower": "葉を吹き飛ばす",
-      "melt": "溶かす",
-      "overlay": "オーバーレイ",
-      "replaceall": "全て置き換える",
-      "replace": "置き換える",
-      "snowcone": "スノーコーン",
-      "toplayer": "上のレイヤー",
-      "tree": "木"
-    }
-  }
+	"commands": {
+		"common": {
+			"warning-prefix": "[警告] ",
+			"invalid-sender": "このコマンドはプレーヤーとしてのみ実行できます。",
+			"no-permission": "このコマンドを実行する権限がありません。"
+		},
+		"brush": {
+			"description": "BlockSniperのGUIを開きます。"
+		},
+		"blocksniper": {
+			"description": "BlockSniperに関する情報を表示するか、プラグインをリロードします。",
+			"info": "情報",
+			"version": "バージョン: ",
+			"organisation": "構成: ",
+			"authors": "作者: ",
+			"target-api": "対象のAPI: ",
+			"reload": "BlockSniperを再読み込みしています..."
+		},
+		"redo": {
+			"description": "最後に取り消したBlockSniperの修正をやり直します。",
+			"no-redo": "変更は見つかりませんでした。",
+			"success": "最後に取り消した変更を正常に再作成しました。"
+		},
+		"undo": {
+			"description": "最後のBlockSniperの変更を元に戻します。",
+			"no-undo": "変更は見つかりませんでした。",
+			"success": "最後の変更を正常に終了しました。"
+		},
+		"clone": {
+			"description": "指定された形式を使用して領域をクローンします。",
+			"copy": {
+				"success": "選択範囲を正常にコピーしました。"
+			},
+			"template": {
+				"missing-name": "テンプレートに有効な名前が指定されていません。",
+				"success": "テンプレートファイルを%sに保存しました。."
+			},
+			"schematic": {
+				"missing-name": "回路図には有効な名前はありません。",
+				"success": "%sに回路図のファイルを保存しました。"
+			}
+		},
+		"paste": {
+			"description": "前にクローンされた領域をワールドに貼り付けます。",
+			"copy": {
+				"no-copies": "コピーが見つかりませんでした。",
+				"success": "選択範囲にコピーを貼り付けました。"
+			},
+			"template": {
+				"nonexistent": "テンプレート%sはテンプレートディレクトリに見つかりませんでした。",
+				"success": "テンプレート%sを選択範囲に貼り付けました。"
+			},
+			"schematic": {
+				"nonexistent": "回路図ディレクトリ%sが回路図ディレクトリに見つかりませんでした。",
+				"success": "選択範囲に回路図%sを貼り付けました。"
+			}
+		}
+	},
+	"ui": {
+		"preset-menu": {
+			"title": "プリセットメニュー",
+			"subtitle": "続行するにはボタンをクリックしてください",
+			"create": "作成",
+			"delete": "削除",
+			"select": "選択",
+			"list": "リスト",
+			"exit": "終了"
+		},
+		"preset-edit": {
+			"title": "プリセット編集メニュー",
+			"name": "プリセットの名前",
+			"size": "大きさ",
+			"shape": "形",
+			"type": "種類",
+			"hollow": "空洞",
+			"decrement": "デクリメント",
+			"height": "高さ",
+			"perfect": "形の完全性",
+			"blocks": "使用するブロック",
+			"obsolete": "使用しないブロック",
+			"biome": "バイオーム",
+			"tree": "木"
+		},
+		"preset-selection": {
+			"title": "プリセット選択メニュー",
+			"subtitle": "ボタンをクリックしてプリセットを適用。"
+		},
+		"preset-deletion": {
+			"title": "プリセット削除メニュー",
+			"subtitle": "ボタンをクリックしてプリセットを削除。"
+		},
+		"preset-list": {
+			"title": "プリセット一覧メニュー",
+			"subtitle": "ボタンをクリックすると、プリセットを編集/表示できます。"
+		},
+		"preset-creation": {
+			"title": "プリセット作成メニュー",
+			"name": "プリセットの名前",
+			"size": "大きさ",
+			"shape": "形",
+			"type": "種類",
+			"hollow": "空洞",
+			"decrement": "デクリメント",
+			"height": "高さ",
+			"perfect": "形の完全性",
+			"blocks": "使用するブロック",
+			"obsolete": "使用しないブロック",
+			"biome": "バイオーム",
+			"tree": "木"
+		},
+		"main-menu": {
+			"title": "BlockSniperメニュー",
+			"subtitle": "続行するにはボタンをクリックしてください。",
+			"brush": "ブラシ",
+			"config": "設定",
+			"presets": "プリセット",
+			"exit": "終了"
+		},
+		"brush-menu": {
+			"title": "ブラシメニュー",
+			"size": "大きさ",
+			"shape": "形",
+			"type": "種類",
+			"hollow": "空洞",
+			"decrement": "デクリメント",
+			"height": "高さ",
+			"perfect": "形の完全性",
+			"blocks": "使用するブロック",
+			"obsolete": "使用しないブロック",
+			"biome": "バイオーム",
+			"tree": "木"
+		},
+		"configuration-menu": {
+			"title": "BlockSniper 設定",
+			"auto-update": "新しいバージョンが見つかったときに設定ファイルを自動的に更新する",
+			"language": "BlockSniperのメッセージ送信に使用する言語",
+			"brush-item": "ブラシに使用するアイテムのID",
+			"max-brush-size": "ブラシの最大サイズ",
+			"min-async-size": "非同期ブラシサイズの制限。ブラシのサイズがこれより大きい場合、操作は非同期に実行されます。",
+			"max-reverts": "やり直しの保存の最大量。古いものは自動的に削除されます。",
+			"reset-decrement-brush": "デクリメントのブラシを初期開始サイズに自動的にリセットする",
+			"save-brush": "サーバーの再起動時にプレイヤーのブラシ設定を保存する。",
+			"drop-plants": "葉を吹き飛ばすタイプで破壊/吹き飛ばされた植物アイテムを落とす",
+			"auto-gui": "ホット・バー・スロットをブラシ項目を含むものに切り替えるときに、GUIを自動的に開きます。",
+			"auto-reload": "このチェックをオンにすると、このウィンドウを閉じるときに自動的に設定が再読み込みされます"
+		}
+	},
+	"log": {
+		"language": {
+			"auto-selected": "[BlockSniper]有効な言語が選択されていません。英語が自動的に選択されました。",
+			"usage": "/bを使用して、ゲーム内の設定タブに移動して言語を選択してください。",
+			"selected": "[BlockSniper]選択した言語："
+		},
+		"brush": {
+			"restored": "プレーヤー%sのブラシが復元されました。",
+			"all-restored": "すべてのブラシが復元されました。"
+		},
+		"presets": {
+			"loaded": "プリセット%sが読み込まれました",
+			"all-loaded": "すべてのプリセットがロードされています。"
+		},
+		"reload": {
+			"start": "[BlockSniper] 再読み込みしています...",
+			"finish": "[BlockSniper] 再読み込みが完了しました。"
+		}
+	},
+	"brush": {
+		"shape": {
+			"cube": "立方体",
+			"cuboid": "直方体",
+			"sphere": "球体",
+			"cylinder": "円柱"
+		},
+		"type": {
+			"biome": "バイオーム",
+			"cleanentities": "エンティティ削除",
+			"clean": "削除",
+			"drain": "Drain",
+			"expand": "拡大",
+			"fill": "埋める",
+			"flattenall": "全てを平らにする",
+			"flatten": "平らにする",
+			"layer": "レイヤー",
+			"leafblower": "葉を吹き飛ばす",
+			"melt": "溶かす",
+			"overlay": "オーバーレイ",
+			"replaceall": "全て置き換える",
+			"replace": "置き換える",
+			"snowcone": "スノーコーン",
+			"toplayer": "上のレイヤー",
+			"tree": "木",
+			"regenerate": "Regenerate",
+			"freeze": "Freeze",
+			"warm": "Warm",
+			"heat": "Heat"
+		}
+	}
 }

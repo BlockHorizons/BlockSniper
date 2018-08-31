@@ -1,197 +1,201 @@
 {
-  "commands": {
-    "common": {
-      "warning-prefix": "[Attention] ",
-      "invalid-sender": "Vous ne pouvez exécuter cette commande qu'en tant que joueur.",
-      "no-permission": "Vous n'avez pas la permission pour executer cette commande"
-    },
-    "brush": {
-      "description": "Ouverture de l'interface graphique pour BlockSniper."
-    },
-    "blocksniper": {
-      "description": "Affiche des informations sur BlockSniper, ou recharge le plugin.",
-      "info": "Information",
-      "version": "Version: ",
-      "organisation": "Organisation: ",
-      "authors": "Auteurs: ",
-      "target-api": "Cible API: ",
-      "reload": "Rechargement BlockSniper..."
-    },
-    "redo": {
-      "description": "Relance la dernière modification annulée de BlockSniper.",
-      "no-redo": "Aucune modification n'a pu être trouvée pour relancer.",
-      "success": "Réécrit avec succès la dernière modification annulée."
-    },
-    "undo": {
-      "description": "Annule la dernière modification BlockSniper.",
-      "no-undo": "Aucune modification n'a pu être trouvée pour annuler.",
-      "success": "Annulé avec succès la dernière modification."
-    },
-    "clone": {
-      "description": "Clone une zone en utilisant le format spécifié.",
-      "copy": {
-        "success": "Copie avec succès de l'emplacement regardé."
-      },
-      "template": {
-        "missing-name": "Aucun nom valide n'a été donné pour le modèle.",
-        "success": "Enregistrement réussi d'un fichier modèle dans %s."
-      },
-      "schematic": {
-        "missing-name": "Aucun nom valide n'a été donné pour le schéma.",
-        "success": "Sauvegarde réussie d'un fichier schématique dans %s."
-      }
-    },
-    "paste": {
-      "description": "Colle une zone préalablement clonée au monde.",
-      "copy": {
-        "no-copies": "Aucune copie n'a pu être trouvée pour coller.",
-        "success": "Collé avec succès la copie sur l'emplacement regardé."
-      },
-      "template": {
-        "nonexistent": "Le template %s n'a pas pu être trouvé dans le répertoire des modèles.",
-        "success": "Collé avec succès le modèle %s sur l'emplacement regardé."
-      },
-      "schematic": {
-        "nonexistent": "Le schéma %s n'a pas pu être trouvé dans le répertoire schématique.",
-        "success": "Collé avec succès le schéma% s sur l'emplacement regardé."
-      }
-    }
-  },
-  "ui": {
-    "preset-menu": {
-      "title": "Menu préfabriqué",
-      "subtitle": "Cliquez sur un bouton pour continuer",
-      "create": "Créer",
-      "delete": "Supprimer",
-      "select": "Sélectionner",
-      "list": "Liste",
-      "exit": "Quitter"
-    },
-    "preset-edit": {
-      "title": "Menu d'édition préfabriqué",
-      "name": "Nom du préfabriqué",
-      "size": "Taille du pinceau",
-      "shape": "Forme du pinceau",
-      "type": "Type de pinceau",
-      "hollow": "Pinceau creuse",
-      "decrement": "Décrémenter le pinceau",
-      "height": "Hauteur du pinceau",
-      "perfect": "Perfection de la forme du pinceau",
-      "blocks": "Blocs du pinceau",
-      "obsolete": "Blocs obsolètes",
-      "biome": "Biome du pinceau",
-      "tree": "Arbre du pinceau"
-    },
-    "preset-selection": {
-      "title": "Menu de sélection de préfabriqué",
-      "subtitle": "Cliquez sur un bouton pour appliquer le préfabriqué"
-    },
-    "preset-deletion": {
-      "title": "Menu de suppression de préfabriqué",
-      "subtitle": "Cliquez sur un bouton pour supprimer un préfabriqué"
-    },
-    "preset-list": {
-      "title": "Menu de liste de préfabriqué",
-      "subtitle": "Cliquez sur un bouton pour modifier / afficher un préfabriqué"
-    },
-    "preset-creation": {
-      "title": "PMenu de création de préfabriqué",
-      "name": "Nom du préfabriqué",
-      "size": "Taille du pinceau",
-      "shape": "Forme du pinceau",
-      "type": "Type de pinceau",
-      "hollow": "Pinceau creuse",
-      "decrement": "Décrémenter le pinceau",
-      "height": "Hauteur du pinceau",
-      "perfect": "Perfection de la forme du pinceau",
-      "blocks": "Blocs du pinceau",
-      "obsolete": "Blocs obsolètes",
-      "biome": "Biome du pinceau",
-      "tree": "Arbre du pinceau"
-    },
-    "main-menu": {
-      "title": "Menu BlockSniper",
-      "subtitle": "Cliquez sur un bouton pour continuer.",
-      "brush": "pinceau (Brush)",
-      "config": "Configuration",
-      "presets": "préfabriqué (Preset)",
-      "global-brush": "Global Brush",
-      "exit": "Quitter"
-    },
-    "brush-menu": {
-      "title": "Menu pinceau (Brush)",
-      "size": "Taille du pinceau",
-      "shape": "Forme du pinceau",
-      "type": "Type de pinceau",
-      "hollow": "Pinceau creuse",
-      "decrement": "Décrémenter le pinceau",
-      "height": "Hauteur du pinceau",
-      "perfect": "Perfection de la forme du pinceau",
-      "blocks": "Blocs du pinceau",
-      "obsolete": "Blocs obsolètes",
-      "biome": "Biome du pinceau",
-      "tree": "Arbre du pinceau"
-    },
-    "configuration-menu": {
-      "title": "Configuration BlockSniper",
-      "auto-update": "Mettre à jour automatiquement le fichier de configuration quand une nouvelle version est trouvée",
-      "language": "Language utilisé pour envoyer des messages liés à BlockSniper",
-      "brush-item": "ID de l'élément utilisé pour peindre",
-      "max-brush-size": "La taille maximale absolue du pinceau",
-      "min-async-size": "Limite asynchrone de la taille du pinceau. Si la taille du pinceau est plus grande, les opérations sont exécutées de façon asynchrone",
-      "max-reverts": "Nombre maximum d'action annuler/relancer sauvegarder. Les plus anciens sont nettoyés automatiquement",
-      "reset-decrement-brush": "Réinitialise automatiquement le pinceau de décrémentation à la taille de départ initiale",
-      "save-brush": "Enregistrer les propriétés du pinceau des joueurs lors du redémarrage du serveur",
-      "drop-plants": "Dropper les plantes détruites/soufflées par le type LeafBlower",
-      "auto-gui": "ouvre automatiquement l'interface graphique lors du passage du curseur dans la hotbar à l'une contenant l'élément pinceau",
-      "myplot-support": "Whether to turn on MyPlot support or not",
-      "auto-reload": "Activer cette bascule rechargera automatiquement la configuration lors de la fermeture de cette fenêtre"
-    }
-  },
-  "log": {
-    "language": {
-      "auto-selected": "[BlockSniper] Aucune langue valide n'a été sélectionnée Le français a été sélectionné automatiquement.",
-      "usage": "Veuillez sélectionner une langue en allant dans l'onglet de configuration dans le jeu, en utilisant /b.",
-      "selected": "[BlockSniper] Langue sélectionnée: "
-    },
-    "brush": {
-      "restored": "Le pinceau du joueur %s a été restauré.",
-      "all-restored": "Tous les pinceaux ont été restaurés."
-    },
-    "presets": {
-      "loaded": "Le préfabriqué %s a été chargé.",
-      "all-loaded": "Tous les préfabriqué ont été chargés."
-    },
-    "reload": {
-      "start": "[BlockSniper] Rechargement en cours...",
-      "finish": "[BlockSniper] Rechargement terminer."
-    }
-  },
-  "brush": {
-    "shape": {
-      "cube": "Cube",
-      "cuboid": "Cuboid",
-      "sphere": "Sphère",
-      "cylinder": "Cylindre"
-    },
-    "type": {
-      "biome": "Biome",
-      "cleanentities": "Nettoyer les entités (cleanentities)",
-      "clean": "Nettoyer (clean)",
-      "drain": "Vider (drain)",
-      "expand": "Étendre (expand)",
-      "fill": "Remplir (fill)",
-      "flattenall": "Aplatir tout (flattenall)",
-      "flatten": "aplatir (flatten)",
-      "layer": "Couche (layer)",
-      "leafblower": "souffleur de feuilles (LeafBlower)",
-      "melt": "fondre (melt)",
-      "overlay": "Superposition (overlay)",
-      "replaceall": "Remplacer tout (replaceall)",
-      "replace": "Remplacer (replace)",
-      "snowcone": "Couche de neige (snowcone)",
-      "toplayer": "Couche supérieure (toplayer)",
-      "tree": "Arbre (tree)"
-    }
-  }
+	"commands": {
+		"common": {
+			"warning-prefix": "[Attention] ",
+			"invalid-sender": "Vous ne pouvez exécuter cette commande qu'en tant que joueur.",
+			"no-permission": "Vous n'avez pas la permission pour executer cette commande"
+		},
+		"brush": {
+			"description": "Ouverture de l'interface graphique pour BlockSniper."
+		},
+		"blocksniper": {
+			"description": "Affiche des informations sur BlockSniper, ou recharge le plugin.",
+			"info": "Information",
+			"version": "Version: ",
+			"organisation": "Organisation: ",
+			"authors": "Auteurs: ",
+			"target-api": "Cible API: ",
+			"reload": "Rechargement BlockSniper..."
+		},
+		"redo": {
+			"description": "Relance la dernière modification annulée de BlockSniper.",
+			"no-redo": "Aucune modification n'a pu être trouvée pour relancer.",
+			"success": "Réécrit avec succès la dernière modification annulée."
+		},
+		"undo": {
+			"description": "Annule la dernière modification BlockSniper.",
+			"no-undo": "Aucune modification n'a pu être trouvée pour annuler.",
+			"success": "Annulé avec succès la dernière modification."
+		},
+		"clone": {
+			"description": "Clone une zone en utilisant le format spécifié.",
+			"copy": {
+				"success": "Copie avec succès de l'emplacement regardé."
+			},
+			"template": {
+				"missing-name": "Aucun nom valide n'a été donné pour le modèle.",
+				"success": "Enregistrement réussi d'un fichier modèle dans %s."
+			},
+			"schematic": {
+				"missing-name": "Aucun nom valide n'a été donné pour le schéma.",
+				"success": "Sauvegarde réussie d'un fichier schématique dans %s."
+			}
+		},
+		"paste": {
+			"description": "Colle une zone préalablement clonée au monde.",
+			"copy": {
+				"no-copies": "Aucune copie n'a pu être trouvée pour coller.",
+				"success": "Collé avec succès la copie sur l'emplacement regardé."
+			},
+			"template": {
+				"nonexistent": "Le template %s n'a pas pu être trouvé dans le répertoire des modèles.",
+				"success": "Collé avec succès le modèle %s sur l'emplacement regardé."
+			},
+			"schematic": {
+				"nonexistent": "Le schéma %s n'a pas pu être trouvé dans le répertoire schématique.",
+				"success": "Collé avec succès le schéma% s sur l'emplacement regardé."
+			}
+		}
+	},
+	"ui": {
+		"preset-menu": {
+			"title": "Menu préfabriqué",
+			"subtitle": "Cliquez sur un bouton pour continuer",
+			"create": "Créer",
+			"delete": "Supprimer",
+			"select": "Sélectionner",
+			"list": "Liste",
+			"exit": "Quitter"
+		},
+		"preset-edit": {
+			"title": "Menu d'édition préfabriqué",
+			"name": "Nom du préfabriqué",
+			"size": "Taille du pinceau",
+			"shape": "Forme du pinceau",
+			"type": "Type de pinceau",
+			"hollow": "Pinceau creuse",
+			"decrement": "Décrémenter le pinceau",
+			"height": "Hauteur du pinceau",
+			"perfect": "Perfection de la forme du pinceau",
+			"blocks": "Blocs du pinceau",
+			"obsolete": "Blocs obsolètes",
+			"biome": "Biome du pinceau",
+			"tree": "Arbre du pinceau"
+		},
+		"preset-selection": {
+			"title": "Menu de sélection de préfabriqué",
+			"subtitle": "Cliquez sur un bouton pour appliquer le préfabriqué"
+		},
+		"preset-deletion": {
+			"title": "Menu de suppression de préfabriqué",
+			"subtitle": "Cliquez sur un bouton pour supprimer un préfabriqué"
+		},
+		"preset-list": {
+			"title": "Menu de liste de préfabriqué",
+			"subtitle": "Cliquez sur un bouton pour modifier / afficher un préfabriqué"
+		},
+		"preset-creation": {
+			"title": "PMenu de création de préfabriqué",
+			"name": "Nom du préfabriqué",
+			"size": "Taille du pinceau",
+			"shape": "Forme du pinceau",
+			"type": "Type de pinceau",
+			"hollow": "Pinceau creuse",
+			"decrement": "Décrémenter le pinceau",
+			"height": "Hauteur du pinceau",
+			"perfect": "Perfection de la forme du pinceau",
+			"blocks": "Blocs du pinceau",
+			"obsolete": "Blocs obsolètes",
+			"biome": "Biome du pinceau",
+			"tree": "Arbre du pinceau"
+		},
+		"main-menu": {
+			"title": "Menu BlockSniper",
+			"subtitle": "Cliquez sur un bouton pour continuer.",
+			"brush": "pinceau (Brush)",
+			"config": "Configuration",
+			"presets": "préfabriqué (Preset)",
+			"global-brush": "Global Brush",
+			"exit": "Quitter"
+		},
+		"brush-menu": {
+			"title": "Menu pinceau (Brush)",
+			"size": "Taille du pinceau",
+			"shape": "Forme du pinceau",
+			"type": "Type de pinceau",
+			"hollow": "Pinceau creuse",
+			"decrement": "Décrémenter le pinceau",
+			"height": "Hauteur du pinceau",
+			"perfect": "Perfection de la forme du pinceau",
+			"blocks": "Blocs du pinceau",
+			"obsolete": "Blocs obsolètes",
+			"biome": "Biome du pinceau",
+			"tree": "Arbre du pinceau"
+		},
+		"configuration-menu": {
+			"title": "Configuration BlockSniper",
+			"auto-update": "Mettre à jour automatiquement le fichier de configuration quand une nouvelle version est trouvée",
+			"language": "Language utilisé pour envoyer des messages liés à BlockSniper",
+			"brush-item": "ID de l'élément utilisé pour peindre",
+			"max-brush-size": "La taille maximale absolue du pinceau",
+			"min-async-size": "Limite asynchrone de la taille du pinceau. Si la taille du pinceau est plus grande, les opérations sont exécutées de façon asynchrone",
+			"max-reverts": "Nombre maximum d'action annuler/relancer sauvegarder. Les plus anciens sont nettoyés automatiquement",
+			"reset-decrement-brush": "Réinitialise automatiquement le pinceau de décrémentation à la taille de départ initiale",
+			"save-brush": "Enregistrer les propriétés du pinceau des joueurs lors du redémarrage du serveur",
+			"drop-plants": "Dropper les plantes détruites/soufflées par le type LeafBlower",
+			"auto-gui": "ouvre automatiquement l'interface graphique lors du passage du curseur dans la hotbar à l'une contenant l'élément pinceau",
+			"myplot-support": "Whether to turn on MyPlot support or not",
+			"auto-reload": "Activer cette bascule rechargera automatiquement la configuration lors de la fermeture de cette fenêtre"
+		}
+	},
+	"log": {
+		"language": {
+			"auto-selected": "[BlockSniper] Aucune langue valide n'a été sélectionnée Le français a été sélectionné automatiquement.",
+			"usage": "Veuillez sélectionner une langue en allant dans l'onglet de configuration dans le jeu, en utilisant /b.",
+			"selected": "[BlockSniper] Langue sélectionnée: "
+		},
+		"brush": {
+			"restored": "Le pinceau du joueur %s a été restauré.",
+			"all-restored": "Tous les pinceaux ont été restaurés."
+		},
+		"presets": {
+			"loaded": "Le préfabriqué %s a été chargé.",
+			"all-loaded": "Tous les préfabriqué ont été chargés."
+		},
+		"reload": {
+			"start": "[BlockSniper] Rechargement en cours...",
+			"finish": "[BlockSniper] Rechargement terminer."
+		}
+	},
+	"brush": {
+		"shape": {
+			"cube": "Cube",
+			"cuboid": "Cuboid",
+			"sphere": "Sphère",
+			"cylinder": "Cylindre"
+		},
+		"type": {
+			"biome": "Biome",
+			"cleanentities": "Nettoyer les entités (cleanentities)",
+			"clean": "Nettoyer (clean)",
+			"drain": "Vider (drain)",
+			"expand": "Étendre (expand)",
+			"fill": "Remplir (fill)",
+			"flattenall": "Aplatir tout (flattenall)",
+			"flatten": "aplatir (flatten)",
+			"layer": "Couche (layer)",
+			"leafblower": "souffleur de feuilles (LeafBlower)",
+			"melt": "fondre (melt)",
+			"overlay": "Superposition (overlay)",
+			"replaceall": "Remplacer tout (replaceall)",
+			"replace": "Remplacer (replace)",
+			"snowcone": "Couche de neige (snowcone)",
+			"toplayer": "Couche supérieure (toplayer)",
+			"tree": "Arbre (tree)",
+			"regenerate": "Regenerate",
+			"freeze": "Freeze",
+			"warm": "Warm",
+			"heat": "Heat"
+		}
+	}
 }

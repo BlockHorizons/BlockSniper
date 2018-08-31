@@ -1,69 +1,83 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\commands;
 
-use BlockHorizons\BlockSniper\data\ConfigData;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\command\PluginIdentifiableCommand;
+use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use pocketmine\utils\TextFormat as TF;
 
-abstract class BaseCommand extends Command implements PluginIdentifiableCommand {
+abstract class BaseCommand extends Command implements PluginIdentifiableCommand{
 
 	/** @var Loader */
 	protected $loader = null;
+	/** @var bool */
+	protected $consoleUsable = false;
 
-	public function __construct(Loader $loader, $name, $description = "", $usageMessage = null, array $aliases = []) {
-		parent::__construct($name, $description, $usageMessage, $aliases);
+	public function __construct(Loader $loader, string $name, string $description, string $usageMessage, array $aliases = [], bool $consoleUsable = false){
+		parent::__construct($name, Translation::get($description), "[Usage] " . $usageMessage, $aliases);
 		$this->loader = $loader;
+		$this->consoleUsable = $consoleUsable;
 		$this->setPermission("blocksniper.command." . $name);
-		$this->setUsage(TF::RED . "[Usage] " . $usageMessage);
 	}
 
 	/**
 	 * @param CommandSender $sender
 	 */
-	public function sendConsoleError(CommandSender $sender): void {
+	public function sendConsoleError(CommandSender $sender) : void{
 		$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_COMMON_INVALID_SENDER));
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getWarning(): string {
+	public function getWarning() : string{
 		return TF::RED . Translation::get(Translation::COMMANDS_COMMON_WARNING_PREFIX);
 	}
 
 	/**
 	 * @return Plugin
 	 */
-	public function getPlugin(): Plugin {
+	public function getPlugin() : Plugin{
 		return $this->loader;
 	}
 
 	/**
 	 * @param CommandSender $sender
 	 */
-	public function sendNoPermission(CommandSender $sender): void {
+	public function sendNoPermission(CommandSender $sender) : void{
 		$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_COMMON_NO_PERMISSION));
 	}
 
 	/**
-	 * @return ConfigData
+	 * @param CommandSender $sender
+	 * @param string        $commandLabel
+	 * @param array         $args
 	 */
-	public function getSettings(): ConfigData {
-		return $this->getLoader()->getSettings();
+	public function execute(CommandSender $sender, string $commandLabel, array $args) : void{
+		if(!$this->testPermission($sender)){
+			$this->sendNoPermission($sender);
+
+			return;
+		}
+		if(!$this->consoleUsable && (!$sender instanceof Player)){
+			$this->sendConsoleError($sender);
+
+			return;
+		}
+		$this->onExecute($sender, $commandLabel, $args);
 	}
 
 	/**
-	 * @return Loader
+	 * @param CommandSender $sender
+	 * @param string        $commandLabel
+	 * @param array         $args
 	 */
-	public function getLoader(): Loader {
-		return $this->loader;
-	}
+	public abstract function onExecute(CommandSender $sender, string $commandLabel, array $args) : void;
 }

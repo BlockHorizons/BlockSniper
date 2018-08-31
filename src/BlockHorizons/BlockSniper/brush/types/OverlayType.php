@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
@@ -12,17 +12,17 @@ use pocketmine\item\Item;
  * Lays a layer of blocks over every block within the brush radius.
  */
 
-class OverlayType extends BaseType {
+class OverlayType extends BaseType{
 
 	const ID = self::TYPE_OVERLAY;
 
 	/**
 	 * @return Block[]
 	 */
-	public function fillSynchronously(): array {
+	public function fillSynchronously() : array{
 		$undoBlocks = [];
-		foreach($this->blocks as $block) {
-			if($block->getId() !== Item::AIR) {
+		foreach($this->blocks as $block){
+			if($block->getId() !== Item::AIR){
 				$directions = [
 					$block->getSide(Block::SIDE_DOWN),
 					$block->getSide(Block::SIDE_UP),
@@ -32,15 +32,15 @@ class OverlayType extends BaseType {
 					$block->getSide(Block::SIDE_EAST)
 				];
 				$valid = true;
-				foreach($this->brushBlocks as $possibleBlock) {
-					if($block->getId() === $possibleBlock->getId() && $block->getDamage() === $possibleBlock->getDamage()) {
+				foreach($this->brushBlocks as $possibleBlock){
+					if($block->getId() === $possibleBlock->getId() && $block->getDamage() === $possibleBlock->getDamage()){
 						$valid = false;
 					}
 				}
-				foreach($directions as $direction) {
-					if($valid && $this->getLevel()->getBlock($direction)->getId() === Item::AIR) {
+				foreach($directions as $direction){
+					if($valid && $this->getLevel()->getBlock($direction)->getId() === Item::AIR){
 						$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
-						if($block->getId() !== $randomBlock->getId()) {
+						if($block->getId() !== $randomBlock->getId()){
 							$undoBlocks[] = $direction;
 							$this->putBlock($direction, $randomBlock->getId(), $randomBlock->getDamage());
 						}
@@ -48,12 +48,13 @@ class OverlayType extends BaseType {
 				}
 			}
 		}
+
 		return $undoBlocks;
 	}
 
-	public function fillAsynchronously(): void {
-		foreach($this->blocks as $block) {
-			if($block->getId() !== Item::AIR) {
+	public function fillAsynchronously() : void{
+		foreach($this->blocks as $block){
+			if($block->getId() !== Item::AIR){
 				$directions = [
 					$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_DOWN),
 					$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_UP),
@@ -63,15 +64,15 @@ class OverlayType extends BaseType {
 					$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_EAST),
 				];
 				$valid = true;
-				foreach($this->brushBlocks as $possibleBlock) {
-					if($block->getId() === $possibleBlock->getId() && $block->getDamage() === $possibleBlock->getDamage()) {
+				foreach($this->brushBlocks as $possibleBlock){
+					if($block->getId() === $possibleBlock->getId() && $block->getDamage() === $possibleBlock->getDamage()){
 						$valid = false;
 					}
 				}
-				foreach($directions as $direction) {
-					if($valid && $this->getChunkManager()->getBlockIdAt($direction->x, $direction->y, $direction->z) === Item::AIR) {
+				foreach($directions as $direction){
+					if($valid && $this->getChunkManager()->getBlockIdAt($direction->x, $direction->y, $direction->z) === Item::AIR){
 						$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
-						if($block->getId() !== $randomBlock->getId()) {
+						if($block->getId() !== $randomBlock->getId()){
 							$this->putBlock($direction, $randomBlock->getId(), $randomBlock->getDamage());
 						}
 					}
@@ -80,7 +81,7 @@ class OverlayType extends BaseType {
 		}
 	}
 
-	public function getName(): string {
+	public function getName() : string{
 		return "Overlay";
 	}
 }

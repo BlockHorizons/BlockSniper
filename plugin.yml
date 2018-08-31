@@ -1,7 +1,7 @@
 {
     "name": "BlockSniper",
-    "version": "2.3.1",
-    "api": 3.0.0,
+    "version": "3.0.0",
+    "api": ["3.2.0"],
     "author": "BlockHorizons",
     "authors": [
         "Sandertv (@Sandertv)",
@@ -14,9 +14,19 @@
     ],
 
     "permissions": {
-        "blocksniper-myplot-bypass": {
-            "default": "op",
-            "description": "Allows bypassing MyPlot plot borders with BlockSniper."
+        "blocksniper-myplot": {
+            "default": false,
+            "description": "Allows bypassing MyPlot plot borders with BlockSniper.",
+            "children": {
+                "blocksniper-myplot.bypass": {
+                    "default": false,
+                    "description": "Allows bypassing MyPlot plot protection."
+                },
+                "blocksniper-myplot.allow-outside": {
+                    "default": "op",
+                    "description": "Allows using BlockSniper outside of plot worlds limitlessly."
+                }
+            }
         },
         "blocksniper": {
             "default": false,

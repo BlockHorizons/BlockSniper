@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
@@ -12,17 +12,17 @@ use pocketmine\item\Item;
  * Melts away every block with more than 2 open sides within the brush radius.
  */
 
-class MeltType extends BaseType {
+class MeltType extends BaseType{
 
 	const ID = self::TYPE_MELT;
 
 	/**
 	 * @return Block[]
 	 */
-	public function fillSynchronously(): array {
+	public function fillSynchronously() : array{
 		$undoBlocks = [];
-		foreach($this->blocks as $block) {
-			if($block->getId() !== Item::AIR) {
+		foreach($this->blocks as $block){
+			if($block->getId() !== Item::AIR){
 				$directions = [
 					$block->getSide(Block::SIDE_DOWN),
 					$block->getSide(Block::SIDE_UP),
@@ -32,26 +32,27 @@ class MeltType extends BaseType {
 					$block->getSide(Block::SIDE_EAST)
 				];
 				$valid = 0;
-				foreach($directions as $direction) {
-					if($direction->getId() === Item::AIR) {
+				foreach($directions as $direction){
+					if($direction->getId() === Item::AIR){
 						$valid++;
 					}
 				}
-				if($valid >= 2) {
+				if($valid >= 2){
 					$undoBlocks[] = $block;
 				}
 			}
 		}
-		foreach($undoBlocks as $selectedBlock) {
+		foreach($undoBlocks as $selectedBlock){
 			$this->putBlock($selectedBlock, 0);
 		}
+
 		return $undoBlocks;
 	}
 
-	public function fillAsynchronously(): void {
+	public function fillAsynchronously() : void{
 		$blocks = [];
-		foreach($this->blocks as $block) {
-			if($block->getId() !== Item::AIR) {
+		foreach($this->blocks as $block){
+			if($block->getId() !== Item::AIR){
 				$directions = [
 					$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_DOWN),
 					$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_UP),
@@ -61,22 +62,22 @@ class MeltType extends BaseType {
 					$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_EAST),
 				];
 				$valid = 0;
-				foreach($directions as $direction) {
-					if($direction->getId() === Item::AIR) {
+				foreach($directions as $direction){
+					if($direction->getId() === Item::AIR){
 						$valid++;
 					}
 				}
-				if($valid >= 2) {
+				if($valid >= 2){
 					$blocks[] = $block;
 				}
 			}
 		}
-		foreach($blocks as $selectedBlock) {
+		foreach($blocks as $selectedBlock){
 			$this->putBlock($selectedBlock, 0);
 		}
 	}
 
-	public function getName(): string {
+	public function getName() : string{
 		return "Melt";
 	}
 }

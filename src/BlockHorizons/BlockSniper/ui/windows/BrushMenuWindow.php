@@ -1,101 +1,53 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\ui\windows;
 
-use BlockHorizons\BlockSniper\brush\PropertyProcessor;
+use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
+use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
 use BlockHorizons\BlockSniper\data\Translation;
+use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
-use pocketmine\level\biome\Biome;
-use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
+use pocketmine\Player;
 
-class BrushMenuWindow extends Window {
+class BrushMenuWindow extends CustomWindow{
 
-	public function process(): void {
-		$this->getLoader()->getSessionManager()->createPlayerSession($this->getPlayer());
-		$v = SessionManager::getPlayerSession($this->getPlayer())->getBrush();
-		$this->data = [
-			"type" => "custom_form",
-			"title" => Translation::get(Translation::UI_BRUSH_MENU_TITLE),
-			"content" => [
-				[
-					"type" => "slider",
-					"text" => Translation::get(Translation::UI_BRUSH_MENU_SIZE),
-					"min" => 0,
-					"max" => $this->getLoader()->getSettings()->getMaxRadius(),
-					"step" => 1,
-					"default" => $v->getSize()
-				],
-				[
-					"type" => "dropdown",
-					"text" => Translation::get(Translation::UI_BRUSH_MENU_SHAPE),
-					"options" => $this->processShapes(),
-					"default" => $v->getShape()::ID
-				],
-				[
-					"type" => "dropdown",
-					"text" => Translation::get(Translation::UI_BRUSH_MENU_TYPE),
-					"options" => $this->processTypes(),
-					"default" => $v->getType()::ID
-				],
-				[
-					"type" => "toggle",
-					"text" => Translation::get(Translation::UI_BRUSH_MENU_HOLLOW),
-					"default" => $v->isHollow()
-				],
-				[
-					"type" => "toggle",
-					"text" => Translation::get(Translation::UI_BRUSH_MENU_DECREMENT),
-					"default" => $v->isDecrementing()
-				],
-				[
-					"type" => "slider",
-					"text" => Translation::get(Translation::UI_BRUSH_MENU_HEIGHT),
-					"min" => 0,
-					"max" => $this->getLoader()->getSettings()->getMaxRadius(),
-					"default" => $v->getHeight(),
-					"step" => 1
-				],
-				[
-					"type" => "toggle",
-					"text" => Translation::get(Translation::UI_BRUSH_MENU_PERFECT),
-					"default" => $v->getPerfect()
-				],
-				[
-					"type" => "input",
-					"text" => Translation::get(Translation::UI_BRUSH_MENU_BLOCKS),
-					"placeholder" => "stone,stone_brick:1,2",
-					"default" => $this->processBlocks($v->getBlocks()),
-				],
-				[
-					"type" => "input",
-					"text" => Translation::get(Translation::UI_BRUSH_MENU_OBSOLETE),
-					"placeholder" => "stone,stone_brick:1,2",
-					"default" => $this->processBlocks($v->getObsolete()),
-				],
-				[
-					"type" => "input",
-					"text" => Translation::get(Translation::UI_BRUSH_MENU_BIOME),
-					"placeholder" => "plains",
-					"default" => strtolower(Biome::getBiome($v->getBiomeId())->getName())
-				],
-				[
-					"type" => "input",
-					"text" => Translation::get(Translation::UI_BRUSH_MENU_TREE),
-					"placeholder" => "oak",
-					"default" => (string) $v->getTreeType()
-				]
-			]
-		];
-	}
+	public function __construct(Loader $loader, Player $requester){
+		parent::__construct($this->t(Translation::UI_BRUSH_MENU_TITLE));
 
-	public function handle(ModalFormResponsePacket $packet): bool {
-		$data = json_decode($packet->formData, true);
-		$processor = new PropertyProcessor(SessionManager::getPlayerSession($this->player), $this->loader);
-		foreach($data as $key => $value) {
-			$processor->process($key, $value);
-		}
-		return true;
+		$b = SessionManager::getPlayerSession($requester)->getBrush();
+		$this->addSlider($this->t(Translation::UI_BRUSH_MENU_SIZE), 0, $loader->config->maxSize, 1, $b->size, function(Player $player, float $value) use ($b){
+			$b->size = (int) $value;
+		});
+		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_SHAPE), $this->processShapes($requester), $b->getShape()::ID, function(Player $player, int $value) use ($b){
+			$b->shape = ShapeRegistration::getShapeById($value);
+		});
+		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_TYPE), $this->processTypes($requester), $b->getType()::ID, function(Player $player, int $value) use ($b){
+			$b->type = TypeRegistration::getTypeById($value);
+		});
+		$this->addToggle($this->t(Translation::UI_BRUSH_MENU_HOLLOW), $b->hollow, function(Player $player, bool $value) use ($b){
+			$b->hollow = $value;
+		});
+		$this->addToggle($this->t(Translation::UI_BRUSH_MENU_DECREMENT), $b->decrementing, function(Player $player, bool $value) use ($b){
+			$b->decrementing = $value;
+			// Set the size the brush will reset to after reaching a size of 0.
+			$b->resetSize = $b->size;
+		});
+		$this->addSlider($this->t(Translation::UI_BRUSH_MENU_HEIGHT), 0, $loader->config->maxSize, 1, $b->height, function(Player $player, float $value) use ($b){
+			$b->height = (int) $value;
+		});
+		$this->addInput($this->t(Translation::UI_BRUSH_MENU_BLOCKS), $this->processBlocks($b->getBlocks()), "stone,stone_brick:1,2", function(Player $player, string $value) use ($b){
+			$b->blocks = $value;
+		});
+		$this->addInput($this->t(Translation::UI_BRUSH_MENU_OBSOLETE), $this->processBlocks($b->getObsolete()), "stone,stone_brick:1,2", function(Player $player, string $value) use ($b){
+			$b->obsolete = $value;
+		});
+		$this->addInput($this->t(Translation::UI_BRUSH_MENU_BIOME), (string) $b->biomeId, "plains", function(Player $player, string $value) use ($b){
+			$b->biome = $b->parseBiomeId($value);
+		});
+		$this->addInput($this->t(Translation::UI_BRUSH_MENU_TREE), (string) $b->tree, "oak", function(Player $player, string $value) use ($b){
+			$b->tree = $b->parseTreeId($value);
+		});
 	}
 }

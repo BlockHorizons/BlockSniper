@@ -1,14 +1,13 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\events;
 
 use pocketmine\event\Cancellable;
-use pocketmine\event\plugin\PluginEvent;
 use pocketmine\Player;
 
-class PresetCreationEvent extends PluginEvent implements Cancellable {
+class PresetCreationEvent extends BlockSniperEvent implements Cancellable{
 
 	/** @var null */
 	public static $handlerList = null;
@@ -18,7 +17,7 @@ class PresetCreationEvent extends PluginEvent implements Cancellable {
 	/** @var array */
 	private $presetData = [];
 
-	public function __construct(Player $player, array $presetData) {
+	public function __construct(Player $player, array $presetData){
 		$this->player = $player;
 		$this->presetData = $presetData;
 	}
@@ -28,7 +27,7 @@ class PresetCreationEvent extends PluginEvent implements Cancellable {
 	 *
 	 * @return Player
 	 */
-	public function getPlayer(): Player {
+	public function getPlayer() : Player{
 		return $this->player;
 	}
 
@@ -47,7 +46,7 @@ class PresetCreationEvent extends PluginEvent implements Cancellable {
 	 *
 	 * @return array
 	 */
-	public function getPresetData(): array {
+	public function getPresetData() : array{
 		return $this->presetData;
 	}
 }

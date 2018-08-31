@@ -1,67 +1,37 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\ui\windows;
 
 use BlockHorizons\BlockSniper\data\Translation;
-use BlockHorizons\BlockSniper\ui\WindowHandler;
-use pocketmine\network\mcpe\protocol\ModalFormRequestPacket;
-use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
+use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\ui\forms\MenuForm;
+use pocketmine\Player;
 
-class MainMenuWindow extends Window {
+class MainMenuWindow extends MenuForm{
 
-	public function process(): void {
-		$this->data = [
-			"type" => "form",
-			"title" => Translation::get(Translation::UI_MAIN_MENU_TITLE),
-			"content" => Translation::get(Translation::UI_MAIN_MENU_SUBTITLE),
-			"buttons" => [
-				[
-					"text" => Translation::get(Translation::UI_MAIN_MENU_BRUSH),
-					"image" => [
-						"type" => "url",
-						"data" => "https://maxcdn.icons8.com/Share/icon/DIY//paint_brush1600.png"
-					]
-				],
-				[
-					"text" => Translation::get(Translation::UI_MAIN_MENU_PRESETS),
-					"image" => [
-						"type" => "url",
-						"data" => "http://www.sidecarpost.com/wp-content/uploads/2014/03/Icon-BaselinePreset-100x100.png"
-					]
-				],
-				[
-					"text" => Translation::get(Translation::UI_MAIN_MENU_EXIT),
-					"image" => [
-						"type" => "url",
-						"data" => "http://www.pngmart.com/files/3/Red-Cross-Transparent-PNG.png"
-					]
-				]
-			]
-		];
-		if($this->getPlayer()->hasPermission("blocksniper.configuration")) {
-			$this->data["buttons"][3] = $this->data["buttons"][2];
-			$this->data["buttons"][2] = [
-				"text" => Translation::get(Translation::UI_MAIN_MENU_CONFIG),
-				"image" => [
-					"type" => "url",
-					"data" => "http://icons.iconarchive.com/icons/dtafalonso/android-l/512/Settings-L-icon.png"
-				]
-			];
+	private const BRUSH_ICON = "https://maxcdn.icons8.com/Share/icon/DIY//paint_brush1600.png";
+	private const PRESET_ICON = "http://www.sidecarpost.com/wp-content/uploads/2014/03/Icon-BaselinePreset-100x100.png";
+	private const CONFIG_ICON = "http://icons.iconarchive.com/icons/dtafalonso/android-l/512/Settings-L-icon.png";
+	private const EXIT_ICON = "http://www.pngmart.com/files/3/Red-Cross-Transparent-PNG.png";
+
+	public function __construct(Loader $loader, Player $requester){
+		parent::__construct($this->t(Translation::UI_MAIN_MENU_TITLE), $this->t(Translation::UI_MAIN_MENU_SUBTITLE));
+
+		$this->addOption($this->t(Translation::UI_MAIN_MENU_BRUSH), self::BRUSH_ICON, "url", function(Player $player) use ($loader){
+			$this->setResponseForm(new BrushMenuWindow($loader, $player));
+		});
+		$this->addOption($this->t(Translation::UI_MAIN_MENU_PRESETS), self::PRESET_ICON, "url", function(Player $player) use ($loader){
+			$this->setResponseForm(new PresetMenuWindow($loader, $player));
+		});
+		if($requester->hasPermission("blocksniper.configuration")){
+			$this->addOption($this->t(Translation::UI_MAIN_MENU_CONFIG), self::CONFIG_ICON, "url", function(Player $player) use ($loader){
+				$this->setResponseForm(new ConfigurationMenuWindow($loader, $player));
+			});
 		}
-	}
 
-	public function handle(ModalFormResponsePacket $packet): bool {
-		$index = (int) $packet->formData + 1;
-		if($index === 4) {
-			return false;
-		}
-		$windowHandler = new WindowHandler();
-		$packet = new ModalFormRequestPacket();
-		$packet->formId = $windowHandler->getWindowIdFor($index);
-		$packet->formData = $windowHandler->getWindowJson($index, $this->loader, $this->player);
-		$this->player->dataPacket($packet);
-		return true;
+		// No need to do anything here, just exit.
+		$this->addOption($this->t(Translation::UI_MAIN_MENU_EXIT), self::EXIT_ICON, "url");
 	}
 }
