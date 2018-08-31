@@ -22,23 +22,24 @@ before_script:
 
 - mkdir PocketMine-MP
 - cd PocketMine-MP
-- wget -O PocketMine-MP.phar | curl -s https://api.github.com/repos/pmmp/PocketMine-MP/releases/latest | grep browser_download_url | cut -d '"' -f 4
+- wget -o PocketMine-MP.phar | curl -s https://api.github.com/repos/pmmp/PocketMine-MP/releases/latest | grep browser_download_url | cut -d '"' -f 4
+- ls
 - mkdir -p plugins/BlockSniper
 
 - cd plugins/
-- wget -O DevTools.phar https://poggit.pmmp.io/r/22356/PocketMine-DevTools.phar
+- wget -o DevTools.phar https://poggit.pmmp.io/r/22356/PocketMine-DevTools.phar
 - cd /home/travis/build/
 
 - cp -rf BlockHorizons/BlockSniper/src PocketMine-MP/plugins/BlockSniper
 - cp -rf BlockHorizons/BlockSniper/resources PocketMine-MP/plugins/BlockSniper
 - cp -rf BlockHorizons/BlockSniper/plugin.yml PocketMine-MP/plugins/BlockSniper
 - cp -rf BlockHorizons/BlockSniper/LICENSE PocketMine-MP/plugins/BlockSniper
-- cp -rf BlockHorizons/BlockSniper/travis.php PocketMine-MP/plugins/BlockSniper
+- cp -rf BlockHorizons/BlockSniper/travis.php travis.php
 
 - cp -rf BlockHorizons/BlockSniper/tests PocketMine-MP/plugins/
 
 script:
-- php plugins/BlockSniper/travis.php
+- php travis.php
 
 notifications:
   email:
