@@ -64,7 +64,7 @@ class Loader extends PluginBase{
 
 	public function onLoad() : void{
 		foreach(self::AUTOLOAD_LIBRARIES as $name){
-			$this->getServer()->getLoader()->addPath($this->getServer()->getPluginPath() . "BlockSniper/src/$name/src");
+			$this->getServer()->getLoader()->addPath($this->getFile() . "src/$name/src");
 		}
 	}
 
