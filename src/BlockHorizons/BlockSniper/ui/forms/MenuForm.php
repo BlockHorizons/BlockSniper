@@ -34,11 +34,13 @@ class MenuForm extends Form implements FormInterface{
 			};
 	}
 
-	public function handleResponse(Player $player, $data) : ?FormInterface{
+	public function handleResponse(Player $player, $data) : void{
 		if($data !== null){
 			$this->buttons[(int) $data]($player, (int) $data);
 		}
 
-		return $this->responseForm;
+		if($this->responseForm !== null){
+			$player->sendForm($this->responseForm);
+		}
 	}
 }

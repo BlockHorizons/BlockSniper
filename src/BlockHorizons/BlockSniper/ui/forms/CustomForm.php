@@ -87,11 +87,13 @@ class CustomForm extends Form implements FormInterface{
 			};
 	}
 
-	public function handleResponse(Player $player, $data) : ?FormInterface{
+	public function handleResponse(Player $player, $data) : void{
 		foreach((array) $data as $index => $value){
 			$this->elements[$index]($player, $value);
 		}
 
-		return $this->responseForm;
+		if($this->responseForm !== null){
+			$player->sendForm($this->responseForm);
+		}
 	}
 }
