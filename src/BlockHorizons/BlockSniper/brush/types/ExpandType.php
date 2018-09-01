@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
@@ -12,18 +12,18 @@ use pocketmine\item\Item;
  * Expands the terrain with blocks below it.
  */
 
-class ExpandType extends BaseType {
+class ExpandType extends BaseType{
 
 	const ID = self::TYPE_EXPAND;
 
 	/**
 	 * @return Block[]
 	 */
-	public function fillSynchronously(): array {
+	public function fillSynchronously() : array{
 		$undoBlocks = [];
 		$oneHoles = [];
-		foreach($this->blocks as $block) {
-			if($block->getId() === Item::AIR) {
+		foreach($this->blocks as $block){
+			if($block->getId() === Item::AIR){
 				$directions = [
 					$block->getSide(Block::SIDE_DOWN),
 					$block->getSide(Block::SIDE_UP),
@@ -34,25 +34,25 @@ class ExpandType extends BaseType {
 				];
 
 				$valid = 0;
-				foreach($directions as $direction) {
-					if($direction->getId() !== Item::AIR) {
+				foreach($directions as $direction){
+					if($direction->getId() !== Item::AIR){
 						$valid++;
 					}
 				}
-				if($valid >= 2) {
+				if($valid >= 2){
 					$undoBlocks[] = $block;
 				}
-				if($valid >= 4) {
+				if($valid >= 4){
 					$oneHoles[] = $block;
 				}
 			}
 		}
-		foreach($undoBlocks as $selectedBlock) {
+		foreach($undoBlocks as $selectedBlock){
 			/** @var Block $undoBlock */
 			$undoBlock = ($selectedBlock->getSide(Block::SIDE_DOWN)->getId() === Block::AIR ? $selectedBlock->getSide(Block::SIDE_UP) : $selectedBlock->getSide(Block::SIDE_DOWN));
 			$this->putBlock($selectedBlock, $undoBlock->getId(), $undoBlock->getDamage());
 		}
-		foreach($oneHoles as $block) {
+		foreach($oneHoles as $block){
 			/** @var Block $oneHole */
 			$oneHole = ($block->getSide(Block::SIDE_DOWN)->getId() === Block::AIR ? $block->getSide(Block::SIDE_EAST) : $block->getSide(Block::SIDE_DOWN));
 			$this->putBlock($block, $oneHole->getId(), $oneHole->getDamage());
@@ -61,11 +61,11 @@ class ExpandType extends BaseType {
 		return array_merge($undoBlocks, $oneHoles);
 	}
 
-	public function fillAsynchronously(): void {
+	public function fillAsynchronously() : void{
 		$oneHoles = [];
 		$blocks = [];
-		foreach($this->blocks as $block) {
-			if($block->getId() === Item::AIR) {
+		foreach($this->blocks as $block){
+			if($block->getId() === Item::AIR){
 				$directions = [
 					$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_DOWN),
 					$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_UP),
@@ -76,32 +76,32 @@ class ExpandType extends BaseType {
 				];
 
 				$valid = 0;
-				foreach($directions as $direction) {
-					if($direction->getId() !== Item::AIR) {
+				foreach($directions as $direction){
+					if($direction->getId() !== Item::AIR){
 						$valid++;
 					}
 				}
-				if($valid >= 2) {
+				if($valid >= 2){
 					$blocks[] = $block;
 				}
-				if($valid >= 4) {
+				if($valid >= 4){
 					$oneHoles[] = $block;
 				}
 			}
 		}
-		foreach($blocks as $selectedBlock) {
+		foreach($blocks as $selectedBlock){
 			$bottom = $this->getChunkManager()->getSide($selectedBlock->x, $selectedBlock->y, $selectedBlock->z, Block::SIDE_DOWN);
 			$top = $this->getChunkManager()->getSide($selectedBlock->x, $selectedBlock->y, $selectedBlock->z, Block::SIDE_UP);
 			$this->putBlock($selectedBlock, $bottom->getId() === Block::AIR ? $top->getId() : $bottom->getId(), $bottom->getId() === Block::AIR ? $top->getDamage() : $bottom->getDamage());
 		}
-		foreach($oneHoles as $block) {
+		foreach($oneHoles as $block){
 			$bottom = $this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_DOWN);
 			$east = $this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_UP);
 			$this->putBlock($block, $bottom->getId() === Block::AIR ? $east->getId() : $bottom->getId(), $bottom->getId() === Block::AIR ? $east->getDamage() : $bottom->getDamage());
 		}
 	}
 
-	public function getName(): string {
+	public function getName() : string{
 		return "Expand";
 	}
 }

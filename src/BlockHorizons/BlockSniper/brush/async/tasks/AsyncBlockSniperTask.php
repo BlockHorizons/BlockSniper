@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\async\tasks;
 
@@ -8,7 +8,7 @@ use BlockHorizons\BlockSniper\Loader;
 use pocketmine\scheduler\AsyncTask;
 use pocketmine\Server;
 
-abstract class AsyncBlockSniperTask extends AsyncTask {
+abstract class AsyncBlockSniperTask extends AsyncTask{
 
 	/** @var bool */
 	private $aborted = false;
@@ -16,14 +16,14 @@ abstract class AsyncBlockSniperTask extends AsyncTask {
 	/**
 	 * @return bool
 	 */
-	public function isAborted(): bool {
+	public function isAborted() : bool{
 		return $this->aborted;
 	}
 
 	/**
 	 * @param bool $value
 	 */
-	public function setAborted(bool $value = true): void {
+	public function setAborted(bool $value = true) : void{
 		$this->aborted = $value;
 	}
 
@@ -33,15 +33,17 @@ abstract class AsyncBlockSniperTask extends AsyncTask {
 	 *
 	 * @return bool
 	 */
-	public function onProgressUpdate(Server $server, $progress): bool {
+	public function onProgressUpdate(Server $server, $progress) : bool{
 		$loader = $server->getPluginManager()->getPlugin("BlockSniper");
-		if($loader instanceof Loader) {
-			if($loader->isEnabled()) {
+		if($loader instanceof Loader){
+			if($loader->isEnabled()){
 				$loader->getLogger()->debug($progress);
+
 				return true;
 			}
 		}
 		$this->setAborted();
+
 		return false;
 	}
 }

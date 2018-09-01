@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\cloning;
 
@@ -9,7 +9,7 @@ use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\Player;
 
-abstract class BaseClone {
+abstract class BaseClone{
 
 	const TYPE_COPY = 0;
 	const TYPE_TEMPLATE = 1;
@@ -36,7 +36,7 @@ abstract class BaseClone {
 	 * @param Block[]  $blocks
 	 * @param string   $name
 	 */
-	public function __construct(Player $player, bool $saveAir, Position $center, array $blocks, string $name = "") {
+	public function __construct(Player $player, bool $saveAir, Position $center, array $blocks, string $name = ""){
 		$this->player = $player;
 		$this->level = $player->getLevel();
 		$this->saveAir = $saveAir;
@@ -50,25 +50,21 @@ abstract class BaseClone {
 	 *
 	 * @return bool
 	 */
-	public static function isCloneType(string $type): bool {
+	public static function isCloneType(string $type) : bool{
 		$cloneTypeConst = strtoupper("type_" . $type);
-		if(defined("self::$cloneTypeConst")) {
+		if(defined("self::$cloneTypeConst")){
 			return true;
 		}
+
 		return false;
 	}
-
-	/**
-	 * @return bool
-	 */
-	public abstract function saveClone(): bool;
 
 	/**
 	 * Returns the level the clone is made in.
 	 *
 	 * @return Level
 	 */
-	public function getLevel(): Level {
+	public function getLevel() : Level{
 		return $this->level;
 	}
 
@@ -77,7 +73,7 @@ abstract class BaseClone {
 	 *
 	 * @return Position
 	 */
-	public function getCenter(): Position {
+	public function getCenter() : Position{
 		return $this->center;
 	}
 
@@ -86,7 +82,7 @@ abstract class BaseClone {
 	 *
 	 * @return Block[]
 	 */
-	public function getBlocks(): array {
+	public function getBlocks() : array{
 		return $this->blocks;
 	}
 
@@ -95,9 +91,11 @@ abstract class BaseClone {
 	 *
 	 * @return string
 	 */
-	public function getPermission(): string {
+	public function getPermission() : string{
 		return "blocksniper.clone." . strtolower($this->getName());
 	}
 
-	public abstract function getName(): string;
+	public abstract function getName() : string;
+
+	public abstract function saveClone() : void;
 }

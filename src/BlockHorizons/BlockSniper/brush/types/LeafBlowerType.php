@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
@@ -15,42 +15,43 @@ use pocketmine\Server;
  * Blows away all plants and flowers within the brush radius.
  */
 
-class LeafBlowerType extends BaseType {
+class LeafBlowerType extends BaseType{
 
 	const ID = self::TYPE_LEAF_BLOWER;
 
 	/**
 	 * @return Block[]
 	 */
-	public function fillSynchronously(): array {
+	public function fillSynchronously() : array{
 		$undoBlocks = [];
 		/** @var Loader $loader */
 		$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
-		if($loader === null) {
+		if($loader === null){
 			return [];
 		}
-		$dropPlants = $loader->getSettings()->dropLeafblowerPlants();
-		foreach($this->blocks as $block) {
-			if($block instanceof Flowable) {
+		$dropPlants = $loader->config->dropLeafBlowerPlants;
+		foreach($this->blocks as $block){
+			if($block instanceof Flowable){
 				$undoBlocks[] = $block;
-				if($dropPlants) {
+				if($dropPlants){
 					$this->getLevel()->dropItem($block, Item::get($block->getId()));
 				}
 				$this->putBlock($block, 0);
 			}
 		}
+
 		return $undoBlocks;
 	}
 
-	public function fillAsynchronously(): void {
-		foreach($this->blocks as $block) {
-			if($block instanceof Flowable) {
+	public function fillAsynchronously() : void{
+		foreach($this->blocks as $block){
+			if($block instanceof Flowable){
 				$this->putBlock($block, 0);
 			}
 		}
 	}
 
-	public function getName(): string {
+	public function getName() : string{
 		return "Leaf Blower";
 	}
 }

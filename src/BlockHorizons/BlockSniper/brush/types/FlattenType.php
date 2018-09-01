@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
@@ -16,11 +16,11 @@ use pocketmine\Player;
  * Flattens the terrain below the selected point within the brush radius.
  */
 
-class FlattenType extends BaseType {
+class FlattenType extends BaseType{
 
 	const ID = self::TYPE_FLATTEN;
 
-	public function __construct(Player $player, ChunkManager $level, array $blocks) {
+	public function __construct(Player $player, ChunkManager $level, array $blocks){
 		parent::__construct($player, $level, $blocks);
 		$this->center = $player->getTargetBlock(100)->asVector3();
 	}
@@ -28,28 +28,29 @@ class FlattenType extends BaseType {
 	/**
 	 * @return Block[]
 	 */
-	public function fillSynchronously(): array {
+	public function fillSynchronously() : array{
 		$undoBlocks = [];
-		foreach($this->blocks as $block) {
+		foreach($this->blocks as $block){
 			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
-			if($block->y <= $this->center->y && ($block->getId() === Item::AIR || $block instanceof Flowable)) {
+			if($block->y <= $this->center->y && ($block->getId() === Item::AIR || $block instanceof Flowable)){
 				$undoBlocks[] = $block;
 				$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());
 			}
 		}
+
 		return $undoBlocks;
 	}
 
-	public function fillAsynchronously(): void {
-		foreach($this->blocks as $block) {
+	public function fillAsynchronously() : void{
+		foreach($this->blocks as $block){
 			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
-			if($block->y <= $this->center->y && ($block->getId() === Item::AIR || $block instanceof Flowable)) {
+			if($block->y <= $this->center->y && ($block->getId() === Item::AIR || $block instanceof Flowable)){
 				$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());
 			}
 		}
 	}
 
-	public function getName(): string {
+	public function getName() : string{
 		return "Flatten";
 	}
 
@@ -58,7 +59,7 @@ class FlattenType extends BaseType {
 	 *
 	 * @return Vector3
 	 */
-	public function getCenter(): Vector3 {
+	public function getCenter() : Vector3{
 		return $this->center;
 	}
 }

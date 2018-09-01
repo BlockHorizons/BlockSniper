@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\async\tasks;
 
@@ -12,16 +12,16 @@ use pocketmine\level\format\Chunk;
 use pocketmine\level\Level;
 use pocketmine\Server;
 
-class RevertTask extends AsyncBlockSniperTask {
+class RevertTask extends AsyncBlockSniperTask{
 
 	/** @var string */
 	private $revert = "";
 
-	public function __construct(AsyncRevert $revert) {
+	public function __construct(AsyncRevert $revert){
 		$this->revert = serialize($revert);
 	}
 
-	public function onRun(): void {
+	public function onRun() : void{
 		/** @var AsyncRevert $revert */
 		$revert = unserialize($this->revert, ["allowed_classes" => true]);
 		$chunks = $revert->getOldChunks();
@@ -29,9 +29,9 @@ class RevertTask extends AsyncBlockSniperTask {
 		$detached = $revert->getDetached();
 
 		$this->setResult([
-			"chunks" => $chunks,
-			"revert" => $detached
-		]);
+							 "chunks" => $chunks,
+							 "revert" => $detached
+						 ]);
 	}
 
 	/**
@@ -39,20 +39,20 @@ class RevertTask extends AsyncBlockSniperTask {
 	 *
 	 * @return bool
 	 */
-	public function onCompletion(Server $server): bool {
+	public function onCompletion(Server $server) : bool{
 		/** @var Loader $loader */
 		$loader = $server->getPluginManager()->getPlugin("BlockSniper");
-		if($loader === null) {
+		if($loader === null){
 			return false;
 		}
-		if(!$loader->isEnabled()) {
+		if(!$loader->isEnabled()){
 			return false;
 		}
 
 		$result = $this->getResult();
 		/** @var Revert $revert */
 		$revert = $result["revert"];
-		if(!($player = $server->getPlayer($revert->getPlayerName()))) {
+		if(!($player = $server->getPlayer($revert->getPlayerName()))){
 			return false;
 		}
 
@@ -61,13 +61,14 @@ class RevertTask extends AsyncBlockSniperTask {
 		$levelId = $player->getLevel()->getId();
 		$level = $server->getLevel($levelId);
 
-		if($level instanceof Level) {
-			foreach($chunks as $hash => $chunk) {
-				$level->setChunk($chunk->getX(), $chunk->getZ(), $chunk);
+		if($level instanceof Level){
+			foreach($chunks as $hash => $chunk){
+				$level->setChunk($chunk->getX(), $chunk->getZ(), $chunk, false);
 			}
 		}
 
-		SessionManager::getPlayerSession($player)->getRevertStorer()->saveRevert($revert);
+		SessionManager::getPlayerSession($player)->getRevertStore()->saveRevert($revert);
+
 		return true;
 	}
 }

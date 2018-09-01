@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\revert;
 
 use BlockHorizons\BlockSniper\revert\async\AsyncRevert;
 use BlockHorizons\BlockSniper\revert\sync\SyncRevert;
 
-abstract class Revert {
+abstract class Revert{
 
 	const TYPE_UNDO = 0;
 	const TYPE_REDO = 1;
@@ -15,14 +15,14 @@ abstract class Revert {
 	/** @var string */
 	protected $playerName = "";
 
-	public function __construct(string $playerName) {
+	public function __construct(string $playerName){
 		$this->playerName = $playerName;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getPlayerName(): string {
+	public function getPlayerName() : string{
 		return $this->playerName;
 	}
 
@@ -31,7 +31,7 @@ abstract class Revert {
 	 *
 	 * @return Revert
 	 */
-	public function setPlayerName(string $name): self {
+	public function setPlayerName(string $name) : self{
 		$this->playerName = $name;
 
 		return $this;
@@ -40,5 +40,5 @@ abstract class Revert {
 	/**
 	 * @return SyncRevert|AsyncRevert
 	 */
-	public abstract function getDetached();
+	public abstract function getDetached() : Revert;
 }

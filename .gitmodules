@@ -1,3 +1,6 @@
-[submodule "src/Schematic"]
-	path = src/Schematic
-	url = https://github.com/BlockHorizons/libschematic
+[submodule "src/marshal"]
+	path = src/marshal
+	url = https://github.com/Sandertv/Marshal
+[submodule "src/schematic"]
+	path = src/schematic
+	url = git://github.com/BlockHorizons/libschematic

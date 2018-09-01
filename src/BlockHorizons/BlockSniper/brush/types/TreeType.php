@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
@@ -17,28 +17,32 @@ use pocketmine\utils\Random;
  * This brush can NOT undo.
  */
 
-class TreeType extends BaseType {
+class TreeType extends BaseType{
 
 	const ID = self::TYPE_TREE;
 
-	public function __construct(Player $player, ChunkManager $level, array $blocks) {
+	public function __construct(Player $player, ChunkManager $level, array $blocks){
 		parent::__construct($player, $level, $blocks);
 		$this->center = $player->getTargetBlock(100)->asVector3();
-		$this->tree = SessionManager::getPlayerSession($player)->getBrush()->getTreeType();
+		$this->tree = SessionManager::getPlayerSession($player)->getBrush()->tree;
 	}
 
 	/**
 	 * @return Block[]
 	 */
-	public function fillSynchronously(): array {
-		if($this->myPlotChecked) {
+	public function fillSynchronously() : array{
+		if($this->myPlotChecked){
 			return [];
 		}
-		Tree::growTree($this->getLevel(), $this->center->x, $this->center->y + 1, $this->center->z, new Random(mt_rand()), $this->tree);
+		Tree::growTree($this->getLevel(), (int) $this->center->x, (int) $this->center->y, (int) $this->center->z, new Random(mt_rand()), $this->tree);
+
 		return [];
 	}
 
-	public function getName(): string {
+	/**
+	 * @return string
+	 */
+	public function getName() : string{
 		return "Tree";
 	}
 
@@ -47,14 +51,14 @@ class TreeType extends BaseType {
 	 *
 	 * @return int
 	 */
-	public function getTree(): int {
+	public function getTree() : int{
 		return $this->tree;
 	}
 
 	/**
 	 * @return bool
 	 */
-	public function canBeExecutedAsynchronously(): bool {
+	public function canBeExecutedAsynchronously() : bool{
 		return false;
 	}
 }

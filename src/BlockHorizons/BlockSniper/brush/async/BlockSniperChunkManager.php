@@ -6,15 +6,15 @@ use pocketmine\block\Block;
 use pocketmine\level\SimpleChunkManager;
 use pocketmine\math\Vector3;
 
-class BlockSniperChunkManager extends SimpleChunkManager {
+class BlockSniperChunkManager extends SimpleChunkManager{
 
 	/**
 	 * @param int $x
 	 * @param int $z
 	 * @param int $id
 	 */
-	public function setBiomeIdAt(int $x, int $z, int $id): void {
-		if($chunk = $this->getChunk($x >> 4, $z >> 4)) {
+	public function setBiomeIdAt(int $x, int $z, int $id) : void{
+		if($chunk = $this->getChunk($x >> 4, $z >> 4)){
 			$chunk->setBiomeId($x & 0x0f, $z & 0x0f, $id);
 		}
 	}
@@ -25,10 +25,11 @@ class BlockSniperChunkManager extends SimpleChunkManager {
 	 *
 	 * @return int
 	 */
-	public function getBiomeIdAt(int $x, int $z): int {
-		if($chunk = $this->getChunk($x >> 4, $z >> 4)) {
+	public function getBiomeIdAt(int $x, int $z) : int{
+		if($chunk = $this->getChunk($x >> 4, $z >> 4)){
 			return $chunk->getBiomeId($x, $z);
 		}
+
 		return 0;
 	}
 
@@ -40,11 +41,11 @@ class BlockSniperChunkManager extends SimpleChunkManager {
 	 *
 	 * @return Block
 	 */
-	public function getSide(int $x, int $y, int $z, int $side): Block {
-		if($chunk = $this->getChunk($x >> 4, $z >> 4)) {
+	public function getSide(int $x, int $y, int $z, int $side) : Block{
+		if($chunk = $this->getChunk($x >> 4, $z >> 4)){
 			$block = Block::get($this->getSideId($x, $y, $z, $side), $this->getSideData($x, $y, $z, $side));
 			$pos = [];
-			switch($side) {
+			switch($side){
 				case Vector3::SIDE_DOWN:
 					$pos = [$x, $y - 1, $z];
 					break;
@@ -64,14 +65,16 @@ class BlockSniperChunkManager extends SimpleChunkManager {
 					$pos = [$x + 1, $y, $z];
 			}
 			$block->setComponents($pos[0], $pos[1], $pos[2]);
+
 			return $block;
 		}
+
 		return Block::get(Block::AIR);
 	}
 
-	public function getSideId(int $x, int $y, int $z, int $side): int {
-		if($chunk = $this->getChunk($x >> 4, $z >> 4)) {
-			switch($side) {
+	public function getSideId(int $x, int $y, int $z, int $side) : int{
+		if($chunk = $this->getChunk($x >> 4, $z >> 4)){
+			switch($side){
 				case Vector3::SIDE_DOWN:
 					return $this->getBlockIdAt($x, $y - 1, $z);
 				case Vector3::SIDE_UP:
@@ -88,12 +91,13 @@ class BlockSniperChunkManager extends SimpleChunkManager {
 					return -1;
 			}
 		}
+
 		return -1;
 	}
 
-	public function getSideData(int $x, int $y, int $z, int $side): int {
-		if($chunk = $this->getChunk($x >> 4, $z >> 4)) {
-			switch($side) {
+	public function getSideData(int $x, int $y, int $z, int $side) : int{
+		if($chunk = $this->getChunk($x >> 4, $z >> 4)){
+			switch($side){
 				case Vector3::SIDE_DOWN:
 					return $this->getBlockDataAt($x, $y - 1, $z);
 				case Vector3::SIDE_UP:
@@ -110,6 +114,7 @@ class BlockSniperChunkManager extends SimpleChunkManager {
 					return -1;
 			}
 		}
+
 		return -1;
 	}
 }

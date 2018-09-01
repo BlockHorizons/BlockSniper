@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\events;
 
@@ -10,7 +10,7 @@ use pocketmine\event\Cancellable;
 use pocketmine\level\Level;
 use pocketmine\Player;
 
-class BrushUseEvent extends BaseEvent implements Cancellable {
+class BrushUseEvent extends BlockSniperEvent implements Cancellable{
 
 	/** @var null */
 	public static $handlerList = null;
@@ -22,7 +22,7 @@ class BrushUseEvent extends BaseEvent implements Cancellable {
 	/** @var BaseShape */
 	public $shape = null;
 
-	public function __construct(Player $player, BaseShape $shape, BaseType $type) {
+	public function __construct(Player $player, BaseShape $shape, BaseType $type){
 		$this->player = $player;
 		$this->type = $type;
 		$this->shape = $shape;
@@ -31,7 +31,7 @@ class BrushUseEvent extends BaseEvent implements Cancellable {
 	/**
 	 * @return Level
 	 */
-	public function getLevel(): Level {
+	public function getLevel() : Level{
 		return $this->getPlayer()->getLevel();
 	}
 
@@ -39,7 +39,7 @@ class BrushUseEvent extends BaseEvent implements Cancellable {
 	 * Returns the player that used the Brush.
 	 * @return Player
 	 */
-	public function getPlayer(): Player {
+	public function getPlayer() : Player{
 		return $this->player;
 	}
 
@@ -48,7 +48,7 @@ class BrushUseEvent extends BaseEvent implements Cancellable {
 	 *
 	 * @return BaseType
 	 */
-	public function getType(): BaseType {
+	public function getType() : BaseType{
 		return $this->type;
 	}
 
@@ -57,7 +57,7 @@ class BrushUseEvent extends BaseEvent implements Cancellable {
 	 *
 	 * @return BaseShape
 	 */
-	public function getShape(): BaseShape {
+	public function getShape() : BaseShape{
 		return $this->shape;
 	}
 
@@ -66,7 +66,7 @@ class BrushUseEvent extends BaseEvent implements Cancellable {
 	 *
 	 * @return int
 	 */
-	public function getApproximateProcessedBlocks(): int {
+	public function getApproximateProcessedBlocks() : int{
 		return $this->shape->getApproximateProcessedBlocks();
 	}
 }
