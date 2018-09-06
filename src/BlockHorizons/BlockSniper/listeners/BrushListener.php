@@ -6,6 +6,7 @@ namespace BlockHorizons\BlockSniper\listeners;
 
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
+use BlockHorizons\BlockSniper\tasks\SessionDeletionTask;
 use BlockHorizons\BlockSniper\ui\windows\BrushMenuWindow;
 use MyPlot\PlotLevelSettings;
 use pocketmine\event\Listener;
@@ -100,6 +101,9 @@ class BrushListener implements Listener{
 	 * @param PlayerQuitEvent $event
 	 */
 	public function onQuit(PlayerQuitEvent $event) : void{
-		SessionManager::closeSession($event->getPlayer());
+		$this->loader->getScheduler()->scheduleDelayedTask(
+			new SessionDeletionTask($this->loader, SessionManager::getPlayerSession($event->getPlayer())),
+			$this->loader->config->sessionTimeoutTime * 20 * 60
+		);
 	}
 }

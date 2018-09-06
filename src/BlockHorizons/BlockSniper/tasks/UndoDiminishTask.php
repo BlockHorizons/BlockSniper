@@ -11,7 +11,7 @@ class UndoDiminishTask extends BaseTask{
 
 	public function onRun(int $currentTick) : void{
 		foreach($this->loader->getServer()->getOnlinePlayers() as $player){
-			if(!SessionManager::playerSessionExists($player)){
+			if(!SessionManager::playerSessionExists($player->getName())){
 				continue;
 			}
 			if(($store = SessionManager::getPlayerSession($player)->getRevertStore())->undoStorageExists()){

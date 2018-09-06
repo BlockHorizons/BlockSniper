@@ -6,7 +6,6 @@ namespace BlockHorizons\BlockSniper\sessions;
 
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\owners\PlayerSessionOwner;
-use pocketmine\IPlayer;
 use pocketmine\Player;
 
 class SessionManager {
@@ -29,38 +28,39 @@ class SessionManager {
 		if($player->hasPermission("blocksniper.command.brush")){
 			/** @var Loader $plugin */
 			$plugin = $player->getServer()->getPluginManager()->getPlugin("BlockSniper");
-			self::createPlayerSession($player, $plugin);
+			self::createPlayerSession($player->getName(), $plugin);
 		}
-		return self::$playerSessions[strtolower($player->getName())] ?? null;
+
+		return self::$playerSessions[$player->getName()] ?? null;
 	}
 
 	/**
-	 * @param IPlayer $player
-	 * @param Loader  $loader
+	 * @param string $playerName
+	 * @param Loader $loader
 	 */
-	public static function createPlayerSession(IPlayer $player, Loader $loader) : void{
-		if(self::playerSessionExists($player)){
+	public static function createPlayerSession(string $playerName, Loader $loader) : void{
+		if(self::playerSessionExists($playerName)){
 			return;
 		}
-		self::$playerSessions[strtolower($player->getName())] = new PlayerSession(new PlayerSessionOwner($player), $loader);
+		self::$playerSessions[$playerName] = new PlayerSession(new PlayerSessionOwner($playerName), $loader);
 	}
 
 	/**
-	 * @param IPlayer $player
+	 * @param string $playerName
 	 *
 	 * @return bool
 	 */
-	public static function playerSessionExists(IPlayer $player) : bool{
-		return isset(self::$playerSessions[strtolower($player->getName())]);
+	public static function playerSessionExists(string $playerName) : bool{
+		return isset(self::$playerSessions[$playerName]);
 	}
 
 	/**
-	 * @param IPlayer $player
+	 * @param string $playerName
 	 */
-	public static function closeSession(IPlayer $player) : void{
-		if(self::playerSessionExists($player)){
-			self::$playerSessions[strtolower($player->getName())]->close();
-			unset(self::$playerSessions[strtolower($player->getName())]);
+	public static function closeSession(string $playerName) : void{
+		if(self::playerSessionExists($playerName)){
+			self::$playerSessions[$playerName]->close();
+			unset(self::$playerSessions[$playerName]);
 		}
 	}
 }

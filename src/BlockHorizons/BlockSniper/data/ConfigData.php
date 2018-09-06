@@ -60,6 +60,11 @@ class ConfigData{
 	 */
 	public $dropLeafBlowerPlants = true;
 	/**
+	 * @var int
+	 * @marshal Session Timeout Time in minutes
+	 */
+	public $sessionTimeoutTime = 5;
+	/**
 	 * @var bool
 	 * @marshal Open GUI Automatically
 	 */

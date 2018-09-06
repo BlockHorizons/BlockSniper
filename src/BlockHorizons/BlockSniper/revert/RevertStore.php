@@ -109,13 +109,6 @@ class RevertStore{
 		}
 	}
 
-	public function resetStorage() : void{
-		$this->undoStack = [];
-		$this->redoStack = [];
-		$this->lastUndo = 0;
-		$this->lastRedo = 0;
-	}
-
 	/**
 	 * @return bool
 	 */
