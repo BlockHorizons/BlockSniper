@@ -6,7 +6,6 @@ namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
-use pocketmine\block\Block;
 use pocketmine\level\ChunkManager;
 use pocketmine\Player;
 
@@ -18,27 +17,24 @@ class ReplaceType extends BaseType{
 
 	const ID = self::TYPE_REPLACE;
 
-	public function __construct(Player $player, ChunkManager $level, array $blocks){
+	public function __construct(Player $player, ChunkManager $level, \Generator $blocks){
 		parent::__construct($player, $level, $blocks);
 		$this->obsolete = SessionManager::getPlayerSession($player)->getBrush()->getObsolete();
 	}
 
 	/**
-	 * @return Block[]
+	 * @return \Generator
 	 */
-	public function fillSynchronously() : array{
-		$undoBlocks = [];
+	public function fillSynchronously() : \Generator{
 		foreach($this->blocks as $block){
 			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 			foreach($this->obsolete as $obsolete){
 				if($block->getId() === $obsolete->getId() and $block->getDamage() === $obsolete->getDamage()){
-					$undoBlocks[] = $block;
+					yield $block;
 					$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());
 				}
 			}
 		}
-
-		return $undoBlocks;
 	}
 
 	public function fillAsynchronously() : void{
@@ -61,7 +57,7 @@ class ReplaceType extends BaseType{
 	 *
 	 * @return array
 	 */
-	public function getObsolete() : array{
+	public function getObsolete() : \Generator{
 		return $this->obsolete;
 	}
 }

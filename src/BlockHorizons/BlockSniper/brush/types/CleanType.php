@@ -20,19 +20,16 @@ class CleanType extends BaseType{
 	}
 
 	/**
-	 * @return Block[]
+	 * @return \Generator
 	 */
-	protected function fillSynchronously() : array{
-		$undoBlocks = [];
+	protected function fillSynchronously() : \Generator{
 		foreach($this->blocks as $block){
 			$blockId = $block->getId();
 			if($blockId !== Block::AIR && $blockId !== Block::STONE && $blockId !== Block::GRASS && $blockId !== Block::DIRT && $blockId !== Block::GRAVEL && $blockId !== Block::SAND && $blockId !== Block::SANDSTONE){
-				$undoBlocks[] = $block;
+				yield $block;
 				$this->putBlock($block, 0);
 			}
 		}
-
-		return $undoBlocks;
 	}
 
 	protected function fillAsynchronously() : void{

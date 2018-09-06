@@ -35,7 +35,6 @@ class BrushTask extends AsyncBlockSniperTask{
 
 	public function onRun() : void{
 		$chunks = unserialize($this->chunks, ["allowed_classes" => [Chunk::class]]);
-		$processedBlocks = 0;
 		$type = $this->type;
 		$shape = $this->shape;
 
@@ -47,18 +46,23 @@ class BrushTask extends AsyncBlockSniperTask{
 		/** @var Chunk[] $chunks */
 
 		$vectorsInside = $shape->getBlocksInside(true);
-		$blocks = [];
 		$manager = BaseType::establishChunkManager($chunks);
-		$i = 0;
-		$percentageBlocks = $shape->getApproximateProcessedBlocks() / 100;
 
+		$type->setBlocksInside($this->blocks($vectorsInside, $shape, $chunks))->setAsynchronous()->setChunkManager($manager)->fillShape(unserialize($this->plotPoints, ["allowed_classes" => [Vector2::class]]));
+
+		$this->setResult(compact("undoChunks", "chunks"));
+	}
+
+	private function blocks(\Generator $vectorsInside, BaseShape $shape, array $chunks) : \Generator{
+		$i = $processedBlocks = 0;
+		$percentageBlocks = $shape->getApproximateProcessedBlocks();
 		foreach($vectorsInside as $vector3){
 			$index = Level::chunkHash($vector3->x >> 4, $vector3->z >> 4);
 
 			$pos = [$vector3->x & 0x0f, $vector3->y, $vector3->z & 0x0f];
 			$block = Block::get($chunks[$index]->getBlockId($pos[0], $pos[1], $pos[2]), $chunks[$index]->getBlockData($pos[0], $pos[1], $pos[2]));
 			$block->setComponents($vector3->x, $vector3->y, $vector3->z);
-			$blocks[] = $block;
+			yield $block;
 
 			++$processedBlocks;
 			if(++$i === $percentageBlocks){ // This is messed up with hollow shapes. Got to find a fix for that.
@@ -69,9 +73,6 @@ class BrushTask extends AsyncBlockSniperTask{
 				$i = 0;
 			}
 		}
-		$type->setBlocksInside($blocks)->setAsynchronous()->setChunkManager($manager)->fillShape(unserialize($this->plotPoints, ["allowed_classes" => [Vector2::class]]));
-
-		$this->setResult(compact("undoChunks", "chunks"));
 	}
 
 	/**

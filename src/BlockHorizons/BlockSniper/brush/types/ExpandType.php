@@ -17,9 +17,9 @@ class ExpandType extends BaseType{
 	const ID = self::TYPE_EXPAND;
 
 	/**
-	 * @return Block[]
+	 * @return \Generator
 	 */
-	public function fillSynchronously() : array{
+	public function fillSynchronously() : \Generator{
 		$undoBlocks = [];
 		$oneHoles = [];
 		foreach($this->blocks as $block){
@@ -50,15 +50,15 @@ class ExpandType extends BaseType{
 		foreach($undoBlocks as $selectedBlock){
 			/** @var Block $undoBlock */
 			$undoBlock = ($selectedBlock->getSide(Block::SIDE_DOWN)->getId() === Block::AIR ? $selectedBlock->getSide(Block::SIDE_UP) : $selectedBlock->getSide(Block::SIDE_DOWN));
+			yield $undoBlock;
 			$this->putBlock($selectedBlock, $undoBlock->getId(), $undoBlock->getDamage());
 		}
 		foreach($oneHoles as $block){
 			/** @var Block $oneHole */
 			$oneHole = ($block->getSide(Block::SIDE_DOWN)->getId() === Block::AIR ? $block->getSide(Block::SIDE_EAST) : $block->getSide(Block::SIDE_DOWN));
+			yield $oneHole;
 			$this->putBlock($block, $oneHole->getId(), $oneHole->getDamage());
 		}
-
-		return array_merge($undoBlocks, $oneHoles);
 	}
 
 	public function fillAsynchronously() : void{

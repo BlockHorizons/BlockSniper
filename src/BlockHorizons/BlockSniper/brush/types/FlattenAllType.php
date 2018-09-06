@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
-use pocketmine\block\Block;
 use pocketmine\block\Flowable;
 use pocketmine\item\Item;
 use pocketmine\level\ChunkManager;
@@ -20,29 +19,26 @@ class FlattenAllType extends BaseType{
 
 	const ID = self::TYPE_FLATTEN_ALL;
 
-	public function __construct(Player $player, ChunkManager $level, array $blocks){
+	public function __construct(Player $player, ChunkManager $level, \Generator $blocks){
 		parent::__construct($player, $level, $blocks);
 		$this->center = $player->getTargetBlock(100)->asVector3();
 	}
 
 	/**
-	 * @return Block[]
+	 * @return \Generator
 	 */
-	public function fillSynchronously() : array{
-		$undoBlocks = [];
+	public function fillSynchronously() : \Generator{
 		foreach($this->blocks as $block){
 			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 			if($block->y <= $this->center->y && ($block->getId() === Item::AIR || $block instanceof Flowable)){
-				$undoBlocks[] = $block;
+				yield $block;
 				$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());
 			}
 			if($block->y > $this->center->y && $block->getId() !== Item::AIR){
-				$undoBlocks[] = $block;
+				yield $block;
 				$this->putBlock($block, 0);
 			}
 		}
-
-		return $undoBlocks;
 	}
 
 	public function fillAsynchronously() : void{

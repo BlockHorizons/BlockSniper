@@ -21,30 +21,27 @@ class TopLayerType extends BaseType{
 
 	const ID = self::TYPE_TOP_LAYER;
 
-	public function __construct(Player $player, ChunkManager $level, array $blocks){
+	public function __construct(Player $player, ChunkManager $level, \Generator $blocks){
 		parent::__construct($player, $level, $blocks);
 		$this->height = SessionManager::getPlayerSession($player)->getBrush()->height;
 	}
 
 	/**
-	 * @return Block[]
+	 * @return \Generator
 	 */
-	public function fillSynchronously() : array{
-		$undoBlocks = [];
+	public function fillSynchronously() : \Generator{
 		foreach($this->blocks as $block){
 			if(!$block instanceof Flowable && $block->getId() !== Item::AIR){
 				$up = $block->getSide(Block::SIDE_UP);
 				if($up instanceof Flowable || $up->getId() === Item::AIR){
 					$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 					for($y = $block->y; $y >= $block->y - $this->height; $y--){
-						$undoBlocks[] = $this->getLevel()->getBlock(new Vector3($block->x, $y, $block->z));
+						yield $this->getLevel()->getBlock(new Vector3($block->x, $y, $block->z));
 						$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());
 					}
 				}
 			}
 		}
-
-		return $undoBlocks;
 	}
 
 	public function fillAsynchronously() : void{

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
-use pocketmine\block\Block;
 use pocketmine\level\ChunkManager;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
@@ -19,24 +18,29 @@ class RegenerateType extends BaseType{
 
 	const ID = self::TYPE_REGENERATE;
 
-	public function __construct(Player $player, ChunkManager $manager, array $blocks){
+	public function __construct(Player $player, ChunkManager $manager, \Generator $blocks){
 		parent::__construct($player, $manager, $blocks);
 		$this->center = $player->getTargetBlock(100)->asVector3();
 	}
 
 	/**
-	 * @return Block[]
+	 * @return \Generator
 	 */
-	public function fillSynchronously() : array{
+	public function fillSynchronously() : \Generator{
 		if($this->myPlotChecked){
-			return [];
+			return;
 		}
 		$x = $this->center->x >> 4;
 		$z = $this->center->z >> 4;
 		$this->getLevel()->getChunk($x, $z)->setPopulated(false);
 		$this->getLevel()->getChunk($x, $z)->setGenerated(false);
 
-		return [];
+		if(false){
+			// Make PHP recognize this is a generator.
+			yield;
+		}
+
+		return;
 	}
 
 	public function canBeExecutedAsynchronously() : bool{

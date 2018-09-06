@@ -6,7 +6,6 @@ namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
-use pocketmine\block\Block;
 use pocketmine\level\ChunkManager;
 use pocketmine\level\generator\object\Tree;
 use pocketmine\Player;
@@ -21,22 +20,24 @@ class TreeType extends BaseType{
 
 	const ID = self::TYPE_TREE;
 
-	public function __construct(Player $player, ChunkManager $level, array $blocks){
+	public function __construct(Player $player, ChunkManager $level, \Generator $blocks){
 		parent::__construct($player, $level, $blocks);
 		$this->center = $player->getTargetBlock(100)->asVector3();
 		$this->tree = SessionManager::getPlayerSession($player)->getBrush()->tree;
 	}
 
 	/**
-	 * @return Block[]
+	 * @return \Generator
 	 */
-	public function fillSynchronously() : array{
+	public function fillSynchronously() : \Generator{
 		if($this->myPlotChecked){
-			return [];
+			return;
 		}
 		Tree::growTree($this->getLevel(), (int) $this->center->x, (int) $this->center->y, (int) $this->center->z, new Random(mt_rand()), $this->tree);
-
-		return [];
+		if(false){
+			// Make PHP recognize this is a generator.
+			yield;
+		}
 	}
 
 	/**

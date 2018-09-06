@@ -17,57 +17,54 @@ class HeatType extends BaseType{
 
 	const ID = self::TYPE_HEAT;
 
-	public function fillSynchronously() : array{
-		$undoBlocks = [];
+	public function fillSynchronously() : \Generator{
 		foreach($this->blocks as $block){
 			switch($block->getId()){
 				case Block::ICE:
-					$undoBlocks[] = $block;
+					yield $block;
 					$this->putBlock($block, Block::WATER);
 					break;
 				case Block::SNOW_LAYER:
-					$undoBlocks[] = $block;
+					yield $block;
 					$this->putBlock($block, 0);
 					break;
 				case Block::PACKED_ICE:
-					$undoBlocks[] = $block;
+					yield $block;
 					$this->putBlock($block, Block::WATER);
 					break;
 				case Block::SNOW:
-					$undoBlocks[] = $block;
+					yield $block;
 					$this->putBlock($block, 0);
 					break;
 				case Block::WATER:
 				case Block::FLOWING_WATER:
 					if(random_int(0, 4) === 0){
-						$undoBlocks[] = $block;
+						yield $block;
 						$this->putBlock($block, 0);
 					}
 					break;
 				case Block::GRASS:
 					$random = random_int(0, 8);
 					if($random === 0){
-						$undoBlocks[] = $block;
+						yield $block;
 						$this->putBlock($block, Block::DIRT);
 					}elseif($random === 1){
-						$undoBlocks[] = $block;
+						yield $block;
 						$this->putBlock($block, Block::DIRT, 1);
 					}
 					break;
 				case $block instanceof Leaves || $block instanceof Leaves2:
 					if(random_int(0, 4) === 0){
-						$undoBlocks[] = $block;
+						yield $block;
 						$this->putBlock($block, 0);
 					}
 					break;
 				case $block instanceof Flower || $block instanceof DoublePlant || $block instanceof TallGrass || $block instanceof Dandelion:
-					$undoBlocks[] = $block;
+					yield $block;
 					$this->putBlock($block, Block::TALL_GRASS);
 					break;
 			}
 		}
-
-		return $undoBlocks;
 	}
 
 	public function fillAsynchronously() : void{

@@ -6,7 +6,6 @@ namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\Loader;
-use pocketmine\block\Block;
 use pocketmine\block\Flowable;
 use pocketmine\item\Item;
 use pocketmine\Server;
@@ -20,27 +19,24 @@ class LeafBlowerType extends BaseType{
 	const ID = self::TYPE_LEAF_BLOWER;
 
 	/**
-	 * @return Block[]
+	 * @return \Generator
 	 */
-	public function fillSynchronously() : array{
-		$undoBlocks = [];
+	public function fillSynchronously() : \Generator{
 		/** @var Loader $loader */
 		$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
 		if($loader === null){
-			return [];
+			return;
 		}
 		$dropPlants = $loader->config->dropLeafBlowerPlants;
 		foreach($this->blocks as $block){
 			if($block instanceof Flowable){
-				$undoBlocks[] = $block;
+				yield $block;
 				if($dropPlants){
 					$this->getLevel()->dropItem($block, Item::get($block->getId()));
 				}
 				$this->putBlock($block, 0);
 			}
 		}
-
-		return $undoBlocks;
 	}
 
 	public function fillAsynchronously() : void{

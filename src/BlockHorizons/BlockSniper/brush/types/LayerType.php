@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
-use pocketmine\block\Block;
 use pocketmine\level\ChunkManager;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
@@ -18,24 +17,21 @@ class LayerType extends BaseType{
 
 	const ID = self::TYPE_LAYER;
 
-	public function __construct(Player $player, ChunkManager $level, array $blocks){
+	public function __construct(Player $player, ChunkManager $level, \Generator $blocks){
 		parent::__construct($player, $level, $blocks);
 		$this->center = $player->getTargetBlock(100)->asVector3();
 	}
 
 	/**
-	 * @return Block[]
+	 * @return \Generator
 	 */
-	public function fillSynchronously() : array{
-		$undoBlocks = [];
+	public function fillSynchronously() : \Generator{
 		foreach($this->blocks as $block){
 			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
-			$undoBlocks[] = $block;
+			yield $block;
 			$vec = new Vector3($block->x, $this->center->y + 1, $block->z);
 			$this->putBlock($vec, $randomBlock->getId(), $randomBlock->getDamage());
 		}
-
-		return $undoBlocks;
 	}
 
 	public function fillAsynchronously() : void{

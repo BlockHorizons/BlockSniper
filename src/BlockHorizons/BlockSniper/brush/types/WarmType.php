@@ -11,25 +11,22 @@ class WarmType extends BaseType{
 
 	const ID = self::TYPE_WARM;
 
-	public function fillSynchronously() : array{
-		$undoBlocks = [];
+	public function fillSynchronously() : \Generator{
 		foreach($this->blocks as $block){
 			switch($block->getId()){
 				case Block::ICE:
-					$undoBlocks[] = $block;
+					yield $block;
 					$this->putBlock($block, Block::WATER);
 					break;
 				case Block::SNOW_LAYER:
-					$undoBlocks[] = $block;
+					yield $block;
 					$this->putBlock($block, 0);
 					break;
 				case Block::PACKED_ICE:
-					$undoBlocks[] = $block;
+					yield $block;
 					$this->putBlock($block, Block::ICE);
 			}
 		}
-
-		return $undoBlocks;
 	}
 
 	public function fillAsynchronously() : void{

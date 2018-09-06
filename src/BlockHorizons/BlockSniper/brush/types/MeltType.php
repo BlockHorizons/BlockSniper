@@ -17,10 +17,9 @@ class MeltType extends BaseType{
 	const ID = self::TYPE_MELT;
 
 	/**
-	 * @return Block[]
+	 * @return \Generator
 	 */
-	public function fillSynchronously() : array{
-		$undoBlocks = [];
+	public function fillSynchronously() : \Generator{
 		foreach($this->blocks as $block){
 			if($block->getId() !== Item::AIR){
 				$directions = [
@@ -38,15 +37,11 @@ class MeltType extends BaseType{
 					}
 				}
 				if($valid >= 2){
-					$undoBlocks[] = $block;
+					yield $block;
+					$this->putBlock($block, 0);
 				}
 			}
 		}
-		foreach($undoBlocks as $selectedBlock){
-			$this->putBlock($selectedBlock, 0);
-		}
-
-		return $undoBlocks;
 	}
 
 	public function fillAsynchronously() : void{

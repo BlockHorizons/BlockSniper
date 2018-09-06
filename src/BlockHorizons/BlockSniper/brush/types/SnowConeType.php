@@ -17,26 +17,23 @@ class SnowConeType extends BaseType{
 	const ID = self::TYPE_SNOW_CONE;
 
 	/**
-	 * @return Block[]
+	 * @return \Generator
 	 */
-	public function fillSynchronously() : array{
-		$undoBlocks = [];
+	public function fillSynchronously() : \Generator{
 		foreach($this->blocks as $block){
 			if(!($block instanceof Flowable) && ($id = $block->getId()) !== Block::AIR && $id !== Block::SNOW_LAYER){
 				$topBlock = $block->getSide(Block::SIDE_UP);
 				if(($topId = $topBlock->getId()) === Block::AIR || $topId === Block::SNOW_LAYER){
 					if($topBlock->getDamage() < 7 && $topBlock->getId() === Block::SNOW_LAYER){
-						$undoBlocks[] = $topBlock;
+						yield $topBlock;
 						$this->putBlock($topBlock, $topBlock->getId(), $topBlock->getDamage() + 1);
 					}elseif($topId !== Block::SNOW_LAYER){
-						$undoBlocks[] = $topBlock;
+						yield $topBlock;
 						$this->putBlock($topBlock, Block::SNOW_LAYER);
 					}
 				}
 			}
 		}
-
-		return $undoBlocks;
 	}
 
 	public function fillAsynchronously() : void{

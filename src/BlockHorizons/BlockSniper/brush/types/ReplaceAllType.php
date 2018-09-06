@@ -17,19 +17,16 @@ class ReplaceAllType extends BaseType{
 	const ID = self::TYPE_REPLACE_ALL;
 
 	/**
-	 * @return Block[]
+	 * @return \Generator
 	 */
-	public function fillSynchronously() : array{
-		$undoBlocks = [];
+	public function fillSynchronously() : \Generator{
 		foreach($this->blocks as $block){
 			if(!$block instanceof Flowable && $block->getId() !== Block::AIR){
 				$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
-				$undoBlocks[] = $block;
+				yield $block;
 				$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());
 			}
 		}
-
-		return $undoBlocks;
 	}
 
 	public function fillAsynchronously() : void{

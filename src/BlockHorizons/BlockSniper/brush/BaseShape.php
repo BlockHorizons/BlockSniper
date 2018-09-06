@@ -6,7 +6,6 @@ namespace BlockHorizons\BlockSniper\brush;
 
 use BlockHorizons\BlockSniper\brush\async\tasks\BrushTask;
 use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
-use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\math\Vector2;
@@ -50,9 +49,9 @@ abstract class BaseShape{
 	 *
 	 * @param $vectorOnly
 	 *
-	 * @return Block[]|Vector3[]
+	 * @return \Generator
 	 */
-	public abstract function getBlocksInside(bool $vectorOnly = false) : array;
+	public abstract function getBlocksInside(bool $vectorOnly = false) : \Generator;
 
 	/**
 	 * Returns the approximate amount of processed blocks in the shape. This may not be perfectly accurate.

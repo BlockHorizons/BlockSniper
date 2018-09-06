@@ -84,16 +84,12 @@ class PasteTask extends AsyncBlockSniperTask{
 			}
 		}
 
-		$serializedChunks = $chunks;
-		foreach($serializedChunks as &$chunk){
+		foreach($chunks as &$chunk){
 			$chunk = $chunk->fastSerialize();
 		}
 		unset($chunk);
 
-		$this->setResult([
-							 "undoChunks" => $undoChunks,
-							 "chunks" => $serializedChunks
-						 ]);
+		$this->setResult(compact("undoChunks", "chunks"));
 	}
 
 	/**

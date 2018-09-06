@@ -15,31 +15,28 @@ class FreezeType extends BaseType{
 
 	const ID = self::TYPE_FREEZE;
 
-	public function fillSynchronously() : array{
-		$undoBlocks = [];
+	public function fillSynchronously() : \Generator{
 		foreach($this->blocks as $block){
 			switch($block->getId()){
 				case Block::WATER:
 				case Block::FLOWING_WATER:
-					$undoBlocks[] = $block;
+					yield $block;
 					$this->putBlock($block, Block::ICE);
 					break;
 				case Block::LAVA:
 				case Block::FLOWING_LAVA:
-					$undoBlocks[] = $block;
+					yield $block;
 					$this->putBlock($block, Block::OBSIDIAN);
 					break;
 				case Block::FIRE:
-					$undoBlocks[] = $block;
+					yield $block;
 					$this->putBlock($block, 0);
 					break;
 				case Block::ICE:
-					$undoBlocks[] = $block;
+					yield $block;
 					$this->putBlock($block, Block::PACKED_ICE);
 			}
 		}
-
-		return $undoBlocks;
 	}
 
 	public function fillAsynchronously() : void{

@@ -58,7 +58,13 @@ class Brush extends BrushProperties{
 			$shape->editAsynchronously($type, $plotPoints);
 		}else{
 			$type->setBlocksInside($shape->getBlocksInside());
-			$undoBlocks = $type->fillShape($plotPoints);
+			$undoBlocks = [];
+			foreach($type->fillShape($plotPoints) as $undoBlock){
+				$undoBlocks[] = $undoBlock;
+			}
+			if(count($undoBlocks) === 0){
+				return;
+			}
 			$session->getRevertStore()->saveRevert(new SyncUndo($undoBlocks, $session->getSessionOwner()->getName()));
 		}
 	}
@@ -76,11 +82,11 @@ class Brush extends BrushProperties{
 	}
 
 	/**
-	 * @param array $blocks
+	 * @param \Generator $blocks
 	 *
 	 * @return BaseType
 	 */
-	public function getType(array $blocks = []) : BaseType{
+	public function getType(\Generator $blocks = null) : BaseType{
 		$type = new $this->type(Server::getInstance()->getPlayer($this->player), Server::getInstance()->getPlayer($this->player)->getLevel(), $blocks);
 
 		return $type;

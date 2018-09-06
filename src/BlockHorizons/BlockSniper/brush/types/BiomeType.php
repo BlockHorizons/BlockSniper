@@ -6,7 +6,6 @@ namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
-use pocketmine\block\Block;
 use pocketmine\level\ChunkManager;
 use pocketmine\Player;
 
@@ -18,7 +17,7 @@ class BiomeType extends BaseType{
 
 	const ID = self::TYPE_BIOME;
 
-	public function __construct(Player $player, ChunkManager $level, array $blocks){
+	public function __construct(Player $player, ChunkManager $level, \Generator $blocks){
 		parent::__construct($player, $level, $blocks);
 		$this->biome = SessionManager::getPlayerSession($player)->getBrush()->biomeId;
 	}
@@ -37,14 +36,16 @@ class BiomeType extends BaseType{
 	}
 
 	/**
-	 * @return Block[]
+	 * @return \Generator
 	 */
-	protected function fillSynchronously() : array{
+	protected function fillSynchronously() : \Generator{
 		foreach($this->blocks as $block){
 			$this->putBiome($block, $this->biome);
 		}
-
-		return [];
+		if(false){
+			// Make PHP recognize this is a generator.
+			yield;
+		}
 	}
 
 	protected function fillAsynchronously() : void{

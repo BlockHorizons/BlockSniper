@@ -47,7 +47,7 @@ abstract class BaseType{
 	protected $level = 0;
 	/** @var int */
 	protected $biome = 0;
-	/** @var Block[] */
+	/** @var \Generator */
 	protected $blocks = [];
 	/** @var Position|null */
 	protected $center = null;
@@ -71,9 +71,9 @@ abstract class BaseType{
 	/**
 	 * @param Player       $player
 	 * @param ChunkManager $manager
-	 * @param Block[]      $blocks
+	 * @param \Generator   $blocks
 	 */
-	public function __construct(Player $player, ChunkManager $manager, array $blocks){
+	public function __construct(Player $player, ChunkManager $manager, \Generator $blocks = null){
 		if($manager instanceof Level){
 			$this->level = $manager->getId();
 		}else{
@@ -101,9 +101,9 @@ abstract class BaseType{
 	/**
 	 * @param Vector2[][] $plotPoints
 	 *
-	 * @return Block[]|null
+	 * @return \Generator|null
 	 */
-	public final function fillShape(array $plotPoints = []) : ?array{
+	public final function fillShape(array $plotPoints = []) : ?\Generator{
 		$this->plotPoints = $plotPoints;
 		if(!empty($plotPoints)){
 			$this->myPlotChecked = true;
@@ -136,9 +136,9 @@ abstract class BaseType{
 	}
 
 	/**
-	 * @return Block[]
+	 * @return \Generator
 	 */
-	protected abstract function fillSynchronously() : array;
+	protected abstract function fillSynchronously() : \Generator;
 
 	/**
 	 * @return int
@@ -148,11 +148,11 @@ abstract class BaseType{
 	}
 
 	/**
-	 * @param array $blocks
+	 * @param \Generator $blocks
 	 *
 	 * @return BaseType
 	 */
-	public function setBlocksInside(array $blocks) : self{
+	public function setBlocksInside(\Generator $blocks) : self{
 		$this->blocks = $blocks;
 
 		return $this;
@@ -161,9 +161,9 @@ abstract class BaseType{
 	/**
 	 * Returns the blocks the type is being executed upon.
 	 *
-	 * @return array
+	 * @return \Generator
 	 */
-	public function getBlocks() : array{
+	public function getBlocks() : \Generator{
 		return $this->blocks;
 	}
 

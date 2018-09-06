@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
-use pocketmine\block\Block;
 
 /*
  * Places blocks on every location within the brush radius.
@@ -16,17 +15,14 @@ class FillType extends BaseType{
 	const ID = self::TYPE_FILL;
 
 	/**
-	 * @return Block[]
+	 * @return \Generator
 	 */
-	public function fillSynchronously() : array{
-		$undoBlocks = [];
+	public function fillSynchronously() : \Generator{
 		foreach($this->blocks as $block){
 			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
-			$undoBlocks[] = $block;
+			yield $block;
 			$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());
 		}
-
-		return $undoBlocks;
 	}
 
 	public function fillAsynchronously() : void{

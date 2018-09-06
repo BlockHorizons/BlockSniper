@@ -17,10 +17,9 @@ class OverlayType extends BaseType{
 	const ID = self::TYPE_OVERLAY;
 
 	/**
-	 * @return Block[]
+	 * @return \Generator
 	 */
-	public function fillSynchronously() : array{
-		$undoBlocks = [];
+	public function fillSynchronously() : \Generator{
 		foreach($this->blocks as $block){
 			if($block->getId() !== Item::AIR){
 				$directions = [
@@ -41,15 +40,13 @@ class OverlayType extends BaseType{
 					if($valid && $this->getLevel()->getBlock($direction)->getId() === Item::AIR){
 						$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 						if($block->getId() !== $randomBlock->getId()){
-							$undoBlocks[] = $direction;
+							yield $direction;
 							$this->putBlock($direction, $randomBlock->getId(), $randomBlock->getDamage());
 						}
 					}
 				}
 			}
 		}
-
-		return $undoBlocks;
 	}
 
 	public function fillAsynchronously() : void{

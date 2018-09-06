@@ -24,11 +24,9 @@ class CubeShape extends BaseShape{
 	 *
 	 * @return array
 	 */
-	public function getBlocksInside(bool $vectorOnly = false) : array{
+	public function getBlocksInside(bool $vectorOnly = false) : \Generator{
 		[$targetX, $targetY, $targetZ] = $this->arrayVec($this->center);
 		[$minX, $minY, $minZ, $maxX, $maxY, $maxZ] = $this->calculateBoundaryBlocks($targetX, $targetY, $targetZ, $this->width, $this->width);
-
-		$blocksInside = [];
 
 		for($x = $minX; $x <= $maxX; $x++){
 			for($z = $minZ; $z <= $maxZ; $z++){
@@ -38,12 +36,10 @@ class CubeShape extends BaseShape{
 							continue;
 						}
 					}
-					$blocksInside[] = $vectorOnly ? new Vector3($x, $y, $z) : $this->getLevel()->getBlock(new Vector3($x, $y, $z));
+					yield $vectorOnly ? new Vector3($x, $y, $z) : $this->getLevel()->getBlock(new Vector3($x, $y, $z));
 				}
 			}
 		}
-
-		return $blocksInside;
 	}
 
 	/**

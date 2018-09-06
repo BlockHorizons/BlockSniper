@@ -26,12 +26,9 @@ class RevertTask extends AsyncBlockSniperTask{
 		$revert = unserialize($this->revert, ["allowed_classes" => true]);
 		$chunks = $revert->getOldChunks();
 
-		$detached = $revert->getDetached();
+		$revert = $revert->getDetached();
 
-		$this->setResult([
-							 "chunks" => $chunks,
-							 "revert" => $detached
-						 ]);
+		$this->setResult(compact("chunks", "revert"));
 	}
 
 	/**
