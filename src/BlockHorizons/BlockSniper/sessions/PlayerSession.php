@@ -13,7 +13,7 @@ use Sandertv\Marshal\Unmarshal;
 class PlayerSession extends Session implements \JsonSerializable{
 
 	public function __construct(PlayerSessionOwner $sessionOwner, Loader $loader){
-		$this->dataFile = $loader->getDataFolder() . "sessions/" . $sessionOwner->getName() . ".json";
+		$this->dataFile = $loader->getDataFolder() . "sessions/" . strtolower($sessionOwner->getName()) . ".json";
 		parent::__construct($sessionOwner, $loader);
 	}
 
