@@ -148,11 +148,11 @@ abstract class BaseType{
 	}
 
 	/**
-	 * @param \Generator $blocks
+	 * @param \Generator|null $blocks
 	 *
 	 * @return BaseType
 	 */
-	public function setBlocksInside(\Generator $blocks) : self{
+	public function setBlocksInside(?\Generator $blocks) : self{
 		$this->blocks = $blocks;
 
 		return $this;

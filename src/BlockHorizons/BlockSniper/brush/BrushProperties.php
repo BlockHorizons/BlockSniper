@@ -55,7 +55,11 @@ class BrushProperties implements \JsonSerializable{
 			if(is_numeric($itemString)){
 				$blocks[] = Item::get((int) $itemString)->getBlock();
 			}else{
-				$blocks[] = Item::fromString($itemString)->getBlock();
+				try {
+					$blocks[] = Item::fromString($itemString)->getBlock();
+				} catch(\InvalidArgumentException $exception){
+
+				}
 			}
 		}
 		if(empty($blocks)){

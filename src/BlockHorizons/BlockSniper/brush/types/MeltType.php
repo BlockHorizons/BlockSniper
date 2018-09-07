@@ -20,6 +20,7 @@ class MeltType extends BaseType{
 	 * @return \Generator
 	 */
 	public function fillSynchronously() : \Generator{
+		$blocks = [];
 		foreach($this->blocks as $block){
 			if($block->getId() !== Item::AIR){
 				$directions = [
@@ -37,10 +38,13 @@ class MeltType extends BaseType{
 					}
 				}
 				if($valid >= 2){
-					yield $block;
-					$this->putBlock($block, 0);
+					$blocks[] = $block;
 				}
 			}
+		}
+		foreach($blocks as $block){
+			yield $block;
+			$this->putBlock($block, 0);
 		}
 	}
 
