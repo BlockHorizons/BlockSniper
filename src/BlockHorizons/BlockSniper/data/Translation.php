@@ -109,6 +109,7 @@ class Translation{
 	const UI_CONFIGURATION_MENU_RESET_DECREMENT_BRUSH = "ui.configuration-menu.reset-decrement-brush";
 	const UI_CONFIGURATION_MENU_SAVE_BRUSH = "ui.configuration-menu.save-brush";
 	const UI_CONFIGURATION_MENU_DROP_PLANTS = "ui.configuration-menu.drop-plants";
+	const UI_CONFIGURATION_MENU_SESSION_TIMEOUT_TIME = "ui.configuration-menu.session-timeout-time";
 	const UI_CONFIGURATION_MENU_AUTO_GUI = "ui.configuration-menu.auto-gui";
 	const UI_CONFIGURATION_MENU_MYPLOT_SUPPORT = "ui.configuration-menu.myplot-support";
 	const UI_CONFIGURATION_MENU_AUTO_RELOAD = "ui.configuration-menu.auto-reload";
@@ -152,7 +153,9 @@ class Translation{
 		$this->messageData = $data->getMessages();
 		$reflection = new \ReflectionClass(self::class);
 		foreach($reflection->getConstants() as $constant => $value){
-			self::$translations[$value] = $this->putMessage($value);
+			if(($msg = $this->putMessage($value)) !== null){
+				self::$translations[$value] = $msg;
+			}
 		}
 	}
 
@@ -161,7 +164,7 @@ class Translation{
 	 *
 	 * @return string
 	 */
-	private function putMessage(string $key) : string{
+	private function putMessage(string $key) : ?string{
 		$messages = $this->messageData;
 		$path = explode(".", $key);
 		$pathCount = count($path);
@@ -169,6 +172,9 @@ class Translation{
 		$message = $messages[$path[0]];
 		for($i = 1; $i < $pathCount; $i++){
 			if(is_array($message)){
+				if(!isset($message[$path[$i]])){
+					return null;
+				}
 				$message = $message[$path[$i]];
 			}
 		}
@@ -183,6 +189,9 @@ class Translation{
 	 * @return string
 	 */
 	public static function get(string $key, array $params = []) : string{
+		if(!isset(self::$translations[$key])){
+			return "Unknown message: Please remove your language file and let it regenerate";
+		}
 		if(!empty($params)){
 			return vsprintf(self::$translations[$key], $params);
 		}

@@ -37,7 +37,7 @@ class Brush extends BrushProperties{
 	 */
 	public function execute(Session $session, array $plotPoints = []) : void{
 		$shape = $this->getShape();
-		$type = $this->getType();
+		$type = $this->getType($shape->getBlocksInside());
 		if($session instanceof PlayerSession){
 			$player = $session->getSessionOwner()->getPlayer();
 
@@ -55,9 +55,9 @@ class Brush extends BrushProperties{
 		}
 
 		if($type->canBeExecutedAsynchronously() && $this->size >= $loader->config->asyncOperationSize){
+			$type->setBlocksInside(null);
 			$shape->editAsynchronously($type, $plotPoints);
 		}else{
-			$type->setBlocksInside($shape->getBlocksInside());
 			$undoBlocks = [];
 			foreach($type->fillShape($plotPoints) as $undoBlock){
 				$undoBlocks[] = $undoBlock;
@@ -86,7 +86,7 @@ class Brush extends BrushProperties{
 	 *
 	 * @return BaseType
 	 */
-	public function getType(\Generator $blocks = null) : BaseType{
+	public function getType(\Generator $blocks) : BaseType{
 		$type = new $this->type(Server::getInstance()->getPlayer($this->player), Server::getInstance()->getPlayer($this->player)->getLevel(), $blocks);
 
 		return $type;

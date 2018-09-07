@@ -143,6 +143,7 @@
 			"reset-decrement-brush": "감소 브러시를 초기 시작 크기로 자동 재설정",
 			"save-brush": "서버 재시작시 플레이어의 브러시 속성 저장",
 			"drop-plants": "드래프러/블로워 타입의 destrow를 제거한 후 LeafBlowertype으로 멀리 떨어져 있습니다.",
+			"session-timeout-time": "The time in minutes after which the session of a player is removed after leaving the server",
 			"auto-gui": "핫 바 슬롯을 브러시 항목을 포함하는 것으로 전환 할 때 GUI를 자동으로 엽니다.",
 			"myplot-support": "MyPlot지원을 사용할지 여부",
 			"auto-reload": "이 창을 닫을 때이 토글을 켜면 구성이 자동으로 다시로드됩니다."

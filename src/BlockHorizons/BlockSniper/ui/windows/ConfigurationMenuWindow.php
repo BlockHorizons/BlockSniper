@@ -41,6 +41,9 @@ class ConfigurationMenuWindow extends CustomWindow{
 		$this->addToggle($this->t(Translation::UI_CONFIGURATION_MENU_DROP_PLANTS), $c->dropLeafBlowerPlants, function(Player $player, bool $value) use ($c){
 			$c->dropLeafBlowerPlants = $value;
 		});
+		$this->addSlider($this->t(Translation::UI_CONFIGURATION_MENU_SESSION_TIMEOUT_TIME), 0, 30, 1, $c->sessionTimeoutTime, function(Player $player, float $value) use ($c){
+			$c->sessionTimeoutTime = (int) $value;
+		});
 		$this->addToggle($this->t(Translation::UI_CONFIGURATION_MENU_AUTO_GUI), $c->openGuiAutomatically, function(Player $player, bool $value) use ($c){
 			$c->openGuiAutomatically = $value;
 		});

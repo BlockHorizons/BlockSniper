@@ -142,7 +142,9 @@
 			"reset-decrement-brush": "デクリメントのブラシを初期開始サイズに自動的にリセットする",
 			"save-brush": "サーバーの再起動時にプレイヤーのブラシ設定を保存する。",
 			"drop-plants": "葉を吹き飛ばすタイプで破壊/吹き飛ばされた植物アイテムを落とす",
+			"session-timeout-time": "The time in minutes after which the session of a player is removed after leaving the server",
 			"auto-gui": "ホット・バー・スロットをブラシ項目を含むものに切り替えるときに、GUIを自動的に開きます。",
+			"myplot-support": "Whether to turn on MyPlot support or not",
 			"auto-reload": "このチェックをオンにすると、このウィンドウを閉じるときに自動的に設定が再読み込みされます"
 		}
 	},

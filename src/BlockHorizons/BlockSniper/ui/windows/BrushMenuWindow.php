@@ -23,7 +23,7 @@ class BrushMenuWindow extends CustomWindow{
 		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_SHAPE), $this->processShapes($requester), $b->getShape()::ID, function(Player $player, int $value) use ($b){
 			$b->shape = ShapeRegistration::getShapeById($value);
 		});
-		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_TYPE), $this->processTypes($requester), $b->getType()::ID, function(Player $player, int $value) use ($b){
+		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_TYPE), $this->processTypes($requester), $b->getType($b->getShape()->getBlocksInside())::ID, function(Player $player, int $value) use ($b){
 			$b->type = TypeRegistration::getTypeById($value);
 		});
 		$this->addToggle($this->t(Translation::UI_BRUSH_MENU_HOLLOW), $b->hollow, function(Player $player, bool $value) use ($b){

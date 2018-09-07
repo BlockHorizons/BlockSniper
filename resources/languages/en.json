@@ -143,6 +143,7 @@
 			"reset-decrement-brush": "Automatically reset decrementing brush to the initial starting size",
 			"save-brush": "Save brush properties of players on server restart",
 			"drop-plants": "Drop plant items destroyed/blown away by the LeafBlower type",
+			"session-timeout-time": "The time in minutes after which the session of a player is removed after leaving the server",
 			"auto-gui": "Automatically open the GUI when switching hotbar slot to one containing the brush item",
 			"myplot-support": "Whether to turn on MyPlot support or not",
 			"auto-reload": "Turning this toggle will automatically reload the configuration when closing this window"

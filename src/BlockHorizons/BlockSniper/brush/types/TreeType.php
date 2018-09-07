@@ -33,7 +33,7 @@ class TreeType extends BaseType{
 		if($this->myPlotChecked){
 			return;
 		}
-		Tree::growTree($this->getLevel(), (int) $this->center->x, (int) $this->center->y, (int) $this->center->z, new Random(mt_rand()), $this->tree);
+		Tree::growTree($this->getLevel(), (int) $this->center->x, (int) $this->center->y + 1, (int) $this->center->z, new Random(mt_rand()), $this->tree);
 		if(false){
 			// Make PHP recognize this is a generator.
 			yield;

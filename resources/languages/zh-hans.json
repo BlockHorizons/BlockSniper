@@ -143,6 +143,7 @@
 			"reset-decrement-brush": "自动重置尺寸递减至最初值",
 			"save-brush": "服务器重启时保存用户画笔数据",
 			"drop-plants": "掉落清除植物类型操作移除的植物物品",
+			"session-timeout-time": "The time in minutes after which the session of a player is removed after leaving the server",
 			"auto-gui": "切换到画笔物品栏时自动打开画笔图形界面",
 			"myplot-support": "是否启用 MyPlot 支持",
 			"auto-reload": "打开此开关后将在这个窗口关闭时重新加载配置"
