@@ -11,7 +11,6 @@ use BlockHorizons\BlockSniper\brush\types\FillType;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\level\biome\Biome;
-use pocketmine\level\generator\object\Tree;
 
 class BrushProperties implements \JsonSerializable{
 
@@ -59,9 +58,9 @@ class BrushProperties implements \JsonSerializable{
 			if(is_numeric($itemString)){
 				$blocks[] = Item::get((int) $itemString)->getBlock();
 			}else{
-				try {
+				try{
 					$blocks[] = Item::fromString($itemString)->getBlock();
-				} catch(\InvalidArgumentException $exception){
+				}catch(\InvalidArgumentException $exception){
 
 				}
 			}
@@ -132,7 +131,7 @@ class BrushProperties implements \JsonSerializable{
 	}
 }
 
-class TreeProperties {
+class TreeProperties{
 	/** @var string */
 	public $trunkBlocks = "";
 	/** @var string */

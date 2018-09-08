@@ -6,12 +6,11 @@ namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\Brush;
 use pocketmine\block\Solid;
-use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\math\Vector3;
 use pocketmine\utils\Random;
 
-class Tree {
+class Tree{
 
 	/** @var []Block */
 	public $trunkBlocks;
@@ -46,16 +45,16 @@ class Tree {
 		$this->leavesClusterSize = $brush->tree->leavesClusterSize;
 		$this->maxBranchLength = $brush->tree->maxBranchLength;
 
-		try {
+		try{
 			$this->random = new Random(random_int(0, 1000000));
-		} catch(\Exception $exception){
+		}catch(\Exception $exception){
 
 		}
 
 		$this->tempVec = new Vector3();
 	}
 
-	public function build() : \Generator {
+	public function build() : \Generator{
 		for($i = 0; $i < $this->trunkHeight; $i++){
 			foreach($this->buildTrunkDisk() as $block){
 				yield $block;
@@ -66,14 +65,16 @@ class Tree {
 			yield $block;
 		}
 	}
-	
-	private function buildTrunkDisk() : \Generator {
-		if(mt_rand(0, 1) === 0) {
+
+	private function buildTrunkDisk() : \Generator{
+		if(mt_rand(0, 1) === 0){
 			if($this->lastAddX !== 0 && $this->lastAddZ !== 0){
 				$this->lastAddX = $this->lastAddZ = 0;
-			} else {
-				while(($x = -$this->random->nextRange(-1, 1)) === -$this->lastAddX){}
-				while(($z = -$this->random->nextRange(-1, 1)) === -$this->lastAddZ){}
+			}else{
+				while(($x = -$this->random->nextRange(-1, 1)) === -$this->lastAddX){
+				}
+				while(($z = -$this->random->nextRange(-1, 1)) === -$this->lastAddZ){
+				}
 				$this->lastAddX = $x;
 				$this->position->x += $this->lastAddX;
 				$this->lastAddZ = $z;
@@ -121,7 +122,7 @@ class Tree {
 		$branchWidth = $this->trunkWidth;
 
 		$direction = $branchPos->subtract($branchEnd)->normalize();
-		for($i = 0; $i < $this->maxBranchLength; $i++) {
+		for($i = 0; $i < $this->maxBranchLength; $i++){
 			$branchPos = $branchPos->add($direction);
 
 			$minX = $branchPos->x - $branchWidth / 2;
@@ -142,7 +143,7 @@ class Tree {
 					for($z = $maxZ; $z >= $minZ; $z--){
 						$zs = ($branchPos->z - $z) ** 2;
 						if($xs + $ys + $zs - 0.5 < $radiusSquared){
-							if($branchWidth < 0.1) {
+							if($branchWidth < 0.1){
 								break;
 							}
 							[$this->tempVec->x, $this->tempVec->y, $this->tempVec->z] = [$x, $y, $z];
@@ -162,7 +163,7 @@ class Tree {
 		}
 	}
 
-	private function buildLeaves(Vector3 $branchEnd) : \Generator {
+	private function buildLeaves(Vector3 $branchEnd) : \Generator{
 		$minX = $branchEnd->x - $this->leavesClusterSize / 2;
 		$minZ = $branchEnd->z - $this->leavesClusterSize / 2;
 		$maxX = $branchEnd->x + $this->leavesClusterSize / 2;

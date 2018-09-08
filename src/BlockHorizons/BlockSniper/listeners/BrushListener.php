@@ -55,9 +55,10 @@ class BrushListener implements Listener{
 		$plotPoints = [];
 		$settings = $this->loader->getMyPlot()->getLevelSettings($player->getLevel()->getName());
 		if($settings === null){
-			if($player->hasPermission("blocksniper-myplot.allow-outside")) {
+			if($player->hasPermission("blocksniper-myplot.allow-outside")){
 				return [];
 			}
+
 			return [[new Vector2(), new Vector2()]];
 		}
 		$plotSize = $settings->plotSize;
@@ -79,8 +80,9 @@ class BrushListener implements Listener{
 	 *
 	 * @return int
 	 */
-	private function calcActual(int $coordinate, PlotLevelSettings $settings) : int {
+	private function calcActual(int $coordinate, PlotLevelSettings $settings) : int{
 		$coordinate += 1;
+
 		return $coordinate * $settings->plotSize + ($coordinate - 1) * $settings->roadWidth;
 	}
 

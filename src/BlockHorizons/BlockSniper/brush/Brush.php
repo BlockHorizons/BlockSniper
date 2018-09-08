@@ -36,7 +36,7 @@ class Brush extends BrushProperties{
 	/**
 	 * @return null|Player
 	 */
-	public function getPlayer() : ?Player {
+	public function getPlayer() : ?Player{
 		return Server::getInstance()->getPlayer($this->player);
 	}
 
@@ -48,7 +48,7 @@ class Brush extends BrushProperties{
 		$shape = $this->getShape();
 		if($this->type !== TreeType::class){
 			$type = $this->getType($shape->getBlocksInside());
-		} else {
+		}else{
 			$type = new TreeType($this->getPlayer(), $this->getPlayer()->getLevel());
 		}
 

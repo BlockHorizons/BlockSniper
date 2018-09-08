@@ -26,7 +26,7 @@ class PlayerSession extends Session implements \JsonSerializable{
 		if($this->loader->config->saveBrushProperties){
 			if(!file_exists($this->dataFile)){
 				file_put_contents($this->dataFile, "{}");
-			} else {
+			}else{
 				$data = file_get_contents($this->dataFile);
 				try{
 					Unmarshal::json($data, $this->brush);

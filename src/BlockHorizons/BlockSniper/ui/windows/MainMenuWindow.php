@@ -27,7 +27,7 @@ class MainMenuWindow extends MenuForm{
 			$this->setResponseForm(new PresetMenuWindow($loader, $player));
 		});
 		if($requester->hasPermission("blocksniper.type.tree")){
-			$this->addOption($this->t(Translation::UI_MAIN_MENU_TREE), self::TREE_ICON, "url", function(Player $player) use($loader) {
+			$this->addOption($this->t(Translation::UI_MAIN_MENU_TREE), self::TREE_ICON, "url", function(Player $player) use ($loader){
 				$this->setResponseForm(new TreeMenuWindow($loader, $player));
 			});
 		}
