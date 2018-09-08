@@ -33,9 +33,12 @@ class Tree{
 	private $lastAddZ = 0;
 	/** @var Vector3 */
 	private $tempVec;
+	/** @var TreeType */
+	private $type;
 
-	public function __construct(Position $position, Brush $brush){
+	public function __construct(Position $position, Brush $brush, TreeType $type){
 		$this->position = $position;
+		$this->type = $type;
 		$this->startY = $position->y;
 
 		$this->trunkBlocks = $brush->parseBlocks($brush->tree->trunkBlocks);
@@ -106,7 +109,8 @@ class Tree{
 				}
 				[$this->tempVec->x, $this->tempVec->y, $this->tempVec->z] = [$x, $this->position->y, $z];
 				yield $this->position->level->getBlock($this->tempVec);
-				$this->position->level->setBlock($this->tempVec, clone $this->trunkBlocks[array_rand($this->trunkBlocks)], false, false);
+				$bl = clone $this->trunkBlocks[array_rand($this->trunkBlocks)];
+				$this->type->putBlock($this->tempVec, $bl->getId(), $bl->getDamage());
 			}
 		}
 		$this->position->y++;
@@ -148,7 +152,8 @@ class Tree{
 							}
 							[$this->tempVec->x, $this->tempVec->y, $this->tempVec->z] = [$x, $y, $z];
 							yield $this->position->level->getBlock($this->tempVec);
-							$this->position->level->setBlock($this->tempVec, clone $this->trunkBlocks[array_rand($this->trunkBlocks)], false, false);
+							$bl = clone $this->trunkBlocks[array_rand($this->trunkBlocks)];
+							$this->type->putBlock($this->tempVec, $bl->getId(), $bl->getDamage());
 							$j++;
 						}
 					}
@@ -185,7 +190,8 @@ class Tree{
 						}
 						if(mt_rand(0, 4) === 0){
 							yield($block);
-							$this->position->level->setBlock($this->tempVec, clone $this->leavesBlocks[array_rand($this->leavesBlocks)], false, false);
+							$bl = clone $this->leavesBlocks[array_rand($this->leavesBlocks)];
+							$this->type->putBlock($this->tempVec, $bl->getId(), $bl->getDamage());
 						}
 					}
 				}

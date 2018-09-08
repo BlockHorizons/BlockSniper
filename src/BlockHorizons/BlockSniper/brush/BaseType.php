@@ -206,7 +206,7 @@ abstract class BaseType{
 	 * @param int     $id
 	 * @param int     $meta
 	 */
-	protected function putBlock(Vector3 $pos, int $id, int $meta = 0) : void{
+	public function putBlock(Vector3 $pos, int $id, int $meta = 0) : void{
 		$valid = false;
 		if($this->myPlotChecked){
 			foreach($this->plotPoints as $plotCorners){
