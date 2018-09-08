@@ -52,10 +52,6 @@ class PresetCreationWindow extends CustomWindow{
 		});
 		$this->addInput($this->t(Translation::UI_PRESET_CREATION_BIOME), "plains", "plains", function(Player $player, string $value){
 			$this->preset->properties->biome = $this->preset->properties->parseBiomeId($value);
-		});
-		$this->addInput($this->t(Translation::UI_PRESET_CREATION_TREE), "oak", "oak", function(Player $player, string $value) use ($loader){
-			$this->preset->properties->tree = $this->preset->properties->parseTreeId($value);
-
 			// Last element, so we finish the preset here and add it.
 			if(!$loader->getPresetManager()->isPreset($this->preset->name)){
 				$loader->getPresetManager()->addPreset($this->preset);

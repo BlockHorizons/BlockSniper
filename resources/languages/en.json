@@ -113,6 +113,7 @@
 			"title": "BlockSniper Menu",
 			"subtitle": "Click a button to continue.",
 			"brush": "Brush",
+			"tree": "Tree",
 			"config": "Configuration",
 			"presets": "Presets",
 			"global-brush": "Global Brush",
@@ -147,6 +148,15 @@
 			"auto-gui": "Automatically open the GUI when switching hotbar slot to one containing the brush item",
 			"myplot-support": "Whether to turn on MyPlot support or not",
 			"auto-reload": "Turning this toggle will automatically reload the configuration when closing this window"
+		},
+		"tree-menu": {
+			"title": "Tree Menu",
+			"trunk-height": "The height of the trunk of the tree",
+			"trunk-width": "The width of the tree at the bottom; The width decreases gradually upwards",
+			"max-branch-length": "The maximum length one of the branches of the tree can extend",
+			"trunk-blocks": "The blocks to use for the trunk of the tree",
+			"leaves-blocks": "The blocks to use for the leaves of the tree",
+			"leaves-cluster-size": "The size of the leaves cluster at the end of each branch"
 		}
 	},
 	"log": {

@@ -50,9 +50,6 @@ class PresetEditWindow extends CustomWindow{
 		$this->addInput($this->t(Translation::UI_PRESET_CREATION_BIOME), (string) $preset->properties->biomeId, "plains", function(Player $player, string $value){
 			$this->preset->properties->biome = $this->preset->properties->parseBiomeId($value);
 		});
-		$this->addInput($this->t(Translation::UI_PRESET_CREATION_TREE), (string) $preset->properties->tree, "oak", function(Player $player, string $value) use ($loader){
-			$this->preset->properties->tree = $this->preset->properties->parseTreeId($value);
-		});
 		$this->setResponseForm(new PresetMenuWindow($loader, $requester));
 	}
 }

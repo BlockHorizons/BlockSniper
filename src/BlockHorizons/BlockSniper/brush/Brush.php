@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush;
 
+use BlockHorizons\BlockSniper\brush\types\TreeType;
 use BlockHorizons\BlockSniper\events\BrushUseEvent;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\revert\sync\SyncUndo;
 use BlockHorizons\BlockSniper\sessions\PlayerSession;
 use BlockHorizons\BlockSniper\sessions\Session;
-use pocketmine\level\Position;
 use pocketmine\math\Vector2;
+use pocketmine\Player;
 use pocketmine\Server;
 
 class Brush extends BrushProperties{
@@ -21,6 +22,7 @@ class Brush extends BrushProperties{
 	public $player = "";
 
 	public function __construct(string $player){
+		parent::__construct();
 		$this->player = $player;
 	}
 
@@ -32,12 +34,24 @@ class Brush extends BrushProperties{
 	}
 
 	/**
+	 * @return null|Player
+	 */
+	public function getPlayer() : ?Player {
+		return Server::getInstance()->getPlayer($this->player);
+	}
+
+	/**
 	 * @param Session     $session
 	 * @param Vector2[][] $plotPoints
 	 */
 	public function execute(Session $session, array $plotPoints = []) : void{
 		$shape = $this->getShape();
-		$type = $this->getType($shape->getBlocksInside());
+		if($this->type !== TreeType::class){
+			$type = $this->getType($shape->getBlocksInside());
+		} else {
+			$type = new TreeType($this->getPlayer(), $this->getPlayer()->getLevel());
+		}
+
 		if($session instanceof PlayerSession){
 			$player = $session->getSessionOwner()->getPlayer();
 
@@ -73,10 +87,9 @@ class Brush extends BrushProperties{
 	 * @return BaseShape
 	 */
 	public function getShape() : BaseShape{
-		$vector3 = Server::getInstance()->getPlayerExact($this->player)->getTargetBlock(100);
-
-		$location = new Position($vector3->x, $vector3->y, $vector3->z, Server::getInstance()->getPlayer($this->player)->getLevel());
-		$shape = new $this->shape(Server::getInstance()->getPlayer($this->player), Server::getInstance()->getPlayer($this->player)->getLevel(), $this->size, $location, $this->hollow);
+		$player = $this->getPlayer();
+		$pos = $player->getTargetBlock(100);
+		$shape = new $this->shape($player, $player->getLevel(), $this->size, $pos->asPosition(), $this->hollow);
 
 		return $shape;
 	}
@@ -87,7 +100,7 @@ class Brush extends BrushProperties{
 	 * @return BaseType
 	 */
 	public function getType(\Generator $blocks) : BaseType{
-		$type = new $this->type(Server::getInstance()->getPlayer($this->player), Server::getInstance()->getPlayer($this->player)->getLevel(), $blocks);
+		$type = new $this->type($this->getPlayer(), $this->getPlayer()->getLevel(), $blocks);
 
 		return $type;
 	}
