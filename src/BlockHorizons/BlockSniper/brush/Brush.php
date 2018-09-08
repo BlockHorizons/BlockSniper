@@ -88,10 +88,8 @@ class Brush extends BrushProperties{
 	 */
 	public function getShape() : BaseShape{
 		$player = $this->getPlayer();
-		$pos = $player->getTargetBlock(100);
-		$shape = new $this->shape($player, $player->getLevel(), $this->size, $pos->asPosition(), $this->hollow);
 
-		return $shape;
+		return new $this->shape($player, $player->getLevel(), $this->size, $player->getTargetBlock(100)->asPosition(), $this->hollow);
 	}
 
 	/**
@@ -100,9 +98,7 @@ class Brush extends BrushProperties{
 	 * @return BaseType
 	 */
 	public function getType(\Generator $blocks) : BaseType{
-		$type = new $this->type($this->getPlayer(), $this->getPlayer()->getLevel(), $blocks);
-
-		return $type;
+		return new $this->type($this->getPlayer(), $this->getPlayer()->getLevel(), $blocks);
 	}
 
 	public function decrement() : void{
