@@ -6,7 +6,6 @@ namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\Brush;
 use pocketmine\block\Block;
-use pocketmine\block\Solid;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\math\Vector3;
