@@ -11,7 +11,6 @@ use BlockHorizons\BlockSniper\brush\types\FillType;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\level\biome\Biome;
-use pocketmine\level\generator\object\Tree;
 
 class BrushProperties implements \JsonSerializable{
 
@@ -33,8 +32,12 @@ class BrushProperties implements \JsonSerializable{
 	public $obsolete = "air";
 	/** @var int */
 	public $biomeId = Biome::PLAINS;
-	/** @var int */
-	public $tree = 0;
+	/** @var TreeProperties */
+	public $tree;
+
+	public function __construct(){
+		$this->tree = new TreeProperties();
+	}
 
 	public function jsonSerialize() : array{
 		return (array) $this;
@@ -45,7 +48,7 @@ class BrushProperties implements \JsonSerializable{
 	 *
 	 * @return Block[]
 	 */
-	private function parseBlocks(string $data) : array{
+	public function parseBlocks(string $data) : array{
 		$blocks = [];
 		$fragments = explode(",", $data);
 		foreach($fragments as $itemString){
@@ -55,9 +58,9 @@ class BrushProperties implements \JsonSerializable{
 			if(is_numeric($itemString)){
 				$blocks[] = Item::get((int) $itemString)->getBlock();
 			}else{
-				try {
+				try{
 					$blocks[] = Item::fromString($itemString)->getBlock();
-				} catch(\InvalidArgumentException $exception){
+				}catch(\InvalidArgumentException $exception){
 
 				}
 			}
@@ -126,23 +129,19 @@ class BrushProperties implements \JsonSerializable{
 
 		return 0;
 	}
+}
 
-	/**
-	 * @param string $data
-	 *
-	 * @return int
-	 */
-	public function parseTreeId(string $data) : int{
-		try{
-			$tree = str_replace("_", "", ucwords($data, "_"));
-			$class = "pocketmine\\level\\generator\\object\\" . $tree . "Tree";
-			/** @var Tree $c */
-			$c = new $class();
-
-			return $c->type;
-		}catch(\Error $error){
-		}
-
-		return 0;
-	}
+class TreeProperties{
+	/** @var string */
+	public $trunkBlocks = "";
+	/** @var string */
+	public $leavesBlocks = "";
+	/** @var int */
+	public $trunkHeight = 20;
+	/** @var int */
+	public $trunkWidth = 2;
+	/** @var int */
+	public $maxBranchLength = 8;
+	/** @var int */
+	public $leavesClusterSize = 7;
 }

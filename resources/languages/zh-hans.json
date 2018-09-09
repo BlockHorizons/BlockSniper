@@ -113,6 +113,7 @@
 			"title": "BlockSniper 菜单",
 			"subtitle": "点击一个按钮以继续。",
 			"brush": "画笔选项",
+			"tree": "Tree",
 			"config": "设置",
 			"presets": "预设选项",
 			"global-brush": "全局画笔",
@@ -147,6 +148,15 @@
 			"auto-gui": "切换到画笔物品栏时自动打开画笔图形界面",
 			"myplot-support": "是否启用 MyPlot 支持",
 			"auto-reload": "打开此开关后将在这个窗口关闭时重新加载配置"
+		},
+		"tree-menu": {
+			"title": "Tree Menu",
+			"trunk-height": "The height of the trunk of the tree",
+			"trunk-width": "The width of the tree at the bottom; The width decreases gradually upwards",
+			"max-branch-length": "The maximum length one of the branches of the tree can extend",
+			"trunk-blocks": "The blocks to use for the trunk of the tree",
+			"leaves-blocks": "The blocks to use for the leaves of the tree",
+			"leaves-cluster-size": "The size of the leaves cluster at the end of each branch"
 		}
 	},
 	"log": {

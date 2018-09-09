@@ -20,7 +20,7 @@ Apart from just brushing, BlockSniper also features things such as copying and p
 ### Installation and Development Builds
 Stable releases will be drafted at [Releases](https://github.com/BlockHorizons/BlockSniper/releases) or at the [release page](https://poggit.pmmp.io/p/BlockSniper/) at Poggit.
 To install a version:
- - Go to releases from either GitHub or Poggit.
+ - Go to releases from Poggit.
  - Download the attached phar file.
  - Drop the plugin in the plugin folder.
  - Restart the server.
@@ -28,7 +28,12 @@ To install a version:
 If you do decide to use a development version to benefit from the latest features, the development build list can be found when clicking the button below. (Warning! Only do this if you understand the development versions could contain bugs and be unstable)
 
 [![Poggit-CI](https://poggit.pmmp.io/ci.shield/BlockHorizons/BlockSniper/BlockSniper)](https://poggit.pmmp.io/ci/BlockHorizons/BlockSniper/BlockSniper)
-[![Build Status](https://travis-ci.org/BlockHorizons/BlockSniper.svg?branch=master)](https://travis-ci.org/BlockHorizons/BlockSniper)
+
+Alternatively, BlockSniper may be downloaded by using:
+`git clone --recursive https://github.com/BlockHorizons/BlockSniper`
+in the plugin folder if DevTools is installed. Git must be installed.
+
+BlockSniper can _not_ be downloaded by downloading the ZIP file GitHub provides. The required dependencies will not be installed if this is done.
 
 ### Translation
 BlockSniper has a multi-language system, so everybody can have a good time using the plugin. We currently have nowhere near enough translated languages though, and we need your help! It is very appreciated if you help translate, so please do so whenever you have time. The available languages can be found under resources/languages.

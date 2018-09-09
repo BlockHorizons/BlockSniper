@@ -113,6 +113,7 @@
 			"title": "BlockSniper 메뉴",
 			"subtitle": "계속하려면 버튼을 클릭하십시오.",
 			"brush": "브러시",
+			"tree": "Tree",
 			"config": "구성",
 			"presets": "프리셋",
 			"global-brush": "광범위한 브러쉬",
@@ -147,6 +148,15 @@
 			"auto-gui": "핫 바 슬롯을 브러시 항목을 포함하는 것으로 전환 할 때 GUI를 자동으로 엽니다.",
 			"myplot-support": "MyPlot지원을 사용할지 여부",
 			"auto-reload": "이 창을 닫을 때이 토글을 켜면 구성이 자동으로 다시로드됩니다."
+		},
+		"tree-menu": {
+			"title": "Tree Menu",
+			"trunk-height": "The height of the trunk of the tree",
+			"trunk-width": "The width of the tree at the bottom; The width decreases gradually upwards",
+			"max-branch-length": "The maximum length one of the branches of the tree can extend",
+			"trunk-blocks": "The blocks to use for the trunk of the tree",
+			"leaves-blocks": "The blocks to use for the leaves of the tree",
+			"leaves-cluster-size": "The size of the leaves cluster at the end of each branch"
 		}
 	},
 	"log": {

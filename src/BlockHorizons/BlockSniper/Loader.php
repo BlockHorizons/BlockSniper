@@ -20,13 +20,14 @@ use BlockHorizons\BlockSniper\presets\PresetManager;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use BlockHorizons\BlockSniper\tasks\RedoDiminishTask;
 use BlockHorizons\BlockSniper\tasks\UndoDiminishTask;
+use BlockHorizons\BlockSniper\tasks\UpdateNotifyTask;
 use MyPlot\MyPlot;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat as TF;
 
 class Loader extends PluginBase{
 
-	public const VERSION = "3.0.4";
+	public const VERSION = "3.1.0";
 	public const CONFIGURATION_VERSION = "4.1.0";
 	public const API_TARGET = "3.2.0";
 
@@ -66,6 +67,8 @@ class Loader extends PluginBase{
 		foreach(self::AUTOLOAD_LIBRARIES as $name){
 			$this->getServer()->getLoader()->addPath($this->getFile() . "src/$name/src");
 		}
+
+		$this->getServer()->getAsyncPool()->submitTask(new UpdateNotifyTask());
 	}
 
 	public function onEnable() : void{

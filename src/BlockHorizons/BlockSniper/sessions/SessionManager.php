@@ -8,7 +8,7 @@ use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\owners\PlayerSessionOwner;
 use pocketmine\Player;
 
-class SessionManager {
+class SessionManager{
 
 	/** @var PlayerSession[] */
 	private static $playerSessions = [];

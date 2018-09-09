@@ -113,6 +113,7 @@
 			"title": "BlockSniper Menu",
 			"subtitle": "Klik een knop om door te gaan.",
 			"brush": "Verf",
+			"tree": "Boom",
 			"config": "Configuratie",
 			"presets": "Voorinstellingen",
 			"global-brush": "Globale Verf",
@@ -147,6 +148,15 @@
 			"auto-gui": "Open de GUI automatisch wanneer het hotbar vakje wordt verplaatst naar een vak met het brush voorwerp",
 			"myplot-support": "MyPlot ondersteuning aanzetten of niet",
 			"auto-reload": "Omzetten van deze knop zal de plugin automatisch herladen wanneer je dit scherm sluit"
+		},
+		"tree-menu": {
+			"title": "Boom Menu",
+			"trunk-height": "De hoogte van de stam van de boom",
+			"trunk-width": "De breedte van de boom aan de onderkant; De boom wordt smaller verder naar boven toe",
+			"max-branch-length": "De maximale lengte die takken van de boom kunnen uitsteken",
+			"trunk-blocks": "De blokken te gebruiken voor de stam van de boom",
+			"leaves-blocks": "De blokken te gebruiken voor de bladeren van de boom",
+			"leaves-cluster-size": "De grootte van de bladerengroepen aan het einde van takken"
 		}
 	},
 	"log": {

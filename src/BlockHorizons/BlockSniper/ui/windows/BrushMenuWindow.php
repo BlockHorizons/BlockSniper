@@ -37,17 +37,14 @@ class BrushMenuWindow extends CustomWindow{
 		$this->addSlider($this->t(Translation::UI_BRUSH_MENU_HEIGHT), 0, $loader->config->maxSize, 1, $b->height, function(Player $player, float $value) use ($b){
 			$b->height = (int) $value;
 		});
-		$this->addInput($this->t(Translation::UI_BRUSH_MENU_BLOCKS), $this->processBlocks($b->getBlocks()), "stone,stone_brick:1,2", function(Player $player, string $value) use ($b){
+		$this->addInput($this->t(Translation::UI_BRUSH_MENU_BLOCKS), $b->blocks, "stone,stone_brick:1,2", function(Player $player, string $value) use ($b){
 			$b->blocks = $value;
 		});
-		$this->addInput($this->t(Translation::UI_BRUSH_MENU_OBSOLETE), $this->processBlocks($b->getObsolete()), "stone,stone_brick:1,2", function(Player $player, string $value) use ($b){
+		$this->addInput($this->t(Translation::UI_BRUSH_MENU_OBSOLETE), $b->obsolete, "stone,stone_brick:1,2", function(Player $player, string $value) use ($b){
 			$b->obsolete = $value;
 		});
 		$this->addInput($this->t(Translation::UI_BRUSH_MENU_BIOME), (string) $b->biomeId, "plains", function(Player $player, string $value) use ($b){
 			$b->biome = $b->parseBiomeId($value);
-		});
-		$this->addInput($this->t(Translation::UI_BRUSH_MENU_TREE), (string) $b->tree, "oak", function(Player $player, string $value) use ($b){
-			$b->tree = $b->parseTreeId($value);
 		});
 	}
 }

@@ -83,6 +83,7 @@ class Translation{
 	const UI_MAIN_MENU_TITLE = "ui.main-menu.title";
 	const UI_MAIN_MENU_SUBTITLE = "ui.main-menu.subtitle";
 	const UI_MAIN_MENU_BRUSH = "ui.main-menu.brush";
+	const UI_MAIN_MENU_TREE = "ui.main-menu.tree";
 	const UI_MAIN_MENU_CONFIG = "ui.main-menu.config";
 	const UI_MAIN_MENU_PRESETS = "ui.main-menu.presets";
 	const UI_MAIN_MENU_GLOBAL_BRUSH = "ui.main-menu.global-brush";
@@ -113,6 +114,13 @@ class Translation{
 	const UI_CONFIGURATION_MENU_AUTO_GUI = "ui.configuration-menu.auto-gui";
 	const UI_CONFIGURATION_MENU_MYPLOT_SUPPORT = "ui.configuration-menu.myplot-support";
 	const UI_CONFIGURATION_MENU_AUTO_RELOAD = "ui.configuration-menu.auto-reload";
+	const UI_TREE_MENU_TITLE = "ui.tree-menu.title";
+	const UI_TREE_MENU_TRUNK_HEIGHT = "ui.tree-menu.trunk-height";
+	const UI_TREE_MENU_TRUNK_WIDTH = "ui.tree-menu.trunk-width";
+	const UI_TREE_MENU_MAX_BRANCH_LENGTH = "ui.tree-menu.max-branch-length";
+	const UI_TREE_MENU_TRUNK_BLOCKS = "ui.tree-menu.trunk-blocks";
+	const UI_TREE_MENU_LEAVES_BLOCKS = "ui.tree-menu.leaves-blocks";
+	const UI_TREE_MENU_LEAVES_CLUSTER_SIZE = "ui.tree-menu.leaves-cluster-size";
 	const LOG_LANGUAGE_AUTO_SELECTED = "log.language.auto-selected";
 	const LOG_LANGUAGE_USAGE = "log.language.usage";
 	const LOG_LANGUAGE_SELECTED = "log.language.selected";

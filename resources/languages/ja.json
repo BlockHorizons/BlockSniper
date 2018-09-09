@@ -113,6 +113,7 @@
 			"title": "BlockSniperメニュー",
 			"subtitle": "続行するにはボタンをクリックしてください。",
 			"brush": "ブラシ",
+			"tree": "Tree",
 			"config": "設定",
 			"presets": "プリセット",
 			"exit": "終了"
@@ -146,6 +147,15 @@
 			"auto-gui": "ホット・バー・スロットをブラシ項目を含むものに切り替えるときに、GUIを自動的に開きます。",
 			"myplot-support": "Whether to turn on MyPlot support or not",
 			"auto-reload": "このチェックをオンにすると、このウィンドウを閉じるときに自動的に設定が再読み込みされます"
+		},
+		"tree-menu": {
+			"title": "Tree Menu",
+			"trunk-height": "The height of the trunk of the tree",
+			"trunk-width": "The width of the tree at the bottom; The width decreases gradually upwards",
+			"max-branch-length": "The maximum length one of the branches of the tree can extend",
+			"trunk-blocks": "The blocks to use for the trunk of the tree",
+			"leaves-blocks": "The blocks to use for the leaves of the tree",
+			"leaves-cluster-size": "The size of the leaves cluster at the end of each branch"
 		}
 	},
 	"log": {
