@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\Brush;
+use pocketmine\block\Block;
 use pocketmine\block\Solid;
+use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\math\Vector3;
 use pocketmine\utils\Random;
@@ -35,6 +37,11 @@ class Tree{
 	private $tempVec;
 	/** @var TreeType */
 	private $type;
+
+	/** @var Vector3[] */
+	private $leavesCentres = [];
+
+	private $set = [];
 
 	public function __construct(Position $position, Brush $brush, TreeType $type){
 		$this->position = $position;
@@ -66,6 +73,11 @@ class Tree{
 		$this->position->y--;
 		foreach($this->buildBranch() as $block){
 			yield $block;
+		}
+		foreach($this->leavesCentres as $centre){
+			foreach($this->buildLeaves($centre) as $block){
+				yield $block;
+			}
 		}
 	}
 
@@ -107,6 +119,13 @@ class Tree{
 				if($xs + ($this->position->z - $z) ** 2 > $radiusSquared){
 					continue;
 				}
+				[$xInt, $yInt, $zInt] = [(int) floor($x), (int) floor($this->position->y), (int) floor($z)];
+				$bHash = Level::blockHash($xInt, $yInt, $zInt);
+				if(array_key_exists($bHash, $this->set)) {
+					continue;
+				}
+				$this->set[$bHash] = null;
+
 				[$this->tempVec->x, $this->tempVec->y, $this->tempVec->z] = [$x, $this->position->y, $z];
 				yield $this->position->level->getBlock($this->tempVec);
 				$bl = clone $this->trunkBlocks[array_rand($this->trunkBlocks)];
@@ -139,7 +158,6 @@ class Tree{
 			$branchWidth -= 0.05;
 
 			$radiusSquared = ($branchWidth / 2) ** 2 + 0.5;
-			$j = 0;
 			for($x = $maxX; $x >= $minX; $x--){
 				$xs = ($branchPos->x - $x) ** 2;
 				for($y = $maxY; $y >= $minY; $y--){
@@ -150,22 +168,24 @@ class Tree{
 							if($branchWidth < 0.1){
 								break;
 							}
+							[$xInt, $yInt, $zInt] = [(int) floor($x), (int) floor($y), (int) floor($z)];
+							$bHash = Level::blockHash($xInt, $yInt, $zInt);
+							if(array_key_exists($bHash, $this->set)) {
+								continue;
+							}
+							$this->set[$bHash] = null;
+
 							[$this->tempVec->x, $this->tempVec->y, $this->tempVec->z] = [$x, $y, $z];
 							yield $this->position->level->getBlock($this->tempVec);
+
 							$bl = clone $this->trunkBlocks[array_rand($this->trunkBlocks)];
 							$this->type->putBlock($this->tempVec, $bl->getId(), $bl->getDamage());
-							$j++;
 						}
 					}
 				}
 			}
-			if($j === 0){
-				break;
-			}
 		}
-		foreach($this->buildLeaves($branchPos) as $block){
-			yield $block;
-		}
+		$this->leavesCentres[] = $branchPos;
 	}
 
 	private function buildLeaves(Vector3 $branchEnd) : \Generator{
@@ -185,11 +205,12 @@ class Tree{
 					$zs = ($branchEnd->z - $z) ** 2;
 					if($xs + $ys + $zs - 0.5 < $radiusSquared){
 						[$this->tempVec->x, $this->tempVec->y, $this->tempVec->z] = [$x, $y, $z];
-						if(($block = $this->position->level->getBlock($this->tempVec)) instanceof Solid){
+						$block = $this->position->level->getBlock($this->tempVec);
+						if($block->getId() !== Block::AIR){
 							continue;
 						}
 						if(mt_rand(0, 4) === 0){
-							yield($block);
+							yield $block;
 							$bl = clone $this->leavesBlocks[array_rand($this->leavesBlocks)];
 							$this->type->putBlock($this->tempVec, $bl->getId(), $bl->getDamage());
 						}
