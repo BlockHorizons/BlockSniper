@@ -1,10 +1,8 @@
 # BlockSniper<a href="https://github.com/BlockHorizons/BlockSniper"><img src="https://github.com/BlockHorizons/BlockSniper/blob/master/resources/BlockSniperLogo.png" width="60" height="60" align="right"></a>
 
-An innovative brush world editing tool, made for PocketMine-MP: A Minecraft server software written in PHP.
+An innovative brush world editing tool for PocketMine-MP: A Minecraft server software written in PHP.
 
-> Third party versions, forks or spoons of PocketMine are **not** supported.
-> 
-> Issues related to other server softwares will be closed immediately.
+---
 
 ### Overview
 BlockSniper is an advanced world editing tool, based on the idea of VoxelSniper from Minecraft PC softwares.
@@ -52,3 +50,7 @@ BlockHorizons can be contacted in the Discord server below.
 <br><br>
 
 [![Chat](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/YynM57V)
+
+<br>
+
+###### Please note that third party modified versions of PocketMine-MP are not supported. Issues caused by them are closed immediately.
