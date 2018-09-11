@@ -62,15 +62,23 @@ use pocketmine\level\Position;
     
 class MyShape extends BaseShape {
 	
+	/**
+     * ID is a unique ID for this shape. Unless it is intended to replace an existing shape,
+     * you should check for existing shapes to find which IDs are free to use.
+     */
 	const ID = 5;
     
-    /*
-     * This function should return an array containing the blocks collected in the shape.
+    /**
+     * getBlocksInside should return a generator containing the blocks collected in the shape.
+     * If $vectorOnly is true, the generator should yield only Vector3s.
      */
-    public function getBlocksInside(bool $partially = false, int $blocksPerTick = 100): array {
+    public function getBlocksInside(bool $vectorOnly = false): \Generator {
         return [];
     }
     
+    /**
+     * getName should return the name of the shape as seen in the brush UI.
+     */
     public function getName(): string {
         return "";
     }
@@ -100,36 +108,48 @@ Registering new types is very similar to the registering of types. Only a couple
 namespace MyPlugin\MyTypes;
     
 use BlockHorizons\BlockSniper\brush\BaseType;
-use pocketmine\level\Level;
+use pocketmine\level\ChunkManager;
 use pocketmine\Player;
     
 class MyType extends BaseType {
 	
-    public function __construct(Player $player, Level $level, array $blocks) {
+    public function __construct(Player $player, ChunkManager $level, \Generator $blocks) {
         parent::__construct($player, $level, $blocks);
     }
     
-    /*
-     * This function should return an array containing the undo blocks.
+    /**
+     * fillSynchronously should return an generator yielding the undo blocks.
      */
-    public function fillSynchronously(): array {
+    public function fillSynchronously(): \Generator {
+    	foreach($this->blocks as $block){
+    		// Yield the block before it is changed.
+    		yield $block;
+    		// Set the block to dirt.
+    		$this->putBlock($block, 3, 0);
+    	}
         return [];
     }
     
-    /*
-     * This function is optional, and could be left if the function below is added.
+    /**
+     * fillAsynchronously is optional, and could be left if the function below is added.
+     * $this->blocks will have a list of Vector3s, and $this->level is a BlockSniperChunkManager
+     * instead of a level.
      */
     public function fillAsynchronously(): void {
         
     }
     
-    /*
-     * The function to specify whether this type can be executed asynchronously or not.
+    /**
+     * canBeExecutedAsynchronously specifies whether this type can be executed asynchronously or not.
      */
     public function canBeExecutedAsynchronously(): bool {
         return false;
     }
     
+    /**
+     * getName returns the name to show up in the brush UI. Can have spaces or other
+     * otherwise weird characters.
+     */
     public function getName(): string {
         return "";
     }
@@ -151,11 +171,10 @@ if(($session = \BlockHorizons\BlockSniper\sessions\SessionManager::getPlayerSess
     return false;
 }
 $brush = $session->getBrush();
-$brush->setSize(10);
-$brush->setHollow();
+$brush->size = 10;
+$brush->hollow = true;
 ?>
 ```
-Make sure to check if the brush obtained from BrushManager::get() is a Brush object, and not null, which will happen if the player has no brush initialized.
 
 <br><br>
 
