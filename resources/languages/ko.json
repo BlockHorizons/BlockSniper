@@ -161,7 +161,7 @@
 	},
 	"log": {
 		"language": {
-			"auto-selected": "[BlockSniper] 올바른 언어가 선택되지 않았습니다. 영어가 자동 설정되었습니다.",
+			"auto-selected": "[BlockSniper] 올바른 언어가 선택되지 않았습니다. 영어가 자동 선택되었습니다.",
 			"usage": "게임 내에서 /b를 사용해서 구성 탭으로 이동해서 언어를 선택해주세요.",
 			"selected": "[BlockSniper] 선택된 언어: "
 		},
