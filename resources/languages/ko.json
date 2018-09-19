@@ -147,7 +147,7 @@
 			"session-timeout-time": "서버를 떠난 후에 플레이어의 세션이 제거될 시간(분)",
 			"auto-gui": "브러시 아이템을 포함하고 있는 단축바 슬롯으로 전환할 때 자동으로 GUI 열기",
 			"myplot-support": "MyPlot 지원을 켤지 말지 여부",
-			"auto-reload": "이 토글을 키면 창을 닫을 때 자동으로 구성을 새로 고칩니다"
+			"auto-reload": "이 토글을 켜면 창을 닫을 때 자동으로 구성을 새로 고칩니다"
 		},
 		"tree-menu": {
 			"title": "나무 메뉴",
