@@ -111,7 +111,7 @@
 		},
 		"main-menu": {
 			"title": "Menu BlockSniper",
-			"subtitle": "Cliquez sur un bouton pour continuer.",
+			"subtitle": "Cliquez sur un bouton pour continuer",
 			"brush": "pinceau (Brush)",
 			"tree": "Tree",
 			"config": "Configuration",

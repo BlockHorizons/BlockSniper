@@ -111,7 +111,7 @@
 		},
 		"main-menu": {
 			"title": "BlockSniper 菜單",
-			"subtitle": "點擊一個按鈕以繼續。",
+			"subtitle": "點擊一個按鈕以繼續",
 			"brush": "畫筆選項",
 			"tree": "Tree",
 			"config": "設置",

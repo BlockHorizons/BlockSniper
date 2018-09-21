@@ -111,7 +111,7 @@
 		},
 		"main-menu": {
 			"title": "BlockSniper Menu",
-			"subtitle": "Klik een knop om door te gaan.",
+			"subtitle": "Klik een knop om door te gaan",
 			"brush": "Verf",
 			"tree": "Boom",
 			"config": "Configuratie",
