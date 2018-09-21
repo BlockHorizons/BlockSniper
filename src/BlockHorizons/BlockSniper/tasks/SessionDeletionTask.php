@@ -8,7 +8,7 @@ use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\PlayerSession;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 
-class SessionDeletionTask extends BaseTask{
+class SessionDeletionTask extends BlockSniperTask{
 
 	/** @var PlayerSession */
 	private $session;

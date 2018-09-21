@@ -7,7 +7,7 @@ namespace BlockHorizons\BlockSniper\tasks;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\scheduler\Task;
 
-abstract class BaseTask extends Task{
+abstract class BlockSniperTask extends Task{
 
 	/** @var Loader */
 	protected $loader = null;

@@ -31,14 +31,12 @@ class PlayerSession extends Session implements \JsonSerializable{
 				try{
 					Unmarshal::json($data, $this->brush);
 					$this->loader->getLogger()->debug("Brush recovered:" . $data);
+
+					return true;
 				}catch(DecodeException $exception){
 					$this->loader->getLogger()->logException($exception);
-
-					return false;
 				}
 			}
-
-			return true;
 		}
 
 		return false;

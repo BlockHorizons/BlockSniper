@@ -175,10 +175,10 @@ class Loader extends PluginBase{
 	}
 
 	private function registerListeners() : void{
-		$blockSniperListeners = [
+		$listeners = [
 			new BrushListener($this),
 		];
-		foreach($blockSniperListeners as $listener){
+		foreach($listeners as $listener){
 			$this->getServer()->getPluginManager()->registerEvents($listener, $this);
 		}
 	}

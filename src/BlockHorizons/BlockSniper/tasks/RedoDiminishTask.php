@@ -7,7 +7,7 @@ namespace BlockHorizons\BlockSniper\tasks;
 use BlockHorizons\BlockSniper\revert\Revert;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 
-class RedoDiminishTask extends BaseTask{
+class RedoDiminishTask extends BlockSniperTask{
 
 	public function onRun(int $currentTick) : void{
 		foreach($this->loader->getServer()->getOnlinePlayers() as $player){
