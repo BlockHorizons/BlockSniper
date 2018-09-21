@@ -2,66 +2,66 @@
 	"commands": {
 		"common": {
 			"warning-prefix": "[경고] ",
-			"invalid-sender": "이 명령은 플레이어로만 실행할 수 있습니다.",
-			"no-permission": "이 명령을 실행할 수있는 권한이 없습니다."
+			"invalid-sender": "이 명령어는 플레이어로만 실행할 수 있습니다.",
+			"no-permission": "이 명령어를 실행할 수 있는 권한이 없습니다."
 		},
 		"brush": {
-			"description": "BlockSniper 용 GUI를 엽니 다."
+			"description": "BlockSniper의 GUI를 엽니다."
 		},
 		"blocksniper": {
-			"description": "BlockSniper에 대한 정보를 표시하거나 플러그인을 다시로드합니다.",
+			"description": "BlockSniper에 대한 정보를 표시하거나, 플러그인을 새로 고칩니다.",
 			"info": "정보",
 			"version": "버전: ",
 			"organisation": "조직: ",
-			"authors": "저자: ",
-			"target-api": "타겟 API: ",
-			"reload": "BlockSniper 다시로드 중 ..."
+			"authors": "작성자: ",
+			"target-api": "대상 API: ",
+			"reload": "BlockSniper를 새로 고치는 중입니다..."
 		},
 		"redo": {
-			"description": "마지막으로 실행 취소 한 BlockSniper 수정 사항을 다시 실행합니다.",
-			"no-redo": "재실행 할 수정 사항을 찾을 수 없습니다.",
-			"success": "마지막으로 실행 취소 한 수정을 다시 실행했습니다."
+			"description": "마지막으로 실행 취소한 BlockSniper 수정 사항을 다시 실행합니다.",
+			"no-redo": "다시 실행할 수정 사항을 찾을 수 없습니다.",
+			"success": "마지막으로 실행 취소한 수정 사항을 성공적으로 다시 실행했습니다."
 		},
 		"undo": {
-			"description": "마지막 BlockSniper 수정을 취소합니다.",
-			"no-undo": "취소 할 수정 사항을 찾을 수 없습니다.",
-			"success": "마지막 수정을 성공적으로 취소했습니다."
+			"description": "마지막으로 실행한 BlockSniper 수정 사항을 실행 취소합니다.",
+			"no-undo": "실행 취소할 수정 사항을 찾을 수 없습니다.",
+			"success": "마지막 수정 사항을 성공적으로 취소했습니다."
 		},
 		"clone": {
-			"description": "지정된 형식을 사용하여 영역을 복제합니다.",
+			"description": "지정된 포맷을 사용해서 영역을 복제합니다.",
 			"copy": {
-				"success": "보았던 위치를 복사했습니다."
+				"success": "보았던 위치를 성공적으로 복사했습니다."
 			},
 			"template": {
-				"missing-name": "템플리트에 유효한 이름이 지정되지 않았습니다.",
-				"success": "템플릿 파일을 %s에 저장했습니다."
+				"missing-name": "견본에 올바른 이름이 입력되지 않았습니다.",
+				"success": "견본 파일을 %s에 성공적으로 저장했습니다."
 			},
 			"schematic": {
-				"missing-name": "설계도에 유효한 이름이 지정되지 않았습니다.",
-				"success": "%s에 대한 설계도 파일을 저장했습니다."
+				"missing-name": "개략도에 올바른 이름이 입력되지 않았습니다.",
+				"success": "개략도 파일을 %s에 성공적으로 저장했습니다."
 			}
 		},
 		"paste": {
-			"description": "이전에 복제 된 영역을 세계에 붙여 넣습니다.",
+			"description": "이전에 복제한 영역을 세계에 붙여넣습니다.",
 			"copy": {
-				"no-copies": "붙여 넣기 할 수있는 사본이 없습니다.",
-				"success": "보았던 위치에 사본을 붙여 넣었습니다."
+				"no-copies": "붙여넣을 복사본을 찾을 수 없습니다.",
+				"success": "보았던 위치에 복사본을 성공적으로 붙여넣었습니다."
 			},
 			"template": {
-				"nonexistent": "%s 템플릿을 템플릿 디렉토리에서 찾을 수 없습니다.",
-				"success": "보았던 위치에 %s 템플릿을 붙여 넣었습니다."
+				"nonexistent": "견본 디렉터리에서 %s 견본을 찾을 수 없습니다.",
+				"success": "보았던 위치에 %s 견본을 성공적으로 붙여넣었습니다."
 			},
 			"schematic": {
-				"nonexistent": "디렉토리에서%s을(를) 찾을 수 없습니다.",
-				"success": "위치에 있는%s의 회로도를 성공적으로 붙였습니다."
+				"nonexistent": "개략도 디렉터리에서 %s 개략도를 찾을 수 없습니다.",
+				"success": "보았던 위치에 %s 개략도를 성공적으로 붙여넣었습니다."
 			}
 		}
 	},
 	"ui": {
 		"preset-menu": {
 			"title": "사전 설정 메뉴",
-			"subtitle": "계속하려면 버튼을 클릭하십시오.",
-			"create": "생성",
+			"subtitle": "계속하려면 버튼을 클릭하세요",
+			"create": "만들기",
 			"delete": "삭제",
 			"select": "선택",
 			"list": "목록",
@@ -69,144 +69,144 @@
 		},
 		"preset-edit": {
 			"title": "사전 설정 편집 메뉴",
-			"name": "프리셋 이름",
+			"name": "사전 설정 이름",
 			"size": "브러시 크기",
-			"shape": "브러시 모양",
-			"type": "브러시 타입",
-			"hollow": "할로우 브러쉬",
-			"decrement": "브러쉬 제거",
+			"shape": "브러시 도형",
+			"type": "브러시 종류",
+			"hollow": "빈 브러시",
+			"decrement": "감소 브러시",
 			"height": "브러시 높이",
-			"perfect": "브러시 모양 마무리",
-			"blocks": "브러시 블럭",
+			"perfect": "브러시 도형 완벽",
+			"blocks": "브러시 블록",
 			"obsolete": "쓸모없는 블록",
-			"biome": "브러시 바이옴",
+			"biome": "브러시 생물군계",
 			"tree": "브러시 나무"
 		},
 		"preset-selection": {
 			"title": "사전 설정 선택 메뉴",
-			"subtitle": "미리 설정을 적용하려면 버튼을 클릭하십시오."
+			"subtitle": "사전 설정을 적용하려면 버튼을 클릭하세요"
 		},
 		"preset-deletion": {
-			"title": "프리셋 삭제 메뉴",
-			"subtitle": "미리 설정을 삭제하려면 버튼을 클릭하십시오."
+			"title": "사전 설정 삭제 메뉴",
+			"subtitle": "사전 설정을 삭제하려면 버튼을 클릭하세요"
 		},
 		"preset-list": {
 			"title": "사전 설정 목록 메뉴",
-			"subtitle": "미리보기를 편집 /보기하려면 버튼을 클릭하십시오."
+			"subtitle": "사전 설정을 편집/보려면 버튼을 클릭하세요"
 		},
 		"preset-creation": {
-			"title": "프리셋 생성 메뉴",
-			"name": "프리셋 이름",
+			"title": "사전 설정 만들기 메뉴",
+			"name": "사전 설정 이름",
 			"size": "브러시 크기",
-			"shape": "브러시 모양",
-			"type": "브러시 타입",
-			"hollow": "할로우 브러쉬",
-			"decrement": "브러쉬 제거",
+			"shape": "브러시 도형",
+			"type": "브러시 종류",
+			"hollow": "빈 브러시",
+			"decrement": "감소 브러시",
 			"height": "브러시 높이",
-			"perfect": "브러시 모양 마무리",
-			"blocks": "브러시 블럭",
-			"obsolete": "O쓸모없는 블록",
-			"biome": "쓸모없는 블록",
+			"perfect": "브러시 도형 완벽",
+			"blocks": "브러시 블록",
+			"obsolete": "쓸모없는 블록",
+			"biome": "브러시 생물군계",
 			"tree": "브러시 나무"
 		},
 		"main-menu": {
 			"title": "BlockSniper 메뉴",
-			"subtitle": "계속하려면 버튼을 클릭하십시오.",
+			"subtitle": "계속하려면 버튼을 클릭하세요.",
 			"brush": "브러시",
-			"tree": "Tree",
+			"tree": "나무",
 			"config": "구성",
-			"presets": "프리셋",
-			"global-brush": "광범위한 브러쉬",
+			"presets": "사전 설정",
+			"global-brush": "전역 브러시",
 			"exit": "나가기"
 		},
 		"brush-menu": {
-			"title": "Brush 메뉴",
+			"title": "브러시 메뉴",
 			"size": "브러시 크기",
-			"shape": "브러시 모양",
-			"type": "브러시 타입",
-			"hollow": "할로우 브러쉬",
-			"decrement": "브러쉬 제거",
+			"shape": "브러시 도형",
+			"type": "브러시 종류",
+			"hollow": "빈 브러시",
+			"decrement": "감소 브러시",
 			"height": "브러시 높이",
-			"perfect": "브러시 모양 마무리",
-			"blocks": "브러시 블럭",
-			"obsolete": "O쓸모없는 블록",
-			"biome": "쓸모없는 블록",
+			"perfect": "브러시 도형 완벽",
+			"blocks": "브러시 블록",
+			"obsolete": "쓸모없는 블록",
+			"biome": "브러시 생물군계",
 			"tree": "브러시 나무"
 		},
 		"configuration-menu": {
 			"title": "BlockSniper 구성",
-			"auto-update": "새 버전이 발견되면 자동으로 구성 파일을 업데이트합니다.",
+			"auto-update": "새로운 버전을 찾았을 때 자동으로 구성 파일 업데이트",
 			"language": "BlockSniper 관련 메시지를 보내는 데 사용되는 언어",
-			"brush-item": "브러시하는 데 사용되는 항목의 항목 ID",
-			"max-brush-size": "브러시의 절대 최대 크기",
-			"min-async-size": "비동기 브러쉬 크기 제한. 브러쉬 크기가 이보다 크면 작업이 비동기 적으로 실행됩니다",
-			"max-reverts": "저장할 Undo / Redo 저장의 최대량. 이전 버전은 자동으로 정리됩니다.",
-			"reset-decrement-brush": "감소 브러시를 초기 시작 크기로 자동 재설정",
-			"save-brush": "서버 재시작시 플레이어의 브러시 속성 저장",
-			"drop-plants": "드래프러/블로워 타입의 destrow를 제거한 후 LeafBlowertype으로 멀리 떨어져 있습니다.",
-			"session-timeout-time": "The time in minutes after which the session of a player is removed after leaving the server",
-			"auto-gui": "핫 바 슬롯을 브러시 항목을 포함하는 것으로 전환 할 때 GUI를 자동으로 엽니다.",
-			"myplot-support": "MyPlot지원을 사용할지 여부",
-			"auto-reload": "이 창을 닫을 때이 토글을 켜면 구성이 자동으로 다시로드됩니다."
+			"brush-item": "브러시에 사용되는 아이템의 ID",
+			"max-brush-size": "브러시의 절대적 최대 크기",
+			"min-async-size": "비동기 브러시 크기 제한입니다. 브러시 크기가 이보다 크다면, 작업이 비동기적으로 실행됩니다",
+			"max-reverts": "저장할 실행 취소/다시 실행 보관의 최대량입니다. 이전 것들은 자동으로 비워집니다",
+			"reset-decrement-brush": "초기 실행 크기로 감소 브러시 자동으로 초기화",
+			"save-brush": "서버 다시 시작 시에 플레이어의 브러시 속성 저장",
+			"drop-plants": "낙엽청소기 유형으로 파괴된/청소된 식물 아이템 떨어뜨리기",
+			"session-timeout-time": "서버를 떠난 후에 플레이어의 세션이 제거될 시간(분)",
+			"auto-gui": "브러시 아이템을 포함하고 있는 단축바 슬롯으로 전환할 때 자동으로 GUI 열기",
+			"myplot-support": "MyPlot 지원을 켤지 말지 여부",
+			"auto-reload": "이 토글을 켜면 창을 닫을 때 자동으로 구성을 새로 고칩니다"
 		},
 		"tree-menu": {
-			"title": "Tree Menu",
-			"trunk-height": "The height of the trunk of the tree",
-			"trunk-width": "The width of the tree at the bottom; The width decreases gradually upwards",
-			"max-branch-length": "The maximum length one of the branches of the tree can extend",
-			"trunk-blocks": "The blocks to use for the trunk of the tree",
-			"leaves-blocks": "The blocks to use for the leaves of the tree",
-			"leaves-cluster-size": "The size of the leaves cluster at the end of each branch"
+			"title": "나무 메뉴",
+			"trunk-height": "나무의 몸통 크기",
+			"trunk-width": "하단의 나무 폭입니다, 폭은 위로 갈수록 점차 감소합니다",
+			"max-branch-length": "나무의 가지가 늘어날 수 있는 최대 길이",
+			"trunk-blocks": "나무의 몸통으로 사용할 블록",
+			"leaves-blocks": "나무의 잎으로 사용할 블록",
+			"leaves-cluster-size": "각 가지 끝의 잎 무리의 크기"
 		}
 	},
 	"log": {
 		"language": {
-			"auto-selected": "[BlockSniper] 유효한 언어가 선택되지 않았습니다. 영어가 자동으로 선택되었습니다",
-			"usage": "/b를 사용하여 게임의 구성 탭으로 이동하여 언어를 선택하십시오.",
-			"selected": "[BlockSniper] 선택한 언어: "
+			"auto-selected": "[BlockSniper] 올바른 언어가 선택되지 않았습니다. 영어가 자동 선택되었습니다.",
+			"usage": "게임 내에서 /b를 사용해서 구성 탭으로 이동해서 언어를 선택해주세요.",
+			"selected": "[BlockSniper] 선택된 언어: "
 		},
 		"brush": {
 			"restored": "플레이어 %s의 브러시가 복원되었습니다.",
 			"all-restored": "모든 브러시가 복원되었습니다."
 		},
 		"presets": {
-			"loaded": "프리셋 %s이(가) 로드되었습니다.",
-			"all-loaded": "모든 프리셋이로드되었습니다."
+			"loaded": "%s 사전 설정이 불러와졌습니다.",
+			"all-loaded": "모든 사전 설정이 불러와졌습니다."
 		},
 		"reload": {
-			"start": "[BlockSniper] 다시로드 중 ...",
-			"finish": "[BlockSniper] 다시로드가 완료되었습니다."
+			"start": "[BlockSniper] 새로 고치는 중입니다...",
+			"finish": "[BlockSniper] 새로 고침을 완료했습니다."
 		}
 	},
 	"brush": {
 		"shape": {
-			"cube": "큐브",
-			"cuboid": "쿠보이드",
+			"cube": "정육면체",
+			"cuboid": "직육면체",
 			"sphere": "구",
-			"cylinder": "원통"
+			"cylinder": "원기둥"
 		},
 		"type": {
-			"biome": "바이옴",
-			"cleanentities": "엔티티 청소",
+			"biome": "생물군계",
+			"cleanentities": "개체 청소",
 			"clean": "청소",
-			"drain": "Drain",
-			"expand": "넓히다",
-			"fill": "채우다",
-			"flattenall": "모두 ",
-			"flatten": "평지화",
-			"layer": "층",
-			"leafblower": "Leaf Blower",
+			"drain": "액체 빼기",
+			"expand": "늘리기",
+			"fill": "채우기",
+			"flattenall": "모두 평평하게 하기",
+			"flatten": "평평하게 하기",
+			"layer": "레이어",
+			"leafblower": "낙엽 청소기",
 			"melt": "녹이기",
-			"overlay": "Overlay",
-			"replaceall": "모두 재배치",
-			"replace": "재배치",
-			"snowcone": "Snowcone",
-			"toplayer": "상단 레이어",
+			"overlay": "덮어씌우기",
+			"replaceall": "모두 바꾸기",
+			"replace": "바꾸기",
+			"snowcone": "스노우콘",
+			"toplayer": "표면 레이어",
 			"tree": "나무",
-			"regenerate": "Regenerate",
-			"freeze": "Freeze",
-			"warm": "Warm",
-			"heat": "Heat"
+			"regenerate": "다시 생성",
+			"freeze": "얼리기",
+			"warm": "따뜻하게 하기",
+			"heat": "뜨겁게 하기"
 		}
 	}
 }
