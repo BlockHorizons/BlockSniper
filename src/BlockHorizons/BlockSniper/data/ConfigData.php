@@ -6,6 +6,7 @@ namespace BlockHorizons\BlockSniper\data;
 
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\item\Item;
+use pocketmine\item\ItemIds;
 use Sandertv\Marshal\DecodeException;
 use Sandertv\Marshal\FileNotFoundException;
 use Sandertv\Marshal\Marshal;
@@ -29,6 +30,11 @@ class ConfigData{
 	 * @marshal Brush Item
 	 */
 	public $brushItem;
+	/**
+	 * @var BrushItem
+	 * @marshal Selection Item
+	 */
+	public $selectionItem;
 	/**
 	 * @var int
 	 * @marshal Maximum Size
@@ -77,6 +83,9 @@ class ConfigData{
 
 	public function __construct(Loader $loader){
 		$this->brushItem = new BrushItem();
+		$this->selectionItem = new BrushItem();
+		$this->selectionItem->itemId = ItemIds::GLOWSTONE_DUST;
+
 		$this->filePath = $loader->getDataFolder() . "config.yml";
 
 		try{

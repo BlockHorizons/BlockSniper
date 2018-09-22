@@ -92,6 +92,9 @@ class Translation{
 	const UI_BRUSH_MENU_SIZE = "ui.brush-menu.size";
 	const UI_BRUSH_MENU_SHAPE = "ui.brush-menu.shape";
 	const UI_BRUSH_MENU_TYPE = "ui.brush-menu.type";
+	const UI_BRUSH_MENU_MODE_DESCRIPTION = "ui.brush-menu.mode.description";
+	const UI_BRUSH_MENU_MODE_BRUSH = "ui.brush-menu.mode.brush";
+	const UI_BRUSH_MENU_MODE_SELECTION = "ui.brush-menu.mode.selection";
 	const UI_BRUSH_MENU_HOLLOW = "ui.brush-menu.hollow";
 	const UI_BRUSH_MENU_DECREMENT = "ui.brush-menu.decrement";
 	const UI_BRUSH_MENU_HEIGHT = "ui.brush-menu.height";
@@ -104,6 +107,7 @@ class Translation{
 	const UI_CONFIGURATION_MENU_AUTO_UPDATE = "ui.configuration-menu.auto-update";
 	const UI_CONFIGURATION_MENU_LANGUAGE = "ui.configuration-menu.language";
 	const UI_CONFIGURATION_MENU_BRUSH_ITEM = "ui.configuration-menu.brush-item";
+	const UI_CONFIGURATION_MENU_SELECTION_ITEM = "ui.configuration-menu.selection-item";
 	const UI_CONFIGURATION_MENU_MAX_BRUSH_SIZE = "ui.configuration-menu.max-brush-size";
 	const UI_CONFIGURATION_MENU_MIN_ASYNC_SIZE = "ui.configuration-menu.min-async-size";
 	const UI_CONFIGURATION_MENU_MAX_REVERTS = "ui.configuration-menu.max-reverts";
@@ -130,6 +134,8 @@ class Translation{
 	const LOG_PRESETS_ALL_LOADED = "log.presets.all-loaded";
 	const LOG_RELOAD_START = "log.reload.start";
 	const LOG_RELOAD_FINISH = "log.reload.finish";
+	const BRUSH_SELECTION_FIRST = "brush.selection.first";
+	const BRUSH_SELECTION_SECOND = "brush.selection.second";
 	const BRUSH_SHAPE_CUBE = "brush.shape.cube";
 	const BRUSH_SHAPE_CUBOID = "brush.shape.cuboid";
 	const BRUSH_SHAPE_SPHERE = "brush.shape.sphere";

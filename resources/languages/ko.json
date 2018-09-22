@@ -124,6 +124,11 @@
 			"size": "브러시 크기",
 			"shape": "브러시 도형",
 			"type": "브러시 종류",
+			"mode": {
+				"description": "Brush Mode",
+				"brush": "Brush",
+				"selection": "Selection"
+			},
 			"hollow": "빈 브러시",
 			"decrement": "감소 브러시",
 			"height": "브러시 높이",
@@ -138,6 +143,7 @@
 			"auto-update": "새로운 버전을 찾았을 때 자동으로 구성 파일 업데이트",
 			"language": "BlockSniper 관련 메시지를 보내는 데 사용되는 언어",
 			"brush-item": "브러시에 사용되는 아이템의 ID",
+			"selection-item": "Item ID of the item that is used to select",
 			"max-brush-size": "브러시의 절대적 최대 크기",
 			"min-async-size": "비동기 브러시 크기 제한입니다. 브러시 크기가 이보다 크다면, 작업이 비동기적으로 실행됩니다",
 			"max-reverts": "저장할 실행 취소/다시 실행 보관의 최대량입니다. 이전 것들은 자동으로 비워집니다",
@@ -179,6 +185,10 @@
 		}
 	},
 	"brush": {
+		"selection": {
+			"first": "Position 1 set to:",
+			"second": "Position 2 set to:"
+		},
 		"shape": {
 			"cube": "정육면체",
 			"cuboid": "직육면체",

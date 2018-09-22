@@ -19,19 +19,24 @@ abstract class Session{
 	protected $sessionOwner = null;
 	/** @var string */
 	protected $dataFile = "";
+	/** @var Loader */
+	protected $loader;
+
 	/** @var Brush */
 	protected $brush = null;
+	/** @var Selection */
+	protected $selection = null;
 	/** @var RevertStore */
 	protected $revertStore = null;
 	/** @var CloneStore */
 	protected $cloneStore = null;
-	/** @var Loader */
-	protected $loader;
 
 	public function __construct(ISessionOwner $sessionOwner, Loader $loader){
 		$this->sessionOwner = $sessionOwner;
 		$this->revertStore = new RevertStore($loader->config->maxRevertStores);
 		$this->cloneStore = new CloneStore($this, $loader->getDataFolder());
+		$this->selection = new Selection();
+
 		$this->loader = $loader;
 		if($this->initializeBrush()){
 			$loader->getLogger()->debug(Translation::get(Translation::LOG_BRUSH_RESTORED, [$this->getSessionOwner()->getName()]));
@@ -76,5 +81,12 @@ abstract class Session{
 	 */
 	public function getCloneStore() : CloneStore{
 		return $this->cloneStore;
+	}
+
+	/**
+	 * @return Selection
+	 */
+	public function getSelection() : Selection {
+		return $this->selection;
 	}
 }

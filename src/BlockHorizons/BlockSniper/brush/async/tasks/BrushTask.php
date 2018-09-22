@@ -13,9 +13,10 @@ use pocketmine\block\Block;
 use pocketmine\level\format\Chunk;
 use pocketmine\level\Level;
 use pocketmine\math\Vector2;
+use pocketmine\scheduler\AsyncTask;
 use pocketmine\Server;
 
-class BrushTask extends AsyncBlockSniperTask{
+class BrushTask extends AsyncTask{
 
 	/** @var BaseShape */
 	private $shape = null;
@@ -48,14 +49,12 @@ class BrushTask extends AsyncBlockSniperTask{
 		$vectorsInside = $shape->getBlocksInside(true);
 		$manager = BaseType::establishChunkManager($chunks);
 
-		$type->setBlocksInside($this->blocks($vectorsInside, $shape, $chunks))->setAsynchronous()->setChunkManager($manager)->fillShape(unserialize($this->plotPoints, ["allowed_classes" => [Vector2::class]]));
+		$type->setBlocksInside($this->blocks($vectorsInside, $chunks))->setAsynchronous()->setChunkManager($manager)->fillShape(unserialize($this->plotPoints, ["allowed_classes" => [Vector2::class]]));
 
 		$this->setResult(compact("undoChunks", "chunks"));
 	}
 
-	private function blocks(\Generator $vectorsInside, BaseShape $shape, array $chunks) : \Generator{
-		$i = $processedBlocks = 0;
-		$percentageBlocks = $shape->getApproximateProcessedBlocks();
+	private function blocks(\Generator $vectorsInside, array $chunks) : \Generator{
 		foreach($vectorsInside as $vector3){
 			$index = Level::chunkHash($vector3->x >> 4, $vector3->z >> 4);
 
@@ -63,15 +62,6 @@ class BrushTask extends AsyncBlockSniperTask{
 			$block = Block::get($chunks[$index]->getBlockId($pos[0], $pos[1], $pos[2]), $chunks[$index]->getBlockData($pos[0], $pos[1], $pos[2]));
 			$block->setComponents($vector3->x, $vector3->y, $vector3->z);
 			yield $block;
-
-			++$processedBlocks;
-			if(++$i === $percentageBlocks){ // This is messed up with hollow shapes. Got to find a fix for that.
-				if($this->isAborted()){
-					return;
-				}
-				$this->publishProgress(ceil($processedBlocks / $shape->getApproximateProcessedBlocks() * 100) . "%");
-				$i = 0;
-			}
 		}
 	}
 
@@ -97,17 +87,15 @@ class BrushTask extends AsyncBlockSniperTask{
 		/** @var Chunk[] $chunks */
 		$chunks = $result["chunks"];
 		$undoChunks = $result["undoChunks"];
-		$level = $server->getLevel($this->shape->getLevelId());
+		$level = $this->shape->getLevel();
 
 		foreach($undoChunks as &$undoChunk){
 			$undoChunk = Chunk::fastDeserialize($undoChunk);
 		}
 		unset($undoChunk);
 
-		if($level instanceof Level){
-			foreach($chunks as $hash => $chunk){
-				$level->setChunk($chunk->getX(), $chunk->getZ(), $chunk, false);
-			}
+		foreach($chunks as $hash => $chunk){
+			$level->setChunk($chunk->getX(), $chunk->getZ(), $chunk, false);
 		}
 
 		SessionManager::getPlayerSession($player)->getRevertStore()->saveRevert(new AsyncUndo($chunks, $undoChunks, $player->getName(), $player->getLevel()->getId()));

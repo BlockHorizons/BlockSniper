@@ -123,6 +123,11 @@
 			"size": "大きさ",
 			"shape": "形",
 			"type": "種類",
+			"mode": {
+				"description": "Brush Mode",
+				"brush": "Brush",
+				"selection": "Selection"
+			},
 			"hollow": "空洞",
 			"decrement": "デクリメント",
 			"height": "高さ",
@@ -137,6 +142,7 @@
 			"auto-update": "新しいバージョンが見つかったときに設定ファイルを自動的に更新する",
 			"language": "BlockSniperのメッセージ送信に使用する言語",
 			"brush-item": "ブラシに使用するアイテムのID",
+			"selection-item": "Item ID of the item that is used to select",
 			"max-brush-size": "ブラシの最大サイズ",
 			"min-async-size": "非同期ブラシサイズの制限。ブラシのサイズがこれより大きい場合、操作は非同期に実行されます。",
 			"max-reverts": "やり直しの保存の最大量。古いものは自動的に削除されます。",
@@ -178,6 +184,10 @@
 		}
 	},
 	"brush": {
+		"selection": {
+			"first": "Position 1 set to:",
+			"second": "Position 2 set to:"
+		},
 		"shape": {
 			"cube": "立方体",
 			"cuboid": "直方体",

@@ -124,6 +124,11 @@
 			"size": "Verf Grootte",
 			"shape": "Verf Vorm",
 			"type": "Verf Type",
+			"mode": {
+				"description": "Brush Mode",
+				"brush": "Brush",
+				"selection": "Selection"
+			},
 			"hollow": "Holle Verf",
 			"decrement": "Verkleinende Verf",
 			"height": "Verf Hoogte",
@@ -138,6 +143,7 @@
 			"auto-update": "Update automatisch als een nieuwe update wordt gevonden",
 			"language": "Taal waarin BlockSniper berichten worden weergeven",
 			"brush-item": "ID van het voorwerp waarmee er wordt geverft",
+			"selection-item": "ID van het voorwerp waarmee een selectie wordt gemaakt",
 			"max-brush-size": "De absolute maximale verf grootte",
 			"min-async-size": "Asynchrone verf limiet. Als de verf grootte groter is dan dit, worden operaties asynchroon gedaan",
 			"max-reverts": "De maximale hoeveelheid van ongedaanmakingen. Oudere ongedaanmakingen worden vanzelf verwijderd",
@@ -179,6 +185,10 @@
 		}
 	},
 	"brush": {
+		"selection": {
+			"first": "Positie 1 gezet naar:",
+			"second": "Positie 2 gezet naar:"
+		},
 		"shape": {
 			"cube": "Kubus",
 			"cuboid": "Balk",

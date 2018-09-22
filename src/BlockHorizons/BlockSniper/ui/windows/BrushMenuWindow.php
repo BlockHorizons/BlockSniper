@@ -20,11 +20,14 @@ class BrushMenuWindow extends CustomWindow{
 		$this->addSlider($this->t(Translation::UI_BRUSH_MENU_SIZE), 0, $loader->config->maxSize, 1, $b->size, function(Player $player, float $value) use ($b){
 			$b->size = (int) $value;
 		});
-		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_SHAPE), $this->processShapes($requester), $b->getShape()::ID, function(Player $player, int $value) use ($b){
+		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_SHAPE), $this->processShapes($requester), $b->getShape(null)::ID, function(Player $player, int $value) use ($b){
 			$b->shape = ShapeRegistration::getShapeById($value);
 		});
-		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_TYPE), $this->processTypes($requester), $b->getType($b->getShape()->getBlocksInside())::ID, function(Player $player, int $value) use ($b){
+		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_TYPE), $this->processTypes($requester), $b->getType($b->getShape(null)->getBlocksInside())::ID, function(Player $player, int $value) use ($b){
 			$b->type = TypeRegistration::getTypeById($value);
+		});
+		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_MODE_DESCRIPTION), $this->processModes(), $b->mode, function(Player $player, int $value) use($b) {
+			$b->mode = $value;
 		});
 		$this->addToggle($this->t(Translation::UI_BRUSH_MENU_HOLLOW), $b->hollow, function(Player $player, bool $value) use ($b){
 			$b->hollow = $value;

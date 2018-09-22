@@ -10,9 +10,10 @@ use BlockHorizons\BlockSniper\revert\Revert;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\level\format\Chunk;
 use pocketmine\level\Level;
+use pocketmine\scheduler\AsyncTask;
 use pocketmine\Server;
 
-class RevertTask extends AsyncBlockSniperTask{
+class RevertTask extends AsyncTask{
 
 	/** @var string */
 	private $revert = "";

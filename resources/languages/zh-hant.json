@@ -124,6 +124,11 @@
 			"size": "大小",
 			"shape": "形狀",
 			"type": "操作類型",
+			"mode": {
+				"description": "Brush Mode",
+				"brush": "Brush",
+				"selection": "Selection"
+			},
 			"hollow": "不填充內部",
 			"decrement": "尺寸遞減",
 			"height": "高度",
@@ -138,6 +143,7 @@
 			"auto-update": "新版本自動更新配置文件",
 			"language": "BlockSniper 相關信息使用的語言",
 			"brush-item": "畫筆物品 ID",
+			"selection-item": "Item ID of the item that is used to select",
 			"max-brush-size": "畫筆絕對大小上限",
 			"min-async-size": "異步畫筆操作大小限制。如果畫筆大小高於這個數值，操作將被異步執行",
 			"max-reverts": "撤銷/恢復操作最大保存數量。更早的操作將被自動清理",
@@ -179,6 +185,10 @@
 		}
 	},
 	"brush": {
+		"selection": {
+			"first": "Position 1 set to:",
+			"second": "Position 2 set to:"
+		},
 		"shape": {
 			"cube": "立方體",
 			"cuboid": "長方體",

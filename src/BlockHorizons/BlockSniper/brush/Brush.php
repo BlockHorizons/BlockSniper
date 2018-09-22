@@ -9,12 +9,17 @@ use BlockHorizons\BlockSniper\events\BrushUseEvent;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\revert\sync\SyncUndo;
 use BlockHorizons\BlockSniper\sessions\PlayerSession;
+use BlockHorizons\BlockSniper\sessions\Selection;
 use BlockHorizons\BlockSniper\sessions\Session;
+use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector2;
 use pocketmine\Player;
 use pocketmine\Server;
 
 class Brush extends BrushProperties{
+
+	public const MODE_BRUSH = 0;
+	public const MODE_SELECTION = 1;
 
 	/** @var int */
 	public $resetSize = 0;
@@ -41,11 +46,12 @@ class Brush extends BrushProperties{
 	}
 
 	/**
-	 * @param Session     $session
-	 * @param Vector2[][] $plotPoints
+	 * @param Session        $session
+	 * @param Selection|null $selection
+	 * @param array          $plotPoints
 	 */
-	public function execute(Session $session, array $plotPoints = []) : void{
-		$shape = $this->getShape();
+	public function execute(Session $session, ?Selection $selection, array $plotPoints = []) : void{
+		$shape = $this->getShape($selection !== null ? $selection->box() : null);
 		if($this->type !== TreeType::class){
 			$type = $this->getType($shape->getBlocksInside());
 		}else{
@@ -84,12 +90,14 @@ class Brush extends BrushProperties{
 	}
 
 	/**
+	 * @param null|AxisAlignedBB $bb
+	 *
 	 * @return BaseShape
 	 */
-	public function getShape() : BaseShape{
+	public function getShape(?AxisAlignedBB $bb) : BaseShape{
 		$player = $this->getPlayer();
 
-		return new $this->shape($player, $player->getLevel(), $this->size, $player->getTargetBlock(100)->asPosition(), $this->hollow);
+		return new $this->shape($player, $player->getLevel(), $player->getTargetBlock(100)->asPosition(), $bb, $this);
 	}
 
 	/**

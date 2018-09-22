@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\shapes;
 
 use BlockHorizons\BlockSniper\brush\BaseShape;
+use BlockHorizons\BlockSniper\brush\Brush;
+use BlockHorizons\BlockSniper\sessions\Selection;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
+use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 
@@ -14,25 +17,17 @@ class CubeShape extends BaseShape{
 
 	const ID = self::SHAPE_CUBE;
 
-	public function __construct(Player $player, Level $level, int $width, Position $center, bool $hollow = false){
-		parent::__construct($player, $level, $center, $hollow);
-		$this->width = $width;
-	}
-
 	/**
 	 * @param bool $vectorOnly
 	 *
-	 * @return array
+	 * @return \Generator
 	 */
 	public function getBlocksInside(bool $vectorOnly = false) : \Generator{
-		[$targetX, $targetY, $targetZ] = $this->arrayVec($this->center);
-		[$minX, $minY, $minZ, $maxX, $maxY, $maxZ] = $this->calculateBoundaryBlocks($targetX, $targetY, $targetZ, $this->width, $this->width);
-
-		for($x = $minX; $x <= $maxX; $x++){
-			for($z = $minZ; $z <= $maxZ; $z++){
-				for($y = $minY; $y <= $maxY; $y++){
+		for($x = $this->minX; $x <= $this->maxX; $x++){
+			for($z = $this->minZ; $z <= $this->maxZ; $z++){
+				for($y = $this->minY; $y <= $this->maxY; $y++){
 					if($this->hollow === true){
-						if($x !== $maxX && $x !== $minX && $y !== $maxY && $y !== $minY && $z !== $maxZ && $z !== $minZ){
+						if($x !== $this->maxX && $x !== $this->minX && $y !== $this->maxY && $y !== $this->minY && $z !== $this->maxZ && $z !== $this->minZ){
 							continue;
 						}
 					}
@@ -50,39 +45,24 @@ class CubeShape extends BaseShape{
 	}
 
 	/**
-	 * @return int
+	 * @param Vector3       $center
+	 * @param Brush         $brush
+	 * @param AxisAlignedBB $bb
 	 */
-	public function getApproximateProcessedBlocks() : int{
-		if($this->hollow){
-			$blockCount = ($this->width * 2) ** 2 * 6;
-		}else{
-			$blockCount = ($this->width * 2) ** 3;
-		}
-
-		return (int) ceil($blockCount);
-	}
-
-	/**
-	 * Returns the width of the cube.
-	 *
-	 * @return int
-	 */
-	public function getWidth() : int{
-		return $this->width;
+	public function buildSelection(Vector3 $center, Brush $brush, AxisAlignedBB $bb) : void{
+		[$bb->maxX, $bb->maxY, $bb->maxZ, $bb->minX, $bb->minY, $bb->minZ] = [
+			$center->x + $brush->size, $center->y + $brush->size, $center->z + $brush->size,
+			$center->x - $brush->size, $center->y - $brush->size, $center->z - $brush->size
+		];
 	}
 
 	/**
 	 * @return array
 	 */
 	public function getTouchedChunks() : array{
-		$maxX = $this->center->x + $this->width;
-		$minX = $this->center->x - $this->width;
-		$maxZ = $this->center->z + $this->width;
-		$minZ = $this->center->z - $this->width;
-
 		$touchedChunks = [];
-		for($x = $minX; $x <= $maxX + 16; $x += 16){
-			for($z = $minZ; $z <= $maxZ + 16; $z += 16){
+		for($x = $this->minX; $x <= $this->maxX + 16; $x += 16){
+			for($z = $this->minZ; $z <= $this->maxZ + 16; $z += 16){
 				$chunk = $this->getLevel()->getChunk($x >> 4, $z >> 4, false);
 				if($chunk === null){
 					continue;

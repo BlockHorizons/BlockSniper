@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\shapes;
 
 use BlockHorizons\BlockSniper\brush\BaseShape;
+use BlockHorizons\BlockSniper\brush\Brush;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
+use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 
@@ -15,28 +17,24 @@ class CylinderShape extends BaseShape{
 
 	const ID = self::SHAPE_CYLINDER;
 
-	public function __construct(Player $player, Level $level, int $radius, Position $center, bool $hollow = false){
-		parent::__construct($player, $level, $center, $hollow);
-		$this->radius = $radius;
-		$this->height = SessionManager::getPlayerSession($player)->getBrush()->height;
-	}
-
 	/**
 	 * @param bool $vectorOnly
 	 *
-	 * @return array
+	 * @return \Generator
 	 */
 	public function getBlocksInside(bool $vectorOnly = false) : \Generator{
-		$radiusSquared = $this->radius ** 2 + 0.5;
-		[$targetX, $targetY, $targetZ] = $this->arrayVec($this->center);
-		[$minX, $minY, $minZ, $maxX, $maxY, $maxZ] = $this->calculateBoundaryBlocks($targetX, $targetY, $targetZ, $this->radius, $this->height);
+		[$rX, $rZ] = [($this->maxX - $this->minX) / 2, ($this->maxZ - $this->minZ) / 2];
+		$centerX = $this->minX + $rX;
+		$centerZ = $this->minZ + $rZ;
+		$radiusSquared = $rX * $rZ + 0.5;
 
-		for($x = $minX; $x <= $maxX; $x++){
-			for($z = $minZ; $z <= $maxZ; $z++){
-				for($y = $minY; $y <= $maxY; $y++){
-					if(($targetX - $x) ** 2 + ($targetZ - $z) ** 2 <= $radiusSquared){
+		for($x = $this->minX; $x <= $this->maxX; $x++){
+			for($z = $this->minZ; $z <= $this->maxZ; $z++){
+				for($y = $this->minY; $y <= $this->maxY; $y++){
+					[$xDSquared, $zDSquared] = [($centerX - $x) ** 2, ($centerZ - $z) ** 2];
+					if($xDSquared + $zDSquared <= $radiusSquared){
 						if($this->hollow === true){
-							if($y !== $maxY && $y !== $minY && (($targetX - $x) ** 2 + ($targetZ - $z) ** 2) < $radiusSquared - 3 - $this->radius / 0.5){
+							if($y !== $this->maxY && $y !== $this->minY && $xDSquared + $zDSquared < $radiusSquared - 3 - ($rX + $rZ)){
 								continue;
 							}
 						}
@@ -55,48 +53,24 @@ class CylinderShape extends BaseShape{
 	}
 
 	/**
-	 * @return int
+	 * @param Vector3       $center
+	 * @param Brush         $brush
+	 * @param AxisAlignedBB $bb
 	 */
-	public function getApproximateProcessedBlocks() : int{
-		if($this->hollow){
-			$blockCount = (M_PI * $this->radius * $this->radius * 2) + (2 * M_PI * $this->radius * $this->height * 2);
-		}else{
-			$blockCount = $this->radius * $this->radius * M_PI * $this->height;
-		}
-
-		return (int) ceil($blockCount);
-	}
-
-	/**
-	 * Returns the height of the shape.
-	 *
-	 * @return int
-	 */
-	public function getHeight() : int{
-		return $this->height;
-	}
-
-	/**
-	 * Returns the radius of the cylinder.
-	 *
-	 * @return int
-	 */
-	public function getRadius() : int{
-		return $this->radius;
+	public function buildSelection(Vector3 $center, Brush $brush, AxisAlignedBB $bb) : void{
+		[$bb->maxX, $bb->maxY, $bb->maxZ, $bb->minX, $bb->minY, $bb->minZ] = [
+			$center->x + $brush->size, $center->y + $brush->height, $center->z + $brush->size,
+			$center->x - $brush->size, $center->y - $brush->height, $center->z - $brush->size
+		];
 	}
 
 	/**
 	 * @return array
 	 */
 	public function getTouchedChunks() : array{
-		$maxX = $this->center->x + $this->radius;
-		$minX = $this->center->x - $this->radius;
-		$maxZ = $this->center->z + $this->radius;
-		$minZ = $this->center->z - $this->radius;
-
 		$touchedChunks = [];
-		for($x = $minX; $x <= $maxX + 16; $x += 16){
-			for($z = $minZ; $z <= $maxZ + 16; $z += 16){
+		for($x = $this->minX; $x <= $this->maxX + 16; $x += 16){
+			for($z = $this->minZ; $z <= $this->maxZ + 16; $z += 16){
 				$chunk = $this->getLevel()->getChunk($x >> 4, $z >> 4, false);
 				if($chunk === null){
 					continue;

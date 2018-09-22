@@ -124,6 +124,11 @@
 			"size": "Brush Size",
 			"shape": "Brush Shape",
 			"type": "Brush Type",
+			"mode": {
+				"description": "Brush Mode",
+				"brush": "Brush",
+				"selection": "Selection"
+			},
 			"hollow": "Hollow Brush",
 			"decrement": "Decrementing Brush",
 			"height": "Brush Height",
@@ -138,6 +143,7 @@
 			"auto-update": "Automatically update the configuration file when a new version is found",
 			"language": "Language used for sending BlockSniper related messages",
 			"brush-item": "Item ID of the item that is used to brush",
+			"selection-item": "Item ID of the item that is used to select",
 			"max-brush-size": "The absolute maximum size of brush",
 			"min-async-size": "Asynchronous brush size limit. If brush size is bigger than this, operations get executed asynchronously",
 			"max-reverts": "Maximum amount of Undo/Redo stores to save. Older ones get cleaned automatically",
@@ -179,6 +185,10 @@
 		}
 	},
 	"brush": {
+		"selection": {
+			"first": "Position 1 set to:",
+			"second": "Position 2 set to:"
+		},
 		"shape": {
 			"cube": "Cube",
 			"cuboid": "Cuboid",

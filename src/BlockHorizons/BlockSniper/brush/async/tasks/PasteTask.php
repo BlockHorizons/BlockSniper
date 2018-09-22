@@ -13,9 +13,10 @@ use pocketmine\block\Block;
 use pocketmine\level\format\Chunk;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
+use pocketmine\scheduler\AsyncTask;
 use pocketmine\Server;
 
-class PasteTask extends AsyncBlockSniperTask{
+class PasteTask extends AsyncTask{
 
 	/** @var string */
 	private $file = "";
@@ -43,7 +44,6 @@ class PasteTask extends AsyncBlockSniperTask{
 		$schematic->fixBlockIds();
 		$width = $schematic->getWidth();
 		$length = $schematic->getLength();
-		$height = $schematic->getHeight();
 
 		$undoChunks = $chunks;
 
@@ -55,7 +55,6 @@ class PasteTask extends AsyncBlockSniperTask{
 		/** @var Block[] $blocksInside */
 		$blocksInside = $schematic->getBlocks();
 		$manager = BaseType::establishChunkManager($chunks);
-		$i = 0;
 
 		$baseWidth = $center->x - (int) ($width / 2);
 		$baseLength = $center->z - (int) ($length / 2);
@@ -73,14 +72,6 @@ class PasteTask extends AsyncBlockSniperTask{
 				$manager->setBlockIdAt($tempX, $tempY, $tempZ, $block->getId());
 				$manager->setBlockDataAt($tempX, $tempY, $tempZ, $block->getDamage());
 				$processedBlocks++;
-			}
-
-			if(++$i === (int) ($length * $width * $height / 100)){
-				if($this->isAborted()){
-					return;
-				}
-				$this->publishProgress(ceil($processedBlocks / ($length * $width * $height) * 100) . "%");
-				$i = 0;
 			}
 		}
 

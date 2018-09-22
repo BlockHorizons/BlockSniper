@@ -6,14 +6,16 @@ namespace BlockHorizons\BlockSniper\brush;
 
 use BlockHorizons\BlockSniper\brush\async\tasks\BrushTask;
 use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
+use BlockHorizons\BlockSniper\sessions\Selection;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
+use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector2;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 use pocketmine\Server;
 
-abstract class BaseShape{
+abstract class BaseShape extends AxisAlignedBB {
 
 	const ID = -1;
 
@@ -28,37 +30,21 @@ abstract class BaseShape{
 	protected $center;
 	/** @var bool */
 	protected $hollow = false;
-	/** @var int */
-	protected $height = 0;
-	/** @var int */
-	protected $radius = 0;
-	/** @var int */
-	protected $width = 0;
 	/** @var string */
 	protected $playerName = "";
 
-	public function __construct(Player $player, Level $level, Position $center, bool $hollow){
+	public function __construct(Player $player, Level $level, Position $center, ?AxisAlignedBB $bb, Brush $brush){
+		if($bb === null) {
+			$bb = new AxisAlignedBB(0, 0, 0, 0, 0, 0);
+			$this->buildSelection($center, $brush, $bb);
+		}
+		parent::__construct($bb->minX, $bb->minY, $bb->minZ, $bb->maxX, $bb->maxY, $bb->maxZ);
+
 		$this->playerName = $player->getName();
 		$this->level = $level->getId();
 		$this->center = $center->asVector3();
-		$this->hollow = $hollow;
+		$this->hollow = $brush->hollow;
 	}
-
-	/**
-	 * Returns all blocks in the shape if $partially is false. If true, only returns part of the shape, specified by $blocksPerTick.
-	 *
-	 * @param $vectorOnly
-	 *
-	 * @return \Generator
-	 */
-	public abstract function getBlocksInside(bool $vectorOnly = false) : \Generator;
-
-	/**
-	 * Returns the approximate amount of processed blocks in the shape. This may not be perfectly accurate.
-	 *
-	 * @return int
-	 */
-	public abstract function getApproximateProcessedBlocks() : int;
 
 	/**
 	 * @param Server $server
@@ -67,22 +53,6 @@ abstract class BaseShape{
 	 */
 	public function getPlayer(Server $server) : ?Player{
 		return $server->getPlayer($this->playerName);
-	}
-
-	/**
-	 * @return int
-	 */
-	public function getLevelId() : int{
-		return $this->level;
-	}
-
-	/**
-	 * Returns the center of the shape made, or the target block.
-	 *
-	 * @return Position
-	 */
-	public function getCenter() : Position{
-		return Position::fromObject($this->center, Server::getInstance()->getLevel($this->level));
 	}
 
 	/**
@@ -102,13 +72,6 @@ abstract class BaseShape{
 	public function getPermission() : string{
 		return "blocksniper.shape." . strtolower(ShapeRegistration::getShapeById(self::ID, true));
 	}
-
-	/**
-	 * Returns the name of the shape.
-	 *
-	 * @return string
-	 */
-	public abstract function getName() : string;
 
 	/**
 	 * @param BaseType    $type
@@ -137,31 +100,25 @@ abstract class BaseShape{
 	public abstract function getTouchedChunks() : array;
 
 	/**
-	 * @param int $targetX
-	 * @param int $targetY
-	 * @param int $targetZ
-	 * @param int $width
-	 * @param int $height
+	 * Returns the name of the shape.
 	 *
-	 * @return array
+	 * @return string
 	 */
-	protected function calculateBoundaryBlocks(int $targetX, int $targetY, int $targetZ, int $width, int $height) : array{
-		$minX = $targetX - $width;
-		$minZ = $targetZ - $width;
-		$minY = $targetY - $height;
-		$maxX = $targetX + $width;
-		$maxZ = $targetZ + $width;
-		$maxY = $targetY + $height;
-
-		return [$minX, $minY, $minZ, $maxX, $maxY, $maxZ];
-	}
+	public abstract function getName() : string;
 
 	/**
-	 * @param Vector3 $vector
+	 * Returns all blocks in the shape if $partially is false. If true, only returns part of the shape, specified by $blocksPerTick.
 	 *
-	 * @return array
+	 * @param $vectorOnly
+	 *
+	 * @return \Generator
 	 */
-	protected function arrayVec(Vector3 $vector) : array{
-		return [$vector->x, $vector->y, $vector->z];
-	}
+	public abstract function getBlocksInside(bool $vectorOnly = false) : \Generator;
+
+	/**
+	 * @param Vector3       $center
+	 * @param Brush         $brush
+	 * @param AxisAlignedBB $bb
+	 */
+	public abstract function buildSelection(Vector3 $center, Brush $brush, AxisAlignedBB $bb) : void;
 }
