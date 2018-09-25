@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\cloning;
 
+use BlockHorizons\BlockSniper\brush\BaseShape;
 use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
@@ -26,22 +27,22 @@ abstract class BaseClone{
 	protected $center = null;
 	/** @var bool */
 	protected $saveAir = false;
-	/** @var \Generator */
-	protected $blocks = [];
+	/** @var BaseShape */
+	protected $shape = [];
 
 	/**
 	 * @param Player   $player
 	 * @param bool     $saveAir
 	 * @param Position $center
-	 * @param \Generator  $blocks
+	 * @param BaseShape $shape
 	 * @param string   $name
 	 */
-	public function __construct(Player $player, bool $saveAir, Position $center, \Generator $blocks, string $name = ""){
+	public function __construct(Player $player, bool $saveAir, Position $center, BaseShape $shape, string $name = ""){
 		$this->player = $player;
 		$this->level = $player->getLevel();
 		$this->saveAir = $saveAir;
 		$this->center = $center;
-		$this->blocks = $blocks;
+		$this->shape = $shape;
 		$this->name = $name;
 	}
 
@@ -78,12 +79,10 @@ abstract class BaseClone{
 	}
 
 	/**
-	 * Returns all blocks that are being cloned.
-	 *
-	 * @return \Generator
+	 * @return BaseShape
 	 */
-	public function getBlocks() : \Generator{
-		return $this->blocks;
+	public function getShape() : BaseShape {
+		return $this->shape;
 	}
 
 	/**

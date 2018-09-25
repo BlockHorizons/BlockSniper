@@ -52,7 +52,7 @@ class CloneCommand extends BaseCommand{
 		switch(strtolower($args[0])){
 			default:
 			case "copy":
-				$cloneType = new CopyType($sender, false, $center, $shape->getBlocksInside());
+				$cloneType = new CopyType($sender, false, $center, $shape);
 				$cloneType->saveClone();
 				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_CLONE_COPY_SUCCESS));
 
@@ -64,7 +64,7 @@ class CloneCommand extends BaseCommand{
 
 					return;
 				}
-				$cloneType = new TemplateType($sender, false, $center, $shape->getBlocksInside(), $args[1]);
+				$cloneType = new TemplateType($sender, false, $center, $shape, $args[1]);
 				$cloneType->saveClone();
 				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_CLONE_TEMPLATE_SUCCESS, [$this->loader->getDataFolder() . "templates/" . $args[1] . ".template"]));
 
