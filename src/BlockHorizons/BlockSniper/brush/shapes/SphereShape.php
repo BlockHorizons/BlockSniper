@@ -22,21 +22,23 @@ class SphereShape extends BaseShape{
 	 * @return \Generator
 	 */
 	public function getBlocksInside(bool $vectorOnly = false) : \Generator{
-		$radius = ($this->maxX - $this->minX) / 2;
-		$centerX = $this->minX + $radius;
-		$centerY = $this->minY + $radius;
-		$centerZ = $this->minZ + $radius;
-		$radiusSquared = $radius ** 2 + 0.5;
+		$radiusX = ($this->maxX - $this->minX) / 2;
+		$radiusY = ($this->maxY - $this->minY) / 2;
+		$radiusZ = ($this->maxZ - $this->minZ) / 2;
+
+		$centerX = $this->minX + $radiusX;
+		$centerY = $this->minY + $radiusY;
+		$centerZ = $this->minZ + $radiusZ;
 
 		for($x = $this->maxX; $x >= $this->minX; $x--){
-			$xs = ($centerX - $x) ** 2;
+			$xs = ($x - $centerX) ** 2 / $radiusX ** 2;
 			for($y = $this->maxY; $y >= $this->minY; $y--){
-				$ys = ($this->center->y - $y) ** 2;
+				$ys = ($y - $centerY) ** 2 / $radiusY ** 2;
 				for($z = $this->maxZ; $z >= $this->minZ; $z--){
-					$zs = ($this->center->z - $z) ** 2;
-					if($xs + $ys + $zs < $radiusSquared){
-						if($this->hollow === true){
-							if(($xs + $ys + $zs) < $radiusSquared - 3 - $radius / 0.5){
+					$zs = ($z - $centerZ) ** 2 / $radiusZ ** 2;
+					if($xs + $ys + $zs <= 1.0){
+						if($this->hollow){
+							if($xs + $ys + $zs < 0.85){
 								continue;
 							}
 						}

@@ -23,18 +23,20 @@ class CylinderShape extends BaseShape{
 	 * @return \Generator
 	 */
 	public function getBlocksInside(bool $vectorOnly = false) : \Generator{
-		[$rX, $rZ] = [($this->maxX - $this->minX) / 2, ($this->maxZ - $this->minZ) / 2];
-		$centerX = $this->minX + $rX;
-		$centerZ = $this->minZ + $rZ;
-		$radiusSquared = $rX * $rZ + 0.5;
+		$radiusX = ($this->maxX - $this->minX) / 2;
+		$radiusZ = ($this->maxZ - $this->minZ) / 2;
+
+		$centerX = $this->minX + $radiusX;
+		$centerZ = $this->minZ + $radiusZ;
 
 		for($x = $this->minX; $x <= $this->maxX; $x++){
+			$xs = ($x - $centerX) ** 2 / $radiusX ** 2;
 			for($z = $this->minZ; $z <= $this->maxZ; $z++){
+				$zs = ($z - $centerZ) ** 2 / $radiusZ ** 2;
 				for($y = $this->minY; $y <= $this->maxY; $y++){
-					[$xDSquared, $zDSquared] = [($centerX - $x) ** 2, ($centerZ - $z) ** 2];
-					if($xDSquared + $zDSquared <= $radiusSquared){
-						if($this->hollow === true){
-							if($y !== $this->maxY && $y !== $this->minY && $xDSquared + $zDSquared < $radiusSquared - 3 - ($rX + $rZ)){
+					if($xs + $zs <= 1.0){
+						if($this->hollow){
+							if($xs + $zs < 0.85 && $y !== $this->minY && $y !== $this->maxY){
 								continue;
 							}
 						}

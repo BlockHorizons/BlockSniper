@@ -26,7 +26,7 @@ class CuboidShape extends BaseShape{
 		for($x = $this->minX; $x <= $this->maxX; $x++){
 			for($y = $this->minY; $y <= $this->maxY; $y++){
 				for($z = $this->minZ; $z <= $this->maxZ; $z++){
-					if($this->hollow === true){
+					if($this->hollow){
 						if($x !== $this->maxX && $x !== $this->minX && $y !== $this->maxY && $y !== $this->minY && $z !== $this->maxZ && $z !== $this->minZ){
 							continue;
 						}

@@ -26,7 +26,7 @@ class CubeShape extends BaseShape{
 		for($x = $this->minX; $x <= $this->maxX; $x++){
 			for($z = $this->minZ; $z <= $this->maxZ; $z++){
 				for($y = $this->minY; $y <= $this->maxY; $y++){
-					if($this->hollow === true){
+					if($this->hollow){
 						if($x !== $this->maxX && $x !== $this->minX && $y !== $this->maxY && $y !== $this->minY && $z !== $this->maxZ && $z !== $this->minZ){
 							continue;
 						}

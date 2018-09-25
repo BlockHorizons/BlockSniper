@@ -116,6 +116,9 @@ abstract class BaseShape extends AxisAlignedBB {
 	public abstract function getBlocksInside(bool $vectorOnly = false) : \Generator;
 
 	/**
+	 * Builds a selection if the brush mode is Brush::MODE_BRUSH. $center is the target block, and $bb requires its
+	 * bounds to be set.
+	 *
 	 * @param Vector3       $center
 	 * @param Brush         $brush
 	 * @param AxisAlignedBB $bb

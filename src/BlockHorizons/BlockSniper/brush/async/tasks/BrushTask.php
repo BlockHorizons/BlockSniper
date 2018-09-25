@@ -58,7 +58,7 @@ class BrushTask extends AsyncTask{
 		foreach($vectorsInside as $vector3){
 			$index = Level::chunkHash($vector3->x >> 4, $vector3->z >> 4);
 
-			$pos = [$vector3->x & 0x0f, $vector3->y, $vector3->z & 0x0f];
+			$pos = [(int) $vector3->x & 0x0f, (int) $vector3->y, (int) $vector3->z & 0x0f];
 			$block = Block::get($chunks[$index]->getBlockId($pos[0], $pos[1], $pos[2]), $chunks[$index]->getBlockData($pos[0], $pos[1], $pos[2]));
 			$block->setComponents($vector3->x, $vector3->y, $vector3->z);
 			yield $block;
