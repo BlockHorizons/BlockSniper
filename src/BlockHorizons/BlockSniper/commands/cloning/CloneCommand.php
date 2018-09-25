@@ -15,6 +15,7 @@ use BlockHorizons\libschematic\Schematic;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
+use pocketmine\utils\TextFormat;
 
 class CloneCommand extends BaseCommand{
 
@@ -35,11 +36,22 @@ class CloneCommand extends BaseCommand{
 			throw new InvalidBlockException("No valid block could be found when attempting to clone.");
 		}
 
+		$session = SessionManager::getPlayerSession($sender);
+
+		if(!$session->getSelection()->ready()) {
+			$sender->sendMessage(
+				TextFormat::RED . Translation::get(Translation::COMMANDS_COMMON_WARNING_PREFIX) .
+				Translation::get(Translation::BRUSH_SELECTION_ERROR)
+			);
+			return;
+		}
+
 		$size = SessionManager::getPlayerSession($sender)->getBrush()->size;
+		$shape = $session->getBrush()->getShape($session->getSelection()->box());
+
 		switch(strtolower($args[0])){
 			default:
 			case "copy":
-				$shape = SessionManager::getPlayerSession($sender)->getBrush()->getShape();
 				$cloneType = new CopyType($sender, false, $center, $shape->getBlocksInside());
 				$cloneType->saveClone();
 				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_CLONE_COPY_SUCCESS));
@@ -52,7 +64,6 @@ class CloneCommand extends BaseCommand{
 
 					return;
 				}
-				$shape = SessionManager::getPlayerSession($sender)->getBrush()->getShape();
 				$cloneType = new TemplateType($sender, false, $center, $shape->getBlocksInside(), $args[1]);
 				$cloneType->saveClone();
 				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_CLONE_TEMPLATE_SUCCESS, [$this->loader->getDataFolder() . "templates/" . $args[1] . ".template"]));
@@ -67,10 +78,15 @@ class CloneCommand extends BaseCommand{
 
 					return;
 				}
-				$shape = SessionManager::getPlayerSession($sender)->getBrush()->getShape();
+
+				$blocks = [];
+				foreach($shape->getBlocksInside() as $block) {
+					$blocks[] = $block;
+				}
+
 				$schematic = new Schematic();
 				$schematic
-					->setBlocks($shape->getBlocksInside())
+					->setBlocks($blocks)
 					->setMaterials(Schematic::MATERIALS_POCKET)
 					->encode()
 					->setLength($size * 2 + 1)

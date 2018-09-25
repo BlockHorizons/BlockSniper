@@ -187,7 +187,8 @@
 	"brush": {
 		"selection": {
 			"first": "Positie 1 gezet naar:",
-			"second": "Positie 2 gezet naar:"
+			"second": "Positie 2 gezet naar:",
+			"error": "Set your selection using the selection item before doing this action."
 		},
 		"shape": {
 			"cube": "Kubus",

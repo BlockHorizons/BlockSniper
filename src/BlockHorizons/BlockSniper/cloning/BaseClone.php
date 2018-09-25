@@ -26,17 +26,17 @@ abstract class BaseClone{
 	protected $center = null;
 	/** @var bool */
 	protected $saveAir = false;
-	/** @var Block[] */
+	/** @var \Generator */
 	protected $blocks = [];
 
 	/**
 	 * @param Player   $player
 	 * @param bool     $saveAir
 	 * @param Position $center
-	 * @param Block[]  $blocks
+	 * @param \Generator  $blocks
 	 * @param string   $name
 	 */
-	public function __construct(Player $player, bool $saveAir, Position $center, array $blocks, string $name = ""){
+	public function __construct(Player $player, bool $saveAir, Position $center, \Generator $blocks, string $name = ""){
 		$this->player = $player;
 		$this->level = $player->getLevel();
 		$this->saveAir = $saveAir;
@@ -80,9 +80,9 @@ abstract class BaseClone{
 	/**
 	 * Returns all blocks that are being cloned.
 	 *
-	 * @return Block[]
+	 * @return \Generator
 	 */
-	public function getBlocks() : array{
+	public function getBlocks() : \Generator{
 		return $this->blocks;
 	}
 

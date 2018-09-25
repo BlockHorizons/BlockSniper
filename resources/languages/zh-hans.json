@@ -187,7 +187,8 @@
 	"brush": {
 		"selection": {
 			"first": "Position 1 set to:",
-			"second": "Position 2 set to:"
+			"second": "Position 2 set to:",
+			"error": "Set your selection using the selection item before doing this action."
 		},
 		"shape": {
 			"cube": "立方体",

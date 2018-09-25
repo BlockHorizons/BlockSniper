@@ -12,7 +12,7 @@ use pocketmine\Player;
 
 class TemplateType extends BaseClone{
 
-	public function __construct(Player $player, bool $saveAir, Position $center, array $blocks, string $name){
+	public function __construct(Player $player, bool $saveAir, Position $center, \Generator $blocks, string $name){
 		parent::__construct($player, $saveAir, $center, $blocks, $name);
 	}
 

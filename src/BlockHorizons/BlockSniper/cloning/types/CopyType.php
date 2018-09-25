@@ -12,7 +12,7 @@ use pocketmine\Player;
 
 class CopyType extends BaseClone{
 
-	public function __construct(Player $player, bool $saveAir, Position $center, array $blocks){
+	public function __construct(Player $player, bool $saveAir, Position $center, \Generator $blocks){
 		parent::__construct($player, $saveAir, $center, $blocks);
 	}
 
@@ -21,14 +21,7 @@ class CopyType extends BaseClone{
 	}
 
 	public function saveClone() : void{
-		$copyBlocks = [];
-		foreach($this->blocks as $block){
-			if($this->saveAir === false && $block->getId() === Item::AIR){
-				continue;
-			}
-			$copyBlocks[] = $block;
-		}
 		SessionManager::getPlayerSession($this->player)->getCloneStore()->setOriginalCenter($this->center);
-		SessionManager::getPlayerSession($this->player)->getCloneStore()->saveCopy($copyBlocks);
+		SessionManager::getPlayerSession($this->player)->getCloneStore()->saveCopy($this->blocks);
 	}
 }

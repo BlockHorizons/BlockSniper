@@ -15,12 +15,14 @@ use pocketmine\Server;
 
 class CloneStore{
 
-	/** @var Block[] */
-	private $copyStore = [];
+	/** @var \Generator */
+	private $copyStore = null;
 	/** @var Vector3 */
 	private $originalCenter = null;
 	/** @var string */
 	private $path = "";
+	/** @var Session */
+	private $session;
 
 	public function __construct(Session $session, string $path){
 		$this->session = $session;
@@ -28,19 +30,10 @@ class CloneStore{
 	}
 
 	/**
-	 * @param Block[] $blocks
+	 * @param \Generator $generator
 	 */
-	public function saveCopy(array $blocks) : void{
-		$this->unsetCopy();
-		foreach($blocks as $block){
-			$v3 = $block->subtract($this->getOriginalCenter());
-			$block->setComponents($v3->x, $v3->y, $v3->z);
-			$this->copyStore[] = $block;
-		}
-	}
-
-	public function unsetCopy() : void{
-		unset($this->copyStore);
+	public function saveCopy(\Generator $generator) : void{
+		$this->copyStore = $generator;
 	}
 
 	/**
@@ -62,7 +55,11 @@ class CloneStore{
 	 */
 	public function pasteCopy(Position $targetBlock) : void{
 		$undoBlocks = [];
+
 		foreach($this->copyStore as $block){
+			$v3 = $block->subtract($this->getOriginalCenter());
+			$block->setComponents($v3->x, $v3->y, $v3->z);
+
 			$undoBlocks[] = $targetBlock->level->getBlock($targetBlock->add($block));
 			$targetBlock->level->setBlock($targetBlock->add($block), $block, false, false);
 		}
@@ -78,14 +75,7 @@ class CloneStore{
 	 * @return bool
 	 */
 	public function copyStoreExists() : bool{
-		return !empty($this->copyStore);
-	}
-
-	/**
-	 * @return int
-	 */
-	public function getCopyBlockAmount() : int{
-		return count($this->copyStore);
+		return $this->copyStore !== null;
 	}
 
 	/*

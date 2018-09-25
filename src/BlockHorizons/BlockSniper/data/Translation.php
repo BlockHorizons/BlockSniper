@@ -136,6 +136,7 @@ class Translation{
 	const LOG_RELOAD_FINISH = "log.reload.finish";
 	const BRUSH_SELECTION_FIRST = "brush.selection.first";
 	const BRUSH_SELECTION_SECOND = "brush.selection.second";
+	const BRUSH_SELECTION_ERROR = "brush.selection.error";
 	const BRUSH_SHAPE_CUBE = "brush.shape.cube";
 	const BRUSH_SHAPE_CUBOID = "brush.shape.cuboid";
 	const BRUSH_SHAPE_SPHERE = "brush.shape.sphere";

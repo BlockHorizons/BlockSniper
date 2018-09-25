@@ -48,7 +48,10 @@ class BrushListener implements Listener{
 		$brush = ($session = SessionManager::getPlayerSession($player))->getBrush();
 		if($brush->mode === Brush::MODE_SELECTION){
 			if(!$session->getSelection()->ready()) {
-				// TODO: Send message.
+				$player->sendMessage(
+					TextFormat::RED . Translation::get(Translation::COMMANDS_COMMON_WARNING_PREFIX) .
+					Translation::get(Translation::BRUSH_SELECTION_ERROR)
+				);
 				return;
 			}
 		}
