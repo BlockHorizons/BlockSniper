@@ -6,6 +6,7 @@ namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
 use pocketmine\level\ChunkManager;
+use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 
@@ -27,6 +28,9 @@ class LayerType extends BaseType{
 	 */
 	public function fillSynchronously() : \Generator{
 		foreach($this->blocks as $block){
+			if($block->y !== $this->center->y + 1) {
+				continue;
+			}
 			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 			yield $block;
 			$vec = new Vector3($block->x, $this->center->y + 1, $block->z);
@@ -36,6 +40,9 @@ class LayerType extends BaseType{
 
 	public function fillAsynchronously() : void{
 		foreach($this->blocks as $block){
+			if($block->y !== $this->center->y + 1) {
+				continue;
+			}
 			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 			$vec = new Vector3($block->x, $this->center->y + 1, $block->z);
 			$this->putBlock($vec, $randomBlock->getId(), $randomBlock->getDamage());
