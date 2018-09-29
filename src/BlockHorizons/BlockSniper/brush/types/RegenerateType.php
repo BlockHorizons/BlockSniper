@@ -6,6 +6,7 @@ namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
 use pocketmine\level\ChunkManager;
+use pocketmine\level\format\Chunk;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 
@@ -32,8 +33,10 @@ class RegenerateType extends BaseType{
 		}
 		$x = $this->center->x >> 4;
 		$z = $this->center->z >> 4;
-		$this->getLevel()->getChunk($x, $z)->setPopulated(false);
-		$this->getLevel()->getChunk($x, $z)->setGenerated(false);
+
+		$this->getLevel()->setChunk($x, $z, new Chunk($x, $z));
+
+		$this->getLevel()->populateChunk($x, $z, true);
 
 		if(false){
 			// Make PHP recognize this is a generator.
