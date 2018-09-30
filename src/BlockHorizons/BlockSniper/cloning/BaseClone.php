@@ -36,7 +36,7 @@ abstract class BaseClone{
 	 * @param Block[]  $blocks
 	 * @param string   $name
 	 */
-	public function __construct(Player $player, bool $saveAir, Position $center, array $blocks, string $name = ""){
+	public function __construct(Player $player, bool $saveAir, Position $center, \Generator $blocks, string $name = ""){
 		$this->player = $player;
 		$this->level = $player->getLevel();
 		$this->saveAir = $saveAir;
