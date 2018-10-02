@@ -7,10 +7,8 @@ namespace BlockHorizons\BlockSniper\brush\shapes;
 use BlockHorizons\BlockSniper\brush\BaseShape;
 use BlockHorizons\BlockSniper\brush\Brush;
 use pocketmine\level\Level;
-use pocketmine\level\Position;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
-use pocketmine\Player;
 
 class SphereShape extends BaseShape{
 

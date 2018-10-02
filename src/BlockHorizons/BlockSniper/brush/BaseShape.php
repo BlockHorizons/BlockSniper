@@ -6,7 +6,6 @@ namespace BlockHorizons\BlockSniper\brush;
 
 use BlockHorizons\BlockSniper\brush\async\tasks\BrushTask;
 use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
-use BlockHorizons\BlockSniper\sessions\Selection;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\math\AxisAlignedBB;
@@ -15,7 +14,7 @@ use pocketmine\math\Vector3;
 use pocketmine\Player;
 use pocketmine\Server;
 
-abstract class BaseShape extends AxisAlignedBB {
+abstract class BaseShape extends AxisAlignedBB{
 
 	const ID = -1;
 
@@ -34,7 +33,7 @@ abstract class BaseShape extends AxisAlignedBB {
 	protected $playerName = "";
 
 	public function __construct(Player $player, Level $level, Position $center, ?AxisAlignedBB $bb, Brush $brush){
-		if($bb === null) {
+		if($bb === null){
 			$bb = new AxisAlignedBB(0, 0, 0, 0, 0, 0);
 			$this->buildSelection($center, $brush, $bb);
 		}

@@ -12,7 +12,6 @@ use BlockHorizons\BlockSniper\sessions\PlayerSession;
 use BlockHorizons\BlockSniper\sessions\Selection;
 use BlockHorizons\BlockSniper\sessions\Session;
 use pocketmine\math\AxisAlignedBB;
-use pocketmine\math\Vector2;
 use pocketmine\Player;
 use pocketmine\Server;
 

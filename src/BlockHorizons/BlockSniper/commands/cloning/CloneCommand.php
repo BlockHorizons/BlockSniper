@@ -14,8 +14,8 @@ use BlockHorizons\BlockSniper\sessions\SessionManager;
 use BlockHorizons\libschematic\Schematic;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
-use pocketmine\utils\TextFormat as TF;
 use pocketmine\utils\TextFormat;
+use pocketmine\utils\TextFormat as TF;
 
 class CloneCommand extends BaseCommand{
 
@@ -38,11 +38,12 @@ class CloneCommand extends BaseCommand{
 
 		$session = SessionManager::getPlayerSession($sender);
 
-		if(!$session->getSelection()->ready()) {
+		if(!$session->getSelection()->ready()){
 			$sender->sendMessage(
 				TextFormat::RED . Translation::get(Translation::COMMANDS_COMMON_WARNING_PREFIX) .
 				Translation::get(Translation::BRUSH_SELECTION_ERROR)
 			);
+
 			return;
 		}
 
@@ -80,7 +81,7 @@ class CloneCommand extends BaseCommand{
 				}
 
 				$blocks = [];
-				foreach($shape->getBlocksInside() as $block) {
+				foreach($shape->getBlocksInside() as $block){
 					$blocks[] = $block;
 				}
 

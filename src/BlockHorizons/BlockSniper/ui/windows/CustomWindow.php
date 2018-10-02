@@ -65,7 +65,7 @@ abstract class CustomWindow extends CustomForm{
 	/**
 	 * @return string[]
 	 */
-	public function processModes() : array {
+	public function processModes() : array{
 		return [
 			$this->t(Translation::UI_BRUSH_MENU_MODE_BRUSH),
 			$this->t(Translation::UI_BRUSH_MENU_MODE_SELECTION)

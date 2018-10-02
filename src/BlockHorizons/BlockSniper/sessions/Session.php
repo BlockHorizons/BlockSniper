@@ -86,7 +86,7 @@ abstract class Session{
 	/**
 	 * @return Selection
 	 */
-	public function getSelection() : Selection {
+	public function getSelection() : Selection{
 		return $this->selection;
 	}
 }

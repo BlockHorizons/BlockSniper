@@ -14,7 +14,6 @@ use MyPlot\PlotLevelSettings;
 use pocketmine\block\Block;
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\Listener;
-use pocketmine\event\player\PlayerEvent;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerItemHeldEvent;
 use pocketmine\event\player\PlayerQuitEvent;
@@ -36,7 +35,7 @@ class BrushListener implements Listener{
 	 */
 	public function brush(PlayerInteractEvent $event) : void{
 		$player = $event->getPlayer();
-		if(!$player->hasPermission("blocksniper.command.brush")) {
+		if(!$player->hasPermission("blocksniper.command.brush")){
 			return;
 		}
 		$hand = $player->getInventory()->getItemInHand();
@@ -47,11 +46,12 @@ class BrushListener implements Listener{
 
 		$brush = ($session = SessionManager::getPlayerSession($player))->getBrush();
 		if($brush->mode === Brush::MODE_SELECTION){
-			if(!$session->getSelection()->ready()) {
+			if(!$session->getSelection()->ready()){
 				$player->sendMessage(
 					TextFormat::RED . Translation::get(Translation::COMMANDS_COMMON_WARNING_PREFIX) .
 					Translation::get(Translation::BRUSH_SELECTION_ERROR)
 				);
+
 				return;
 			}
 		}
@@ -82,25 +82,28 @@ class BrushListener implements Listener{
 		$selection = ($session = SessionManager::getPlayerSession($player))->getSelection();
 		$vec = $block->asVector3();
 		[$x, $y, $z] = [$vec->x, $vec->y, $vec->z];
-		switch($action) {
+		switch($action){
 			case PlayerInteractEvent::RIGHT_CLICK_BLOCK:
 				$selection->setFirstPos($vec);
 				$msg = Translation::get(Translation::BRUSH_SELECTION_FIRST) . " ($x, $y, $z)";
 				$player->sendMessage(TextFormat::GREEN . $msg);
+
 				return true;
 			case PlayerInteractEvent::LEFT_CLICK_BLOCK:
 				$selection->setSecondPos($vec);
 				$msg = Translation::get(Translation::BRUSH_SELECTION_SECOND) . " ($x, $y, $z)";
 				$player->sendMessage(TextFormat::GREEN . $msg);
+
 				return true;
 		}
+
 		return false;
 	}
 
 	/**
 	 * @param PlayerInteractEvent $event
 	 */
-	public function onBlockClick(PlayerInteractEvent $event) : void {
+	public function onBlockClick(PlayerInteractEvent $event) : void{
 		if($this->selection($event->getPlayer(), $event->getBlock(), $event->getAction())){
 			$event->setCancelled();
 		}
@@ -109,7 +112,7 @@ class BrushListener implements Listener{
 	/**
 	 * @param BlockBreakEvent $event
 	 */
-	public function onBlockBreak(BlockBreakEvent $event) : void {
+	public function onBlockBreak(BlockBreakEvent $event) : void{
 		if($this->selection($event->getPlayer(), $event->getBlock(), PlayerInteractEvent::LEFT_CLICK_BLOCK)){
 			$event->setCancelled();
 		}
@@ -175,7 +178,7 @@ class BrushListener implements Listener{
 	 * @param PlayerQuitEvent $event
 	 */
 	public function onQuit(PlayerQuitEvent $event) : void{
-		if(!SessionManager::playerSessionExists($event->getPlayer()->getName())) {
+		if(!SessionManager::playerSessionExists($event->getPlayer()->getName())){
 			return;
 		}
 		$this->loader->getScheduler()->scheduleDelayedTask(
