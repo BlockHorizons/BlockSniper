@@ -83,22 +83,14 @@ class PasteTask extends AsyncTask{
 		$this->setResult(compact("undoChunks", "chunks"));
 	}
 
-	/**
-	 * @param Server $server
-	 *
-	 * @return bool
-	 */
-	public function onCompletion(Server $server) : bool{
+	public function onCompletion(Server $server) : void{
 		/** @var Loader $loader */
 		$loader = $server->getPluginManager()->getPlugin("BlockSniper");
-		if($loader === null){
-			return false;
-		}
 		if(!$loader->isEnabled()){
-			return false;
+			return;
 		}
 		if(!($player = $server->getPlayer($this->playerName))){
-			return false;
+			return;
 		}
 
 		$result = $this->getResult();
@@ -123,7 +115,5 @@ class PasteTask extends AsyncTask{
 		unset($undoChunk);
 
 		SessionManager::getPlayerSession($player)->getRevertStore()->saveRevert(new AsyncUndo($chunks, $undoChunks, $this->playerName, $player->getLevel()->getId()));
-
-		return true;
 	}
 }

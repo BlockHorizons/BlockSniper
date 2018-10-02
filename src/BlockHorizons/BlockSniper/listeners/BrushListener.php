@@ -175,6 +175,9 @@ class BrushListener implements Listener{
 	 * @param PlayerQuitEvent $event
 	 */
 	public function onQuit(PlayerQuitEvent $event) : void{
+		if(!SessionManager::playerSessionExists($event->getPlayer()->getName())) {
+			return;
+		}
 		$this->loader->getScheduler()->scheduleDelayedTask(
 			new SessionDeletionTask($this->loader, SessionManager::getPlayerSession($event->getPlayer())),
 			$this->loader->config->sessionTimeoutTime * 20 * 60

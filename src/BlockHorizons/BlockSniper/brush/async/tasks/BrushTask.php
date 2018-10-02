@@ -65,22 +65,14 @@ class BrushTask extends AsyncTask{
 		}
 	}
 
-	/**
-	 * @param Server $server
-	 *
-	 * @return bool
-	 */
-	public function onCompletion(Server $server) : bool{
+	public function onCompletion(Server $server) : void{
 		/** @var Loader $loader */
 		$loader = $server->getPluginManager()->getPlugin("BlockSniper");
-		if($loader === null){
-			return false;
-		}
 		if(!$loader->isEnabled()){
-			return false;
+			return;
 		}
 		if(!($player = $this->shape->getPlayer($server))){
-			return false;
+			return;
 		}
 
 		$result = $this->getResult();
@@ -99,7 +91,5 @@ class BrushTask extends AsyncTask{
 		}
 
 		SessionManager::getPlayerSession($player)->getRevertStore()->saveRevert(new AsyncUndo($chunks, $undoChunks, $player->getName(), $player->getLevel()->getId()));
-
-		return true;
 	}
 }

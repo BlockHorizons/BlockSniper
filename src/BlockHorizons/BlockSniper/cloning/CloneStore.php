@@ -57,12 +57,11 @@ class CloneStore{
 	public function pasteCopy(Position $targetBlock) : void{
 		$undoBlocks = [];
 
-		foreach($this->copy->getBlocksInside() as $block){
+		foreach($this->copy->getBlocksInside(true) as $block){
 			$v3 = $block->subtract($this->getOriginalCenter());
-			$block->setComponents($v3->x, $v3->y, $v3->z);
 
-			$undoBlocks[] = $targetBlock->level->getBlock($targetBlock->add($block));
-			$targetBlock->level->setBlock($targetBlock->add($block), $block, false, false);
+			$undoBlocks[] = $targetBlock->level->getBlock($targetBlock->add($v3));
+			$targetBlock->level->setBlock($targetBlock->add($v3), clone $targetBlock->level->getBlock($block), false, false);
 		}
 		$this->session->getRevertStore()->saveRevert(new SyncUndo($undoBlocks, $this->session->getSessionOwner()->getPlayerName()));
 	}

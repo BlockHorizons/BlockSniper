@@ -32,26 +32,18 @@ class RevertTask extends AsyncTask{
 		$this->setResult(compact("chunks", "revert"));
 	}
 
-	/**
-	 * @param Server $server
-	 *
-	 * @return bool
-	 */
-	public function onCompletion(Server $server) : bool{
+	public function onCompletion(Server $server) : void{
 		/** @var Loader $loader */
 		$loader = $server->getPluginManager()->getPlugin("BlockSniper");
-		if($loader === null){
-			return false;
-		}
 		if(!$loader->isEnabled()){
-			return false;
+			return;
 		}
 
 		$result = $this->getResult();
 		/** @var Revert $revert */
 		$revert = $result["revert"];
 		if(!($player = $server->getPlayer($revert->getPlayerName()))){
-			return false;
+			return;
 		}
 
 		/** @var Chunk[] $chunks */
@@ -66,7 +58,5 @@ class RevertTask extends AsyncTask{
 		}
 
 		SessionManager::getPlayerSession($player)->getRevertStore()->saveRevert($revert);
-
-		return true;
 	}
 }
