@@ -5,9 +5,9 @@ An innovative brush world editing tool for PocketMine-MP: A Minecraft server sof
 ---
 
 ### Overview
-BlockSniper is an advanced world editing tool, based on the idea of VoxelSniper from Minecraft PC softwares.
-BlockSniper allows you to edit your world on a long range, with several different types and shapes. Shapes are the shapes types are being executed in. This means that every type can be executed in any shape.
-A shape would for example be a sphere, a type replace. Every block in that shape will then get modified using the selected type; Replaced.
+BlockSniper is an advanced world editing tool, based on the idea of VoxelSniper from Minecraft PC software.
+BlockSniper allows you to edit your world from a long distance, with several different types and shapes. Shapes are the shapes types are being executed in. This means that every type can be executed in any shape.
+A shape would, for example, be a sphere, a type replace. Every block in that shape will then get modified using the selected type; Replaced.
 <br><br>
 Almost all features can be managed using an in-game user interface. The brush menu can be opened using the /brush command.
 <br><br>
