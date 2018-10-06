@@ -73,7 +73,16 @@ class Brush extends BrushProperties{
 			return;
 		}
 
-		if($type->canBeExecutedAsynchronously() && $this->size >= $loader->config->asyncOperationSize){
+		$asyncSize = false;
+		if($selection !== null) {
+			if($selection->blockCount() ** 1/3 >= $loader->config->asyncOperationSize) {
+				$asyncSize = true;
+			}
+		} elseif($this->size >= $loader->config->asyncOperationSize) {
+			$asyncSize = true;
+		}
+
+		if($type->canBeExecutedAsynchronously() && $asyncSize){
 			$type->setBlocksInside(null);
 			$shape->editAsynchronously($type, $plotPoints);
 		}else{
