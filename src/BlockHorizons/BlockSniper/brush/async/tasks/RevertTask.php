@@ -32,9 +32,9 @@ class RevertTask extends AsyncTask{
 		$this->setResult(compact("chunks", "revert"));
 	}
 
-	public function onCompletion(Server $server) : void{
+	public function onCompletion() : void{
 		/** @var Loader $loader */
-		$loader = $server->getPluginManager()->getPlugin("BlockSniper");
+		$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
 		if(!$loader->isEnabled()){
 			return;
 		}
@@ -42,14 +42,14 @@ class RevertTask extends AsyncTask{
 		$result = $this->getResult();
 		/** @var Revert $revert */
 		$revert = $result["revert"];
-		if(!($player = $server->getPlayer($revert->getPlayerName()))){
+		if(!($player = Server::getInstance()->getPlayer($revert->getPlayerName()))){
 			return;
 		}
 
 		/** @var Chunk[] $chunks */
 		$chunks = $result["chunks"];
 		$levelId = $player->getLevel()->getId();
-		$level = $server->getLevel($levelId);
+		$level = Server::getInstance()->getLevel($levelId);
 
 		if($level instanceof Level){
 			foreach($chunks as $hash => $chunk){

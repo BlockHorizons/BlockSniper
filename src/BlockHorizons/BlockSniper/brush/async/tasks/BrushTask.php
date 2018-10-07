@@ -65,13 +65,13 @@ class BrushTask extends AsyncTask{
 		}
 	}
 
-	public function onCompletion(Server $server) : void{
+	public function onCompletion() : void{
 		/** @var Loader $loader */
-		$loader = $server->getPluginManager()->getPlugin("BlockSniper");
+		$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
 		if(!$loader->isEnabled()){
 			return;
 		}
-		if(!($player = $this->shape->getPlayer($server))){
+		if(!($player = $this->shape->getPlayer(Server::getInstance()))){
 			return;
 		}
 

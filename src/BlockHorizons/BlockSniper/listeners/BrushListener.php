@@ -16,6 +16,7 @@ use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerItemHeldEvent;
+use pocketmine\event\player\PlayerItemUseEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\math\Vector2;
 use pocketmine\Player;
@@ -31,9 +32,9 @@ class BrushListener implements Listener{
 	}
 
 	/**
-	 * @param PlayerInteractEvent $event
+	 * @param PlayerItemUseEvent $event
 	 */
-	public function brush(PlayerInteractEvent $event) : void{
+	public function brush(PlayerItemUseEvent $event) : void{
 		$player = $event->getPlayer();
 		if(!$player->hasPermission("blocksniper.command.brush")){
 			return;

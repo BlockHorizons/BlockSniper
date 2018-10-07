@@ -33,9 +33,9 @@ class UpdateNotifyTask extends AsyncTask{
 		$this->setResult([$highestVersion, $artifactUrl, $api, $err]);
 	}
 
-	public function onCompletion(Server $server) : void{
+	public function onCompletion() : void{
 		/** @var Loader|null $loader */
-		$loader = $server->getPluginManager()->getPlugin("BlockSniper");
+		$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
 		if($loader === null){
 			return;
 		}
