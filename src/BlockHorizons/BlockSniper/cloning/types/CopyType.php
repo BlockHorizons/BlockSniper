@@ -12,7 +12,7 @@ use pocketmine\Player;
 
 class CopyType extends BaseClone{
 
-	public function __construct(Player $player, bool $saveAir, Position $center, array $blocks){
+	public function __construct(Player $player, bool $saveAir, Position $center, \Generator $blocks){
 		parent::__construct($player, $saveAir, $center, $blocks);
 	}
 
