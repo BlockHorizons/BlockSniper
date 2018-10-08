@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
-use pocketmine\block\Block;
 use pocketmine\item\Item;
+use pocketmine\math\Facing;
 
 /*
  * Melts away every block with more than 2 open sides within the brush radius.
@@ -23,17 +23,9 @@ class MeltType extends BaseType{
 		$blocks = [];
 		foreach($this->blocks as $block){
 			if($block->getId() !== Item::AIR){
-				$directions = [
-					$block->getSide(Block::SIDE_DOWN),
-					$block->getSide(Block::SIDE_UP),
-					$block->getSide(Block::SIDE_NORTH),
-					$block->getSide(Block::SIDE_SOUTH),
-					$block->getSide(Block::SIDE_WEST),
-					$block->getSide(Block::SIDE_EAST)
-				];
 				$valid = 0;
-				foreach($directions as $direction){
-					if($direction->getId() === Item::AIR){
+				foreach(Facing::ALL as $direction){
+					if($block->getSide($direction)->getId() === Item::AIR){
 						$valid++;
 					}
 				}
@@ -52,17 +44,10 @@ class MeltType extends BaseType{
 		$blocks = [];
 		foreach($this->blocks as $block){
 			if($block->getId() !== Item::AIR){
-				$directions = [
-					$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_DOWN),
-					$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_UP),
-					$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_NORTH),
-					$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_SOUTH),
-					$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_WEST),
-					$this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_EAST),
-				];
 				$valid = 0;
-				foreach($directions as $direction){
-					if($direction->getId() === Item::AIR){
+				foreach(Facing::ALL as $direction){
+					$sideBlock = $this->getChunkManager()->getSide($block->x, $block->y, $block->z, $direction);
+					if($sideBlock->getId() === Item::AIR){
 						$valid++;
 					}
 				}

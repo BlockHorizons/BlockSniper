@@ -6,10 +6,10 @@ namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
-use pocketmine\block\Block;
 use pocketmine\block\Flowable;
 use pocketmine\item\Item;
 use pocketmine\level\ChunkManager;
+use pocketmine\math\Facing;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 
@@ -32,10 +32,10 @@ class TopLayerType extends BaseType{
 	public function fillSynchronously() : \Generator{
 		foreach($this->blocks as $block){
 			if(!$block instanceof Flowable && $block->getId() !== Item::AIR){
-				$up = $block->getSide(Block::SIDE_UP);
+				$up = $block->getSide(Facing::UP);
 				if($up instanceof Flowable || $up->getId() === Item::AIR){
 					$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
-					for($y = $block->y; $y >= $block->y - $this->height; $y--){
+					for($y = $block->y; $y >= $block->y - $this->height; $block->y--){
 						yield $this->getLevel()->getBlock(new Vector3($block->x, $y, $block->z));
 						$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());
 					}
@@ -47,10 +47,10 @@ class TopLayerType extends BaseType{
 	public function fillAsynchronously() : void{
 		foreach($this->blocks as $block){
 			if(!$block instanceof Flowable && $block->getId() !== Item::AIR){
-				$up = $this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_UP);
+				$up = $this->getChunkManager()->getSide($block->x, $block->y, $block->z, Facing::UP);
 				if($up instanceof Flowable || $up->getId() === Item::AIR){
 					$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
-					for($y = $block->y; $y >= $block->y - $this->height; $y--){
+					for($y = $block->y; $y >= $block->y - $this->height; $block->y--){
 						$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());
 					}
 				}

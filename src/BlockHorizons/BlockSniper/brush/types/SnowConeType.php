@@ -7,6 +7,7 @@ namespace BlockHorizons\BlockSniper\brush\types;
 use BlockHorizons\BlockSniper\brush\BaseType;
 use pocketmine\block\Block;
 use pocketmine\block\Flowable;
+use pocketmine\math\Facing;
 
 /*
  * Lays a layer of snow on top of the terrain, and raises it if there is snow already.
@@ -22,7 +23,7 @@ class SnowConeType extends BaseType{
 	public function fillSynchronously() : \Generator{
 		foreach($this->blocks as $block){
 			if(!($block instanceof Flowable) && ($id = $block->getId()) !== Block::AIR && $id !== Block::SNOW_LAYER){
-				$topBlock = $block->getSide(Block::SIDE_UP);
+				$topBlock = $block->getSide(Facing::UP);
 				if(($topId = $topBlock->getId()) === Block::AIR || $topId === Block::SNOW_LAYER){
 					if($topBlock->getDamage() < 7 && $topBlock->getId() === Block::SNOW_LAYER){
 						yield $topBlock;
@@ -39,7 +40,7 @@ class SnowConeType extends BaseType{
 	public function fillAsynchronously() : void{
 		foreach($this->blocks as $block){
 			if(!($block instanceof Flowable) && ($id = $block->getId()) !== Block::AIR && $id !== Block::SNOW_LAYER){
-				$topBlock = $this->getChunkManager()->getSide($block->x, $block->y, $block->z, Block::SIDE_UP);
+				$topBlock = $this->getChunkManager()->getSide($block->x, $block->y, $block->z, Facing::UP);
 				if(($topId = $topBlock->getId()) === Block::AIR || $topId === Block::SNOW_LAYER){
 					if($topBlock->getDamage() < 7 && $topBlock->getId() === Block::SNOW_LAYER){
 						$this->putBlock($topBlock, $topBlock->getId(), $topBlock->getDamage() + 1);
