@@ -68,10 +68,7 @@ class BrushTask extends AsyncTask{
 
 			$i++;
 			if($i === $percentageBlocks) {
-				$this->publishProgress([
-					"player" => $shape->getPlayerName(),
-					"progress" => (int) ceil($i / $blockCount * 20)
-									   ]);
+				$this->publishProgress([$shape->getPlayerName(), (int) ceil($i / $blockCount * 20)]);
 				$percentageBlocks += $blocksPerPercentage;
 			}
 			yield $block;
