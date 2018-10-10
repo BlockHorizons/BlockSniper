@@ -78,21 +78,21 @@ class BrushTask extends AsyncTask{
 		}
 	}
 
-	public function onProgressUpdate(Server $server, array $progress) : void{
+	public function onProgressUpdate($progress) : void{
 		[$playerName, $progress] = $progress;
-		if(($player = $server->getPlayer($playerName)) === null) {
+		if(($player = Server::getInstance()->getPlayer($playerName)) === null) {
 			return;
 		}
 		$player->sendPopup(TextFormat::GREEN . str_repeat("|", $progress) . TextFormat::RED . str_repeat("|", 20 - $progress));
 	}
 
-	public function onCompletion(Server $server) : void{
+	public function onCompletion() : void{
 		/** @var Loader $loader */
-		$loader = $server->getPluginManager()->getPlugin("BlockSniper");
+		$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
 		if(!$loader->isEnabled()){
 			return;
 		}
-		if(!($player = $this->shape->getPlayer($server))){
+		if(!($player = $this->shape->getPlayer(Server::getInstance()))){
 			return;
 		}
 
