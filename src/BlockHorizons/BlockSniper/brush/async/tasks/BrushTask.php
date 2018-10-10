@@ -15,6 +15,7 @@ use pocketmine\level\Level;
 use pocketmine\math\Vector2;
 use pocketmine\scheduler\AsyncTask;
 use pocketmine\Server;
+use pocketmine\utils\TextFormat;
 
 class BrushTask extends AsyncTask{
 
@@ -45,33 +46,53 @@ class BrushTask extends AsyncTask{
 			$chunks[$hash] = Chunk::fastDeserialize($data);
 		}
 		/** @var Chunk[] $chunks */
-
-		$vectorsInside = $shape->getBlocksInside(true);
 		$manager = BaseType::establishChunkManager($chunks);
 
-		$type->setBlocksInside($this->blocks($vectorsInside, $chunks))->setAsynchronous()->setChunkManager($manager)->fillShape(unserialize($this->plotPoints, ["allowed_classes" => [Vector2::class]]));
+		$type->setBlocksInside($this->blocks($shape, $chunks))->setAsynchronous()->setChunkManager($manager)->fillShape(unserialize($this->plotPoints, ["allowed_classes" => [Vector2::class]]));
 
 		$this->setResult(compact("undoChunks", "chunks"));
 	}
 
-	private function blocks(\Generator $vectorsInside, array $chunks) : \Generator{
-		foreach($vectorsInside as $vector3){
+	private function blocks(BaseShape $shape, array $chunks) : \Generator{
+		$blockCount = $shape->getBlockCount();
+		$blocksPerPercentage = (int) round($blockCount / 100);
+		$percentageBlocks = $blocksPerPercentage;
+
+		$i = 0;
+		foreach($shape->getBlocksInside(true) as $vector3){
 			$index = Level::chunkHash($vector3->x >> 4, $vector3->z >> 4);
 
-			$pos = [(int) $vector3->x & 0x0f, (int) $vector3->y, (int) $vector3->z & 0x0f];
-			$block = Block::get($chunks[$index]->getBlockId($pos[0], $pos[1], $pos[2]), $chunks[$index]->getBlockData($pos[0], $pos[1], $pos[2]));
+			[$posX, $posY, $posZ] = [(int) $vector3->x & 0x0f, (int) $vector3->y, (int) $vector3->z & 0x0f];
+			$block = Block::get($chunks[$index]->getBlockId($posX, $posY, $posZ), $chunks[$index]->getBlockData($posX, $posY, $posZ));
 			$block->setComponents($vector3->x, $vector3->y, $vector3->z);
+
+			$i++;
+			if($i === $percentageBlocks) {
+				$this->publishProgress([
+					"player" => $shape->getPlayerName(),
+					"progress" => (int) ceil($i / $blockCount * 20)
+									   ]);
+				$percentageBlocks += $blocksPerPercentage;
+			}
 			yield $block;
 		}
 	}
 
-	public function onCompletion() : void{
+	public function onProgressUpdate(Server $server, array $progress) : void{
+		[$playerName, $progress] = $progress;
+		if(($player = $server->getPlayer($playerName)) === null) {
+			return;
+		}
+		$player->sendPopup(TextFormat::GREEN . str_repeat("|", $progress) . TextFormat::RED . str_repeat("|", 20 - $progress));
+	}
+
+	public function onCompletion(Server $server) : void{
 		/** @var Loader $loader */
-		$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
+		$loader = $server->getPluginManager()->getPlugin("BlockSniper");
 		if(!$loader->isEnabled()){
 			return;
 		}
-		if(!($player = $this->shape->getPlayer(Server::getInstance()))){
+		if(!($player = $this->shape->getPlayer($server))){
 			return;
 		}
 

@@ -6,7 +6,6 @@ namespace BlockHorizons\BlockSniper\brush\shapes;
 
 use BlockHorizons\BlockSniper\brush\BaseShape;
 use BlockHorizons\BlockSniper\brush\Brush;
-use pocketmine\level\Level;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
 
@@ -35,6 +34,26 @@ class CuboidShape extends BaseShape{
 	}
 
 	/**
+	 * @return int
+	 */
+	public function getBlockCount() : int {
+		$i = 0;
+		for($x = $this->minX; $x <= $this->maxX; $x++){
+			for($y = $this->minY; $y <= $this->maxY; $y++){
+				for($z = $this->minZ; $z <= $this->maxZ; $z++){
+					if($this->hollow){
+						if($x !== $this->maxX && $x !== $this->minX && $y !== $this->maxY && $y !== $this->minY && $z !== $this->maxZ && $z !== $this->minZ){
+							continue;
+						}
+					}
+					++$i;
+				}
+			}
+		}
+		return $i;
+	}
+
+	/**
 	 * @return string
 	 */
 	public function getName() : string{
@@ -51,23 +70,5 @@ class CuboidShape extends BaseShape{
 			$center->x + $brush->size, $center->y + $brush->height, $center->z + $brush->size,
 			$center->x - $brush->size, $center->y - $brush->height, $center->z - $brush->size
 		];
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getTouchedChunks() : array{
-		$touchedChunks = [];
-		for($x = $this->minX; $x <= $this->maxX + 16; $x += 16){
-			for($z = $this->minZ; $z <= $this->maxZ + 16; $z += 16){
-				$chunk = $this->getLevel()->getChunk($x >> 4, $z >> 4, false);
-				if($chunk === null){
-					continue;
-				}
-				$touchedChunks[Level::chunkHash($x >> 4, $z >> 4)] = $chunk->fastSerialize();
-			}
-		}
-
-		return $touchedChunks;
 	}
 }
