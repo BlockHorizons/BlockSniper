@@ -55,6 +55,13 @@ abstract class BaseShape extends AxisAlignedBB{
 	}
 
 	/**
+	 * @return string
+	 */
+	public function getPlayerName() : string {
+		return $this->playerName;
+	}
+
+	/**
 	 * Returns true if the shape is hollow, false if it is not.
 	 *
 	 * @return bool
@@ -85,6 +92,24 @@ abstract class BaseShape extends AxisAlignedBB{
 	}
 
 	/**
+	 * @return string[]
+	 */
+	public function getTouchedChunks() : array{
+		$touchedChunks = [];
+		for($x = $this->minX; $x <= $this->maxX + 16; $x += 16){
+			for($z = $this->minZ; $z <= $this->maxZ + 16; $z += 16){
+				$chunk = $this->getLevel()->getChunk($x >> 4, $z >> 4, false);
+				if($chunk === null){
+					continue;
+				}
+				$touchedChunks[Level::chunkHash($x >> 4, $z >> 4)] = $chunk->fastSerialize();
+			}
+		}
+
+		return $touchedChunks;
+	}
+
+	/**
 	 * Returns the level the shape is made in.
 	 *
 	 * @return Level
@@ -92,11 +117,6 @@ abstract class BaseShape extends AxisAlignedBB{
 	public function getLevel() : Level{
 		return Server::getInstance()->getLevel($this->level);
 	}
-
-	/**
-	 * @return array
-	 */
-	public abstract function getTouchedChunks() : array;
 
 	/**
 	 * Returns the name of the shape.
@@ -123,4 +143,11 @@ abstract class BaseShape extends AxisAlignedBB{
 	 * @param AxisAlignedBB $bb
 	 */
 	public abstract function buildSelection(Vector3 $center, Brush $brush, AxisAlignedBB $bb) : void;
+
+	/**
+	 * Calculates the total amount of blocks in the selection of the shape.
+	 *
+	 * @return int
+	 */
+	public abstract function getBlockCount() : int;
 }
