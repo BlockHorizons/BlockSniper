@@ -4,7 +4,7 @@ namespace BlockHorizons\BlockSniper\brush\async;
 
 use pocketmine\block\Block;
 use pocketmine\level\SimpleChunkManager;
-use pocketmine\math\Vector3;
+use pocketmine\math\Facing;
 
 class BlockSniperChunkManager extends SimpleChunkManager{
 
@@ -46,22 +46,22 @@ class BlockSniperChunkManager extends SimpleChunkManager{
 			$block = Block::get($this->getSideId($x, $y, $z, $side), $this->getSideData($x, $y, $z, $side));
 			$pos = [];
 			switch($side){
-				case Vector3::SIDE_DOWN:
+				case Facing::DOWN:
 					$pos = [$x, $y - 1, $z];
 					break;
-				case Vector3::SIDE_UP:
+				case Facing::UP:
 					$pos = [$x, $y + 1, $z];
 					break;
-				case Vector3::SIDE_NORTH:
+				case Facing::NORTH:
 					$pos = [$x, $y, $z - 1];
 					break;
-				case Vector3::SIDE_SOUTH:
+				case Facing::SOUTH:
 					$pos = [$x, $y, $z + 1];
 					break;
-				case Vector3::SIDE_WEST:
+				case Facing::WEST:
 					$pos = [$x - 1, $y, $z];
 					break;
-				case Vector3::SIDE_EAST:
+				case Facing::EAST:
 					$pos = [$x + 1, $y, $z];
 			}
 			$block->setComponents($pos[0], $pos[1], $pos[2]);
@@ -75,17 +75,17 @@ class BlockSniperChunkManager extends SimpleChunkManager{
 	public function getSideId(int $x, int $y, int $z, int $side) : int{
 		if($chunk = $this->getChunk($x >> 4, $z >> 4)){
 			switch($side){
-				case Vector3::SIDE_DOWN:
+				case Facing::DOWN:
 					return $this->getBlockIdAt($x, $y - 1, $z);
-				case Vector3::SIDE_UP:
+				case Facing::UP:
 					return $this->getBlockIdAt($x, $y + 1, $z);
-				case Vector3::SIDE_NORTH:
+				case Facing::NORTH:
 					return $this->getBlockIdAt($x, $y, $z - 1);
-				case Vector3::SIDE_SOUTH:
+				case Facing::SOUTH:
 					return $this->getBlockIdAt($x, $y, $z + 1);
-				case Vector3::SIDE_WEST:
+				case Facing::WEST:
 					return $this->getBlockIdAt($x - 1, $y, $z);
-				case Vector3::SIDE_EAST:
+				case Facing::EAST:
 					return $this->getBlockIdAt($x + 1, $y, $z);
 				default:
 					return -1;
@@ -98,17 +98,17 @@ class BlockSniperChunkManager extends SimpleChunkManager{
 	public function getSideData(int $x, int $y, int $z, int $side) : int{
 		if($chunk = $this->getChunk($x >> 4, $z >> 4)){
 			switch($side){
-				case Vector3::SIDE_DOWN:
+				case Facing::DOWN:
 					return $this->getBlockDataAt($x, $y - 1, $z);
-				case Vector3::SIDE_UP:
+				case Facing::UP:
 					return $this->getBlockDataAt($x, $y + 1, $z);
-				case Vector3::SIDE_NORTH:
+				case Facing::NORTH:
 					return $this->getBlockDataAt($x, $y, $z - 1);
-				case Vector3::SIDE_SOUTH:
+				case Facing::SOUTH:
 					return $this->getBlockDataAt($x, $y, $z + 1);
-				case Vector3::SIDE_WEST:
+				case Facing::WEST:
 					return $this->getBlockDataAt($x - 1, $y, $z);
-				case Vector3::SIDE_EAST:
+				case Facing::EAST:
 					return $this->getBlockDataAt($x + 1, $y, $z);
 				default:
 					return -1;
