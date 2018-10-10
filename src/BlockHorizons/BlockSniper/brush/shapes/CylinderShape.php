@@ -36,7 +36,7 @@ class CylinderShape extends BaseShape{
 								continue;
 							}
 						}
-						yield $vectorOnly ? new Vector3($x, $y, $z) : $this->getLevel()->getBlock(new Vector3($x, $y, $z));
+						yield $vectorOnly ? new Vector3((int) $x, (int) $y, (int) $z) : $this->getLevel()->getBlock(new Vector3($x, $y, $z));
 					}
 				}
 			}
