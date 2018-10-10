@@ -36,9 +36,13 @@ class BrushTask extends AsyncTask{
 	}
 
 	public function onRun() : void{
-		$chunks = unserialize($this->chunks, ["allowed_classes" => [Chunk::class]]);
 		$type = $this->type;
 		$shape = $this->shape;
+
+		// Publish progress immediately so that there will be no delay until the progress indicator appears.
+		$this->publishProgress([$shape->getPlayerName(), 0]);
+
+		$chunks = unserialize($this->chunks, ["allowed_classes" => [Chunk::class]]);
 
 		$undoChunks = $chunks;
 
@@ -59,9 +63,11 @@ class BrushTask extends AsyncTask{
 		$percentageBlocks = $blocksPerPercentage;
 
 		$i = 0;
-		$this->publishProgress([$shape->getPlayerName(), 0]);
 		foreach($shape->getBlocksInside(true) as $vector3){
 			$index = Level::chunkHash($vector3->x >> 4, $vector3->z >> 4);
+			if(!isset($chunks[$index])) {
+				continue;
+			}
 
 			[$posX, $posY, $posZ] = [(int) $vector3->x & 0x0f, (int) $vector3->y, (int) $vector3->z & 0x0f];
 			$block = Block::get($chunks[$index]->getBlockId($posX, $posY, $posZ), $chunks[$index]->getBlockData($posX, $posY, $posZ));
