@@ -59,6 +59,7 @@ class BrushTask extends AsyncTask{
 		$percentageBlocks = $blocksPerPercentage;
 
 		$i = 0;
+		$this->publishProgress([$shape->getPlayerName(), 0]);
 		foreach($shape->getBlocksInside(true) as $vector3){
 			$index = Level::chunkHash($vector3->x >> 4, $vector3->z >> 4);
 
