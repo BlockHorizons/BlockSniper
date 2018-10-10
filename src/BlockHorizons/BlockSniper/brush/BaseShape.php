@@ -98,7 +98,7 @@ abstract class BaseShape extends AxisAlignedBB{
 		$touchedChunks = [];
 		for($x = $this->minX; $x <= $this->maxX + 16; $x += 16){
 			for($z = $this->minZ; $z <= $this->maxZ + 16; $z += 16){
-				$chunk = $this->getLevel()->getChunk($x >> 4, $z >> 4, false);
+				$chunk = $this->getLevel()->getChunk($x >> 4, $z >> 4, true);
 				if($chunk === null){
 					continue;
 				}
