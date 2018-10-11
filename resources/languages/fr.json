@@ -124,6 +124,11 @@
 			"size": "Taille du pinceau",
 			"shape": "Forme du pinceau",
 			"type": "Type de pinceau",
+			"mode": {
+				"description": "Brush Mode",
+				"brush": "Brush",
+				"selection": "Selection"
+			},
 			"hollow": "Pinceau creuse",
 			"decrement": "Décrémenter le pinceau",
 			"height": "Hauteur du pinceau",
@@ -138,6 +143,7 @@
 			"auto-update": "Mettre à jour automatiquement le fichier de configuration quand une nouvelle version est trouvée",
 			"language": "Language utilisé pour envoyer des messages liés à BlockSniper",
 			"brush-item": "ID de l'élément utilisé pour peindre",
+			"selection-item": "Item ID of the item that is used to select",
 			"max-brush-size": "La taille maximale absolue du pinceau",
 			"min-async-size": "Limite asynchrone de la taille du pinceau. Si la taille du pinceau est plus grande, les opérations sont exécutées de façon asynchrone",
 			"max-reverts": "Nombre maximum d'action annuler/relancer sauvegarder. Les plus anciens sont nettoyés automatiquement",
@@ -179,6 +185,11 @@
 		}
 	},
 	"brush": {
+		"selection": {
+			"first": "Position 1 set to:",
+			"second": "Position 2 set to:",
+			"error": "Set your selection using the selection item before doing this action."
+		},
 		"shape": {
 			"cube": "Cube",
 			"cuboid": "Cuboid",

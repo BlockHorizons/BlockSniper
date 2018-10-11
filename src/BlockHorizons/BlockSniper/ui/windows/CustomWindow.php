@@ -6,6 +6,7 @@ namespace BlockHorizons\BlockSniper\ui\windows;
 
 use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
 use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
+use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\ui\forms\CustomForm;
 use pocketmine\Player;
 
@@ -59,5 +60,15 @@ abstract class CustomWindow extends CustomForm{
 		}
 
 		return array_values($types);
+	}
+
+	/**
+	 * @return string[]
+	 */
+	public function processModes() : array{
+		return [
+			$this->t(Translation::UI_BRUSH_MENU_MODE_BRUSH),
+			$this->t(Translation::UI_BRUSH_MENU_MODE_SELECTION)
+		];
 	}
 }

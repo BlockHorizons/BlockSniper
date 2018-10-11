@@ -10,9 +10,10 @@ use BlockHorizons\BlockSniper\revert\Revert;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\level\format\Chunk;
 use pocketmine\level\Level;
+use pocketmine\scheduler\AsyncTask;
 use pocketmine\Server;
 
-class RevertTask extends AsyncBlockSniperTask{
+class RevertTask extends AsyncTask{
 
 	/** @var string */
 	private $revert = "";
@@ -31,26 +32,18 @@ class RevertTask extends AsyncBlockSniperTask{
 		$this->setResult(compact("chunks", "revert"));
 	}
 
-	/**
-	 * @param Server $server
-	 *
-	 * @return bool
-	 */
-	public function onCompletion(Server $server) : bool{
+	public function onCompletion(Server $server) : void{
 		/** @var Loader $loader */
 		$loader = $server->getPluginManager()->getPlugin("BlockSniper");
-		if($loader === null){
-			return false;
-		}
 		if(!$loader->isEnabled()){
-			return false;
+			return;
 		}
 
 		$result = $this->getResult();
 		/** @var Revert $revert */
 		$revert = $result["revert"];
 		if(!($player = $server->getPlayer($revert->getPlayerName()))){
-			return false;
+			return;
 		}
 
 		/** @var Chunk[] $chunks */
@@ -65,7 +58,5 @@ class RevertTask extends AsyncBlockSniperTask{
 		}
 
 		SessionManager::getPlayerSession($player)->getRevertStore()->saveRevert($revert);
-
-		return true;
 	}
 }

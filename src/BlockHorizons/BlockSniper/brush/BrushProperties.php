@@ -19,6 +19,8 @@ class BrushProperties implements \JsonSerializable{
 	/** @var string */
 	public $shape = SphereShape::class;
 	/** @var int */
+	public $mode = 0;
+	/** @var int */
 	public $size = 1;
 	/** @var bool */
 	public $hollow = false;

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\cloning;
 
 use BlockHorizons\BlockSniper\brush\async\tasks\PasteTask;
+use BlockHorizons\BlockSniper\brush\BaseShape;
 use BlockHorizons\BlockSniper\revert\sync\SyncUndo;
 use BlockHorizons\BlockSniper\sessions\Session;
 use pocketmine\block\Block;
@@ -15,12 +16,14 @@ use pocketmine\Server;
 
 class CloneStore{
 
-	/** @var Block[] */
-	private $copyStore = [];
+	/** @var BaseShape */
+	private $copy = null;
 	/** @var Vector3 */
 	private $originalCenter = null;
 	/** @var string */
 	private $path = "";
+	/** @var Session */
+	private $session;
 
 	public function __construct(Session $session, string $path){
 		$this->session = $session;
@@ -28,19 +31,10 @@ class CloneStore{
 	}
 
 	/**
-	 * @param Block[] $blocks
+	 * @param BaseShape $generator
 	 */
-	public function saveCopy(array $blocks) : void{
-		$this->unsetCopy();
-		foreach($blocks as $block){
-			$v3 = $block->subtract($this->getOriginalCenter());
-			$block->setComponents($v3->x, $v3->y, $v3->z);
-			$this->copyStore[] = $block;
-		}
-	}
-
-	public function unsetCopy() : void{
-		unset($this->copyStore);
+	public function saveCopy(BaseShape $generator) : void{
+		$this->copy = $generator;
 	}
 
 	/**
@@ -62,15 +56,18 @@ class CloneStore{
 	 */
 	public function pasteCopy(Position $targetBlock) : void{
 		$undoBlocks = [];
-		foreach($this->copyStore as $block){
-			$undoBlocks[] = $targetBlock->level->getBlock($targetBlock->add($block));
-			$targetBlock->level->setBlock($targetBlock->add($block), $block, false, false);
+
+		foreach($this->copy->getBlocksInside(true) as $block){
+			$v3 = $block->subtract($this->getOriginalCenter());
+
+			$undoBlocks[] = $targetBlock->level->getBlock($targetBlock->add($v3));
+			$targetBlock->level->setBlock($targetBlock->add($v3), clone $targetBlock->level->getBlock($block), false, false);
 		}
 		$this->session->getRevertStore()->saveRevert(new SyncUndo($undoBlocks, $this->session->getSessionOwner()->getPlayerName()));
 	}
 
 	public function resetCopyStorage() : void{
-		$this->copyStore = [];
+		$this->copy = null;
 		$this->originalCenter = null;
 	}
 
@@ -78,14 +75,7 @@ class CloneStore{
 	 * @return bool
 	 */
 	public function copyStoreExists() : bool{
-		return !empty($this->copyStore);
-	}
-
-	/**
-	 * @return int
-	 */
-	public function getCopyBlockAmount() : int{
-		return count($this->copyStore);
+		return $this->copy !== null;
 	}
 
 	/*
@@ -99,7 +89,7 @@ class CloneStore{
 	 *
 	 * @deprecated
 	 */
-	public function saveTemplate(string $templateName, array $blocks, Vector3 $targetBlock) : void{
+	public function saveTemplate(string $templateName, \Generator $blocks, Vector3 $targetBlock) : void{
 		$template = [];
 		$i = 0;
 		foreach($blocks as $block){

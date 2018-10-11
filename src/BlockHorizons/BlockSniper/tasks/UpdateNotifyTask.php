@@ -47,6 +47,6 @@ class UpdateNotifyTask extends AsyncTask{
 			return;
 		}
 		$loader->getLogger()->info(vsprintf("Version %s has been released for API %s. Download the new release at %s",
-									   [$highestVersion, $api, $artifactUrl]));
+											[$highestVersion, $api, $artifactUrl]));
 	}
 }

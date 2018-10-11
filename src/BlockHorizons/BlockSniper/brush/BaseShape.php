@@ -8,12 +8,13 @@ use BlockHorizons\BlockSniper\brush\async\tasks\BrushTask;
 use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
+use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector2;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 use pocketmine\Server;
 
-abstract class BaseShape{
+abstract class BaseShape extends AxisAlignedBB{
 
 	const ID = -1;
 
@@ -28,37 +29,21 @@ abstract class BaseShape{
 	protected $center;
 	/** @var bool */
 	protected $hollow = false;
-	/** @var int */
-	protected $height = 0;
-	/** @var int */
-	protected $radius = 0;
-	/** @var int */
-	protected $width = 0;
 	/** @var string */
 	protected $playerName = "";
 
-	public function __construct(Player $player, Level $level, Position $center, bool $hollow){
+	public function __construct(Player $player, Level $level, Position $center, ?AxisAlignedBB $bb, Brush $brush){
+		if($bb === null){
+			$bb = new AxisAlignedBB(0, 0, 0, 0, 0, 0);
+			$this->buildSelection($center, $brush, $bb);
+		}
+		parent::__construct($bb->minX, $bb->minY, $bb->minZ, $bb->maxX, $bb->maxY, $bb->maxZ);
+
 		$this->playerName = $player->getName();
 		$this->level = $level->getId();
 		$this->center = $center->asVector3();
-		$this->hollow = $hollow;
+		$this->hollow = $brush->hollow;
 	}
-
-	/**
-	 * Returns all blocks in the shape if $partially is false. If true, only returns part of the shape, specified by $blocksPerTick.
-	 *
-	 * @param $vectorOnly
-	 *
-	 * @return \Generator
-	 */
-	public abstract function getBlocksInside(bool $vectorOnly = false) : \Generator;
-
-	/**
-	 * Returns the approximate amount of processed blocks in the shape. This may not be perfectly accurate.
-	 *
-	 * @return int
-	 */
-	public abstract function getApproximateProcessedBlocks() : int;
 
 	/**
 	 * @param Server $server
@@ -70,19 +55,10 @@ abstract class BaseShape{
 	}
 
 	/**
-	 * @return int
+	 * @return string
 	 */
-	public function getLevelId() : int{
-		return $this->level;
-	}
-
-	/**
-	 * Returns the center of the shape made, or the target block.
-	 *
-	 * @return Position
-	 */
-	public function getCenter() : Position{
-		return Position::fromObject($this->center, Server::getInstance()->getLevel($this->level));
+	public function getPlayerName() : string {
+		return $this->playerName;
 	}
 
 	/**
@@ -104,13 +80,6 @@ abstract class BaseShape{
 	}
 
 	/**
-	 * Returns the name of the shape.
-	 *
-	 * @return string
-	 */
-	public abstract function getName() : string;
-
-	/**
 	 * @param BaseType    $type
 	 * @param Vector2[][] $plotPoints
 	 *
@@ -123,6 +92,24 @@ abstract class BaseShape{
 	}
 
 	/**
+	 * @return string[]
+	 */
+	public function getTouchedChunks() : array{
+		$touchedChunks = [];
+		for($x = $this->minX; $x <= $this->maxX + 16; $x += 16){
+			for($z = $this->minZ; $z <= $this->maxZ + 16; $z += 16){
+				$chunk = $this->getLevel()->getChunk($x >> 4, $z >> 4, true);
+				if($chunk === null){
+					continue;
+				}
+				$touchedChunks[Level::chunkHash($x >> 4, $z >> 4)] = $chunk->fastSerialize();
+			}
+		}
+
+		return $touchedChunks;
+	}
+
+	/**
 	 * Returns the level the shape is made in.
 	 *
 	 * @return Level
@@ -132,36 +119,35 @@ abstract class BaseShape{
 	}
 
 	/**
-	 * @return array
+	 * Returns the name of the shape.
+	 *
+	 * @return string
 	 */
-	public abstract function getTouchedChunks() : array;
+	public abstract function getName() : string;
 
 	/**
-	 * @param int $targetX
-	 * @param int $targetY
-	 * @param int $targetZ
-	 * @param int $width
-	 * @param int $height
+	 * Returns all blocks in the shape if $partially is false. If true, only returns part of the shape, specified by $blocksPerTick.
 	 *
-	 * @return array
+	 * @param $vectorOnly
+	 *
+	 * @return \Generator
 	 */
-	protected function calculateBoundaryBlocks(int $targetX, int $targetY, int $targetZ, int $width, int $height) : array{
-		$minX = $targetX - $width;
-		$minZ = $targetZ - $width;
-		$minY = $targetY - $height;
-		$maxX = $targetX + $width;
-		$maxZ = $targetZ + $width;
-		$maxY = $targetY + $height;
-
-		return [$minX, $minY, $minZ, $maxX, $maxY, $maxZ];
-	}
+	public abstract function getBlocksInside(bool $vectorOnly = false) : \Generator;
 
 	/**
-	 * @param Vector3 $vector
+	 * Builds a selection if the brush mode is Brush::MODE_BRUSH. $center is the target block, and $bb requires its
+	 * bounds to be set.
 	 *
-	 * @return array
+	 * @param Vector3       $center
+	 * @param Brush         $brush
+	 * @param AxisAlignedBB $bb
 	 */
-	protected function arrayVec(Vector3 $vector) : array{
-		return [$vector->x, $vector->y, $vector->z];
-	}
+	public abstract function buildSelection(Vector3 $center, Brush $brush, AxisAlignedBB $bb) : void;
+
+	/**
+	 * Calculates the total amount of blocks in the selection of the shape.
+	 *
+	 * @return int
+	 */
+	public abstract function getBlockCount() : int;
 }

@@ -13,9 +13,10 @@ use pocketmine\block\Block;
 use pocketmine\level\format\Chunk;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
+use pocketmine\scheduler\AsyncTask;
 use pocketmine\Server;
 
-class PasteTask extends AsyncBlockSniperTask{
+class PasteTask extends AsyncTask{
 
 	/** @var string */
 	private $file = "";
@@ -43,7 +44,6 @@ class PasteTask extends AsyncBlockSniperTask{
 		$schematic->fixBlockIds();
 		$width = $schematic->getWidth();
 		$length = $schematic->getLength();
-		$height = $schematic->getHeight();
 
 		$undoChunks = $chunks;
 
@@ -55,7 +55,6 @@ class PasteTask extends AsyncBlockSniperTask{
 		/** @var Block[] $blocksInside */
 		$blocksInside = $schematic->getBlocks();
 		$manager = BaseType::establishChunkManager($chunks);
-		$i = 0;
 
 		$baseWidth = $center->x - (int) ($width / 2);
 		$baseLength = $center->z - (int) ($length / 2);
@@ -74,14 +73,6 @@ class PasteTask extends AsyncBlockSniperTask{
 				$manager->setBlockDataAt($tempX, $tempY, $tempZ, $block->getDamage());
 				$processedBlocks++;
 			}
-
-			if(++$i === (int) ($length * $width * $height / 100)){
-				if($this->isAborted()){
-					return;
-				}
-				$this->publishProgress(ceil($processedBlocks / ($length * $width * $height) * 100) . "%");
-				$i = 0;
-			}
 		}
 
 		foreach($chunks as &$chunk){
@@ -92,22 +83,14 @@ class PasteTask extends AsyncBlockSniperTask{
 		$this->setResult(compact("undoChunks", "chunks"));
 	}
 
-	/**
-	 * @param Server $server
-	 *
-	 * @return bool
-	 */
-	public function onCompletion(Server $server) : bool{
+	public function onCompletion(Server $server) : void{
 		/** @var Loader $loader */
 		$loader = $server->getPluginManager()->getPlugin("BlockSniper");
-		if($loader === null){
-			return false;
-		}
 		if(!$loader->isEnabled()){
-			return false;
+			return;
 		}
 		if(!($player = $server->getPlayer($this->playerName))){
-			return false;
+			return;
 		}
 
 		$result = $this->getResult();
@@ -132,7 +115,5 @@ class PasteTask extends AsyncBlockSniperTask{
 		unset($undoChunk);
 
 		SessionManager::getPlayerSession($player)->getRevertStore()->saveRevert(new AsyncUndo($chunks, $undoChunks, $this->playerName, $player->getLevel()->getId()));
-
-		return true;
 	}
 }

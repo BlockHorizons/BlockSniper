@@ -120,7 +120,7 @@ class Tree{
 				}
 				[$xInt, $yInt, $zInt] = [(int) floor($x), (int) floor($this->position->y), (int) floor($z)];
 				$bHash = Level::blockHash($xInt, $yInt, $zInt);
-				if(array_key_exists($bHash, $this->set)) {
+				if(array_key_exists($bHash, $this->set)){
 					continue;
 				}
 				$this->set[$bHash] = null;
@@ -169,7 +169,7 @@ class Tree{
 							}
 							[$xInt, $yInt, $zInt] = [(int) floor($x), (int) floor($y), (int) floor($z)];
 							$bHash = Level::blockHash($xInt, $yInt, $zInt);
-							if(array_key_exists($bHash, $this->set)) {
+							if(array_key_exists($bHash, $this->set)){
 								continue;
 							}
 							$this->set[$bHash] = null;
