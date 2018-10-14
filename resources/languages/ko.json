@@ -28,7 +28,7 @@
 			"success": "마지막 수정 사항을 성공적으로 취소했습니다."
 		},
 		"clone": {
-			"description": "지정된 포맷을 사용해서 영역을 복제합니다.",
+			"description": "지정한 형식을 사용해서 영역을 복제합니다.",
 			"copy": {
 				"success": "보았던 위치를 성공적으로 복사했습니다."
 			},
@@ -125,9 +125,9 @@
 			"shape": "브러시 도형",
 			"type": "브러시 종류",
 			"mode": {
-				"description": "Brush Mode",
-				"brush": "Brush",
-				"selection": "Selection"
+				"description": "브러시 모드",
+				"brush": "브러시",
+				"selection": "선택 영역"
 			},
 			"hollow": "빈 브러시",
 			"decrement": "감소 브러시",
@@ -143,7 +143,7 @@
 			"auto-update": "새로운 버전을 찾았을 때 자동으로 구성 파일 업데이트",
 			"language": "BlockSniper 관련 메시지를 보내는 데 사용되는 언어",
 			"brush-item": "브러시에 사용되는 아이템의 ID",
-			"selection-item": "Item ID of the item that is used to select",
+			"selection-item": "선택에 사용되는 아이템의 ID",
 			"max-brush-size": "브러시의 절대적 최대 크기",
 			"min-async-size": "비동기 브러시 크기 제한입니다. 브러시 크기가 이보다 크다면, 작업이 비동기적으로 실행됩니다",
 			"max-reverts": "저장할 실행 취소/다시 실행 보관의 최대량입니다. 이전 것들은 자동으로 비워집니다",
@@ -153,7 +153,7 @@
 			"session-timeout-time": "서버를 떠난 후에 플레이어의 세션이 제거될 시간(분)",
 			"auto-gui": "브러시 아이템을 포함하고 있는 단축바 슬롯으로 전환할 때 자동으로 GUI 열기",
 			"myplot-support": "MyPlot 지원을 켤지 말지 여부",
-			"auto-reload": "이 토글을 켜면 창을 닫을 때 자동으로 구성을 새로 고칩니다"
+			"auto-reload": "이 토글을 켜면 이 창을 닫을 때 자동으로 구성을 새로 고칩니다"
 		},
 		"tree-menu": {
 			"title": "나무 메뉴",
@@ -169,7 +169,7 @@
 		"language": {
 			"auto-selected": "[BlockSniper] 올바른 언어가 선택되지 않았습니다. 영어가 자동 선택되었습니다.",
 			"usage": "게임 내에서 /b를 사용해서 구성 탭으로 이동해서 언어를 선택해주세요.",
-			"selected": "[BlockSniper] 선택된 언어: "
+			"selected": "[BlockSniper] 선택한 언어: "
 		},
 		"brush": {
 			"restored": "플레이어 %s의 브러시가 복원되었습니다.",
@@ -186,9 +186,9 @@
 	},
 	"brush": {
 		"selection": {
-			"first": "Position 1 set to:",
-			"second": "Position 2 set to:",
-			"error": "Set your selection using the selection item before doing this action."
+			"first": "위치 1을 다음으로 설정했습니다:",
+			"second": "위치 2를 다음으로 설정했습니다:",
+			"error": "이 작업을 실행하기 전에 선택 아이템을 사용해서 먼저 선택 영역을 설정하세요."
 		},
 		"shape": {
 			"cube": "정육면체",
