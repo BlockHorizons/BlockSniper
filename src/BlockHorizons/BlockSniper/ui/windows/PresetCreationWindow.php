@@ -50,8 +50,8 @@ class PresetCreationWindow extends CustomWindow{
 		$this->addInput($this->t(Translation::UI_PRESET_CREATION_OBSOLETE), "air", "stone,stone_brick:1,2", function(Player $player, string $value){
 			$this->preset->properties->obsolete = $value;
 		});
-		$this->addInput($this->t(Translation::UI_PRESET_CREATION_BIOME), "plains", "plains", function(Player $player, string $value){
-			$this->preset->properties->biome = $this->preset->properties->parseBiomeId($value);
+		$this->addInput($this->t(Translation::UI_PRESET_CREATION_BIOME), "plains", "plains", function(Player $player, string $value) use($loader){
+			$this->preset->properties->biomeId = $this->preset->properties->parseBiomeId($value);
 			// Last element, so we finish the preset here and add it.
 			if(!$loader->getPresetManager()->isPreset($this->preset->name)){
 				$loader->getPresetManager()->addPreset($this->preset);

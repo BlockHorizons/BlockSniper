@@ -48,7 +48,7 @@ class PresetEditWindow extends CustomWindow{
 			$this->preset->properties->obsolete = $value;
 		});
 		$this->addInput($this->t(Translation::UI_PRESET_CREATION_BIOME), (string) $preset->properties->biomeId, "plains", function(Player $player, string $value){
-			$this->preset->properties->biome = $this->preset->properties->parseBiomeId($value);
+			$this->preset->properties->biomeId = $this->preset->properties->parseBiomeId($value);
 		});
 		$this->setResponseForm(new PresetMenuWindow($loader, $requester));
 	}
