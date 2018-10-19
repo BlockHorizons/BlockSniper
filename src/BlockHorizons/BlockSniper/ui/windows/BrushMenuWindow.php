@@ -47,7 +47,7 @@ class BrushMenuWindow extends CustomWindow{
 			$b->obsolete = $value;
 		});
 		$this->addInput($this->t(Translation::UI_BRUSH_MENU_BIOME), (string) $b->biomeId, "plains", function(Player $player, string $value) use ($b){
-			$b->biome = $b->parseBiomeId($value);
+			$b->biomeId = $b->parseBiomeId($value);
 		});
 	}
 }
