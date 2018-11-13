@@ -13,7 +13,7 @@ use pocketmine\item\Item;
 
 class DrainType extends BaseType{
 
-	const ID = self::TYPE_DRAIN;
+	public const ID = self::TYPE_DRAIN;
 
 	/**
 	 * @return \Generator

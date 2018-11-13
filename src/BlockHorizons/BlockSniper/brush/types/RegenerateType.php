@@ -17,7 +17,7 @@ use pocketmine\Player;
 
 class RegenerateType extends BaseType{
 
-	const ID = self::TYPE_REGENERATE;
+	public const ID = self::TYPE_REGENERATE;
 
 	public function __construct(Player $player, ChunkManager $manager, \Generator $blocks){
 		parent::__construct($player, $manager, $blocks);

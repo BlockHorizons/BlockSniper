@@ -17,7 +17,7 @@ use pocketmine\Player;
 
 class FlattenAllType extends BaseType{
 
-	const ID = self::TYPE_FLATTEN_ALL;
+	public const ID = self::TYPE_FLATTEN_ALL;
 
 	public function __construct(Player $player, ChunkManager $level, \Generator $blocks){
 		parent::__construct($player, $level, $blocks);

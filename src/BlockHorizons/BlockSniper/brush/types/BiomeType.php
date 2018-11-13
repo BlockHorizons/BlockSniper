@@ -15,7 +15,7 @@ use pocketmine\Player;
 
 class BiomeType extends BaseType{
 
-	const ID = self::TYPE_BIOME;
+	public const ID = self::TYPE_BIOME;
 
 	public function __construct(Player $player, ChunkManager $level, \Generator $blocks){
 		parent::__construct($player, $level, $blocks);

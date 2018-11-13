@@ -11,7 +11,7 @@ use pocketmine\math\Vector3;
 
 class SphereShape extends BaseShape{
 
-	const ID = self::SHAPE_SPHERE;
+	public const ID = self::SHAPE_SPHERE;
 
 	/**
 	 * @param bool $vectorOnly

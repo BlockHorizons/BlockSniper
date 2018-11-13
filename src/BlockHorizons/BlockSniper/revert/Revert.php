@@ -9,8 +9,8 @@ use BlockHorizons\BlockSniper\revert\sync\SyncRevert;
 
 abstract class Revert{
 
-	const TYPE_UNDO = 0;
-	const TYPE_REDO = 1;
+	public const TYPE_UNDO = 0;
+	public const TYPE_REDO = 1;
 
 	/** @var string */
 	protected $playerName = "";

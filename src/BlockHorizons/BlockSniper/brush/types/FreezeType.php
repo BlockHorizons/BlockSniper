@@ -13,7 +13,7 @@ use pocketmine\block\Block;
 
 class FreezeType extends BaseType{
 
-	const ID = self::TYPE_FREEZE;
+	public const ID = self::TYPE_FREEZE;
 
 	public function fillSynchronously() : \Generator{
 		foreach($this->blocks as $block){

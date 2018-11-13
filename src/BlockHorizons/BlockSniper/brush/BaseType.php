@@ -19,29 +19,29 @@ use pocketmine\Server;
 
 abstract class BaseType{
 
-	const ID = -1;
+	public const ID = -1;
 
-	const TYPE_BIOME = 0;
-	const TYPE_CLEAN_ENTITIES = 1;
-	const TYPE_CLEAN = 2;
-	const TYPE_DRAIN = 3;
-	const TYPE_EXPAND = 4;
-	const TYPE_FILL = 5;
-	const TYPE_FLATTEN_ALL = 6;
-	const TYPE_FLATTEN = 7;
-	const TYPE_LAYER = 8;
-	const TYPE_LEAF_BLOWER = 9;
-	const TYPE_MELT = 10;
-	const TYPE_OVERLAY = 11;
-	const TYPE_REPLACE_ALL = 12;
-	const TYPE_REPLACE = 13;
-	const TYPE_SNOW_CONE = 14;
-	const TYPE_TOP_LAYER = 15;
-	const TYPE_TREE = 16;
-	const TYPE_REGENERATE = 17;
-	const TYPE_FREEZE = 18;
-	const TYPE_WARM = 19;
-	const TYPE_HEAT = 20;
+	public const TYPE_BIOME = 0;
+	public const TYPE_CLEAN_ENTITIES = 1;
+	public const TYPE_CLEAN = 2;
+	public const TYPE_DRAIN = 3;
+	public const TYPE_EXPAND = 4;
+	public const TYPE_FILL = 5;
+	public const TYPE_FLATTEN_ALL = 6;
+	public const TYPE_FLATTEN = 7;
+	public const TYPE_LAYER = 8;
+	public const TYPE_LEAF_BLOWER = 9;
+	public const TYPE_MELT = 10;
+	public const TYPE_OVERLAY = 11;
+	public const TYPE_REPLACE_ALL = 12;
+	public const TYPE_REPLACE = 13;
+	public const TYPE_SNOW_CONE = 14;
+	public const TYPE_TOP_LAYER = 15;
+	public const TYPE_TREE = 16;
+	public const TYPE_REGENERATE = 17;
+	public const TYPE_FREEZE = 18;
+	public const TYPE_WARM = 19;
+	public const TYPE_HEAT = 20;
 
 	/** @var int */
 	protected $level = 0;

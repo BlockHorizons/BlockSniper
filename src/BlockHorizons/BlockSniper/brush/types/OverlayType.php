@@ -14,7 +14,7 @@ use pocketmine\math\Facing;
 
 class OverlayType extends BaseType{
 
-	const ID = self::TYPE_OVERLAY;
+	public const ID = self::TYPE_OVERLAY;
 
 	/**
 	 * @return \Generator

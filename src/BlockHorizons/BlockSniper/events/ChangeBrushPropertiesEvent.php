@@ -8,19 +8,19 @@ use pocketmine\Player;
 
 class ChangeBrushPropertiesEvent extends BlockSniperEvent{
 
-	const ACTION_RESET_BRUSH = 0;
-	const ACTION_CHANGE_SIZE = 1;
-	const ACTION_CHANGE_HEIGHT = 2;
-	const ACTION_CHANGE_TYPE = 3;
-	const ACTION_CHANGE_SHAPE = 4;
+	public const ACTION_RESET_BRUSH = 0;
+	public const ACTION_CHANGE_SIZE = 1;
+	public const ACTION_CHANGE_HEIGHT = 2;
+	public const ACTION_CHANGE_TYPE = 3;
+	public const ACTION_CHANGE_SHAPE = 4;
 
-	const ACTION_CHANGE_BLOCKS = 5;
-	const ACTION_CHANGE_BIOME = 6;
-	const ACTION_CHANGE_OBSOLETE = 7;
-	const ACTION_CHANGE_DECREMENT = 8;
-	const ACTION_CHANGE_HOLLOW = 9;
-	const ACTION_CHANGE_TREE = 10;
-	const ACTION_CHANGE_PERFECT = 11;
+	public const ACTION_CHANGE_BLOCKS = 5;
+	public const ACTION_CHANGE_BIOME = 6;
+	public const ACTION_CHANGE_OBSOLETE = 7;
+	public const ACTION_CHANGE_DECREMENT = 8;
+	public const ACTION_CHANGE_HOLLOW = 9;
+	public const ACTION_CHANGE_TREE = 10;
+	public const ACTION_CHANGE_PERFECT = 11;
 
 	/** @var null */
 	public static $handlerList = null;

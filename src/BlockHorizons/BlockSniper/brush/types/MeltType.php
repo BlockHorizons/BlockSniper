@@ -14,7 +14,7 @@ use pocketmine\math\Facing;
 
 class MeltType extends BaseType{
 
-	const ID = self::TYPE_MELT;
+	public const ID = self::TYPE_MELT;
 
 	/**
 	 * @return \Generator

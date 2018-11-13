@@ -13,7 +13,7 @@ use pocketmine\block\Block;
 
 class CleanType extends BaseType{
 
-	const ID = self::TYPE_CLEAN;
+	public const ID = self::TYPE_CLEAN;
 
 	public function getName() : string{
 		return "Clean";

@@ -14,7 +14,7 @@ use pocketmine\block\Flowable;
 
 class ReplaceAllType extends BaseType{
 
-	const ID = self::TYPE_REPLACE_ALL;
+	public const ID = self::TYPE_REPLACE_ALL;
 
 	/**
 	 * @return \Generator

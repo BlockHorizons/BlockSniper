@@ -14,7 +14,7 @@ use pocketmine\Player;
 
 class CleanEntitiesType extends BaseType{
 
-	const ID = self::TYPE_CLEAN_ENTITIES;
+	public const ID = self::TYPE_CLEAN_ENTITIES;
 
 	public function getName() : string{
 		return "Clean Entities";

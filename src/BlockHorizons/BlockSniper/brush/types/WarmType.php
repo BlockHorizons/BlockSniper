@@ -9,7 +9,7 @@ use pocketmine\block\Block;
 
 class WarmType extends BaseType{
 
-	const ID = self::TYPE_WARM;
+	public const ID = self::TYPE_WARM;
 
 	public function fillSynchronously() : \Generator{
 		foreach($this->blocks as $block){

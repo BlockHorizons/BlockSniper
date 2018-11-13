@@ -11,9 +11,9 @@ use pocketmine\Player;
 
 abstract class BaseClone{
 
-	const TYPE_COPY = 0;
-	const TYPE_TEMPLATE = 1;
-	const TYPE_SCHEMATIC = 2;
+	public const TYPE_COPY = 0;
+	public const TYPE_TEMPLATE = 1;
+	public const TYPE_SCHEMATIC = 2;
 
 	/** @var Level */
 	public $level = null;

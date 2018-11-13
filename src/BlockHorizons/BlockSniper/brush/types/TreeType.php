@@ -17,7 +17,7 @@ use pocketmine\Player;
 
 class TreeType extends BaseType{
 
-	const ID = self::TYPE_TREE;
+	public const ID = self::TYPE_TREE;
 
 	/** @var Brush */
 	private $brush;

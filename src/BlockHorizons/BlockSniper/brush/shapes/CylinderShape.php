@@ -11,7 +11,7 @@ use pocketmine\math\Vector3;
 
 class CylinderShape extends BaseShape{
 
-	const ID = self::SHAPE_CYLINDER;
+	public const ID = self::SHAPE_CYLINDER;
 
 	/**
 	 * @param bool $vectorOnly

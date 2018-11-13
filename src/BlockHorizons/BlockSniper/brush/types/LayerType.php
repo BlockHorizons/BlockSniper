@@ -15,7 +15,7 @@ use pocketmine\Player;
 
 class LayerType extends BaseType{
 
-	const ID = self::TYPE_LAYER;
+	public const ID = self::TYPE_LAYER;
 
 	public function __construct(Player $player, ChunkManager $level, \Generator $blocks){
 		parent::__construct($player, $level, $blocks);

@@ -16,7 +16,7 @@ use pocketmine\Server;
 
 class LeafBlowerType extends BaseType{
 
-	const ID = self::TYPE_LEAF_BLOWER;
+	public const ID = self::TYPE_LEAF_BLOWER;
 
 	/**
 	 * @return \Generator

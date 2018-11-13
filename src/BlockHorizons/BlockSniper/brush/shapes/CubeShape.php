@@ -10,7 +10,7 @@ use pocketmine\math\Vector3;
 
 class CubeShape extends CuboidShape{
 
-	const ID = self::SHAPE_CUBE;
+	public const ID = self::SHAPE_CUBE;
 
 	/**
 	 * @return string

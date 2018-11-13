@@ -11,7 +11,7 @@ use pocketmine\math\Vector3;
 
 class CuboidShape extends BaseShape{
 
-	const ID = self::SHAPE_CUBOID;
+	public const ID = self::SHAPE_CUBOID;
 
 	/**
 	 * @param bool $vectorOnly

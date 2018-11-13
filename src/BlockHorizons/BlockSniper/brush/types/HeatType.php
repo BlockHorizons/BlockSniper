@@ -15,7 +15,7 @@ use pocketmine\block\TallGrass;
 
 class HeatType extends BaseType{
 
-	const ID = self::TYPE_HEAT;
+	public const ID = self::TYPE_HEAT;
 
 	public function fillSynchronously() : \Generator{
 		foreach($this->blocks as $block){

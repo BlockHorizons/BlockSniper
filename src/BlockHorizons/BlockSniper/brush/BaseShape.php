@@ -16,12 +16,12 @@ use pocketmine\Server;
 
 abstract class BaseShape extends AxisAlignedBB{
 
-	const ID = -1;
+	public const ID = -1;
 
-	const SHAPE_SPHERE = 0;
-	const SHAPE_CUBE = 1;
-	const SHAPE_CUBOID = 2;
-	const SHAPE_CYLINDER = 3;
+	public const SHAPE_SPHERE = 0;
+	public const SHAPE_CUBE = 1;
+	public const SHAPE_CUBOID = 2;
+	public const SHAPE_CYLINDER = 3;
 
 	/** @var int */
 	protected $level = 0;

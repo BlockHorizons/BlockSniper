@@ -12,7 +12,7 @@ use BlockHorizons\BlockSniper\brush\BaseType;
 
 class FillType extends BaseType{
 
-	const ID = self::TYPE_FILL;
+	public const ID = self::TYPE_FILL;
 
 	/**
 	 * @return \Generator
