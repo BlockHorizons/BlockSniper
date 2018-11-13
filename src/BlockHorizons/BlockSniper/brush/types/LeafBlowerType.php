@@ -21,13 +21,16 @@ class LeafBlowerType extends BaseType{
 	/**
 	 * @return \Generator
 	 */
-	public function fillSynchronously() : \Generator{
-		/** @var Loader $loader */
-		$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
-		if($loader === null){
-			return;
+	public function fill() : \Generator{
+		$dropPlants = false;
+		if($this->isAsynchronous()){
+			/** @var Loader $loader */
+			$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
+			if($loader === null){
+				return;
+			}
+			$dropPlants = $loader->config->dropLeafBlowerPlants;
 		}
-		$dropPlants = $loader->config->dropLeafBlowerPlants;
 		foreach($this->blocks as $block){
 			if($block instanceof Flowable){
 				yield $block;
@@ -39,14 +42,9 @@ class LeafBlowerType extends BaseType{
 		}
 	}
 
-	public function fillAsynchronously() : void{
-		foreach($this->blocks as $block){
-			if($block instanceof Flowable){
-				$this->delete($block);
-			}
-		}
-	}
-
+	/**
+	 * @return string
+	 */
 	public function getName() : string{
 		return "Leaf Blower";
 	}

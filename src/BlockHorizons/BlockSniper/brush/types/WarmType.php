@@ -11,7 +11,10 @@ class WarmType extends BaseType{
 
 	public const ID = self::TYPE_WARM;
 
-	public function fillSynchronously() : \Generator{
+	/**
+	 * @return \Generator
+	 */
+	public function fill() : \Generator{
 		foreach($this->blocks as $block){
 			switch($block->getId()){
 				case Block::ICE:
@@ -29,21 +32,9 @@ class WarmType extends BaseType{
 		}
 	}
 
-	public function fillAsynchronously() : void{
-		foreach($this->blocks as $block){
-			switch($block->getId()){
-				case Block::ICE:
-					$this->putBlock($block, Block::WATER);
-					break;
-				case Block::SNOW_LAYER:
-					$this->delete($block);
-					break;
-				case Block::PACKED_ICE:
-					$this->putBlock($block, Block::ICE);
-			}
-		}
-	}
-
+	/**
+	 * @return string
+	 */
 	public function getName() : string{
 		return "Warm";
 	}

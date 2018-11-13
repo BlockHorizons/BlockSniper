@@ -6,11 +6,11 @@ namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
+use pocketmine\block\BlockIds;
 use pocketmine\block\Flowable;
 use pocketmine\item\Item;
 use pocketmine\level\ChunkManager;
 use pocketmine\math\Facing;
-use pocketmine\math\Vector3;
 use pocketmine\Player;
 
 /*
@@ -29,36 +29,28 @@ class TopLayerType extends BaseType{
 	/**
 	 * @return \Generator
 	 */
-	public function fillSynchronously() : \Generator{
+	public function fill() : \Generator{
 		foreach($this->blocks as $block){
-			if(!$block instanceof Flowable && $block->getId() !== Item::AIR){
-				$up = $block->getSide(Facing::UP);
-				if($up instanceof Flowable || $up->getId() === Item::AIR){
+			if($block instanceof Flowable || $block->getId() === Item::AIR){
+				continue;
+			}
+
+			$higherBlock = $block;
+			for($y = $block->y; $y <= $block->y + $this->height; $y++) {
+				$higherBlock = $this->side($higherBlock, Facing::UP);
+				if($higherBlock instanceof Flowable || $higherBlock->getId() === BlockIds::AIR) {
 					$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
-					for($y = $block->y; $y >= $block->y - $this->height; $y--){
-						$vec = new Vector3($block->x, $y, $block->z);
-						yield $this->getLevel()->getBlock($vec);
-						$this->putBlock($vec, $randomBlock->getId(), $randomBlock->getDamage());
-					}
+					yield $block;
+					$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());
+					break;
 				}
 			}
 		}
 	}
 
-	public function fillAsynchronously() : void{
-		foreach($this->blocks as $block){
-			if(!$block instanceof Flowable && $block->getId() !== Item::AIR){
-				$up = $this->getChunkManager()->getSide($block->x, $block->y, $block->z, Facing::UP);
-				if($up instanceof Flowable || $up->getId() === Item::AIR){
-					$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
-					for($y = $block->y; $y >= $block->y - $this->height; $y--){
-						$this->putBlock(new Vector3($block->x, $y, $block->z), $randomBlock->getId(), $randomBlock->getDamage());
-					}
-				}
-			}
-		}
-	}
-
+	/**
+	 * @return string
+	 */
 	public function getName() : string{
 		return "Top Layer";
 	}

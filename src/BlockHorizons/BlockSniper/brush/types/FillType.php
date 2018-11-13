@@ -17,7 +17,7 @@ class FillType extends BaseType{
 	/**
 	 * @return \Generator
 	 */
-	public function fillSynchronously() : \Generator{
+	public function fill() : \Generator{
 		foreach($this->blocks as $block){
 			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 			yield $block;
@@ -25,13 +25,9 @@ class FillType extends BaseType{
 		}
 	}
 
-	public function fillAsynchronously() : void{
-		foreach($this->blocks as $block){
-			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
-			$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());
-		}
-	}
-
+	/**
+	 * @return string
+	 */
 	public function getName() : string{
 		return "Fill";
 	}

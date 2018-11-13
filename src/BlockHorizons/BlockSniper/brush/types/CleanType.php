@@ -24,14 +24,10 @@ class CleanType extends BaseType{
 		BlockIds::SANDSTONE => 0
 	];
 
-	public function getName() : string{
-		return "Clean";
-	}
-
 	/**
 	 * @return \Generator
 	 */
-	protected function fillSynchronously() : \Generator{
+	protected function fill() : \Generator{
 		foreach($this->blocks as $block){
 			if(isset(self::NATURAL_BLOCKS[$block->getId()])){
 				yield $block;
@@ -40,11 +36,10 @@ class CleanType extends BaseType{
 		}
 	}
 
-	protected function fillAsynchronously() : void{
-		foreach($this->blocks as $block){
-			if(isset(self::NATURAL_BLOCKS[$block->getId()])){
-				$this->delete($block);
-			}
-		}
+	/**
+	 * @return string
+	 */
+	public function getName() : string{
+		return "Clean";
 	}
 }

@@ -51,7 +51,12 @@ class BrushTask extends AsyncTask{
 		}
 		/** @var Chunk[] $chunks */
 		$manager = BaseType::establishChunkManager($chunks);
+		$type->setBlocksInside($this->blocks($shape, $chunks))->setAsynchronous()->setChunkManager($manager);
 
+		foreach($type->fillShape(unserialize($this->plotPoints, ["allowed_classes" => [Vector2::class]])) as $block) {
+			// Don't do anything. The clone is created by copying the chunks.
+			continue;
+		}
 		$type->setBlocksInside($this->blocks($shape, $chunks))->setAsynchronous()->setChunkManager($manager)->fillShape(unserialize($this->plotPoints, ["allowed_classes" => [Vector2::class]]));
 
 		$this->setResult(compact("undoChunks", "chunks"));

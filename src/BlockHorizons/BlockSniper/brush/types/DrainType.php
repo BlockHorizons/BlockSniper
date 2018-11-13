@@ -25,7 +25,7 @@ class DrainType extends BaseType{
 	/**
 	 * @return \Generator
 	 */
-	public function fillSynchronously() : \Generator{
+	public function fill() : \Generator{
 		foreach($this->blocks as $block){
 			if(isset(self::LIQUID_BLOCKS[$block->getId()])){
 				yield $block;
@@ -34,14 +34,9 @@ class DrainType extends BaseType{
 		}
 	}
 
-	public function fillAsynchronously() : void{
-		foreach($this->blocks as $block){
-			if(isset(self::LIQUID_BLOCKS[$block->getId()])){
-				$this->delete($block);
-			}
-		}
-	}
-
+	/**
+	 * @return string
+	 */
 	public function getName() : string{
 		return "Drain";
 	}

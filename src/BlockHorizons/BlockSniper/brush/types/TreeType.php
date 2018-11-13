@@ -31,7 +31,7 @@ class TreeType extends BaseType{
 	/**
 	 * @return \Generator
 	 */
-	public function fillSynchronously() : \Generator{
+	public function fill() : \Generator{
 		if(false){
 			yield;
 		}
@@ -39,6 +39,13 @@ class TreeType extends BaseType{
 		foreach($tree->build() as $block){
 			yield $block;
 		}
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function canBeExecutedAsynchronously() : bool{
+		return false;
 	}
 
 	/**
@@ -55,12 +62,5 @@ class TreeType extends BaseType{
 	 */
 	public function getTree() : TreeProperties{
 		return $this->brush->tree;
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function canBeExecutedAsynchronously() : bool{
-		return false;
 	}
 }

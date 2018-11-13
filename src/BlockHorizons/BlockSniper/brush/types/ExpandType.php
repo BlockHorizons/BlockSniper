@@ -20,7 +20,7 @@ class ExpandType extends BaseType{
 	/**
 	 * @return \Generator
 	 */
-	public function fillSynchronously() : \Generator{
+	public function fill() : \Generator{
 		$undoBlocks = [];
 		$oneHoles = [];
 		foreach($this->blocks as $block){
@@ -28,7 +28,7 @@ class ExpandType extends BaseType{
 			if($block->getId() === Item::AIR){
 				$valid = 0;
 				foreach(Facing::ALL as $direction){
-					$sideBlock = $block->getSide($direction);
+					$sideBlock = $this->side($block, $direction);
 					if($sideBlock->getId() !== Item::AIR){
 						$valid++;
 					}
@@ -43,50 +43,21 @@ class ExpandType extends BaseType{
 		}
 		foreach($undoBlocks as $selectedBlock){
 			/** @var Block $undoBlock */
-			$undoBlock = ($selectedBlock->getSide(Facing::DOWN)->getId() === Block::AIR ? $selectedBlock->getSide(Facing::UP) : $selectedBlock->getSide(Facing::DOWN));
+			$undoBlock = ($this->side($selectedBlock, Facing::DOWN)->getId() === Block::AIR ? $this->side($selectedBlock, Facing::UP) : $this->side($selectedBlock, Facing::DOWN));
 			yield $undoBlock;
 			$this->putBlock($selectedBlock, $undoBlock->getId(), $undoBlock->getDamage());
 		}
 		foreach($oneHoles as $block){
 			/** @var Block $oneHole */
-			$oneHole = ($block->getSide(Facing::DOWN)->getId() === Block::AIR ? $block->getSide(Facing::EAST) : $block->getSide(Facing::DOWN));
+			$oneHole = ($this->side($block, Facing::DOWN)->getId() === Block::AIR ? $this->side($block, Facing::EAST) : $this->side($block, Facing::DOWN));
 			yield $oneHole;
 			$this->putBlock($block, $oneHole->getId(), $oneHole->getDamage());
 		}
 	}
 
-	public function fillAsynchronously() : void{
-		$oneHoles = [];
-		$blocks = [];
-		foreach($this->blocks as $block){
-			if($block->getId() === Item::AIR){
-				$valid = 0;
-				foreach(Facing::ALL as $direction){
-					$sideBlock = $this->getChunkManager()->getSide($block->x, $block->y, $block->z, $direction);
-					if($sideBlock->getId() !== Item::AIR){
-						$valid++;
-					}
-				}
-				if($valid >= 2){
-					$blocks[] = $block;
-				}
-				if($valid >= 4){
-					$oneHoles[] = $block;
-				}
-			}
-		}
-		foreach($blocks as $selectedBlock){
-			$bottom = $this->getChunkManager()->getSide($selectedBlock->x, $selectedBlock->y, $selectedBlock->z, Facing::DOWN);
-			$top = $this->getChunkManager()->getSide($selectedBlock->x, $selectedBlock->y, $selectedBlock->z, Facing::UP);
-			$this->putBlock($selectedBlock, $bottom->getId() === Block::AIR ? $top->getId() : $bottom->getId(), $bottom->getId() === Block::AIR ? $top->getDamage() : $bottom->getDamage());
-		}
-		foreach($oneHoles as $block){
-			$bottom = $this->getChunkManager()->getSide($block->x, $block->y, $block->z, Facing::DOWN);
-			$east = $this->getChunkManager()->getSide($block->x, $block->y, $block->z, Facing::EAST);
-			$this->putBlock($block, $bottom->getId() === Block::AIR ? $east->getId() : $bottom->getId(), $bottom->getId() === Block::AIR ? $east->getDamage() : $bottom->getDamage());
-		}
-	}
-
+	/**
+	 * @return string
+	 */
 	public function getName() : string{
 		return "Expand";
 	}

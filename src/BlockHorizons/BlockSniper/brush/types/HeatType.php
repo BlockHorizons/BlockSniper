@@ -16,7 +16,11 @@ class HeatType extends BaseType{
 
 	public const ID = self::TYPE_HEAT;
 
-	public function fillSynchronously() : \Generator{
+	/**
+	 * @return \Generator
+	 * @throws \Exception
+	 */
+	public function fill() : \Generator{
 		foreach($this->blocks as $block){
 			switch($block->getId()){
 				case Block::ICE:
@@ -57,40 +61,9 @@ class HeatType extends BaseType{
 		}
 	}
 
-	public function fillAsynchronously() : void{
-		foreach($this->blocks as $block){
-			switch($block->getId()){
-				case Block::ICE:
-					$this->putBlock($block, Block::WATER);
-					break;
-				case Block::SNOW_LAYER:
-				case Block::SNOW:
-					$this->delete($block);
-					break;
-				case Block::PACKED_ICE:
-					$this->putBlock($block, Block::WATER);
-					break;
-				case Block::WATER:
-				case Block::FLOWING_WATER:
-				case $block instanceof Leaves:
-					if(random_int(0, 4) === 0){
-						$this->delete($block);
-					}
-					break;
-				case Block::GRASS:
-					$random = random_int(0, 8);
-					if($random === 0){
-						$this->putBlock($block, Block::DIRT);
-					}elseif($random === 1){
-						$this->putBlock($block, Block::DIRT, 1);
-					}
-					break;
-				case $block instanceof Flower || $block instanceof DoublePlant || $block instanceof TallGrass || $block instanceof Dandelion:
-					$this->putBlock($block, Block::TALL_GRASS);
-			}
-		}
-	}
-
+	/**
+	 * @return string
+	 */
 	public function getName() : string{
 		return "Heat";
 	}

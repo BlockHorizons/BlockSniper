@@ -20,10 +20,10 @@ class SnowConeType extends BaseType{
 	/**
 	 * @return \Generator
 	 */
-	public function fillSynchronously() : \Generator{
+	public function fill() : \Generator{
 		foreach($this->blocks as $block){
 			if(!($block instanceof Flowable) && ($id = $block->getId()) !== Block::AIR && $id !== Block::SNOW_LAYER){
-				$topBlock = $block->getSide(Facing::UP);
+				$topBlock = $this->side($block, Facing::UP);
 				if(($topId = $topBlock->getId()) === Block::AIR || $topId === Block::SNOW_LAYER){
 					if($topBlock->getDamage() < 7 && $topBlock->getId() === Block::SNOW_LAYER){
 						yield $topBlock;
@@ -37,21 +37,9 @@ class SnowConeType extends BaseType{
 		}
 	}
 
-	public function fillAsynchronously() : void{
-		foreach($this->blocks as $block){
-			if(!($block instanceof Flowable) && ($id = $block->getId()) !== Block::AIR && $id !== Block::SNOW_LAYER){
-				$topBlock = $this->getChunkManager()->getSide($block->x, $block->y, $block->z, Facing::UP);
-				if(($topId = $topBlock->getId()) === Block::AIR || $topId === Block::SNOW_LAYER){
-					if($topBlock->getDamage() < 7 && $topBlock->getId() === Block::SNOW_LAYER){
-						$this->putBlock($topBlock, $topBlock->getId(), $topBlock->getDamage() + 1);
-					}elseif($topId !== Block::SNOW_LAYER){
-						$this->putBlock($topBlock, Block::SNOW_LAYER);
-					}
-				}
-			}
-		}
-	}
-
+	/**
+	 * @return string
+	 */
 	public function getName() : string{
 		return "Snow Cone";
 	}

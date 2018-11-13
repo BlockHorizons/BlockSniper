@@ -25,7 +25,7 @@ class ReplaceType extends BaseType{
 	/**
 	 * @return \Generator
 	 */
-	public function fillSynchronously() : \Generator{
+	public function fill() : \Generator{
 		foreach($this->blocks as $block){
 			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 			foreach($this->obsolete as $obsolete){
@@ -37,17 +37,9 @@ class ReplaceType extends BaseType{
 		}
 	}
 
-	public function fillAsynchronously() : void{
-		foreach($this->blocks as $block){
-			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
-			foreach($this->obsolete as $obsolete){
-				if($block->getId() === $obsolete->getId() and $block->getDamage() === $obsolete->getDamage()){
-					$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());
-				}
-			}
-		}
-	}
-
+	/**
+	 * @return string
+	 */
 	public function getName() : string{
 		return "Replace";
 	}

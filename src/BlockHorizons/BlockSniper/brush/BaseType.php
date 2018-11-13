@@ -109,13 +109,10 @@ abstract class BaseType{
 		if(!empty($plotPoints)){
 			$this->myPlotChecked = true;
 		}
-		if($this->isAsynchronous() && $this->canBeExecutedAsynchronously()){
-			$this->fillAsynchronously();
-
-			return null;
+		if(($this->async && $this->canBeExecutedAsynchronously()) || !$this->async){
+			return $this->fill();
 		}
-
-		return $this->fillSynchronously();
+		return null;
 	}
 
 	/**
@@ -132,14 +129,10 @@ abstract class BaseType{
 		return true;
 	}
 
-	protected function fillAsynchronously() : void{
-
-	}
-
 	/**
 	 * @return \Generator
 	 */
-	protected abstract function fillSynchronously() : \Generator;
+	protected abstract function fill() : \Generator;
 
 	/**
 	 * @return int
@@ -236,6 +229,36 @@ abstract class BaseType{
 	 */
 	public function delete(Vector3 $pos) : void{
 		$this->putBlock($pos, 0);
+	}
+
+	/**
+	 * Returns a block by its position, either in the level or chunk manager held.
+	 *
+	 * @param Vector3 $pos
+	 *
+	 * @return Block
+	 */
+	public function getBlock(Vector3 $pos) : Block {
+		if($this->async){
+			$manager = $this->chunkManager;
+			return Block::get($manager->getBlockIdAt($pos->x, $pos->y, $pos->z), $manager->getBlockDataAt($pos->x, $pos->y, $pos->z));
+		}
+		return $this->getLevel()->getBlock($pos);
+	}
+
+	/**
+	 * Returns the side of a block for both asynchronous and synchronous types.
+	 *
+	 * @param Vector3 $block
+	 * @param int     $side
+	 *
+	 * @return Block
+	 */
+	public function side(Vector3 $block, int $side) : Block {
+		if(!$this->async && $block instanceof Block){
+			return $block->getSide($side);
+		}
+		return $this->chunkManager->getSide($block->x, $block->y, $block->z, $side);
 	}
 
 	/**

@@ -25,7 +25,7 @@ class LayerType extends BaseType{
 	/**
 	 * @return \Generator
 	 */
-	public function fillSynchronously() : \Generator{
+	public function fill() : \Generator{
 		foreach($this->blocks as $block){
 			if($block->y !== $this->center->y + 1){
 				continue;
@@ -37,17 +37,9 @@ class LayerType extends BaseType{
 		}
 	}
 
-	public function fillAsynchronously() : void{
-		foreach($this->blocks as $block){
-			if($block->y !== $this->center->y + 1){
-				continue;
-			}
-			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
-			$vec = new Vector3($block->x, $this->center->y + 1, $block->z);
-			$this->putBlock($vec, $randomBlock->getId(), $randomBlock->getDamage());
-		}
-	}
-
+	/**
+	 * @return string
+	 */
 	public function getName() : string{
 		return "Layer";
 	}

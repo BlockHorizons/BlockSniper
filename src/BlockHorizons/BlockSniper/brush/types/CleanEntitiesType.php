@@ -16,18 +16,10 @@ class CleanEntitiesType extends BaseType{
 
 	public const ID = self::TYPE_CLEAN_ENTITIES;
 
-	public function getName() : string{
-		return "Clean Entities";
-	}
-
-	public function canBeExecutedAsynchronously() : bool{
-		return false;
-	}
-
 	/**
 	 * @return \Generator
 	 */
-	protected function fillSynchronously() : \Generator{
+	protected function fill() : \Generator{
 		foreach($this->blocks as $block){
 			foreach($block->getLevel()->getNearbyEntities(new AxisAlignedBB($block->x, $block->y, $block->z, $block->x + 1, $block->y + 1, $block->z + 1)) as $entity){
 				if(!($entity instanceof Player)){
@@ -39,5 +31,19 @@ class CleanEntitiesType extends BaseType{
 			// Make PHP recognize this is a generator.
 			yield;
 		}
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function canBeExecutedAsynchronously() : bool{
+		return false;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getName() : string{
+		return "Clean Entities";
 	}
 }

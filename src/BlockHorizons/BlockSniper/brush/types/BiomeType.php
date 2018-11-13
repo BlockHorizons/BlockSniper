@@ -22,6 +22,22 @@ class BiomeType extends BaseType{
 		$this->biome = SessionManager::getPlayerSession($player)->getBrush()->biomeId;
 	}
 
+	/**
+	 * @return \Generator
+	 */
+	protected function fill() : \Generator{
+		foreach($this->blocks as $block){
+			$this->putBiome($block, $this->biome);
+		}
+		if(false){
+			// Make PHP recognize this is a generator.
+			yield;
+		}
+	}
+
+	/**
+	 * @return string
+	 */
 	public function getName() : string{
 		return "Biome";
 	}
@@ -33,24 +49,5 @@ class BiomeType extends BaseType{
 	 */
 	public function getBiome() : int{
 		return $this->biome;
-	}
-
-	/**
-	 * @return \Generator
-	 */
-	protected function fillSynchronously() : \Generator{
-		foreach($this->blocks as $block){
-			$this->putBiome($block, $this->biome);
-		}
-		if(false){
-			// Make PHP recognize this is a generator.
-			yield;
-		}
-	}
-
-	protected function fillAsynchronously() : void{
-		foreach($this->blocks as $block){
-			$this->putBiome($block, $this->biome);
-		}
 	}
 }

@@ -27,7 +27,7 @@ class RegenerateType extends BaseType{
 	/**
 	 * @return \Generator
 	 */
-	public function fillSynchronously() : \Generator{
+	public function fill() : \Generator{
 		if($this->myPlotChecked){
 			return;
 		}
@@ -42,14 +42,18 @@ class RegenerateType extends BaseType{
 			// Make PHP recognize this is a generator.
 			yield;
 		}
-
-		return;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function canBeExecutedAsynchronously() : bool{
 		return false;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getName() : string{
 		return "Chunk Regenerate";
 	}

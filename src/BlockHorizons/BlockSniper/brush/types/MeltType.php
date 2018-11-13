@@ -19,13 +19,13 @@ class MeltType extends BaseType{
 	/**
 	 * @return \Generator
 	 */
-	public function fillSynchronously() : \Generator{
+	public function fill() : \Generator{
 		$blocks = [];
 		foreach($this->blocks as $block){
 			if($block->getId() !== Item::AIR){
 				$valid = 0;
 				foreach(Facing::ALL as $direction){
-					if($block->getSide($direction)->getId() === Item::AIR){
+					if($this->side($block, $direction)->getId() === Item::AIR){
 						$valid++;
 					}
 				}
@@ -40,27 +40,9 @@ class MeltType extends BaseType{
 		}
 	}
 
-	public function fillAsynchronously() : void{
-		$blocks = [];
-		foreach($this->blocks as $block){
-			if($block->getId() !== Item::AIR){
-				$valid = 0;
-				foreach(Facing::ALL as $direction){
-					$sideBlock = $this->getChunkManager()->getSide($block->x, $block->y, $block->z, $direction);
-					if($sideBlock->getId() === Item::AIR){
-						$valid++;
-					}
-				}
-				if($valid >= 2){
-					$blocks[] = $block;
-				}
-			}
-		}
-		foreach($blocks as $selectedBlock){
-			$this->delete($selectedBlock);
-		}
-	}
-
+	/**
+	 * @return string
+	 */
 	public function getName() : string{
 		return "Melt";
 	}

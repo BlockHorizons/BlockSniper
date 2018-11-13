@@ -27,7 +27,7 @@ class FlattenType extends BaseType{
 	/**
 	 * @return \Generator
 	 */
-	public function fillSynchronously() : \Generator{
+	public function fill() : \Generator{
 		foreach($this->blocks as $block){
 			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 			if($block->y <= $this->center->y && ($block->getId() === Item::AIR || $block instanceof Flowable)){
@@ -37,15 +37,9 @@ class FlattenType extends BaseType{
 		}
 	}
 
-	public function fillAsynchronously() : void{
-		foreach($this->blocks as $block){
-			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
-			if($block->y <= $this->center->y && ($block->getId() === Item::AIR || $block instanceof Flowable)){
-				$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());
-			}
-		}
-	}
-
+	/**
+	 * @return string
+	 */
 	public function getName() : string{
 		return "Flatten";
 	}
