@@ -60,7 +60,8 @@ class Brush extends BrushProperties{
 		if($session instanceof PlayerSession){
 			$player = $session->getSessionOwner()->getPlayer();
 
-			Server::getInstance()->getPluginManager()->callEvent($event = new BrushUseEvent($player, $shape, $type));
+			$event = new BrushUseEvent($player, $shape, $type);
+			$event->call();
 			if($event->isCancelled()){
 				return;
 			}
