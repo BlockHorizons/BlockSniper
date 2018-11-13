@@ -74,14 +74,15 @@ abstract class BaseType{
 	 * @param \Generator   $blocks
 	 */
 	public function __construct(Player $player, ChunkManager $manager, \Generator $blocks = null){
-		if($manager instanceof Level){
-			$this->level = $manager->getId();
-		}else{
-			$this->async = true;
-			$this->chunkManager = $manager;
-		}
 		$this->blocks = $blocks;
 		$this->brushBlocks = SessionManager::getPlayerSession($player)->getBrush()->getBlocks();
+
+		if($manager instanceof Level){
+			$this->level = $manager->getId();
+			return;
+		}
+		$this->async = true;
+		$this->chunkManager = $manager;
 	}
 
 	/**
@@ -207,7 +208,7 @@ abstract class BaseType{
 	 * @param int     $meta
 	 */
 	public function putBlock(Vector3 $pos, int $id, int $meta = 0) : void{
-		$valid = false;
+		$valid = !$this->myPlotChecked;
 		if($this->myPlotChecked){
 			foreach($this->plotPoints as $plotCorners){
 				if($pos->x < $plotCorners[0]->x || $pos->z < $plotCorners[0]->y || $pos->x > $plotCorners[1]->x || $pos->z > $plotCorners[1]->y){
@@ -216,8 +217,6 @@ abstract class BaseType{
 				$valid = true;
 				break;
 			}
-		}else{
-			$valid = true;
 		}
 		if(!$valid){
 			return;
@@ -225,9 +224,9 @@ abstract class BaseType{
 		if($this->isAsynchronous()){
 			$this->getChunkManager()->setBlockIdAt((int) $pos->x, (int) $pos->y, (int) $pos->z, $id);
 			$this->getChunkManager()->setBlockDataAt((int) $pos->x, (int) $pos->y, (int) $pos->z, $meta);
-		}else{
-			$this->getLevel()->setBlock($pos, Block::get($id, $meta), false, false);
+			return;
 		}
+		$this->getLevel()->setBlock($pos, Block::get($id, $meta), false);
 	}
 
 	/**
@@ -262,7 +261,7 @@ abstract class BaseType{
 	 * @param int     $biomeId
 	 */
 	protected function putBiome(Vector3 $pos, int $biomeId) : void{
-		$valid = false;
+		$valid = !$this->myPlotChecked;
 		if($this->myPlotChecked){
 			foreach($this->plotPoints as $plotCorners){
 				if($pos->x < $plotCorners[0]->x || $pos->z < $plotCorners[0]->z || $pos->x > $plotCorners[1]->x || $pos->z > $plotCorners[1]->z){
@@ -271,16 +270,14 @@ abstract class BaseType{
 				$valid = true;
 				break;
 			}
-		}else{
-			$valid = true;
 		}
 		if(!$valid){
 			return;
 		}
 		if($this->isAsynchronous()){
 			$this->getChunkManager()->setBiomeIdAt($pos->x, $pos->z, $biomeId);
-		}else{
-			$this->getLevel()->setBiomeId($pos->x, $pos->z, $biomeId);
+			return;
 		}
+		$this->getLevel()->setBiomeId($pos->x, $pos->z, $biomeId);
 	}
 }

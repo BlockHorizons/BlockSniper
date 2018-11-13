@@ -19,9 +19,9 @@ class Preset{
 		$this->name = $name;
 		if($properties === null){
 			$this->properties = new BrushProperties();
-		}else{
-			$this->properties = $properties;
+			return;
 		}
+		$this->properties = $properties;
 	}
 
 	/**

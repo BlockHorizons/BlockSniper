@@ -22,32 +22,32 @@ class PlayerSession extends Session implements \JsonSerializable{
 	 */
 	public function initializeBrush() : bool{
 		$this->brush = new Brush($this->getSessionOwner()->getPlayerName());
-
-		if($this->loader->config->saveBrushProperties){
-			if(!file_exists($this->dataFile)){
-				file_put_contents($this->dataFile, "{}");
-			}else{
-				$data = file_get_contents($this->dataFile);
-				try{
-					Unmarshal::json($data, $this->brush);
-					$this->loader->getLogger()->debug("Brush recovered:" . $data);
-
-					return true;
-				}catch(DecodeException $exception){
-					$this->loader->getLogger()->logException($exception);
-				}
-			}
+		if(!$this->loader->config->saveBrushProperties) {
+			return false;
 		}
+		if(!file_exists($this->dataFile)){
+			file_put_contents($this->dataFile, "{}");
+			return false;
+		}
+		$data = file_get_contents($this->dataFile);
+		try{
+			Unmarshal::json($data, $this->brush);
+			$this->loader->getLogger()->debug("Brush recovered:" . $data);
 
+			return true;
+		}catch(DecodeException $exception){
+			$this->loader->getLogger()->logException($exception);
+		}
 		return false;
 	}
 
 	public function close() : void{
-		if($this->loader->config->saveBrushProperties){
-			$data = json_encode($this);
-			$this->loader->getLogger()->debug("Saved brush:" . $data);
-			file_put_contents($this->dataFile, $data);
+		if(!$this->loader->config->saveBrushProperties) {
+			return;
 		}
+		$data = json_encode($this);
+		$this->loader->getLogger()->debug("Saved brush:" . $data);
+		file_put_contents($this->dataFile, $data);
 	}
 
 	/**

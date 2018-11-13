@@ -9,7 +9,6 @@ use BlockHorizons\BlockSniper\brush\BaseShape;
 use BlockHorizons\BlockSniper\revert\sync\SyncUndo;
 use BlockHorizons\BlockSniper\sessions\Session;
 use pocketmine\block\Block;
-use pocketmine\item\Item;
 use pocketmine\level\Position;
 use pocketmine\math\Vector3;
 use pocketmine\Server;
@@ -61,7 +60,7 @@ class CloneStore{
 			$v3 = $block->subtract($this->getOriginalCenter());
 
 			$undoBlocks[] = $targetBlock->level->getBlock($targetBlock->add($v3));
-			$targetBlock->level->setBlock($targetBlock->add($v3), clone $targetBlock->level->getBlock($block), false, false);
+			$targetBlock->level->setBlock($targetBlock->add($v3), clone $targetBlock->level->getBlock($block), false);
 		}
 		$this->session->getRevertStore()->saveRevert(new SyncUndo($undoBlocks, $this->session->getSessionOwner()->getPlayerName()));
 	}
@@ -78,13 +77,9 @@ class CloneStore{
 		return $this->copy !== null;
 	}
 
-	/*
-	 * Templates
-	 */
-
 	/**
 	 * @param string  $templateName
-	 * @param array   $blocks
+	 * @param \Generator   $blocks
 	 * @param Vector3 $targetBlock
 	 *
 	 * @deprecated
@@ -124,12 +119,10 @@ class CloneStore{
 			$x = (int) $block["x"];
 			$y = (int) $block["y"] + 1;
 			$z = (int) $block["z"];
-			$finalBlock = Item::get($blockId)->getBlock();
-			$finalBlock->setDamage(!empty($meta) ? $meta : 0);
 
 			$blockPos = new Vector3($x + $targetBlock->x, $y + $targetBlock->y, $z + $targetBlock->z);
 			$undoBlocks[] = $targetBlock->getLevel()->getBlock($blockPos);
-			$targetBlock->getLevel()->setBlock($blockPos, Block::get($blockId, $meta), false, false);
+			$targetBlock->getLevel()->setBlock($blockPos, Block::get($blockId, $meta), false);
 		}
 		$this->session->getRevertStore()->saveRevert(new SyncUndo($undoBlocks, $this->session->getSessionOwner()->getPlayerName()));
 	}

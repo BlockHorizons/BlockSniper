@@ -46,15 +46,13 @@ class BrushListener implements Listener{
 		}
 
 		$brush = ($session = SessionManager::getPlayerSession($player))->getBrush();
-		if($brush->mode === Brush::MODE_SELECTION){
-			if(!$session->getSelection()->ready()){
-				$player->sendMessage(
-					TextFormat::RED . Translation::get(Translation::COMMANDS_COMMON_WARNING_PREFIX) .
-					Translation::get(Translation::BRUSH_SELECTION_ERROR)
-				);
+		if($brush->mode === Brush::MODE_SELECTION && !$session->getSelection()->ready()){
+			$player->sendMessage(
+				TextFormat::RED . Translation::get(Translation::COMMANDS_COMMON_WARNING_PREFIX) .
+				Translation::get(Translation::BRUSH_SELECTION_ERROR)
+			);
 
-				return;
-			}
+			return;
 		}
 
 		$selection = $brush->mode === Brush::MODE_BRUSH ? null : $session->getSelection();
@@ -168,10 +166,11 @@ class BrushListener implements Listener{
 	public function onItemHeld(PlayerItemHeldEvent $event) : void{
 		$player = $event->getPlayer();
 		$brush = $this->loader->config->brushItem->parse();
-		if($event->getItem()->getId() === $brush->getId() && $event->getItem()->getDamage() === $brush->getDamage()){
-			if($player->hasPermission("blocksniper.command.brush")){
-				$player->sendForm(new BrushMenuWindow($this->loader, $player));
-			}
+		if($event->getItem()->getId() !== $brush->getId() || $event->getItem()->getDamage() !== $brush->getDamage()) {
+			return;
+		}
+		if($player->hasPermission("blocksniper.command.brush")){
+			$player->sendForm(new BrushMenuWindow($this->loader, $player));
 		}
 	}
 

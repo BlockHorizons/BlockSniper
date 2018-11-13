@@ -60,10 +60,11 @@ class RevertStore{
 		if($type === Revert::TYPE_UNDO){
 			$this->undoStack[] = $revert;
 			$this->lastUndo = time();
-		}else{
-			$this->redoStack[] = $revert;
-			$this->lastRedo = time();
+
+			return;
 		}
+		$this->redoStack[] = $revert;
+		$this->lastRedo = time();
 	}
 
 	/**
@@ -87,10 +88,10 @@ class RevertStore{
 			if(!empty($this->undoStack)){
 				unset($this->undoStack[min(array_keys($this->undoStack))]);
 			}
-		}else{
-			if(!empty($this->redoStack)){
-				unset($this->redoStack[min(array_keys($this->redoStack))]);
-			}
+			return;
+		}
+		if(!empty($this->redoStack)){
+			unset($this->redoStack[min(array_keys($this->redoStack))]);
 		}
 	}
 
@@ -102,10 +103,10 @@ class RevertStore{
 			if(!empty($this->undoStack)){
 				unset($this->undoStack[max(array_keys($this->undoStack))]);
 			}
-		}else{
-			if(!empty($this->redoStack)){
-				unset($this->redoStack[max(array_keys($this->redoStack))]);
-			}
+			return;
+		}
+		if(!empty($this->redoStack)){
+			unset($this->redoStack[max(array_keys($this->redoStack))]);
 		}
 	}
 

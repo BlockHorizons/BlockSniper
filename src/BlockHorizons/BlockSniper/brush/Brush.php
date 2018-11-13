@@ -51,11 +51,9 @@ class Brush extends BrushProperties{
 	 */
 	public function execute(Session $session, ?Selection $selection, array $plotPoints = []) : void{
 		$shape = $this->getShape($selection !== null ? $selection->box() : null);
-		if($this->type !== TreeType::class){
-			$type = $this->getType($shape->getBlocksInside());
-		}else{
-			$type = new TreeType($this->getPlayer(), $this->getPlayer()->getLevel());
-		}
+		$type = ($this->type !== TreeType::class
+			? $this->getType($shape->getBlocksInside())
+			: new TreeType($this->getPlayer(), $this->getPlayer()->getLevel()));
 
 		if($session instanceof PlayerSession){
 			$player = $session->getSessionOwner()->getPlayer();
@@ -86,16 +84,16 @@ class Brush extends BrushProperties{
 		if($type->canBeExecutedAsynchronously() && $asyncSize){
 			$type->setBlocksInside(null);
 			$shape->editAsynchronously($type, $plotPoints);
-		}else{
-			$undoBlocks = [];
-			foreach($type->fillShape($plotPoints) as $undoBlock){
-				$undoBlocks[] = $undoBlock;
-			}
-			if(count($undoBlocks) === 0){
-				return;
-			}
-			$session->getRevertStore()->saveRevert(new SyncUndo($undoBlocks, $session->getSessionOwner()->getName()));
+			return;
 		}
+		$undoBlocks = [];
+		foreach($type->fillShape($plotPoints) as $undoBlock){
+			$undoBlocks[] = $undoBlock;
+		}
+		if(count($undoBlocks) === 0){
+			return;
+		}
+		$session->getRevertStore()->saveRevert(new SyncUndo($undoBlocks, $session->getSessionOwner()->getName()));
 	}
 
 	/**
@@ -119,20 +117,20 @@ class Brush extends BrushProperties{
 	}
 
 	public function decrement() : void{
-		if($this->decrementing){
-			if($this->size <= 1){
-				/** @var Loader $loader */
-				$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
-				if($loader === null){
-					return;
-				}
-				if($loader->config->resetDecrementBrush){
-					$this->size = $this->resetSize;
-				}
-
-				return;
-			}
+		if(!$this->decrementing){
+			return;
+		}
+		if($this->size > 1){
 			$this->size = $this->size - 1;
+			return;
+		}
+		/** @var Loader $loader */
+		$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
+		if($loader === null){
+			return;
+		}
+		if($loader->config->resetDecrementBrush){
+			$this->size = $this->resetSize;
 		}
 	}
 }
