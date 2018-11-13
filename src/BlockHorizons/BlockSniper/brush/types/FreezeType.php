@@ -30,7 +30,7 @@ class FreezeType extends BaseType{
 					break;
 				case Block::FIRE:
 					yield $block;
-					$this->putBlock($block, 0);
+					$this->delete($block);
 					break;
 				case Block::ICE:
 					yield $block;
@@ -51,7 +51,7 @@ class FreezeType extends BaseType{
 					$this->putBlock($block, Block::OBSIDIAN);
 					break;
 				case Block::FIRE:
-					$this->putBlock($block, 0);
+					$this->delete($block);
 					break;
 				case Block::ICE:
 					$this->putBlock($block, Block::PACKED_ICE);

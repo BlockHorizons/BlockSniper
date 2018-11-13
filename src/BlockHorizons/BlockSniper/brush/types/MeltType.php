@@ -36,7 +36,7 @@ class MeltType extends BaseType{
 		}
 		foreach($blocks as $block){
 			yield $block;
-			$this->putBlock($block, 0);
+			$this->delete($block);
 		}
 	}
 
@@ -57,7 +57,7 @@ class MeltType extends BaseType{
 			}
 		}
 		foreach($blocks as $selectedBlock){
-			$this->putBlock($selectedBlock, 0);
+			$this->delete($selectedBlock);
 		}
 	}
 

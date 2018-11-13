@@ -20,7 +20,7 @@ class WarmType extends BaseType{
 					break;
 				case Block::SNOW_LAYER:
 					yield $block;
-					$this->putBlock($block, 0);
+					$this->delete($block);
 					break;
 				case Block::PACKED_ICE:
 					yield $block;
@@ -36,7 +36,7 @@ class WarmType extends BaseType{
 					$this->putBlock($block, Block::WATER);
 					break;
 				case Block::SNOW_LAYER:
-					$this->putBlock($block, 0);
+					$this->delete($block);
 					break;
 				case Block::PACKED_ICE:
 					$this->putBlock($block, Block::ICE);

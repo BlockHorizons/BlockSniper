@@ -36,7 +36,7 @@ class FlattenAllType extends BaseType{
 			}
 			if($block->y > $this->center->y && $block->getId() !== Item::AIR){
 				yield $block;
-				$this->putBlock($block, 0);
+				$this->delete($block);
 			}
 		}
 	}
@@ -48,7 +48,7 @@ class FlattenAllType extends BaseType{
 				$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());
 			}
 			if($block->y > $this->center->y && $block->getId() !== Item::AIR){
-				$this->putBlock($block, 0);
+				$this->delete($block);
 			}
 		}
 	}

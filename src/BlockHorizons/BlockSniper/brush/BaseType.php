@@ -201,7 +201,7 @@ abstract class BaseType{
 	}
 
 	/**
-	 * Puts a block at the given location either asynchronously or synchronously with MyPlot checks (if relevant)
+	 * Puts a block at the given location either asynchronously or synchronously with MyPlot checks. (if relevant)
 	 *
 	 * @param Vector3 $pos
 	 * @param int     $id
@@ -227,6 +227,15 @@ abstract class BaseType{
 			return;
 		}
 		$this->getLevel()->setBlock($pos, Block::get($id, $meta), false);
+	}
+
+	/**
+	 * Deletes a block at the given location either asynchronously or synchronously with MyPlot checks. (if relevant)
+	 *
+	 * @param Vector3 $pos
+	 */
+	public function delete(Vector3 $pos) : void{
+		$this->putBlock($pos, 0);
 	}
 
 	/**

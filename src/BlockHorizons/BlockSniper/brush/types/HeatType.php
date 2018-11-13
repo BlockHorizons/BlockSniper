@@ -10,7 +10,6 @@ use pocketmine\block\Dandelion;
 use pocketmine\block\DoublePlant;
 use pocketmine\block\Flower;
 use pocketmine\block\Leaves;
-use pocketmine\block\Leaves2;
 use pocketmine\block\TallGrass;
 
 class HeatType extends BaseType{
@@ -25,22 +24,20 @@ class HeatType extends BaseType{
 					$this->putBlock($block, Block::WATER);
 					break;
 				case Block::SNOW_LAYER:
+				case Block::SNOW:
 					yield $block;
-					$this->putBlock($block, 0);
+					$this->delete($block);
 					break;
 				case Block::PACKED_ICE:
 					yield $block;
 					$this->putBlock($block, Block::WATER);
 					break;
-				case Block::SNOW:
-					yield $block;
-					$this->putBlock($block, 0);
-					break;
 				case Block::WATER:
 				case Block::FLOWING_WATER:
+				case $block instanceof Leaves:
 					if(random_int(0, 4) === 0){
 						yield $block;
-						$this->putBlock($block, 0);
+						$this->delete($block);
 					}
 					break;
 				case Block::GRASS:
@@ -53,16 +50,9 @@ class HeatType extends BaseType{
 						$this->putBlock($block, Block::DIRT, 1);
 					}
 					break;
-				case $block instanceof Leaves || $block instanceof Leaves2:
-					if(random_int(0, 4) === 0){
-						yield $block;
-						$this->putBlock($block, 0);
-					}
-					break;
 				case $block instanceof Flower || $block instanceof DoublePlant || $block instanceof TallGrass || $block instanceof Dandelion:
 					yield $block;
 					$this->putBlock($block, Block::TALL_GRASS);
-					break;
 			}
 		}
 	}
@@ -74,18 +64,17 @@ class HeatType extends BaseType{
 					$this->putBlock($block, Block::WATER);
 					break;
 				case Block::SNOW_LAYER:
-					$this->putBlock($block, 0);
+				case Block::SNOW:
+					$this->delete($block);
 					break;
 				case Block::PACKED_ICE:
 					$this->putBlock($block, Block::WATER);
 					break;
-				case Block::SNOW:
-					$this->putBlock($block, 0);
-					break;
 				case Block::WATER:
 				case Block::FLOWING_WATER:
+				case $block instanceof Leaves:
 					if(random_int(0, 4) === 0){
-						$this->putBlock($block, 0);
+						$this->delete($block);
 					}
 					break;
 				case Block::GRASS:
@@ -96,14 +85,8 @@ class HeatType extends BaseType{
 						$this->putBlock($block, Block::DIRT, 1);
 					}
 					break;
-				case $block instanceof Leaves || $block instanceof Leaves2:
-					if(random_int(0, 4) === 0){
-						$this->putBlock($block, 0);
-					}
-					break;
 				case $block instanceof Flower || $block instanceof DoublePlant || $block instanceof TallGrass || $block instanceof Dandelion:
 					$this->putBlock($block, Block::TALL_GRASS);
-					break;
 			}
 		}
 	}

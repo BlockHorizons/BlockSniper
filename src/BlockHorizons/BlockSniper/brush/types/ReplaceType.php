@@ -55,7 +55,7 @@ class ReplaceType extends BaseType{
 	/**
 	 * Returns the obsolete blocks of this type.
 	 *
-	 * @return array
+	 * @return \Generator
 	 */
 	public function getObsolete() : \Generator{
 		return $this->obsolete;
