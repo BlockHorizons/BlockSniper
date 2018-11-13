@@ -232,21 +232,6 @@ abstract class BaseType{
 	}
 
 	/**
-	 * Returns a block by its position, either in the level or chunk manager held.
-	 *
-	 * @param Vector3 $pos
-	 *
-	 * @return Block
-	 */
-	public function getBlock(Vector3 $pos) : Block {
-		if($this->async){
-			$manager = $this->chunkManager;
-			return Block::get($manager->getBlockIdAt($pos->x, $pos->y, $pos->z), $manager->getBlockDataAt($pos->x, $pos->y, $pos->z));
-		}
-		return $this->getLevel()->getBlock($pos);
-	}
-
-	/**
 	 * Returns the side of a block for both asynchronous and synchronous types.
 	 *
 	 * @param Vector3 $block
