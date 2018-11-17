@@ -82,7 +82,7 @@ class BrushTask extends AsyncTask{
 		}
 	}
 
-	public function onProgressUpdate(Server $server, array $progress) : void{
+	public function onProgressUpdate(Server $server, $progress) : void{
 		[$playerName, $progress] = $progress;
 		if(($player = $server->getPlayer($playerName)) === null) {
 			return;
