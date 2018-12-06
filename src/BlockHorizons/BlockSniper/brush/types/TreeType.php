@@ -32,9 +32,6 @@ class TreeType extends BaseType{
 	 * @return \Generator
 	 */
 	public function fill() : \Generator{
-		if(false){
-			yield;
-		}
 		$tree = new Tree($this->center, $this->brush, $this);
 		foreach($tree->build() as $block){
 			yield $block;
