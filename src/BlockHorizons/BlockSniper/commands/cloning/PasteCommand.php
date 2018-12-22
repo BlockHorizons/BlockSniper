@@ -44,7 +44,7 @@ class PasteCommand extends BaseCommand{
 
 					return;
 				}
-				$session->getCloneStore()->pasteCopy($sender->getTargetBlock(100));
+				$session->getCloneStore()->pasteCopy($center);
 				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_PASTE_COPY_SUCCESS));
 
 				return;
@@ -91,7 +91,7 @@ class PasteCommand extends BaseCommand{
 						$touchedChunks[Level::chunkHash($x >> 4, $z >> 4)] = $chunk->fastSerialize();
 					}
 				}
-				$session->getCloneStore()->pasteSchematic($file, $sender->getTargetBlock(100)->asVector3(), $touchedChunks);
+				$session->getCloneStore()->pasteSchematic($file, $center->asVector3(), $touchedChunks);
 				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_PASTE_SCHEMATIC_SUCCESS, [$args[1]]));
 		}
 	}
