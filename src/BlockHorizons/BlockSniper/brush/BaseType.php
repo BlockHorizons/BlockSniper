@@ -215,8 +215,7 @@ abstract class BaseType{
 			return;
 		}
 		if($this->isAsynchronous()){
-			$this->getChunkManager()->setBlockIdAt((int) $pos->x, (int) $pos->y, (int) $pos->z, $id);
-			$this->getChunkManager()->setBlockDataAt((int) $pos->x, (int) $pos->y, (int) $pos->z, $meta);
+			$this->getChunkManager()->setBlockAt((int) $pos->x, (int) $pos->y, (int) $pos->z, Block::get($id, $meta));
 			return;
 		}
 		$this->getLevel()->setBlock($pos, Block::get($id, $meta), false);
