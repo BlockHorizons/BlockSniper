@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\async\tasks;
 
-use BlockHorizons\BlockSniper\brush\BaseType;
+use BlockHorizons\BlockSniper\brush\async\BlockSniperChunkManager;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\revert\async\AsyncUndo;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
@@ -19,23 +19,28 @@ use pocketmine\Server;
 class PasteTask extends AsyncTask{
 
 	/** @var string */
-	private $file = "";
+	private $file;
 	/** @var Vector3 */
-	private $center = null;
+	private $center;
 	/** @var string[] */
-	private $chunks = "";
+	private $chunks;
 	/** @var string */
-	private $playerName = "";
+	private $playerName;
 
 	public function __construct(string $file, Vector3 $center, array $chunks, string $playerName){
+		$this->storeLocal($chunks);
 		$this->file = $file;
 		$this->center = $center;
-		$this->chunks = serialize($chunks);
+		$this->chunks = $chunks;
 		$this->playerName = $playerName;
 	}
 
 	public function onRun() : void{
-		$chunks = unserialize($this->chunks, ["allowed_classes" => [Chunk::class]]);
+		$chunks = $this->chunks;
+		foreach($chunks as $hash => $data){
+			$chunks[$hash] = Chunk::fastDeserialize($data);
+		}
+
 		$file = $this->file;
 		$center = $this->center;
 
@@ -45,20 +50,19 @@ class PasteTask extends AsyncTask{
 		$width = $schematic->getWidth();
 		$length = $schematic->getLength();
 
-		$undoChunks = $chunks;
-
 		$processedBlocks = 0;
-		foreach($chunks as $hash => $data){
-			$chunks[$hash] = Chunk::fastDeserialize($data);
-		}
-		/** @var Chunk[] $chunks */
-		/** @var Block[] $blocksInside */
 		$blocksInside = $schematic->getBlocks();
-		$manager = BaseType::establishChunkManager($chunks);
+
+		/** @var Chunk[] $chunks */
+		$manager = new BlockSniperChunkManager();
+		foreach($chunks as $chunk) {
+			$manager->setChunk($chunk->getX(), $chunk->getZ(), $chunk);
+		}
 
 		$baseWidth = $center->x - (int) ($width / 2);
 		$baseLength = $center->z - (int) ($length / 2);
 
+		/** @var Block[] $blocksInside */
 		foreach($blocksInside as $block){
 			if($block->getId() === Block::AIR){
 				continue;
@@ -69,18 +73,12 @@ class PasteTask extends AsyncTask{
 			$index = Level::chunkHash($tempX >> 4, $tempZ >> 4);
 
 			if(isset($chunks[$index])){
-				$manager->setBlockIdAt($tempX, $tempY, $tempZ, $block->getId());
-				$manager->setBlockDataAt($tempX, $tempY, $tempZ, $block->getDamage());
+				$manager->setBlockAt($tempX, $tempY, $tempZ, $block);
 				$processedBlocks++;
 			}
 		}
 
-		foreach($chunks as &$chunk){
-			$chunk = $chunk->fastSerialize();
-		}
-		unset($chunk);
-
-		$this->setResult(compact("undoChunks", "chunks"));
+		$this->setResult($chunks);
 	}
 
 	public function onCompletion() : void{
@@ -93,26 +91,20 @@ class PasteTask extends AsyncTask{
 			return;
 		}
 
-		$result = $this->getResult();
-		$chunks = $result["chunks"];
-		foreach($chunks as &$chunk){
-			$chunk = Chunk::fastDeserialize($chunk);
+		$undoChunks = $this->fetchLocal();
+		foreach($undoChunks as &$undoChunk){
+			$undoChunk = Chunk::fastDeserialize($undoChunk);
 		}
-		unset($chunk);
-		/** @var Chunk[] $chunks */
 
-		$undoChunks = $result["undoChunks"];
 		$level = $player->getLevel();
+		/** @var Chunk[] $chunks */
+		$chunks = $this->getResult();
+
 		if($level instanceof Level){
 			foreach($chunks as $hash => $chunk){
 				$level->setChunk($chunk->getX(), $chunk->getZ(), $chunk, false);
 			}
 		}
-
-		foreach($undoChunks as &$undoChunk){
-			$undoChunk = Chunk::fastDeserialize($undoChunk);
-		}
-		unset($undoChunk);
 
 		SessionManager::getPlayerSession($player)->getRevertStore()->saveRevert(new AsyncUndo($chunks, $undoChunks, $this->playerName, $player->getLevel()->getId()));
 	}

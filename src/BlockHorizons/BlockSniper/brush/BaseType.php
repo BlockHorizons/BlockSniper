@@ -9,7 +9,6 @@ use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\block\Block;
 use pocketmine\level\ChunkManager;
-use pocketmine\level\format\Chunk;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\math\Vector2;
@@ -83,20 +82,6 @@ abstract class BaseType{
 		}
 		$this->async = true;
 		$this->chunkManager = $manager;
-	}
-
-	/**
-	 * @param Chunk[] $chunks
-	 *
-	 * @return BlockSniperChunkManager
-	 */
-	public static function establishChunkManager(array $chunks) : BlockSniperChunkManager{
-		$manager = new BlockSniperChunkManager(0);
-		foreach($chunks as $chunk){
-			$manager->setChunk($chunk->getX(), $chunk->getZ(), $chunk);
-		}
-
-		return $manager;
 	}
 
 	/**

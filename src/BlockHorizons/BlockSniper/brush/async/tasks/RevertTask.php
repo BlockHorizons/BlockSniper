@@ -15,21 +15,20 @@ use pocketmine\Server;
 
 class RevertTask extends AsyncTask{
 
-	/** @var string */
-	private $revert = "";
+	/** @var AsyncRevert */
+	private $revert;
 
 	public function __construct(AsyncRevert $revert){
-		$this->revert = serialize($revert);
+		$this->revert = $revert;
 	}
 
 	public function onRun() : void{
-		/** @var AsyncRevert $revert */
-		$revert = unserialize($this->revert, ["allowed_classes" => true]);
+		$revert = $this->revert;
 		$chunks = $revert->getOldChunks();
 
 		$revert = $revert->getDetached();
 
-		$this->setResult(compact("chunks", "revert"));
+		$this->setResult([$chunks, $revert]);
 	}
 
 	public function onCompletion() : void{
@@ -40,14 +39,14 @@ class RevertTask extends AsyncTask{
 		}
 
 		$result = $this->getResult();
+		/** @var Chunk[] $chunks */
+		$chunks = $result[0];
 		/** @var Revert $revert */
-		$revert = $result["revert"];
+		$revert = $result[1];
 		if(!($player = Server::getInstance()->getPlayer($revert->getPlayerName()))){
 			return;
 		}
 
-		/** @var Chunk[] $chunks */
-		$chunks = $result["chunks"];
 		$levelId = $player->getLevel()->getId();
 		$level = Server::getInstance()->getLevel($levelId);
 
