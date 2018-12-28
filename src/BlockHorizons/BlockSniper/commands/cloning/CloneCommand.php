@@ -67,7 +67,7 @@ class CloneCommand extends BaseCommand{
 				}
 				$cloneType = new TemplateType($sender, false, $center, $shape, $args[1]);
 				$cloneType->saveClone();
-				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_CLONE_TEMPLATE_SUCCESS, [$this->loader->getDataFolder() . "templates/" . $args[1] . ".template"]));
+				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_CLONE_TEMPLATE_SUCCESS, $this->loader->getDataFolder() . "templates/" . $args[1] . ".template"));
 
 				return;
 
@@ -94,7 +94,7 @@ class CloneCommand extends BaseCommand{
 					->setHeight($size * 2 + 1)
 					->setWidth($size * 2 + 1)
 					->save($this->loader->getDataFolder() . "schematics/" . $args[1] . ".schematic");
-				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_CLONE_SCHEMATIC_SUCCESS, [$this->loader->getDataFolder() . "templates/" . $args[1] . ".schematic"]));
+				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_CLONE_SCHEMATIC_SUCCESS, $this->loader->getDataFolder() . "templates/" . $args[1] . ".schematic"));
 		}
 	}
 }

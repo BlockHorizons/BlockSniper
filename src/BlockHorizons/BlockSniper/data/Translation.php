@@ -198,12 +198,12 @@ class Translation{
 	}
 
 	/**
-	 * @param string $key
-	 * @param array  $params
+	 * @param string   $key
+	 * @param string[] $params
 	 *
 	 * @return string
 	 */
-	public static function get(string $key, array $params = []) : string{
+	public static function get(string $key, string... $params) : string{
 		if(!isset(self::$translations[$key])){
 			return "Unknown message: Please remove your language file and let it regenerate";
 		}

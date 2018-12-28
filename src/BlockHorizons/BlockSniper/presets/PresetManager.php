@@ -37,7 +37,7 @@ class PresetManager{
 				$loader->getLogger()->logException($exception);
 			}
 			$this->presets[] = $preset;
-			$loader->getLogger()->debug(Translation::get(Translation::LOG_PRESETS_LOADED, [$preset->name]) . " (" . json_encode($preset) . ")");
+			$loader->getLogger()->debug(Translation::get(Translation::LOG_PRESETS_LOADED, $preset->name) . " (" . json_encode($preset) . ")");
 		}
 		$loader->getLogger()->debug(Translation::get(Translation::LOG_PRESETS_ALL_LOADED));
 	}

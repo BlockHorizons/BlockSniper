@@ -56,12 +56,12 @@ class PasteCommand extends BaseCommand{
 					return;
 				}
 				if(!$session->getCloneStore()->templateExists($args[1])){
-					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_PASTE_TEMPLATE_NONEXISTENT, [$args[1]]));
+					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_PASTE_TEMPLATE_NONEXISTENT, $args[1]));
 
 					return;
 				}
 				$session->getCloneStore()->pasteTemplate($args[1], $center);
-				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_PASTE_TEMPLATE_SUCCESS, [$args[1]]));
+				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_PASTE_TEMPLATE_SUCCESS, $args[1]));
 
 				return;
 
@@ -72,7 +72,7 @@ class PasteCommand extends BaseCommand{
 					return;
 				}
 				if(!is_file($file = $this->loader->getDataFolder() . "schematics/" . $args[1] . ".schematic")){
-					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_PASTE_SCHEMATIC_NONEXISTENT, [$args[1]]));
+					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_PASTE_SCHEMATIC_NONEXISTENT, $args[1]));
 
 					return;
 				}
@@ -92,7 +92,7 @@ class PasteCommand extends BaseCommand{
 					}
 				}
 				$session->getCloneStore()->pasteSchematic($file, $center->asVector3(), $touchedChunks);
-				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_PASTE_SCHEMATIC_SUCCESS, [$args[1]]));
+				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_PASTE_SCHEMATIC_SUCCESS, $args[1]));
 		}
 	}
 }
