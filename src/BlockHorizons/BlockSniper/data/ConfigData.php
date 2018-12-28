@@ -126,7 +126,7 @@ class BrushItem{
 	 * @var int
 	 * @marshal Item ID
 	 */
-	public $itemId = 396;
+	public $itemId = Item::GOLDEN_CARROT;
 	/**
 	 * @var int
 	 * @marshal Item Data
