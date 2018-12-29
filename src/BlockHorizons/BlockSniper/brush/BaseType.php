@@ -163,6 +163,27 @@ abstract class BaseType{
 	}
 
 	/**
+	 * @return bool
+	 */
+	public function canBeHollow() : bool{
+		return true;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function usesSize() : bool{
+		return true;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function usesBlocks() : bool{
+		return true;
+	}
+
+	/**
 	 * @return string
 	 */
 	public abstract function getName() : string;

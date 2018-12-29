@@ -8,7 +8,8 @@ use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\block\Flowable;
 use pocketmine\item\Item;
-use pocketmine\Server;
+use pocketmine\level\ChunkManager;
+use pocketmine\Player;
 
 /*
  * Blows away all plants and flowers within the brush radius.
@@ -18,23 +19,29 @@ class LeafBlowerType extends BaseType{
 
 	public const ID = self::TYPE_LEAF_BLOWER;
 
+	/** @var bool */
+	private $dropPlants = false;
+
+	public function __construct(Player $player, ChunkManager $level, \Generator $blocks = null){
+		parent::__construct($player, $level, $blocks);
+		if($this->isAsynchronous()){
+			/** @var Loader $loader */
+			$loader = $player->getServer()->getPluginManager()->getPlugin("BlockSniper");
+			if($loader === null){
+				return;
+			}
+			$this->dropPlants = $loader->config->dropLeafBlowerPlants;
+		}
+	}
+
 	/**
 	 * @return \Generator
 	 */
 	public function fill() : \Generator{
-		$dropPlants = false;
-		if($this->isAsynchronous()){
-			/** @var Loader $loader */
-			$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
-			if($loader === null){
-				return;
-			}
-			$dropPlants = $loader->config->dropLeafBlowerPlants;
-		}
 		foreach($this->blocks as $block){
 			if($block instanceof Flowable){
 				yield $block;
-				if($dropPlants){
+				if($this->dropPlants){
 					$this->getLevel()->dropItem($block, Item::get($block->getId()));
 				}
 				$this->delete($block);
@@ -47,5 +54,12 @@ class LeafBlowerType extends BaseType{
 	 */
 	public function getName() : string{
 		return "Leaf Blower";
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function usesBlocks() : bool{
+		return false;
 	}
 }

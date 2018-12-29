@@ -101,7 +101,7 @@ class Brush extends BrushProperties{
 	 *
 	 * @return BaseShape
 	 */
-	public function getShape(?AxisAlignedBB $bb) : BaseShape{
+	public function getShape(AxisAlignedBB $bb = null) : BaseShape{
 		$player = $this->getPlayer();
 
 		return new $this->shape($player, $player->getLevel(), $player->getTargetBlock(100)->asPosition(), $bb, $this);
@@ -112,7 +112,7 @@ class Brush extends BrushProperties{
 	 *
 	 * @return BaseType
 	 */
-	public function getType(\Generator $blocks) : BaseType{
+	public function getType(\Generator $blocks = null) : BaseType{
 		return new $this->type($this->getPlayer(), $this->getPlayer()->getLevel(), $blocks);
 	}
 

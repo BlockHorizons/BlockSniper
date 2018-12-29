@@ -19,7 +19,7 @@ class RegenerateType extends BaseType{
 
 	public const ID = self::TYPE_REGENERATE;
 
-	public function __construct(Player $player, ChunkManager $manager, \Generator $blocks){
+	public function __construct(Player $player, ChunkManager $manager, \Generator $blocks = null){
 		parent::__construct($player, $manager, $blocks);
 		$this->center = $player->getTargetBlock(100)->asVector3();
 	}
@@ -56,6 +56,27 @@ class RegenerateType extends BaseType{
 	 */
 	public function getName() : string{
 		return "Chunk Regenerate";
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function canBeHollow() : bool{
+		return false;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function usesSize() : bool{
+		return false;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function usesBlocks() : bool{
+		return false;
 	}
 
 	/**

@@ -46,4 +46,11 @@ class MeltType extends BaseType{
 	public function getName() : string{
 		return "Melt";
 	}
+
+	/**
+	 * @return bool
+	 */
+	public function usesBlocks() : bool{
+		return false;
+	}
 }

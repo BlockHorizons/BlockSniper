@@ -61,6 +61,13 @@ class CuboidShape extends BaseShape{
 	}
 
 	/**
+	 * @return bool
+	 */
+	public function usesHeight() : bool{
+		return true;
+	}
+
+	/**
 	 * @param Vector3       $center
 	 * @param Brush         $brush
 	 * @param AxisAlignedBB $bb

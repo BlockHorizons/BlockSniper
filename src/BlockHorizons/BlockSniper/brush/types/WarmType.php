@@ -38,4 +38,11 @@ class WarmType extends BaseType{
 	public function getName() : string{
 		return "Warm";
 	}
+
+	/**
+	 * @return bool
+	 */
+	public function usesBlocks() : bool{
+		return false;
+	}
 }

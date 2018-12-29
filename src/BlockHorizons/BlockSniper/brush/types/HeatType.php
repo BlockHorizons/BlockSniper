@@ -67,4 +67,11 @@ class HeatType extends BaseType{
 	public function getName() : string{
 		return "Heat";
 	}
+
+	/**
+	 * @return bool
+	 */
+	public function usesBlocks() : bool{
+		return false;
+	}
 }

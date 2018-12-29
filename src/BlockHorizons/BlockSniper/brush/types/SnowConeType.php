@@ -43,4 +43,11 @@ class SnowConeType extends BaseType{
 	public function getName() : string{
 		return "Snow Cone";
 	}
+
+	/**
+	 * @return bool
+	 */
+	public function usesBlocks() : bool{
+		return false;
+	}
 }

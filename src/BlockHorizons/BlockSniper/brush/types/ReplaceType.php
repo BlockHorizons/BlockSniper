@@ -17,7 +17,7 @@ class ReplaceType extends BaseType{
 
 	public const ID = self::TYPE_REPLACE;
 
-	public function __construct(Player $player, ChunkManager $level, \Generator $blocks){
+	public function __construct(Player $player, ChunkManager $level, \Generator $blocks = null){
 		parent::__construct($player, $level, $blocks);
 		$this->obsolete = SessionManager::getPlayerSession($player)->getBrush()->getObsolete();
 	}

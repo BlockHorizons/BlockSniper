@@ -42,4 +42,11 @@ class CleanType extends BaseType{
 	public function getName() : string{
 		return "Clean";
 	}
+
+	/**
+	 * @return bool
+	 */
+	public function usesBlocks() : bool{
+		return false;
+	}
 }

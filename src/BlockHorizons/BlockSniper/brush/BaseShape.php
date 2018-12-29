@@ -80,6 +80,13 @@ abstract class BaseShape extends AxisAlignedBB{
 	}
 
 	/**
+	 * @return bool
+	 */
+	public function usesHeight() : bool{
+		return false;
+	}
+
+	/**
 	 * @param BaseType    $type
 	 * @param Vector2[][] $plotPoints
 	 *

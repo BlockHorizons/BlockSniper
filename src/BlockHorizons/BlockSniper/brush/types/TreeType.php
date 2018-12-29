@@ -46,6 +46,27 @@ class TreeType extends BaseType{
 	}
 
 	/**
+	 * @return bool
+	 */
+	public function canBeHollow() : bool{
+		return false;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function usesSize() : bool{
+		return false;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function usesBlocks() : bool{
+		return false;
+	}
+
+	/**
 	 * @return string
 	 */
 	public function getName() : string{

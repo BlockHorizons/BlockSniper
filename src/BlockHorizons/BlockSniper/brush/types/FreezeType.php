@@ -48,4 +48,11 @@ class FreezeType extends BaseType{
 	public function getName() : string{
 		return "Freeze";
 	}
+
+	/**
+	 * @return bool
+	 */
+	public function usesBlocks() : bool{
+		return false;
+	}
 }

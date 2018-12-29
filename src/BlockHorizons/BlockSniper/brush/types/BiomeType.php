@@ -17,7 +17,7 @@ class BiomeType extends BaseType{
 
 	public const ID = self::TYPE_BIOME;
 
-	public function __construct(Player $player, ChunkManager $level, \Generator $blocks){
+	public function __construct(Player $player, ChunkManager $level, \Generator $blocks = null){
 		parent::__construct($player, $level, $blocks);
 		$this->biome = SessionManager::getPlayerSession($player)->getBrush()->biomeId;
 	}
@@ -40,6 +40,13 @@ class BiomeType extends BaseType{
 	 */
 	public function getName() : string{
 		return "Biome";
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function usesBlocks() : bool{
+		return false;
 	}
 
 	/**

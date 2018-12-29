@@ -40,4 +40,11 @@ class DrainType extends BaseType{
 	public function getName() : string{
 		return "Drain";
 	}
+
+	/**
+	 * @return bool
+	 */
+	public function usesBlocks() : bool{
+		return false;
+	}
 }
