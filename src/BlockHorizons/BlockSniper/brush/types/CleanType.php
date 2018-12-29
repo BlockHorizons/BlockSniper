@@ -29,7 +29,7 @@ class CleanType extends BaseType{
 	 */
 	protected function fill() : \Generator{
 		foreach($this->blocks as $block){
-			if(isset(self::NATURAL_BLOCKS[$block->getId()])){
+			if(!isset(self::NATURAL_BLOCKS[$block->getId()])){
 				yield $block;
 				$this->delete($block);
 			}
