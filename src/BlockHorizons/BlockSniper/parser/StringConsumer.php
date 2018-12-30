@@ -27,7 +27,7 @@ class StringConsumer{
 	 * @param string $blockString with possibly multiple blocks in it. The block string has all its whitespace removed.
 	 */
 	public function __construct(string $blockString){
-		$this->blockString = str_replace(" ", "", $blockString);
+		$this->blockString = preg_replace("/\\s/", "", $blockString);
 	}
 
 	/**

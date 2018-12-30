@@ -10,7 +10,15 @@ use BlockHorizons\BlockSniperTests\Test;
 class BlockParserTest extends Test{
 
 	public function onRun() : bool{
-		$str = "Stone[facing=north,colour=blue],Grass[width=3]";
+		$str = '
+		Stone [
+			facing = north,
+			colour = blue
+		], 
+		Grass [
+			width = 3
+		]
+		';
 		$blocks = BlockParser::parse($str);
 		if(count($blocks) !== 2){
 			return false;
