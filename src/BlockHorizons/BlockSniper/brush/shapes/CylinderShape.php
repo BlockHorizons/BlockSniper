@@ -20,15 +20,17 @@ class CylinderShape extends BaseShape{
 	 */
 	public function getBlocksInside(bool $vectorOnly = false) : \Generator{
 		$radiusX = ($this->maxX - $this->minX) / 2;
+		$radiusXS = (int) $radiusX === 0 ? 10 : $radiusX ** 2;
 		$radiusZ = ($this->maxZ - $this->minZ) / 2;
+		$radiusZS = (int) $radiusZ === 0 ? 10 : $radiusZ ** 2;
 
 		$centerX = $this->minX + $radiusX;
 		$centerZ = $this->minZ + $radiusZ;
 
 		for($x = $this->minX; $x <= $this->maxX; $x++){
-			$xs = ($x - $centerX) ** 2 / $radiusX ** 2;
+			$xs = ($x - $centerX) ** 2 / $radiusXS;
 			for($z = $this->minZ; $z <= $this->maxZ; $z++){
-				$zs = ($z - $centerZ) ** 2 / $radiusZ ** 2;
+				$zs = ($z - $centerZ) ** 2 / $radiusZS;
 				for($y = $this->minY; $y <= $this->maxY; $y++){
 					if($xs + $zs <= 1.0){
 						if($this->hollow){
@@ -49,15 +51,17 @@ class CylinderShape extends BaseShape{
 	public function getBlockCount() : int {
 		$i = 0;
 		$radiusX = ($this->maxX - $this->minX) / 2;
+		$radiusXS = (int) $radiusX === 0 ? 10 : $radiusX ** 2;
 		$radiusZ = ($this->maxZ - $this->minZ) / 2;
+		$radiusZS = (int) $radiusZ === 0 ? 10 : $radiusZ ** 2;
 
 		$centerX = $this->minX + $radiusX;
 		$centerZ = $this->minZ + $radiusZ;
 
 		for($x = $this->minX; $x <= $this->maxX; $x++){
-			$xs = ($x - $centerX) ** 2 / $radiusX ** 2;
+			$xs = ($x - $centerX) ** 2 / $radiusXS;
 			for($z = $this->minZ; $z <= $this->maxZ; $z++){
-				$zs = ($z - $centerZ) ** 2 / $radiusZ ** 2;
+				$zs = ($z - $centerZ) ** 2 / $radiusZS;
 				for($y = $this->minY; $y <= $this->maxY; $y++){
 					if($xs + $zs <= 1.0){
 						if($this->hollow){

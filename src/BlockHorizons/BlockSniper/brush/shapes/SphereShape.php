@@ -20,19 +20,22 @@ class SphereShape extends BaseShape{
 	 */
 	public function getBlocksInside(bool $vectorOnly = false) : \Generator{
 		$radiusX = ($this->maxX - $this->minX) / 2;
+		$radiusXS = (int) $radiusX === 0 ? 1 : $radiusX ** 2;
 		$radiusY = ($this->maxY - $this->minY) / 2;
+		$radiusYS = (int) $radiusY === 0 ? 1 : $radiusY ** 2;
 		$radiusZ = ($this->maxZ - $this->minZ) / 2;
+		$radiusZS = (int) $radiusZ === 0 ? 1 : $radiusZ ** 2;
 
 		$centerX = $this->minX + $radiusX;
 		$centerY = $this->minY + $radiusY;
 		$centerZ = $this->minZ + $radiusZ;
 
 		for($x = $this->maxX; $x >= $this->minX; $x--){
-			$xs = ($x - $centerX) ** 2 / $radiusX ** 2;
+			$xs = ($x - $centerX) ** 2 / $radiusXS;
 			for($y = $this->maxY; $y >= $this->minY; $y--){
-				$ys = ($y - $centerY) ** 2 / $radiusY ** 2;
+				$ys = ($y - $centerY) ** 2 / $radiusYS;
 				for($z = $this->maxZ; $z >= $this->minZ; $z--){
-					$zs = ($z - $centerZ) ** 2 / $radiusZ ** 2;
+					$zs = ($z - $centerZ) ** 2 / $radiusZS;
 					if($xs + $ys + $zs <= 1.0){
 						if($this->hollow){
 							if($xs + $ys + $zs < 0.85){
@@ -52,19 +55,22 @@ class SphereShape extends BaseShape{
 	public function getBlockCount() : int {
 		$i = 0;
 		$radiusX = ($this->maxX - $this->minX) / 2;
+		$radiusXS = (int) $radiusX === 0 ? 1 : $radiusX ** 2;
 		$radiusY = ($this->maxY - $this->minY) / 2;
+		$radiusYS = (int) $radiusY === 0 ? 1 : $radiusY ** 2;
 		$radiusZ = ($this->maxZ - $this->minZ) / 2;
+		$radiusZS = (int) $radiusZ === 0 ? 1 : $radiusZ ** 2;
 
 		$centerX = $this->minX + $radiusX;
 		$centerY = $this->minY + $radiusY;
 		$centerZ = $this->minZ + $radiusZ;
 
 		for($x = $this->maxX; $x >= $this->minX; $x--){
-			$xs = ($x - $centerX) ** 2 / $radiusX ** 2;
+			$xs = ($x - $centerX) ** 2 / $radiusXS;
 			for($y = $this->maxY; $y >= $this->minY; $y--){
-				$ys = ($y - $centerY) ** 2 / $radiusY ** 2;
+				$ys = ($y - $centerY) ** 2 / $radiusYS;
 				for($z = $this->maxZ; $z >= $this->minZ; $z--){
-					$zs = ($z - $centerZ) ** 2 / $radiusZ ** 2;
+					$zs = ($z - $centerZ) ** 2 / $radiusZS;
 					if($xs + $ys + $zs <= 1.0){
 						if($this->hollow){
 							if($xs + $ys + $zs < 0.85){
