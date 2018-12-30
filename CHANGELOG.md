@@ -14,5 +14,6 @@
 - Fixed the Leafblower type not dropping items as expected, and fixed its complete failure when used in a size that
   would make it executed asynchronous.
 - Fixed an error that would occur when using a brush with sphere or cylinder shape, with a size of 0.
+- Fixed an error that would occur when using a brush that would attempt to place blocks outside of the world.
 
 ### For PocketMine-MP API: 4.0.0

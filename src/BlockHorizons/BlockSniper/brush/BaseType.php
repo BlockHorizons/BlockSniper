@@ -208,6 +208,9 @@ abstract class BaseType{
 	 */
 	public function putBlock(Vector3 $pos, int $id, int $meta = 0) : void{
 		$valid = !$this->myPlotChecked;
+		if($pos->y < 0 || $pos->y >= Level::Y_MAX){
+			return;
+		}
 		if($this->myPlotChecked){
 			foreach($this->plotPoints as $plotCorners){
 				if($pos->x < $plotCorners[0]->x || $pos->z < $plotCorners[0]->y || $pos->x > $plotCorners[1]->x || $pos->z > $plotCorners[1]->y){
