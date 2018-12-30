@@ -96,4 +96,11 @@ class CustomForm extends Form implements FormInterface{
 			$player->sendForm($this->responseForm);
 		}
 	}
+
+	/**
+	 * @return int
+	 */
+	public function elementCount() : int{
+		return count($this->elements);
+	}
 }

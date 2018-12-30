@@ -28,7 +28,10 @@ class BrushMenuWindow extends CustomWindow{
 
 			// Note to future readers: This response form is explicitly set after all brush properties have been changed
 			// so that the BrushPropertiesWindow is updated property.
-			$this->setResponseForm(new BrushPropertiesWindow($loader, $player));
+			$form = new BrushPropertiesWindow($loader, $player);
+			if($form->elementCount() !== 0){
+				$this->setResponseForm($form);
+			}
 		});
 	}
 }
