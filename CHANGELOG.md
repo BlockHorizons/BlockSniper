@@ -1,11 +1,13 @@
 # === 4.0.0 ===
 
 ### New Features
-- Added a new UI that opens when setting the brush shape, type and mode. This new UI contains brush properties
+- Added a new UI that opens after setting the brush shape, type and mode. This new UI contains brush properties
   specifically available for the combination of shape, type and mode set.
   
 ### Behavioural Changes
 - The Brush UI no longer contains all available brush properties.
+- The main menu no longer contains a Tree button.
+- The tree properties now show when the new brush properties UI is opened.
 
 ### Bug Fixes
 - Fixed the Clean type doing the opposite of what it is supposed to do.
