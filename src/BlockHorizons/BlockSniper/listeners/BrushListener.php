@@ -26,6 +26,8 @@ class BrushListener implements Listener{
 
 	/** @var Loader */
 	private $loader = null;
+	/** @var int */
+	private $lastSelection = 0;
 
 	public function __construct(Loader $loader){
 		$this->loader = $loader;
@@ -77,10 +79,14 @@ class BrushListener implements Listener{
 		if($hand->getId() !== $selectionItem->getId() || $hand->getDamage() !== $selectionItem->getDamage()){
 			return false;
 		}
+		if(time() - $this->lastSelection < 2){
+			return false;
+		}
 
 		$selection = ($session = SessionManager::getPlayerSession($player))->getSelection();
 		$vec = $block->asVector3();
 		[$x, $y, $z] = [$vec->x, $vec->y, $vec->z];
+		$this->lastSelection = time();
 		switch($action){
 			case PlayerInteractEvent::RIGHT_CLICK_BLOCK:
 				$selection->setFirstPos($vec);

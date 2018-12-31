@@ -15,5 +15,6 @@
   would make it executed asynchronous.
 - Fixed an error that would occur when using a brush with sphere or cylinder shape, with a size of 0.
 - Fixed an error that would occur when using a brush that would attempt to place blocks outside of the world.
+- Fixed right click selection on windows 10 causing multiple chat messages to be sent.
 
 ### For PocketMine-MP API: 4.0.0
