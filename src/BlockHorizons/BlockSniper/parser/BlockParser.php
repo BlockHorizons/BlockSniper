@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\parser;
 
 use BlockHorizons\BlockSniper\exceptions\InvalidBlockException;
+use pocketmine\block\Block;
 
 class BlockParser{
 
@@ -18,7 +19,7 @@ class BlockParser{
 	 *
 	 * @param string $blockString
 	 *
-	 * @return array
+	 * @return Block[]
 	 */
 	public static function parse(string $blockString) : array {
 		$blocks = [];
