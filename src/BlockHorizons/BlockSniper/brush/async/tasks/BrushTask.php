@@ -7,9 +7,11 @@ namespace BlockHorizons\BlockSniper\brush\async\tasks;
 use BlockHorizons\BlockSniper\brush\async\BlockSniperChunkManager;
 use BlockHorizons\BlockSniper\brush\BaseShape;
 use BlockHorizons\BlockSniper\brush\BaseType;
+use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\revert\async\AsyncUndo;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
+use BlockHorizons\BlockSniper\tasks\CooldownBarTask;
 use pocketmine\block\Block;
 use pocketmine\level\format\Chunk;
 use pocketmine\level\Level;
@@ -63,6 +65,9 @@ class BrushTask extends AsyncTask{
 			->setAsynchronous()
 			->setChunkManager($manager)
 			->fillShape($plotPoints);
+
+		// Publish progress for 21 so that the user gets a message 'Done'.
+		$this->publishProgress([$shape->getPlayerName(), 21]);
 		$this->setResult($chunks);
 	}
 
@@ -96,6 +101,10 @@ class BrushTask extends AsyncTask{
 		if(($player = Server::getInstance()->getPlayer($playerName)) === null) {
 			return;
 		}
+		if($progress === 21){
+			$player->sendPopup(TextFormat::GREEN . Translation::get(Translation::BRUSH_STATE_DONE));
+			return;
+		}
 		$player->sendPopup(TextFormat::GREEN . str_repeat("|", $progress) . TextFormat::RED . str_repeat("|", 20 - $progress));
 	}
 
@@ -122,6 +131,7 @@ class BrushTask extends AsyncTask{
 			$level->setChunk($chunk->getX(), $chunk->getZ(), $chunk, false);
 		}
 
+		$loader->getScheduler()->scheduleDelayedRepeatingTask(new CooldownBarTask($loader, $player), 1, 3);
 		SessionManager::getPlayerSession($player)->getRevertStore()->saveRevert(new AsyncUndo($chunks, $undoChunks, $player->getName(), $player->getLevel()->getId()));
 	}
 }

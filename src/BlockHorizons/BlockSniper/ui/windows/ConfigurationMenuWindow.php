@@ -49,6 +49,9 @@ class ConfigurationMenuWindow extends CustomWindow{
 		$this->addSlider($this->t(Translation::UI_CONFIGURATION_MENU_SESSION_TIMEOUT_TIME), 0, 30, 1, $c->sessionTimeoutTime, function(Player $player, float $value) use ($c){
 			$c->sessionTimeoutTime = (int) $value;
 		});
+		$this->addSlider($this->t(Translation::UI_CONFIGURATION_MENU_COOLDOWN), 0, 30, 0.5, $c->cooldownSeconds, function(Player $player, float $value) use($c){
+			$c->cooldownSeconds = $value;
+		});
 		$this->addToggle($this->t(Translation::UI_CONFIGURATION_MENU_AUTO_GUI), $c->openGuiAutomatically, function(Player $player, bool $value) use ($c){
 			$c->openGuiAutomatically = $value;
 		});

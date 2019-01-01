@@ -151,6 +151,7 @@
 			"drop-plants": "葉を吹き飛ばすタイプで破壊/吹き飛ばされた植物アイテムを落とす",
 			"session-timeout-time": "The time in minutes after which the session of a player is removed after leaving the server",
 			"auto-gui": "ホット・バー・スロットをブラシ項目を含むものに切り替えるときに、GUIを自動的に開きます。",
+			"cooldown": "The cooldown in seconds (can be decimal) until the brush can be re-used after using it",
 			"myplot-support": "Whether to turn on MyPlot support or not",
 			"auto-reload": "このチェックをオンにすると、このウィンドウを閉じるときに自動的に設定が再読み込みされます"
 		},
@@ -184,6 +185,10 @@
 		}
 	},
 	"brush": {
+		"state": {
+			"ready": "Ready",
+			"done": "Done"
+		},
 		"selection": {
 			"first": "Position 1 set to:",
 			"second": "Position 2 set to:",

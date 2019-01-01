@@ -11,6 +11,7 @@ use BlockHorizons\BlockSniper\revert\sync\SyncUndo;
 use BlockHorizons\BlockSniper\sessions\PlayerSession;
 use BlockHorizons\BlockSniper\sessions\Selection;
 use BlockHorizons\BlockSniper\sessions\Session;
+use BlockHorizons\BlockSniper\tasks\CooldownBarTask;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\Player;
 use pocketmine\Server;
@@ -22,6 +23,8 @@ class Brush extends BrushProperties{
 
 	/** @var string */
 	public $player = "";
+	/** @var bool */
+	private $lock = false;
 
 	public function __construct(string $playerName){
 		parent::__construct();
@@ -48,6 +51,12 @@ class Brush extends BrushProperties{
 	 * @param array          $plotPoints
 	 */
 	public function execute(Session $session, ?Selection $selection, array $plotPoints = []) : void{
+		if($this->lock){
+			// Brush is locked. Return immediately without doing anything.
+			return;
+		}
+		$this->lock();
+
 		$shape = $this->getShape($selection !== null ? $selection->box() : null);
 		$type = ($this->type !== TreeType::class
 			? $this->getType($shape->getBlocksInside())
@@ -92,6 +101,8 @@ class Brush extends BrushProperties{
 			return;
 		}
 		$session->getRevertStore()->saveRevert(new SyncUndo($undoBlocks, $session->getSessionOwner()->getName()));
+
+		$loader->getScheduler()->scheduleRepeatingTask(new CooldownBarTask($loader, $this->getPlayer()), 1);
 	}
 
 	/**
@@ -130,5 +141,13 @@ class Brush extends BrushProperties{
 		if($loader->config->resetDecrementBrush){
 			$this->size = $this->resetSize;
 		}
+	}
+
+	public function lock() : void{
+		$this->lock = true;
+	}
+
+	public function unlock() : void{
+		$this->lock = false;
 	}
 }

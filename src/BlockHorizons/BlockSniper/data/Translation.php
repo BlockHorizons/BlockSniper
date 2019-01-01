@@ -116,6 +116,7 @@ class Translation{
 	public const UI_CONFIGURATION_MENU_DROP_PLANTS = "ui.configuration-menu.drop-plants";
 	public const UI_CONFIGURATION_MENU_SESSION_TIMEOUT_TIME = "ui.configuration-menu.session-timeout-time";
 	public const UI_CONFIGURATION_MENU_AUTO_GUI = "ui.configuration-menu.auto-gui";
+	public const UI_CONFIGURATION_MENU_COOLDOWN = "ui.configuration-menu.cooldown";
 	public const UI_CONFIGURATION_MENU_MYPLOT_SUPPORT = "ui.configuration-menu.myplot-support";
 	public const UI_CONFIGURATION_MENU_AUTO_RELOAD = "ui.configuration-menu.auto-reload";
 	public const UI_TREE_MENU_TITLE = "ui.tree-menu.title";
@@ -134,6 +135,8 @@ class Translation{
 	public const LOG_PRESETS_ALL_LOADED = "log.presets.all-loaded";
 	public const LOG_RELOAD_START = "log.reload.start";
 	public const LOG_RELOAD_FINISH = "log.reload.finish";
+	public const BRUSH_STATE_READY = "brush.state.ready";
+	public const BRUSH_STATE_DONE = "brush.state.done";
 	public const BRUSH_SELECTION_FIRST = "brush.selection.first";
 	public const BRUSH_SELECTION_SECOND = "brush.selection.second";
 	public const BRUSH_SELECTION_ERROR = "brush.selection.error";

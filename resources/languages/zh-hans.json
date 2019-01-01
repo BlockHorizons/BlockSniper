@@ -152,6 +152,7 @@
 			"drop-plants": "掉落清除植物类型操作移除的植物物品",
 			"session-timeout-time": "The time in minutes after which the session of a player is removed after leaving the server",
 			"auto-gui": "切换到画笔物品栏时自动打开画笔图形界面",
+			"cooldown": "The cooldown in seconds (can be decimal) until the brush can be re-used after using it",
 			"myplot-support": "是否启用 MyPlot 支持",
 			"auto-reload": "打开此开关后将在这个窗口关闭时重新加载配置"
 		},
@@ -185,6 +186,10 @@
 		}
 	},
 	"brush": {
+		"state": {
+			"ready": "Ready",
+			"done": "Done"
+		},
 		"selection": {
 			"first": "Position 1 set to:",
 			"second": "Position 2 set to:",

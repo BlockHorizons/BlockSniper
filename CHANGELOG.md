@@ -4,6 +4,7 @@
 - Added a new UI that opens after setting the brush shape, type and mode. This new UI contains brush properties
   specifically available for the combination of shape, type and mode set.
 - Presets can now set tree properties in addition to other properties.
+- A cooldown bar is added to limit the rate at which BlockSniper can be used. The duration is configurable.
   
 ### Behavioural Changes
 - The Brush UI no longer contains all available brush properties.
@@ -11,6 +12,7 @@
 - The tree properties now show when the new brush properties UI is opened.
 - The preset creation window no longer holds all available properties. Instead, like the brush window, it now only shows
   brush properties that apply.
+- It is no longer possible to do two or more brush modifications concurrently.
 
 ### Bug Fixes
 - Fixed the Clean type doing the opposite of what it is supposed to do.

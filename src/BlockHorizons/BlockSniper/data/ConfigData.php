@@ -71,6 +71,11 @@ class ConfigData{
 	 */
 	public $sessionTimeoutTime = 5;
 	/**
+	 * @var float
+	 * @marshal Brush cooldown in seconds
+	 */
+	public $cooldownSeconds = 1.0;
+	/**
 	 * @var bool
 	 * @marshal Open GUI Automatically
 	 */
