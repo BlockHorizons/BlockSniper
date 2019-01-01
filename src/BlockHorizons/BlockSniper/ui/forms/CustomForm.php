@@ -91,6 +91,7 @@ class CustomForm extends Form implements FormInterface{
 		foreach((array) $data as $index => $value){
 			$this->elements[$index]($player, $value);
 		}
+		$this->onSubmit($player);
 
 		if($this->responseForm !== null){
 			$player->sendForm($this->responseForm);

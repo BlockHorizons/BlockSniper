@@ -38,6 +38,7 @@ class MenuForm extends Form implements FormInterface{
 		if($data !== null){
 			$this->buttons[(int) $data]($player, (int) $data);
 		}
+		$this->onSubmit($player);
 
 		if($this->responseForm !== null){
 			$player->sendForm($this->responseForm);

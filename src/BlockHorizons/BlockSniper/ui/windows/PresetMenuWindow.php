@@ -15,11 +15,9 @@ class PresetMenuWindow extends MenuForm{
 	private const DELETE_ICON = "http://www.pngmart.com/files/3/Red-Cross-Transparent-PNG.png";
 	private const SELECT_ICON = "http://www.clker.com/cliparts/k/T/w/u/G/S/transparent-yellow-checkmark-md.png";
 	private const LIST_ICON = "http://www.iconsdb.com/icons/preview/guacamole-green/list-xxl.png";
-	private const EXIT_ICON = self::DELETE_ICON;
 
 	public function __construct(Loader $loader, Player $requester){
 		parent::__construct($this->t(Translation::UI_PRESET_MENU_TITLE), $this->t(Translation::UI_PRESET_MENU_SUBTITLE));
-		$this->setResponseForm(new MainMenuWindow($loader, $requester));
 
 		$this->addOption($this->t(Translation::UI_PRESET_MENU_CREATE), self::CREATE_ICON, "url", function(Player $player) use ($loader){
 			$this->setResponseForm(new PresetCreationWindow($loader, $player));
@@ -32,9 +30,6 @@ class PresetMenuWindow extends MenuForm{
 		});
 		$this->addOption($this->t(Translation::UI_PRESET_MENU_LIST), self::LIST_ICON, "url", function(Player $player) use ($loader){
 			$this->setResponseForm(new PresetListWindow($loader, $player));
-		});
-		$this->addOption($this->t(Translation::UI_PRESET_MENU_EXIT), self::EXIT_ICON, "url", function(Player $player) use ($loader){
-			$this->setResponseForm(new MainMenuWindow($loader, $player));
 		});
 	}
 }

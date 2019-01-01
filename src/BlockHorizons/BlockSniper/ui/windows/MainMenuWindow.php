@@ -14,7 +14,6 @@ class MainMenuWindow extends MenuForm{
 	private const BRUSH_ICON = "https://maxcdn.icons8.com/Share/icon/DIY//paint_brush1600.png";
 	private const PRESET_ICON = "http://www.sidecarpost.com/wp-content/uploads/2014/03/Icon-BaselinePreset-100x100.png";
 	private const CONFIG_ICON = "http://icons.iconarchive.com/icons/dtafalonso/android-l/512/Settings-L-icon.png";
-	private const EXIT_ICON = "http://www.pngmart.com/files/3/Red-Cross-Transparent-PNG.png";
 
 	public function __construct(Loader $loader, Player $requester){
 		parent::__construct($this->t(Translation::UI_MAIN_MENU_TITLE), $this->t(Translation::UI_MAIN_MENU_SUBTITLE));
@@ -30,8 +29,5 @@ class MainMenuWindow extends MenuForm{
 				$this->setResponseForm(new ConfigurationMenuWindow($loader, $player));
 			});
 		}
-
-		// No need to do anything here, just exit.
-		$this->addOption($this->t(Translation::UI_MAIN_MENU_EXIT), self::EXIT_ICON, "url");
 	}
 }

@@ -6,6 +6,7 @@ namespace BlockHorizons\BlockSniper\ui\forms;
 
 use BlockHorizons\BlockSniper\data\Translation;
 use pocketmine\form\Form as FormInterface;
+use pocketmine\Player;
 
 abstract class Form implements \JsonSerializable{
 
@@ -24,5 +25,9 @@ abstract class Form implements \JsonSerializable{
 
 	public function jsonSerialize() : array{
 		return $this->data;
+	}
+
+	public function onSubmit(Player $player) : void{
+
 	}
 }

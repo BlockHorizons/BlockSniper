@@ -20,14 +20,12 @@ class Brush extends BrushProperties{
 	public const MODE_BRUSH = 0;
 	public const MODE_SELECTION = 1;
 
-	/** @var int */
-	public $resetSize = 0;
 	/** @var string */
 	public $player = "";
 
-	public function __construct(string $player){
+	public function __construct(string $playerName){
 		parent::__construct();
-		$this->player = $player;
+		$this->player = $playerName;
 	}
 
 	/**

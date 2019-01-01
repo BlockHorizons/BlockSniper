@@ -46,6 +46,11 @@ class PresetManager{
 	 * @param Preset $preset
 	 */
 	public function addPreset(Preset $preset) : void{
+		foreach($this->presets as $otherPreset){
+			if($otherPreset->name === $preset->name){
+				return;
+			}
+		}
 		$this->presets[] = $preset;
 	}
 

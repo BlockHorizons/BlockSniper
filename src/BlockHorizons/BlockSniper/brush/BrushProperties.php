@@ -27,6 +27,8 @@ class BrushProperties implements \JsonSerializable{
 	/** @var bool */
 	public $decrementing = false;
 	/** @var int */
+	public $resetSize = 0;
+	/** @var int */
 	public $height = 0;
 	/** @var string */
 	public $blocks = "stone";

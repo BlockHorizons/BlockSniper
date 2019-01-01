@@ -18,7 +18,9 @@ class PresetListWindow extends MenuForm{
 
 		foreach($loader->getPresetManager()->getAllPresets() as $preset){
 			$this->addOption($preset->name, self::LIST_ICON, "url", function(Player $player, int $offset) use ($loader){
-				$this->setResponseForm(new PresetEditWindow($loader, $player, $loader->getPresetManager()->getPreset($offset)));
+				$window = new PresetCreationWindow($loader, $player);
+				$window->preset = $loader->getPresetManager()->getPreset($offset);
+				$this->setResponseForm($window);
 			});
 		}
 
