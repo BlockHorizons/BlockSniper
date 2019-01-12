@@ -29,7 +29,8 @@ class RedoCommand extends BaseCommand{
 		$redoAmount = 1;
 		if(isset($args[0])){
 			$redoAmount = (int) $args[0];
-			if($redoAmount > ($totalRedo = SessionManager::getPlayerSession($sender)->getRevertStore()->getTotalStores(Revert::TYPE_REDO))){
+			$totalRedo = SessionManager::getPlayerSession($sender)->getRevertStore()->getTotalStores(Revert::TYPE_REDO);
+			if($redoAmount > $totalRedo || $args[0] === "all"){
 				$redoAmount = $totalRedo;
 			}
 		}

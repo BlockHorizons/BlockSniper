@@ -16,6 +16,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
 use pocketmine\utils\TextFormat as TF;
+use function strtolower;
 
 class CloneCommand extends BaseCommand{
 

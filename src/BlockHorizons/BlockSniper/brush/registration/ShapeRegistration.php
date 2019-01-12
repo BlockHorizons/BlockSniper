@@ -11,6 +11,8 @@ use BlockHorizons\BlockSniper\brush\shapes\SphereShape;
 use BlockHorizons\BlockSniper\exceptions\InvalidIdException;
 use pocketmine\permission\Permission;
 use pocketmine\permission\PermissionManager;
+use function str_replace;
+use function strtolower;
 
 class ShapeRegistration{
 

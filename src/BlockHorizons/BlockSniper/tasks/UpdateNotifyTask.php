@@ -8,6 +8,9 @@ use BlockHorizons\BlockSniper\Loader;
 use pocketmine\scheduler\AsyncTask;
 use pocketmine\Server;
 use pocketmine\utils\Internet;
+use function json_decode;
+use function sprintf;
+use function version_compare;
 
 class UpdateNotifyTask extends AsyncTask{
 

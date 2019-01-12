@@ -15,6 +15,8 @@ use pocketmine\math\Vector2;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 use pocketmine\Server;
+use function array_rand;
+use function strtolower;
 
 abstract class BaseType{
 
@@ -203,10 +205,9 @@ abstract class BaseType{
 	 * Puts a block at the given location either asynchronously or synchronously with MyPlot checks. (if relevant)
 	 *
 	 * @param Vector3 $pos
-	 * @param int     $id
-	 * @param int     $meta
+	 * @param Block $block
 	 */
-	public function putBlock(Vector3 $pos, int $id, int $meta = 0) : void{
+	public function putBlock(Vector3 $pos, Block $block) : void{
 		$valid = !$this->myPlotChecked;
 		if($pos->y < 0 || $pos->y >= Level::Y_MAX){
 			return;
@@ -224,10 +225,10 @@ abstract class BaseType{
 			return;
 		}
 		if($this->isAsynchronous()){
-			$this->getChunkManager()->setBlockAt((int) $pos->x, (int) $pos->y, (int) $pos->z, Block::get($id, $meta));
+			$this->getChunkManager()->setBlockAt($pos->x, $pos->y, $pos->z, $block);
 			return;
 		}
-		$this->getLevel()->setBlock($pos, Block::get($id, $meta), false);
+		$this->getLevel()->setBlock($pos, $block, false);
 	}
 
 	/**
@@ -236,7 +237,16 @@ abstract class BaseType{
 	 * @param Vector3 $pos
 	 */
 	public function delete(Vector3 $pos) : void{
-		$this->putBlock($pos, 0);
+		$this->putBlock($pos, Block::get(Block::AIR));
+	}
+
+	/**
+	 * Returns a randomly selected brush block.
+	 *
+	 * @return Block
+	 */
+	public function randomBrushBlock() : Block {
+		return $this->brushBlocks[array_rand($this->brushBlocks)];
 	}
 
 	/**

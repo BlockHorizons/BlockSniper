@@ -19,6 +19,8 @@ use pocketmine\math\Vector2;
 use pocketmine\scheduler\AsyncTask;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat;
+use function round;
+use function str_repeat;
 
 class BrushTask extends AsyncTask{
 

@@ -6,6 +6,9 @@ namespace BlockHorizons\BlockSniper\sessions;
 
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
+use function ceil;
+use function max;
+use function min;
 
 class Selection{
 	/** @var Vector3 */

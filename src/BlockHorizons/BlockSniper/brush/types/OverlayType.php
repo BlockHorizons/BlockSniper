@@ -32,9 +32,9 @@ class OverlayType extends BaseType{
 					$sideBlock = $this->side($block, $direction);
 					if($valid && $sideBlock->getId() === Item::AIR){
 						$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
-						if($block->getId() !== $randomBlock->getId()){
+						if($block->getId() !== $randomBlock->getId() && $block->getDamage() !== $randomBlock->getDamage()){
 							yield $sideBlock;
-							$this->putBlock($sideBlock, $randomBlock->getId(), $randomBlock->getDamage());
+							$this->putBlock($sideBlock, $randomBlock);
 						}
 					}
 				}

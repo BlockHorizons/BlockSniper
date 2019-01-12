@@ -14,6 +14,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\level\Level;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
+use function strtolower;
 
 class PasteCommand extends BaseCommand{
 

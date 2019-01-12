@@ -29,10 +29,9 @@ class FlattenAllType extends BaseType{
 	 */
 	public function fill() : \Generator{
 		foreach($this->blocks as $block){
-			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 			if($block->y <= $this->center->y && ($block->getId() === Item::AIR || $block instanceof Flowable)){
 				yield $block;
-				$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());
+				$this->putBlock($block, $this->randomBrushBlock());
 			}
 			if($block->y > $this->center->y && $block->getId() !== Item::AIR){
 				yield $block;

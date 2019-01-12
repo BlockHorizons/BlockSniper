@@ -30,10 +30,9 @@ class LayerType extends BaseType{
 			if($block->y !== $this->center->y + 1){
 				continue;
 			}
-			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 			yield $block;
 			$vec = new Vector3($block->x, $this->center->y + 1, $block->z);
-			$this->putBlock($vec, $randomBlock->getId(), $randomBlock->getDamage());
+			$this->putBlock($vec, $this->randomBrushBlock());
 		}
 	}
 

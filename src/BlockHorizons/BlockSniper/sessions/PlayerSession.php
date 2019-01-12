@@ -9,6 +9,11 @@ use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\owners\PlayerSessionOwner;
 use Sandertv\Marshal\DecodeException;
 use Sandertv\Marshal\Unmarshal;
+use function file_exists;
+use function file_get_contents;
+use function file_put_contents;
+use function json_encode;
+use function strtolower;
 
 class PlayerSession extends Session implements \JsonSerializable{
 

@@ -11,6 +11,10 @@ use BlockHorizons\BlockSniper\brush\types\FillType;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\level\biome\Biome;
+use function explode;
+use function is_numeric;
+use function str_replace;
+use function strtoupper;
 
 class BrushProperties implements \JsonSerializable{
 

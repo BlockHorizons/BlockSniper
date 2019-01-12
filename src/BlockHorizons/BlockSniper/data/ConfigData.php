@@ -11,6 +11,7 @@ use Sandertv\Marshal\DecodeException;
 use Sandertv\Marshal\FileNotFoundException;
 use Sandertv\Marshal\Marshal;
 use Sandertv\Marshal\Unmarshal;
+use function rename;
 
 class ConfigData{
 	private $filePath = "";

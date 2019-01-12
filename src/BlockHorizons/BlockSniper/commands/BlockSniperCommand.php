@@ -11,6 +11,7 @@ use BlockHorizons\BlockSniper\ui\windows\MainMenuWindow;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
+use function strtolower;
 
 class BlockSniperCommand extends BaseCommand{
 

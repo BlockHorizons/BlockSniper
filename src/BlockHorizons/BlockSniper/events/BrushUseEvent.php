@@ -67,6 +67,6 @@ class BrushUseEvent extends BlockSniperEvent implements Cancellable{
 	 * @return int
 	 */
 	public function getApproximateProcessedBlocks() : int{
-		return $this->shape->getApproximateProcessedBlocks();
+		return $this->shape->getBlockCount();
 	}
 }

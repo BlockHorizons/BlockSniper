@@ -8,6 +8,9 @@ use BlockHorizons\BlockSniper\brush\BaseShape;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\Player;
+use function defined;
+use function strtolower;
+use function strtoupper;
 
 abstract class BaseClone{
 

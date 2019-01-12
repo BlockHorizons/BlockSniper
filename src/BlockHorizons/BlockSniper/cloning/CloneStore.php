@@ -12,6 +12,12 @@ use pocketmine\block\Block;
 use pocketmine\level\Position;
 use pocketmine\math\Vector3;
 use pocketmine\Server;
+use function explode;
+use function file_get_contents;
+use function file_put_contents;
+use function is_file;
+use function serialize;
+use function unserialize;
 
 class CloneStore{
 

@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\data;
 
+use function count;
+use function explode;
+use function is_array;
+use function vsprintf;
+
 class Translation{
 
 	/**

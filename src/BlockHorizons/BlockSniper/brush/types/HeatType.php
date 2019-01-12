@@ -23,18 +23,15 @@ class HeatType extends BaseType{
 	public function fill() : \Generator{
 		foreach($this->blocks as $block){
 			switch($block->getId()){
+				case Block::PACKED_ICE:
 				case Block::ICE:
 					yield $block;
-					$this->putBlock($block, Block::WATER);
+					$this->putBlock($block, Block::get(Block::WATER));
 					break;
 				case Block::SNOW_LAYER:
 				case Block::SNOW:
 					yield $block;
 					$this->delete($block);
-					break;
-				case Block::PACKED_ICE:
-					yield $block;
-					$this->putBlock($block, Block::WATER);
 					break;
 				case Block::WATER:
 				case Block::FLOWING_WATER:
@@ -48,15 +45,15 @@ class HeatType extends BaseType{
 					$random = random_int(0, 8);
 					if($random === 0){
 						yield $block;
-						$this->putBlock($block, Block::DIRT);
+						$this->putBlock($block, Block::get(Block::DIRT));
 					}elseif($random === 1){
 						yield $block;
-						$this->putBlock($block, Block::DIRT, 1);
+						$this->putBlock($block, Block::get(Block::DIRT, 1));
 					}
 					break;
 				case $block instanceof Flower || $block instanceof DoublePlant || $block instanceof TallGrass || $block instanceof Dandelion:
 					yield $block;
-					$this->putBlock($block, Block::TALL_GRASS);
+					$this->putBlock($block, Block::get(Block::DEAD_BUSH));
 			}
 		}
 	}

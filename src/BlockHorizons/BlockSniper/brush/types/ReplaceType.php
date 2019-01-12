@@ -27,11 +27,11 @@ class ReplaceType extends BaseType{
 	 */
 	public function fill() : \Generator{
 		foreach($this->blocks as $block){
-			$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 			foreach($this->obsolete as $obsolete){
 				if($block->getId() === $obsolete->getId() and $block->getDamage() === $obsolete->getDamage()){
 					yield $block;
-					$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());
+					$this->putBlock($block, $this->randomBrushBlock());
+					break;
 				}
 			}
 		}

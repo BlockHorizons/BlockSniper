@@ -15,6 +15,7 @@ use BlockHorizons\BlockSniper\tasks\CooldownBarTask;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\Player;
 use pocketmine\Server;
+use function count;
 
 class Brush extends BrushProperties{
 

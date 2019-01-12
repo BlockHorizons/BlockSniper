@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\data;
 
 use BlockHorizons\BlockSniper\Loader;
+use function file_get_contents;
+use function json_decode;
 
 class TranslationData{
 

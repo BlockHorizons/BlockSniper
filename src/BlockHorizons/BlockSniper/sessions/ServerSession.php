@@ -8,6 +8,10 @@ use BlockHorizons\BlockSniper\brush\Brush;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\owners\ServerSessionOwner;
 use pocketmine\level\Position;
+use function file_get_contents;
+use function file_put_contents;
+use function json_decode;
+use function json_encode;
 
 class ServerSession extends Session implements \JsonSerializable{
 

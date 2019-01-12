@@ -6,6 +6,12 @@ namespace BlockHorizons\BlockSniper\revert;
 
 use BlockHorizons\BlockSniper\revert\async\AsyncRevert;
 use BlockHorizons\BlockSniper\revert\sync\SyncRevert;
+use function array_keys;
+use function count;
+use function max;
+use function min;
+use function time;
+
 
 class RevertStore{
 

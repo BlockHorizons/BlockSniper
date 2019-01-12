@@ -9,6 +9,10 @@ use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\ui\forms\CustomForm;
 use pocketmine\Player;
+use function array_values;
+use function implode;
+use function str_replace;
+use function strtolower;
 
 abstract class CustomWindow extends CustomForm{
 

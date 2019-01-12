@@ -10,6 +10,8 @@ use Sandertv\Marshal\DecodeException;
 use Sandertv\Marshal\FileNotFoundException;
 use Sandertv\Marshal\Marshal;
 use Sandertv\Marshal\Unmarshal;
+use function is_file;
+use function scandir;
 
 class PresetManager{
 

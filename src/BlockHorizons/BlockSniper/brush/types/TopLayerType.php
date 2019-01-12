@@ -39,9 +39,8 @@ class TopLayerType extends BaseType{
 			for($y = $block->y; $y <= $block->y + $this->height; $y++) {
 				$higherBlock = $this->side($higherBlock, Facing::UP);
 				if($higherBlock instanceof Flowable || $higherBlock->getId() === BlockIds::AIR) {
-					$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 					yield $block;
-					$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());
+					$this->putBlock($block, $this->randomBrushBlock());
 					break;
 				}
 			}

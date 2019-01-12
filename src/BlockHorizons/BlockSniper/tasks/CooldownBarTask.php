@@ -9,6 +9,9 @@ use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
+use function ceil;
+use function microtime;
+use function str_repeat;
 
 class CooldownBarTask extends BlockSniperTask{
 

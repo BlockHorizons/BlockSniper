@@ -28,6 +28,8 @@ use BlockHorizons\BlockSniper\brush\types\WarmType;
 use BlockHorizons\BlockSniper\exceptions\InvalidIdException;
 use pocketmine\permission\Permission;
 use pocketmine\permission\PermissionManager;
+use function str_replace;
+use function strtolower;
 
 class TypeRegistration{
 

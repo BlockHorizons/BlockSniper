@@ -27,10 +27,10 @@ class SnowConeType extends BaseType{
 				if(($topId = $topBlock->getId()) === Block::AIR || $topId === Block::SNOW_LAYER){
 					if($topBlock->getDamage() < 7 && $topBlock->getId() === Block::SNOW_LAYER){
 						yield $topBlock;
-						$this->putBlock($topBlock, $topBlock->getId(), $topBlock->getDamage() + 1);
+						$this->putBlock($topBlock, Block::get(Block::SNOW_LAYER, $topBlock->getDamage() + 1));
 					}elseif($topId !== Block::SNOW_LAYER){
 						yield $topBlock;
-						$this->putBlock($topBlock, Block::SNOW_LAYER);
+						$this->putBlock($topBlock, Block::get(Block::SNOW_LAYER));
 					}
 				}
 			}

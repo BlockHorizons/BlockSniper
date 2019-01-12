@@ -24,6 +24,8 @@ use BlockHorizons\BlockSniper\tasks\UpdateNotifyTask;
 use MyPlot\MyPlot;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat as TF;
+use function is_dir;
+use function mkdir;
 
 class Loader extends PluginBase{
 

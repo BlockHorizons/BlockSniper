@@ -24,12 +24,12 @@ class FreezeType extends BaseType{
 				case Block::WATER:
 				case Block::FLOWING_WATER:
 					yield $block;
-					$this->putBlock($block, Block::ICE);
+					$this->putBlock($block, Block::get(Block::ICE));
 					break;
 				case Block::LAVA:
 				case Block::FLOWING_LAVA:
 					yield $block;
-					$this->putBlock($block, Block::OBSIDIAN);
+					$this->putBlock($block, Block::get(Block::OBSIDIAN));
 					break;
 				case Block::FIRE:
 					yield $block;
@@ -37,7 +37,7 @@ class FreezeType extends BaseType{
 					break;
 				case Block::ICE:
 					yield $block;
-					$this->putBlock($block, Block::PACKED_ICE);
+					$this->putBlock($block, Block::get(Block::PACKED_ICE));
 			}
 		}
 	}

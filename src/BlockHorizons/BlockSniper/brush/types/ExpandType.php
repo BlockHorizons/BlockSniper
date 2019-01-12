@@ -45,13 +45,13 @@ class ExpandType extends BaseType{
 			/** @var Block $undoBlock */
 			$undoBlock = ($this->side($selectedBlock, Facing::DOWN)->getId() === Block::AIR ? $this->side($selectedBlock, Facing::UP) : $this->side($selectedBlock, Facing::DOWN));
 			yield $undoBlock;
-			$this->putBlock($selectedBlock, $undoBlock->getId(), $undoBlock->getDamage());
+			$this->putBlock($selectedBlock, $undoBlock);
 		}
 		foreach($oneHoles as $block){
 			/** @var Block $oneHole */
 			$oneHole = ($this->side($block, Facing::DOWN)->getId() === Block::AIR ? $this->side($block, Facing::EAST) : $this->side($block, Facing::DOWN));
 			yield $oneHole;
-			$this->putBlock($block, $oneHole->getId(), $oneHole->getDamage());
+			$this->putBlock($block, $oneHole);
 		}
 	}
 

@@ -7,6 +7,11 @@ namespace BlockHorizons\BlockSniper\parser;
 use BlockHorizons\BlockSniper\exceptions\InvalidBlockException;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
+use function preg_match;
+use function preg_replace;
+use function sprintf;
+use function strlen;
+use function substr;
 
 class StringConsumer{
 

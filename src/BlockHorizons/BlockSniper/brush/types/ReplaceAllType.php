@@ -22,9 +22,8 @@ class ReplaceAllType extends BaseType{
 	public function fill() : \Generator{
 		foreach($this->blocks as $block){
 			if(!$block instanceof Flowable && $block->getId() !== Block::AIR){
-				$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 				yield $block;
-				$this->putBlock($block, $randomBlock->getId(), $randomBlock->getDamage());
+				$this->putBlock($block, $this->randomBrushBlock());
 			}
 		}
 	}
