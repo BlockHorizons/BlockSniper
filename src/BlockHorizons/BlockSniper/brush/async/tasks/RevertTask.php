@@ -48,7 +48,7 @@ class RevertTask extends AsyncTask{
 		}
 
 		$levelId = $player->getLevel()->getId();
-		$level = Server::getInstance()->getLevel($levelId);
+		$level = Server::getInstance()->getLevelManager()->getLevel($levelId);
 
 		if($level instanceof Level){
 			foreach($chunks as $hash => $chunk){

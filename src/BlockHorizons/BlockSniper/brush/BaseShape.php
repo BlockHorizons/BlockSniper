@@ -122,7 +122,7 @@ abstract class BaseShape extends AxisAlignedBB{
 	 * @return Level
 	 */
 	public function getLevel() : Level{
-		return Server::getInstance()->getLevel($this->level);
+		return Server::getInstance()->getLevelManager()->getLevel($this->level);
 	}
 
 	/**

@@ -288,7 +288,7 @@ abstract class BaseType{
 	 * @return Level|null
 	 */
 	public function getLevel() : ?Level{
-		return Server::getInstance()->getLevel($this->level);
+		return Server::getInstance()->getLevelManager()->getLevel($this->level);
 	}
 
 	/**
