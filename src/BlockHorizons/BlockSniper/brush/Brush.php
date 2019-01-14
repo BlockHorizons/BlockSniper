@@ -98,10 +98,9 @@ class Brush extends BrushProperties{
 		foreach($type->fillShape($plotPoints) as $undoBlock){
 			$undoBlocks[] = $undoBlock;
 		}
-		if(count($undoBlocks) === 0){
-			return;
+		if(count($undoBlocks) !== 0){
+			$session->getRevertStore()->saveRevert(new SyncUndo($undoBlocks, $session->getSessionOwner()->getName()));
 		}
-		$session->getRevertStore()->saveRevert(new SyncUndo($undoBlocks, $session->getSessionOwner()->getName()));
 
 		$loader->getScheduler()->scheduleRepeatingTask(new CooldownBarTask($loader, $this->getPlayer()), 1);
 	}
