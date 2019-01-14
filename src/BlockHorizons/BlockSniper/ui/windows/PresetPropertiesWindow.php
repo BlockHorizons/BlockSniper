@@ -45,7 +45,7 @@ class PresetPropertiesWindow extends CustomWindow{
 				$this->preset->properties->hollow = $value;
 			});
 		}
-		if($b->mode === Brush::MODE_BRUSH && $b->getShape()->usesHeight() && $b->getType()::ID !== BiomeType::ID){
+		if($b->mode === Brush::MODE_BRUSH && $b->getShape()->usesHeight() && $b->getType()->usesSize() && $b->getType()::ID !== BiomeType::ID){
 			$this->addSlider($this->t(Translation::UI_BRUSH_MENU_HEIGHT), 0, $loader->config->maxSize, 1, $b->height, function(Player $player, float $value) use ($b){
 				$this->preset->properties->height = (int) $value;
 			});
