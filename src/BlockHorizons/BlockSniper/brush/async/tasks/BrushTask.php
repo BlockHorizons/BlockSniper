@@ -103,7 +103,7 @@ class BrushTask extends AsyncTask{
 		if(($player = Server::getInstance()->getPlayer($playerName)) === null) {
 			return;
 		}
-		if($progress === 21){
+		if($progress >= 21){
 			$player->sendPopup(TextFormat::GREEN . Translation::get(Translation::BRUSH_STATE_DONE));
 			return;
 		}
