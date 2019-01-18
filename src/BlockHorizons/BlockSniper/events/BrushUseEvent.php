@@ -7,10 +7,12 @@ namespace BlockHorizons\BlockSniper\events;
 use BlockHorizons\BlockSniper\brush\BaseShape;
 use BlockHorizons\BlockSniper\brush\BaseType;
 use pocketmine\event\Cancellable;
+use pocketmine\event\CancellableTrait;
 use pocketmine\level\Level;
 use pocketmine\Player;
 
 class BrushUseEvent extends BlockSniperEvent implements Cancellable{
+	use CancellableTrait;
 
 	/** @var null */
 	public static $handlerList = null;
