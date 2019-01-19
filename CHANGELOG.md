@@ -22,5 +22,7 @@
 - Fixed an error that would occur when using a brush that would attempt to place blocks outside of the world.
 - Fixed right click selection on windows 10 causing multiple chat messages to be sent.
 - Fixed a very rare rounding error that would cause the server to crash when doing a medium sized modification.
+- Fixed schematics saved using BlockSniper causing blocks to be significantly misplaced.
+- Fixed schematic pasting running out of memory quickly with bigger schematics.
 
 ### For PocketMine-MP API: 4.0.0
