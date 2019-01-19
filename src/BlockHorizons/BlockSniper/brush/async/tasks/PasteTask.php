@@ -36,22 +36,20 @@ class PasteTask extends AsyncTask{
 	}
 
 	public function onRun() : void{
-		$chunks = $this->chunks;
+		$chunks = (array) $this->chunks;
 		foreach($chunks as $hash => $data){
 			$chunks[$hash] = Chunk::fastDeserialize($data);
 		}
 
-		$file = $this->file;
 		$center = $this->center;
 
-		$schematic = new Schematic($file);
-		$schematic->decode();
-		$schematic->fixBlockIds();
+		$schematic = new Schematic();
+		$schematic->parse($this->file);
+
 		$width = $schematic->getWidth();
 		$length = $schematic->getLength();
-
-		$processedBlocks = 0;
-		$blocksInside = $schematic->getBlocks();
+		$baseWidth = $center->x - (int) ($width / 2);
+		$baseLength = $center->z - (int) ($length / 2);
 
 		/** @var Chunk[] $chunks */
 		$manager = new BlockSniperChunkManager();
@@ -59,11 +57,9 @@ class PasteTask extends AsyncTask{
 			$manager->setChunk($chunk->getX(), $chunk->getZ(), $chunk);
 		}
 
-		$baseWidth = $center->x - (int) ($width / 2);
-		$baseLength = $center->z - (int) ($length / 2);
-
+		$processedBlocks = 0;
 		/** @var Block[] $blocksInside */
-		foreach($blocksInside as $block){
+		foreach($schematic->blocks() as $block){
 			if($block->getId() === Block::AIR){
 				continue;
 			}

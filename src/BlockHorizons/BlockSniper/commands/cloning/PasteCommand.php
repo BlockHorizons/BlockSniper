@@ -77,8 +77,8 @@ class PasteCommand extends BaseCommand{
 
 					return;
 				}
-				$schematic = new Schematic($file);
-				$schematic->decodeSizes();
+				$schematic = new Schematic();
+				$schematic->parse($file);
 
 				$width = $schematic->getWidth();
 				$length = $schematic->getLength();

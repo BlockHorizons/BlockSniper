@@ -48,7 +48,6 @@ class CloneCommand extends BaseCommand{
 			return;
 		}
 
-		$size = SessionManager::getPlayerSession($sender)->getBrush()->size;
 		$shape = $session->getBrush()->getShape($session->getSelection()->box());
 
 		switch(strtolower($args[0])){
@@ -80,22 +79,13 @@ class CloneCommand extends BaseCommand{
 
 					return;
 				}
-
-				$blocks = [];
-				foreach($shape->getBlocksInside() as $block){
-					$blocks[] = $block;
-				}
+				$path = $this->loader->getDataFolder() . "schematics/" . $args[1] . ".schematic";
 
 				$schematic = new Schematic();
-				$schematic
-					->setBlocks($blocks)
-					->setMaterials(Schematic::MATERIALS_POCKET)
-					->encode()
-					->setLength($size * 2 + 1)
-					->setHeight($size * 2 + 1)
-					->setWidth($size * 2 + 1)
-					->save($this->loader->getDataFolder() . "schematics/" . $args[1] . ".schematic");
-				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_CLONE_SCHEMATIC_SUCCESS, $this->loader->getDataFolder() . "templates/" . $args[1] . ".schematic"));
+				$schematic->setBlocks($session->getSelection()->box(), $shape->getBlocksInside());
+				$schematic->save($path);
+
+				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_CLONE_SCHEMATIC_SUCCESS, $path));
 		}
 	}
 }
