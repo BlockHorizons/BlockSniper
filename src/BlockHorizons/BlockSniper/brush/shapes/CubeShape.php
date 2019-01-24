@@ -30,4 +30,11 @@ class CubeShape extends CuboidShape{
 			$center->x - $brush->size, $center->y - $brush->size, $center->z - $brush->size
 		];
 	}
+
+	/**
+	 * @return bool
+	 */
+	public function usesHeight() : bool{
+		return false;
+	}
 }
