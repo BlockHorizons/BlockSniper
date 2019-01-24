@@ -28,6 +28,10 @@ class CooldownBarTask extends BlockSniperTask{
 	}
 
 	public function onRun(int $currentTick) : void{
+		if($this->player->isClosed()){
+			$this->getHandler()->cancel();
+			return;
+		}
 		do {
 			if($this->loader->config->cooldownSeconds === 0.0){
 				break;
