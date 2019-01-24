@@ -5,6 +5,7 @@
   specifically available for the combination of shape, type and mode set.
 - Presets can now set tree properties in addition to other properties.
 - A cooldown bar is added to limit the rate at which BlockSniper can be used. The duration is configurable.
+- Modifications with the Regenerate brush type may now be undone.
   
 ### Behavioural Changes
 - The Brush UI no longer contains all available brush properties.
