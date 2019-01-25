@@ -113,7 +113,7 @@ class Brush extends BrushProperties{
 	public function getShape(AxisAlignedBB $bb = null) : BaseShape{
 		$player = $this->getPlayer();
 
-		return new $this->shape($player, $player->getLevel(), $player->getTargetBlock(100)->asPosition(), $bb, $this);
+		return new $this->shape($player, $player->getLevel(), $player->getTargetBlock($player->getViewDistance() * 16)->asPosition(), $bb, $this);
 	}
 
 	/**

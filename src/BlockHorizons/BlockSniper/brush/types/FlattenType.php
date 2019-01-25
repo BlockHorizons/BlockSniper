@@ -21,7 +21,7 @@ class FlattenType extends BaseType{
 
 	public function __construct(Player $player, ChunkManager $level, \Generator $blocks = null){
 		parent::__construct($player, $level, $blocks);
-		$this->center = $player->getTargetBlock(100)->asVector3();
+		$this->center = $player->getTargetBlock($player->getViewDistance() * 16)->asVector3();
 	}
 
 	/**

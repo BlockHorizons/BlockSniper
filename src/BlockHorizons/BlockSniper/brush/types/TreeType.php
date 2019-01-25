@@ -24,7 +24,7 @@ class TreeType extends BaseType{
 
 	public function __construct(Player $player, ChunkManager $level){
 		parent::__construct($player, $level);
-		$this->center = $player->getTargetBlock(100)->asPosition();
+		$this->center = $player->getTargetBlock($player->getViewDistance() * 16)->asPosition();
 		$this->brush = SessionManager::getPlayerSession($player)->getBrush();
 	}
 

@@ -14,6 +14,7 @@
 - The preset creation window no longer holds all available properties. Instead, like the brush window, it now only shows
   brush properties that apply.
 - It is no longer possible to do two or more brush modifications concurrently.
+- The maximum brush distance now depends on the view distance of a player.
 
 ### Removed
 - The main menu no longer contains a Tree button.

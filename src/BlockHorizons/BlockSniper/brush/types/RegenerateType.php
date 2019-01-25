@@ -26,7 +26,7 @@ class RegenerateType extends BaseType{
 
 	public function __construct(Player $player, ChunkManager $manager, \Generator $blocks = null){
 		parent::__construct($player, $manager, $blocks);
-		$this->center = $player->getTargetBlock(100)->asVector3();
+		$this->center = $player->getTargetBlock($player->getViewDistance() * 16)->asVector3();
 		$this->session = SessionManager::getPlayerSession($player);
 	}
 

@@ -30,7 +30,7 @@ class PasteCommand extends BaseCommand{
 			return;
 		}
 
-		$center = $sender->getTargetBlock(100);
+		$center = $sender->getTargetBlock($sender->getViewDistance() * 16);
 		if($center === null){
 			throw new InvalidBlockException("No valid block could be found when attempting to paste.");
 		}
