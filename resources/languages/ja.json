@@ -118,7 +118,6 @@
 		},
 		"configuration-menu": {
 			"title": "BlockSniper 設定",
-			"auto-update": "新しいバージョンが見つかったときに設定ファイルを自動的に更新する",
 			"language": "BlockSniperのメッセージ送信に使用する言語",
 			"brush-item": "ブラシに使用するアイテムのID",
 			"selection-item": "Item ID of the item that is used to select",
@@ -131,8 +130,7 @@
 			"session-timeout-time": "The time in minutes after which the session of a player is removed after leaving the server",
 			"auto-gui": "ホット・バー・スロットをブラシ項目を含むものに切り替えるときに、GUIを自動的に開きます。",
 			"cooldown": "The cooldown in seconds (can be decimal) until the brush can be re-used after using it",
-			"myplot-support": "Whether to turn on MyPlot support or not",
-			"auto-reload": "このチェックをオンにすると、このウィンドウを閉じるときに自動的に設定が再読み込みされます"
+			"myplot-support": "Whether to turn on MyPlot support or not"
 		},
 		"tree-menu": {
 			"title": "Tree Menu",

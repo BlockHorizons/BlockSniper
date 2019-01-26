@@ -58,10 +58,5 @@ class ConfigurationMenuWindow extends CustomWindow{
 		$this->addToggle($this->t(Translation::UI_CONFIGURATION_MENU_MYPLOT_SUPPORT), $c->myPlotSupport, function(Player $player, bool $value) use ($c){
 			$c->myPlotSupport = $value;
 		});
-		$this->addToggle($this->t(Translation::UI_CONFIGURATION_MENU_AUTO_RELOAD), false, function(Player $player, bool $value) use ($c, $loader){
-			if($value){
-				$loader->reload();
-			}
-		});
 	}
 }

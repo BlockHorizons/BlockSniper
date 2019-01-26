@@ -117,7 +117,6 @@
 		},
 		"configuration-menu": {
 			"title": "BlockSniper Configuratie",
-			"auto-update": "Update automatisch als een nieuwe update wordt gevonden",
 			"language": "Taal waarin BlockSniper berichten worden weergeven",
 			"brush-item": "ID van het voorwerp waarmee er wordt geverft",
 			"selection-item": "ID van het voorwerp waarmee een selectie wordt gemaakt",
@@ -130,8 +129,7 @@
 			"session-timeout-time": "De tijd waarna de sessie van een speler wordt opgeruimd na het verlaten van de server",
 			"auto-gui": "Open de GUI automatisch wanneer het hotbar vakje wordt verplaatst naar een vak met het brush voorwerp",
 			"cooldown": "De tijd in seconden (mag decimalen hebben) totdat de verf hergebruikt kan worden na gebruik",
-			"myplot-support": "MyPlot ondersteuning aanzetten of niet",
-			"auto-reload": "Omzetten van deze knop zal de plugin automatisch herladen wanneer je dit scherm sluit"
+			"myplot-support": "MyPlot ondersteuning aanzetten of niet"
 		},
 		"tree-menu": {
 			"title": "Boom Menu",

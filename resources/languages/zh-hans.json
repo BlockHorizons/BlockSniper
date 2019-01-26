@@ -117,7 +117,6 @@
 		},
 		"configuration-menu": {
 			"title": "BlockSniper 设置",
-			"auto-update": "新版本自动更新配置文件",
 			"language": "BlockSniper 相关信息使用的语言",
 			"brush-item": "画笔物品 ID",
 			"selection-item": "Item ID of the item that is used to select",
@@ -130,8 +129,7 @@
 			"session-timeout-time": "The time in minutes after which the session of a player is removed after leaving the server",
 			"auto-gui": "切换到画笔物品栏时自动打开画笔图形界面",
 			"cooldown": "The cooldown in seconds (can be decimal) until the brush can be re-used after using it",
-			"myplot-support": "是否启用 MyPlot 支持",
-			"auto-reload": "打开此开关后将在这个窗口关闭时重新加载配置"
+			"myplot-support": "是否启用 MyPlot 支持"
 		},
 		"tree-menu": {
 			"title": "Tree Menu",

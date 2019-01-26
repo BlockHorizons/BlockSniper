@@ -81,12 +81,13 @@ class Translation{
 	public const UI_BRUSH_MENU_HOLLOW = "ui.brush-menu.hollow";
 	public const UI_BRUSH_MENU_DECREMENT = "ui.brush-menu.decrement";
 	public const UI_BRUSH_MENU_HEIGHT = "ui.brush-menu.height";
+	public const UI_BRUSH_MENU_WIDTH = "ui.brush-menu.width";
+	public const UI_BRUSH_MENU_LENGTH = "ui.brush-menu.length";
 	public const UI_BRUSH_MENU_BLOCKS = "ui.brush-menu.blocks";
 	public const UI_BRUSH_MENU_OBSOLETE = "ui.brush-menu.obsolete";
 	public const UI_BRUSH_MENU_BIOME = "ui.brush-menu.biome";
 	public const UI_BRUSH_MENU_TREE = "ui.brush-menu.tree";
 	public const UI_CONFIGURATION_MENU_TITLE = "ui.configuration-menu.title";
-	public const UI_CONFIGURATION_MENU_AUTO_UPDATE = "ui.configuration-menu.auto-update";
 	public const UI_CONFIGURATION_MENU_LANGUAGE = "ui.configuration-menu.language";
 	public const UI_CONFIGURATION_MENU_BRUSH_ITEM = "ui.configuration-menu.brush-item";
 	public const UI_CONFIGURATION_MENU_SELECTION_ITEM = "ui.configuration-menu.selection-item";
@@ -100,7 +101,6 @@ class Translation{
 	public const UI_CONFIGURATION_MENU_AUTO_GUI = "ui.configuration-menu.auto-gui";
 	public const UI_CONFIGURATION_MENU_COOLDOWN = "ui.configuration-menu.cooldown";
 	public const UI_CONFIGURATION_MENU_MYPLOT_SUPPORT = "ui.configuration-menu.myplot-support";
-	public const UI_CONFIGURATION_MENU_AUTO_RELOAD = "ui.configuration-menu.auto-reload";
 	public const UI_TREE_MENU_TITLE = "ui.tree-menu.title";
 	public const UI_TREE_MENU_TRUNK_HEIGHT = "ui.tree-menu.trunk-height";
 	public const UI_TREE_MENU_TRUNK_WIDTH = "ui.tree-menu.trunk-width";

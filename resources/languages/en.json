@@ -117,7 +117,6 @@
 		},
 		"configuration-menu": {
 			"title": "BlockSniper Configuration",
-			"auto-update": "Automatically update the configuration file when a new version is found",
 			"language": "Language used for sending BlockSniper related messages",
 			"brush-item": "Item ID of the item that is used to brush",
 			"selection-item": "Item ID of the item that is used to select",
@@ -130,8 +129,7 @@
 			"session-timeout-time": "The time in minutes after which the session of a player is removed after leaving the server",
 			"auto-gui": "Automatically open the GUI when switching hotbar slot to one containing the brush item",
 			"cooldown": "The cooldown in seconds (can be decimal) until the brush can be re-used after using it",
-			"myplot-support": "Whether to turn on MyPlot support or not",
-			"auto-reload": "Turning this toggle will automatically reload the configuration when closing this window"
+			"myplot-support": "Whether to turn on MyPlot support or not"
 		},
 		"tree-menu": {
 			"title": "Tree Menu",

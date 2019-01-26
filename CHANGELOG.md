@@ -20,6 +20,7 @@
 
 ### Removed
 - The main menu no longer contains a Tree button.
+- The configuration menu no longer has a reload button. This is done automatically.
 
 ### Fixed
 - Fixed the Clean type doing the opposite of what it is supposed to do.
