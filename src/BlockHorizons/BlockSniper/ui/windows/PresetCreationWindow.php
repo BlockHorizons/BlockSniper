@@ -29,10 +29,10 @@ class PresetCreationWindow extends CustomWindow{
 		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_MODE_DESCRIPTION), $this->processModes(), $b->mode, function(Player $player, int $value) {
 			$this->preset->properties->mode = $value;
 		});
-		$this->addDropdown($this->t(Translation::UI_PRESET_CREATION_SHAPE), $this->processShapes($requester), $b->getShape()::ID, function(Player $player, int $value){
+		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_SHAPE), $this->processShapes($requester), $b->getShape()::ID, function(Player $player, int $value){
 			$this->preset->properties->shape = ShapeRegistration::getShapeById($value);
 		});
-		$this->addDropdown($this->t(Translation::UI_PRESET_CREATION_TYPE), $this->processTypes($requester), $b->getType()::ID, function(Player $player, int $value) use($loader) {
+		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_TYPE), $this->processTypes($requester), $b->getType()::ID, function(Player $player, int $value) use($loader) {
 			$this->preset->properties->type = TypeRegistration::getTypeById($value);
 			$loader->getPresetManager()->addPreset($this->preset);
 

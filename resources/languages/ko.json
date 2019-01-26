@@ -69,18 +69,7 @@
 		},
 		"preset-edit": {
 			"title": "사전 설정 편집 메뉴",
-			"name": "사전 설정 이름",
-			"size": "브러시 크기",
-			"shape": "브러시 도형",
-			"type": "브러시 종류",
-			"hollow": "빈 브러시",
-			"decrement": "감소 브러시",
-			"height": "브러시 높이",
-			"perfect": "브러시 도형 완벽",
-			"blocks": "브러시 블록",
-			"obsolete": "쓸모없는 블록",
-			"biome": "브러시 생물군계",
-			"tree": "브러시 나무"
+			"name": "사전 설정 이름"
 		},
 		"preset-selection": {
 			"title": "사전 설정 선택 메뉴",
@@ -96,27 +85,14 @@
 		},
 		"preset-creation": {
 			"title": "사전 설정 만들기 메뉴",
-			"name": "사전 설정 이름",
-			"size": "브러시 크기",
-			"shape": "브러시 도형",
-			"type": "브러시 종류",
-			"hollow": "빈 브러시",
-			"decrement": "감소 브러시",
-			"height": "브러시 높이",
-			"perfect": "브러시 도형 완벽",
-			"blocks": "브러시 블록",
-			"obsolete": "쓸모없는 블록",
-			"biome": "브러시 생물군계",
-			"tree": "브러시 나무"
+			"name": "사전 설정 이름"
 		},
 		"main-menu": {
 			"title": "BlockSniper 메뉴",
 			"subtitle": "계속하려면 버튼을 클릭하세요",
 			"brush": "브러시",
-			"tree": "나무",
 			"config": "구성",
 			"presets": "사전 설정",
-			"global-brush": "전역 브러시",
 			"exit": "나가기"
 		},
 		"brush-menu": {
@@ -132,7 +108,8 @@
 			"hollow": "빈 브러시",
 			"decrement": "감소 브러시",
 			"height": "브러시 높이",
-			"perfect": "브러시 도형 완벽",
+			"width": "Brush Width",
+			"length": "Brush Length",
 			"blocks": "브러시 블록",
 			"obsolete": "쓸모없는 블록",
 			"biome": "브러시 생물군계",

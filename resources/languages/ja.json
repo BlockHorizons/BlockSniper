@@ -69,18 +69,7 @@
 		},
 		"preset-edit": {
 			"title": "プリセット編集メニュー",
-			"name": "プリセットの名前",
-			"size": "大きさ",
-			"shape": "形",
-			"type": "種類",
-			"hollow": "空洞",
-			"decrement": "デクリメント",
-			"height": "高さ",
-			"perfect": "形の完全性",
-			"blocks": "使用するブロック",
-			"obsolete": "使用しないブロック",
-			"biome": "バイオーム",
-			"tree": "木"
+			"name": "プリセットの名前"
 		},
 		"preset-selection": {
 			"title": "プリセット選択メニュー",
@@ -96,18 +85,7 @@
 		},
 		"preset-creation": {
 			"title": "プリセット作成メニュー",
-			"name": "プリセットの名前",
-			"size": "大きさ",
-			"shape": "形",
-			"type": "種類",
-			"hollow": "空洞",
-			"decrement": "デクリメント",
-			"height": "高さ",
-			"perfect": "形の完全性",
-			"blocks": "使用するブロック",
-			"obsolete": "使用しないブロック",
-			"biome": "バイオーム",
-			"tree": "木"
+			"name": "プリセットの名前"
 		},
 		"main-menu": {
 			"title": "BlockSniperメニュー",
@@ -131,7 +109,8 @@
 			"hollow": "空洞",
 			"decrement": "デクリメント",
 			"height": "高さ",
-			"perfect": "形の完全性",
+			"width": "Brush Width",
+			"length": "Brush Length",
 			"blocks": "使用するブロック",
 			"obsolete": "使用しないブロック",
 			"biome": "バイオーム",

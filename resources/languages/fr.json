@@ -70,17 +70,6 @@
 		"preset-edit": {
 			"title": "Menu d'édition préfabriqué",
 			"name": "Nom du préfabriqué",
-			"size": "Taille du pinceau",
-			"shape": "Forme du pinceau",
-			"type": "Type de pinceau",
-			"hollow": "Pinceau creuse",
-			"decrement": "Décrémenter le pinceau",
-			"height": "Hauteur du pinceau",
-			"perfect": "Perfection de la forme du pinceau",
-			"blocks": "Blocs du pinceau",
-			"obsolete": "Blocs obsolètes",
-			"biome": "Biome du pinceau",
-			"tree": "Arbre du pinceau"
 		},
 		"preset-selection": {
 			"title": "Menu de sélection de préfabriqué",
@@ -97,26 +86,13 @@
 		"preset-creation": {
 			"title": "PMenu de création de préfabriqué",
 			"name": "Nom du préfabriqué",
-			"size": "Taille du pinceau",
-			"shape": "Forme du pinceau",
-			"type": "Type de pinceau",
-			"hollow": "Pinceau creuse",
-			"decrement": "Décrémenter le pinceau",
-			"height": "Hauteur du pinceau",
-			"perfect": "Perfection de la forme du pinceau",
-			"blocks": "Blocs du pinceau",
-			"obsolete": "Blocs obsolètes",
-			"biome": "Biome du pinceau",
-			"tree": "Arbre du pinceau"
 		},
 		"main-menu": {
 			"title": "Menu BlockSniper",
 			"subtitle": "Cliquez sur un bouton pour continuer",
 			"brush": "pinceau (Brush)",
-			"tree": "Tree",
 			"config": "Configuration",
 			"presets": "préfabriqué (Preset)",
-			"global-brush": "Global Brush",
 			"exit": "Quitter"
 		},
 		"brush-menu": {
@@ -132,7 +108,8 @@
 			"hollow": "Pinceau creuse",
 			"decrement": "Décrémenter le pinceau",
 			"height": "Hauteur du pinceau",
-			"perfect": "Perfection de la forme du pinceau",
+			"width": "Brush Width",
+			"length": "Brush Length",
 			"blocks": "Blocs du pinceau",
 			"obsolete": "Blocs obsolètes",
 			"biome": "Biome du pinceau",

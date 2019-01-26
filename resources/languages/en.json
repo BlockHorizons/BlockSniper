@@ -69,18 +69,7 @@
 		},
 		"preset-edit": {
 			"title": "Preset Edit Menu",
-			"name": "Preset Name",
-			"size": "Brush Size",
-			"shape": "Brush Shape",
-			"type": "Brush Type",
-			"hollow": "Hollow Brush",
-			"decrement": "Decrementing Brush",
-			"height": "Brush Height",
-			"perfect": "Brush Shape Perfection",
-			"blocks": "Brush Blocks",
-			"obsolete": "Obsolete Blocks",
-			"biome": "Brush Biome",
-			"tree": "Brush Tree"
+			"name": "Preset Name"
 		},
 		"preset-selection": {
 			"title": "Preset Selection Menu",
@@ -96,27 +85,14 @@
 		},
 		"preset-creation": {
 			"title": "Preset Creation Menu",
-			"name": "Preset Name",
-			"size": "Brush Size",
-			"shape": "Brush Shape",
-			"type": "Brush Type",
-			"hollow": "Hollow Brush",
-			"decrement": "Decrementing Brush",
-			"height": "Brush Height",
-			"perfect": "Brush Shape Perfection",
-			"blocks": "Brush Blocks",
-			"obsolete": "Obsolete Blocks",
-			"biome": "Brush Biome",
-			"tree": "Brush Tree"
+			"name": "Preset Name"
 		},
 		"main-menu": {
 			"title": "BlockSniper Menu",
 			"subtitle": "Click a button to continue",
 			"brush": "Brush",
-			"tree": "Tree",
 			"config": "Configuration",
 			"presets": "Presets",
-			"global-brush": "Global Brush",
 			"exit": "Exit"
 		},
 		"brush-menu": {
@@ -132,7 +108,8 @@
 			"hollow": "Hollow Brush",
 			"decrement": "Decrementing Brush",
 			"height": "Brush Height",
-			"perfect": "Brush Shape Perfection",
+			"width": "Brush Width",
+			"length": "Brush Length",
 			"blocks": "Brush Blocks",
 			"obsolete": "Obsolete Blocks",
 			"biome": "Brush Biome",

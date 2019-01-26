@@ -70,17 +70,6 @@
 		"preset-edit": {
 			"title": "Voorinstellingen Maak Menu",
 			"name": "Voorinstellingen Naam",
-			"size": "Verf Grootte",
-			"shape": "Verf Vorm",
-			"type": "Verf Type",
-			"hollow": "Holle Verf",
-			"decrement": "Verkleinende Verf",
-			"height": "Verf Hoogte",
-			"perfect": "Verf Vorm Perfectie",
-			"blocks": "Verf Blokken",
-			"obsolete": "Herplaats Blokken",
-			"biome": "Verf Biome",
-			"tree": "Verf Boom"
 		},
 		"preset-selection": {
 			"title": "Voorinstellingen Selectie Menu",
@@ -97,26 +86,13 @@
 		"preset-creation": {
 			"title": "Voorinstellingen Maak Menu",
 			"name": "Voorinstellingen Naam",
-			"size": "Verf Grootte",
-			"shape": "Verf Vorm",
-			"type": "Verf Type",
-			"hollow": "Holle Verf",
-			"decrement": "Verkleinende Verf",
-			"height": "Verf Hoogte",
-			"perfect": "Verf Vorm Perfectie",
-			"blocks": "Verf Blokken",
-			"obsolete": "Herplaats Blokken",
-			"biome": "Verf Biome",
-			"tree": "Verf Boom"
 		},
 		"main-menu": {
 			"title": "BlockSniper Menu",
 			"subtitle": "Klik een knop om door te gaan",
 			"brush": "Verf",
-			"tree": "Boom",
 			"config": "Configuratie",
 			"presets": "Voorinstellingen",
-			"global-brush": "Globale Verf",
 			"exit": "Verlaat"
 		},
 		"brush-menu": {
@@ -132,7 +108,8 @@
 			"hollow": "Holle Verf",
 			"decrement": "Verkleinende Verf",
 			"height": "Verf Hoogte",
-			"perfect": "Verf Vorm Perfectie",
+			"width": "Verf Breedte",
+			"length": "Verf Lengte",
 			"blocks": "Verf Blokken",
 			"obsolete": "Herplaats Blokken",
 			"biome": "Verf Biome",

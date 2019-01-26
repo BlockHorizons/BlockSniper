@@ -70,17 +70,6 @@
 		"preset-edit": {
 			"title": "編輯預設選項",
 			"name": "預設選項名稱",
-			"size": "大小",
-			"shape": "形狀",
-			"type": "操作類型",
-			"hollow": "不填充內部",
-			"decrement": "尺寸遞減",
-			"height": "高度",
-			"perfect": "完善形狀",
-			"blocks": "目標方塊",
-			"obsolete": "替換方塊",
-			"biome": "生物群落",
-			"tree": "樹木類型"
 		},
 		"preset-selection": {
 			"title": "選擇預設選項",
@@ -97,26 +86,13 @@
 		"preset-creation": {
 			"title": "新建預設選項",
 			"name": "預設選項名稱",
-			"size": "大小",
-			"shape": "形狀",
-			"type": "操作類型",
-			"hollow": "不填充內部",
-			"decrement": "尺寸遞減",
-			"height": "高度",
-			"perfect": "完善形狀",
-			"blocks": "目標方塊",
-			"obsolete": "替換方塊",
-			"biome": "生物群落",
-			"tree": "樹木類型"
 		},
 		"main-menu": {
 			"title": "BlockSniper 菜單",
 			"subtitle": "點擊一個按鈕以繼續",
 			"brush": "畫筆選項",
-			"tree": "Tree",
 			"config": "設置",
 			"presets": "預設選項",
-			"global-brush": "全局畫筆",
 			"exit": "退出"
 		},
 		"brush-menu": {
@@ -132,7 +108,8 @@
 			"hollow": "不填充內部",
 			"decrement": "尺寸遞減",
 			"height": "高度",
-			"perfect": "完善形狀",
+			"width": "Brush Width",
+			"length": "Brush Length",
 			"blocks": "目標方塊",
 			"obsolete": "替換方塊",
 			"biome": "生物群落",

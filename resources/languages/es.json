@@ -69,18 +69,7 @@
 		},
 		"preset-edit": {
 			"title": "Menú de Edición de Predefinidos",
-			"name": "Nombre de Predefinidos",
-			"size": "Tamaño de Brocha",
-			"shape": "Forma de Brocha",
-			"type": "Tipo de Brocha",
-			"hollow": "Brocha Hueca",
-			"decrement": "Decrementar Brocha",
-			"height": "Altura de Brocha",
-			"perfect": "Perfección de Forma de Brocha",
-			"blocks": "Bloques de la Brocha",
-			"obsolete": "Bloques Obsoletos",
-			"biome": "Bioma de Brocha",
-			"tree": "Árbol de Brocha"
+			"name": "Nombre de Predefinidos"
 		},
 		"preset-selection": {
 			"title": "Menú de selección de Predefinidos",
@@ -96,27 +85,14 @@
 		},
 		"preset-creation": {
 			"title": "Menú de creación de Predefinidos",
-			"name": "Nombre del Predefinido",
-			"size": "Tamaño de Brocha",
-			"shape": "Forma de Brocha",
-			"type": "Tipo de Brocha",
-			"hollow": "Brocha Hueca",
-			"decrement": "Decrementar Brocha",
-			"height": "Altura de Brocha",
-			"perfect": "Perfección de Forma de Brocha",
-			"blocks": "Bloques de la Brocha",
-			"obsolete": "Bloques Obsoletos",
-			"biome": "Bioma de Brocha",
-			"tree": "Árbol de Brocha"
+			"name": "Nombre del Predefinido"
 		},
 		"main-menu": {
 			"title": "Menú de BlockSniper",
 			"subtitle": "Pulsa un botón para continuar",
 			"brush": "Brocha",
-			"tree": "Árbol",
 			"config": "Configuración",
 			"presets": "Predefinidos",
-			"global-brush": "Brocha Global",
 			"exit": "Salir"
 		},
 		"brush-menu": {
@@ -124,10 +100,16 @@
 			"size": "Tamaño de Brocha",
 			"shape": "Forma de Brocha",
 			"type": "Tipo de Brocha",
+			"mode": {
+				"description": "Brush Mode",
+				"brush": "Brush",
+				"selection": "Selection"
+			},
 			"hollow": "Brocha Hueca",
 			"decrement": "Decrementar Brocha",
 			"height": "Altura de Brocha",
-			"perfect": "Perfección de Forma de Brocha",
+			"width": "Brush Width",
+			"length": "Brush Length",
 			"blocks": "Bloques de la Brocha",
 			"obsolete": "Bloques Obsoletos",
 			"biome": "Bioma de Brocha",
