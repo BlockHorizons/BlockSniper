@@ -15,6 +15,8 @@
   brush properties that apply.
 - It is no longer possible to do two or more brush modifications concurrently.
 - The maximum brush distance now depends on the view distance of a player.
+- The language files will now be automatically updated if it is found not to be up to date. It will no longer show a
+  message prompting you to let the file regenerate.
 
 ### Removed
 - The main menu no longer contains a Tree button.

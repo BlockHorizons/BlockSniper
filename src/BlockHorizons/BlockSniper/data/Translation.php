@@ -146,10 +146,13 @@ class Translation{
 
 	/** @var string[] */
 	private static $translations = [];
+	/** @var TranslationData */
+	private static $translationData;
 	/** @var array */
 	private $messageData = [];
 
 	public function __construct(TranslationData $data){
+		self::$translationData = $data;
 		$this->messageData = $data->getMessages();
 		$reflection = new \ReflectionClass(self::class);
 		foreach($reflection->getConstants() as $constant => $value){
@@ -190,7 +193,10 @@ class Translation{
 	 */
 	public static function get(string $key, string... $params) : string{
 		if(!isset(self::$translations[$key])){
-			return "Unknown message: Please remove your language file and let it regenerate";
+			// We tried getting a key that did not exist, which means our language file is outdated. We regenerate it
+			// and try again.
+			self::$translationData->regenerateLanguageFile();
+			return self::get($key, ...$params);
 		}
 		if(!empty($params)){
 			return vsprintf(self::$translations[$key], $params);
