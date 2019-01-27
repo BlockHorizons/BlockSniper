@@ -19,7 +19,7 @@ class BrushPropertiesWindow extends CustomWindow{
 		parent::__construct($this->t(Translation::UI_BRUSH_MENU_TITLE));
 		$b = SessionManager::getPlayerSession($requester)->getBrush();
 
-		if($b->mode === Brush::MODE_BRUSH && $b->getType()->usesSize()){
+		if($b->mode === Brush::MODE_BRUSH && $b->getType()->usesSize() && !$b->getShape()->usesThreeLengths()){
 			$this->addSlider($this->t(Translation::UI_BRUSH_MENU_SIZE), 0, $loader->config->maxSize, 1, $b->size, function(Player $player, float $value) use ($b){
 				$b->size = (int) $value;
 			});
