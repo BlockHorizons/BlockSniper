@@ -175,7 +175,8 @@
 			"cube": "立方体",
 			"cuboid": "直方体",
 			"sphere": "球体",
-			"cylinder": "円柱"
+			"cylinder": "円柱",
+			"ellipsoid": "Ellipsoid"
 		},
 		"type": {
 			"biome": "バイオーム",

@@ -87,7 +87,7 @@ class CylinderShape extends BaseShape{
 	/**
 	 * @return bool
 	 */
-	public function usesHeight() : bool{
+	public function usesThreeLengths() : bool{
 		return true;
 	}
 
@@ -98,8 +98,8 @@ class CylinderShape extends BaseShape{
 	 */
 	public function buildSelection(Vector3 $center, Brush $brush, AxisAlignedBB $bb) : void{
 		[$bb->maxX, $bb->maxY, $bb->maxZ, $bb->minX, $bb->minY, $bb->minZ] = [
-			$center->x + $brush->size, $center->y + $brush->height, $center->z + $brush->size,
-			$center->x - $brush->size, $center->y - $brush->height, $center->z - $brush->size
+			$center->x + $brush->width, $center->y + $brush->height, $center->z + $brush->length,
+			$center->x - $brush->width, $center->y - $brush->height, $center->z - $brush->length
 		];
 	}
 }

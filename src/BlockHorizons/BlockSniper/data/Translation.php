@@ -126,6 +126,7 @@ class Translation{
 	public const BRUSH_SHAPE_CUBOID = "brush.shape.cuboid";
 	public const BRUSH_SHAPE_SPHERE = "brush.shape.sphere";
 	public const BRUSH_SHAPE_CYLINDER = "brush.shape.cylinder";
+	public const BRUSH_SHAPE_ELLIPSOID = "brush.shape.ellipsoid";
 	public const BRUSH_TYPE_BIOME = "brush.type.biome";
 	public const BRUSH_TYPE_CLEANENTITIES = "brush.type.cleanentities";
 	public const BRUSH_TYPE_CLEAN = "brush.type.clean";

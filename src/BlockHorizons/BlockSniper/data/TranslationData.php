@@ -46,9 +46,9 @@ class TranslationData{
 	}
 
 	public function regenerateLanguageFile() : void{
-		unlink($this->loader->getDataFolder() . "languages/" . $this->loader->config->messageLanguage . ".json");
+		@unlink($this->loader->getDataFolder() . "languages/" . $this->loader->config->messageLanguage . ".json");
 		// Always unlink the default translations.
-		unlink($this->loader->getDataFolder() . "languages/en.json");
+		@unlink($this->loader->getDataFolder() . "languages/en.json");
 		$this->collectTranslations();
 	}
 

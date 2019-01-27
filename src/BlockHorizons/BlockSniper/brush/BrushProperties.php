@@ -25,15 +25,15 @@ class BrushProperties implements \JsonSerializable{
 	/** @var int */
 	public $mode = 0;
 	/** @var int */
-	public $size = 1;
+	public $size = 5;
+	/** @var int */
+	public $height = 5, $width = 5, $length = 5;
 	/** @var bool */
 	public $hollow = false;
 	/** @var bool */
 	public $decrementing = false;
 	/** @var int */
 	public $resetSize = 0;
-	/** @var int */
-	public $height = 0;
 	/** @var string */
 	public $blocks = "stone";
 	/** @var string */

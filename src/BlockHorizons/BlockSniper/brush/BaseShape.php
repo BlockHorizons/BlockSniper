@@ -22,6 +22,7 @@ abstract class BaseShape extends AxisAlignedBB{
 	public const SHAPE_CUBE = 1;
 	public const SHAPE_CUBOID = 2;
 	public const SHAPE_CYLINDER = 3;
+	public const SHAPE_ELLIPSOID = 4;
 
 	/** @var int */
 	protected $level = 0;
@@ -82,7 +83,7 @@ abstract class BaseShape extends AxisAlignedBB{
 	/**
 	 * @return bool
 	 */
-	public function usesHeight() : bool{
+	public function usesThreeLengths() : bool{
 		return false;
 	}
 

@@ -174,7 +174,8 @@
 			"cube": "Cube",
 			"cuboid": "Cuboid",
 			"sphere": "Sphere",
-			"cylinder": "Cylinder"
+			"cylinder": "Cylinder",
+			"ellipsoid": "Ellipsoid"
 		},
 		"type": {
 			"biome": "Biome",

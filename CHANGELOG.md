@@ -7,6 +7,8 @@
 - Presets can now set tree properties in addition to other properties.
 - A cooldown bar is added to limit the rate at which BlockSniper can be used. The duration is configurable.
 - Modifications with the Regenerate brush type may now be undone.
+- Added a new Ellipsoid shape with width, length and height properties.
+- Added width, length and height properties for cylinders and cuboids.
   
 ### Changed
 - The Brush UI no longer contains all available brush properties.

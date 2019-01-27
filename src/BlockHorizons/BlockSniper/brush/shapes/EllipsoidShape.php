@@ -8,15 +8,15 @@ use BlockHorizons\BlockSniper\brush\Brush;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
 
-class CubeShape extends CuboidShape{
+class EllipsoidShape extends SphereShape{
 
-	public const ID = self::SHAPE_CUBE;
+	public const ID = self::SHAPE_ELLIPSOID;
 
 	/**
 	 * @return string
 	 */
 	public function getName() : string{
-		return $this->hollow ? "Hollow Cube" : "Cube";
+		return $this->hollow ? "Hollow Ellipsoid" : "Ellipsoid";
 	}
 
 	/**
@@ -26,8 +26,8 @@ class CubeShape extends CuboidShape{
 	 */
 	public function buildSelection(Vector3 $center, Brush $brush, AxisAlignedBB $bb) : void{
 		[$bb->maxX, $bb->maxY, $bb->maxZ, $bb->minX, $bb->minY, $bb->minZ] = [
-			$center->x + $brush->size, $center->y + $brush->size, $center->z + $brush->size,
-			$center->x - $brush->size, $center->y - $brush->size, $center->z - $brush->size
+			$center->x + $brush->width, $center->y + $brush->height, $center->z + $brush->length,
+			$center->x - $brush->width, $center->y - $brush->height, $center->z - $brush->length
 		];
 	}
 
@@ -35,6 +35,6 @@ class CubeShape extends CuboidShape{
 	 * @return bool
 	 */
 	public function usesThreeLengths() : bool{
-		return false;
+		return true;
 	}
 }

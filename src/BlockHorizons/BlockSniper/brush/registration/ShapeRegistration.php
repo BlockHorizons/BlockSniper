@@ -7,6 +7,7 @@ namespace BlockHorizons\BlockSniper\brush\registration;
 use BlockHorizons\BlockSniper\brush\shapes\CubeShape;
 use BlockHorizons\BlockSniper\brush\shapes\CuboidShape;
 use BlockHorizons\BlockSniper\brush\shapes\CylinderShape;
+use BlockHorizons\BlockSniper\brush\shapes\EllipsoidShape;
 use BlockHorizons\BlockSniper\brush\shapes\SphereShape;
 use BlockHorizons\BlockSniper\exceptions\InvalidIdException;
 use pocketmine\permission\Permission;
@@ -26,6 +27,7 @@ class ShapeRegistration{
 		self::registerShape(CubeShape::class, CubeShape::ID);
 		self::registerShape(CuboidShape::class, CuboidShape::ID);
 		self::registerShape(CylinderShape::class, CylinderShape::ID);
+		self::registerShape(EllipsoidShape::class, EllipsoidShape::ID);
 	}
 
 	/**

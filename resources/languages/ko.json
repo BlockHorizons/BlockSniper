@@ -174,7 +174,8 @@
 			"cube": "정육면체",
 			"cuboid": "직육면체",
 			"sphere": "구",
-			"cylinder": "원기둥"
+			"cylinder": "원기둥",
+			"ellipsoid": "Ellipsoid"
 		},
 		"type": {
 			"biome": "생물군계",

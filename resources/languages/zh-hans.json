@@ -174,7 +174,8 @@
 			"cube": "立方体",
 			"cuboid": "长方体",
 			"sphere": "球体",
-			"cylinder": "圆柱体"
+			"cylinder": "圆柱体",
+			"ellipsoid": "Ellipsoid"
 		},
 		"type": {
 			"biome": "生物群落",
