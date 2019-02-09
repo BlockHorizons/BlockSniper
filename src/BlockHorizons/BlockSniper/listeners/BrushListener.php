@@ -59,7 +59,6 @@ class BrushListener implements Listener{
 				$this->useBrush($session, $session->getBrush(), $player);
 				break;
 			case $hand->getNamedTag()->hasTag(self::KEY_BRUSH_ID, IntTag::class):
-				var_dump("Tag is set");
 				$this->useBrush($session, self::$brushItems[$hand->getNamedTag()->getInt(self::KEY_BRUSH_ID)], $player);
 				break;
 			default:
@@ -205,8 +204,9 @@ class BrushListener implements Listener{
 			new SessionDeletionTask($this->loader, SessionManager::getPlayerSession($event->getPlayer())),
 			$this->loader->config->sessionTimeoutTime * 20 * 60
 		);
-		foreach($event->getPlayer()->getInventory()->getContents(false) as $item){
+		foreach($event->getPlayer()->getInventory()->getContents(false) as $slot => $item){
 			$item->getNamedTag()->removeTag(self::KEY_BRUSH_ID);
+			$event->getPlayer()->getInventory()->setItem($slot, $item);
 		}
 	}
 }

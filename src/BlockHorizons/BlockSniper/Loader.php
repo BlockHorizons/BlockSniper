@@ -88,6 +88,13 @@ class Loader extends PluginBase{
 		$this->getPresetManager()->storePresetsToFile();
 		SessionManager::close();
 		$this->config->close();
+
+		foreach($this->getServer()->getOnlinePlayers() as $player){
+			foreach($player->getInventory()->getContents(false) as $slot => $item){
+				$item->getNamedTag()->removeTag(BrushListener::KEY_BRUSH_ID);
+				$player->getInventory()->setItem($slot, $item);
+			}
+		}
 	}
 
 	public function reload() : void{

@@ -35,6 +35,13 @@ abstract class BaseShape extends AxisAlignedBB{
 		if($bb === null){
 			$bb = new AxisAlignedBB(0, 0, 0, 0, 0, 0);
 			$this->buildSelection($center, $brush, $bb);
+
+			if($bb->minY < 0){
+				$bb->minY = 0;
+			}
+			if($bb->maxY > 255){
+				$bb->maxY = 255;
+			}
 		}
 		parent::__construct($bb->minX, $bb->minY, $bb->minZ, $bb->maxX, $bb->maxY, $bb->maxZ);
 
