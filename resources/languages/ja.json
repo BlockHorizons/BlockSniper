@@ -199,7 +199,8 @@
 			"regenerate": "Regenerate",
 			"freeze": "Freeze",
 			"warm": "Warm",
-			"heat": "Heat"
+			"heat": "Heat",
+			"smooth": "Smooth"
 		}
 	}
 }

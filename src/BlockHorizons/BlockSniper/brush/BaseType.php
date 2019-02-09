@@ -43,6 +43,7 @@ abstract class BaseType{
 	public const TYPE_FREEZE = 18;
 	public const TYPE_WARM = 19;
 	public const TYPE_HEAT = 20;
+	public const TYPE_SMOOTH = 21;
 
 	/** @var int */
 	protected $level = 0;

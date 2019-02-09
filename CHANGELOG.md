@@ -9,6 +9,7 @@
 - Modifications with the Regenerate brush type may now be undone.
 - Added a new Ellipsoid shape with width, length and height properties.
 - Added width, length and height properties for cylinders and cuboids.
+- Added a new Smooth type which gets rid of rough edges and holes in the terrain.
   
 ### Changed
 - The Brush UI no longer contains all available brush properties.

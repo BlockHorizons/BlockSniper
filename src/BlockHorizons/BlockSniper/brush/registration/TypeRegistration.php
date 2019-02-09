@@ -21,6 +21,7 @@ use BlockHorizons\BlockSniper\brush\types\OverlayType;
 use BlockHorizons\BlockSniper\brush\types\RegenerateType;
 use BlockHorizons\BlockSniper\brush\types\ReplaceAllType;
 use BlockHorizons\BlockSniper\brush\types\ReplaceType;
+use BlockHorizons\BlockSniper\brush\types\SmoothType;
 use BlockHorizons\BlockSniper\brush\types\SnowConeType;
 use BlockHorizons\BlockSniper\brush\types\TopLayerType;
 use BlockHorizons\BlockSniper\brush\types\TreeType;
@@ -60,6 +61,7 @@ class TypeRegistration{
 		self::registerType(FreezeType::class, FreezeType::ID);
 		self::registerType(WarmType::class, WarmType::ID);
 		self::registerType(HeatType::class, HeatType::ID);
+		self::registerType(SmoothType::class, SmoothType::ID);
 	}
 
 	/**

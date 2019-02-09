@@ -192,7 +192,8 @@
 			"regenerate": "Regenerar",
 			"freeze": "Congelar",
 			"warm": "Calentar",
-			"heat": "Hervir"
+			"heat": "Hervir",
+			"smooth": "Smooth"
 		}
 	}
 }

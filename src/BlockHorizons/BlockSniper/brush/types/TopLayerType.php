@@ -6,9 +6,9 @@ namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
+use pocketmine\block\Block;
 use pocketmine\block\BlockIds;
 use pocketmine\block\Flowable;
-use pocketmine\item\Item;
 use pocketmine\level\ChunkManager;
 use pocketmine\math\Facing;
 use pocketmine\Player;
@@ -31,7 +31,7 @@ class TopLayerType extends BaseType{
 	 */
 	public function fill() : \Generator{
 		foreach($this->blocks as $block){
-			if($block instanceof Flowable || $block->getId() === Item::AIR){
+			if($block instanceof Flowable || $block->getId() === Block::AIR){
 				continue;
 			}
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
-use pocketmine\item\Item;
+use pocketmine\block\Block;
 use pocketmine\math\Facing;
 
 /*
@@ -22,14 +22,14 @@ class MeltType extends BaseType{
 	public function fill() : \Generator{
 		$blocks = [];
 		foreach($this->blocks as $block){
-			if($block->getId() !== Item::AIR){
-				$valid = 0;
+			if($block->getId() !== Block::AIR){
+				$openSides = 0;
 				foreach(Facing::ALL as $direction){
-					if($this->side($block, $direction)->getId() === Item::AIR){
-						$valid++;
+					if($this->side($block, $direction)->getId() === Block::AIR){
+						$openSides++;
 					}
 				}
-				if($valid >= 2){
+				if($openSides >= 2){
 					$blocks[] = $block;
 				}
 			}

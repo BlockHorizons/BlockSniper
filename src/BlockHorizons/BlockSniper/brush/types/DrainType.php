@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
-use pocketmine\item\Item;
+use pocketmine\block\Block;
 
 /*
  * Removes all liquid blocks within the brush radius.
@@ -16,10 +16,10 @@ class DrainType extends BaseType{
 	public const ID = self::TYPE_DRAIN;
 
 	private const LIQUID_BLOCKS = [
-		Item::FLOWING_WATER => 0,
-		Item::WATER => 0,
-		Item::FLOWING_LAVA => 0,
-		Item::LAVA => 0
+		Block::FLOWING_WATER => 0,
+		Block::WATER => 0,
+		Block::FLOWING_LAVA => 0,
+		Block::LAVA => 0
 	];
 
 	/**

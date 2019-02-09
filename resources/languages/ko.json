@@ -198,7 +198,8 @@
 			"regenerate": "다시 생성",
 			"freeze": "얼리기",
 			"warm": "따뜻하게 하기",
-			"heat": "뜨겁게 하기"
+			"heat": "뜨겁게 하기",
+			"smooth": "Smooth"
 		}
 	}
 }

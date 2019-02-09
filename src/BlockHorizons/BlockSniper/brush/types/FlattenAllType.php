@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
+use pocketmine\block\Block;
 use pocketmine\block\Flowable;
-use pocketmine\item\Item;
 use pocketmine\level\ChunkManager;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
@@ -29,11 +29,11 @@ class FlattenAllType extends BaseType{
 	 */
 	public function fill() : \Generator{
 		foreach($this->blocks as $block){
-			if($block->y <= $this->center->y && ($block->getId() === Item::AIR || $block instanceof Flowable)){
+			if($block->y <= $this->center->y && ($block->getId() === Block::AIR || $block instanceof Flowable)){
 				yield $block;
 				$this->putBlock($block, $this->randomBrushBlock());
 			}
-			if($block->y > $this->center->y && $block->getId() !== Item::AIR){
+			if($block->y > $this->center->y && $block->getId() !== Block::AIR){
 				yield $block;
 				$this->delete($block);
 			}

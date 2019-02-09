@@ -6,7 +6,6 @@ namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
 use pocketmine\block\Block;
-use pocketmine\item\Item;
 use pocketmine\math\Facing;
 
 /*
@@ -22,36 +21,24 @@ class ExpandType extends BaseType{
 	 */
 	public function fill() : \Generator{
 		$undoBlocks = [];
-		$oneHoles = [];
 		foreach($this->blocks as $block){
 			/** @var Block $block */
-			if($block->getId() === Item::AIR){
-				$valid = 0;
+			if($block->getId() === Block::AIR){
+				$closedSides = 0;
 				foreach(Facing::ALL as $direction){
 					$sideBlock = $this->side($block, $direction);
-					if($sideBlock->getId() !== Item::AIR){
-						$valid++;
+					if($sideBlock->getId() !== Block::AIR){
+						$closedSides++;
 					}
 				}
-				if($valid >= 2){
+				if($closedSides >= 2){
 					$undoBlocks[] = $block;
-				}
-				if($valid >= 4){
-					$oneHoles[] = $block;
 				}
 			}
 		}
 		foreach($undoBlocks as $selectedBlock){
-			/** @var Block $undoBlock */
-			$undoBlock = ($this->side($selectedBlock, Facing::DOWN)->getId() === Block::AIR ? $this->side($selectedBlock, Facing::UP) : $this->side($selectedBlock, Facing::DOWN));
-			yield $undoBlock;
-			$this->putBlock($selectedBlock, $undoBlock);
-		}
-		foreach($oneHoles as $block){
-			/** @var Block $oneHole */
-			$oneHole = ($this->side($block, Facing::DOWN)->getId() === Block::AIR ? $this->side($block, Facing::EAST) : $this->side($block, Facing::DOWN));
-			yield $oneHole;
-			$this->putBlock($block, $oneHole);
+			yield $selectedBlock;
+			$this->putBlock($selectedBlock, $this->randomBrushBlock());
 		}
 	}
 

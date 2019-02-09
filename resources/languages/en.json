@@ -190,15 +190,16 @@
 			"leafblower": "Leaf Blower",
 			"melt": "Melt",
 			"overlay": "Overlay",
+			"regenerate": "Regenerate",
 			"replaceall": "Replace All",
 			"replace": "Replace",
 			"snowcone": "Snowcone",
 			"toplayer": "Top Layer",
 			"tree": "Tree",
-			"regenerate": "Regenerate",
 			"freeze": "Freeze",
 			"warm": "Warm",
-			"heat": "Heat"
+			"heat": "Heat",
+			"smooth": "Smooth"
 		}
 	}
 }

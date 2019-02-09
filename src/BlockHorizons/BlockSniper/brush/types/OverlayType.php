@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
-use pocketmine\item\Item;
+use pocketmine\block\Block;
 use pocketmine\math\Facing;
 
 /*
@@ -21,7 +21,7 @@ class OverlayType extends BaseType{
 	 */
 	public function fill() : \Generator{
 		foreach($this->blocks as $block){
-			if($block->getId() !== Item::AIR){
+			if($block->getId() !== Block::AIR){
 				$valid = true;
 				foreach($this->brushBlocks as $possibleBlock){
 					if($block->getId() === $possibleBlock->getId() && $block->getDamage() === $possibleBlock->getDamage()){
@@ -30,7 +30,7 @@ class OverlayType extends BaseType{
 				}
 				foreach(Facing::ALL as $direction){
 					$sideBlock = $this->side($block, $direction);
-					if($valid && $sideBlock->getId() === Item::AIR){
+					if($valid && $sideBlock->getId() === Block::AIR){
 						$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 						if($block->getId() !== $randomBlock->getId() && $block->getDamage() !== $randomBlock->getDamage()){
 							yield $sideBlock;

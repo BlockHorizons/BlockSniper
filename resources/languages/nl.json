@@ -198,7 +198,8 @@
 			"regenerate": "Vernieuwen",
 			"freeze": "Bevriezen",
 			"warm": "Verwarmen",
-			"heat": "Verhitten"
+			"heat": "Verhitten",
+			"smooth": "Afvlakken"
 		}
 	}
 }
