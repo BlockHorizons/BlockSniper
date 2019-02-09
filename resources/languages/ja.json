@@ -6,7 +6,10 @@
 			"no-permission": "このコマンドを実行する権限がありません。"
 		},
 		"brush": {
-			"description": "BlockSniperのGUIを開きます。"
+			"description": "BlockSniperのGUIを開きます。",
+			"need-item": "You can only bind a brush to an item.",
+			"clear-success": "Successfully cleared all brushes from this item.",
+			"not-bound": "There was no brush bound to this item."
 		},
 		"blocksniper": {
 			"description": "BlockSniperに関する情報を表示するか、プラグインをリロードします。",

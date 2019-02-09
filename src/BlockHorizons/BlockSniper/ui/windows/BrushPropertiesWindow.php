@@ -10,14 +10,12 @@ use BlockHorizons\BlockSniper\brush\types\ReplaceType;
 use BlockHorizons\BlockSniper\brush\types\TreeType;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
-use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\Player;
 
 class BrushPropertiesWindow extends CustomWindow{
 
-	public function __construct(Loader $loader, Player $requester){
+	public function __construct(Loader $loader, Brush $b){
 		parent::__construct($this->t(Translation::UI_BRUSH_MENU_TITLE));
-		$b = SessionManager::getPlayerSession($requester)->getBrush();
 
 		if($b->mode === Brush::MODE_BRUSH && $b->getType()->usesSize() && !$b->getShape()->usesThreeLengths()){
 			$this->addSlider($this->t(Translation::UI_BRUSH_MENU_SIZE), 0, $loader->config->maxSize, 1, $b->size, function(Player $player, float $value) use ($b){

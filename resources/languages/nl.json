@@ -6,7 +6,10 @@
 			"no-permission": "Je hebt geen permissie om dit commando uit te voeren."
 		},
 		"brush": {
-			"description": "Opent de GUI van BlockSniper."
+			"description": "Opent de GUI van BlockSniper.",
+			"need-item": "Je kan alleen maar verf binden aan een voorwerp.",
+			"clear-success": "Verwijderen van alle verf van dit voorwerp geslaagd.",
+			"not-bound": "Er was geen verf gebonden aan dit voorwerp."
 		},
 		"blocksniper": {
 			"description": "Geeft informatie over BlockSniper, of herlaadt de plugin.",

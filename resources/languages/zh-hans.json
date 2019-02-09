@@ -6,7 +6,10 @@
 			"no-permission": "你没有权限执行这条指令。"
 		},
 		"brush": {
-			"description": "打开 BlockSniper 图形界面。"
+			"description": "打开 BlockSniper 图形界面。",
+			"need-item": "You can only bind a brush to an item.",
+			"clear-success": "Successfully cleared all brushes from this item.",
+			"not-bound": "There was no brush bound to this item."
 		},
 		"blocksniper": {
 			"description": "显示 BlockSniper 的相关信息，或重新加载插件。",

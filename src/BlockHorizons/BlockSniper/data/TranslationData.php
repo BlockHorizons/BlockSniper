@@ -19,7 +19,6 @@ class TranslationData{
 		$this->loader = $loader;
 
 		$this->collectTranslations();
-		new Translation($this);
 	}
 
 	/**
@@ -41,6 +40,8 @@ class TranslationData{
 			$language = file_get_contents($this->loader->getDataFolder() . "languages/en.json");
 		}
 		$this->messages = json_decode($language, true);
+
+		new Translation($this);
 
 		return $languageSelected;
 	}

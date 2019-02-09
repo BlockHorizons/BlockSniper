@@ -6,7 +6,10 @@
 			"no-permission": "Vous n'avez pas la permission pour executer cette commande"
 		},
 		"brush": {
-			"description": "Ouverture de l'interface graphique pour BlockSniper."
+			"description": "Ouverture de l'interface graphique pour BlockSniper.",
+			"need-item": "You can only bind a brush to an item.",
+			"clear-success": "Successfully cleared all brushes from this item.",
+			"not-bound": "There was no brush bound to this item."
 		},
 		"blocksniper": {
 			"description": "Affiche des informations sur BlockSniper, ou recharge le plugin.",

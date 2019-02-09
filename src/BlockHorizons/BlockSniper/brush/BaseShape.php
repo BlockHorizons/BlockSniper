@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush;
 
-use BlockHorizons\BlockSniper\brush\async\tasks\BrushTask;
 use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\math\AxisAlignedBB;
-use pocketmine\math\Vector2;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 use pocketmine\Server;
@@ -85,18 +83,6 @@ abstract class BaseShape extends AxisAlignedBB{
 	 */
 	public function usesThreeLengths() : bool{
 		return false;
-	}
-
-	/**
-	 * @param BaseType    $type
-	 * @param Vector2[][] $plotPoints
-	 *
-	 * @return bool
-	 */
-	public function editAsynchronously(BaseType $type, array $plotPoints = []) : bool{
-		$this->getLevel()->getServer()->getAsyncPool()->submitTask(new BrushTask($this, $type, $this->getTouchedChunks(), $plotPoints));
-
-		return true;
 	}
 
 	/**

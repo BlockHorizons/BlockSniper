@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\tasks;
 
+use BlockHorizons\BlockSniper\brush\Brush;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
-use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
 use function ceil;
@@ -17,12 +17,15 @@ class CooldownBarTask extends BlockSniperTask{
 
 	/** @var Player */
 	private $player;
+	/** @var Brush */
+	private $brush;
 	/** @var int */
 	private $useTime;
 
-	public function __construct(Loader $loader, Player $player){
+	public function __construct(Loader $loader, Brush $brush, Player $player){
 		parent::__construct($loader);
 		$this->player = $player;
+		$this->brush = $brush;
 		// Time of usage in seconds.
 		$this->useTime = microtime(true);
 	}
@@ -48,7 +51,7 @@ class CooldownBarTask extends BlockSniperTask{
 			return;
 		}while(false);
 
-		SessionManager::getPlayerSession($this->player)->getBrush()->unlock();
+		$this->brush->unlock();
 		$this->player->sendPopup(TextFormat::AQUA . Translation::get(Translation::BRUSH_STATE_READY));
 		$this->getHandler()->cancel();
 	}

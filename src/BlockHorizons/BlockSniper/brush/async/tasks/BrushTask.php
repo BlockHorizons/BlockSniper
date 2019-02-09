@@ -7,6 +7,7 @@ namespace BlockHorizons\BlockSniper\brush\async\tasks;
 use BlockHorizons\BlockSniper\brush\async\BlockSniperChunkManager;
 use BlockHorizons\BlockSniper\brush\BaseShape;
 use BlockHorizons\BlockSniper\brush\BaseType;
+use BlockHorizons\BlockSniper\brush\Brush;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\revert\async\AsyncUndo;
@@ -33,8 +34,8 @@ class BrushTask extends AsyncTask{
 	/** @var Vector2[] */
 	private $plotPoints;
 
-	public function __construct(BaseShape $shape, BaseType $type, array $chunks, array $plotPoints){
-		$this->storeLocal($chunks);
+	public function __construct(Brush $brush, BaseShape $shape, BaseType $type, array $chunks, array $plotPoints){
+		$this->storeLocal([$chunks, $brush]);
 		$this->shape = $shape;
 		$this->type = $type;
 		$this->chunks = $chunks;
@@ -123,7 +124,7 @@ class BrushTask extends AsyncTask{
 		/** @var Chunk[] $chunks */
 		$chunks = $this->getResult();
 		$level = $this->shape->getLevel();
-		$undoChunks = $this->fetchLocal();
+		[$undoChunks, $brush] = $this->fetchLocal();
 
 		foreach($undoChunks as &$undoChunk){
 			$undoChunk = Chunk::fastDeserialize($undoChunk);
@@ -133,7 +134,7 @@ class BrushTask extends AsyncTask{
 			$level->setChunk($chunk->getX(), $chunk->getZ(), $chunk, false);
 		}
 
-		$loader->getScheduler()->scheduleDelayedRepeatingTask(new CooldownBarTask($loader, $player), 1, 3);
+		$loader->getScheduler()->scheduleDelayedRepeatingTask(new CooldownBarTask($loader, $brush, $player), 1, 3);
 		SessionManager::getPlayerSession($player)->getRevertStore()->saveRevert(new AsyncUndo($chunks, $undoChunks, $player->getName(), $player->getLevel()->getId()));
 	}
 }

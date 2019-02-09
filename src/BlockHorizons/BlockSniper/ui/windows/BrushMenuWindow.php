@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\ui\windows;
 
+use BlockHorizons\BlockSniper\brush\Brush;
 use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
 use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
-use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\Player;
 
 class BrushMenuWindow extends CustomWindow{
 
-	public function __construct(Loader $loader, Player $requester){
+	public function __construct(Loader $loader, Player $requester, Brush $b){
 		parent::__construct($this->t(Translation::UI_BRUSH_MENU_TITLE));
-		$b = SessionManager::getPlayerSession($requester)->getBrush();
 
 		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_MODE_DESCRIPTION), $this->processModes(), $b->mode, function(Player $player, int $value) use ($b){
 			$b->mode = $value;
@@ -28,7 +27,7 @@ class BrushMenuWindow extends CustomWindow{
 
 			// Note to future readers: This response form is explicitly set after all brush properties have been changed
 			// so that the BrushPropertiesWindow is updated property.
-			$form = new BrushPropertiesWindow($loader, $player);
+			$form = new BrushPropertiesWindow($loader, $b);
 			if($form->elementCount() !== 0){
 				$this->setResponseForm($form);
 			}

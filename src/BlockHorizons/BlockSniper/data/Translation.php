@@ -20,6 +20,9 @@ class Translation{
 	public const COMMANDS_COMMON_INVALID_SENDER = "commands.common.invalid-sender";
 	public const COMMANDS_COMMON_NO_PERMISSION = "commands.common.no-permission";
 	public const COMMANDS_BRUSH_DESCRIPTION = "commands.brush.description";
+	public const COMMANDS_BRUSH_NEED_ITEM = "commands.brush.need-item";
+	public const COMMANDS_BRUSH_NOT_BOUND = "commands.brush.not-bound";
+	public const COMMANDS_BRUSH_CLEAR_SUCCESS = "commands.brush.clear-success";
 	public const COMMANDS_BLOCKSNIPER_DESCRIPTION = "commands.blocksniper.description";
 	public const COMMANDS_BLOCKSNIPER_INFO = "commands.blocksniper.info";
 	public const COMMANDS_BLOCKSNIPER_VERSION = "commands.blocksniper.version";

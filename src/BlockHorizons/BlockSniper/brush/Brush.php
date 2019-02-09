@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush;
 
+use BlockHorizons\BlockSniper\brush\async\tasks\BrushTask;
 use BlockHorizons\BlockSniper\brush\types\TreeType;
 use BlockHorizons\BlockSniper\events\BrushUseEvent;
 use BlockHorizons\BlockSniper\Loader;
@@ -91,7 +92,7 @@ class Brush extends BrushProperties{
 
 		if($type->canBeExecutedAsynchronously() && $asyncSize){
 			$type->setBlocksInside(null);
-			$shape->editAsynchronously($type, $plotPoints);
+			Server::getInstance()->getAsyncPool()->submitTask(new BrushTask($this, $shape, $type, $shape->getTouchedChunks(), $plotPoints));
 			return;
 		}
 		$undoBlocks = [];
@@ -102,7 +103,7 @@ class Brush extends BrushProperties{
 			$session->getRevertStore()->saveRevert(new SyncUndo($undoBlocks, $session->getSessionOwner()->getName()));
 		}
 
-		$loader->getScheduler()->scheduleRepeatingTask(new CooldownBarTask($loader, $this->getPlayer()), 1);
+		$loader->getScheduler()->scheduleRepeatingTask(new CooldownBarTask($loader, $this, $this->getPlayer()), 1);
 	}
 
 	/**

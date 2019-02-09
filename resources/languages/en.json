@@ -6,7 +6,10 @@
 			"no-permission": "You do not have permission to execute this command."
 		},
 		"brush": {
-			"description": "Opens the GUI for BlockSniper."
+			"description": "Opens the GUI for BlockSniper.",
+			"need-item": "You can only bind a brush to an item.",
+			"clear-success": "Successfully cleared all brushes from this item.",
+			"not-bound": "There was no brush bound to this item."
 		},
 		"blocksniper": {
 			"description": "Displays information about BlockSniper, or reloads the plugin.",

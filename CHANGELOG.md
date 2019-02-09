@@ -10,6 +10,7 @@
 - Added a new Ellipsoid shape with width, length and height properties.
 - Added width, length and height properties for cylinders and cuboids.
 - Added a new Smooth type which gets rid of rough edges and holes in the terrain.
+- Added brush to item binding. Use /b bind and /b unbind to bind a new brush to an item.
   
 ### Changed
 - The Brush UI no longer contains all available brush properties.

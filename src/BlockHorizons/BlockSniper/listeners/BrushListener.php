@@ -7,6 +7,7 @@ namespace BlockHorizons\BlockSniper\listeners;
 use BlockHorizons\BlockSniper\brush\Brush;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\sessions\PlayerSession;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use BlockHorizons\BlockSniper\tasks\SessionDeletionTask;
 use BlockHorizons\BlockSniper\ui\windows\BrushMenuWindow;
@@ -19,10 +20,18 @@ use pocketmine\event\player\PlayerItemHeldEvent;
 use pocketmine\event\player\PlayerItemUseEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\math\Vector2;
+use pocketmine\nbt\tag\IntTag;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
 
 class BrushListener implements Listener{
+
+	public const KEY_BRUSH_ID = "blocksniper:brush_id";
+
+	/** @var Brush[] */
+	public static $brushItems = [];
+	/** @var int */
+	public static $brushIndex = 0;
 
 	/** @var Loader */
 	private $loader = null;
@@ -39,26 +48,37 @@ class BrushListener implements Listener{
 		if(!$player->hasPermission("blocksniper.command.brush")){
 			return;
 		}
+
+		$session = SessionManager::getPlayerSession($player);
+
 		$hand = $player->getInventory()->getItemInHand();
 		$brushItem = $this->loader->config->brushItem->parse();
-		if($hand->getId() !== $brushItem->getId() || $hand->getDamage() !== $brushItem->getDamage()){
-			return;
+
+		switch(true){
+			case $hand->getId() === $brushItem->getId() && $hand->getDamage() === $brushItem->getDamage():
+				$this->useBrush($session, $session->getBrush(), $player);
+				break;
+			case $hand->getNamedTag()->hasTag(self::KEY_BRUSH_ID, IntTag::class):
+				var_dump("Tag is set");
+				$this->useBrush($session, self::$brushItems[$hand->getNamedTag()->getInt(self::KEY_BRUSH_ID)], $player);
+				break;
+			default:
+				return;
 		}
 
-		$brush = ($session = SessionManager::getPlayerSession($player))->getBrush();
+		$event->setCancelled();
+	}
+
+	private function useBrush(PlayerSession $session, Brush $brush, Player $player) : void{
 		if($brush->mode === Brush::MODE_SELECTION && !$session->getSelection()->ready()){
 			$player->sendMessage(
 				TextFormat::RED . Translation::get(Translation::COMMANDS_COMMON_WARNING_PREFIX) .
 				Translation::get(Translation::BRUSH_SELECTION_ERROR)
 			);
-
 			return;
 		}
-
 		$selection = $brush->mode === Brush::MODE_BRUSH ? null : $session->getSelection();
-
 		$brush->execute($session, $selection, $this->getPlotPoints($player));
-		$event->setCancelled();
 	}
 
 	/**
@@ -170,7 +190,7 @@ class BrushListener implements Listener{
 			return;
 		}
 		if($player->hasPermission("blocksniper.command.brush")){
-			$player->sendForm(new BrushMenuWindow($this->loader, $player));
+			$player->sendForm(new BrushMenuWindow($this->loader, $player, SessionManager::getPlayerSession($player)->getBrush()));
 		}
 	}
 
@@ -185,5 +205,8 @@ class BrushListener implements Listener{
 			new SessionDeletionTask($this->loader, SessionManager::getPlayerSession($event->getPlayer())),
 			$this->loader->config->sessionTimeoutTime * 20 * 60
 		);
+		foreach($event->getPlayer()->getInventory()->getContents(false) as $item){
+			$item->getNamedTag()->removeTag(self::KEY_BRUSH_ID);
+		}
 	}
 }
