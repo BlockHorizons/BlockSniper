@@ -39,7 +39,7 @@ class BrushCommand extends BaseCommand{
 
 				$brushIndex = BrushListener::$brushIndex++;
 				BrushListener::$brushItems[$brushIndex] = $b;
-				$sender->sendForm(new BrushMenuWindow($this->loader, $sender, $b));
+				$sender->sendForm(new BrushMenuWindow($this->loader, $sender, $b, true));
 
 				$item->getNamedTag()->setInt(BrushListener::KEY_BRUSH_ID, $brushIndex);
 				$sender->getInventory()->setItemInHand($item);
@@ -47,6 +47,11 @@ class BrushCommand extends BaseCommand{
 			case $args[0] === "unbind":
 				if(!$item->getNamedTag()->hasTag(BrushListener::KEY_BRUSH_ID, IntTag::class)){
 					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_BRUSH_NOT_BOUND));
+					return;
+				}
+				$brush = $this->loader->config->brushItem->parse();
+				if($item->getId() === $brush->getId() && $item->getDamage() === $brush->getDamage()){
+					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_BRUSH_BIND_BRUSH_ITEM));
 					return;
 				}
 				$index = $item->getNamedTag()->getInt(BrushListener::KEY_BRUSH_ID);

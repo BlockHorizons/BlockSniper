@@ -22,6 +22,7 @@ class Translation{
 	public const COMMANDS_BRUSH_DESCRIPTION = "commands.brush.description";
 	public const COMMANDS_BRUSH_NEED_ITEM = "commands.brush.need-item";
 	public const COMMANDS_BRUSH_NOT_BOUND = "commands.brush.not-bound";
+	public const COMMANDS_BRUSH_BIND_BRUSH_ITEM = "commands.brush.bind-brush-item";
 	public const COMMANDS_BRUSH_CLEAR_SUCCESS = "commands.brush.clear-success";
 	public const COMMANDS_BLOCKSNIPER_DESCRIPTION = "commands.blocksniper.description";
 	public const COMMANDS_BLOCKSNIPER_INFO = "commands.blocksniper.info";
@@ -91,6 +92,7 @@ class Translation{
 	public const UI_BRUSH_MENU_BIOME = "ui.brush-menu.biome";
 	public const UI_BRUSH_MENU_TREE = "ui.brush-menu.tree";
 	public const UI_BRUSH_MENU_LAYER_WIDTH = "ui.brush-menu.layer-width";
+	public const UI_BRUSH_MENU_NAME = "ui.brush-menu.name";
 	public const UI_CONFIGURATION_MENU_TITLE = "ui.configuration-menu.title";
 	public const UI_CONFIGURATION_MENU_LANGUAGE = "ui.configuration-menu.language";
 	public const UI_CONFIGURATION_MENU_BRUSH_ITEM = "ui.configuration-menu.brush-item";

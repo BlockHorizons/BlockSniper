@@ -10,12 +10,20 @@ use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\Player;
+use pocketmine\utils\TextFormat as TF;
 
 class BrushMenuWindow extends CustomWindow{
 
-	public function __construct(Loader $loader, Player $requester, Brush $b){
+	public function __construct(Loader $loader, Player $requester, Brush $b, bool $withName = false){
 		parent::__construct($this->t(Translation::UI_BRUSH_MENU_TITLE));
 
+		if($withName){
+			$this->addInput($this->t(Translation::UI_BRUSH_MENU_NAME), "Brush", "Brush", function(Player $player, string $value) use($b){
+				$item = $player->getInventory()->getItemInHand();
+				$item->setCustomName($value);
+				$player->getInventory()->setItemInHand($item);
+			});
+		}
 		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_MODE_DESCRIPTION), $this->processModes(), $b->mode, function(Player $player, int $value) use ($b){
 			$b->mode = $value;
 		});
@@ -24,6 +32,12 @@ class BrushMenuWindow extends CustomWindow{
 		});
 		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_TYPE), $this->processTypes($requester), $b->getType($b->getShape(null)->getBlocksInside())::ID, function(Player $player, int $value) use ($loader, $b){
 			$b->type = TypeRegistration::getTypeById($value);
+
+			$item = $player->getInventory()->getItemInHand();
+			if($item->getName() !== $item->getVanillaName()){
+				$item->setCustomName(sprintf("%s\n%s %s Brush", TF::RESET . TF::WHITE . $item->getName(), TF::AQUA . $this->brush->getShape()->getName(), $this->brush->getType()->getName()));
+				$player->getInventory()->setItemInHand($item);
+			}
 
 			// Note to future readers: This response form is explicitly set after all brush properties have been changed
 			// so that the BrushPropertiesWindow is updated property.

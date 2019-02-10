@@ -8,6 +8,7 @@
 		"brush": {
 			"description": "Opent de GUI van BlockSniper.",
 			"need-item": "Je kan alleen maar verf binden aan een voorwerp.",
+			"bind-brush-item": "Je kan niet binden aan een verf voorwerp",
 			"clear-success": "Verwijderen van alle verf van dit voorwerp geslaagd.",
 			"not-bound": "Er was geen verf gebonden aan dit voorwerp."
 		},
@@ -117,7 +118,8 @@
 			"obsolete": "Herplaats Blokken",
 			"biome": "Verf Biome",
 			"tree": "Verf Boom",
-			"layer-width": "Laagdikte"
+			"layer-width": "Laagdikte",
+			"name": "Verf naam"
 		},
 		"configuration-menu": {
 			"title": "BlockSniper Configuratie",

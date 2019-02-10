@@ -8,6 +8,7 @@
 		"brush": {
 			"description": "打開 BlockSniper 圖形界面。",
 			"need-item": "You can only bind a brush to an item.",
+			"bind-brush-item": "You cannot bind the brush item",
 			"clear-success": "Successfully cleared all brushes from this item.",
 			"not-bound": "There was no brush bound to this item."
 		},
@@ -117,7 +118,8 @@
 			"obsolete": "替換方塊",
 			"biome": "生物群落",
 			"tree": "樹木類型",
-			"layer-width": "Layer Width"
+			"layer-width": "Layer Width",
+			"name": "Brush Name"
 		},
 		"configuration-menu": {
 			"title": "BlockSniper 設置",

@@ -8,6 +8,7 @@
 		"brush": {
 			"description": "Ouverture de l'interface graphique pour BlockSniper.",
 			"need-item": "You can only bind a brush to an item.",
+			"bind-brush-item": "You cannot bind the brush item",
 			"clear-success": "Successfully cleared all brushes from this item.",
 			"not-bound": "There was no brush bound to this item."
 		},
@@ -117,7 +118,8 @@
 			"obsolete": "Blocs obsolètes",
 			"biome": "Biome du pinceau",
 			"tree": "Arbre du pinceau",
-			"layer-width": "Layer Width"
+			"layer-width": "Layer Width",
+			"name": "Brush Name"
 		},
 		"configuration-menu": {
 			"title": "Configuration BlockSniper",

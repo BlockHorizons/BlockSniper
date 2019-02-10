@@ -8,6 +8,7 @@
 		"brush": {
 			"description": "Opens the GUI for BlockSniper.",
 			"need-item": "You can only bind a brush to an item.",
+			"bind-brush-item": "You cannot bind the brush item",
 			"clear-success": "Successfully cleared all brushes from this item.",
 			"not-bound": "There was no brush bound to this item."
 		},
@@ -100,6 +101,7 @@
 		},
 		"brush-menu": {
 			"title": "Brush Menu",
+			"name": "Brush Name",
 			"size": "Brush Size",
 			"shape": "Brush Shape",
 			"type": "Brush Type",
