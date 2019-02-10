@@ -90,6 +90,7 @@ class Translation{
 	public const UI_BRUSH_MENU_OBSOLETE = "ui.brush-menu.obsolete";
 	public const UI_BRUSH_MENU_BIOME = "ui.brush-menu.biome";
 	public const UI_BRUSH_MENU_TREE = "ui.brush-menu.tree";
+	public const UI_BRUSH_MENU_LAYER_WIDTH = "ui.brush-menu.layer-width";
 	public const UI_CONFIGURATION_MENU_TITLE = "ui.configuration-menu.title";
 	public const UI_CONFIGURATION_MENU_LANGUAGE = "ui.configuration-menu.language";
 	public const UI_CONFIGURATION_MENU_BRUSH_ITEM = "ui.configuration-menu.brush-item";

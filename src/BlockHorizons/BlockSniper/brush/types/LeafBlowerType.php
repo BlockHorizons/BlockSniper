@@ -25,7 +25,7 @@ class LeafBlowerType extends BaseType{
 
 	public function __construct(Brush $brush, ChunkManager $level, \Generator $blocks = null){
 		parent::__construct($brush, $level, $blocks);
-		if($this->isAsynchronous()){
+		if(!$this->isAsynchronous()){
 			/** @var Loader $loader */
 			$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
 			if($loader === null){

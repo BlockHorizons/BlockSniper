@@ -117,7 +117,8 @@
 			"blocks": "使用するブロック",
 			"obsolete": "使用しないブロック",
 			"biome": "バイオーム",
-			"tree": "木"
+			"tree": "木",
+			"layer-width": "Layer Width"
 		},
 		"configuration-menu": {
 			"title": "BlockSniper 設定",

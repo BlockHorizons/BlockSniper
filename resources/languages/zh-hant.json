@@ -116,7 +116,8 @@
 			"blocks": "目標方塊",
 			"obsolete": "替換方塊",
 			"biome": "生物群落",
-			"tree": "樹木類型"
+			"tree": "樹木類型",
+			"layer-width": "Layer Width"
 		},
 		"configuration-menu": {
 			"title": "BlockSniper 設置"

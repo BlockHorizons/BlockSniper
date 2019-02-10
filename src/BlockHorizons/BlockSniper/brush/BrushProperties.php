@@ -42,6 +42,8 @@ class BrushProperties implements \JsonSerializable{
 	public $biomeId = Biome::PLAINS;
 	/** @var TreeProperties */
 	public $tree;
+	/** @var int */
+	public $layerWidth = 0;
 
 	public function __construct(){
 		$this->tree = new TreeProperties();

@@ -17,7 +17,7 @@ class TreeType extends BaseType{
 
 	public const ID = self::TYPE_TREE;
 
-	/** @var Tree*/
+	/** @var Tree */
 	private $tree;
 
 	public function __construct(Brush $brush, ChunkManager $level, \Generator $blocks = null){

@@ -7,6 +7,7 @@ namespace BlockHorizons\BlockSniper\ui\windows;
 use BlockHorizons\BlockSniper\brush\Brush;
 use BlockHorizons\BlockSniper\brush\types\BiomeType;
 use BlockHorizons\BlockSniper\brush\types\ReplaceType;
+use BlockHorizons\BlockSniper\brush\types\TopLayerType;
 use BlockHorizons\BlockSniper\brush\types\TreeType;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
@@ -66,6 +67,11 @@ class PresetPropertiesWindow extends CustomWindow{
 
 		// Type specific properties.
 		switch($b->getType()::ID){
+			case TopLayerType::ID:
+				$this->addSlider($this->t(Translation::UI_BRUSH_MENU_LAYER_WIDTH), 0, $loader->config->maxSize, 1, $b->layerWidth, function(Player $player, float $value) use ($b){
+					$b->layerWidth = (int) $value;
+				});
+				break;
 			case ReplaceType::ID:
 				$this->addInput($this->t(Translation::UI_BRUSH_MENU_OBSOLETE), $b->obsolete, "stone,stone_brick:1,2", function(Player $player, string $value) use ($b){
 					$this->preset->properties->obsolete = $value;

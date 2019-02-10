@@ -6,6 +6,7 @@ namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\brush\Brush;
+use pocketmine\block\Block;
 use pocketmine\level\ChunkManager;
 
 /*
@@ -15,6 +16,9 @@ use pocketmine\level\ChunkManager;
 class ReplaceType extends BaseType{
 
 	public const ID = self::TYPE_REPLACE;
+
+	/** @var Block[] */
+	private $obsolete;
 
 	public function __construct(Brush $brush, ChunkManager $level, \Generator $blocks = null){
 		parent::__construct($brush, $level, $blocks);
@@ -46,9 +50,9 @@ class ReplaceType extends BaseType{
 	/**
 	 * Returns the obsolete blocks of this type.
 	 *
-	 * @return \Generator
+	 * @return Block[]
 	 */
-	public function getObsolete() : \Generator{
+	public function getObsolete() : array{
 		return $this->obsolete;
 	}
 }

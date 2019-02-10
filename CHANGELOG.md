@@ -23,6 +23,8 @@
   message prompting you to let the file regenerate.
 - The Expand type now uses brush blocks instead of the blocks below it to place new blocks, resulting in a much better
   effect.
+- The TopLayer type no longer uses the `Brush Height` property for the width of the layer. It now uses a new 
+  `Layer Width` property
 
 ### Removed
 - The main menu no longer contains a Tree button.

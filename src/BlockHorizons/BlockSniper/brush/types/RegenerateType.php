@@ -23,10 +23,12 @@ class RegenerateType extends BaseType{
 
 	/** @var Session */
 	private $session;
+	/** @var Vector3 */
+	private $center;
 
 	public function __construct(Brush $brush, ChunkManager $manager, \Generator $blocks = null){
 		parent::__construct($brush, $manager, $blocks);
-		$this->center = $brush->getPlayer()->getTargetBlock($brush->getPlayer()->getViewDistance() * 16)->asVector3();
+		$this->center = $this->target($brush);
 		$this->session = SessionManager::getPlayerSession($brush->getPlayer());
 	}
 

@@ -116,7 +116,8 @@
 			"blocks": "Verf Blokken",
 			"obsolete": "Herplaats Blokken",
 			"biome": "Verf Biome",
-			"tree": "Verf Boom"
+			"tree": "Verf Boom",
+			"layer-width": "Laagdikte"
 		},
 		"configuration-menu": {
 			"title": "BlockSniper Configuratie",

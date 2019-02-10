@@ -116,7 +116,8 @@
 			"blocks": "Blocs du pinceau",
 			"obsolete": "Blocs obsolètes",
 			"biome": "Biome du pinceau",
-			"tree": "Arbre du pinceau"
+			"tree": "Arbre du pinceau",
+			"layer-width": "Layer Width"
 		},
 		"configuration-menu": {
 			"title": "Configuration BlockSniper",

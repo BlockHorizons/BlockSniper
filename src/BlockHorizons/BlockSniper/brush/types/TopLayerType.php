@@ -20,9 +20,12 @@ class TopLayerType extends BaseType{
 
 	public const ID = self::TYPE_TOP_LAYER;
 
+	/** @var int */
+	private $layerWidth;
+
 	public function __construct(Brush $brush, ChunkManager $level, \Generator $blocks = null){
 		parent::__construct($brush, $level, $blocks);
-		$this->height = $brush->height;
+		$this->layerWidth = $brush->layerWidth;
 	}
 
 	/**
@@ -35,7 +38,7 @@ class TopLayerType extends BaseType{
 			}
 
 			$higherBlock = $block;
-			for($y = $block->y; $y <= $block->y + $this->height; $y++) {
+			for($y = $block->y; $y <= $block->y + $this->layerWidth; $y++) {
 				$higherBlock = $this->side($higherBlock, Facing::UP);
 				if($higherBlock instanceof Flowable || $higherBlock->getId() === BlockIds::AIR) {
 					yield $block;

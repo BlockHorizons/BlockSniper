@@ -19,9 +19,12 @@ class FlattenAllType extends BaseType{
 
 	public const ID = self::TYPE_FLATTEN_ALL;
 
+	/** @var Vector3 */
+	private $center;
+
 	public function __construct(Brush $brush, ChunkManager $level, \Generator $blocks = null){
 		parent::__construct($brush, $level, $blocks);
-		$this->center = $brush->getPlayer()->getTargetBlock($brush->getPlayer()->getViewDistance() * 16)->asVector3();
+		$this->center = $this->target($brush);
 	}
 
 	/**

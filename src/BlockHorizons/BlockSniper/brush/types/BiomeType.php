@@ -16,6 +16,9 @@ class BiomeType extends BaseType{
 
 	public const ID = self::TYPE_BIOME;
 
+	/** @var int */
+	private $biome;
+
 	public function __construct(Brush $brush, ChunkManager $level, \Generator $blocks = null){
 		parent::__construct($brush, $level, $blocks);
 		$this->biome = $brush->biomeId;

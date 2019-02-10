@@ -9,7 +9,6 @@ use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
 use pocketmine\block\Block;
 use pocketmine\level\ChunkManager;
 use pocketmine\level\Level;
-use pocketmine\level\Position;
 use pocketmine\math\Vector2;
 use pocketmine\math\Vector3;
 use pocketmine\Server;
@@ -45,18 +44,11 @@ abstract class BaseType{
 
 	/** @var int */
 	protected $level = 0;
-	/** @var int */
-	protected $biome = 0;
 	/** @var \Generator */
 	protected $blocks = [];
-	/** @var Position|null */
-	protected $center = null;
-	/** @var Block[]|array */
-	protected $obsolete = [];
 	/** @var Block[] */
 	protected $brushBlocks = [];
-	/** @var int */
-	protected $height = 0;
+
 	/** @var null|BlockSniperChunkManager */
 	protected $chunkManager = null;
 	/** @var bool */
@@ -311,5 +303,14 @@ abstract class BaseType{
 			return;
 		}
 		$this->getLevel()->setBiomeId($pos->x, $pos->z, $biomeId);
+	}
+
+	/**
+	 * @param Brush $brush
+	 *
+	 * @return Vector3
+	 */
+	protected function target(Brush $brush) : Vector3 {
+		return $brush->getPlayer()->getTargetBlock($brush->getPlayer()->getViewDistance() * 16)->asVector3();
 	}
 }

@@ -116,7 +116,8 @@
 			"blocks": "Bloques de la Brocha",
 			"obsolete": "Bloques Obsoletos",
 			"biome": "Bioma de Brocha",
-			"tree": "Árbol de Brocha"
+			"tree": "Árbol de Brocha",
+			"layer-width": "Layer Width"
 		},
 		"configuration-menu": {
 			"title": "Configuración de BlockSniper",
