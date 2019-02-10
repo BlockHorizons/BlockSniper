@@ -48,11 +48,4 @@ class ExpandType extends BaseType{
 	public function getName() : string{
 		return "Expand";
 	}
-
-	/**
-	 * @return bool
-	 */
-	public function usesBlocks() : bool{
-		return false;
-	}
 }
