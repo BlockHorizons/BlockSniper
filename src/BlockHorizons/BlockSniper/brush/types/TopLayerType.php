@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
-use BlockHorizons\BlockSniper\sessions\SessionManager;
+use BlockHorizons\BlockSniper\brush\Brush;
 use pocketmine\block\Block;
 use pocketmine\block\BlockIds;
 use pocketmine\block\Flowable;
 use pocketmine\level\ChunkManager;
 use pocketmine\math\Facing;
-use pocketmine\Player;
 
 /*
  * Replaces the top layer of the terrain, thickness depending on brush height, within the brush radius.
@@ -21,9 +20,9 @@ class TopLayerType extends BaseType{
 
 	public const ID = self::TYPE_TOP_LAYER;
 
-	public function __construct(Player $player, ChunkManager $level, \Generator $blocks = null){
-		parent::__construct($player, $level, $blocks);
-		$this->height = SessionManager::getPlayerSession($player)->getBrush()->height;
+	public function __construct(Brush $brush, ChunkManager $level, \Generator $blocks = null){
+		parent::__construct($brush, $level, $blocks);
+		$this->height = $brush->height;
 	}
 
 	/**

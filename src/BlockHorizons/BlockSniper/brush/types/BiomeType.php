@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
-use BlockHorizons\BlockSniper\sessions\SessionManager;
+use BlockHorizons\BlockSniper\brush\Brush;
 use pocketmine\level\ChunkManager;
-use pocketmine\Player;
 
 /*
  * Changes the biome within the brush radius.
@@ -17,9 +16,9 @@ class BiomeType extends BaseType{
 
 	public const ID = self::TYPE_BIOME;
 
-	public function __construct(Player $player, ChunkManager $level, \Generator $blocks = null){
-		parent::__construct($player, $level, $blocks);
-		$this->biome = SessionManager::getPlayerSession($player)->getBrush()->biomeId;
+	public function __construct(Brush $brush, ChunkManager $level, \Generator $blocks = null){
+		parent::__construct($brush, $level, $blocks);
+		$this->biome = $brush->biomeId;
 	}
 
 	/**

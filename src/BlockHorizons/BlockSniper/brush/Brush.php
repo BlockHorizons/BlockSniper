@@ -62,7 +62,7 @@ class Brush extends BrushProperties{
 		$shape = $this->getShape($selection !== null ? $selection->box() : null);
 		$type = ($this->type !== TreeType::class
 			? $this->getType($shape->getBlocksInside())
-			: new TreeType($this->getPlayer(), $this->getPlayer()->getLevel()));
+			: new TreeType($this, $this->getPlayer()->getLevel()));
 
 		if($session instanceof PlayerSession){
 			$player = $session->getSessionOwner()->getPlayer();
@@ -123,7 +123,7 @@ class Brush extends BrushProperties{
 	 * @return BaseType
 	 */
 	public function getType(\Generator $blocks = null) : BaseType{
-		return new $this->type($this->getPlayer(), $this->getPlayer()->getLevel(), $blocks);
+		return new $this->type($this, $this->getPlayer()->getLevel(), $blocks);
 	}
 
 	public function decrement() : void{

@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
+use BlockHorizons\BlockSniper\brush\Brush;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\block\Flowable;
 use pocketmine\item\Item;
 use pocketmine\level\ChunkManager;
-use pocketmine\Player;
+use pocketmine\Server;
 
 /*
  * Blows away all plants and flowers within the brush radius.
@@ -22,11 +23,11 @@ class LeafBlowerType extends BaseType{
 	/** @var bool */
 	private $dropPlants = false;
 
-	public function __construct(Player $player, ChunkManager $level, \Generator $blocks = null){
-		parent::__construct($player, $level, $blocks);
+	public function __construct(Brush $brush, ChunkManager $level, \Generator $blocks = null){
+		parent::__construct($brush, $level, $blocks);
 		if($this->isAsynchronous()){
 			/** @var Loader $loader */
-			$loader = $player->getServer()->getPluginManager()->getPlugin("BlockSniper");
+			$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
 			if($loader === null){
 				return;
 			}

@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
+use BlockHorizons\BlockSniper\brush\Brush;
 use pocketmine\block\Block;
 use pocketmine\block\Flowable;
 use pocketmine\level\ChunkManager;
 use pocketmine\math\Vector3;
-use pocketmine\Player;
 
 /*
  * Flattens the terrain below the selected point and removes the blocks above it within the brush radius.
@@ -19,9 +19,9 @@ class FlattenAllType extends BaseType{
 
 	public const ID = self::TYPE_FLATTEN_ALL;
 
-	public function __construct(Player $player, ChunkManager $level, \Generator $blocks = null){
-		parent::__construct($player, $level, $blocks);
-		$this->center = $player->getTargetBlock($player->getViewDistance() * 16)->asVector3();
+	public function __construct(Brush $brush, ChunkManager $level, \Generator $blocks = null){
+		parent::__construct($brush, $level, $blocks);
+		$this->center = $brush->getPlayer()->getTargetBlock($brush->getPlayer()->getViewDistance() * 16)->asVector3();
 	}
 
 	/**

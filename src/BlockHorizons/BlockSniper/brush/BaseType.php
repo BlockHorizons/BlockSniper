@@ -6,14 +6,12 @@ namespace BlockHorizons\BlockSniper\brush;
 
 use BlockHorizons\BlockSniper\brush\async\BlockSniperChunkManager;
 use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
-use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\block\Block;
 use pocketmine\level\ChunkManager;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\math\Vector2;
 use pocketmine\math\Vector3;
-use pocketmine\Player;
 use pocketmine\Server;
 use function array_rand;
 use function strtolower;
@@ -71,13 +69,13 @@ abstract class BaseType{
 	private $plotPoints = [];
 
 	/**
-	 * @param Player       $player
+	 * @param Brush $brush
 	 * @param ChunkManager $manager
 	 * @param \Generator   $blocks
 	 */
-	public function __construct(Player $player, ChunkManager $manager, \Generator $blocks = null){
+	public function __construct(Brush $brush, ChunkManager $manager, \Generator $blocks = null){
 		$this->blocks = $blocks;
-		$this->brushBlocks = SessionManager::getPlayerSession($player)->getBrush()->getBlocks();
+		$this->brushBlocks = $brush->getBlocks();
 
 		if($manager instanceof Level){
 			$this->level = $manager->getId();

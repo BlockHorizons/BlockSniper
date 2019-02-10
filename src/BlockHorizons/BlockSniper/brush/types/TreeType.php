@@ -7,9 +7,7 @@ namespace BlockHorizons\BlockSniper\brush\types;
 use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\brush\Brush;
 use BlockHorizons\BlockSniper\brush\TreeProperties;
-use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\level\ChunkManager;
-use pocketmine\Player;
 
 /*
  * Grows a custom tree on the target block.
@@ -19,21 +17,20 @@ class TreeType extends BaseType{
 
 	public const ID = self::TYPE_TREE;
 
-	/** @var Brush */
-	private $brush;
+	/** @var Tree*/
+	private $tree;
 
-	public function __construct(Player $player, ChunkManager $level){
-		parent::__construct($player, $level);
-		$this->center = $player->getTargetBlock($player->getViewDistance() * 16)->asPosition();
-		$this->brush = SessionManager::getPlayerSession($player)->getBrush();
+	public function __construct(Brush $brush, ChunkManager $level, \Generator $blocks = null){
+		parent::__construct($brush, $level, $blocks);
+		$center = $brush->getPlayer()->getTargetBlock($brush->getPlayer()->getViewDistance() * 16);
+		$this->tree = new Tree($center, $brush, $this);
 	}
 
 	/**
 	 * @return \Generator
 	 */
 	public function fill() : \Generator{
-		$tree = new Tree($this->center, $this->brush, $this);
-		foreach($tree->build() as $block){
+		foreach($this->tree->build() as $block){
 			yield $block;
 		}
 	}

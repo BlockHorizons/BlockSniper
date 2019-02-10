@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
+use BlockHorizons\BlockSniper\brush\Brush;
 use BlockHorizons\BlockSniper\revert\async\AsyncUndo;
 use BlockHorizons\BlockSniper\sessions\Session;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\level\ChunkManager;
 use pocketmine\level\format\Chunk;
 use pocketmine\math\Vector3;
-use pocketmine\Player;
 
 /*
  * Regenerates the chunk looked at.
@@ -24,10 +24,10 @@ class RegenerateType extends BaseType{
 	/** @var Session */
 	private $session;
 
-	public function __construct(Player $player, ChunkManager $manager, \Generator $blocks = null){
-		parent::__construct($player, $manager, $blocks);
-		$this->center = $player->getTargetBlock($player->getViewDistance() * 16)->asVector3();
-		$this->session = SessionManager::getPlayerSession($player);
+	public function __construct(Brush $brush, ChunkManager $manager, \Generator $blocks = null){
+		parent::__construct($brush, $manager, $blocks);
+		$this->center = $brush->getPlayer()->getTargetBlock($brush->getPlayer()->getViewDistance() * 16)->asVector3();
+		$this->session = SessionManager::getPlayerSession($brush->getPlayer());
 	}
 
 	/**

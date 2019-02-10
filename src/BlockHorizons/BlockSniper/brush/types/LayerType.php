@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
+use BlockHorizons\BlockSniper\brush\Brush;
 use pocketmine\level\ChunkManager;
 use pocketmine\math\Vector3;
-use pocketmine\Player;
 
 /*
  * Lays a thin layer of blocks within the brush radius.
@@ -17,9 +17,9 @@ class LayerType extends BaseType{
 
 	public const ID = self::TYPE_LAYER;
 
-	public function __construct(Player $player, ChunkManager $level, \Generator $blocks = null){
-		parent::__construct($player, $level, $blocks);
-		$this->center = $player->getTargetBlock($player->getViewDistance() * 16)->asVector3();
+	public function __construct(Brush $brush, ChunkManager $level, \Generator $blocks = null){
+		parent::__construct($brush, $level, $blocks);
+		$this->center = $brush->getPlayer()->getTargetBlock($brush->getPlayer()->getViewDistance() * 16)->asVector3();
 	}
 
 	/**
