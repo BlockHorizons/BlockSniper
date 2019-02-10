@@ -21,6 +21,8 @@
 - The maximum brush distance now depends on the view distance of a player.
 - The language files will now be automatically updated if it is found not to be up to date. It will no longer show a
   message prompting you to let the file regenerate.
+- The Expand type now uses brush blocks instead of the blocks below it to place new blocks, resulting in a much better
+  effect.
 
 ### Removed
 - The main menu no longer contains a Tree button.
