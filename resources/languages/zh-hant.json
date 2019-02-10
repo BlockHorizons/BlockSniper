@@ -72,7 +72,7 @@
 		},
 		"preset-edit": {
 			"title": "編輯預設選項",
-			"name": "預設選項名稱",
+			"name": "預設選項名稱"
 		},
 		"preset-selection": {
 			"title": "選擇預設選項",
@@ -88,7 +88,7 @@
 		},
 		"preset-creation": {
 			"title": "新建預設選項",
-			"name": "預設選項名稱",
+			"name": "預設選項名稱"
 		},
 		"main-menu": {
 			"title": "BlockSniper 菜單",
@@ -120,7 +120,7 @@
 			"layer-width": "Layer Width"
 		},
 		"configuration-menu": {
-			"title": "BlockSniper 設置"
+			"title": "BlockSniper 設置",
 			"language": "BlockSniper 相關信息使用的語言",
 			"brush-item": "畫筆物品 ID",
 			"selection-item": "Item ID of the item that is used to select",
