@@ -53,8 +53,6 @@ abstract class BaseType{
 	protected $center = null;
 	/** @var Block[]|array */
 	protected $obsolete = [];
-	/** @var TreeProperties */
-	protected $tree = 0;
 	/** @var Block[] */
 	protected $brushBlocks = [];
 	/** @var int */
