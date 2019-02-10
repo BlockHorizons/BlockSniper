@@ -9,6 +9,7 @@ use BlockHorizons\BlockSniper\brush\shapes\CuboidShape;
 use BlockHorizons\BlockSniper\brush\shapes\CylinderShape;
 use BlockHorizons\BlockSniper\brush\shapes\EllipsoidShape;
 use BlockHorizons\BlockSniper\brush\shapes\SphereShape;
+use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\exceptions\InvalidIdException;
 use pocketmine\permission\Permission;
 use pocketmine\permission\PermissionManager;
@@ -42,6 +43,9 @@ class ShapeRegistration{
 	 */
 	public static function registerShape(string $class, int $id, bool $overwrite = false) : bool{
 		$shortName = str_replace("Shape", "", (new \ReflectionClass($class))->getShortName());
+
+		$reflectClass = new \ReflectionClass(Translation::class);
+		$shortName = Translation::get($reflectClass->getConstant(strtoupper("brush_shape_$shortName")));
 
 		if(!$overwrite && self::shapeExists(strtolower($shortName), $id)){
 			return false;

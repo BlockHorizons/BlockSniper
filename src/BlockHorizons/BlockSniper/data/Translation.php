@@ -139,15 +139,20 @@ class Translation{
 	public const BRUSH_TYPE_FILL = "brush.type.fill";
 	public const BRUSH_TYPE_FLATTENALL = "brush.type.flattenall";
 	public const BRUSH_TYPE_FLATTEN = "brush.type.flatten";
+	public const BRUSH_TYPE_FREEZE = "brush.type.freeze";
+	public const BRUSH_TYPE_HEAT = "brush.type.heat";
 	public const BRUSH_TYPE_LAYER = "brush.type.layer";
 	public const BRUSH_TYPE_LEAFBLOWER = "brush.type.leafblower";
 	public const BRUSH_TYPE_MELT = "brush.type.melt";
 	public const BRUSH_TYPE_OVERLAY = "brush.type.overlay";
 	public const BRUSH_TYPE_REPLACEALL = "brush.type.replaceall";
 	public const BRUSH_TYPE_REPLACE = "brush.type.replace";
+	public const BRUSH_TYPE_REGENERATE = "brush.type.regenerate";
+	public const BRUSH_TYPE_SMOOTH = "brush.type.smooth";
 	public const BRUSH_TYPE_SNOWCONE = "brush.type.snowcone";
 	public const BRUSH_TYPE_TOPLAYER = "brush.type.toplayer";
 	public const BRUSH_TYPE_TREE = "brush.type.tree";
+	public const BRUSH_TYPE_WARM = "brush.type.warm";
 
 	/** @var string[] */
 	private static $translations = [];

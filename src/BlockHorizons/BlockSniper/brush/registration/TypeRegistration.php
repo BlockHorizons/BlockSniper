@@ -26,6 +26,7 @@ use BlockHorizons\BlockSniper\brush\types\SnowConeType;
 use BlockHorizons\BlockSniper\brush\types\TopLayerType;
 use BlockHorizons\BlockSniper\brush\types\TreeType;
 use BlockHorizons\BlockSniper\brush\types\WarmType;
+use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\exceptions\InvalidIdException;
 use pocketmine\permission\Permission;
 use pocketmine\permission\PermissionManager;
@@ -76,6 +77,9 @@ class TypeRegistration{
 	 */
 	public static function registerType(string $class, int $id, bool $overwrite = false) : bool{
 		$shortName = str_replace("Type", "", (new \ReflectionClass($class))->getShortName());
+
+		$reflectClass = new \ReflectionClass(Translation::class);
+		$shortName = Translation::get($reflectClass->getConstant(strtoupper("brush_type_$shortName")));
 
 		if(!$overwrite && self::typeExists(strtolower($shortName), $id)){
 			return false;
