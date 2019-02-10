@@ -35,7 +35,7 @@ class BrushMenuWindow extends CustomWindow{
 
 			$item = $player->getInventory()->getItemInHand();
 			if($item->getName() !== $item->getVanillaName()){
-				$item->setCustomName(sprintf("%s\n%s %s Brush", TF::RESET . TF::WHITE . $item->getName(), TF::AQUA . $this->brush->getShape()->getName(), $this->brush->getType()->getName()));
+				$item->setCustomName(sprintf("%s\n%s %s Brush", TF::RESET . TF::WHITE . $item->getName(), TF::AQUA . $b->getShape()->getName(), $b->getType()->getName()));
 				$player->getInventory()->setItemInHand($item);
 			}
 

@@ -20,24 +20,42 @@ use pocketmine\event\player\PlayerItemHeldEvent;
 use pocketmine\event\player\PlayerItemUseEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\math\Vector2;
-use pocketmine\nbt\tag\IntTag;
+use pocketmine\nbt\tag\StringTag;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
+use Sandertv\Marshal\Unmarshal;
 
 class BrushListener implements Listener{
 
-	public const KEY_BRUSH_ID = "blocksniper:brush_id";
+	public const KEY_BRUSH_UUID = "blocksniper:brush_uuid";
 
 	/** @var Brush[] */
 	public static $brushItems = [];
-	/** @var int */
-	public static $brushIndex = 0;
 
 	/** @var Loader */
 	private $loader = null;
 
 	public function __construct(Loader $loader){
 		$this->loader = $loader;
+
+		if(file_exists($loader->getDataFolder() . "bound_brushes.json")){
+			$data = json_decode(file_get_contents($loader->getDataFolder() . "bound_brushes.json"), true);
+			foreach($data as $uuid => $brushData){
+				$b = new Brush($brushData["player"]);
+				Unmarshal::json($brushData["data"], $b);
+				self::$brushItems[$uuid] = $b;
+
+				$loader->getLogger()->debug("Bound brush $uuid restored");
+			}
+		}
+	}
+
+	public function saveBrushes() : void {
+		$data = [];
+		foreach(self::$brushItems as $uuid => $brush){
+			$data[$uuid] = ["player" => $brush->player, "data" => json_encode($brush)];
+		}
+		file_put_contents($this->loader->getDataFolder() . "bound_brushes.json", json_encode($data));
 	}
 
 	/**
@@ -58,8 +76,8 @@ class BrushListener implements Listener{
 			case $hand->getId() === $brushItem->getId() && $hand->getDamage() === $brushItem->getDamage():
 				$this->useBrush($session, $session->getBrush(), $player);
 				break;
-			case $hand->getNamedTag()->hasTag(self::KEY_BRUSH_ID, IntTag::class):
-				$this->useBrush($session, self::$brushItems[$hand->getNamedTag()->getInt(self::KEY_BRUSH_ID)], $player);
+			case $hand->getNamedTag()->hasTag(self::KEY_BRUSH_UUID, StringTag::class):
+				$this->useBrush($session, self::$brushItems[$hand->getNamedTag()->getString(self::KEY_BRUSH_UUID)], $player);
 				break;
 			default:
 				return;
@@ -146,7 +164,7 @@ class BrushListener implements Listener{
 			return [];
 		}
 		$plotPoints = [];
-		$settings = $this->loader->getMyPlot()->getLevelSettings($player->getLevel()->getName());
+		$settings = $this->loader->getMyPlot()->getLevelSettings($player->getLevel()->getFolderName());
 		if($settings === null){
 			if($player->hasPermission("blocksniper-myplot.allow-outside")){
 				return [];
@@ -204,9 +222,5 @@ class BrushListener implements Listener{
 			new SessionDeletionTask($this->loader, SessionManager::getPlayerSession($event->getPlayer())),
 			$this->loader->config->sessionTimeoutTime * 20 * 60
 		);
-		foreach($event->getPlayer()->getInventory()->getContents(false) as $slot => $item){
-			$item->getNamedTag()->removeTag(self::KEY_BRUSH_ID);
-			$event->getPlayer()->getInventory()->setItem($slot, $item);
-		}
 	}
 }

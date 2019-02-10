@@ -12,6 +12,7 @@
 - Added a new Smooth type which gets rid of rough edges and holes in the terrain.
 - Added brush to item binding. Use /b bind and /b unbind to bind a new brush to an item.
     - Bound brushes can be named and display the shape and type they have in the name.
+    - Bound brushes are saved when the server restarts.
   
 ### Changed
 - The Brush UI no longer contains all available brush properties.

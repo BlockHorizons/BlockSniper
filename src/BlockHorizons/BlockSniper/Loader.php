@@ -59,6 +59,9 @@ class Loader extends PluginBase{
 	/** @var null|MyPlot */
 	private $myPlot = null;
 
+	/** @var BrushListener */
+	private $listener;
+
 	/**
 	 * @return string[]
 	 */
@@ -88,13 +91,7 @@ class Loader extends PluginBase{
 		$this->getPresetManager()->storePresetsToFile();
 		SessionManager::close();
 		$this->config->close();
-
-		foreach($this->getServer()->getOnlinePlayers() as $player){
-			foreach($player->getInventory()->getContents(false) as $slot => $item){
-				$item->getNamedTag()->removeTag(BrushListener::KEY_BRUSH_ID);
-				$player->getInventory()->setItem($slot, $item);
-			}
-		}
+		$this->listener->saveBrushes();
 	}
 
 	public function reload() : void{
@@ -186,7 +183,7 @@ class Loader extends PluginBase{
 
 	private function registerListeners() : void{
 		$listeners = [
-			new BrushListener($this),
+			$this->listener = new BrushListener($this),
 		];
 		foreach($listeners as $listener){
 			$this->getServer()->getPluginManager()->registerEvents($listener, $this);
