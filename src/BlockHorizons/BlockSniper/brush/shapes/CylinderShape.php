@@ -32,6 +32,9 @@ class CylinderShape extends BaseShape{
 			for($z = $this->minZ; $z <= $this->maxZ; $z++){
 				$zs = ($z - $centerZ) ** 2 / $radiusZS;
 				for($y = $this->minY; $y <= $this->maxY; $y++){
+					if($y >= 255 || $y <= 0){
+						continue;
+					}
 					if($xs + $zs <= 1.0){
 						if($this->hollow){
 							if($xs + $zs < 0.85 && $y !== $this->minY && $y !== $this->maxY){
@@ -63,6 +66,9 @@ class CylinderShape extends BaseShape{
 			for($z = $this->minZ; $z <= $this->maxZ; $z++){
 				$zs = ($z - $centerZ) ** 2 / $radiusZS;
 				for($y = $this->minY; $y <= $this->maxY; $y++){
+					if($y >= 255 || $y <= 0){
+						continue;
+					}
 					if($xs + $zs <= 1.0){
 						if($this->hollow){
 							if($xs + $zs < 0.85 && $y !== $this->minY && $y !== $this->maxY){

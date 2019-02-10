@@ -33,6 +33,9 @@ class SphereShape extends BaseShape{
 		for($x = $this->maxX; $x >= $this->minX; $x--){
 			$xs = ($x - $centerX) ** 2 / $radiusXS;
 			for($y = $this->maxY; $y >= $this->minY; $y--){
+				if($y >= 255 || $y <= 0){
+					continue;
+				}
 				$ys = ($y - $centerY) ** 2 / $radiusYS;
 				for($z = $this->maxZ; $z >= $this->minZ; $z--){
 					$zs = ($z - $centerZ) ** 2 / $radiusZS;
