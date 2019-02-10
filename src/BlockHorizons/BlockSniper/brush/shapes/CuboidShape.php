@@ -21,7 +21,7 @@ class CuboidShape extends BaseShape{
 	public function getBlocksInside(bool $vectorOnly = false) : \Generator{
 		for($x = $this->minX; $x <= $this->maxX; $x++){
 			for($y = $this->minY; $y <= $this->maxY; $y++){
-				if($y >= 255 || $y <= 0){
+				if($y > 255 || $y < 0){
 					continue;
 				}
 				for($z = $this->minZ; $z <= $this->maxZ; $z++){
