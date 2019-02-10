@@ -104,9 +104,9 @@
 			"shape": "Verf Vorm",
 			"type": "Verf Type",
 			"mode": {
-				"description": "Brush Mode",
-				"brush": "Brush",
-				"selection": "Selection"
+				"description": "Verf Modus",
+				"brush": "Verf",
+				"selection": "Selectie"
 			},
 			"hollow": "Holle Verf",
 			"decrement": "Verkleinende Verf",
