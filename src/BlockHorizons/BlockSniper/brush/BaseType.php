@@ -217,7 +217,7 @@ abstract class BaseType{
 			$this->getChunkManager()->setBlockAt($pos->x, $pos->y, $pos->z, $block);
 			return;
 		}
-		$this->getLevel()->setBlock($pos, $block, false);
+		$this->getLevel()->setBlockAt($pos->x, $pos->y, $pos->z, $block, false);
 	}
 
 	/**
