@@ -33,6 +33,7 @@
 - The configuration menu no longer has a reload button. This is done automatically.
 
 ### Fixed
+- Fixed cuboid and cylinder shapes not to be async/sync when they should be.
 - Fixed the brush UI not showing the translated brush shapes and types.
 - Fixed the Clean type doing the opposite of what it is supposed to do.
 - Fixed the Leafblower type not dropping items as expected, and fixed its complete failure when used in a size that
