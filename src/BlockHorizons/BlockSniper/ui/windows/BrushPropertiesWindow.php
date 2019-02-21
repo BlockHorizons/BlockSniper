@@ -51,7 +51,7 @@ class BrushPropertiesWindow extends CustomWindow{
 			});
 		}
 		if($b->getType()->usesBlocks()){
-			$this->addInput($this->t(Translation::UI_BRUSH_MENU_BLOCKS), $b->blocks, "stone,stone_brick:1,2", function(Player $player, string $value) use ($b){
+			$this->addInput($this->t(Translation::UI_BRUSH_MENU_BLOCKS), $b->blocks, "stone,cracked_stone_brick", function(Player $player, string $value) use ($b){
 				try {
 					$b->parseBlocks($value);
 					$b->blocks = $value;
@@ -69,7 +69,7 @@ class BrushPropertiesWindow extends CustomWindow{
 				});
 				break;
 			case ReplaceType::ID:
-				$this->addInput($this->t(Translation::UI_BRUSH_MENU_OBSOLETE), $b->obsolete, "stone,stone_brick:1,2", function(Player $player, string $value) use ($b){
+				$this->addInput($this->t(Translation::UI_BRUSH_MENU_OBSOLETE), $b->obsolete, "stone,mossy_stone_brick,grass", function(Player $player, string $value) use ($b){
 					try {
 						$b->parseBlocks($value);
 						$b->obsolete = $value;
@@ -90,7 +90,7 @@ class BrushPropertiesWindow extends CustomWindow{
 	}
 
 	private function addTreeProperties(Brush $b, Loader $loader){
-		$this->addInput($this->t(Translation::UI_TREE_MENU_TRUNK_BLOCKS), $b->tree->trunkBlocks, "log:12,log:13", function(Player $player, string $value) use ($b){
+		$this->addInput($this->t(Translation::UI_TREE_MENU_TRUNK_BLOCKS), $b->tree->trunkBlocks, "oak_wood,dark_oak_wood", function(Player $player, string $value) use ($b){
 			try {
 				$b->parseBlocks($value);
 				$b->tree->trunkBlocks = $value;
@@ -98,7 +98,7 @@ class BrushPropertiesWindow extends CustomWindow{
 				$player->sendMessage(TextFormat::RED . $exception->getMessage());
 			}
 		});
-		$this->addInput($this->t(Translation::UI_TREE_MENU_LEAVES_BLOCKS), $b->tree->leavesBlocks, "leaves:12,leaves:13", function(Player $player, string $value) use ($b){
+		$this->addInput($this->t(Translation::UI_TREE_MENU_LEAVES_BLOCKS), $b->tree->leavesBlocks, "oak_leaves,spruce_leaves", function(Player $player, string $value) use ($b){
 			try {
 				$b->parseBlocks($value);
 				$b->tree->leavesBlocks = $value;
