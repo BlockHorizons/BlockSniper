@@ -149,9 +149,9 @@
 	},
 	"log": {
 		"language": {
-			"auto-selected": "[BlockSniper] Geen geldige taal is geselecteerd. Engels is automatisch geselecteerd.",
+			"auto-selected": "Geen geldige taal is geselecteerd. Engels is automatisch geselecteerd.",
 			"usage": "Kies alstublieft een taal door in-game naar het configuratie scherm te gaan, door /b te gebruiken.",
-			"selected": "[BlockSniper] Language selected: "
+			"selected": "Language selected: "
 		},
 		"brush": {
 			"restored": "Verf van speler %s is hersteld.",
@@ -162,8 +162,8 @@
 			"all-loaded": "Alle voorinstellingen zijn geladen."
 		},
 		"reload": {
-			"start": "[BlockSniper] Herladen...",
-			"finish": "[BlockSniper] Herladen klaar."
+			"start": "Herladen...",
+			"finish": "Herladen klaar."
 		}
 	},
 	"brush": {

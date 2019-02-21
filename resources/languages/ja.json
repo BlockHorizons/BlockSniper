@@ -150,9 +150,9 @@
 	},
 	"log": {
 		"language": {
-			"auto-selected": "[BlockSniper]有効な言語が選択されていません。英語が自動的に選択されました。",
+			"auto-selected": "有効な言語が選択されていません。英語が自動的に選択されました。",
 			"usage": "/bを使用して、ゲーム内の設定タブに移動して言語を選択してください。",
-			"selected": "[BlockSniper]選択した言語："
+			"selected": "選択した言語："
 		},
 		"brush": {
 			"restored": "プレーヤー%sのブラシが復元されました。",
@@ -163,8 +163,8 @@
 			"all-loaded": "すべてのプリセットがロードされています。"
 		},
 		"reload": {
-			"start": "[BlockSniper] 再読み込みしています...",
-			"finish": "[BlockSniper] 再読み込みが完了しました。"
+			"start": "再読み込みしています...",
+			"finish": "再読み込みが完了しました。"
 		}
 	},
 	"brush": {

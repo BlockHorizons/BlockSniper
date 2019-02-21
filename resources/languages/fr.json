@@ -149,9 +149,9 @@
 	},
 	"log": {
 		"language": {
-			"auto-selected": "[BlockSniper] Aucune langue valide n'a été sélectionnée Le français a été sélectionné automatiquement.",
+			"auto-selected": "Aucune langue valide n'a été sélectionnée Le français a été sélectionné automatiquement.",
 			"usage": "Veuillez sélectionner une langue en allant dans l'onglet de configuration dans le jeu, en utilisant /b.",
-			"selected": "[BlockSniper] Langue sélectionnée: "
+			"selected": "Langue sélectionnée: "
 		},
 		"brush": {
 			"restored": "Le pinceau du joueur %s a été restauré.",
@@ -162,8 +162,8 @@
 			"all-loaded": "Tous les préfabriqué ont été chargés."
 		},
 		"reload": {
-			"start": "[BlockSniper] Rechargement en cours...",
-			"finish": "[BlockSniper] Rechargement terminer."
+			"start": "Rechargement en cours...",
+			"finish": "Rechargement terminer."
 		}
 	},
 	"brush": {

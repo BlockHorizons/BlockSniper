@@ -149,9 +149,9 @@
 	},
 	"log": {
 		"language": {
-			"auto-selected": "[BlockSniper] No valid language has been selected. English has been auto selected.",
+			"auto-selected": "No valid language has been selected. English has been auto selected.",
 			"usage": "Please select a language by going to the configuration tab in-game, using /b.",
-			"selected": "[BlockSniper] Language selected: "
+			"selected": "Language selected: "
 		},
 		"brush": {
 			"restored": "Brush of player %s has been restored.",
@@ -162,8 +162,8 @@
 			"all-loaded": "All presets have been loaded."
 		},
 		"reload": {
-			"start": "[BlockSniper] Reloading...",
-			"finish": "[BlockSniper] Reload finished."
+			"start": "Reloading...",
+			"finish": "Reload finished."
 		}
 	},
 	"brush": {

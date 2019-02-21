@@ -149,9 +149,9 @@
 	},
 	"log": {
 		"language": {
-			"auto-selected": "[BlockSniper] No valid language has been selected. English has been auto selected.",
+			"auto-selected": "No valid language has been selected. English has been auto selected.",
 			"usage": "請到遊戲中設置頁面使用 /b 選擇語言。",
-			"selected": "[BlockSniper] 已選擇語言: "
+			"selected": "已選擇語言: "
 		},
 		"brush": {
 			"restored": "玩家 %s 的畫筆已被恢復。",
@@ -162,8 +162,8 @@
 			"all-loaded": "所有預設選項已被加載。"
 		},
 		"reload": {
-			"start": "[BlockSniper] 重新加載中...",
-			"finish": "[BlockSniper] 已重新加載。"
+			"start": "重新加載中...",
+			"finish": "已重新加載。"
 		}
 	},
 	"brush": {

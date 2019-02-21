@@ -148,9 +148,9 @@
 	},
 	"log": {
 		"language": {
-			"auto-selected": "[BlockSniper] No se ha seleccionado un lenguaje válido. El Español ha sido seleccionado automáticamente.",
+			"auto-selected": "No se ha seleccionado un lenguaje válido. El Español ha sido seleccionado automáticamente.",
 			"usage": "Por favor, selecciona una lenguaje yendo a la venta de configuración en el juego, usando /b.",
-			"selected": "[BlockSniper] Idioma seleccionado: "
+			"selected": "Idioma seleccionado: "
 		},
 		"brush": {
 			"restored": "La brocha del jugador %s ha sido reestablecida.",
@@ -161,8 +161,8 @@
 			"all-loaded": "Todos los predefinidos han sido cargados."
 		},
 		"reload": {
-			"start": "[BlockSniper] Reiniciando...",
-			"finish": "[BlockSniper] Reinicio terminado."
+			"start": "Reiniciando...",
+			"finish": "Reinicio terminado."
 		}
 	},
 	"brush": {
