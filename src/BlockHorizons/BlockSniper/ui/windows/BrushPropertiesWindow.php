@@ -54,10 +54,10 @@ class BrushPropertiesWindow extends CustomWindow{
 			$this->addInput($this->t(Translation::UI_BRUSH_MENU_BLOCKS), $b->blocks, "stone,stone_brick:1,2", function(Player $player, string $value) use ($b){
 				try {
 					$b->parseBlocks($value);
+					$b->blocks = $value;
 				} catch(InvalidBlockException $exception) {
 					$player->sendMessage(TextFormat::RED . $exception->getMessage());
 				}
-				$b->blocks = $value;
 			});
 		}
 
@@ -72,10 +72,10 @@ class BrushPropertiesWindow extends CustomWindow{
 				$this->addInput($this->t(Translation::UI_BRUSH_MENU_OBSOLETE), $b->obsolete, "stone,stone_brick:1,2", function(Player $player, string $value) use ($b){
 					try {
 						$b->parseBlocks($value);
+						$b->obsolete = $value;
 					} catch(InvalidBlockException $exception) {
 						$player->sendMessage(TextFormat::RED . $exception->getMessage());
 					}
-					$b->obsolete = $value;
 				});
 				break;
 			case BiomeType::ID:
