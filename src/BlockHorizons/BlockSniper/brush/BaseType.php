@@ -77,6 +77,7 @@ abstract class BaseType{
 			$this->brushBlocks = $brush->getBlocks();
 		}catch(InvalidBlockException $exception){
 			$brush->getPlayer()->sendMessage(TextFormat::RED . $exception->getMessage());
+			$this->brushBlocks = [Block::get(Block::AIR)];
 		}
 	}
 
