@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\Brush;
+use BlockHorizons\BlockSniper\exceptions\InvalidBlockException;
 use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\math\Vector3;
 use pocketmine\utils\Random;
+use pocketmine\utils\TextFormat;
 
 class Tree{
 
@@ -43,24 +45,25 @@ class Tree{
 	private $set = [];
 
 	public function __construct(Position $position, Brush $brush, TreeType $type){
-		$this->position = $position;
-		$this->type = $type;
-		$this->startY = $position->y;
+		$this->random = new Random(random_int(0, 1000000));
+		$this->tempVec = new Vector3();
 
-		$this->trunkBlocks = $brush->parseBlocks($brush->tree->trunkBlocks);
-		$this->leavesBlocks = $brush->parseBlocks($brush->tree->leavesBlocks);
+		try {
+			$this->trunkBlocks = $brush->parseBlocks($brush->tree->trunkBlocks);
+			$this->leavesBlocks = $brush->parseBlocks($brush->tree->leavesBlocks);
+		} catch(InvalidBlockException $exception) {
+			$brush->getPlayer()->sendMessage(TextFormat::RED . $exception->getMessage());
+			return;
+		}
+
 		$this->trunkHeight = $brush->tree->trunkHeight;
 		$this->trunkWidth = $brush->tree->trunkWidth;
 		$this->leavesClusterSize = $brush->tree->leavesClusterSize;
 		$this->maxBranchLength = $brush->tree->maxBranchLength;
 
-		try{
-			$this->random = new Random(random_int(0, 1000000));
-		}catch(\Exception $exception){
-
-		}
-
-		$this->tempVec = new Vector3();
+		$this->position = $position;
+		$this->type = $type;
+		$this->startY = $position->y;
 	}
 
 	public function build() : \Generator{
@@ -128,7 +131,7 @@ class Tree{
 				[$this->tempVec->x, $this->tempVec->y, $this->tempVec->z] = [$x, $this->position->y, $z];
 				yield $this->position->level->getBlock($this->tempVec);
 				$bl = clone $this->trunkBlocks[array_rand($this->trunkBlocks)];
-				$this->type->putBlock($this->tempVec, $bl);
+				$this->type->putBlock($this->tempVec->round(), $bl);
 			}
 		}
 		$this->position->y++;
@@ -178,7 +181,7 @@ class Tree{
 							yield $this->position->level->getBlock($this->tempVec);
 
 							$bl = clone $this->trunkBlocks[array_rand($this->trunkBlocks)];
-							$this->type->putBlock($this->tempVec, $bl);
+							$this->type->putBlock($this->tempVec->round(), $bl);
 						}
 					}
 				}
@@ -211,7 +214,7 @@ class Tree{
 						if(mt_rand(0, 4) === 0){
 							yield $block;
 							$bl = clone $this->leavesBlocks[array_rand($this->leavesBlocks)];
-							$this->type->putBlock($this->tempVec, $bl);
+							$this->type->putBlock($this->tempVec->round(), $bl);
 						}
 					}
 				}

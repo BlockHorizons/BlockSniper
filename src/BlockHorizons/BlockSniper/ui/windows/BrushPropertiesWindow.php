@@ -91,10 +91,20 @@ class BrushPropertiesWindow extends CustomWindow{
 
 	private function addTreeProperties(Brush $b, Loader $loader){
 		$this->addInput($this->t(Translation::UI_TREE_MENU_TRUNK_BLOCKS), $b->tree->trunkBlocks, "log:12,log:13", function(Player $player, string $value) use ($b){
-			$b->tree->trunkBlocks = $value;
+			try {
+				$b->parseBlocks($value);
+				$b->tree->trunkBlocks = $value;
+			} catch(InvalidBlockException $exception) {
+				$player->sendMessage(TextFormat::RED . $exception->getMessage());
+			}
 		});
 		$this->addInput($this->t(Translation::UI_TREE_MENU_LEAVES_BLOCKS), $b->tree->leavesBlocks, "leaves:12,leaves:13", function(Player $player, string $value) use ($b){
-			$b->tree->leavesBlocks = $value;
+			try {
+				$b->parseBlocks($value);
+				$b->tree->leavesBlocks = $value;
+			} catch(InvalidBlockException $exception) {
+				$player->sendMessage(TextFormat::RED . $exception->getMessage());
+			}
 		});
 		$this->addSlider($this->t(Translation::UI_TREE_MENU_TRUNK_HEIGHT), 0, $loader->config->maxSize, 1, $b->tree->trunkHeight, function(Player $player, float $value) use ($b){
 			$b->tree->trunkHeight = (int) $value;

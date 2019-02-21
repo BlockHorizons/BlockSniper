@@ -6,12 +6,14 @@ namespace BlockHorizons\BlockSniper\brush;
 
 use BlockHorizons\BlockSniper\brush\async\BlockSniperChunkManager;
 use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
+use BlockHorizons\BlockSniper\exceptions\InvalidBlockException;
 use pocketmine\block\Block;
 use pocketmine\level\ChunkManager;
 use pocketmine\level\Level;
 use pocketmine\math\Vector2;
 use pocketmine\math\Vector3;
 use pocketmine\Server;
+use pocketmine\utils\TextFormat;
 use function array_rand;
 use function strtolower;
 
@@ -65,14 +67,17 @@ abstract class BaseType{
 	 */
 	public function __construct(Brush $brush, ChunkManager $manager, \Generator $blocks = null){
 		$this->blocks = $blocks;
-		$this->brushBlocks = $brush->getBlocks();
-
 		if($manager instanceof Level){
 			$this->level = $manager->getId();
-			return;
+		}else{
+			$this->async = true;
+			$this->chunkManager = $manager;
 		}
-		$this->async = true;
-		$this->chunkManager = $manager;
+		try{
+			$this->brushBlocks = $brush->getBlocks();
+		}catch(InvalidBlockException $exception){
+			$brush->getPlayer()->sendMessage(TextFormat::RED . $exception->getMessage());
+		}
 	}
 
 	/**
