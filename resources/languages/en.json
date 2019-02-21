@@ -116,7 +116,7 @@
 			"width": "Brush Width",
 			"length": "Brush Length",
 			"blocks": "Brush Blocks",
-			"obsolete": "Obsolete Blocks",
+			"obsolete": "Replaced Blocks",
 			"biome": "Brush Biome",
 			"tree": "Brush Tree",
 			"layer-width": "Layer Width"
