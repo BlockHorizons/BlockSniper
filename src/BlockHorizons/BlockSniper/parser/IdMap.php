@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\parser;
 
+use function json_decode;
+use function stream_get_contents;
+
 class IdMap{
 
 	/** @var string[] */
