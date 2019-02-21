@@ -59,6 +59,8 @@ class BrushCommand extends BaseCommand{
 				$item->getNamedTag()->removeTag(BrushListener::KEY_BRUSH_UUID);
 				unset(BrushListener::$brushItems[$uuid]);
 
+				$sender->getInventory()->setItemInHand($item);
+
 				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_BRUSH_CLEAR_SUCCESS));
 		}
 	}
