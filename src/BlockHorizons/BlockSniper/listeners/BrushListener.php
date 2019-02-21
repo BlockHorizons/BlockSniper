@@ -77,7 +77,14 @@ class BrushListener implements Listener{
 				$this->useBrush($session, $session->getBrush(), $player);
 				break;
 			case $hand->getNamedTag()->hasTag(self::KEY_BRUSH_UUID, StringTag::class):
-				$this->useBrush($session, self::$brushItems[$hand->getNamedTag()->getString(self::KEY_BRUSH_UUID)], $player);
+				$uuid = $hand->getNamedTag()->getString(self::KEY_BRUSH_UUID);
+				if(!isset(self::$brushItems[$uuid])){
+					$this->loader->getLogger()->debug("Invalid bound brush found, removing the item: " . $uuid);
+					$hand->getNamedTag()->removeTag(self::KEY_BRUSH_UUID);
+					$player->getInventory()->setItemInHand($hand);
+					return;
+				}
+				$this->useBrush($session, self::$brushItems[$uuid], $player);
 				break;
 			default:
 				return;
