@@ -16,6 +16,7 @@ use BlockHorizons\BlockSniper\data\ConfigData;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\data\TranslationData;
 use BlockHorizons\BlockSniper\listeners\BrushListener;
+use BlockHorizons\BlockSniper\parser\IdMap;
 use BlockHorizons\BlockSniper\presets\PresetManager;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use BlockHorizons\BlockSniper\tasks\RedoDiminishTask;
@@ -75,6 +76,8 @@ class Loader extends PluginBase{
 		}
 
 		$this->getServer()->getAsyncPool()->submitTask(new UpdateNotifyTask());
+
+		new IdMap($this->getResource("id_mapping.json"));
 	}
 
 	public function onEnable() : void{

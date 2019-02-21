@@ -95,8 +95,9 @@ class StringConsumer{
 			$char = $this->blockString[$i];
 			$match = preg_match('/[a-zA-Z_]/', $char);
 			if($match === 0) {
-				// Not a letter. If the character is a [, it probably indicates the start of the block tags.
-				if($char !== "[") {
+				// Not a letter. If the character is a [, it probably indicates the start of the block tags. If it is a
+				// comma, it means we have another block following.
+				if($char !== "[" && $char !== ",") {
 					throw new InvalidBlockException(sprintf("cannot parse %s as block: invalid character %s at offset %s",
 															$this->blockString, $char, $i));
 				}
@@ -124,6 +125,9 @@ class StringConsumer{
 	 * @return Block
 	 */
 	private function parseBlockName(string $name) : Block {
+		if(($translation = IdMap::translate($name)) !== null){
+			$name = $translation;
+		}
 		try {
 			return Item::fromString($name)->getBlock();
 		}catch(\InvalidArgumentException $exception){
@@ -137,7 +141,7 @@ class StringConsumer{
 	 * @throws InvalidBlockException
 	 */
 	private function tryConsumeTags() {
-		if(strlen($this->blockString) === 0) {
+		if(strlen($this->blockString) === 0 || $this->blockString[0] !== "[") {
 			// There are no tags available. Don't do anything.
 			return;
 		}

@@ -10,8 +10,10 @@ use BlockHorizons\BlockSniper\brush\types\ReplaceType;
 use BlockHorizons\BlockSniper\brush\types\TopLayerType;
 use BlockHorizons\BlockSniper\brush\types\TreeType;
 use BlockHorizons\BlockSniper\data\Translation;
+use BlockHorizons\BlockSniper\exceptions\InvalidBlockException;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\Player;
+use pocketmine\utils\TextFormat;
 
 class BrushPropertiesWindow extends CustomWindow{
 
@@ -50,6 +52,11 @@ class BrushPropertiesWindow extends CustomWindow{
 		}
 		if($b->getType()->usesBlocks()){
 			$this->addInput($this->t(Translation::UI_BRUSH_MENU_BLOCKS), $b->blocks, "stone,stone_brick:1,2", function(Player $player, string $value) use ($b){
+				try {
+					$b->parseBlocks($value);
+				} catch(InvalidBlockException $exception) {
+					$player->sendMessage(TextFormat::RED . $exception->getMessage());
+				}
 				$b->blocks = $value;
 			});
 		}
@@ -63,6 +70,11 @@ class BrushPropertiesWindow extends CustomWindow{
 				break;
 			case ReplaceType::ID:
 				$this->addInput($this->t(Translation::UI_BRUSH_MENU_OBSOLETE), $b->obsolete, "stone,stone_brick:1,2", function(Player $player, string $value) use ($b){
+					try {
+						$b->parseBlocks($value);
+					} catch(InvalidBlockException $exception) {
+						$player->sendMessage(TextFormat::RED . $exception->getMessage());
+					}
 					$b->obsolete = $value;
 				});
 				break;

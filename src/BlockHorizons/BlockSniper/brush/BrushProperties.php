@@ -8,10 +8,9 @@ use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
 use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
 use BlockHorizons\BlockSniper\brush\shapes\SphereShape;
 use BlockHorizons\BlockSniper\brush\types\FillType;
+use BlockHorizons\BlockSniper\parser\BlockParser;
 use pocketmine\block\Block;
-use pocketmine\item\Item;
 use pocketmine\level\biome\Biome;
-use function explode;
 use function is_numeric;
 use function str_replace;
 use function strtoupper;
@@ -59,26 +58,10 @@ class BrushProperties implements \JsonSerializable{
 	 * @return Block[]
 	 */
 	public function parseBlocks(string $data) : array{
-		$blocks = [];
-		$fragments = explode(",", $data);
-		foreach($fragments as $itemString){
-			if($itemString === ""){
-				continue;
-			}
-			if(is_numeric($itemString)){
-				$blocks[] = Item::get((int) $itemString)->getBlock();
-				continue;
-			}
-			try{
-				$blocks[] = Item::fromString($itemString)->getBlock();
-			}catch(\InvalidArgumentException $exception){
-
-			}
-		}
+		$blocks = BlockParser::parse($data);
 		if(empty($blocks)){
 			return [Block::get(Block::AIR)];
 		}
-
 		return $blocks;
 	}
 

@@ -13,6 +13,7 @@
 - Added brush to item binding. Use /b bind and /b unbind to bind a new brush to an item.
     - Bound brushes can be named and display the shape and type they have in the name.
     - Bound brushes are saved when the server restarts.
+- Added a message if brush/obsolete blocks could not be resolved instead of defaulting to 0 silently.
   
 ### Changed
 - The Brush UI no longer contains all available brush properties.
@@ -27,6 +28,8 @@
   effect.
 - The TopLayer type no longer uses the `Brush Height` property for the width of the layer. It now uses a new 
   `Layer Width` property
+- Brush blocks can now be selected using a readable name instead of using metadata, for example `spruce_sapling` instead
+  of `sapling:1`
 
 ### Removed
 - The main menu no longer contains a Tree button.
