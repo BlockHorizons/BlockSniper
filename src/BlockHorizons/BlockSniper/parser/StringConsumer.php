@@ -93,7 +93,7 @@ class StringConsumer{
 		$length = strlen($this->blockString);
 		for($i = 0; $i < $length; $i++) {
 			$char = $this->blockString[$i];
-			$match = preg_match('/[a-zA-Z_]/', $char);
+			$match = preg_match('/[a-zA-Z0-9_:]/', $char);
 			if($match === 0) {
 				// Not a letter. If the character is a [, it probably indicates the start of the block tags. If it is a
 				// comma, it means we have another block following.
