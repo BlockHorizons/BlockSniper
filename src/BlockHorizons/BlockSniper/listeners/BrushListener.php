@@ -73,7 +73,7 @@ class BrushListener implements Listener{
 		$brushItem = $this->loader->config->brushItem->parse();
 
 		switch(true){
-			case $hand->getId() === $brushItem->getId() && $hand->getMeta() === $brushItem->getMeta():
+			case $hand->getId() === $brushItem->getId() && $hand->getDamage() === $brushItem->getDamage():
 				$this->useBrush($session, $session->getBrush(), $player);
 				break;
 			case $hand->getNamedTag()->hasTag(self::KEY_BRUSH_UUID, StringTag::class):
@@ -118,7 +118,7 @@ class BrushListener implements Listener{
 		}
 		$selectionItem = $this->loader->config->selectionItem->parse();
 		$hand = $player->getInventory()->getItemInHand();
-		if($hand->getId() !== $selectionItem->getId() || $hand->getMeta() !== $selectionItem->getMeta()){
+		if($hand->getId() !== $selectionItem->getId() || $hand->getDamage() !== $selectionItem->getDamage()){
 			return false;
 		}
 
@@ -210,7 +210,7 @@ class BrushListener implements Listener{
 	public function onItemHeld(PlayerItemHeldEvent $event) : void{
 		$player = $event->getPlayer();
 		$brush = $this->loader->config->brushItem->parse();
-		if($event->getItem()->getId() !== $brush->getId() || $event->getItem()->getMeta() !== $brush->getMeta()) {
+		if($event->getItem()->getId() !== $brush->getId() || $event->getItem()->getDamage() !== $brush->getDamage()) {
 			return;
 		}
 		if($player->hasPermission("blocksniper.command.brush")){

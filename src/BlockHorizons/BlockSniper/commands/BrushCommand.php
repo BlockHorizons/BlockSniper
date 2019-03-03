@@ -37,7 +37,7 @@ class BrushCommand extends BaseCommand{
 					return;
 				}
 				$brush = $this->loader->config->brushItem->parse();
-				if($item->getId() === $brush->getId() && $item->getMeta() === $brush->getMeta()){
+				if($item->getId() === $brush->getId() && $item->getDamage() === $brush->getDamage()){
 					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_BRUSH_BIND_BRUSH_ITEM));
 					return;
 				}
