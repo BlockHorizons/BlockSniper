@@ -28,7 +28,7 @@ abstract class CustomWindow extends CustomForm{
 	public function processBlocks(array $blocks) : string{
 		$return = [];
 		foreach($blocks as $block){
-			$return[] = $block->getId() . ":" . $block->getDamage();
+			$return[] = $block->getId() . ":" . $block->getMeta();
 		}
 
 		return implode(",", $return);

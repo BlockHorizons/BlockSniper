@@ -6,12 +6,12 @@ namespace BlockHorizons\BlockSniper\commands;
 
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
-use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use pocketmine\utils\TextFormat as TF;
+use Sandertv\Cmd\Command;
 
 abstract class BaseCommand extends Command implements PluginIdentifiableCommand{
 
@@ -20,10 +20,9 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand{
 	/** @var bool */
 	protected $consoleUsable = false;
 
-	public function __construct(Loader $loader, string $name, string $description, string $usageMessage, array $aliases = [], bool $consoleUsable = false){
-		parent::__construct($name, Translation::get($description), "[Usage] " . $usageMessage, $aliases);
+	public function __construct(Loader $loader, string $name, string $description, array $aliases = []){
+		parent::__construct($name, Translation::get($description), $aliases);
 		$this->loader = $loader;
-		$this->consoleUsable = $consoleUsable;
 		$this->setPermission("blocksniper.command." . $name);
 	}
 

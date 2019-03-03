@@ -94,7 +94,7 @@ class CloneStore{
 		$template = [];
 		$i = 0;
 		foreach($blocks as $block){
-			$template[$block->getId() . ":" . $block->getDamage() . "(" . $i . ")"] = [
+			$template[$block->getId() . ":" . $block->getMeta() . "(" . $i . ")"] = [
 				"x" => $block->x - $targetBlock->x,
 				"y" => $block->y - $targetBlock->y,
 				"z" => $block->z - $targetBlock->z
