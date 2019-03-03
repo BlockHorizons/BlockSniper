@@ -25,9 +25,9 @@ class SnowConeType extends BaseType{
 			if(!($block instanceof Flowable) && ($id = $block->getId()) !== Block::AIR && $id !== Block::SNOW_LAYER){
 				$topBlock = $this->side($block, Facing::UP);
 				if(($topId = $topBlock->getId()) === Block::AIR || $topId === Block::SNOW_LAYER){
-					if($topBlock->getDamage() < 7 && $topBlock->getId() === Block::SNOW_LAYER){
+					if($topBlock->getMeta() < 7 && $topBlock->getId() === Block::SNOW_LAYER){
 						yield $topBlock;
-						$this->putBlock($topBlock, Block::get(Block::SNOW_LAYER, $topBlock->getDamage() + 1));
+						$this->putBlock($topBlock, Block::get(Block::SNOW_LAYER, $topBlock->getMeta() + 1));
 					}elseif($topId !== Block::SNOW_LAYER){
 						yield $topBlock;
 						$this->putBlock($topBlock, Block::get(Block::SNOW_LAYER));
