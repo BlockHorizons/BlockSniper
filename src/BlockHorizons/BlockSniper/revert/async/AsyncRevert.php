@@ -7,6 +7,7 @@ namespace BlockHorizons\BlockSniper\revert\async;
 use BlockHorizons\BlockSniper\brush\async\BlockSniperChunkManager;
 use BlockHorizons\BlockSniper\brush\async\tasks\RevertTask;
 use BlockHorizons\BlockSniper\revert\Revert;
+use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\level\format\Chunk;
 use pocketmine\Server;
 
@@ -98,7 +99,15 @@ abstract class AsyncRevert extends Revert{
 	}
 
 	public function restore() : void{
-		Server::getInstance()->getAsyncPool()->submitTask(new RevertTask($this));
+		$player = Server::getInstance()->getPlayer($this->getPlayerName());
+		if($player === null){
+			// Player left the server already.
+			return;
+		}
+		foreach($this->getOldChunks() as $hash => $chunk){
+			$player->getLevel()->setChunk($chunk->getX(), $chunk->getZ(), $chunk, false);
+		}
+		SessionManager::getPlayerSession($player)->getRevertStore()->saveRevert($this->getDetached());
 	}
 
 	/**
