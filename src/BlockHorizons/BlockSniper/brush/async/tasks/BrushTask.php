@@ -85,9 +85,12 @@ class BrushTask extends AsyncTask{
 			if(!isset($chunks[$index])) {
 				continue;
 			}
+			/** @var Chunk $chunk */
+			$chunk = $chunks[$index];
 
 			[$posX, $posY, $posZ] = [(int) $vector3->x & 0x0f, (int) $vector3->y, (int) $vector3->z & 0x0f];
-			$block = Block::get($chunks[$index]->getBlockId($posX, $posY, $posZ), $chunks[$index]->getBlockData($posX, $posY, $posZ));
+			$combinedValue = $chunk->getFullBlock($posX, $posY, $posZ);
+			$block = Block::get($combinedValue >> 4, $combinedValue & 0xf);
 			$block->setComponents($vector3->x, $vector3->y, $vector3->z);
 
 			$i++;
