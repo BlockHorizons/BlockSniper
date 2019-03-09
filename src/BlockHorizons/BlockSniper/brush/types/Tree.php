@@ -131,7 +131,7 @@ class Tree{
 				[$this->tempVec->x, $this->tempVec->y, $this->tempVec->z] = [$x, $this->position->y, $z];
 				yield $this->position->level->getBlock($this->tempVec);
 				$bl = clone $this->trunkBlocks[array_rand($this->trunkBlocks)];
-				$this->type->putBlock($this->tempVec->round(), $bl);
+				$this->type->putBlock($this->tempVec->floor(), $bl);
 			}
 		}
 		$this->position->y++;
@@ -181,7 +181,7 @@ class Tree{
 							yield $this->position->level->getBlock($this->tempVec);
 
 							$bl = clone $this->trunkBlocks[array_rand($this->trunkBlocks)];
-							$this->type->putBlock($this->tempVec->round(), $bl);
+							$this->type->putBlock($this->tempVec->floor(), $bl);
 						}
 					}
 				}
@@ -214,7 +214,7 @@ class Tree{
 						if(mt_rand(0, 4) === 0){
 							yield $block;
 							$bl = clone $this->leavesBlocks[array_rand($this->leavesBlocks)];
-							$this->type->putBlock($this->tempVec->round(), $bl);
+							$this->type->putBlock($this->tempVec->floor(), $bl);
 						}
 					}
 				}
