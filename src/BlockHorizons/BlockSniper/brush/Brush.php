@@ -6,6 +6,7 @@ namespace BlockHorizons\BlockSniper\brush;
 
 use BlockHorizons\BlockSniper\brush\async\tasks\BrushTask;
 use BlockHorizons\BlockSniper\brush\types\TreeType;
+use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\events\BrushUseEvent;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\revert\sync\SyncUndo;
@@ -16,6 +17,7 @@ use BlockHorizons\BlockSniper\tasks\CooldownBarTask;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\Player;
 use pocketmine\Server;
+use pocketmine\utils\TextFormat;
 use function count;
 
 class Brush extends BrushProperties{
@@ -91,6 +93,8 @@ class Brush extends BrushProperties{
 			Server::getInstance()->getAsyncPool()->submitTask(new BrushTask($this, $shape, $type, $shape->getTouchedChunks(), $plotPoints));
 			return;
 		}
+		$startTime = microtime(true);
+
 		$undoBlocks = [];
 		foreach($type->fillShape($plotPoints) as $undoBlock){
 			$undoBlocks[] = $undoBlock;
@@ -99,6 +103,8 @@ class Brush extends BrushProperties{
 			$session->getRevertStore()->saveRevert(new SyncUndo($undoBlocks, $session->getSessionOwner()->getName()));
 		}
 
+		$duration = round(microtime(true) - $startTime, 2);
+		$this->getPlayer()->sendPopup(TextFormat::GREEN . Translation::get(Translation::BRUSH_STATE_DONE) . " ($duration seconds)");
 		$loader->getScheduler()->scheduleRepeatingTask(new CooldownBarTask($loader, $this, $this->getPlayer()), 1);
 	}
 

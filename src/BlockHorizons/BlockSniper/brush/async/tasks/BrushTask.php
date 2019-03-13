@@ -33,6 +33,8 @@ class BrushTask extends AsyncTask{
 	private $type;
 	/** @var Vector2[] */
 	private $plotPoints;
+	/** @var float */
+	private $startTime;
 
 	public function __construct(Brush $brush, BaseShape $shape, BaseType $type, array $chunks, array $plotPoints){
 		$this->storeLocal([$chunks, $brush]);
@@ -40,6 +42,7 @@ class BrushTask extends AsyncTask{
 		$this->type = $type;
 		$this->chunks = $chunks;
 		$this->plotPoints = $plotPoints;
+		$this->startTime = microtime(true);
 	}
 
 	public function onRun() : void{
@@ -108,7 +111,8 @@ class BrushTask extends AsyncTask{
 			return;
 		}
 		if($progress >= 21){
-			$player->sendPopup(TextFormat::GREEN . Translation::get(Translation::BRUSH_STATE_DONE));
+			$duration = round(microtime(true) - $this->startTime, 2);
+			$player->sendPopup(TextFormat::GREEN . Translation::get(Translation::BRUSH_STATE_DONE) . " ($duration seconds)");
 			return;
 		}
 		$player->sendPopup(TextFormat::GREEN . str_repeat("|", $progress) . TextFormat::RED . str_repeat("|", 20 - $progress));

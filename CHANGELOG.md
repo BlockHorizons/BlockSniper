@@ -14,6 +14,8 @@
     - Bound brushes can be named and display the shape and type they have in the name.
     - Bound brushes are saved when the server restarts.
 - Added a message if brush/obsolete blocks could not be resolved instead of defaulting to 0 silently.
+- The duration a modification took is now sent upon the finishing of the modification. Note that this is not entirely
+  accurate, in particular for smaller modifications.
   
 ### Changed
 - The Brush UI no longer contains all available brush properties.
@@ -48,3 +50,4 @@
 - Fixed schematics saved using BlockSniper causing blocks to be significantly misplaced.
 - Fixed schematic pasting running out of memory quickly with bigger schematics.
 - Fixed [BlockSniper] being shown twice in console messages.
+- Fixed the schematic pasted successfully message showing up before the schematic was even done pasting.

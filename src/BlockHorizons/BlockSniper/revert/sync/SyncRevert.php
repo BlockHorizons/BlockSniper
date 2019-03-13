@@ -2,8 +2,11 @@
 
 namespace BlockHorizons\BlockSniper\revert\sync;
 
+use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\revert\Revert;
 use pocketmine\block\Block;
+use pocketmine\Server;
+use pocketmine\utils\TextFormat;
 
 abstract class SyncRevert extends Revert{
 
@@ -16,9 +19,12 @@ abstract class SyncRevert extends Revert{
 	}
 
 	public function restore() : void{
+		$startTime = microtime(true);
 		foreach($this->blocks as $block){
-			$block->getLevel()->setBlock($block, $block, false, false);
+			$block->getLevel()->setBlock($block, $block, false);
 		}
+		$duration = round(microtime(true) - $startTime, 2);
+		Server::getInstance()->getPlayer($this->playerName)->sendPopup(TextFormat::GREEN . Translation::get(Translation::BRUSH_STATE_DONE) . " ($duration seconds)");
 	}
 
 	/**

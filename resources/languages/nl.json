@@ -57,7 +57,7 @@
 			},
 			"schematic": {
 				"nonexistent": "De schematic %s kon niet worden gevonden in de schematic folder.",
-				"success": "Plakken van de schematic %s op de locatie waar je naar kijkt geslaagd."
+				"success": "Schematic %s wordt geplaatst op het doelwit blok."
 			}
 		}
 	},

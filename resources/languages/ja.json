@@ -57,7 +57,7 @@
 			},
 			"schematic": {
 				"nonexistent": "回路図ディレクトリ%sが回路図ディレクトリに見つかりませんでした。",
-				"success": "選択範囲に回路図%sを貼り付けました。"
+				"success": "Pasting the schematic %s on the location looked at."
 			}
 		}
 	},

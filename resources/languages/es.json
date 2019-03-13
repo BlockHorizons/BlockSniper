@@ -57,7 +57,7 @@
 			},
 			"schematic": {
 				"nonexistent": "La schematic %s no pudo ser encontrada en el directorio de schematics.",
-				"success": "Se ha pegado correctamente la schematic %s en la ubicación examinada."
+				"success": "Pasting the schematic %s on the location looked at."
 			}
 		}
 	},

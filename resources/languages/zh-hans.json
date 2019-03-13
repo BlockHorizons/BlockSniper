@@ -57,7 +57,7 @@
 			},
 			"schematic": {
 				"nonexistent": "无法在概要目录中找到 %s 概要。",
-				"success": "成功复制概要 %s 至你看向的位置。"
+				"success": "Pasting the schematic %s on the location looked at."
 			}
 		}
 	},

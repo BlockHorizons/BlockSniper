@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\async\tasks;
 
 use BlockHorizons\BlockSniper\brush\async\BlockSniperChunkManager;
+use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\revert\async\AsyncUndo;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
@@ -15,6 +16,7 @@ use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use pocketmine\scheduler\AsyncTask;
 use pocketmine\Server;
+use pocketmine\utils\TextFormat;
 
 class PasteTask extends AsyncTask{
 
@@ -28,7 +30,7 @@ class PasteTask extends AsyncTask{
 	private $playerName;
 
 	public function __construct(string $file, Vector3 $center, array $chunks, string $playerName){
-		$this->storeLocal($chunks);
+		$this->storeLocal([$chunks, microtime(true)]);
 		$this->file = $file;
 		$this->center = $center;
 		$this->chunks = $chunks;
@@ -87,7 +89,7 @@ class PasteTask extends AsyncTask{
 			return;
 		}
 
-		$undoChunks = $this->fetchLocal();
+		[$undoChunks, $startTime] = $this->fetchLocal();
 		foreach($undoChunks as &$undoChunk){
 			$undoChunk = Chunk::fastDeserialize($undoChunk);
 		}
@@ -102,6 +104,8 @@ class PasteTask extends AsyncTask{
 			}
 		}
 
+		$duration = round(microtime(true) - $startTime, 2);
+		$player->sendPopup(TextFormat::GREEN . Translation::get(Translation::BRUSH_STATE_DONE) . " ($duration seconds)");
 		SessionManager::getPlayerSession($player)->getRevertStore()->saveRevert(new AsyncUndo($chunks, $undoChunks, $this->playerName, $player->getLevel()->getId()));
 	}
 }
