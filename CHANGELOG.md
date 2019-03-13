@@ -32,6 +32,7 @@
   `Layer Width` property
 - Brush blocks can now be selected using a readable name instead of using metadata, for example `spruce_sapling` instead
   of `sapling:1`
+- The ReplaceAll type no longer ignores blocks such as torches, grass and other plants.
 
 ### Removed
 - The main menu no longer contains a Tree button.
