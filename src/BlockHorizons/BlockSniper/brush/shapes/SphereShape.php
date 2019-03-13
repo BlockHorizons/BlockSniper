@@ -26,6 +26,9 @@ class SphereShape extends BaseShape{
 		$radiusZ = ($this->maxZ - $this->minZ) / 2;
 		$radiusZS = (int) $radiusZ === 0 ? 1 : $radiusZ ** 2;
 
+		$avgRadius = ($radiusX + $radiusY + $radiusZ ) / 3;
+		$rSquared = $avgRadius ** 2;
+
 		$centerX = $this->minX + $radiusX;
 		$centerY = $this->minY + $radiusY;
 		$centerZ = $this->minZ + $radiusZ;
@@ -41,7 +44,7 @@ class SphereShape extends BaseShape{
 					$zs = ($z - $centerZ) ** 2 / $radiusZS;
 					if($xs + $ys + $zs <= 1.0){
 						if($this->hollow){
-							if($xs + $ys + $zs < 0.85){
+							if(($xs * $radiusXS + $ys * $radiusYS + $zs * $radiusZS) < $rSquared - 3 - $avgRadius * 2){
 								continue;
 							}
 						}

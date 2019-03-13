@@ -24,6 +24,9 @@ class CylinderShape extends BaseShape{
 		$radiusZ = ($this->maxZ - $this->minZ) / 2;
 		$radiusZS = (int) $radiusZ === 0 ? 10 : $radiusZ ** 2;
 
+		$avgRadius = ($radiusX + $radiusZ) / 2;
+		$rSquared = $avgRadius ** 2;
+
 		$centerX = $this->minX + $radiusX;
 		$centerZ = $this->minZ + $radiusZ;
 
@@ -37,7 +40,7 @@ class CylinderShape extends BaseShape{
 					}
 					if($xs + $zs <= 1.0){
 						if($this->hollow){
-							if($xs + $zs < 0.85 && $y !== $this->minY && $y !== $this->maxY){
+							if(($xs * $radiusXS + $zs * $radiusZS) < $rSquared - 3 - $avgRadius * 2 && $y !== $this->minY && $y !== $this->maxY){
 								continue;
 							}
 						}
