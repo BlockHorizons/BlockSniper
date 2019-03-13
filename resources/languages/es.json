@@ -199,7 +199,8 @@
 			"freeze": "Congelar",
 			"warm": "Calentar",
 			"heat": "Hervir",
-			"smooth": "Smooth"
+			"smooth": "Smooth",
+			"replacetarget": "Replace Target"
 		}
 	}
 }

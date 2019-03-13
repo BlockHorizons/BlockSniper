@@ -206,7 +206,8 @@
 			"freeze": "Freeze",
 			"warm": "Warm",
 			"heat": "Heat",
-			"smooth": "Smooth"
+			"smooth": "Smooth",
+			"replacetarget": "Replace Target"
 		}
 	}
 }

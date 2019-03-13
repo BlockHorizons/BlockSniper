@@ -205,7 +205,8 @@
 			"freeze": "얼리기",
 			"warm": "따뜻하게 하기",
 			"heat": "뜨겁게 하기",
-			"smooth": "Smooth"
+			"smooth": "Smooth",
+			"replacetarget": "Replace Target"
 		}
 	}
 }

@@ -155,6 +155,7 @@ class Translation{
 	public const BRUSH_TYPE_TOPLAYER = "brush.type.toplayer";
 	public const BRUSH_TYPE_TREE = "brush.type.tree";
 	public const BRUSH_TYPE_WARM = "brush.type.warm";
+	public const BRUSH_TYPE_REPLACETARGET = "brush.type.replacetarget";
 
 	/** @var string[] */
 	private static $translations = [];

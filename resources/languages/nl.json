@@ -205,7 +205,8 @@
 			"freeze": "Bevriezen",
 			"warm": "Verwarmen",
 			"heat": "Verhitten",
-			"smooth": "Afvlakken"
+			"smooth": "Afvlakken",
+			"replacetarget": "Vervang doelwit"
 		}
 	}
 }
