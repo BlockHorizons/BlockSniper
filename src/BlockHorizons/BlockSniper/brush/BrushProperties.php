@@ -43,6 +43,8 @@ class BrushProperties implements \JsonSerializable{
 	public $tree;
 	/** @var int */
 	public $layerWidth = 0;
+	/** @var string */
+	public $soilBlocks = "grass";
 
 	public function __construct(){
 		$this->tree = new TreeProperties();
@@ -77,6 +79,13 @@ class BrushProperties implements \JsonSerializable{
 	 */
 	public function getObsolete() : array{
 		return $this->parseBlocks($this->obsolete);
+	}
+
+	/**
+	 * @return Block[]
+	 */
+	public function getSoil() : array{
+		return $this->parseBlocks($this->soilBlocks);
 	}
 
 	/**

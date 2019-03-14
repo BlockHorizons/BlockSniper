@@ -89,7 +89,8 @@
 			"obsolete": "Replaced Blocks",
 			"biome": "Brush Biome",
 			"tree": "Brush Tree",
-			"layer-width": "Layer Width"
+			"layer-width": "Layer Width",
+			"soil": "Soil Blocks"
 		},
 		"configuration-menu": {
 			"title": "BlockSniper Configuration",
@@ -172,7 +173,8 @@
 			"warm": "Warm",
 			"heat": "Heat",
 			"smooth": "Smooth",
-			"replacetarget": "Replace Target"
+			"replacetarget": "Replace Target",
+			"plant": "Plant"
 		}
 	}
 }

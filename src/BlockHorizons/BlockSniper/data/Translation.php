@@ -12,9 +12,9 @@ use function vsprintf;
 class Translation{
 
 	/**
-	 * These constants are AUTOMATICALLY GENERATED.
+	 * These constants are automatically generated.
 	 *
-	 * Do NOT edit by hand.
+	 * Do not edit by hand.
 	 */
 	public const COMMANDS_COMMON_WARNING_PREFIX = "commands.common.warning-prefix";
 	public const COMMANDS_COMMON_INVALID_SENDER = "commands.common.invalid-sender";
@@ -75,6 +75,7 @@ class Translation{
 	public const UI_BRUSH_MENU_TREE = "ui.brush-menu.tree";
 	public const UI_BRUSH_MENU_LAYER_WIDTH = "ui.brush-menu.layer-width";
 	public const UI_BRUSH_MENU_NAME = "ui.brush-menu.name";
+	public const UI_BRUSH_MENU_SOIL = "ui.brush-menu.soil";
 	public const UI_CONFIGURATION_MENU_TITLE = "ui.configuration-menu.title";
 	public const UI_CONFIGURATION_MENU_LANGUAGE = "ui.configuration-menu.language";
 	public const UI_CONFIGURATION_MENU_BRUSH_ITEM = "ui.configuration-menu.brush-item";
@@ -136,6 +137,7 @@ class Translation{
 	public const BRUSH_TYPE_TREE = "brush.type.tree";
 	public const BRUSH_TYPE_WARM = "brush.type.warm";
 	public const BRUSH_TYPE_REPLACETARGET = "brush.type.replacetarget";
+	public const BRUSH_TYPE_PLANT = "brush.type.plant";
 
 	/** @var string[] */
 	private static $translations = [];

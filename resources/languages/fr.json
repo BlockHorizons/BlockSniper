@@ -89,7 +89,8 @@
 			"biome": "Biome du pinceau",
 			"tree": "Arbre du pinceau",
 			"layer-width": "Layer Width",
-			"name": "Brush Name"
+			"name": "Brush Name",
+			"soil": "Soil Blocks"
 		},
 		"configuration-menu": {
 			"title": "Configuration BlockSniper",
@@ -172,7 +173,8 @@
 			"warm": "Warm",
 			"heat": "Heat",
 			"smooth": "Smooth",
-			"replacetarget": "Replace Target"
+			"replacetarget": "Replace Target",
+			"plant": "Plant"
 		}
 	}
 }

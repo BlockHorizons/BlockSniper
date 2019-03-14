@@ -6,6 +6,7 @@ namespace BlockHorizons\BlockSniper\ui\windows;
 
 use BlockHorizons\BlockSniper\brush\Brush;
 use BlockHorizons\BlockSniper\brush\types\BiomeType;
+use BlockHorizons\BlockSniper\brush\types\PlantType;
 use BlockHorizons\BlockSniper\brush\types\ReplaceType;
 use BlockHorizons\BlockSniper\brush\types\TopLayerType;
 use BlockHorizons\BlockSniper\brush\types\TreeType;
@@ -85,6 +86,16 @@ class BrushPropertiesWindow extends CustomWindow{
 				break;
 			case TreeType::ID:
 				$this->addTreeProperties($b, $loader);
+				break;
+			case PlantType::ID:
+				$this->addInput($this->t(Translation::UI_BRUSH_MENU_SOIL), $b->soilBlocks, "grass", function(Player $player, string $value) use ($b){
+					try {
+						$b->parseBlocks($value);
+						$b->soilBlocks = $value;
+					} catch(InvalidBlockException $exception) {
+						$player->sendMessage(TextFormat::RED . $exception->getMessage());
+					}
+				});
 				break;
 		}
 	}

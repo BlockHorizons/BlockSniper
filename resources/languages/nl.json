@@ -89,7 +89,8 @@
 			"biome": "Verf Biome",
 			"tree": "Verf Boom",
 			"layer-width": "Laagdikte",
-			"name": "Verf naam"
+			"name": "Verf naam",
+			"soil": "Grond Blokken"
 		},
 		"configuration-menu": {
 			"title": "BlockSniper Configuratie",
@@ -172,7 +173,8 @@
 			"warm": "Verwarmen",
 			"heat": "Verhitten",
 			"smooth": "Afvlakken",
-			"replacetarget": "Vervang doelwit"
+			"replacetarget": "Vervang doelwit",
+			"plant": "Planten"
 		}
 	}
 }

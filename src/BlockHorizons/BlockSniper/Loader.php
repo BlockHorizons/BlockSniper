@@ -88,7 +88,6 @@ class Loader extends PluginBase{
 	}
 
 	public function onDisable() : void{
-		$this->getPresetManager()->storePresetsToFile();
 		SessionManager::close();
 		$this->config->close();
 		$this->listener->saveBrushes();

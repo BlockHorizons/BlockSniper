@@ -44,6 +44,7 @@ abstract class BaseType{
 	public const TYPE_HEAT = 20;
 	public const TYPE_SMOOTH = 21;
 	public const TYPE_REPLACE_TARGET = 22;
+	public const TYPE_PLANT = 23;
 
 	/** @var int */
 	protected $level = 0;

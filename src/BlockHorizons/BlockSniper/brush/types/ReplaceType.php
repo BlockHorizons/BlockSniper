@@ -31,7 +31,7 @@ class ReplaceType extends BaseType{
 	public function fill() : \Generator{
 		foreach($this->blocks as $block){
 			foreach($this->obsolete as $obsolete){
-				if($block->getId() === $obsolete->getId() and $block->getMeta() === $obsolete->getMeta()){
+				if($block->getId() === $obsolete->getId() && $block->getMeta() === $obsolete->getMeta()){
 					yield $block;
 					$this->putBlock($block, $this->randomBrushBlock());
 					break;

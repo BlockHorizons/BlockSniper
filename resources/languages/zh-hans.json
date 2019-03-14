@@ -89,7 +89,8 @@
 			"biome": "生物群落",
 			"tree": "树木类型",
 			"layer-width": "Layer Width",
-			"name": "Brush Name"
+			"name": "Brush Name",
+			"soil": "Soil Blocks"
 		},
 		"configuration-menu": {
 			"title": "BlockSniper 设置",
@@ -172,7 +173,8 @@
 			"warm": "Warm",
 			"heat": "Heat",
 			"smooth": "Smooth",
-			"replacetarget": "Replace Target"
+			"replacetarget": "Replace Target",
+			"plant": "Plant"
 		}
 	}
 }

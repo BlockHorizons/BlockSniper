@@ -18,6 +18,7 @@
   accurate, in particular for smaller modifications.
 - Added a new Replace Target type which replaces all blocks with the same type as the target block with the blocks set
   as brush blocks.
+- Added a new Plant type which places brush blocks on top of all soil blocks set in the brush.
   
 ### Changed
 - The Brush UI no longer contains all available brush properties.
