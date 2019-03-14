@@ -22,8 +22,6 @@
 ### Changed
 - The Brush UI no longer contains all available brush properties.
 - The tree properties now show when the new brush properties UI is opened.
-- The preset creation window no longer holds all available properties. Instead, like the brush window, it now only shows
-  brush properties that apply.
 - It is no longer possible to do two or more brush modifications concurrently.
 - The maximum brush distance now depends on the view distance of a player.
 - The language files will now be automatically updated if it is found not to be up to date. It will no longer show a
@@ -39,6 +37,7 @@
 ### Removed
 - The main menu no longer contains a Tree button.
 - The configuration menu no longer has a reload button. This is done automatically.
+- The preset menu was removed in favour of the bound brushes that were added.
 
 ### Fixed
 - Fixed cuboid and cylinder shapes not to be async/sync when they should be.

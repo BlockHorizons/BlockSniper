@@ -62,41 +62,11 @@
 		}
 	},
 	"ui": {
-		"preset-menu": {
-			"title": "Preset Menu",
-			"subtitle": "Click a button to continue",
-			"create": "Create",
-			"delete": "Delete",
-			"select": "Select",
-			"list": "List",
-			"exit": "Exit"
-		},
-		"preset-edit": {
-			"title": "Preset Edit Menu",
-			"name": "Preset Name"
-		},
-		"preset-selection": {
-			"title": "Preset Selection Menu",
-			"subtitle": "Click a button to apply the preset"
-		},
-		"preset-deletion": {
-			"title": "Preset Deletion Menu",
-			"subtitle": "Click a button to delete a preset"
-		},
-		"preset-list": {
-			"title": "Preset List Menu",
-			"subtitle": "Click a button to edit/view a preset"
-		},
-		"preset-creation": {
-			"title": "Preset Creation Menu",
-			"name": "Preset Name"
-		},
 		"main-menu": {
 			"title": "BlockSniper Menu",
 			"subtitle": "Click a button to continue",
 			"brush": "Brush",
 			"config": "Configuration",
-			"presets": "Presets",
 			"exit": "Exit"
 		},
 		"brush-menu": {
@@ -156,10 +126,6 @@
 		"brush": {
 			"restored": "Brush of player %s has been restored.",
 			"all-restored": "All brushes have been restored."
-		},
-		"presets": {
-			"loaded": "Preset %s has been loaded.",
-			"all-loaded": "All presets have been loaded."
 		},
 		"reload": {
 			"start": "Reloading...",

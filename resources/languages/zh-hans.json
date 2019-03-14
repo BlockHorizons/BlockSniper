@@ -62,41 +62,11 @@
 		}
 	},
 	"ui": {
-		"preset-menu": {
-			"title": "预设选项",
-			"subtitle": "点击一个按钮以继续。",
-			"create": "新建",
-			"delete": "删除",
-			"select": "选择",
-			"list": "列表",
-			"exit": "退出"
-		},
-		"preset-edit": {
-			"title": "编辑预设选项",
-			"name": "预设选项名称"
-		},
-		"preset-selection": {
-			"title": "选择预设选项",
-			"subtitle": "点击一个按钮以应用预设选项。"
-		},
-		"preset-deletion": {
-			"title": "删除预设选项",
-			"subtitle": "点击一个按钮以删除预设选项。"
-		},
-		"preset-list": {
-			"title": "预设选项列表",
-			"subtitle": "点击一个按钮以编辑/查看预设选项。"
-		},
-		"preset-creation": {
-			"title": "新建预设选项",
-			"name": "预设选项名称"
-		},
 		"main-menu": {
 			"title": "BlockSniper 菜单",
 			"subtitle": "点击一个按钮以继续",
 			"brush": "画笔选项",
 			"config": "设置",
-			"presets": "预设选项",
 			"exit": "退出"
 		},
 		"brush-menu": {
@@ -156,10 +126,6 @@
 		"brush": {
 			"restored": "玩家 %s 的画笔已被恢复。",
 			"all-restored": "所有的画笔已被恢复。"
-		},
-		"presets": {
-			"loaded": "预设选项 %s 已被加载。",
-			"all-loaded": "所有预设选项已被加载。"
 		},
 		"reload": {
 			"start": "重新加载中...",

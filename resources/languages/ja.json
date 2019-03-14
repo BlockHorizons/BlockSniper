@@ -62,42 +62,12 @@
 		}
 	},
 	"ui": {
-		"preset-menu": {
-			"title": "プリセットメニュー",
-			"subtitle": "続行するにはボタンをクリックしてください",
-			"create": "作成",
-			"delete": "削除",
-			"select": "選択",
-			"list": "リスト",
-			"exit": "終了"
-		},
-		"preset-edit": {
-			"title": "プリセット編集メニュー",
-			"name": "プリセットの名前"
-		},
-		"preset-selection": {
-			"title": "プリセット選択メニュー",
-			"subtitle": "ボタンをクリックしてプリセットを適用。"
-		},
-		"preset-deletion": {
-			"title": "プリセット削除メニュー",
-			"subtitle": "ボタンをクリックしてプリセットを削除。"
-		},
-		"preset-list": {
-			"title": "プリセット一覧メニュー",
-			"subtitle": "ボタンをクリックすると、プリセットを編集/表示できます。"
-		},
-		"preset-creation": {
-			"title": "プリセット作成メニュー",
-			"name": "プリセットの名前"
-		},
 		"main-menu": {
 			"title": "BlockSniperメニュー",
 			"subtitle": "続行するにはボタンをクリックしてください",
 			"brush": "ブラシ",
 			"tree": "Tree",
 			"config": "設定",
-			"presets": "プリセット",
 			"exit": "終了"
 		},
 		"brush-menu": {
@@ -157,10 +127,6 @@
 		"brush": {
 			"restored": "プレーヤー%sのブラシが復元されました。",
 			"all-restored": "すべてのブラシが復元されました。"
-		},
-		"presets": {
-			"loaded": "プリセット%sが読み込まれました",
-			"all-loaded": "すべてのプリセットがロードされています。"
 		},
 		"reload": {
 			"start": "再読み込みしています...",

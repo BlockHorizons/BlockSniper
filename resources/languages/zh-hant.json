@@ -62,41 +62,11 @@
 		}
 	},
 	"ui": {
-		"preset-menu": {
-			"title": "預設選項",
-			"subtitle": "點擊一個按鈕以繼續。",
-			"create": "新建",
-			"delete": "刪除",
-			"select": "選擇",
-			"list": "列表",
-			"exit": "退出"
-		},
-		"preset-edit": {
-			"title": "編輯預設選項",
-			"name": "預設選項名稱"
-		},
-		"preset-selection": {
-			"title": "選擇預設選項",
-			"subtitle": "點擊一個按鈕以應用預設選項。"
-		},
-		"preset-deletion": {
-			"title": "刪除預設選項",
-			"subtitle": "點擊一個按鈕以刪除預設選項。"
-		},
-		"preset-list": {
-			"title": "預設選項列表",
-			"subtitle": "點擊一個按鈕以編輯/查看預設選項。"
-		},
-		"preset-creation": {
-			"title": "新建預設選項",
-			"name": "預設選項名稱"
-		},
 		"main-menu": {
 			"title": "BlockSniper 菜單",
 			"subtitle": "點擊一個按鈕以繼續",
 			"brush": "畫筆選項",
 			"config": "設置",
-			"presets": "預設選項",
 			"exit": "退出"
 		},
 		"brush-menu": {
@@ -156,10 +126,6 @@
 		"brush": {
 			"restored": "玩家 %s 的畫筆已被恢復。",
 			"all-restored": "所有的畫筆已被恢復。"
-		},
-		"presets": {
-			"loaded": "預設選項 %s 已被加載。",
-			"all-loaded": "所有預設選項已被加載。"
 		},
 		"reload": {
 			"start": "重新加載中...",

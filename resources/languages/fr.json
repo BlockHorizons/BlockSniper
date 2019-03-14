@@ -62,41 +62,11 @@
 		}
 	},
 	"ui": {
-		"preset-menu": {
-			"title": "Menu préfabriqué",
-			"subtitle": "Cliquez sur un bouton pour continuer",
-			"create": "Créer",
-			"delete": "Supprimer",
-			"select": "Sélectionner",
-			"list": "Liste",
-			"exit": "Quitter"
-		},
-		"preset-edit": {
-			"title": "Menu d'édition préfabriqué",
-			"name": "Nom du préfabriqué"
-		},
-		"preset-selection": {
-			"title": "Menu de sélection de préfabriqué",
-			"subtitle": "Cliquez sur un bouton pour appliquer le préfabriqué"
-		},
-		"preset-deletion": {
-			"title": "Menu de suppression de préfabriqué",
-			"subtitle": "Cliquez sur un bouton pour supprimer un préfabriqué"
-		},
-		"preset-list": {
-			"title": "Menu de liste de préfabriqué",
-			"subtitle": "Cliquez sur un bouton pour modifier / afficher un préfabriqué"
-		},
-		"preset-creation": {
-			"title": "PMenu de création de préfabriqué",
-			"name": "Nom du préfabriqué"
-		},
 		"main-menu": {
 			"title": "Menu BlockSniper",
 			"subtitle": "Cliquez sur un bouton pour continuer",
 			"brush": "pinceau (Brush)",
 			"config": "Configuration",
-			"presets": "préfabriqué (Preset)",
 			"exit": "Quitter"
 		},
 		"brush-menu": {
@@ -156,10 +126,6 @@
 		"brush": {
 			"restored": "Le pinceau du joueur %s a été restauré.",
 			"all-restored": "Tous les pinceaux ont été restaurés."
-		},
-		"presets": {
-			"loaded": "Le préfabriqué %s a été chargé.",
-			"all-loaded": "Tous les préfabriqué ont été chargés."
 		},
 		"reload": {
 			"start": "Rechargement en cours...",

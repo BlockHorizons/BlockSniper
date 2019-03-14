@@ -17,7 +17,6 @@ use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\data\TranslationData;
 use BlockHorizons\BlockSniper\listeners\BrushListener;
 use BlockHorizons\BlockSniper\parser\IdMap;
-use BlockHorizons\BlockSniper\presets\PresetManager;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use BlockHorizons\BlockSniper\tasks\RedoDiminishTask;
 use BlockHorizons\BlockSniper\tasks\UndoDiminishTask;
@@ -52,8 +51,6 @@ class Loader extends PluginBase{
 	];
 	/** @var TranslationData */
 	private $language = null;
-	/** @var PresetManager */
-	private $presetManager = null;
 	/** @var ConfigData */
 	public $config = null;
 
@@ -102,19 +99,11 @@ class Loader extends PluginBase{
 		$this->load();
 	}
 
-	/**
-	 * @return PresetManager
-	 */
-	public function getPresetManager() : PresetManager{
-		return $this->presetManager;
-	}
-
 	private function load() : void{
 		$this->initializeDirectories();
 
 		$this->config = new ConfigData($this);
 		$this->language = new TranslationData($this);
-		$this->presetManager = new PresetManager($this);
 
 		if(!$this->language->collectTranslations()){
 			$this->getLogger()->info(Translation::get(Translation::LOG_LANGUAGE_AUTO_SELECTED));
@@ -146,9 +135,6 @@ class Loader extends PluginBase{
 		}
 		if(!is_dir($this->getDataFolder() . "sessions/")){
 			mkdir($this->getDataFolder() . "sessions/");
-		}
-		if(!is_dir($this->getDataFolder() . "presets/")){
-			mkdir($this->getDataFolder() . "presets/");
 		}
 	}
 

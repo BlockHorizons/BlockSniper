@@ -62,41 +62,11 @@
 		}
 	},
 	"ui": {
-		"preset-menu": {
-			"title": "Voorinstellingen Menu",
-			"subtitle": "Klik een knop om door te gaan",
-			"create": "Maak",
-			"delete": "Verwijder",
-			"select": "Kies",
-			"list": "Lijst",
-			"exit": "Verlaat"
-		},
-		"preset-edit": {
-			"title": "Voorinstellingen Maak Menu",
-			"name": "Voorinstellingen Naam"
-		},
-		"preset-selection": {
-			"title": "Voorinstellingen Selectie Menu",
-			"subtitle": "Klik een knop om de voorinstellingen toe te passen"
-		},
-		"preset-deletion": {
-			"title": "Voorinstellingen Verwijder Menu",
-			"subtitle": "Klik een knop om de voorinstellingen te verwijderen"
-		},
-		"preset-list": {
-			"title": "Voorinstellingen Lijst Menu",
-			"subtitle": "Klik een knop om de voorinstellingen te bekijken/bewerken"
-		},
-		"preset-creation": {
-			"title": "Voorinstellingen Maak Menu",
-			"name": "Voorinstellingen Naam"
-		},
 		"main-menu": {
 			"title": "BlockSniper Menu",
 			"subtitle": "Klik een knop om door te gaan",
 			"brush": "Verf",
 			"config": "Configuratie",
-			"presets": "Voorinstellingen",
 			"exit": "Verlaat"
 		},
 		"brush-menu": {
@@ -156,10 +126,6 @@
 		"brush": {
 			"restored": "Verf van speler %s is hersteld.",
 			"all-restored": "Alle verven zijn hersteld."
-		},
-		"presets": {
-			"loaded": "Voorinstellingen %s zijn geladen.",
-			"all-loaded": "Alle voorinstellingen zijn geladen."
 		},
 		"reload": {
 			"start": "Herladen...",

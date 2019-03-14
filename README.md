@@ -11,7 +11,7 @@ A shape would, for example, be a sphere, a type replace. Every block in that sha
 <br><br>
 Almost all features can be managed using an in-game user interface. The brush menu can be opened using the /brush command.
 <br><br>
-Apart from just brushing, BlockSniper also features things such as copying and pasting (including schematics), undo and redo, presets and an extensive API for other plugins to build on. 
+Apart from just brushing, BlockSniper also features things such as copying and pasting (including schematics), undo and redo, bound brushes and an extensive API for other plugins to build on. 
 <br>
 **For more information, make sure to check the [Wiki](https://github.com/Blockhorizons/BlockSniper/wiki).**
 

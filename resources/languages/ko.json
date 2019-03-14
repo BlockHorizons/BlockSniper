@@ -62,41 +62,11 @@
 		}
 	},
 	"ui": {
-		"preset-menu": {
-			"title": "사전 설정 메뉴",
-			"subtitle": "계속하려면 버튼을 클릭하세요",
-			"create": "만들기",
-			"delete": "삭제",
-			"select": "선택",
-			"list": "목록",
-			"exit": "나가기"
-		},
-		"preset-edit": {
-			"title": "사전 설정 편집 메뉴",
-			"name": "사전 설정 이름"
-		},
-		"preset-selection": {
-			"title": "사전 설정 선택 메뉴",
-			"subtitle": "사전 설정을 적용하려면 버튼을 클릭하세요"
-		},
-		"preset-deletion": {
-			"title": "사전 설정 삭제 메뉴",
-			"subtitle": "사전 설정을 삭제하려면 버튼을 클릭하세요"
-		},
-		"preset-list": {
-			"title": "사전 설정 목록 메뉴",
-			"subtitle": "사전 설정을 편집/보려면 버튼을 클릭하세요"
-		},
-		"preset-creation": {
-			"title": "사전 설정 만들기 메뉴",
-			"name": "사전 설정 이름"
-		},
 		"main-menu": {
 			"title": "BlockSniper 메뉴",
 			"subtitle": "계속하려면 버튼을 클릭하세요",
 			"brush": "브러시",
 			"config": "구성",
-			"presets": "사전 설정",
 			"exit": "나가기"
 		},
 		"brush-menu": {
@@ -156,10 +126,6 @@
 		"brush": {
 			"restored": "플레이어 %s의 브러시가 복원되었습니다.",
 			"all-restored": "모든 브러시가 복원되었습니다."
-		},
-		"presets": {
-			"loaded": "%s 사전 설정이 불러와졌습니다.",
-			"all-loaded": "모든 사전 설정이 불러와졌습니다."
 		},
 		"reload": {
 			"start": "새로 고치는 중입니다...",

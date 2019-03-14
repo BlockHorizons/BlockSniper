@@ -62,41 +62,11 @@
 		}
 	},
 	"ui": {
-		"preset-menu": {
-			"title": "Menú de predefinidos",
-			"subtitle": "Clica un botón para continuar",
-			"create": "Crear",
-			"delete": "Eliminar",
-			"select": "Seleccionar",
-			"list": "Lista",
-			"exit": "Salir"
-		},
-		"preset-edit": {
-			"title": "Menú de Edición de Predefinidos",
-			"name": "Nombre de Predefinidos"
-		},
-		"preset-selection": {
-			"title": "Menú de selección de Predefinidos",
-			"subtitle": "Pulsa un botón para aplicar el predefinido"
-		},
-		"preset-deletion": {
-			"title": "Menú de eleminación de Predefinidos",
-			"subtitle": "Pulsa un botón para eliminar el predefinido"
-		},
-		"preset-list": {
-			"title": "Menú de lista de Predefinidos",
-			"subtitle": "Pulsa un botón para editar/ver un predefinido"
-		},
-		"preset-creation": {
-			"title": "Menú de creación de Predefinidos",
-			"name": "Nombre del Predefinido"
-		},
 		"main-menu": {
 			"title": "Menú de BlockSniper",
 			"subtitle": "Pulsa un botón para continuar",
 			"brush": "Brocha",
 			"config": "Configuración",
-			"presets": "Predefinidos",
 			"exit": "Salir"
 		},
 		"brush-menu": {
@@ -155,10 +125,6 @@
 		"brush": {
 			"restored": "La brocha del jugador %s ha sido reestablecida.",
 			"all-restored": "Todas las brochas han sido reestablecidas."
-		},
-		"presets": {
-			"loaded": "El predefinido %s ha sido cargado.",
-			"all-loaded": "Todos los predefinidos han sido cargados."
 		},
 		"reload": {
 			"start": "Reiniciando...",
