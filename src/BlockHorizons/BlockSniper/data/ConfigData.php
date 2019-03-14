@@ -20,7 +20,7 @@ class ConfigData{
 	 * @var string
 	 * @marshal Configuration Version
 	 */
-	public $configurationVersion = ""; // Default to an outdated version, so we can properly detect outdated configs.
+	public $configurationVersion = ""; // Default to an empty version, so we can properly detect outdated configs.
 	/**
 	 * @var string
 	 * @marshal Message Language
