@@ -3,5 +3,5 @@ submodule: true
 projects:
   BlockSniper:
     path: ""
-    icon: resources/BlockSniperLogo.png
+    icon: resources/block_sniper_logo.png
 ...
