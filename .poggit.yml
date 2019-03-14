@@ -4,4 +4,6 @@ projects:
   BlockSniper:
     path: ""
     icon: resources/block_sniper_logo.png
+    compressBuilds: false
+    fullGzip: 9
 ...
