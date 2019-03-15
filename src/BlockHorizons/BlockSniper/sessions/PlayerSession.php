@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\sessions;
 
 use BlockHorizons\BlockSniper\brush\Brush;
+use BlockHorizons\BlockSniper\changelog\ChangeLog;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\owners\PlayerSessionOwner;
 use Sandertv\Marshal\DecodeException;
@@ -16,6 +17,8 @@ use function json_encode;
 use function strtolower;
 
 class PlayerSession extends Session implements \JsonSerializable{
+
+	private const KEY_LAST_USED_VERSION = "lastUsedVersion";
 
 	public function __construct(PlayerSessionOwner $sessionOwner, Loader $loader){
 		$this->dataFile = $loader->getDataFolder() . "sessions/" . strtolower($sessionOwner->getName()) . ".json";
@@ -34,7 +37,14 @@ class PlayerSession extends Session implements \JsonSerializable{
 			file_put_contents($this->dataFile, "{}");
 			return false;
 		}
+
 		$data = file_get_contents($this->dataFile);
+		$json = json_decode($data, true);
+		if(!isset($json[self::KEY_LAST_USED_VERSION]) || $json[self::KEY_LAST_USED_VERSION] !== Loader::VERSION){
+			// We send the changelog to the player only if it used BlockSniper before and if the version the player last
+			// used was not equal to the current version of BlockSniper.
+			$this->sendChangelog();
+		}
 		try{
 			Unmarshal::json($data, $this->brush);
 			$this->loader->getLogger()->debug("Brush recovered:" . $data);
@@ -59,6 +69,12 @@ class PlayerSession extends Session implements \JsonSerializable{
 	 * @return array
 	 */
 	public function jsonSerialize() : array{
-		return $this->brush->jsonSerialize();
+		$data = $this->brush->jsonSerialize();
+		$data[self::KEY_LAST_USED_VERSION] = Loader::VERSION;
+		return $data;
+	}
+
+	private function sendChangelog() : void{
+		$this->getSessionOwner()->getPlayer()->sendForm(ChangeLog::$changeLogs[Loader::VERSION]->toForm());
 	}
 }

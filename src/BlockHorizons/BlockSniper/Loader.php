@@ -6,6 +6,7 @@ namespace BlockHorizons\BlockSniper;
 
 use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
 use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
+use BlockHorizons\BlockSniper\changelog\ChangelogTask;
 use BlockHorizons\BlockSniper\commands\BlockSniperCommand;
 use BlockHorizons\BlockSniper\commands\BrushCommand;
 use BlockHorizons\BlockSniper\commands\cloning\CloneCommand;
@@ -73,6 +74,7 @@ class Loader extends PluginBase{
 		}
 
 		$this->getServer()->getAsyncPool()->submitTask(new UpdateNotifyTask());
+		$this->getServer()->getAsyncPool()->submitTask(new ChangelogTask());
 
 		new IdMap($this->getResource("id_mapping.json"));
 	}

@@ -16,6 +16,7 @@
 - The duration a modification took is now sent upon the finishing of the modification. Note that this is not entirely accurate, in particular for smaller modifications.
 - Added a new Replace Target type which replaces all blocks with the same type as the target block with the blocks set as brush blocks.
 - Added a new Plant type which places brush blocks on top of all soil blocks set in the brush.
+- Added an in-game changelog that shows up the first time you use a new version of BlockSniper. Note that it does not show up the first time a player starts using BlockSniper on a server.
 
 ### Changed
 - The Brush UI no longer contains all available brush properties.
