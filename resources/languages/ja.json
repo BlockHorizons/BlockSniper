@@ -117,6 +117,13 @@
 			"trunk-blocks": "The blocks to use for the trunk of the tree",
 			"leaves-blocks": "The blocks to use for the leaves of the tree",
 			"leaves-cluster-size": "The size of the leaves cluster at the end of each branch"
+		},
+		"changelog": {
+			"title": "Changelog Menu",
+			"name": "Changelog",
+			"subtitle": "Click a version to view its changelog.",
+			"close": "Close",
+			"see-other": "See other changelogs"
 		}
 	},
 	"log": {

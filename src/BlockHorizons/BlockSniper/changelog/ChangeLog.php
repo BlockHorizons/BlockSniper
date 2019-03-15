@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\changelog;
 
+use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\ui\forms\ModalForm;
+use BlockHorizons\BlockSniper\ui\windows\ChangeLogMenu;
+use pocketmine\Player;
 use pocketmine\utils\TextFormat;
 
 class ChangeLog{
@@ -55,7 +58,11 @@ class ChangeLog{
 			}
 			$text .= "\n";
 		}
-		$form = new ModalForm("BlockSniper $this->version Changelog ", $text);
+		$form = new ModalForm("BlockSniper $this->version " . Translation::get(Translation::UI_CHANGELOG_NAME), $text);
+		$form->setYes(function(Player $player){}, Translation::get(Translation::UI_CHANGELOG_CLOSE));
+		$form->setNo(function(Player $player){
+			$player->sendForm(new ChangeLogMenu($player));
+		}, Translation::get(Translation::UI_CHANGELOG_SEE_OTHER));
 		return $form;
 	}
 

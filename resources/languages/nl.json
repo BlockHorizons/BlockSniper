@@ -116,6 +116,13 @@
 			"trunk-blocks": "De blokken te gebruiken voor de stam van de boom",
 			"leaves-blocks": "De blokken te gebruiken voor de bladeren van de boom",
 			"leaves-cluster-size": "De grootte van de bladerengroepen aan het einde van takken"
+		},
+		"changelog": {
+			"title": "Changelog Menu",
+			"name": "Changelog",
+			"subtitle": "Klik een versie om de changelog van die versie te zien.",
+			"close": "Sluit",
+			"see-other": "Bekijk andere changelogs"
 		}
 	},
 	"log": {

@@ -115,6 +115,13 @@
 			"trunk-blocks": "Los bloques a utilizar para el tronco del árbol",
 			"leaves-blocks": "Los bloques a utilizar para las hojas del árbol",
 			"leaves-cluster-size": "El tamaño de las hojas que agrupan al final de cada rama"
+		},
+		"changelog": {
+			"title": "Changelog Menu",
+			"name": "Changelog",
+			"subtitle": "Click a version to view its changelog.",
+			"close": "Close",
+			"see-other": "See other changelogs"
 		}
 	},
 	"log": {

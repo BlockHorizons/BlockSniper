@@ -97,6 +97,11 @@ class Translation{
 	public const UI_TREE_MENU_TRUNK_BLOCKS = "ui.tree-menu.trunk-blocks";
 	public const UI_TREE_MENU_LEAVES_BLOCKS = "ui.tree-menu.leaves-blocks";
 	public const UI_TREE_MENU_LEAVES_CLUSTER_SIZE = "ui.tree-menu.leaves-cluster-size";
+	public const UI_CHANGELOG_TITLE = "ui.changelog.title";
+	public const UI_CHANGELOG_SUBTITLE = "ui.changelog.subtitle";
+	public const UI_CHANGELOG_NAME = "ui.changelog.name";
+	public const UI_CHANGELOG_CLOSE = "ui.changelog.close";
+	public const UI_CHANGELOG_SEE_OTHER = "ui.changelog.see-other";
 	public const LOG_LANGUAGE_AUTO_SELECTED = "log.language.auto-selected";
 	public const LOG_LANGUAGE_USAGE = "log.language.usage";
 	public const LOG_LANGUAGE_SELECTED = "log.language.selected";

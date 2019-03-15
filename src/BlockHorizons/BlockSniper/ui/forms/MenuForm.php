@@ -23,13 +23,14 @@ class MenuForm extends Form implements FormInterface{
 
 	// callable: function(Player $player)
 	public function addOption(string $text, string $iconPath = "", string $iconType = "url", callable $c = null) : void{
-		$this->data["buttons"][] = [
-			"text" => $text,
-			"image" => [
+		$d = ["text" => $text];
+		if($iconPath !== ""){
+			$d["image"] = [
 				"type" => $iconType,
 				"data" => $iconPath,
-			]
-		];
+			];
+		}
+		$this->data["buttons"][] = $d;
 		$this->buttons[] = $c ?? function(){
 			};
 	}

@@ -116,6 +116,13 @@
 			"trunk-blocks": "나무의 몸통으로 사용할 블록",
 			"leaves-blocks": "나무의 잎으로 사용할 블록",
 			"leaves-cluster-size": "각 가지 끝의 잎 무리의 크기"
+		},
+		"changelog": {
+			"title": "Changelog Menu",
+			"name": "Changelog",
+			"subtitle": "Click a version to view its changelog.",
+			"close": "Close",
+			"see-other": "See other changelogs"
 		}
 	},
 	"log": {
