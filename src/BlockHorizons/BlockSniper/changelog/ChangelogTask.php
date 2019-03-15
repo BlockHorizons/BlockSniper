@@ -36,7 +36,7 @@ class ChangelogTask extends AsyncTask{
 					$fixed = explode("\n", $reader->readUntil("\n\n"));
 				}
 
-				$changeLogs[$version] = new ChangeLog($version, $date, $added, $changed, $removed, $fixed);
+				$changeLogs[$version] = new Changelog($version, $date, $added, $changed, $removed, $fixed);
 			}
 		}
 
@@ -52,6 +52,6 @@ class ChangelogTask extends AsyncTask{
 		if($err !== null){
 			$loader->getLogger()->error("Changelog retrieving error: " . $err);
 		}
-		ChangeLog::$changeLogs = $changeLogs;
+		Changelog::$changeLogs = $changeLogs;
 	}
 }

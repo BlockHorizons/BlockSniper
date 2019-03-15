@@ -10,9 +10,9 @@ use BlockHorizons\BlockSniper\ui\windows\ChangeLogMenu;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
 
-class ChangeLog{
+class Changelog{
 
-	/** @var ChangeLog[] */
+	/** @var Changelog[] */
 	public static $changeLogs = [];
 
 	/** @var string */
@@ -58,12 +58,26 @@ class ChangeLog{
 			}
 			$text .= "\n";
 		}
-		$form = new ModalForm("BlockSniper $this->version " . Translation::get(Translation::UI_CHANGELOG_NAME), $text);
+		$form = new ModalForm("BlockSniper $this->version ($this->date)", $text);
 		$form->setYes(function(Player $player){}, Translation::get(Translation::UI_CHANGELOG_CLOSE));
 		$form->setNo(function(Player $player){
 			$player->sendForm(new ChangeLogMenu($player));
 		}, Translation::get(Translation::UI_CHANGELOG_SEE_OTHER));
 		return $form;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getVersion() : string {
+		return $this->version;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getReleaseDate() : string{
+		return $this->date;
 	}
 
 	/**

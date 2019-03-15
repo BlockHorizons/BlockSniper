@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\sessions;
 
 use BlockHorizons\BlockSniper\brush\Brush;
-use BlockHorizons\BlockSniper\changelog\ChangeLog;
+use BlockHorizons\BlockSniper\changelog\Changelog;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\owners\PlayerSessionOwner;
 use Sandertv\Marshal\DecodeException;
@@ -75,6 +75,6 @@ class PlayerSession extends Session implements \JsonSerializable{
 	}
 
 	private function sendChangelog() : void{
-		$this->getSessionOwner()->getPlayer()->sendForm(ChangeLog::$changeLogs[Loader::VERSION]->toForm());
+		$this->getSessionOwner()->getPlayer()->sendForm(Changelog::$changeLogs[Loader::VERSION]->toForm());
 	}
 }
