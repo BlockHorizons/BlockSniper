@@ -37,9 +37,11 @@ class CloneStore{
 
 	/**
 	 * @param BaseShape $generator
+	 * @param Vector3   $center
 	 */
-	public function saveCopy(BaseShape $generator) : void{
+	public function saveCopy(BaseShape $generator, Vector3 $center) : void{
 		$this->copy = $generator;
+		$this->originalCenter = $center;
 	}
 
 	/**

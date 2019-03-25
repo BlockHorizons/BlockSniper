@@ -12,8 +12,8 @@ use pocketmine\Player;
 
 class CopyType extends BaseClone{
 
-	public function __construct(Player $player, bool $saveAir, Position $center, BaseShape $shape){
-		parent::__construct($player, $saveAir, $center, $shape);
+	public function __construct(Player $player, bool $saveAir, BaseShape $shape){
+		parent::__construct($player, $saveAir, Position::fromObject($shape->getCenter(), $player->getLevel()), $shape);
 	}
 
 	public function getName() : string{
@@ -21,7 +21,6 @@ class CopyType extends BaseClone{
 	}
 
 	public function saveClone() : void{
-		SessionManager::getPlayerSession($this->player)->getCloneStore()->setOriginalCenter($this->center);
-		SessionManager::getPlayerSession($this->player)->getCloneStore()->saveCopy($this->shape);
+		SessionManager::getPlayerSession($this->player)->getCloneStore()->saveCopy($this->shape, $this->center);
 	}
 }

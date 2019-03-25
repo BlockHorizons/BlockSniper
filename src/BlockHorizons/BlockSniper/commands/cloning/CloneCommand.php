@@ -53,7 +53,7 @@ class CloneCommand extends BaseCommand{
 		switch(strtolower($args[0])){
 			default:
 			case "copy":
-				$cloneType = new CopyType($sender, false, $center, $shape);
+				$cloneType = new CopyType($sender, false, $shape);
 				$cloneType->saveClone();
 				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_CLONE_COPY_SUCCESS));
 

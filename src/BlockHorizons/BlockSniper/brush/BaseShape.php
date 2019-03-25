@@ -104,6 +104,13 @@ abstract class BaseShape extends AxisAlignedBB{
 	}
 
 	/**
+	 * @return Vector3
+	 */
+	public function getCenter() : Vector3 {
+		return $this->center;
+	}
+
+	/**
 	 * Returns the level the shape is made in.
 	 *
 	 * @return Level
