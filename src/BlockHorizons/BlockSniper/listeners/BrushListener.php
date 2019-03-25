@@ -44,8 +44,6 @@ class BrushListener implements Listener{
 				$b = new Brush($brushData["player"]);
 				Unmarshal::json($brushData["data"], $b);
 				self::$brushItems[$uuid] = $b;
-
-				$loader->getLogger()->debug("Bound brush $uuid restored");
 			}
 		}
 	}
