@@ -65,17 +65,16 @@ class BrushListener implements Listener{
 			return;
 		}
 
-		$session = SessionManager::getPlayerSession($player);
-
 		$hand = $player->getInventory()->getItemInHand();
 		$brushItem = $this->loader->config->brushItem->parse();
-
 		switch(true){
 			case $hand->getId() === $brushItem->getId() && $hand->getMeta() === $brushItem->getMeta():
+				$session = SessionManager::getPlayerSession($player);
 				$this->useBrush($session, $session->getBrush(), $player);
 				break;
 			case $hand->getNamedTag()->hasTag(self::KEY_BRUSH_UUID, StringTag::class):
 				$uuid = $hand->getNamedTag()->getString(self::KEY_BRUSH_UUID);
+				$session = SessionManager::getPlayerSession($player);
 				if(!isset(self::$brushItems[$uuid])){
 					$this->loader->getLogger()->debug("Invalid bound brush found, removing the item: " . $uuid);
 					$hand->getNamedTag()->removeTag(self::KEY_BRUSH_UUID);
@@ -87,7 +86,6 @@ class BrushListener implements Listener{
 			default:
 				return;
 		}
-
 		$event->setCancelled();
 	}
 
