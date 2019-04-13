@@ -114,6 +114,7 @@ class TypeRegistration{
 	 * @param string $typeName
 	 */
 	private static function registerPermission(string $typeName) : void{
+		$typeName = str_replace(" ", "_", $typeName);
 		$permission = new Permission("blocksniper.type." . $typeName, "Allows permission to use the " . $typeName . " shape.", Permission::DEFAULT_OP);
 		$permission->addParent("blocksniper.type", true);
 		PermissionManager::getInstance()->addPermission($permission);

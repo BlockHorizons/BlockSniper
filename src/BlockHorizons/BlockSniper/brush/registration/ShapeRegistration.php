@@ -76,6 +76,7 @@ class ShapeRegistration{
 	 * @param string $shapeName
 	 */
 	private static function registerPermission(string $shapeName) : void{
+		$shapeName = str_replace(" ", "_", $shapeName);
 		$permission = new Permission("blocksniper.shape." . $shapeName, "Allows permission to use the " . $shapeName . " shape.", Permission::DEFAULT_OP);
 		$permission->addParent("blocksniper.shape", true);
 		PermissionManager::getInstance()->addPermission($permission);
