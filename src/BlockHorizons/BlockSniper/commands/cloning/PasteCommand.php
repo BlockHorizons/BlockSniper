@@ -6,7 +6,7 @@ namespace BlockHorizons\BlockSniper\commands\cloning;
 
 use BlockHorizons\BlockSniper\commands\BaseCommand;
 use BlockHorizons\BlockSniper\data\Translation;
-use BlockHorizons\BlockSniper\exceptions\InvalidBlockException;
+use BlockHorizons\BlockSniper\exceptions\InvalidItemException;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use BlockHorizons\libschematic\Schematic;
@@ -32,7 +32,7 @@ class PasteCommand extends BaseCommand{
 
 		$center = $sender->getTargetBlock($sender->getViewDistance() * 16);
 		if($center === null){
-			throw new InvalidBlockException("No valid block could be found when attempting to paste.");
+			throw new InvalidItemException("No valid block could be found when attempting to paste.");
 		}
 
 		$session = SessionManager::getPlayerSession($sender);

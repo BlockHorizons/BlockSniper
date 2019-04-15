@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\Brush;
-use BlockHorizons\BlockSniper\exceptions\InvalidBlockException;
+use BlockHorizons\BlockSniper\exceptions\InvalidItemException;
 use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
@@ -51,7 +51,7 @@ class Tree{
 		try {
 			$this->trunkBlocks = $brush->parseBlocks($brush->tree->trunkBlocks);
 			$this->leavesBlocks = $brush->parseBlocks($brush->tree->leavesBlocks);
-		} catch(InvalidBlockException $exception) {
+		} catch(InvalidItemException $exception) {
 			$brush->getPlayer()->sendMessage(TextFormat::RED . $exception->getMessage());
 			return;
 		}

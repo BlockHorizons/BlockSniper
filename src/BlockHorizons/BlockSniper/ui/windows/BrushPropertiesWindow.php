@@ -11,7 +11,7 @@ use BlockHorizons\BlockSniper\brush\types\ReplaceType;
 use BlockHorizons\BlockSniper\brush\types\TopLayerType;
 use BlockHorizons\BlockSniper\brush\types\TreeType;
 use BlockHorizons\BlockSniper\data\Translation;
-use BlockHorizons\BlockSniper\exceptions\InvalidBlockException;
+use BlockHorizons\BlockSniper\exceptions\InvalidItemException;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
@@ -56,7 +56,7 @@ class BrushPropertiesWindow extends CustomWindow{
 				try {
 					$b->parseBlocks($value);
 					$b->blocks = $value;
-				} catch(InvalidBlockException $exception) {
+				} catch(InvalidItemException $exception) {
 					$player->sendMessage(TextFormat::RED . $exception->getMessage());
 				}
 			});
@@ -74,7 +74,7 @@ class BrushPropertiesWindow extends CustomWindow{
 					try {
 						$b->parseBlocks($value);
 						$b->obsolete = $value;
-					} catch(InvalidBlockException $exception) {
+					} catch(InvalidItemException $exception) {
 						$player->sendMessage(TextFormat::RED . $exception->getMessage());
 					}
 				});
@@ -92,7 +92,7 @@ class BrushPropertiesWindow extends CustomWindow{
 					try {
 						$b->parseBlocks($value);
 						$b->soilBlocks = $value;
-					} catch(InvalidBlockException $exception) {
+					} catch(InvalidItemException $exception) {
 						$player->sendMessage(TextFormat::RED . $exception->getMessage());
 					}
 				});
@@ -105,7 +105,7 @@ class BrushPropertiesWindow extends CustomWindow{
 			try {
 				$b->parseBlocks($value);
 				$b->tree->trunkBlocks = $value;
-			} catch(InvalidBlockException $exception) {
+			} catch(InvalidItemException $exception) {
 				$player->sendMessage(TextFormat::RED . $exception->getMessage());
 			}
 		});
@@ -113,7 +113,7 @@ class BrushPropertiesWindow extends CustomWindow{
 			try {
 				$b->parseBlocks($value);
 				$b->tree->leavesBlocks = $value;
-			} catch(InvalidBlockException $exception) {
+			} catch(InvalidItemException $exception) {
 				$player->sendMessage(TextFormat::RED . $exception->getMessage());
 			}
 		});

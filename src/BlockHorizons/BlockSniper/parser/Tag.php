@@ -6,7 +6,7 @@ namespace BlockHorizons\BlockSniper\parser;
 
 use pocketmine\block\Block;
 
-class BlockTag{
+class Tag{
 
 	/** @var string */
 	private $name = "";

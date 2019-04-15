@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\exceptions;
 
-class InvalidBlockException extends BlockSniperException{
+class InvalidItemException extends BlockSniperException{
 
 }

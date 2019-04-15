@@ -6,7 +6,6 @@ namespace BlockHorizons\BlockSniper\ui\windows;
 
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
-use pocketmine\item\Item;
 use pocketmine\Player;
 
 class ConfigurationMenuWindow extends CustomWindow{
@@ -18,15 +17,11 @@ class ConfigurationMenuWindow extends CustomWindow{
 		$this->addDropdown($this->t(Translation::UI_CONFIGURATION_MENU_LANGUAGE), Loader::getAvailableLanguages(), array_search($c->messageLanguage, Loader::getAvailableLanguages()), function(Player $player, int $value) use ($c){
 			$c->messageLanguage = Loader::getAvailableLanguages()[$value];
 		});
-		$this->addInput($this->t(Translation::UI_CONFIGURATION_MENU_BRUSH_ITEM), $c->brushItem->itemId . ":" . $c->brushItem->itemData, "396:0", function(Player $player, string $value) use ($c){
-			$item = Item::fromString($value);
-			$c->brushItem->itemId = $item->getId();
-			$c->brushItem->itemData = $item->getMeta();
+		$this->addInput($this->t(Translation::UI_CONFIGURATION_MENU_BRUSH_ITEM), $c->brushItem->item, "golden_carrot", function(Player $player, string $value) use ($c){
+			$c->brushItem->item = $value;
 		});
-		$this->addInput($this->t(Translation::UI_CONFIGURATION_MENU_SELECTION_ITEM), $c->selectionItem->itemId . ":" . $c->selectionItem->itemData, "348:0", function(Player $player, string $value) use ($c){
-			$item = Item::fromString($value);
-			$c->selectionItem->itemId = $item->getId();
-			$c->selectionItem->itemData = $item->getMeta();
+		$this->addInput($this->t(Translation::UI_CONFIGURATION_MENU_SELECTION_ITEM), $c->selectionItem->item, "glowstone_dust", function(Player $player, string $value) use ($c){
+			$c->selectionItem->item = $value;
 		});
 		$this->addSlider($this->t(Translation::UI_CONFIGURATION_MENU_MAX_BRUSH_SIZE), 0, 100, 1, $c->maxSize, function(Player $player, float $value) use ($c){
 			$c->maxSize = (int) $value;

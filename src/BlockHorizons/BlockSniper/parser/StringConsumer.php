@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\parser;
 
-use BlockHorizons\BlockSniper\exceptions\InvalidBlockException;
-use pocketmine\block\Block;
+use BlockHorizons\BlockSniper\exceptions\InvalidItemException;
 use pocketmine\item\Item;
 use function preg_match;
 use function preg_replace;
@@ -16,11 +15,11 @@ use function substr;
 class StringConsumer{
 
 	/** @var string */
-	private $blockString = "";
+	private $itemString = "";
 
-	/** @var Block|null */
-	private $block = null;
-	/** @var BlockTag[] */
+	/** @var Item|null */
+	private $item = null;
+	/** @var Tag[] */
 	private $tags = [];
 
 	/** @var int */
@@ -29,10 +28,10 @@ class StringConsumer{
 	/**
 	 * StringConsumer constructor.
 	 *
-	 * @param string $blockString with possibly multiple blocks in it. The block string has all its whitespace removed.
+	 * @param string $itemString with possibly multiple blocks in it. The item string has all its whitespace removed.
 	 */
-	public function __construct(string $blockString){
-		$this->blockString = preg_replace("/\\s/", "", $blockString);
+	public function __construct(string $itemString){
+		$this->itemString = preg_replace("/\\s/", "", $itemString);
 	}
 
 	/**
@@ -41,32 +40,32 @@ class StringConsumer{
 	 * StringConsumer->tryConsume(), the tags parsed using StringConsumer->getTags() and the length of the last parsed
 	 * blocks + tags using StringConsumer->getProgressedLength().
 	 *
-	 * @throws InvalidBlockException
+	 * @throws InvalidItemException
 	 */
 	public function tryConsume() {
 		$this->blockLength = 0;
-		$this->tryConsumeBlock();
+		$this->tryConsumeItem();
 		$this->tryConsumeTags();
-		if(isset($this->blockString[0]) && $this->blockString[0] === ","){
-			$this->blockString = substr($this->blockString, 1);
+		if(isset($this->itemString[0]) && $this->itemString[0] === ","){
+			$this->itemString = substr($this->itemString, 1);
 			$this->blockLength++;
 		}
 	}
 
 	/**
-	 * getBlock returns the block parsed by the string consumer. Null is returned if the string has not yet been
+	 * getItem returns the item parsed by the string consumer. Null is returned if the string has not yet been
 	 * consumed, or if an exception was thrown during the parsing.
 	 *
-	 * @return Block
+	 * @return Item
 	 */
-	public function getBlock() : ?Block{
-		return $this->block;
+	public function getItem() : ?Item{
+		return $this->item;
 	}
 
 	/**
 	 * getTags returns an array of tags successfully parsed by the string consumer.
 	 *
-	 * @return BlockTag[]
+	 * @return Tag[]
 	 */
 	public function getTags() : array{
 		return $this->tags;
@@ -83,81 +82,81 @@ class StringConsumer{
 	}
 
 	/**
-	 * tryConsumeBlock tries to consume a block from the block string. If successful, the block string is advanced and
+	 * tryConsumeBlock tries to consume an item from the block string. If successful, the item string is advanced and
 	 * the block is set.
 	 *
-	 * @throws InvalidBlockException
+	 * @throws InvalidItemException
 	 */
-	private function tryConsumeBlock() {
+	private function tryConsumeItem() {
 		$blockName = "";
-		$length = strlen($this->blockString);
+		$length = strlen($this->itemString);
 		for($i = 0; $i < $length; $i++) {
-			$char = $this->blockString[$i];
+			$char = $this->itemString[$i];
 			$match = preg_match('/[a-zA-Z0-9_:]/', $char);
 			if($match === 0) {
 				// Not a letter. If the character is a [, it probably indicates the start of the block tags. If it is a
 				// comma, it means we have another block following.
 				if($char !== "[" && $char !== ",") {
-					throw new InvalidBlockException(sprintf("cannot parse %s as block: invalid character %s at offset %s",
-															$this->blockString, $char, $i));
+					throw new InvalidItemException(sprintf("cannot parse %s as block: invalid character %s at offset %s",
+														   $this->itemString, $char, $i));
 				}
 				break;
 			} elseif($match === false){
-				throw new InvalidBlockException(sprintf("cannot parse %s as block: error matching: %s", $this->blockString, preg_last_error()));
+				throw new InvalidItemException(sprintf("cannot parse %s as block: error matching: %s", $this->itemString, preg_last_error()));
 			}
 			$blockName .= $char;
 		}
-		$this->blockString = substr($this->blockString, strlen($blockName));
+		$this->itemString = substr($this->itemString, strlen($blockName));
 		$this->blockLength += strlen($blockName);
 
-		// Parse the block name. (Might also be an ID)
-		$this->block = $this->parseBlockName($blockName);
+		// Parse the item name. (Might also be an ID)
+		$this->item = $this->parseItemName($blockName);
 	}
 
 	/**
-	 * parseBlockName parses a block name and creates a block instance. The block name might also be an ID, in which
+	 * parseItemName parses an item name and creates an item instance. The item name might also be an ID, in which
 	 * case it will be resolved too.
 	 *
-	 * @throws InvalidBlockException
+	 * @throws InvalidItemException
 	 *
 	 * @param string $name
 	 *
-	 * @return Block
+	 * @return Item
 	 */
-	private function parseBlockName(string $name) : Block {
+	private function parseItemName(string $name) : Item {
 		if(($translation = IdMap::translate($name)) !== null){
 			$name = $translation;
 		}
 		try {
-			return Item::fromString($name)->getBlock();
+			return Item::fromString($name);
 		}catch(\InvalidArgumentException $exception){
-			throw new InvalidBlockException(sprintf("cannot parse %s as block: block not found", $name));
+			throw new InvalidItemException(sprintf("cannot parse %s as block: block not found", $name));
 		}
 	}
 
 	/**
 	 * tryConsumeTags attempts to parse the leftover block string as block tags, provided they are enclosed in brackets.
 	 *
-	 * @throws InvalidBlockException
+	 * @throws InvalidItemException
 	 */
 	private function tryConsumeTags() {
-		if(strlen($this->blockString) === 0 || $this->blockString[0] !== "[") {
+		if(strlen($this->itemString) === 0 || $this->itemString[0] !== "[") {
 			// There are no tags available. Don't do anything.
 			return;
 		}
 		// Remove the first bracket from the string.
-		$this->blockString = substr($this->blockString, 1);
+		$this->itemString = substr($this->itemString, 1);
 		$this->blockLength++;
 
 		while(true) {
 			$tagName = "";
 			$tagValue = "";
 			$nameComplete = false;
-			if(($length = strlen($this->blockString)) === 0) {
+			if(($length = strlen($this->itemString)) === 0) {
 				return;
 			}
 			for($i = 0; $i < $length; $i++) {
-				$char = $this->blockString[$i];
+				$char = $this->itemString[$i];
 				$match = preg_match('/[a-zA-Z0-9]/', $char);
 				if($match === 0) {
 					// Not a letter or number. If the character is a =, it indicates the tag's value, if it is a ], it
@@ -177,10 +176,10 @@ class StringConsumer{
 								continue 2;
 							}
 						default:
-							throw new InvalidBlockException(sprintf("cannot parse %s as tag: invalid character %s at offset %s", $this->blockString, $char, $i));
+							throw new InvalidItemException(sprintf("cannot parse %s as tag: invalid character %s at offset %s", $this->itemString, $char, $i));
 					}
 				} elseif($match === false){
-					throw new InvalidBlockException(sprintf("cannot parse %s as tag: error matching: %s", $this->blockString, preg_last_error()));
+					throw new InvalidItemException(sprintf("cannot parse %s as tag: error matching: %s", $this->itemString, preg_last_error()));
 				}
 				if(!$nameComplete){
 					$tagName .= $char;
@@ -189,21 +188,21 @@ class StringConsumer{
 				$tagValue .= $char;
 			}
 			tag_finalize:
-			if(!isset($this->blockString[$i])){
-				throw new InvalidBlockException(sprintf("cannot parse %s as tag: expected ']' or ',', but found none at offset %s", $this->blockString, $i));
+			if(!isset($this->itemString[$i])){
+				throw new InvalidItemException(sprintf("cannot parse %s as tag: expected ']' or ',', but found none at offset %s", $this->itemString, $i));
 			}
-			$lastChar = $this->blockString[$i];
+			$lastChar = $this->itemString[$i];
 
 			// Progress one further in the string to get rid of the unneeded bracket or comma.
-			$this->blockString = substr($this->blockString, ++$i);
-			$this->tags[] = new BlockTag($tagName, $tagValue);
+			$this->itemString = substr($this->itemString, ++$i);
+			$this->tags[] = new Tag($tagName, $tagValue);
 			$this->blockLength += $i;
 
 			if($lastChar === "]"){
 				// The last character was a bracket, so end the loop.
 				return;
 			} elseif($lastChar != ","){
-				throw new InvalidBlockException(sprintf("cannot parse %s as tag: invalid character %s at offset %s", $this->blockString, $lastChar, 0));
+				throw new InvalidItemException(sprintf("cannot parse %s as tag: invalid character %s at offset %s", $this->itemString, $lastChar, 0));
 			}
 		}
 	}

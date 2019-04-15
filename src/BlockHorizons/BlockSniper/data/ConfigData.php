@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\data;
 
+use BlockHorizons\BlockSniper\exceptions\InvalidItemException;
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\parser\Parser;
 use pocketmine\item\Item;
-use pocketmine\item\ItemIds;
 use Sandertv\Marshal\DecodeException;
 use Sandertv\Marshal\FileNotFoundException;
 use Sandertv\Marshal\Marshal;
@@ -90,7 +91,7 @@ class ConfigData{
 	public function __construct(Loader $loader){
 		$this->brushItem = new BrushItem();
 		$this->selectionItem = new BrushItem();
-		$this->selectionItem->itemId = ItemIds::GLOWSTONE_DUST;
+		$this->selectionItem->item = "glowstone_dust";
 
 		$this->filePath = $loader->getDataFolder() . "config.yml";
 
@@ -129,17 +130,16 @@ class ConfigData{
 
 class BrushItem{
 	/**
-	 * @var int
+	 * @var string
 	 * @marshal Item ID
 	 */
-	public $itemId = Item::GOLDEN_CARROT;
-	/**
-	 * @var int
-	 * @marshal Item Data
-	 */
-	public $itemData = 0;
+	public $item = "golden_carrot";
 
 	public function parse() : Item{
-		return Item::get($this->itemId, $this->itemData);
+		$items = Parser::parse($this->item);
+		if(count($items) === 0){
+			throw new InvalidItemException("invalid configuration brush item");
+		}
+		return $items[0];
 	}
 }

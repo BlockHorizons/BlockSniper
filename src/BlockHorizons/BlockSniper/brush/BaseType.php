@@ -6,7 +6,7 @@ namespace BlockHorizons\BlockSniper\brush;
 
 use BlockHorizons\BlockSniper\brush\async\BlockSniperChunkManager;
 use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
-use BlockHorizons\BlockSniper\exceptions\InvalidBlockException;
+use BlockHorizons\BlockSniper\exceptions\InvalidItemException;
 use pocketmine\block\Block;
 use pocketmine\level\ChunkManager;
 use pocketmine\level\Level;
@@ -77,7 +77,7 @@ abstract class BaseType{
 		}
 		try{
 			$this->brushBlocks = $brush->getBlocks();
-		}catch(InvalidBlockException $exception){
+		}catch(InvalidItemException $exception){
 			$brush->getPlayer()->sendMessage(TextFormat::RED . $exception->getMessage());
 			$this->brushBlocks = [Block::get(Block::AIR)];
 		}
