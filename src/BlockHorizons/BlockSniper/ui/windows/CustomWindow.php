@@ -10,7 +10,6 @@ use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\ui\forms\CustomForm;
 use pocketmine\Player;
 use function array_values;
-use function implode;
 use function str_replace;
 use function strtolower;
 
@@ -18,20 +17,6 @@ abstract class CustomWindow extends CustomForm{
 
 	public function __construct(string $title){
 		parent::__construct($title);
-	}
-
-	/**
-	 * @param array $blocks
-	 *
-	 * @return string
-	 */
-	public function processBlocks(array $blocks) : string{
-		$return = [];
-		foreach($blocks as $block){
-			$return[] = $block->getId() . ":" . $block->getMeta();
-		}
-
-		return implode(",", $return);
 	}
 
 	/**
