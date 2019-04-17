@@ -3,7 +3,6 @@
 ## [4.0.0] (For API 4.0.0)- Unreleased
 ### Added
 - Added a new UI that opens after setting the brush shape, type and mode. This new UI contains brush properties specifically available for the combination of shape, type and mode set.
-- Presets can now set tree properties in addition to other properties.
 - A cooldown bar is added to limit the rate at which BlockSniper can be used. The duration is configurable.
 - Modifications with the Regenerate brush type may now be undone.
 - Added a new Ellipsoid shape with width, length and height properties.
@@ -34,7 +33,7 @@
 ### Removed
 - The main menu no longer contains a Tree button.
 - The configuration menu no longer has a reload button. This is done automatically.
-- The preset menu was removed in favour of the bound brushes that were added.
+- Presets were removed in favour of the bound brushes that were added.
 
 ### Fixed
 - Fixed cuboid and cylinder shapes not to be async/sync when they should be.
