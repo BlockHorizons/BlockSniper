@@ -34,6 +34,7 @@
 - The main menu no longer contains a Tree button.
 - The configuration menu no longer has a reload button. This is done automatically.
 - Presets were removed in favour of the bound brushes that were added.
+- The undo/redo stores are no longer automatically cleared after 3 minutes. This caused unexpected behaviour and is never expected behaviour.
 
 ### Fixed
 - Fixed cuboid and cylinder shapes not to be async/sync when they should be.

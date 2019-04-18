@@ -84,9 +84,6 @@ class Loader extends PluginBase{
 
 		$this->registerCommands();
 		$this->registerListeners();
-
-		$this->getScheduler()->scheduleRepeatingTask(new UndoDiminishTask($this), 400);
-		$this->getScheduler()->scheduleRepeatingTask(new RedoDiminishTask($this), 400);
 	}
 
 	public function onDisable() : void{
