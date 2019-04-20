@@ -19,8 +19,7 @@ use BlockHorizons\BlockSniper\data\TranslationData;
 use BlockHorizons\BlockSniper\listeners\BrushListener;
 use BlockHorizons\BlockSniper\parser\IdMap;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
-use BlockHorizons\BlockSniper\tasks\RedoDiminishTask;
-use BlockHorizons\BlockSniper\tasks\UndoDiminishTask;
+use BlockHorizons\BlockSniper\tasks\TargetHighlightTask;
 use BlockHorizons\BlockSniper\tasks\UpdateNotifyTask;
 use MyPlot\MyPlot;
 use pocketmine\plugin\PluginBase;
@@ -84,6 +83,7 @@ class Loader extends PluginBase{
 
 		$this->registerCommands();
 		$this->registerListeners();
+		$this->getScheduler()->scheduleRepeatingTask(new TargetHighlightTask($this), 1);
 	}
 
 	public function onDisable() : void{

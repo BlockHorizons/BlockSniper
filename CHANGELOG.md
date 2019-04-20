@@ -17,6 +17,7 @@
 - Added a new Plant type which places brush blocks on top of all soil blocks set in the brush.
 - Added an in-game changelog that shows up the first time you use a new version of BlockSniper. Note that it does not show up the first time a player starts using BlockSniper on a server.
 - Added a new Changelog menu that can be used to view past changelogs and changelogs of newer versions.
+- Added flame particles that highlight the target block when holding the brush item.
 
 ### Changed
 - The Brush UI no longer contains all available brush properties.

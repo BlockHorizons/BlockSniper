@@ -65,10 +65,9 @@ class BrushListener implements Listener{
 			return;
 		}
 
-		$hand = $player->getInventory()->getItemInHand();
-		$brushItem = $this->loader->config->brushItem->parse();
+		$hand = $event->getItem();
 		switch(true){
-			case $hand->getId() === $brushItem->getId() && $hand->getMeta() === $brushItem->getMeta():
+			case $hand->equals($this->loader->config->brushItem->parse()):
 				$session = SessionManager::getPlayerSession($player);
 				$this->useBrush($session, $session->getBrush(), $player);
 				break;
@@ -112,9 +111,8 @@ class BrushListener implements Listener{
 		if(!$player->hasPermission("blocksniper.command.brush")){
 			return false;
 		}
-		$selectionItem = $this->loader->config->selectionItem->parse();
 		$hand = $player->getInventory()->getItemInHand();
-		if($hand->getId() !== $selectionItem->getId() || $hand->getMeta() !== $selectionItem->getMeta()){
+		if(!$hand->equals($this->loader->config->selectionItem->parse())){
 			return false;
 		}
 
@@ -205,8 +203,7 @@ class BrushListener implements Listener{
 	 */
 	public function onItemHeld(PlayerItemHeldEvent $event) : void{
 		$player = $event->getPlayer();
-		$brush = $this->loader->config->brushItem->parse();
-		if($event->getItem()->getId() !== $brush->getId() || $event->getItem()->getMeta() !== $brush->getMeta()) {
+		if(!$event->getItem()->equals($this->loader->config->brushItem->parse())) {
 			return;
 		}
 		if($player->hasPermission("blocksniper.command.brush")){
