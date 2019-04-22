@@ -14,7 +14,7 @@ class CopyType extends BaseClone{
 
 	public function __construct(Player $player, bool $saveAir, BaseShape $shape){
 		$offset = ($shape->maxY - $shape->minY) / 2;
-		parent::__construct($player, $saveAir, Position::fromObject($shape->getCenter()->subtract(0, $offset), $player->getLevel()), $shape);
+		parent::__construct($player, $saveAir, Position::fromObject($shape->getCentre()->subtract(0, $offset), $player->getLevel()), $shape);
 	}
 
 	public function getName() : string{

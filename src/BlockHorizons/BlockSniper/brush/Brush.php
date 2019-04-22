@@ -26,6 +26,12 @@ class Brush extends BrushProperties{
 	private $lock = false;
 
 	/**
+	 * execute executes the brush, using $session as the user of the brush. $target is assumed to be the target of the
+	 * brush, which will form the centre of the brush Shape if the brush mode is set to MODE_BRUSH. If $plotPoints is
+	 * not empty, blocks will only ever be placed within the points passed.
+	 * If the brush mode of the brush is MODE_SELECTION, the selection $selection must be passed, defining the bounds of
+	 * the selection.
+	 *
 	 * @param Session        $session
 	 * @param Position       $target
 	 * @param array          $plotPoints
@@ -83,6 +89,9 @@ class Brush extends BrushProperties{
 	}
 
 	/**
+	 * getShape gets a Shape using a selection and a target position. Each of these may be null to create a BaseShape
+	 * that has no functionality but allows calling methods specific to a Shape.
+	 *
 	 * @param AxisAlignedBB|null $bb
 	 * @param Position|null      $target
 	 *
@@ -97,6 +106,9 @@ class Brush extends BrushProperties{
 	}
 
 	/**
+	 * getType gets a Type using a block generator, target position and session passed. Each of these may be null to
+	 * create a BaseType that has no functionality but allows calling methods specific to a Type.
+	 *
 	 * @param \Generator|null $blocks
 	 * @param Position|null   $target
 	 * @param Session|null    $session
@@ -111,6 +123,10 @@ class Brush extends BrushProperties{
 		return new $this->type($this, new Target($target, $target->getLevel()), $blocks, $session);
 	}
 
+	/**
+	 * decrement decrements the Brush's size property if the brush's decrementing property is set to true. If the size
+	 * reaches 0, and resetDecrementBrush is set to true in the configuration, the size is reset.
+	 */
 	public function decrement() : void{
 		if(!$this->decrementing){
 			return;
@@ -130,10 +146,17 @@ class Brush extends BrushProperties{
 		}
 	}
 
+	/**
+	 * lock locks the Brush, making it unusable until it is unlocked using unlock(). Attempts to brush using this Brush
+	 * instance will be ignored while locked.
+	 */
 	public function lock() : void{
 		$this->lock = true;
 	}
 
+	/**
+	 * unlock unlocks the Brush, making it usable again after being locked using lock().
+	 */
 	public function unlock() : void{
 		$this->lock = false;
 	}

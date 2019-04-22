@@ -7,6 +7,12 @@ namespace BlockHorizons\BlockSniper\brush;
 use pocketmine\level\ChunkManager;
 use pocketmine\math\Vector3;
 
+/**
+ * Class Target is a wrapper around a Vector3, providing roughly the same functionality as a pocketmine\level\Position,
+ * but allowing a generic ChunkManager instead of a Level instance.
+ *
+ * @package BlockHorizons\BlockSniper\brush
+ */
 class Target extends Vector3{
 
 	/** @var ChunkManager|null */
@@ -18,6 +24,8 @@ class Target extends Vector3{
 	}
 
 	/**
+	 * getChunkManager returns the ChunkManager of the Target, or null if null was passed when constructing the Target.
+	 *
 	 * @return ChunkManager|null
 	 */
 	public function getChunkManager() : ?ChunkManager{

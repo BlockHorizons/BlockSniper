@@ -25,6 +25,16 @@ abstract class BaseShape extends AxisAlignedBB{
 	/** @var bool */
 	protected $hollow = false;
 
+	/**
+	 * BaseShape constructor: Constructs a BaseShape using the BrushProperties passed to define the bounds of the shape.
+	 * The $target passed is assumed to be the target block, which will be used as the centre of the shape if the mode
+	 * of the brush is Brush::MODE_BRUSH. If the mode is Brush::MODE_SELECTION, the $selection passed must be non-null
+	 * and specify the bounds of the shape.
+	 *
+	 * @param BrushProperties    $properties
+	 * @param Target             $target
+	 * @param AxisAlignedBB|null $selection
+	 */
 	public function __construct(BrushProperties $properties, Target $target, ?AxisAlignedBB $selection = null){
 		if($selection === null){
 			$selection = new AxisAlignedBB(0, 0, 0, 0, 0, 0);
@@ -37,72 +47,6 @@ abstract class BaseShape extends AxisAlignedBB{
 	}
 
 	/**
-	 * isHollow returns true if the shape is hollow, false if it is not.
-	 *
-	 * @return bool
-	 */
-	public function isHollow() : bool{
-		return $this->hollow;
-	}
-
-	/**
-	 * getPermission returns the permission required to use the shape.
-	 *
-	 * @return string
-	 */
-	public function getPermission() : string{
-		return "blocksniper.shape." . strtolower(ShapeRegistration::getShapeById(self::ID, true));
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function usesThreeLengths() : bool{
-		return false;
-	}
-
-	/**
-	 * @param ChunkManager $chunkManager
-	 *
-	 * @return string[]
-	 */
-	public function getTouchedChunks(ChunkManager $chunkManager) : array{
-		$touchedChunks = [];
-		for($x = $this->minX; $x <= $this->maxX + 16; $x += 16){
-			for($z = $this->minZ; $z <= $this->maxZ + 16; $z += 16){
-				$chunk = $chunkManager->getChunk($x >> 4, $z >> 4);
-				if($chunk === null){
-					continue;
-				}
-				$touchedChunks[Level::chunkHash($x >> 4, $z >> 4)] = $chunk->fastSerialize();
-			}
-		}
-
-		return $touchedChunks;
-	}
-
-	/**
-	 * @return Vector3
-	 */
-	public function getCenter() : Vector3{
-		return $this->center;
-	}
-
-	/**
-	 * getBlocks returns a generator that holds blocks rather than Vector3 instances, by looking up the blocks that are
-	 * found in the ChunkManager passed.
-	 *
-	 * @param ChunkManager $manager
-	 *
-	 * @return \Generator
-	 */
-	public function getBlocks(ChunkManager $manager) : \Generator{
-		foreach($this->getVectors() as $vector){
-			yield $manager->getBlockAt($vector->x, $vector->y, $vector->z);
-		}
-	}
-
-	/**
 	 * getName returns the name of the shape.
 	 *
 	 * @return string
@@ -110,7 +54,7 @@ abstract class BaseShape extends AxisAlignedBB{
 	public abstract function getName() : string;
 
 	/**
-	 * getBlocksInside creates a generator that yields Vector3s that are found within the shape.
+	 * getBlocksInside creates a generator that yields all Vector3s that are found within the shape.
 	 *
 	 * @return \Generator
 	 */
@@ -132,4 +76,79 @@ abstract class BaseShape extends AxisAlignedBB{
 	 * @return int
 	 */
 	public abstract function getBlockCount() : int;
+
+	/**
+	 * getPermission returns the permission required to use this shape.
+	 *
+	 * @return string
+	 */
+	public function getPermission() : string{
+		return "blocksniper.shape." . strtolower(ShapeRegistration::getShapeById(self::ID, true));
+	}
+
+	/**
+	 * usesThreeLengths defines if the Shape uses three different lengths (width, length, height) to define the
+	 * dimensions, instead of a single radius.
+	 *
+	 * @return bool
+	 */
+	public function usesThreeLengths() : bool{
+		return false;
+	}
+
+	/**
+	 * getCentre returns the centre of the BaseShape. This centre might not be accurate, depending on if the Brush mode
+	 * was Brush::MODE_BRUSH (accurate) or Brush::MODE_SELECTION (not accurate).
+	 *
+	 * @return Vector3
+	 */
+	public function getCentre() : Vector3{
+		return $this->center;
+	}
+
+	/**
+	 * isHollow defines if the BaseShape is hollow, as set in the BrushProperties passed into the constructor.
+	 *
+	 * @return bool
+	 */
+	public function isHollow() : bool{
+		return $this->hollow;
+	}
+
+	/**
+	 * getBlocks returns a generator that holds blocks rather than Vector3 instances, by looking up the blocks that are
+	 * found in the ChunkManager passed.
+	 *
+	 * @param ChunkManager $manager
+	 *
+	 * @return \Generator
+	 */
+	public function getBlocks(ChunkManager $manager) : \Generator{
+		foreach($this->getVectors() as $vector){
+			yield $manager->getBlockAt($vector->x, $vector->y, $vector->z);
+		}
+	}
+
+	/**
+	 * getTouchedChunks returns a serialised array of chunks that the BaseShape touches. It uses $chunkManager to find
+	 * chunks in.
+	 *
+	 * @param ChunkManager $chunkManager
+	 *
+	 * @return string[]
+	 */
+	public function getTouchedChunks(ChunkManager $chunkManager) : array{
+		$touchedChunks = [];
+		for($x = $this->minX; $x <= $this->maxX + 16; $x += 16){
+			for($z = $this->minZ; $z <= $this->maxZ + 16; $z += 16){
+				$chunk = $chunkManager->getChunk($x >> 4, $z >> 4);
+				if($chunk === null){
+					continue;
+				}
+				$touchedChunks[Level::chunkHash($x >> 4, $z >> 4)] = $chunk->fastSerialize();
+			}
+		}
+
+		return $touchedChunks;
+	}
 }

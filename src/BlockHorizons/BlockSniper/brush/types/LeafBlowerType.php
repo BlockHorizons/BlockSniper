@@ -60,7 +60,7 @@ class LeafBlowerType extends BaseType{
 	/**
 	 * @return bool
 	 */
-	public function usesBlocks() : bool{
+	public function usesBrushBlocks() : bool{
 		return false;
 	}
 }

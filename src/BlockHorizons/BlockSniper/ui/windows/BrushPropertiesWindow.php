@@ -51,7 +51,7 @@ class BrushPropertiesWindow extends CustomWindow{
 				$b->length = (int) $value;
 			});
 		}
-		if($b->getType()->usesBlocks()){
+		if($b->getType()->usesBrushBlocks()){
 			$this->addInput($this->t(Translation::UI_BRUSH_MENU_BLOCKS), $b->blocks, "stone,cracked_stone_brick", function(Player $player, string $value) use ($b){
 				try{
 					$b->parseBlocks($value);

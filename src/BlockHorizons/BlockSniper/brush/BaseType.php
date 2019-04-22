@@ -59,6 +59,10 @@ abstract class BaseType{
 	protected $plotPoints = [];
 
 	/**
+	 * BaseType constructor: Constructs a new BaseType using the BrushProperties passed. The Type was executed while
+	 * having $target as target block. The $blocks passed may be null, but must later be supplied using setBlocksInside
+	 * in order to operate.
+	 *
 	 * @param BrushProperties $properties
 	 * @param Target          $target
 	 * @param \Generator|null $blocks
@@ -75,6 +79,83 @@ abstract class BaseType{
 	}
 
 	/**
+	 * getTarget returns the target block of the BaseType.
+	 *
+	 * @return Vector3
+	 */
+	protected function getTarget() : Vector3{
+		return $this->target;
+	}
+
+	/**
+	 * canBeHollow defines if the Type uses the hollow property. Types such as the Regenerate Type do not use this, as
+	 * they operate only on the target block and have no realisation of hollow.
+	 *
+	 * @return bool
+	 */
+	public function canBeHollow() : bool{
+		return true;
+	}
+
+	/**
+	 * usesSize defines if the Type uses the size property. Types such as the Regenerate Type do not use this, as they
+	 * operate only on the target block.
+	 *
+	 * @return bool
+	 */
+	public function usesSize() : bool{
+		return true;
+	}
+
+	/**
+	 * usesBrushBlocks defines if the Type uses brush blocks. Types such as the Regenerate Type do not use this, and
+	 * overwrite the method.
+	 *
+	 * @return bool
+	 */
+	public function usesBrushBlocks() : bool{
+		return true;
+	}
+
+	/**
+	 * canBeExecutedAsynchronously defines if the Type is able to be executed asynchronously. If not, the Type will
+	 * always be executed synchronously, no matter the size of the shape.
+	 *
+	 * @return bool
+	 */
+	public function canBeExecutedAsynchronously() : bool{
+		return true;
+	}
+
+	/**
+	 * getPermission returns the permission required to use the Type.
+	 *
+	 * @return string
+	 */
+	public function getPermission() : string{
+		return "blocksniper.type." . strtolower(TypeRegistration::getTypeById(self::ID, true));
+	}
+
+	/**
+	 * getName returns the name of the Type.
+	 *
+	 * @return string
+	 */
+	public abstract function getName() : string;
+
+	/**
+	 * fill fills the blocks set in the generator of the BaseType, and in turn returns a generator yielding the undo
+	 * blocks of the Type.
+	 *
+	 * @return \Generator
+	 */
+	protected abstract function fill() : \Generator;
+
+	/**
+	 * fillShape fills the shape previously set in the constructor or using setBlocksInside() and edits the blocks
+	 * supplied the way the Type defines. If $plotPoints is not empty, modifications will only be allowed to happen
+	 * within these points.
+	 *
 	 * @param Vector2[][] $plotPoints
 	 *
 	 * @return \Generator|null
@@ -93,81 +174,71 @@ abstract class BaseType{
 	}
 
 	/**
-	 * @return bool
-	 */
-	public function canBeExecutedAsynchronously() : bool{
-		return true;
-	}
-
-	/**
-	 * @return \Generator
-	 */
-	protected abstract function fill() : \Generator;
-
-	/**
-	 * @param \Generator|null $blocks
+	 * randomBrushBlock returns a random brush block set in the BrushProperties passed during construction of the
+	 * BaseType.
 	 *
-	 * @return BaseType
+	 * @return Block
 	 */
-	public function setBlocksInside(?\Generator $blocks) : self{
-		$this->blocks = $blocks;
-
-		return $this;
+	public function randomBrushBlock() : Block{
+		return $this->brushBlocks[array_rand($this->brushBlocks)];
 	}
 
 	/**
-	 * Returns the blocks the type is being executed upon.
+	 * getBlock returns the block at a specific position, provided the chunk of that block is loaded into the
+	 * ChunkManager.
 	 *
-	 * @return \Generator
-	 */
-	public function getBlocks() : \Generator{
-		return $this->blocks;
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getBrushBlocks() : array{
-		return $this->brushBlocks;
-	}
-
-	/**
-	 * Returns the permission required to use the type.
+	 * @param Vector3 $pos
 	 *
-	 * @return string
+	 * @return Block
 	 */
-	public function getPermission() : string{
-		return "blocksniper.type." . strtolower(TypeRegistration::getTypeById(self::ID, true));
+	public function getBlock(Vector3 $pos) : Block{
+		return $this->chunkManager->getBlockAt($pos->x, $pos->y, $pos->z);
 	}
 
 	/**
-	 * @return bool
+	 * side returns the neighbouring block of the block passed at the side passed, provided the ChunkManager of the
+	 * BaseType is not null.
+	 *
+	 * @param Vector3 $block
+	 * @param int     $side
+	 *
+	 * @return Block
 	 */
-	public function canBeHollow() : bool{
-		return true;
+	public function side(Vector3 $block, int $side) : Block{
+		if($this->chunkManager instanceof Level && $block instanceof Block){
+			return $block->getSide($side);
+		}
+
+		return $this->chunkManager->getSide($block->x, $block->y, $block->z, $side);
 	}
 
 	/**
-	 * @return bool
+	 * putBiome puts a biome ID at a specific position, provided it is within the plot areas defined when constructing
+	 * the type (if any at all).
+	 *
+	 * @param Vector3 $pos
+	 * @param int     $biomeId
 	 */
-	public function usesSize() : bool{
-		return true;
+	protected function putBiome(Vector3 $pos, int $biomeId) : void{
+		$valid = !$this->myPlotChecked;
+		if($this->myPlotChecked){
+			foreach($this->plotPoints as $plotCorners){
+				if($pos->x < $plotCorners[0]->x || $pos->z < $plotCorners[0]->z || $pos->x > $plotCorners[1]->x || $pos->z > $plotCorners[1]->z){
+					continue;
+				}
+				$valid = true;
+				break;
+			}
+		}
+		if(!$valid){
+			return;
+		}
+		$this->chunkManager->setBiomeId($pos->x, $pos->z, $biomeId);
 	}
 
 	/**
-	 * @return bool
-	 */
-	public function usesBlocks() : bool{
-		return true;
-	}
-
-	/**
-	 * @return string
-	 */
-	public abstract function getName() : string;
-
-	/**
-	 * Puts a block at the given location either asynchronously or synchronously with MyPlot checks. (if relevant)
+	 * putBlock puts a block at the given location in the ChunkManager of the BaseType, provided it is not null. The
+	 * block is only set if it is within the plot boundaries set during construction of the BaseType.
 	 *
 	 * @param Vector3 $pos
 	 * @param Block   $block
@@ -193,16 +264,8 @@ abstract class BaseType{
 	}
 
 	/**
-	 * @param Vector3 $pos
-	 *
-	 * @return Block
-	 */
-	public function getBlock(Vector3 $pos) : Block{
-		return $this->chunkManager->getBlockAt($pos->x, $pos->y, $pos->z);
-	}
-
-	/**
-	 * Deletes a block at the given location either asynchronously or synchronously with MyPlot checks. (if relevant)
+	 * delete removes a block at the given location provided the ChunkManager of the BaseType is not null. This
+	 * method is a wrapper around putBlock(air).
 	 *
 	 * @param Vector3 $pos
 	 */
@@ -211,38 +274,19 @@ abstract class BaseType{
 	}
 
 	/**
-	 * Returns a randomly selected brush block.
+	 * getChunkManager returns the ChunkManager of the BaseType. If not set, or if passed onto an AsyncTask before, the
+	 * ChunkManager returned is null.
 	 *
-	 * @return Block
-	 */
-	public function randomBrushBlock() : Block{
-		return $this->brushBlocks[array_rand($this->brushBlocks)];
-	}
-
-	/**
-	 * Returns the side of a block for both asynchronous and synchronous types.
-	 *
-	 * @param Vector3 $block
-	 * @param int     $side
-	 *
-	 * @return Block
-	 */
-	public function side(Vector3 $block, int $side) : Block{
-		if($this->chunkManager instanceof Level && $block instanceof Block){
-			return $block->getSide($side);
-		}
-
-		return $this->chunkManager->getSide($block->x, $block->y, $block->z, $side);
-	}
-
-	/**
 	 * @return BlockSniperChunkManager|Level
 	 */
-	public function getChunkManager() : ChunkManager{
+	public function getChunkManager() : ?ChunkManager{
 		return $this->chunkManager;
 	}
 
 	/**
+	 * setChunkManager sets the ChunkManager of the BaseType, and returns itself for fluency. A BaseType loses its
+	 * ChunkManager when passed onto an AsyncTask, so it must be reset.
+	 *
 	 * @param ChunkManager $manager
 	 *
 	 * @return BaseType
@@ -254,38 +298,22 @@ abstract class BaseType{
 	}
 
 	/**
-	 * @param Vector3 $pos
-	 * @param int     $biomeId
-	 */
-	protected function putBiome(Vector3 $pos, int $biomeId) : void{
-		$valid = !$this->myPlotChecked;
-		if($this->myPlotChecked){
-			foreach($this->plotPoints as $plotCorners){
-				if($pos->x < $plotCorners[0]->x || $pos->z < $plotCorners[0]->z || $pos->x > $plotCorners[1]->x || $pos->z > $plotCorners[1]->z){
-					continue;
-				}
-				$valid = true;
-				break;
-			}
-		}
-		if(!$valid){
-			return;
-		}
-		$this->chunkManager->setBiomeId($pos->x, $pos->z, $biomeId);
-	}
-
-	/**
-	 * @return Vector3
-	 */
-	protected function getTarget() : Vector3{
-		return $this->target;
-	}
-
-	/**
-	 * __sleep zero-s the chunk manager and blocks of the Type so that it may be serialised without serialising the
-	 * entire chunk manager.
+	 * setBlocksInside sets the generator used to supply blocks to the Type to edit.
 	 *
-	 * @return array
+	 * @param \Generator|null $blocks
+	 *
+	 * @return BaseType
+	 */
+	public function setBlocksInside(?\Generator $blocks) : self{
+		$this->blocks = $blocks;
+
+		return $this;
+	}
+
+	/**
+	 * __sleep returns only specific properties of BaseType that can be serialised when passed onto an AsyncTask.
+	 *
+	 * @return string[]
 	 */
 	public function __sleep(){
 		return ["brushBlocks", "target", "myPlotChecked", "plotPoints"];
