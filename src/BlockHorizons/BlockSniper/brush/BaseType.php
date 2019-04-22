@@ -12,8 +12,6 @@ use pocketmine\level\ChunkManager;
 use pocketmine\level\Level;
 use pocketmine\math\Vector2;
 use pocketmine\math\Vector3;
-use pocketmine\Server;
-use pocketmine\utils\TextFormat;
 use function array_rand;
 use function strtolower;
 
@@ -46,39 +44,32 @@ abstract class BaseType{
 	public const TYPE_REPLACE_TARGET = 22;
 	public const TYPE_PLANT = 23;
 
-	/** @var int */
-	protected $level = 0;
 	/** @var \Generator */
 	protected $blocks = [];
 	/** @var Block[] */
 	protected $brushBlocks = [];
+	/** @var Vector3 */
+	protected $target;
 
-	/** @var null|BlockSniperChunkManager */
+	/** @var BlockSniperChunkManager|Level */
 	protected $chunkManager = null;
 	/** @var bool */
 	protected $myPlotChecked = false;
-	/** @var bool */
-	private $async = false;
 	/** @var Vector2[][] */
-	private $plotPoints = [];
+	protected $plotPoints = [];
 
 	/**
-	 * @param Brush $brush
-	 * @param ChunkManager $manager
-	 * @param \Generator   $blocks
+	 * @param BrushProperties $properties
+	 * @param Target          $target
+	 * @param \Generator|null $blocks
 	 */
-	public function __construct(Brush $brush, ChunkManager $manager, \Generator $blocks = null){
+	public function __construct(BrushProperties $properties, Target $target, \Generator $blocks = null){
 		$this->blocks = $blocks;
-		if($manager instanceof Level){
-			$this->level = $manager->getId();
-		}else{
-			$this->async = true;
-			$this->chunkManager = $manager;
-		}
+		$this->chunkManager = $target->getChunkManager();
+		$this->target = $target->asVector3();
 		try{
-			$this->brushBlocks = $brush->getBlocks();
+			$this->brushBlocks = $properties->getBlocks();
 		}catch(InvalidItemException $exception){
-			$brush->getPlayer()->sendMessage(TextFormat::RED . $exception->getMessage());
 			$this->brushBlocks = [Block::get(Block::AIR)];
 		}
 	}
@@ -93,17 +84,12 @@ abstract class BaseType{
 		if(!empty($plotPoints)){
 			$this->myPlotChecked = true;
 		}
-		if(($this->async && $this->canBeExecutedAsynchronously()) || !$this->async){
+		$isLevel = $this->chunkManager instanceof Level;
+		if((!$isLevel && $this->canBeExecutedAsynchronously()) || $isLevel){
 			return $this->fill();
 		}
-		return null;
-	}
 
-	/**
-	 * @return bool
-	 */
-	public function isAsynchronous() : bool{
-		return $this->async;
+		return null;
 	}
 
 	/**
@@ -117,13 +103,6 @@ abstract class BaseType{
 	 * @return \Generator
 	 */
 	protected abstract function fill() : \Generator;
-
-	/**
-	 * @return int
-	 */
-	public function getLevelId() : int{
-		return $this->level;
-	}
 
 	/**
 	 * @param \Generator|null $blocks
@@ -188,21 +167,10 @@ abstract class BaseType{
 	public abstract function getName() : string;
 
 	/**
-	 * @param bool $value
-	 *
-	 * @return BaseType
-	 */
-	public function setAsynchronous(bool $value = true) : self{
-		$this->async = $value;
-
-		return $this;
-	}
-
-	/**
 	 * Puts a block at the given location either asynchronously or synchronously with MyPlot checks. (if relevant)
 	 *
 	 * @param Vector3 $pos
-	 * @param Block $block
+	 * @param Block   $block
 	 */
 	public function putBlock(Vector3 $pos, Block $block) : void{
 		$valid = !$this->myPlotChecked;
@@ -221,11 +189,16 @@ abstract class BaseType{
 		if(!$valid){
 			return;
 		}
-		if($this->isAsynchronous()){
-			$this->getChunkManager()->setBlockAt($pos->x, $pos->y, $pos->z, $block);
-			return;
-		}
-		$this->getLevel()->setBlockAt($pos->x, $pos->y, $pos->z, $block, false);
+		$this->chunkManager->setBlockAt($pos->x, $pos->y, $pos->z, $block, false);
+	}
+
+	/**
+	 * @param Vector3 $pos
+	 *
+	 * @return Block
+	 */
+	public function getBlock(Vector3 $pos) : Block{
+		return $this->chunkManager->getBlockAt($pos->x, $pos->y, $pos->z);
 	}
 
 	/**
@@ -242,7 +215,7 @@ abstract class BaseType{
 	 *
 	 * @return Block
 	 */
-	public function randomBrushBlock() : Block {
+	public function randomBrushBlock() : Block{
 		return $this->brushBlocks[array_rand($this->brushBlocks)];
 	}
 
@@ -254,17 +227,18 @@ abstract class BaseType{
 	 *
 	 * @return Block
 	 */
-	public function side(Vector3 $block, int $side) : Block {
-		if(!$this->async && $block instanceof Block){
+	public function side(Vector3 $block, int $side) : Block{
+		if($this->chunkManager instanceof Level && $block instanceof Block){
 			return $block->getSide($side);
 		}
+
 		return $this->chunkManager->getSide($block->x, $block->y, $block->z, $side);
 	}
 
 	/**
-	 * @return BlockSniperChunkManager
+	 * @return BlockSniperChunkManager|Level
 	 */
-	public function getChunkManager() : BlockSniperChunkManager{
+	public function getChunkManager() : ChunkManager{
 		return $this->chunkManager;
 	}
 
@@ -277,15 +251,6 @@ abstract class BaseType{
 		$this->chunkManager = $manager;
 
 		return $this;
-	}
-
-	/**
-	 * Returns the level the type is used in.
-	 *
-	 * @return Level|null
-	 */
-	public function getLevel() : ?Level{
-		return Server::getInstance()->getLevelManager()->getLevel($this->level);
 	}
 
 	/**
@@ -306,19 +271,23 @@ abstract class BaseType{
 		if(!$valid){
 			return;
 		}
-		if($this->isAsynchronous()){
-			$this->getChunkManager()->setBiomeIdAt($pos->x, $pos->z, $biomeId);
-			return;
-		}
-		$this->getLevel()->setBiomeId($pos->x, $pos->z, $biomeId);
+		$this->chunkManager->setBiomeId($pos->x, $pos->z, $biomeId);
 	}
 
 	/**
-	 * @param Brush $brush
-	 *
 	 * @return Vector3
 	 */
-	protected function target(Brush $brush) : Vector3 {
-		return $brush->getPlayer()->getTargetBlock($brush->getPlayer()->getViewDistance() * 16)->asVector3();
+	protected function getTarget() : Vector3{
+		return $this->target;
+	}
+
+	/**
+	 * __sleep zero-s the chunk manager and blocks of the Type so that it may be serialised without serialising the
+	 * entire chunk manager.
+	 *
+	 * @return array
+	 */
+	public function __sleep(){
+		return ["brushBlocks", "target", "myPlotChecked", "plotPoints"];
 	}
 }

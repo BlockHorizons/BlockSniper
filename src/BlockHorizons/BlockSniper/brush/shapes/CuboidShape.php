@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\shapes;
 
 use BlockHorizons\BlockSniper\brush\BaseShape;
-use BlockHorizons\BlockSniper\brush\Brush;
+use BlockHorizons\BlockSniper\brush\BrushProperties;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
 
@@ -14,11 +14,9 @@ class CuboidShape extends BaseShape{
 	public const ID = self::SHAPE_CUBOID;
 
 	/**
-	 * @param bool $vectorOnly
-	 *
 	 * @return \Generator
 	 */
-	public function getBlocksInside(bool $vectorOnly = false) : \Generator{
+	public function getVectors() : \Generator{
 		for($x = $this->minX; $x <= $this->maxX; $x++){
 			for($y = $this->minY; $y <= $this->maxY; $y++){
 				if($y > 255 || $y < 0){
@@ -30,7 +28,7 @@ class CuboidShape extends BaseShape{
 							continue;
 						}
 					}
-					yield $vectorOnly ? new Vector3((int) $x, (int) $y, (int) $z) : $this->getLevel()->getBlock(new Vector3($x, $y, $z));
+					yield new Vector3((int) $x, (int) $y, (int) $z);
 				}
 			}
 		}
@@ -39,7 +37,7 @@ class CuboidShape extends BaseShape{
 	/**
 	 * @return int
 	 */
-	public function getBlockCount() : int {
+	public function getBlockCount() : int{
 		$i = 0;
 		for($x = $this->minX; $x <= $this->maxX; $x++){
 			for($y = $this->minY; $y <= $this->maxY; $y++){
@@ -56,6 +54,7 @@ class CuboidShape extends BaseShape{
 				}
 			}
 		}
+
 		return $i;
 	}
 
@@ -74,11 +73,11 @@ class CuboidShape extends BaseShape{
 	}
 
 	/**
-	 * @param Vector3       $center
-	 * @param Brush         $brush
-	 * @param AxisAlignedBB $bb
+	 * @param Vector3         $center
+	 * @param BrushProperties $brush
+	 * @param AxisAlignedBB   $bb
 	 */
-	public function buildSelection(Vector3 $center, Brush $brush, AxisAlignedBB $bb) : void{
+	public function buildSelection(Vector3 $center, BrushProperties $brush, AxisAlignedBB $bb) : void{
 		[$bb->maxX, $bb->maxY, $bb->maxZ, $bb->minX, $bb->minY, $bb->minZ] = [
 			$center->x + $brush->width, $center->y + $brush->height, $center->z + $brush->length,
 			$center->x - $brush->width, $center->y - $brush->height, $center->z - $brush->length

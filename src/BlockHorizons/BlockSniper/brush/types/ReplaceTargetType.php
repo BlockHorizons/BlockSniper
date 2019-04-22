@@ -5,21 +5,20 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
-use BlockHorizons\BlockSniper\brush\Brush;
+use BlockHorizons\BlockSniper\brush\BrushProperties;
+use BlockHorizons\BlockSniper\brush\Target;
 use pocketmine\block\Block;
-use pocketmine\level\ChunkManager;
 
-class ReplaceTargetType extends BaseType {
+class ReplaceTargetType extends BaseType{
 
 	public const ID = self::TYPE_REPLACE_TARGET;
 
 	/** @var Block */
 	private $targetBlock;
 
-	public function __construct(Brush $brush, ChunkManager $level, \Generator $blocks = null){
-		parent::__construct($brush, $level, $blocks);
-		$targetBlock = $brush->getPlayer()->getTargetBlock($brush->getPlayer()->getViewDistance() * 16);
-		$this->targetBlock = Block::get($targetBlock->getId(), $targetBlock->getMeta());
+	public function __construct(BrushProperties $properties, Target $target, \Generator $blocks = null){
+		parent::__construct($properties, $target, $blocks);
+		$this->targetBlock = $this->getBlock($this->target)->setLevel(null);
 	}
 
 	/**

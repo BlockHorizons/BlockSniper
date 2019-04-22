@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
-use BlockHorizons\BlockSniper\brush\Brush;
+use BlockHorizons\BlockSniper\brush\BrushProperties;
+use BlockHorizons\BlockSniper\brush\Target;
 use pocketmine\block\Block;
-use pocketmine\level\ChunkManager;
 
 /*
  * Replaces the obsolete blocks within the brush radius.
@@ -20,9 +20,9 @@ class ReplaceType extends BaseType{
 	/** @var Block[] */
 	private $obsolete;
 
-	public function __construct(Brush $brush, ChunkManager $level, \Generator $blocks = null){
-		parent::__construct($brush, $level, $blocks);
-		$this->obsolete = $brush->getObsolete();
+	public function __construct(BrushProperties $properties, Target $target, \Generator $blocks = null){
+		parent::__construct($properties, $target, $blocks);
+		$this->obsolete = $properties->getObsolete();
 	}
 
 	/**

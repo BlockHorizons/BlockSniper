@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\tasks;
 
 use BlockHorizons\BlockSniper\brush\Brush;
+use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
@@ -32,9 +33,10 @@ class CooldownBarTask extends BlockSniperTask{
 	public function onRun(int $currentTick) : void{
 		if($this->player->isClosed()){
 			$this->getHandler()->cancel();
+
 			return;
 		}
-		do {
+		do{
 			if($this->loader->config->cooldownSeconds === 0.0){
 				break;
 			}
@@ -45,8 +47,10 @@ class CooldownBarTask extends BlockSniperTask{
 			$this->player->sendPopup(TextFormat::AQUA . str_repeat("|", $progress) . TextFormat::GRAY . str_repeat("|", 20 - $progress));
 
 			if($progress === 20){
+				$this->player->sendPopup(TextFormat::AQUA . Translation::get(Translation::BRUSH_STATE_READY));
 				break;
 			}
+
 			return;
 		}while(false);
 

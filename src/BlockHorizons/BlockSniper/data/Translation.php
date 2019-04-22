@@ -196,6 +196,7 @@ class Translation{
 			// We tried getting a key that did not exist, which means our language file is outdated. We regenerate it
 			// and try again.
 			self::$translationData->regenerateLanguageFile();
+
 			return self::get($key, ...$params);
 		}
 		if(!empty($params)){

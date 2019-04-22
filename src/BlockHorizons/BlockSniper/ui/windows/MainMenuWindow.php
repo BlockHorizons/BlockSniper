@@ -22,7 +22,7 @@ class MainMenuWindow extends MenuForm{
 		$this->addOption($this->t(Translation::UI_MAIN_MENU_BRUSH), self::BRUSH_ICON, "url", function(Player $player) use ($loader){
 			$this->setResponseForm(new BrushMenuWindow($loader, $player, SessionManager::getPlayerSession($player)->getBrush()));
 		});
-		$this->addOption($this->t(Translation::UI_CHANGELOG_NAME), self::CHANGELOG_ICON, "url", function(Player $player) {
+		$this->addOption($this->t(Translation::UI_CHANGELOG_NAME), self::CHANGELOG_ICON, "url", function(Player $player){
 			$this->setResponseForm(new ChangeLogMenu($player));
 		});
 		if($requester->hasPermission("blocksniper.configuration")){

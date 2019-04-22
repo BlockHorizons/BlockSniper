@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
-use BlockHorizons\BlockSniper\brush\Brush;
+use BlockHorizons\BlockSniper\brush\BrushProperties;
 use BlockHorizons\BlockSniper\exceptions\InvalidItemException;
 use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\math\Vector3;
 use pocketmine\utils\Random;
-use pocketmine\utils\TextFormat;
 
 class Tree{
 
@@ -44,15 +43,14 @@ class Tree{
 
 	private $set = [];
 
-	public function __construct(Position $position, Brush $brush, TreeType $type){
+	public function __construct(Position $position, BrushProperties $brush, TreeType $type){
 		$this->random = new Random(random_int(0, 1000000));
 		$this->tempVec = new Vector3();
 
-		try {
+		try{
 			$this->trunkBlocks = $brush->parseBlocks($brush->tree->trunkBlocks);
 			$this->leavesBlocks = $brush->parseBlocks($brush->tree->leavesBlocks);
-		} catch(InvalidItemException $exception) {
-			$brush->getPlayer()->sendMessage(TextFormat::RED . $exception->getMessage());
+		}catch(InvalidItemException $exception){
 			return;
 		}
 

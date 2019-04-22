@@ -8,7 +8,7 @@ use BlockHorizons\BlockSniper\brush\BaseType;
 use pocketmine\block\Block;
 use pocketmine\math\Facing;
 
-class SmoothType extends BaseType {
+class SmoothType extends BaseType{
 
 	public const ID = self::TYPE_SMOOTH;
 
@@ -20,7 +20,7 @@ class SmoothType extends BaseType {
 		$expandBlocks = [];
 		foreach($this->blocks as $block){
 			/** @var Block $block */
-			switch($block->getId()) {
+			switch($block->getId()){
 				case Block::AIR:
 					$closedSides = 0;
 					foreach(Facing::ALL as $direction){

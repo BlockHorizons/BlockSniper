@@ -30,7 +30,7 @@ class PasteTask extends AsyncTask{
 	private $playerName;
 
 	public function __construct(string $file, Vector3 $center, array $chunks, string $playerName){
-		$this->storeLocal([$chunks, microtime(true)]);
+		$this->storeLocal("", [$chunks, microtime(true)]);
 		$this->file = $file;
 		$this->center = $center;
 		$this->chunks = $chunks;
@@ -55,7 +55,7 @@ class PasteTask extends AsyncTask{
 
 		/** @var Chunk[] $chunks */
 		$manager = new BlockSniperChunkManager();
-		foreach($chunks as $chunk) {
+		foreach($chunks as $chunk){
 			$manager->setChunk($chunk->getX(), $chunk->getZ(), $chunk);
 		}
 
@@ -89,7 +89,7 @@ class PasteTask extends AsyncTask{
 			return;
 		}
 
-		[$undoChunks, $startTime] = $this->fetchLocal();
+		[$undoChunks, $startTime] = $this->fetchLocal("");
 		foreach($undoChunks as &$undoChunk){
 			$undoChunk = Chunk::fastDeserialize($undoChunk);
 		}

@@ -51,6 +51,6 @@ class UpdateNotifyTask extends AsyncTask{
 		}
 		$artifactUrl = $artifactUrl . "/BlockSniper_v" . $highestVersion . ".phar";
 		$loader->getLogger()->info(sprintf("Version %s has been released for API %s. Download the new release at %s",
-											$highestVersion, $api, $artifactUrl));
+										   $highestVersion, $api, $artifactUrl));
 	}
 }

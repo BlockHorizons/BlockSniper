@@ -6,18 +6,15 @@ namespace BlockHorizons\BlockSniper\brush;
 
 use BlockHorizons\BlockSniper\brush\async\tasks\BrushTask;
 use BlockHorizons\BlockSniper\brush\types\TreeType;
-use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\events\BrushUseEvent;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\revert\sync\SyncUndo;
 use BlockHorizons\BlockSniper\sessions\PlayerSession;
 use BlockHorizons\BlockSniper\sessions\Selection;
 use BlockHorizons\BlockSniper\sessions\Session;
-use BlockHorizons\BlockSniper\tasks\CooldownBarTask;
+use pocketmine\level\Position;
 use pocketmine\math\AxisAlignedBB;
-use pocketmine\Player;
 use pocketmine\Server;
-use pocketmine\utils\TextFormat;
 use function count;
 
 class Brush extends BrushProperties{
@@ -25,46 +22,28 @@ class Brush extends BrushProperties{
 	public const MODE_BRUSH = 0;
 	public const MODE_SELECTION = 1;
 
-	/** @var string */
-	public $player = "";
 	/** @var bool */
 	private $lock = false;
 
-	public function __construct(string $playerName){
-		parent::__construct();
-		$this->player = $playerName;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getPlayerName() : string{
-		return $this->player;
-	}
-
-	/**
-	 * @return null|Player
-	 */
-	public function getPlayer() : ?Player{
-		return Server::getInstance()->getPlayer($this->player);
-	}
-
 	/**
 	 * @param Session        $session
-	 * @param Selection|null $selection
+	 * @param Position       $target
 	 * @param array          $plotPoints
+	 * @param Selection|null $selection
+	 *
+	 * @return bool
 	 */
-	public function execute(Session $session, ?Selection $selection, array $plotPoints = []) : void{
+	public function execute(Session $session, Position $target, array $plotPoints = [], ?Selection $selection = null) : bool{
 		if($this->lock){
 			// Brush is locked. Return immediately without doing anything.
-			return;
+			return false;
 		}
 		$this->lock();
 
-		$shape = $this->getShape($selection !== null ? $selection->box() : null);
+		$shape = $this->getShape($selection !== null ? $selection->box() : null, $target);
 		$type = ($this->type !== TreeType::class
-			? $this->getType($shape->getBlocksInside())
-			: new TreeType($this, $this->getPlayer()->getLevel()));
+			? $this->getType($shape->getBlocks($target->getLevel()), $target, $session)
+			: new TreeType($this, new Target($target, $target->getLevel())));
 
 		if($session instanceof PlayerSession){
 			$player = $session->getSessionOwner()->getPlayer();
@@ -72,28 +51,25 @@ class Brush extends BrushProperties{
 			$event = new BrushUseEvent($player, $shape, $type);
 			$event->call();
 			if($event->isCancelled()){
-				return;
+				return false;
 			}
 		}
 		$this->decrement();
 
 		/** @var Loader $loader */
 		$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
-		if($loader === null){
-			return;
-		}
 
 		$asyncSize = false;
-		if(($shape->getBlockCount() ** (1/3)) / 2 >= $loader->config->asyncOperationSize) {
+		if(($shape->getBlockCount() ** (1 / 3)) / 2 >= $loader->config->asyncOperationSize){
 			$asyncSize = true;
 		}
 
 		if($type->canBeExecutedAsynchronously() && $asyncSize){
 			$type->setBlocksInside(null);
-			Server::getInstance()->getAsyncPool()->submitTask(new BrushTask($this, $shape, $type, $shape->getTouchedChunks(), $plotPoints));
-			return;
+			Server::getInstance()->getAsyncPool()->submitTask(new BrushTask($this, $session, $shape, $type, $target->getLevel(), $plotPoints));
+
+			return false;
 		}
-		$startTime = microtime(true);
 
 		$undoBlocks = [];
 		foreach($type->fillShape($plotPoints) as $undoBlock){
@@ -103,29 +79,36 @@ class Brush extends BrushProperties{
 			$session->getRevertStore()->saveRevert(new SyncUndo($undoBlocks, $session->getSessionOwner()->getName()));
 		}
 
-		$duration = round(microtime(true) - $startTime, 2);
-		$this->getPlayer()->sendPopup(TextFormat::GREEN . Translation::get(Translation::BRUSH_STATE_DONE) . " ($duration seconds)");
-		$loader->getScheduler()->scheduleRepeatingTask(new CooldownBarTask($loader, $this, $this->getPlayer()), 1);
+		return true;
 	}
 
 	/**
-	 * @param null|AxisAlignedBB $bb
+	 * @param AxisAlignedBB|null $bb
+	 * @param Position|null      $target
 	 *
 	 * @return BaseShape
 	 */
-	public function getShape(AxisAlignedBB $bb = null) : BaseShape{
-		$player = $this->getPlayer();
+	public function getShape(AxisAlignedBB $bb = null, Position $target = null) : BaseShape{
+		if($target === null){
+			$target = new Position();
+		}
 
-		return new $this->shape($player, $player->getLevel(), $player->getTargetBlock($player->getViewDistance() * 16)->asPosition(), $bb, $this);
+		return new $this->shape($this, new Target($target, $target->getLevel()), $bb);
 	}
 
 	/**
-	 * @param \Generator $blocks
+	 * @param \Generator|null $blocks
+	 * @param Position|null   $target
+	 * @param Session|null    $session
 	 *
 	 * @return BaseType
 	 */
-	public function getType(\Generator $blocks = null) : BaseType{
-		return new $this->type($this, $this->getPlayer()->getLevel(), $blocks);
+	public function getType(\Generator $blocks = null, Position $target = null, Session $session = null) : BaseType{
+		if($target === null){
+			$target = new Position();
+		}
+
+		return new $this->type($this, new Target($target, $target->getLevel()), $blocks, $session);
 	}
 
 	public function decrement() : void{
@@ -134,6 +117,7 @@ class Brush extends BrushProperties{
 		}
 		if($this->size > 1){
 			$this->size = $this->size - 1;
+
 			return;
 		}
 		/** @var Loader $loader */

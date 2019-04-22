@@ -34,11 +34,13 @@ class BrushCommand extends BaseCommand{
 			case $args[0] === "bind":
 				if($item->getId() === Item::AIR){
 					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_BRUSH_NEED_ITEM));
+
 					return;
 				}
 				$brush = $this->loader->config->brushItem->parse();
 				if($item->getId() === $brush->getId() && $item->getMeta() === $brush->getMeta()){
 					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_BRUSH_BIND_BRUSH_ITEM));
+
 					return;
 				}
 				$b = new Brush($sender->getName());
@@ -53,6 +55,7 @@ class BrushCommand extends BaseCommand{
 			case $args[0] === "unbind":
 				if(!$item->getNamedTag()->hasTag(BrushListener::KEY_BRUSH_UUID, StringTag::class)){
 					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_BRUSH_NOT_BOUND));
+
 					return;
 				}
 				$uuid = $item->getNamedTag()->getString(BrushListener::KEY_BRUSH_UUID);

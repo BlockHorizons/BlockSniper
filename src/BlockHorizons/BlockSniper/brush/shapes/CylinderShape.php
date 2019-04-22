@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\shapes;
 
 use BlockHorizons\BlockSniper\brush\BaseShape;
-use BlockHorizons\BlockSniper\brush\Brush;
+use BlockHorizons\BlockSniper\brush\BrushProperties;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
 
@@ -14,11 +14,9 @@ class CylinderShape extends BaseShape{
 	public const ID = self::SHAPE_CYLINDER;
 
 	/**
-	 * @param bool $vectorOnly
-	 *
 	 * @return \Generator
 	 */
-	public function getBlocksInside(bool $vectorOnly = false) : \Generator{
+	public function getVectors() : \Generator{
 		$radiusX = ($this->maxX - $this->minX) / 2;
 		$radiusXS = (int) $radiusX === 0 ? 10 : $radiusX ** 2;
 		$radiusZ = ($this->maxZ - $this->minZ) / 2;
@@ -44,7 +42,7 @@ class CylinderShape extends BaseShape{
 								continue;
 							}
 						}
-						yield $vectorOnly ? new Vector3((int) $x, (int) $y, (int) $z) : $this->getLevel()->getBlock(new Vector3($x, $y, $z));
+						new Vector3((int) $x, (int) $y, (int) $z);
 					}
 				}
 			}
@@ -54,7 +52,7 @@ class CylinderShape extends BaseShape{
 	/**
 	 * @return int
 	 */
-	public function getBlockCount() : int {
+	public function getBlockCount() : int{
 		$i = 0;
 		$radiusX = ($this->maxX - $this->minX) / 2;
 		$radiusXS = (int) $radiusX === 0 ? 10 : $radiusX ** 2;
@@ -83,6 +81,7 @@ class CylinderShape extends BaseShape{
 				}
 			}
 		}
+
 		return $i;
 	}
 
@@ -101,11 +100,11 @@ class CylinderShape extends BaseShape{
 	}
 
 	/**
-	 * @param Vector3       $center
-	 * @param Brush         $brush
-	 * @param AxisAlignedBB $bb
+	 * @param Vector3         $center
+	 * @param BrushProperties $brush
+	 * @param AxisAlignedBB   $bb
 	 */
-	public function buildSelection(Vector3 $center, Brush $brush, AxisAlignedBB $bb) : void{
+	public function buildSelection(Vector3 $center, BrushProperties $brush, AxisAlignedBB $bb) : void{
 		[$bb->maxX, $bb->maxY, $bb->maxZ, $bb->minX, $bb->minY, $bb->minZ] = [
 			$center->x + $brush->width, $center->y + $brush->height, $center->z + $brush->length,
 			$center->x - $brush->width, $center->y - $brush->height, $center->z - $brush->length

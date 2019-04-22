@@ -17,7 +17,7 @@ class Changelog{
 
 	/** @var string */
 	private $version;
-	/** @var string  */
+	/** @var string */
 	private $date;
 
 	/** @var string[] */
@@ -35,14 +35,22 @@ class Changelog{
 	/**
 	 * @return ModalForm
 	 */
-	public function toForm() : ModalForm {
+	public function toForm() : ModalForm{
 		$text = "";
 		foreach(["added" => $this->added, "changed" => $this->changed, "removed" => $this->removed, "fixed" => $this->fixed] as $key => $changes){
 			switch($key){
-				case "added": $text .= TextFormat::GREEN; break;
-				case "changed": $text .= TextFormat::GOLD; break;
-				case "removed": $text .= TextFormat::RED; break;
-				case "fixed": $text .= TextFormat::AQUA; break;
+				case "added":
+					$text .= TextFormat::GREEN;
+					break;
+				case "changed":
+					$text .= TextFormat::GOLD;
+					break;
+				case "removed":
+					$text .= TextFormat::RED;
+					break;
+				case "fixed":
+					$text .= TextFormat::AQUA;
+					break;
 			}
 			$text .= TextFormat::BOLD . ucfirst($key) . TextFormat::RESET . "\n";
 
@@ -50,7 +58,7 @@ class Changelog{
 				if($change[0] === "-"){
 					// Wordwrap it with indentation so that everything is indented properly.
 					$text .= wordwrap($change, 46, "\n  ");
-				} else {
+				}else{
 					// Wordwrap it with even more indentation as this change is indented 4 spaces (or a tab) further.
 					$text .= wordwrap(str_replace("-", "o", $change), 42, "\n       ");
 				}
@@ -59,17 +67,19 @@ class Changelog{
 			$text .= "\n";
 		}
 		$form = new ModalForm("BlockSniper $this->version ($this->date)", $text);
-		$form->setYes(function(Player $player){}, Translation::get(Translation::UI_CHANGELOG_CLOSE));
+		$form->setYes(function(Player $player){
+		}, Translation::get(Translation::UI_CHANGELOG_CLOSE));
 		$form->setNo(function(Player $player){
 			$player->sendForm(new ChangeLogMenu($player));
 		}, Translation::get(Translation::UI_CHANGELOG_SEE_OTHER));
+
 		return $form;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getVersion() : string {
+	public function getVersion() : string{
 		return $this->version;
 	}
 
@@ -85,13 +95,14 @@ class Changelog{
 	 *
 	 * @return string[]
 	 */
-	private function filter(array $changes) : array {
+	private function filter(array $changes) : array{
 		$new = [];
-		foreach($changes as $key => $value) {
+		foreach($changes as $key => $value){
 			if(trim($value) !== ""){
 				$new[$key] = $value;
 			}
 		}
+
 		return $new;
 	}
 }

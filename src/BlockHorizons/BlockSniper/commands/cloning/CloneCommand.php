@@ -82,7 +82,7 @@ class CloneCommand extends BaseCommand{
 				$path = $this->loader->getDataFolder() . "schematics/" . $args[1] . ".schematic";
 
 				$schematic = new Schematic();
-				$schematic->setBlocks($session->getSelection()->box(), $shape->getBlocksInside());
+				$schematic->setBlocks($session->getSelection()->box(), $shape->getBlocks($sender->getLevel()));
 				$schematic->save($path);
 
 				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_CLONE_SCHEMATIC_SUCCESS, $path));

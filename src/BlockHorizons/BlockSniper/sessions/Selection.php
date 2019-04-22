@@ -56,7 +56,7 @@ class Selection{
 	/**
 	 * @return int
 	 */
-	public function blockCount() : int {
+	public function blockCount() : int{
 		$box = $this->box();
 
 		return (int) ceil(($box->maxX - $box->minX) * ($box->maxY - $box->minY) * ($box->maxZ - $box->minZ));

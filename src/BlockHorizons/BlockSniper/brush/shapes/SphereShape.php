@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\shapes;
 
 use BlockHorizons\BlockSniper\brush\BaseShape;
-use BlockHorizons\BlockSniper\brush\Brush;
+use BlockHorizons\BlockSniper\brush\BrushProperties;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
 
@@ -14,11 +14,9 @@ class SphereShape extends BaseShape{
 	public const ID = self::SHAPE_SPHERE;
 
 	/**
-	 * @param bool $vectorOnly
-	 *
 	 * @return \Generator
 	 */
-	public function getBlocksInside(bool $vectorOnly = false) : \Generator{
+	public function getVectors() : \Generator{
 		$radiusX = ($this->maxX - $this->minX) / 2;
 		$radiusXS = (int) $radiusX === 0 ? 1 : $radiusX ** 2;
 		$radiusY = ($this->maxY - $this->minY) / 2;
@@ -26,7 +24,7 @@ class SphereShape extends BaseShape{
 		$radiusZ = ($this->maxZ - $this->minZ) / 2;
 		$radiusZS = (int) $radiusZ === 0 ? 1 : $radiusZ ** 2;
 
-		$avgRadius = ($radiusX + $radiusY + $radiusZ ) / 3;
+		$avgRadius = ($radiusX + $radiusY + $radiusZ) / 3;
 		$rSquared = $avgRadius ** 2;
 
 		$centerX = $this->minX + $radiusX;
@@ -48,7 +46,7 @@ class SphereShape extends BaseShape{
 								continue;
 							}
 						}
-						yield $vectorOnly ? new Vector3((int) $x, (int) $y, (int) $z) : $this->getLevel()->getBlock(new Vector3($x, $y, $z));
+						yield new Vector3((int) $x, (int) $y, (int) $z);
 					}
 				}
 			}
@@ -58,7 +56,7 @@ class SphereShape extends BaseShape{
 	/**
 	 * @return int
 	 */
-	public function getBlockCount() : int {
+	public function getBlockCount() : int{
 		$i = 0;
 		$radiusX = ($this->maxX - $this->minX) / 2;
 		$radiusXS = (int) $radiusX === 0 ? 1 : $radiusX ** 2;
@@ -88,6 +86,7 @@ class SphereShape extends BaseShape{
 				}
 			}
 		}
+
 		return $i;
 	}
 
@@ -99,11 +98,11 @@ class SphereShape extends BaseShape{
 	}
 
 	/**
-	 * @param Vector3       $center
-	 * @param Brush         $brush
-	 * @param AxisAlignedBB $bb
+	 * @param Vector3         $center
+	 * @param BrushProperties $brush
+	 * @param AxisAlignedBB   $bb
 	 */
-	public function buildSelection(Vector3 $center, Brush $brush, AxisAlignedBB $bb) : void{
+	public function buildSelection(Vector3 $center, BrushProperties $brush, AxisAlignedBB $bb) : void{
 		[$bb->maxX, $bb->maxY, $bb->maxZ, $bb->minX, $bb->minY, $bb->minZ] = [
 			$center->x + $brush->size, $center->y + $brush->size, $center->z + $brush->size,
 			$center->x - $brush->size, $center->y - $brush->size, $center->z - $brush->size

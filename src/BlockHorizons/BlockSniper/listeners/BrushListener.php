@@ -9,6 +9,7 @@ use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\PlayerSession;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
+use BlockHorizons\BlockSniper\tasks\CooldownBarTask;
 use BlockHorizons\BlockSniper\tasks\SessionDeletionTask;
 use BlockHorizons\BlockSniper\ui\windows\BrushMenuWindow;
 use MyPlot\PlotLevelSettings;
@@ -41,17 +42,19 @@ class BrushListener implements Listener{
 		if(file_exists($loader->getDataFolder() . "bound_brushes.json")){
 			$data = json_decode(file_get_contents($loader->getDataFolder() . "bound_brushes.json"), true);
 			foreach($data as $uuid => $brushData){
-				$b = new Brush($brushData["player"]);
-				Unmarshal::json($brushData["data"], $b);
+				$b = new Brush();
+				if(is_string($brushData)){
+					Unmarshal::json($brushData, $b);
+				}
 				self::$brushItems[$uuid] = $b;
 			}
 		}
 	}
 
-	public function saveBrushes() : void {
+	public function saveBrushes() : void{
 		$data = [];
 		foreach(self::$brushItems as $uuid => $brush){
-			$data[$uuid] = ["player" => $brush->player, "data" => json_encode($brush)];
+			$data[$uuid] = json_encode($brush);
 		}
 		file_put_contents($this->loader->getDataFolder() . "bound_brushes.json", json_encode($data));
 	}
@@ -78,6 +81,7 @@ class BrushListener implements Listener{
 					$this->loader->getLogger()->debug("Invalid bound brush found, removing the item: " . $uuid);
 					$hand->getNamedTag()->removeTag(self::KEY_BRUSH_UUID);
 					$player->getInventory()->setItemInHand($hand);
+
 					return;
 				}
 				$this->useBrush($session, self::$brushItems[$uuid], $player);
@@ -94,10 +98,18 @@ class BrushListener implements Listener{
 				TextFormat::RED . Translation::get(Translation::COMMANDS_COMMON_WARNING_PREFIX) .
 				Translation::get(Translation::BRUSH_SELECTION_ERROR)
 			);
+
 			return;
 		}
+		$startTime = microtime(true);
+
 		$selection = $brush->mode === Brush::MODE_BRUSH ? null : $session->getSelection();
-		$brush->execute($session, $selection, $this->getPlotPoints($player));
+		if($brush->execute($session, $player->getTargetBlock(16 * $player->getViewDistance())->asPosition(), $this->getPlotPoints($player), $selection)){
+			// If the brush was executed synchronously, we send a cooldown bar task directly.
+			$duration = round(microtime(true) - $startTime, 2);
+			$player->sendPopup(TextFormat::GREEN . Translation::get(Translation::BRUSH_STATE_DONE) . " ($duration seconds)");
+			$this->loader->getScheduler()->scheduleRepeatingTask(new CooldownBarTask($this->loader, $brush, $player), 1);
+		}
 	}
 
 	/**
@@ -203,7 +215,7 @@ class BrushListener implements Listener{
 	 */
 	public function onItemHeld(PlayerItemHeldEvent $event) : void{
 		$player = $event->getPlayer();
-		if(!$event->getItem()->equals($this->loader->config->brushItem->parse())) {
+		if(!$event->getItem()->equals($this->loader->config->brushItem->parse())){
 			return;
 		}
 		if($player->hasPermission("blocksniper.command.brush")){

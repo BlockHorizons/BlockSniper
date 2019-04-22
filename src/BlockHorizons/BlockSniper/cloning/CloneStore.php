@@ -64,7 +64,7 @@ class CloneStore{
 	public function pasteCopy(Position $targetBlock) : void{
 		$undoBlocks = [];
 
-		foreach($this->copy->getBlocksInside(true) as $block){
+		foreach($this->copy->getVectors() as $block){
 			$v3 = $block->subtract($this->getOriginalCenter());
 
 			$undoBlocks[] = $targetBlock->level->getBlock($targetBlock->add($v3));
@@ -86,9 +86,9 @@ class CloneStore{
 	}
 
 	/**
-	 * @param string  $templateName
-	 * @param \Generator   $blocks
-	 * @param Vector3 $targetBlock
+	 * @param string     $templateName
+	 * @param \Generator $blocks
+	 * @param Vector3    $targetBlock
 	 *
 	 * @deprecated
 	 */

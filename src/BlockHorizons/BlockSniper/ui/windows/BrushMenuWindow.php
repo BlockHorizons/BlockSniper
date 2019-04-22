@@ -18,7 +18,7 @@ class BrushMenuWindow extends CustomWindow{
 		parent::__construct($this->t(Translation::UI_BRUSH_MENU_TITLE));
 
 		if($withName){
-			$this->addInput($this->t(Translation::UI_BRUSH_MENU_NAME), "Brush", "Brush", function(Player $player, string $value) use($b){
+			$this->addInput($this->t(Translation::UI_BRUSH_MENU_NAME), "Brush", "Brush", function(Player $player, string $value) use ($b){
 				$item = $player->getInventory()->getItemInHand();
 				$item->setCustomName($value);
 				$player->getInventory()->setItemInHand($item);
@@ -27,10 +27,10 @@ class BrushMenuWindow extends CustomWindow{
 		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_MODE_DESCRIPTION), $this->processModes(), $b->mode, function(Player $player, int $value) use ($b){
 			$b->mode = $value;
 		});
-		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_SHAPE), $this->processShapes($requester), $b->getShape(null)::ID, function(Player $player, int $value) use ($b){
+		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_SHAPE), $this->processShapes($requester), $b->getShape()::ID, function(Player $player, int $value) use ($b){
 			$b->shape = ShapeRegistration::getShapeById($value);
 		});
-		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_TYPE), $this->processTypes($requester), $b->getType($b->getShape(null)->getBlocksInside())::ID, function(Player $player, int $value) use ($loader, $b){
+		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_TYPE), $this->processTypes($requester), $b->getType()::ID, function(Player $player, int $value) use ($loader, $b){
 			$b->type = TypeRegistration::getTypeById($value);
 
 			$item = $player->getInventory()->getItemInHand();

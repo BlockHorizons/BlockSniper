@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
-use BlockHorizons\BlockSniper\brush\Brush;
+use BlockHorizons\BlockSniper\brush\BrushProperties;
+use BlockHorizons\BlockSniper\brush\Target;
 use BlockHorizons\BlockSniper\revert\async\AsyncUndo;
 use BlockHorizons\BlockSniper\sessions\Session;
-use BlockHorizons\BlockSniper\sessions\SessionManager;
-use pocketmine\level\ChunkManager;
 use pocketmine\level\format\Chunk;
-use pocketmine\math\Vector3;
 
 /*
  * Regenerates the chunk looked at.
@@ -23,13 +21,10 @@ class RegenerateType extends BaseType{
 
 	/** @var Session */
 	private $session;
-	/** @var Vector3 */
-	private $center;
 
-	public function __construct(Brush $brush, ChunkManager $manager, \Generator $blocks = null){
-		parent::__construct($brush, $manager, $blocks);
-		$this->center = $this->target($brush);
-		$this->session = SessionManager::getPlayerSession($brush->getPlayer());
+	public function __construct(BrushProperties $properties, Target $target, \Generator $blocks = null, Session $session = null){
+		parent::__construct($properties, $target, $blocks);
+		$this->session = $session;
 	}
 
 	/**
@@ -39,14 +34,14 @@ class RegenerateType extends BaseType{
 		if($this->myPlotChecked){
 			return;
 		}
-		$x = $this->center->x >> 4;
-		$z = $this->center->z >> 4;
+		$x = $this->target->x >> 4;
+		$z = $this->target->z >> 4;
 
-		$oldChunk = $this->getLevel()->getChunk($x, $z);
+		$oldChunk = $this->chunkManager->getChunk($x, $z);
 		$c = new Chunk($x, $z);
-		$this->getLevel()->setChunk($x, $z, $c);
+		$this->chunkManager->setChunk($x, $z, $c);
 
-		$this->getLevel()->populateChunk($x, $z, true);
+		$this->chunkManager->populateChunk($x, $z, true);
 
 		$this->session->getRevertStore()->saveRevert(new AsyncUndo([$c], [$oldChunk], $this->session->getSessionOwner()->getName(), $this->level));
 
@@ -89,14 +84,5 @@ class RegenerateType extends BaseType{
 	 */
 	public function usesBlocks() : bool{
 		return false;
-	}
-
-	/**
-	 * Returns the center of this type.
-	 *
-	 * @return Vector3
-	 */
-	public function getCenter() : Vector3{
-		return $this->center;
 	}
 }

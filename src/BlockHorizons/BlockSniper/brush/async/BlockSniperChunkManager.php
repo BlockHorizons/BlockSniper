@@ -8,12 +8,19 @@ use pocketmine\math\Facing;
 
 class BlockSniperChunkManager extends SimpleChunkManager{
 
+	public function getBlockAt(int $x, int $y, int $z) : Block{
+		$block = parent::getBlockAt($x, $y, $z);
+		$block->setComponents($x, $y, $z);
+
+		return $block;
+	}
+
 	/**
 	 * @param int $x
 	 * @param int $z
 	 * @param int $id
 	 */
-	public function setBiomeIdAt(int $x, int $z, int $id) : void{
+	public function setBiomeId(int $x, int $z, int $id) : void{
 		if($chunk = $this->getChunk($x >> 4, $z >> 4)){
 			$chunk->setBiomeId($x & 0x0f, $z & 0x0f, $id);
 		}
@@ -25,7 +32,7 @@ class BlockSniperChunkManager extends SimpleChunkManager{
 	 *
 	 * @return int
 	 */
-	public function getBiomeIdAt(int $x, int $z) : int{
+	public function getBiomeId(int $x, int $z) : int{
 		if($chunk = $this->getChunk($x >> 4, $z >> 4)){
 			return $chunk->getBiomeId($x, $z);
 		}
@@ -65,6 +72,7 @@ class BlockSniperChunkManager extends SimpleChunkManager{
 			}
 			$block = $this->getBlockAt($x, $y, $z);
 			$block->setComponents($x, $y, $z);
+
 			return $block;
 		}
 

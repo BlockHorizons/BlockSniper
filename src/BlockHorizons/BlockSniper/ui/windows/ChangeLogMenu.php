@@ -20,7 +20,7 @@ class ChangeLogMenu extends MenuForm{
 			if($version === Loader::VERSION){
 				$text = TextFormat::YELLOW . TextFormat::BOLD . ">> " . TextFormat::RESET . TextFormat::DARK_AQUA . $text . TextFormat::BOLD . TextFormat::YELLOW . " <<";
 			}
-			$this->addOption($text, "", "", function(Player $player) use($changeLog) {
+			$this->addOption($text, "", "", function(Player $player) use ($changeLog){
 				$this->setResponseForm($changeLog->toForm());
 			});
 		}

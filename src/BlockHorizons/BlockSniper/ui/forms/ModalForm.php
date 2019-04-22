@@ -20,7 +20,8 @@ class ModalForm extends Form implements FormInterface{
 			"button1" => "gui.yes",
 			"button2" => "gui.no"
 		];
-		$this->yes = $this->no = function(){};
+		$this->yes = $this->no = function(){
+		};
 	}
 
 	/**
@@ -43,12 +44,12 @@ class ModalForm extends Form implements FormInterface{
 
 	/**
 	 * @param Player $player
-	 * @param bool  $data
+	 * @param bool   $data
 	 */
 	public function handleResponse(Player $player, $data) : void{
 		if($data){
 			$callable = $this->yes;
-		} else {
+		}else{
 			$callable = $this->no;
 		}
 		$callable($player);

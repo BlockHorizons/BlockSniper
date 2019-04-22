@@ -3,6 +3,7 @@
 namespace BlockHorizons\BlockSniper\sessions\owners;
 
 use pocketmine\Server;
+use pocketmine\utils\MainLogger;
 
 class ServerSessionOwner implements ISessionOwner{
 
@@ -32,5 +33,12 @@ class ServerSessionOwner implements ISessionOwner{
 	 */
 	public function getName() : string{
 		return "Server Session #" . self::$id;
+	}
+
+	/**
+	 * @param string $message
+	 */
+	public function sendMessage(string $message) : void{
+		MainLogger::getLogger()->info($message);
 	}
 }

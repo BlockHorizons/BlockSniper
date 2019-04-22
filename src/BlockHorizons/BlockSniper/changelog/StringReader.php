@@ -25,6 +25,7 @@ class StringReader{
 		}
 		$sub = substr($this->data, 0, $pos);
 		$this->data = substr($this->data, $pos + strlen($pattern));
+
 		return $sub;
 	}
 
@@ -33,14 +34,14 @@ class StringReader{
 	 *
 	 * @return bool
 	 */
-	public function canReadUntil(string $pattern) : bool {
+	public function canReadUntil(string $pattern) : bool{
 		return strpos($this->data, $pattern) !== false;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function remaining() : string {
+	public function remaining() : string{
 		return $this->data;
 	}
 }

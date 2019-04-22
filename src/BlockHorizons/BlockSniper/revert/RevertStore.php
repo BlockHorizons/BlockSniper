@@ -94,6 +94,7 @@ class RevertStore{
 			if(!empty($this->undoStack)){
 				unset($this->undoStack[min(array_keys($this->undoStack))]);
 			}
+
 			return;
 		}
 		if(!empty($this->redoStack)){
@@ -109,6 +110,7 @@ class RevertStore{
 			if(!empty($this->undoStack)){
 				unset($this->undoStack[max(array_keys($this->undoStack))]);
 			}
+
 			return;
 		}
 		if(!empty($this->redoStack)){

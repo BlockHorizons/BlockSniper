@@ -11,6 +11,7 @@ use BlockHorizons\BlockSniper\brush\Brush;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\revert\async\AsyncUndo;
+use BlockHorizons\BlockSniper\sessions\Session;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use BlockHorizons\BlockSniper\tasks\CooldownBarTask;
 use pocketmine\block\Block;
@@ -36,8 +37,9 @@ class BrushTask extends AsyncTask{
 	/** @var float */
 	private $startTime;
 
-	public function __construct(Brush $brush, BaseShape $shape, BaseType $type, array $chunks, array $plotPoints){
-		$this->storeLocal([$chunks, $brush]);
+	public function __construct(Brush $brush, Session $session, BaseShape $shape, BaseType $type, Level $level, array $plotPoints = []){
+		$chunks = $shape->getTouchedChunks($level);
+		$this->storeLocal("", [$level, $session, $chunks, $brush]);
 		$this->shape = $shape;
 		$this->type = $type;
 		$this->chunks = $chunks;
@@ -51,7 +53,7 @@ class BrushTask extends AsyncTask{
 		$plotPoints = (array) $this->plotPoints;
 
 		// Publish progress immediately so that there will be no delay until the progress indicator appears.
-		$this->publishProgress([$shape->getPlayerName(), 0]);
+		$this->publishProgress(0);
 
 		$chunks = (array) $this->chunks;
 		foreach($chunks as $hash => $data){
@@ -60,20 +62,16 @@ class BrushTask extends AsyncTask{
 
 		/** @var Chunk[] $chunks */
 		$manager = new BlockSniperChunkManager();
-		foreach($chunks as $chunk) {
+		foreach($chunks as $chunk){
 			$manager->setChunk($chunk->getX(), $chunk->getZ(), $chunk);
 		}
-		$type->setBlocksInside($this->blocks($shape, $chunks))->setAsynchronous()->setChunkManager($manager);
+		$type->setBlocksInside($this->blocks($shape, $chunks))->setChunkManager($manager);
 
-		foreach($type->fillShape($plotPoints) as $b) {}
-
-		$type->setBlocksInside($this->blocks($shape, $chunks))
-			->setAsynchronous()
-			->setChunkManager($manager)
-			->fillShape($plotPoints);
+		foreach($type->fillShape($plotPoints) as $b){
+		}
 
 		// Publish progress for 21 so that the user gets a message 'Done'.
-		$this->publishProgress([$shape->getPlayerName(), 21]);
+		$this->publishProgress(21);
 		$this->setResult($chunks);
 	}
 
@@ -83,10 +81,10 @@ class BrushTask extends AsyncTask{
 		$percentageBlocks = $blocksPerPercentage;
 
 		$i = 0;
-		foreach($shape->getBlocksInside(true) as $vector3){
+		foreach($shape->getVectors() as $vector3){
 			$index = Level::chunkHash($vector3->x >> 4, $vector3->z >> 4);
-			if(!isset($chunks[$index])) {
-				continue;
+			if(!isset($chunks[$index])){
+				throw new \InvalidArgumentException("chunk not found for block");
 			}
 			/** @var Chunk $chunk */
 			$chunk = $chunks[$index];
@@ -96,9 +94,9 @@ class BrushTask extends AsyncTask{
 			$block = Block::get($combinedValue >> 4, $combinedValue & 0xf);
 			$block->setComponents($vector3->x, $vector3->y, $vector3->z);
 
-			$i++;
-			if($i === $percentageBlocks) {
-				$this->publishProgress([$shape->getPlayerName(), (int) ceil($i / $blockCount * 20)]);
+			++$i;
+			if($i === $percentageBlocks){
+				$this->publishProgress((int) ceil($i / $blockCount * 20));
 				$percentageBlocks += $blocksPerPercentage;
 			}
 			yield $block;
@@ -106,32 +104,29 @@ class BrushTask extends AsyncTask{
 	}
 
 	public function onProgressUpdate($progress) : void{
-		[$playerName, $progress] = $progress;
-		if(($player = Server::getInstance()->getPlayer($playerName)) === null) {
-			return;
-		}
+		/** @var Session $session */
+		[, $session] = $this->fetchLocal("");
+
 		if($progress >= 21){
 			$duration = round(microtime(true) - $this->startTime, 2);
-			$player->sendPopup(TextFormat::GREEN . Translation::get(Translation::BRUSH_STATE_DONE) . " ($duration seconds)");
+			$session->getSessionOwner()->sendMessage(TextFormat::GREEN . Translation::get(Translation::BRUSH_STATE_DONE) . " ($duration seconds)");
+
 			return;
 		}
-		$player->sendPopup(TextFormat::GREEN . str_repeat("|", $progress) . TextFormat::RED . str_repeat("|", 20 - $progress));
+		$session->getSessionOwner()->sendMessage(TextFormat::GREEN . str_repeat("|", $progress) . TextFormat::RED . str_repeat("|", 20 - $progress));
 	}
 
 	public function onCompletion() : void{
 		/** @var Loader $loader */
 		$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
-		if(!$loader->isEnabled()){
-			return;
-		}
-		if(!($player = $this->shape->getPlayer(Server::getInstance()))){
-			return;
-		}
 
 		/** @var Chunk[] $chunks */
 		$chunks = $this->getResult();
-		$level = $this->shape->getLevel();
-		[$undoChunks, $brush] = $this->fetchLocal();
+		/**
+		 * @var Level   $level
+		 * @var Session $session
+		 */
+		[$level, $session, $undoChunks, $brush] = $this->fetchLocal("");
 
 		foreach($undoChunks as &$undoChunk){
 			$undoChunk = Chunk::fastDeserialize($undoChunk);
@@ -141,7 +136,9 @@ class BrushTask extends AsyncTask{
 			$level->setChunk($chunk->getX(), $chunk->getZ(), $chunk, false);
 		}
 
-		$loader->getScheduler()->scheduleDelayedRepeatingTask(new CooldownBarTask($loader, $brush, $player), 1, 3);
-		SessionManager::getPlayerSession($player)->getRevertStore()->saveRevert(new AsyncUndo($chunks, $undoChunks, $player->getName(), $player->getLevel()->getId()));
+		if(($player = Server::getInstance()->getPlayer($session->getSessionOwner()->getName())) !== null){
+			$loader->getScheduler()->scheduleDelayedRepeatingTask(new CooldownBarTask($loader, $brush, $player), 1, 3);
+		}
+		SessionManager::getPlayerSession($player)->getRevertStore()->saveRevert(new AsyncUndo($chunks, $undoChunks, $session->getSessionOwner()->getName(), $level->getId()));
 	}
 }

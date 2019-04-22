@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
-use BlockHorizons\BlockSniper\brush\Brush;
+use BlockHorizons\BlockSniper\brush\BrushProperties;
+use BlockHorizons\BlockSniper\brush\Target;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\block\Flowable;
 use pocketmine\item\Item;
-use pocketmine\level\ChunkManager;
 use pocketmine\Server;
 
 /*
@@ -23,8 +23,8 @@ class LeafBlowerType extends BaseType{
 	/** @var bool */
 	private $dropPlants = false;
 
-	public function __construct(Brush $brush, ChunkManager $level, \Generator $blocks = null){
-		parent::__construct($brush, $level, $blocks);
+	public function __construct(BrushProperties $properties, Target $target, \Generator $blocks = null){
+		parent::__construct($properties, $target, $blocks);
 		if(!$this->isAsynchronous()){
 			/** @var Loader $loader */
 			$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
@@ -43,7 +43,7 @@ class LeafBlowerType extends BaseType{
 			if($block instanceof Flowable){
 				yield $block;
 				if($this->dropPlants){
-					$this->getLevel()->dropItem($block, Item::get($block->getId()));
+					$this->chunkManager->dropItem($block, Item::get($block->getId()));
 				}
 				$this->delete($block);
 			}

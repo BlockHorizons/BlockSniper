@@ -140,6 +140,7 @@ class BrushItem{
 		if(count($items) === 0){
 			throw new InvalidItemException("invalid configuration brush item");
 		}
+
 		return $items[0];
 	}
 }

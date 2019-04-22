@@ -42,7 +42,7 @@ class BrushPropertiesWindow extends CustomWindow{
 			$this->addSlider($this->t(Translation::UI_BRUSH_MENU_WIDTH), 0, $loader->config->maxSize, 1, $b->width, function(Player $player, float $value) use ($b){
 				$b->width = (int) $value;
 			});
-			if($b->getType()::ID !== BiomeType::ID) {
+			if($b->getType()::ID !== BiomeType::ID){
 				$this->addSlider($this->t(Translation::UI_BRUSH_MENU_HEIGHT), 0, $loader->config->maxSize, 1, $b->height, function(Player $player, float $value) use ($b){
 					$b->height = (int) $value;
 				});
@@ -53,10 +53,10 @@ class BrushPropertiesWindow extends CustomWindow{
 		}
 		if($b->getType()->usesBlocks()){
 			$this->addInput($this->t(Translation::UI_BRUSH_MENU_BLOCKS), $b->blocks, "stone,cracked_stone_brick", function(Player $player, string $value) use ($b){
-				try {
+				try{
 					$b->parseBlocks($value);
 					$b->blocks = $value;
-				} catch(InvalidItemException $exception) {
+				}catch(InvalidItemException $exception){
 					$player->sendMessage(TextFormat::RED . $exception->getMessage());
 				}
 			});
@@ -71,10 +71,10 @@ class BrushPropertiesWindow extends CustomWindow{
 				break;
 			case ReplaceType::ID:
 				$this->addInput($this->t(Translation::UI_BRUSH_MENU_OBSOLETE), $b->obsolete, "stone,mossy_stone_brick,grass", function(Player $player, string $value) use ($b){
-					try {
+					try{
 						$b->parseBlocks($value);
 						$b->obsolete = $value;
-					} catch(InvalidItemException $exception) {
+					}catch(InvalidItemException $exception){
 						$player->sendMessage(TextFormat::RED . $exception->getMessage());
 					}
 				});
@@ -89,10 +89,10 @@ class BrushPropertiesWindow extends CustomWindow{
 				break;
 			case PlantType::ID:
 				$this->addInput($this->t(Translation::UI_BRUSH_MENU_SOIL), $b->soilBlocks, "grass", function(Player $player, string $value) use ($b){
-					try {
+					try{
 						$b->parseBlocks($value);
 						$b->soilBlocks = $value;
-					} catch(InvalidItemException $exception) {
+					}catch(InvalidItemException $exception){
 						$player->sendMessage(TextFormat::RED . $exception->getMessage());
 					}
 				});
@@ -102,18 +102,18 @@ class BrushPropertiesWindow extends CustomWindow{
 
 	private function addTreeProperties(Brush $b, Loader $loader){
 		$this->addInput($this->t(Translation::UI_TREE_MENU_TRUNK_BLOCKS), $b->tree->trunkBlocks, "oak_wood,dark_oak_wood", function(Player $player, string $value) use ($b){
-			try {
+			try{
 				$b->parseBlocks($value);
 				$b->tree->trunkBlocks = $value;
-			} catch(InvalidItemException $exception) {
+			}catch(InvalidItemException $exception){
 				$player->sendMessage(TextFormat::RED . $exception->getMessage());
 			}
 		});
 		$this->addInput($this->t(Translation::UI_TREE_MENU_LEAVES_BLOCKS), $b->tree->leavesBlocks, "oak_leaves,spruce_leaves", function(Player $player, string $value) use ($b){
-			try {
+			try{
 				$b->parseBlocks($value);
 				$b->tree->leavesBlocks = $value;
-			} catch(InvalidItemException $exception) {
+			}catch(InvalidItemException $exception){
 				$player->sendMessage(TextFormat::RED . $exception->getMessage());
 			}
 		});

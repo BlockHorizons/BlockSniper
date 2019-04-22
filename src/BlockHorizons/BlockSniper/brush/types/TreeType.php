@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
-use BlockHorizons\BlockSniper\brush\Brush;
-use BlockHorizons\BlockSniper\brush\TreeProperties;
-use pocketmine\level\ChunkManager;
+use BlockHorizons\BlockSniper\brush\BrushProperties;
+use BlockHorizons\BlockSniper\brush\Target;
+use pocketmine\level\Position;
 
 /*
  * Grows a custom tree on the target block.
@@ -20,10 +20,9 @@ class TreeType extends BaseType{
 	/** @var Tree */
 	private $tree;
 
-	public function __construct(Brush $brush, ChunkManager $level, \Generator $blocks = null){
-		parent::__construct($brush, $level, $blocks);
-		$center = $brush->getPlayer()->getTargetBlock($brush->getPlayer()->getViewDistance() * 16);
-		$this->tree = new Tree($center, $brush, $this);
+	public function __construct(BrushProperties $properties, Target $target, \Generator $blocks = null){
+		parent::__construct($properties, $target, $blocks);
+		$this->tree = new Tree(Position::fromObject($target->asVector3(), $target->getChunkManager()), $properties, $this);
 	}
 
 	/**
@@ -68,14 +67,5 @@ class TreeType extends BaseType{
 	 */
 	public function getName() : string{
 		return "Tree";
-	}
-
-	/**
-	 * Returns the tree properties of this type.
-	 *
-	 * @return TreeProperties
-	 */
-	public function getTree() : TreeProperties{
-		return $this->brush->tree;
 	}
 }

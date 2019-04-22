@@ -50,6 +50,9 @@ class BrushProperties implements \JsonSerializable{
 		$this->tree = new TreeProperties();
 	}
 
+	/**
+	 * @return array
+	 */
 	public function jsonSerialize() : array{
 		return (array) $this;
 	}
@@ -64,9 +67,10 @@ class BrushProperties implements \JsonSerializable{
 		if(empty($blocks)){
 			return [Block::get(Block::AIR)];
 		}
-		foreach($blocks as $key => $item) {
+		foreach($blocks as $key => $item){
 			$blocks[$key] = $item->getBlock();
 		}
+
 		return $blocks;
 	}
 

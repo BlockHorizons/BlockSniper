@@ -34,10 +34,10 @@ class TargetHighlightTask extends BlockSniperTask{
 		$level = $player->getLevel();
 		$iterator = new BlockEdgeIterator($player->getTargetBlock(16 * $player->getViewDistance()));
 
-		foreach($iterator->getEdges() as $edge) {
+		foreach($iterator->getEdges() as $edge){
 			/** @var Vector3 $position */
 			foreach($edge->walk(0.2) as $position){
-				if(mt_rand(0, 5) === 0) {
+				if(mt_rand(0, 5) === 0){
 					$level->addParticle($position, new FlameParticle());
 				}
 			}

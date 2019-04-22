@@ -18,7 +18,7 @@ class ChangelogTask extends AsyncTask{
 		if(is_string($text)){
 			$reader = new StringReader($text);
 			while(true){
-				if(!$reader->canReadUntil("## [")) {
+				if(!$reader->canReadUntil("## [")){
 					// We've processed all versions in the file.
 					break;
 				}
@@ -32,7 +32,7 @@ class ChangelogTask extends AsyncTask{
 				$removed = explode("\n", $reader->readUntil("### Fixed"));
 				if(!$reader->canReadUntil("\n\n")){
 					$fixed = explode("\n", $reader->remaining());
-				} else {
+				}else{
 					$fixed = explode("\n", $reader->readUntil("\n\n"));
 				}
 

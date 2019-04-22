@@ -21,6 +21,6 @@ class TemplateType extends BaseClone{
 	}
 
 	public function saveClone() : void{
-		SessionManager::getPlayerSession($this->player)->getCloneStore()->saveTemplate($this->name, $this->shape->getBlocksInside(), $this->center);
+		SessionManager::getPlayerSession($this->player)->getCloneStore()->saveTemplate($this->name, $this->shape->getVectors(), $this->center);
 	}
 }

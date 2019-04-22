@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BaseType;
-use BlockHorizons\BlockSniper\brush\Brush;
+use BlockHorizons\BlockSniper\brush\BrushProperties;
+use BlockHorizons\BlockSniper\brush\Target;
 use pocketmine\block\Block;
 use pocketmine\block\BlockIds;
 use pocketmine\block\Flowable;
-use pocketmine\level\ChunkManager;
 use pocketmine\math\Facing;
 
 /*
@@ -23,9 +23,9 @@ class TopLayerType extends BaseType{
 	/** @var int */
 	private $layerWidth;
 
-	public function __construct(Brush $brush, ChunkManager $level, \Generator $blocks = null){
-		parent::__construct($brush, $level, $blocks);
-		$this->layerWidth = $brush->layerWidth;
+	public function __construct(BrushProperties $properties, Target $target, \Generator $blocks = null){
+		parent::__construct($properties, $target, $blocks);
+		$this->layerWidth = $properties->layerWidth;
 	}
 
 	/**
@@ -38,9 +38,9 @@ class TopLayerType extends BaseType{
 			}
 
 			$higherBlock = $block;
-			for($y = $block->y; $y <= $block->y + $this->layerWidth; $y++) {
+			for($y = $block->y; $y <= $block->y + $this->layerWidth; $y++){
 				$higherBlock = $this->side($higherBlock, Facing::UP);
-				if($higherBlock instanceof Flowable || $higherBlock->getId() === BlockIds::AIR) {
+				if($higherBlock instanceof Flowable || $higherBlock->getId() === BlockIds::AIR){
 					yield $block;
 					$this->putBlock($block, $this->randomBrushBlock());
 					break;

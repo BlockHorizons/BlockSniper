@@ -30,11 +30,12 @@ class PlayerSession extends Session implements \JsonSerializable{
 	 */
 	public function initializeBrush() : bool{
 		$this->brush = new Brush($this->getSessionOwner()->getPlayerName());
-		if(!$this->loader->config->saveBrushProperties) {
+		if(!$this->loader->config->saveBrushProperties){
 			return false;
 		}
 		if(!file_exists($this->dataFile)){
 			file_put_contents($this->dataFile, "{}");
+
 			return false;
 		}
 
@@ -53,11 +54,12 @@ class PlayerSession extends Session implements \JsonSerializable{
 		}catch(DecodeException $exception){
 			$this->loader->getLogger()->logException($exception);
 		}
+
 		return false;
 	}
 
 	public function close() : void{
-		if(!$this->loader->config->saveBrushProperties) {
+		if(!$this->loader->config->saveBrushProperties){
 			return;
 		}
 		$data = json_encode($this);
@@ -71,6 +73,7 @@ class PlayerSession extends Session implements \JsonSerializable{
 	public function jsonSerialize() : array{
 		$data = $this->brush->jsonSerialize();
 		$data[self::KEY_LAST_USED_VERSION] = Loader::VERSION;
+
 		return $data;
 	}
 

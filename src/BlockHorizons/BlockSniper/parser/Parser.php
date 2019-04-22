@@ -21,7 +21,7 @@ class Parser{
 	 *
 	 * @return Item[]
 	 */
-	public static function parse(string $itemString) : array {
+	public static function parse(string $itemString) : array{
 		$blocks = [];
 
 		$length = strlen($itemString);
@@ -31,6 +31,7 @@ class Parser{
 			$length -= $consumer->getProgressedLength();
 			$blocks[] = $consumer->getItem();
 		}
+
 		return $blocks;
 	}
 }

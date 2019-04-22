@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\shapes;
 
-use BlockHorizons\BlockSniper\brush\Brush;
+use BlockHorizons\BlockSniper\brush\BrushProperties;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
 
@@ -20,11 +20,11 @@ class CubeShape extends CuboidShape{
 	}
 
 	/**
-	 * @param Vector3       $center
-	 * @param Brush         $brush
-	 * @param AxisAlignedBB $bb
+	 * @param Vector3         $center
+	 * @param BrushProperties $brush
+	 * @param AxisAlignedBB   $bb
 	 */
-	public function buildSelection(Vector3 $center, Brush $brush, AxisAlignedBB $bb) : void{
+	public function buildSelection(Vector3 $center, BrushProperties $brush, AxisAlignedBB $bb) : void{
 		[$bb->maxX, $bb->maxY, $bb->maxZ, $bb->minX, $bb->minY, $bb->minZ] = [
 			$center->x + $brush->size, $center->y + $brush->size, $center->z + $brush->size,
 			$center->x - $brush->size, $center->y - $brush->size, $center->z - $brush->size

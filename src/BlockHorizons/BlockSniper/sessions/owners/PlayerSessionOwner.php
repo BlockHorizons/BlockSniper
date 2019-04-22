@@ -34,4 +34,15 @@ class PlayerSessionOwner implements ISessionOwner{
 	public function getName() : string{
 		return $this->playerName;
 	}
+
+	/**
+	 * @param string $message
+	 */
+	public function sendMessage(string $message) : void{
+		// This may seem unintuitive, but we generally send popups over chat messages.
+		$player = $this->getPlayer();
+		if($player !== null){
+			$player->sendPopup($message);
+		}
+	}
 }

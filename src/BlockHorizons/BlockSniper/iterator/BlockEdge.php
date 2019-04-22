@@ -26,8 +26,26 @@ class BlockEdge{
 	public function walk(float $interval = 0.1) : \Generator{
 		$sub = $this->end->subtract($this->start)->multiply($interval);
 		$iterCount = 1 / $interval;
-		for($i = 0; $i < $iterCount; $i++) {
+		for($i = 0; $i < $iterCount; $i++){
 			yield $this->start->add($sub->multiply($i));
 		}
+	}
+
+	/**
+	 * getStart returns the start position of the block edge: One of the corners of the block.
+	 *
+	 * @return Vector3
+	 */
+	public function getStart() : Vector3{
+		return $this->start;
+	}
+
+	/**
+	 * getEnd returns the end position of the block edge: One of the corners of the block.
+	 *
+	 * @return Vector3
+	 */
+	public function getEnd() : Vector3{
+		return $this->end;
 	}
 }

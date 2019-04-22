@@ -28,7 +28,7 @@ class IdMap{
 	 *
 	 * @return string|null
 	 */
-	public static function translate(string $id) : ?string {
+	public static function translate(string $id) : ?string{
 		return self::$ids[$id] ?? null;
 	}
 }

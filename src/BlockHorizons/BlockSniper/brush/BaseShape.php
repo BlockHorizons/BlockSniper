@@ -5,12 +5,10 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush;
 
 use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
+use pocketmine\level\ChunkManager;
 use pocketmine\level\Level;
-use pocketmine\level\Position;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
-use pocketmine\Player;
-use pocketmine\Server;
 
 abstract class BaseShape extends AxisAlignedBB{
 
@@ -22,46 +20,24 @@ abstract class BaseShape extends AxisAlignedBB{
 	public const SHAPE_CYLINDER = 3;
 	public const SHAPE_ELLIPSOID = 4;
 
-	/** @var int */
-	protected $level = 0;
 	/** @var Vector3 */
 	protected $center;
 	/** @var bool */
 	protected $hollow = false;
-	/** @var string */
-	protected $playerName = "";
 
-	public function __construct(Player $player, Level $level, Position $center, ?AxisAlignedBB $bb, Brush $brush){
-		if($bb === null){
-			$bb = new AxisAlignedBB(0, 0, 0, 0, 0, 0);
-			$this->buildSelection($center, $brush, $bb);
+	public function __construct(BrushProperties $properties, Target $target, ?AxisAlignedBB $selection = null){
+		if($selection === null){
+			$selection = new AxisAlignedBB(0, 0, 0, 0, 0, 0);
+			$this->buildSelection($target, $properties, $selection);
 		}
-		parent::__construct($bb->minX, $bb->minY, $bb->minZ, $bb->maxX, $bb->maxY, $bb->maxZ);
+		parent::__construct($selection->minX, $selection->minY, $selection->minZ, $selection->maxX, $selection->maxY, $selection->maxZ);
 
-		$this->playerName = $player->getName();
-		$this->level = $level->getId();
-		$this->center = $center->asVector3();
-		$this->hollow = $brush->hollow;
+		$this->center = $target->asVector3();
+		$this->hollow = $properties->hollow;
 	}
 
 	/**
-	 * @param Server $server
-	 *
-	 * @return Player|null
-	 */
-	public function getPlayer(Server $server) : ?Player{
-		return $server->getPlayer($this->playerName);
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getPlayerName() : string {
-		return $this->playerName;
-	}
-
-	/**
-	 * Returns true if the shape is hollow, false if it is not.
+	 * isHollow returns true if the shape is hollow, false if it is not.
 	 *
 	 * @return bool
 	 */
@@ -70,7 +46,7 @@ abstract class BaseShape extends AxisAlignedBB{
 	}
 
 	/**
-	 * Returns the permission required to use the shape.
+	 * getPermission returns the permission required to use the shape.
 	 *
 	 * @return string
 	 */
@@ -86,13 +62,15 @@ abstract class BaseShape extends AxisAlignedBB{
 	}
 
 	/**
+	 * @param ChunkManager $chunkManager
+	 *
 	 * @return string[]
 	 */
-	public function getTouchedChunks() : array{
+	public function getTouchedChunks(ChunkManager $chunkManager) : array{
 		$touchedChunks = [];
 		for($x = $this->minX; $x <= $this->maxX + 16; $x += 16){
 			for($z = $this->minZ; $z <= $this->maxZ + 16; $z += 16){
-				$chunk = $this->getLevel()->getChunk($x >> 4, $z >> 4, true);
+				$chunk = $chunkManager->getChunk($x >> 4, $z >> 4);
 				if($chunk === null){
 					continue;
 				}
@@ -106,47 +84,50 @@ abstract class BaseShape extends AxisAlignedBB{
 	/**
 	 * @return Vector3
 	 */
-	public function getCenter() : Vector3 {
+	public function getCenter() : Vector3{
 		return $this->center;
 	}
 
 	/**
-	 * Returns the level the shape is made in.
+	 * getBlocks returns a generator that holds blocks rather than Vector3 instances, by looking up the blocks that are
+	 * found in the ChunkManager passed.
 	 *
-	 * @return Level
+	 * @param ChunkManager $manager
+	 *
+	 * @return \Generator
 	 */
-	public function getLevel() : Level{
-		return Server::getInstance()->getLevelManager()->getLevel($this->level);
+	public function getBlocks(ChunkManager $manager) : \Generator{
+		foreach($this->getVectors() as $vector){
+			yield $manager->getBlockAt($vector->x, $vector->y, $vector->z);
+		}
 	}
 
 	/**
-	 * Returns the name of the shape.
+	 * getName returns the name of the shape.
 	 *
 	 * @return string
 	 */
 	public abstract function getName() : string;
 
 	/**
-	 * Returns all blocks in the shape if $partially is false. If true, only returns part of the shape, specified by $blocksPerTick.
-	 *
-	 * @param $vectorOnly
+	 * getBlocksInside creates a generator that yields Vector3s that are found within the shape.
 	 *
 	 * @return \Generator
 	 */
-	public abstract function getBlocksInside(bool $vectorOnly = false) : \Generator;
+	public abstract function getVectors() : \Generator;
 
 	/**
-	 * Builds a selection if the brush mode is Brush::MODE_BRUSH. $center is the target block, and $bb requires its
-	 * bounds to be set.
+	 * buildSelection builds a selection if the brush mode is Brush::MODE_BRUSH. $center is the target block, and $bb
+	 * requires its bounds to be set.
 	 *
-	 * @param Vector3       $center
-	 * @param Brush         $brush
-	 * @param AxisAlignedBB $bb
+	 * @param Vector3         $center
+	 * @param BrushProperties $properties
+	 * @param AxisAlignedBB   $bb
 	 */
-	public abstract function buildSelection(Vector3 $center, Brush $brush, AxisAlignedBB $bb) : void;
+	public abstract function buildSelection(Vector3 $center, BrushProperties $properties, AxisAlignedBB $bb) : void;
 
 	/**
-	 * Calculates the total amount of blocks in the selection of the shape.
+	 * getBlockCount calculates the total amount of blocks in the selection of the shape.
 	 *
 	 * @return int
 	 */
