@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush;
 
 use pocketmine\level\ChunkManager;
+use pocketmine\level\Position;
 use pocketmine\math\Vector3;
 
 /**
@@ -30,5 +31,16 @@ class Target extends Vector3{
 	 */
 	public function getChunkManager() : ?ChunkManager{
 		return $this->chunkManager;
+	}
+
+	/**
+	 * fromPosition creates a Target instance from a Position instance.
+	 *
+	 * @param Position $position
+	 *
+	 * @return Target
+	 */
+	public static function fromPosition(Position $position) : Target {
+		return new Target($position->asVector3(), $position->getLevel());
 	}
 }
