@@ -29,7 +29,7 @@ class PlayerSession extends Session implements \JsonSerializable{
 	 * @return bool true if the brush could be recovered from a file.
 	 */
 	public function initializeBrush() : bool{
-		$this->brush = new Brush($this->getSessionOwner()->getPlayerName());
+		$this->brush = new Brush();
 		if(!$this->loader->config->saveBrushProperties){
 			return false;
 		}

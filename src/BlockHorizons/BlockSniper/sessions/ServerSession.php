@@ -52,7 +52,7 @@ class ServerSession extends Session implements \JsonSerializable{
 	 * @param Position $position
 	 */
 	public function setTargetBlock(Position $position) : void{
-		$this->levelName = $position->getLevel()->getName();
+		$this->levelName = $position->getLevel()->getFolderName();
 		$this->targetBlock = $position;
 	}
 
@@ -82,7 +82,7 @@ class ServerSession extends Session implements \JsonSerializable{
 	 * @return bool
 	 */
 	protected function initializeBrush() : bool{
-		$this->brush = new Brush($this->getSessionOwner()->getName());
+		$this->brush = new Brush();
 
 		return true;
 	}
