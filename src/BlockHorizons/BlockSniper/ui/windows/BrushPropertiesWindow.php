@@ -13,6 +13,7 @@ use BlockHorizons\BlockSniper\brush\types\TreeType;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\exceptions\InvalidItemException;
 use BlockHorizons\BlockSniper\Loader;
+use pocketmine\level\biome\Biome;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
 
@@ -52,10 +53,10 @@ class BrushPropertiesWindow extends CustomWindow{
 			});
 		}
 		if($b->getType()->usesBrushBlocks()){
-			$this->addInput($this->t(Translation::UI_BRUSH_MENU_BLOCKS), $b->blocks, "stone,cracked_stone_brick", function(Player $player, string $value) use ($b){
+			$this->addInput($this->t(Translation::UI_BRUSH_MENU_BLOCKS), $b->brushBlocks, "stone,cracked_stone_brick", function(Player $player, string $value) use ($b){
 				try{
 					$b->parseBlocks($value);
-					$b->blocks = $value;
+					$b->brushBlocks = $value;
 				}catch(InvalidItemException $exception){
 					$player->sendMessage(TextFormat::RED . $exception->getMessage());
 				}
@@ -70,10 +71,10 @@ class BrushPropertiesWindow extends CustomWindow{
 				});
 				break;
 			case ReplaceType::ID:
-				$this->addInput($this->t(Translation::UI_BRUSH_MENU_OBSOLETE), $b->obsolete, "stone,mossy_stone_brick,grass", function(Player $player, string $value) use ($b){
+				$this->addInput($this->t(Translation::UI_BRUSH_MENU_OBSOLETE), $b->replacedBlocks, "stone,mossy_stone_brick,grass", function(Player $player, string $value) use ($b){
 					try{
 						$b->parseBlocks($value);
-						$b->obsolete = $value;
+						$b->replacedBlocks = $value;
 					}catch(InvalidItemException $exception){
 						$player->sendMessage(TextFormat::RED . $exception->getMessage());
 					}
@@ -82,6 +83,18 @@ class BrushPropertiesWindow extends CustomWindow{
 			case BiomeType::ID:
 				$this->addInput($this->t(Translation::UI_BRUSH_MENU_BIOME), (string) $b->biomeId, "plains", function(Player $player, string $value) use ($b){
 					$b->biomeId = $b->parseBiomeId($value);
+
+					if(is_numeric($value)){
+						$b->biomeId = (int) $value;
+						return;
+					}
+					$biomes = new \ReflectionClass(Biome::class);
+					$const = strtoupper(str_replace(" ", "_", $value));
+					if($biomes->hasConstant($const)){
+						$b->biomeId = $biomes->getConstant($const);
+						return;
+					}
+					$player->sendMessage(TextFormat::RED . "Unknown biome type " . $value);
 				});
 				break;
 			case TreeType::ID:

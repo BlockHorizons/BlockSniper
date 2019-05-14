@@ -19,7 +19,7 @@ class PlantType extends BaseType{
 
 	public function __construct(BrushProperties $properties, Target $target, \Generator $blocks = null){
 		parent::__construct($properties, $target, $blocks);
-		$this->soilBlocks = $properties->getSoil();
+		$this->soilBlocks = $properties->getSoilBlocks();
 	}
 
 	/**

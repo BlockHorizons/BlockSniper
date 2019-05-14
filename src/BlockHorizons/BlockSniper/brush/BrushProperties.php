@@ -4,60 +4,150 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush;
 
-use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
-use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
 use BlockHorizons\BlockSniper\brush\shapes\SphereShape;
 use BlockHorizons\BlockSniper\brush\types\FillType;
+use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\parser\Parser;
 use pocketmine\block\Block;
 use pocketmine\level\biome\Biome;
-use function is_numeric;
-use function str_replace;
-use function strtoupper;
+use pocketmine\Server;
 
+/**
+ * Class BrushProperties holds all properties used by BrushTypes and BrushShapes. They may be applied using the Brush
+ * instance, which extends it, in order to directly brush. Alternatively, a BrushProperties instance may be directly
+ * passed into BrushTypes and BrushShapes to use their functionality.
+ */
 class BrushProperties implements \JsonSerializable{
 
-	/** @var string */
+	/**
+	 * type is the brush type. It must be a '::class' string of a class that extends BaseType.
+	 *
+	 * @var string
+	 */
 	public $type = FillType::class;
-	/** @var string */
+	/**
+	 * shape is the brush shape. It must be a '::class' string of a class that extends BaseShape.
+	 *
+	 * @var string
+	 */
 	public $shape = SphereShape::class;
-	/** @var int */
-	public $mode = 0;
-	/** @var int */
+	/**
+	 * mode is the mode of the brush. It must be either Brush::MODE_BRUSH or Brush::MODE_SELECTION.
+	 *
+	 * @var int
+	 */
+	public $mode = Brush::MODE_BRUSH;
+	/**
+	 * size is the size of the brush, which is only applied if the mode is Brush::MODE_BRUSH. Some shapes don't use the
+	 * size property, but instead use one of the fields below.
+	 *
+	 * @var int
+	 */
 	public $size = 5;
-	/** @var int */
+	/**
+	 * height, width and length are alternative fields to the size field. The Cuboid-, Cylinder- and EllipsoidShape use
+	 * these fields.
+	 *
+	 * @var int
+	 */
 	public $height = 5, $width = 5, $length = 5;
-	/** @var bool */
+	/**
+	 * hollow specifies if the shapes created by the brush are hollow.
+	 *
+	 * @var bool
+	 */
 	public $hollow = false;
-	/** @var bool */
+	/**
+	 * decrementing specifies if the brush properties' size is decreased by one each time the brush is used.
+	 *
+	 * @var bool
+	 */
 	public $decrementing = false;
-	/** @var int */
+	/**
+	 * resetSize specifies the brush's reset size if the size reaches 0 while decrementing is set to true.
+	 *
+	 * @var int
+	 */
 	public $resetSize = 0;
-	/** @var string */
-	public $blocks = "stone";
-	/** @var string */
-	public $obsolete = "air";
-	/** @var int */
+	/**
+	 * brushBlocks is a string of brush blocks. These blocks are separated using commas and may contain tags. (Even though
+	 * they don't have functionality yet)
+	 * An example: stone,birch_log[axis=x]
+	 *
+	 * @var string
+	 */
+	public $brushBlocks = "stone";
+	/**
+	 * replacedBlocks is a string of blocks. These blocks are replaced if the replace brush type is used. The format
+	 * of the string is the same as that of the blocks field.
+	 *
+	 * @var string
+	 */
+	public $replacedBlocks = "air";
+	/**
+	 * biomeId is the biome ID used to brush biomes with. The biome ID must be one of the constantsvfound in the Biome
+	 * class.
+	 *
+	 * @var int
+	 */
 	public $biomeId = Biome::PLAINS;
-	/** @var TreeProperties */
+	/**
+	 * tree holds properties specifically used by the tree type brush.
+	 *
+	 * @var TreeProperties
+	 */
 	public $tree;
-	/** @var int */
+	/**
+	 * layerWidth is the width used by the TopLayerType. It specifies the width of the layer brushed at the top. In
+	 * other words, the amount of blocks n+1 blocks it should extend down.
+	 *
+	 * @var int
+	 */
 	public $layerWidth = 0;
-	/** @var string */
+	/**
+	 * soilBlocks is a string of soil blocks. These blocks are the only blocks that brush blocks are placed on top of if
+	 * the PlantType is used.
+	 *
+	 * @var string
+	 */
 	public $soilBlocks = "grass";
 
 	public function __construct(){
+		// Initialise the tree properties object as we can't have default property object values.
 		$this->tree = new TreeProperties();
 	}
 
 	/**
-	 * @return array
+	 * getBrushBlocks returns the parsed brush blocks set in the brush properties.
+	 *
+	 * @return Block[]
 	 */
-	public function jsonSerialize() : array{
-		return (array) $this;
+	public function getBrushBlocks() : array{
+		return $this->parseBlocks($this->brushBlocks);
 	}
 
 	/**
+	 * getReplacedBlocks returns the parsed blocks that are replaced when using the ReplaceType.
+	 *
+	 * @return Block[]
+	 */
+	public function getReplacedBlocks() : array{
+		return $this->parseBlocks($this->replacedBlocks);
+	}
+
+	/**
+	 * getSoilBlocks returns the parsed blocks that brush blocks are only placed upon when using the PlantType.
+	 *
+	 * @return Block[]
+	 */
+	public function getSoilBlocks() : array{
+		return $this->parseBlocks($this->soilBlocks);
+	}
+
+	/**
+	 * parseBlocks parses a block string as seen in one of the fields above. It throws an exception if the block string
+	 * could not be parsed successfully.
+	 *
 	 * @param string $data
 	 *
 	 * @return Block[]
@@ -75,68 +165,33 @@ class BrushProperties implements \JsonSerializable{
 	}
 
 	/**
-	 * @return Block[]
+	 * decrement decrements the BrushProperties's size field if the brush's decrementing property is set to true. If the
+	 * size reaches 0, and resetDecrementBrush is set to true in the configuration, the size is reset.
 	 */
-	public function getBlocks() : array{
-		return $this->parseBlocks($this->blocks);
-	}
-
-	/**
-	 * @return Block[]
-	 */
-	public function getObsolete() : array{
-		return $this->parseBlocks($this->obsolete);
-	}
-
-	/**
-	 * @return Block[]
-	 */
-	public function getSoil() : array{
-		return $this->parseBlocks($this->soilBlocks);
-	}
-
-	/**
-	 * @param string $data
-	 *
-	 * @return string
-	 */
-	public function parseType(string $data) : string{
-		if(($type = TypeRegistration::getType($data)) === null){
-			return FillType::class;
+	public function decrement() : void{
+		if(!$this->decrementing){
+			return;
 		}
+		if($this->size > 1){
+			$this->size = $this->size - 1;
 
-		return $type;
+			return;
+		}
+		/** @var Loader $loader */
+		$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
+		if($loader === null){
+			return;
+		}
+		if($loader->config->resetDecrementBrush){
+			$this->size = $this->resetSize;
+		}
 	}
 
 	/**
-	 * @param string $data
-	 *
-	 * @return string
+	 * @return array
 	 */
-	public function parseShape(string $data) : string{
-		if(($shape = ShapeRegistration::getShape($data)) === null){
-			return SphereShape::class;
-		}
-
-		return $shape;
-	}
-
-	/**
-	 * @param string $data
-	 *
-	 * @return int
-	 */
-	public function parseBiomeId(string $data) : int{
-		if(is_numeric($data)){
-			return (int) $data;
-		}
-		$biomes = new \ReflectionClass(Biome::class);
-		$const = strtoupper(str_replace(" ", "_", $data));
-		if($biomes->hasConstant($const)){
-			return $biomes->getConstant($const);
-		}
-
-		return 0;
+	public function jsonSerialize() : array{
+		return (array) $this;
 	}
 }
 

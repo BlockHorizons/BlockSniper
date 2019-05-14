@@ -72,7 +72,7 @@ abstract class BaseType{
 		$this->chunkManager = $target->getChunkManager();
 		$this->target = $target->asVector3();
 		try{
-			$this->brushBlocks = $properties->getBlocks();
+			$this->brushBlocks = $properties->getBrushBlocks();
 		}catch(InvalidItemException $exception){
 			$this->brushBlocks = [Block::get(Block::AIR)];
 		}

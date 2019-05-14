@@ -22,7 +22,7 @@ class ReplaceType extends BaseType{
 
 	public function __construct(BrushProperties $properties, Target $target, \Generator $blocks = null){
 		parent::__construct($properties, $target, $blocks);
-		$this->obsolete = $properties->getObsolete();
+		$this->obsolete = $properties->getReplacedBlocks();
 	}
 
 	/**

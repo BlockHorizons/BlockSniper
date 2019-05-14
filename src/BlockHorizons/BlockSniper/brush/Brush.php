@@ -17,9 +17,21 @@ use pocketmine\math\AxisAlignedBB;
 use pocketmine\Server;
 use function count;
 
+/**
+ * Class Brush implements the main brushing logic of BlockSniper. It handles the selection of the brush shape and type
+ * and fills the selection made using the type selected. It also decides if a shape is filled asynchronously or
+ * synchronously, depending on its size.
+ */
 class Brush extends BrushProperties{
 
+	/**
+	 * MODE_BRUSH is the brush mode for classic brushing, meaning actually brushing from a long distance.
+	 */
 	public const MODE_BRUSH = 0;
+	/**
+	 * MODE_SELECTION is the brush mode for selection based world edit, much like classic WorldEdit. Selections must be
+	 * made using the selection item.
+	 */
 	public const MODE_SELECTION = 1;
 
 	/** @var bool */
@@ -121,29 +133,6 @@ class Brush extends BrushProperties{
 		}
 
 		return new $this->type($this, new Target($target, $target->getLevel()), $blocks, $session);
-	}
-
-	/**
-	 * decrement decrements the Brush's size property if the brush's decrementing property is set to true. If the size
-	 * reaches 0, and resetDecrementBrush is set to true in the configuration, the size is reset.
-	 */
-	public function decrement() : void{
-		if(!$this->decrementing){
-			return;
-		}
-		if($this->size > 1){
-			$this->size = $this->size - 1;
-
-			return;
-		}
-		/** @var Loader $loader */
-		$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
-		if($loader === null){
-			return;
-		}
-		if($loader->config->resetDecrementBrush){
-			$this->size = $this->resetSize;
-		}
 	}
 
 	/**
