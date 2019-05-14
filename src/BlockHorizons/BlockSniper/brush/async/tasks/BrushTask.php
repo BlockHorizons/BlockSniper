@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\async\tasks;
 
 use BlockHorizons\BlockSniper\brush\async\BlockSniperChunkManager;
-use BlockHorizons\BlockSniper\brush\BaseShape;
-use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\brush\Brush;
+use BlockHorizons\BlockSniper\brush\Shape;
+use BlockHorizons\BlockSniper\brush\Type;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\revert\async\AsyncUndo;
@@ -26,18 +26,18 @@ use function str_repeat;
 
 class BrushTask extends AsyncTask{
 
-	/** @var BaseShape */
+	/** @var Shape */
 	private $shape;
 	/** @var string[] */
 	private $chunks;
-	/** @var BaseType */
+	/** @var Type */
 	private $type;
 	/** @var Vector2[] */
 	private $plotPoints;
 	/** @var float */
 	private $startTime;
 
-	public function __construct(Brush $brush, Session $session, BaseShape $shape, BaseType $type, Level $level, array $plotPoints = []){
+	public function __construct(Brush $brush, Session $session, Shape $shape, Type $type, Level $level, array $plotPoints = []){
 		$chunks = $shape->getTouchedChunks($level);
 		$this->storeLocal("", [$level, $session, $chunks, $brush]);
 		$this->shape = $shape;
@@ -75,7 +75,7 @@ class BrushTask extends AsyncTask{
 		$this->setResult($chunks);
 	}
 
-	private function blocks(BaseShape $shape, array $chunks) : \Generator{
+	private function blocks(Shape $shape, array $chunks) : \Generator{
 		$blockCount = $shape->getBlockCount();
 		$blocksPerPercentage = (int) round($blockCount / 100);
 		$percentageBlocks = $blocksPerPercentage;

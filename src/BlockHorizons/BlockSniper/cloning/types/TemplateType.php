@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\cloning\types;
 
-use BlockHorizons\BlockSniper\brush\BaseShape;
+use BlockHorizons\BlockSniper\brush\Shape;
 use BlockHorizons\BlockSniper\cloning\BaseClone;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\level\Position;
@@ -12,7 +12,7 @@ use pocketmine\Player;
 
 class TemplateType extends BaseClone{
 
-	public function __construct(Player $player, bool $saveAir, Position $center, BaseShape $shape, string $name){
+	public function __construct(Player $player, bool $saveAir, Position $center, Shape $shape, string $name){
 		parent::__construct($player, $saveAir, $center, $shape, $name);
 	}
 

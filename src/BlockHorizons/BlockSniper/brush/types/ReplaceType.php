@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
-use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\brush\BrushProperties;
 use BlockHorizons\BlockSniper\brush\Target;
+use BlockHorizons\BlockSniper\brush\Type;
 use pocketmine\block\Block;
 
 /*
  * Replaces the obsolete blocks within the brush radius.
  */
 
-class ReplaceType extends BaseType{
+class ReplaceType extends Type{
 
 	public const ID = self::TYPE_REPLACE;
 

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
-use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\brush\BrushProperties;
 use BlockHorizons\BlockSniper\brush\Target;
+use BlockHorizons\BlockSniper\brush\Type;
 use BlockHorizons\BlockSniper\revert\async\AsyncUndo;
 use BlockHorizons\BlockSniper\sessions\Session;
 use pocketmine\level\format\Chunk;
@@ -15,7 +15,7 @@ use pocketmine\level\format\Chunk;
  * Regenerates the chunk looked at.
  */
 
-class RegenerateType extends BaseType{
+class RegenerateType extends Type{
 
 	public const ID = self::TYPE_REGENERATE;
 

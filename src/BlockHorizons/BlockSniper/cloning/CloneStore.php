@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\cloning;
 
 use BlockHorizons\BlockSniper\brush\async\tasks\PasteTask;
-use BlockHorizons\BlockSniper\brush\BaseShape;
+use BlockHorizons\BlockSniper\brush\Shape;
 use BlockHorizons\BlockSniper\revert\sync\SyncUndo;
 use BlockHorizons\BlockSniper\sessions\Session;
 use pocketmine\block\Block;
@@ -21,7 +21,7 @@ use function unserialize;
 
 class CloneStore{
 
-	/** @var BaseShape */
+	/** @var Shape */
 	private $copy = null;
 	/** @var Vector3 */
 	private $originalCenter = null;
@@ -36,10 +36,10 @@ class CloneStore{
 	}
 
 	/**
-	 * @param BaseShape $generator
-	 * @param Vector3   $center
+	 * @param Shape   $generator
+	 * @param Vector3 $center
 	 */
-	public function saveCopy(BaseShape $generator, Vector3 $center) : void{
+	public function saveCopy(Shape $generator, Vector3 $center) : void{
 		$this->copy = $generator;
 		$this->originalCenter = $center;
 	}

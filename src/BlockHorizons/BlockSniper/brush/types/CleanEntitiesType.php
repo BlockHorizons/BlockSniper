@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
-use BlockHorizons\BlockSniper\brush\BaseType;
+use BlockHorizons\BlockSniper\brush\Type;
 use pocketmine\entity\Entity;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\Player;
@@ -13,7 +13,7 @@ use pocketmine\Player;
  * Clears all entities within the brush radius. This brush can not undo.
  */
 
-class CleanEntitiesType extends BaseType{
+class CleanEntitiesType extends Type{
 
 	public const ID = self::TYPE_CLEAN_ENTITIES;
 

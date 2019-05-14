@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
-use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\brush\BrushProperties;
 use BlockHorizons\BlockSniper\brush\Target;
+use BlockHorizons\BlockSniper\brush\Type;
 use pocketmine\block\Block;
 use pocketmine\block\BlockIds;
 use pocketmine\block\Flowable;
@@ -16,7 +16,7 @@ use pocketmine\math\Facing;
  * Replaces the top layer of the terrain, thickness depending on brush height, within the brush radius.
  */
 
-class TopLayerType extends BaseType{
+class TopLayerType extends Type{
 
 	public const ID = self::TYPE_TOP_LAYER;
 

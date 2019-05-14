@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\events;
 
-use BlockHorizons\BlockSniper\brush\BaseShape;
-use BlockHorizons\BlockSniper\brush\BaseType;
+use BlockHorizons\BlockSniper\brush\Shape;
+use BlockHorizons\BlockSniper\brush\Type;
 use pocketmine\event\Cancellable;
 use pocketmine\event\CancellableTrait;
 use pocketmine\level\Level;
@@ -19,12 +19,12 @@ class BrushUseEvent extends BlockSniperEvent implements Cancellable{
 
 	/** @var Player */
 	public $player = null;
-	/** @var BaseType */
+	/** @var Type */
 	public $type = null;
-	/** @var BaseShape */
+	/** @var Shape */
 	public $shape = null;
 
-	public function __construct(Player $player, BaseShape $shape, BaseType $type){
+	public function __construct(Player $player, Shape $shape, Type $type){
 		$this->player = $player;
 		$this->type = $type;
 		$this->shape = $shape;
@@ -48,18 +48,18 @@ class BrushUseEvent extends BlockSniperEvent implements Cancellable{
 	/**
 	 * Returns the type of the player that used the Brush. (Object)
 	 *
-	 * @return BaseType
+	 * @return Type
 	 */
-	public function getType() : BaseType{
+	public function getType() : Type{
 		return $this->type;
 	}
 
 	/**
 	 * Returns the shape of the player that used the Brush. (Object)
 	 *
-	 * @return BaseShape
+	 * @return Shape
 	 */
-	public function getShape() : BaseShape{
+	public function getShape() : Shape{
 		return $this->shape;
 	}
 

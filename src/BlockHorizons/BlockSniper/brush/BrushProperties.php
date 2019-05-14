@@ -20,13 +20,13 @@ use pocketmine\Server;
 class BrushProperties implements \JsonSerializable{
 
 	/**
-	 * type is the brush type. It must be a '::class' string of a class that extends BaseType.
+	 * type is the brush type. It must be a '::class' string of a class that extends Type.
 	 *
 	 * @var string
 	 */
 	public $type = FillType::class;
 	/**
-	 * shape is the brush shape. It must be a '::class' string of a class that extends BaseShape.
+	 * shape is the brush shape. It must be a '::class' string of a class that extends Shape.
 	 *
 	 * @var string
 	 */

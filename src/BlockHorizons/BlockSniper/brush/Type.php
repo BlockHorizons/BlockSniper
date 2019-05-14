@@ -15,7 +15,11 @@ use pocketmine\math\Vector3;
 use function array_rand;
 use function strtolower;
 
-abstract class BaseType{
+/**
+ * Class Type implements the basic behaviour of a brush type. It holds methods which are primarily used within classes
+ * extending Type. Type implements the behaviour of filling an area depending on the area a user is allowed to brush in.
+ */
+abstract class Type{
 
 	public const ID = -1;
 
@@ -59,7 +63,7 @@ abstract class BaseType{
 	protected $plotPoints = [];
 
 	/**
-	 * BaseType constructor: Constructs a new BaseType using the BrushProperties passed. The Type was executed while
+	 * Type constructor: Constructs a new Type using the BrushProperties passed. The Type was executed while
 	 * having $target as target block. The $blocks passed may be null, but must later be supplied using setBlocksInside
 	 * in order to operate.
 	 *
@@ -79,7 +83,7 @@ abstract class BaseType{
 	}
 
 	/**
-	 * getTarget returns the target block of the BaseType.
+	 * getTarget returns the target block of the Type.
 	 *
 	 * @return Vector3
 	 */
@@ -144,7 +148,7 @@ abstract class BaseType{
 	public abstract function getName() : string;
 
 	/**
-	 * fill fills the blocks set in the generator of the BaseType, and in turn returns a generator yielding the undo
+	 * fill fills the blocks set in the generator of the Type, and in turn returns a generator yielding the undo
 	 * blocks of the Type.
 	 *
 	 * @return \Generator
@@ -175,7 +179,7 @@ abstract class BaseType{
 
 	/**
 	 * randomBrushBlock returns a random brush block set in the BrushProperties passed during construction of the
-	 * BaseType.
+	 * Type.
 	 *
 	 * @return Block
 	 */
@@ -197,7 +201,7 @@ abstract class BaseType{
 
 	/**
 	 * side returns the neighbouring block of the block passed at the side passed, provided the ChunkManager of the
-	 * BaseType is not null.
+	 * Type is not null.
 	 *
 	 * @param Vector3 $block
 	 * @param int     $side
@@ -237,8 +241,8 @@ abstract class BaseType{
 	}
 
 	/**
-	 * putBlock puts a block at the given location in the ChunkManager of the BaseType, provided it is not null. The
-	 * block is only set if it is within the plot boundaries set during construction of the BaseType.
+	 * putBlock puts a block at the given location in the ChunkManager of the Type, provided it is not null. The
+	 * block is only set if it is within the plot boundaries set during construction of the Type.
 	 *
 	 * @param Vector3 $pos
 	 * @param Block   $block
@@ -264,7 +268,7 @@ abstract class BaseType{
 	}
 
 	/**
-	 * delete removes a block at the given location provided the ChunkManager of the BaseType is not null. This
+	 * delete removes a block at the given location provided the ChunkManager of the Type is not null. This
 	 * method is a wrapper around putBlock(air).
 	 *
 	 * @param Vector3 $pos
@@ -274,7 +278,7 @@ abstract class BaseType{
 	}
 
 	/**
-	 * getChunkManager returns the ChunkManager of the BaseType. If not set, or if passed onto an AsyncTask before, the
+	 * getChunkManager returns the ChunkManager of the Type. If not set, or if passed onto an AsyncTask before, the
 	 * ChunkManager returned is null.
 	 *
 	 * @return BlockSniperChunkManager|Level
@@ -284,12 +288,12 @@ abstract class BaseType{
 	}
 
 	/**
-	 * setChunkManager sets the ChunkManager of the BaseType, and returns itself for fluency. A BaseType loses its
+	 * setChunkManager sets the ChunkManager of the Type, and returns itself for fluency. A Type loses its
 	 * ChunkManager when passed onto an AsyncTask, so it must be reset.
 	 *
 	 * @param ChunkManager $manager
 	 *
-	 * @return BaseType
+	 * @return Type
 	 */
 	public function setChunkManager(ChunkManager $manager) : self{
 		$this->chunkManager = $manager;
@@ -302,7 +306,7 @@ abstract class BaseType{
 	 *
 	 * @param \Generator|null $blocks
 	 *
-	 * @return BaseType
+	 * @return Type
 	 */
 	public function setBlocksInside(?\Generator $blocks) : self{
 		$this->blocks = $blocks;
@@ -311,7 +315,7 @@ abstract class BaseType{
 	}
 
 	/**
-	 * __sleep returns only specific properties of BaseType that can be serialised when passed onto an AsyncTask.
+	 * __sleep returns only specific properties of Type that can be serialised when passed onto an AsyncTask.
 	 *
 	 * @return string[]
 	 */

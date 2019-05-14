@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
-use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\brush\BrushProperties;
 use BlockHorizons\BlockSniper\brush\Target;
+use BlockHorizons\BlockSniper\brush\Type;
 
 /*
  * Changes the biome within the brush radius.
  */
 
-class BiomeType extends BaseType{
+class BiomeType extends Type{
 
 	public const ID = self::TYPE_BIOME;
 

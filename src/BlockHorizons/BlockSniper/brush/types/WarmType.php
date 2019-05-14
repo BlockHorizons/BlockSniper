@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
-use BlockHorizons\BlockSniper\brush\BaseType;
+use BlockHorizons\BlockSniper\brush\Type;
 use pocketmine\block\Block;
 
-class WarmType extends BaseType{
+class WarmType extends Type{
 
 	public const ID = self::TYPE_WARM;
 

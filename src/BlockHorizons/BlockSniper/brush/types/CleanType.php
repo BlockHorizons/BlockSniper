@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
-use BlockHorizons\BlockSniper\brush\BaseType;
+use BlockHorizons\BlockSniper\brush\Type;
 use pocketmine\block\BlockIds;
 
 /*
  * Removes all non-natural blocks within the brush radius.
  */
 
-class CleanType extends BaseType{
+class CleanType extends Type{
 
 	public const ID = self::TYPE_CLEAN;
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
-use BlockHorizons\BlockSniper\brush\BaseType;
+use BlockHorizons\BlockSniper\brush\Type;
 use pocketmine\block\Block;
 use pocketmine\block\Flowable;
 use pocketmine\math\Facing;
@@ -13,7 +13,7 @@ use pocketmine\math\Facing;
  * Lays a layer of snow on top of the terrain, and raises it if there is snow already.
  */
 
-class SnowConeType extends BaseType{
+class SnowConeType extends Type{
 
 	public const ID = self::TYPE_SNOW_CONE;
 

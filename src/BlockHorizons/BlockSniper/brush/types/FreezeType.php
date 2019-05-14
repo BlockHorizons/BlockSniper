@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
-use BlockHorizons\BlockSniper\brush\BaseType;
+use BlockHorizons\BlockSniper\brush\Type;
 use pocketmine\block\Block;
 
 /*
  * Freezes the terrain, causing water to become ice, lava to become obsidian and extinguishes fire.
  */
 
-class FreezeType extends BaseType{
+class FreezeType extends Type{
 
 	public const ID = self::TYPE_FREEZE;
 

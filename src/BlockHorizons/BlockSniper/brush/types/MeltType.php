@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
-use BlockHorizons\BlockSniper\brush\BaseType;
+use BlockHorizons\BlockSniper\brush\Type;
 use pocketmine\block\Block;
 use pocketmine\math\Facing;
 
@@ -12,7 +12,7 @@ use pocketmine\math\Facing;
  * Melts away every block with more than 2 open sides within the brush radius.
  */
 
-class MeltType extends BaseType{
+class MeltType extends Type{
 
 	public const ID = self::TYPE_MELT;
 

@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
-use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\brush\BrushProperties;
 use BlockHorizons\BlockSniper\brush\Target;
+use BlockHorizons\BlockSniper\brush\Type;
 use pocketmine\block\Air;
 use pocketmine\block\Block;
 use pocketmine\math\Facing;
 
-class PlantType extends BaseType{
+class PlantType extends Type{
 	public const ID = self::TYPE_PLANT;
 
 	/** @var Block[] */

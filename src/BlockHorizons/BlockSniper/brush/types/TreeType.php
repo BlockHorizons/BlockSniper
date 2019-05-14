@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
-use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\brush\BrushProperties;
 use BlockHorizons\BlockSniper\brush\Target;
+use BlockHorizons\BlockSniper\brush\Type;
 use pocketmine\level\Position;
 
 /*
  * Grows a custom tree on the target block.
  */
 
-class TreeType extends BaseType{
+class TreeType extends Type{
 
 	public const ID = self::TYPE_TREE;
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
-use BlockHorizons\BlockSniper\brush\BaseType;
+use BlockHorizons\BlockSniper\brush\Type;
 use pocketmine\block\Block;
 use pocketmine\block\Dandelion;
 use pocketmine\block\DoublePlant;
@@ -12,7 +12,7 @@ use pocketmine\block\Flower;
 use pocketmine\block\Leaves;
 use pocketmine\block\TallGrass;
 
-class HeatType extends BaseType{
+class HeatType extends Type{
 
 	public const ID = self::TYPE_HEAT;
 

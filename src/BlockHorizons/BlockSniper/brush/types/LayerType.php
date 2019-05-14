@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
-use BlockHorizons\BlockSniper\brush\BaseType;
+use BlockHorizons\BlockSniper\brush\Type;
 use pocketmine\math\Vector3;
 
 /*
  * Lays a thin layer of blocks within the brush radius.
  */
 
-class LayerType extends BaseType{
+class LayerType extends Type{
 
 	public const ID = self::TYPE_LAYER;
 

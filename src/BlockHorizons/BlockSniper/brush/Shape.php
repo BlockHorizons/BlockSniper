@@ -10,7 +10,11 @@ use pocketmine\level\Level;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
 
-abstract class BaseShape extends AxisAlignedBB{
+/**
+ * Class Shape implements the basic behaviour of shapes. It holds a couple of convenience methods which may be used to
+ * make processing them easier.
+ */
+abstract class Shape extends AxisAlignedBB{
 
 	public const ID = -1;
 
@@ -26,7 +30,7 @@ abstract class BaseShape extends AxisAlignedBB{
 	protected $hollow = false;
 
 	/**
-	 * BaseShape constructor: Constructs a BaseShape using the BrushProperties passed to define the bounds of the shape.
+	 * Shape constructor: Constructs a Shape using the BrushProperties passed to define the bounds of the shape.
 	 * The $target passed is assumed to be the target block, which will be used as the centre of the shape if the mode
 	 * of the brush is Brush::MODE_BRUSH. If the mode is Brush::MODE_SELECTION, the $selection passed must be non-null
 	 * and specify the bounds of the shape.
@@ -97,7 +101,7 @@ abstract class BaseShape extends AxisAlignedBB{
 	}
 
 	/**
-	 * getCentre returns the centre of the BaseShape. This centre might not be accurate, depending on if the Brush mode
+	 * getCentre returns the centre of the Shape. This centre might not be accurate, depending on if the Brush mode
 	 * was Brush::MODE_BRUSH (accurate) or Brush::MODE_SELECTION (not accurate).
 	 *
 	 * @return Vector3
@@ -107,7 +111,7 @@ abstract class BaseShape extends AxisAlignedBB{
 	}
 
 	/**
-	 * isHollow defines if the BaseShape is hollow, as set in the BrushProperties passed into the constructor.
+	 * isHollow defines if the Shape is hollow, as set in the BrushProperties passed into the constructor.
 	 *
 	 * @return bool
 	 */
@@ -130,7 +134,7 @@ abstract class BaseShape extends AxisAlignedBB{
 	}
 
 	/**
-	 * getTouchedChunks returns a serialised array of chunks that the BaseShape touches. It uses $chunkManager to find
+	 * getTouchedChunks returns a serialised array of chunks that the Shape touches. It uses $chunkManager to find
 	 * chunks in.
 	 *
 	 * @param ChunkManager $chunkManager

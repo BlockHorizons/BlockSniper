@@ -101,15 +101,15 @@ class Brush extends BrushProperties{
 	}
 
 	/**
-	 * getShape gets a Shape using a selection and a target position. Each of these may be null to create a BaseShape
+	 * getShape gets a Shape using a selection and a target position. Each of these may be null to create a Shape
 	 * that has no functionality but allows calling methods specific to a Shape.
 	 *
 	 * @param AxisAlignedBB|null $bb
 	 * @param Position|null      $target
 	 *
-	 * @return BaseShape
+	 * @return Shape
 	 */
-	public function getShape(AxisAlignedBB $bb = null, Position $target = null) : BaseShape{
+	public function getShape(AxisAlignedBB $bb = null, Position $target = null) : Shape{
 		if($target === null){
 			$target = new Position();
 		}
@@ -119,15 +119,15 @@ class Brush extends BrushProperties{
 
 	/**
 	 * getType gets a Type using a block generator, target position and session passed. Each of these may be null to
-	 * create a BaseType that has no functionality but allows calling methods specific to a Type.
+	 * create a Type that has no functionality but allows calling methods specific to a Type.
 	 *
 	 * @param \Generator|null $blocks
 	 * @param Position|null   $target
 	 * @param Session|null    $session
 	 *
-	 * @return BaseType
+	 * @return Type
 	 */
-	public function getType(\Generator $blocks = null, Position $target = null, Session $session = null) : BaseType{
+	public function getType(\Generator $blocks = null, Position $target = null, Session $session = null) : Type{
 		if($target === null){
 			$target = new Position();
 		}

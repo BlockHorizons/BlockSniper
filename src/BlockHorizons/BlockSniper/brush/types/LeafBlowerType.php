@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
-use BlockHorizons\BlockSniper\brush\BaseType;
 use BlockHorizons\BlockSniper\brush\BrushProperties;
 use BlockHorizons\BlockSniper\brush\Target;
+use BlockHorizons\BlockSniper\brush\Type;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\block\Flowable;
 use pocketmine\item\Item;
@@ -16,7 +16,7 @@ use pocketmine\Server;
  * Blows away all plants and flowers within the brush radius.
  */
 
-class LeafBlowerType extends BaseType{
+class LeafBlowerType extends Type{
 
 	public const ID = self::TYPE_LEAF_BLOWER;
 

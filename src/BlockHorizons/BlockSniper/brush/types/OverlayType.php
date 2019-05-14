@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\types;
 
-use BlockHorizons\BlockSniper\brush\BaseType;
+use BlockHorizons\BlockSniper\brush\Type;
 use pocketmine\block\Block;
 use pocketmine\math\Facing;
 
@@ -12,7 +12,7 @@ use pocketmine\math\Facing;
  * Lays a layer of blocks over every block within the brush radius.
  */
 
-class OverlayType extends BaseType{
+class OverlayType extends Type{
 
 	public const ID = self::TYPE_OVERLAY;
 

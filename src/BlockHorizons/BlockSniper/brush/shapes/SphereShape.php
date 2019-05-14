@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\shapes;
 
-use BlockHorizons\BlockSniper\brush\BaseShape;
 use BlockHorizons\BlockSniper\brush\BrushProperties;
+use BlockHorizons\BlockSniper\brush\Shape;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
 
-class SphereShape extends BaseShape{
+class SphereShape extends Shape{
 
 	public const ID = self::SHAPE_SPHERE;
 
