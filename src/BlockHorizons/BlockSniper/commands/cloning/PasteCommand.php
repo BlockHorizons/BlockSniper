@@ -19,7 +19,7 @@ use function strtolower;
 class PasteCommand extends BaseCommand{
 
 	public function __construct(Loader $loader){
-		parent::__construct($loader, "paste", Translation::COMMANDS_PASTE_DESCRIPTION, "/paste <copy|template|schematic> [name]");
+		parent::__construct($loader, "paste", Translation::COMMANDS_PASTE_DESCRIPTION, "/paste <copy|schematic> [name]");
 	}
 
 	public function onExecute(CommandSender $sender, string $commandLabel, array $args) : void{
@@ -40,6 +40,9 @@ class PasteCommand extends BaseCommand{
 		switch(strtolower($args[0])){
 			default:
 			case "copy":
+				if(!$sender->hasPermission("blocksniper.paste.copy")){
+					return;
+				}
 				if(!$session->getCloneStore()->copyStoreExists()){
 					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_PASTE_COPY_NO_COPIES));
 
@@ -49,24 +52,10 @@ class PasteCommand extends BaseCommand{
 				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_PASTE_COPY_SUCCESS));
 
 				return;
-
-			case "template":
-				if(!isset($args[1])){
-					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_CLONE_TEMPLATE_MISSING_NAME));
-
-					return;
-				}
-				if(!$session->getCloneStore()->templateExists($args[1])){
-					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_PASTE_TEMPLATE_NONEXISTENT, $args[1]));
-
-					return;
-				}
-				$session->getCloneStore()->pasteTemplate($args[1], $center);
-				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_PASTE_TEMPLATE_SUCCESS, $args[1]));
-
-				return;
-
 			case "schematic":
+				if(!$sender->hasPermission("blocksniper.paste.schematic")){
+					return;
+				}
 				if(!isset($args[1])){
 					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_CLONE_SCHEMATIC_MISSING_NAME));
 

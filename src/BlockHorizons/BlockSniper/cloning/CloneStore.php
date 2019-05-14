@@ -8,16 +8,9 @@ use BlockHorizons\BlockSniper\brush\async\tasks\PasteTask;
 use BlockHorizons\BlockSniper\brush\Shape;
 use BlockHorizons\BlockSniper\revert\sync\SyncUndo;
 use BlockHorizons\BlockSniper\sessions\Session;
-use pocketmine\block\Block;
 use pocketmine\level\Position;
 use pocketmine\math\Vector3;
 use pocketmine\Server;
-use function explode;
-use function file_get_contents;
-use function file_put_contents;
-use function is_file;
-use function serialize;
-use function unserialize;
 
 class CloneStore{
 
@@ -83,71 +76,6 @@ class CloneStore{
 	 */
 	public function copyStoreExists() : bool{
 		return $this->copy !== null;
-	}
-
-	/**
-	 * @param string     $templateName
-	 * @param \Generator $blocks
-	 * @param Vector3    $targetBlock
-	 *
-	 * @deprecated
-	 */
-	public function saveTemplate(string $templateName, \Generator $blocks, Vector3 $targetBlock) : void{
-		$template = [];
-		$i = 0;
-		foreach($blocks as $block){
-			$template[$block->getId() . ":" . $block->getMeta() . "(" . $i . ")"] = [
-				"x" => $block->x - $targetBlock->x,
-				"y" => $block->y - $targetBlock->y,
-				"z" => $block->z - $targetBlock->z
-			];
-			$i++;
-		}
-		file_put_contents($this->path . "templates/" . $templateName . ".template", serialize($template));
-	}
-
-	/**
-	 * @param string   $templateName
-	 * @param Position $targetBlock
-	 *
-	 * @deprecated
-	 */
-	public function pasteTemplate(string $templateName, Position $targetBlock) : void{
-		$data = file_get_contents($this->path . "templates/" . $templateName . ".yml");
-		$content = unserialize($data, ["allowed_classes" => false]);
-
-		$undoBlocks = [];
-
-		foreach($content as $key => $block){
-			$Id = explode("(", $key);
-			$blockData = $Id[0];
-			$meta = explode(":", $blockData);
-			$blockId = (int) $meta[0];
-			$meta = (int) $meta[1];
-			$x = (int) $block["x"];
-			$y = (int) $block["y"] + 1;
-			$z = (int) $block["z"];
-
-			$blockPos = new Vector3($x + $targetBlock->x, $y + $targetBlock->y, $z + $targetBlock->z);
-			$undoBlocks[] = $targetBlock->getLevel()->getBlock($blockPos);
-			$targetBlock->getLevel()->setBlock($blockPos, Block::get($blockId, $meta), false);
-		}
-		$this->session->getRevertStore()->saveRevert(new SyncUndo($undoBlocks, $this->session->getSessionOwner()->getPlayerName()));
-	}
-
-	/**
-	 * @param string $templateName
-	 *
-	 * @return bool
-	 *
-	 * @deprecated
-	 */
-	public function templateExists(string $templateName) : bool{
-		if(is_file($this->path . "templates/" . $templateName . ".yml")){
-			return true;
-		}
-
-		return false;
 	}
 
 	/**

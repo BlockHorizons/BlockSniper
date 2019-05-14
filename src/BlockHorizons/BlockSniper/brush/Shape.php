@@ -25,7 +25,7 @@ abstract class Shape extends AxisAlignedBB{
 	public const SHAPE_ELLIPSOID = 4;
 
 	/** @var Vector3 */
-	protected $center;
+	protected $centre;
 	/** @var bool */
 	protected $hollow = false;
 
@@ -46,7 +46,7 @@ abstract class Shape extends AxisAlignedBB{
 		}
 		parent::__construct($selection->minX, $selection->minY, $selection->minZ, $selection->maxX, $selection->maxY, $selection->maxZ);
 
-		$this->center = $target->asVector3();
+		$this->centre = $target->asVector3();
 		$this->hollow = $properties->hollow;
 	}
 
@@ -107,7 +107,7 @@ abstract class Shape extends AxisAlignedBB{
 	 * @return Vector3
 	 */
 	public function getCentre() : Vector3{
-		return $this->center;
+		return $this->centre;
 	}
 
 	/**
