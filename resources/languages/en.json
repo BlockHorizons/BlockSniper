@@ -36,10 +36,6 @@
 			"copy": {
 				"success": "Successfully copied the location looked at."
 			},
-			"template": {
-				"missing-name": "No valid name has been given for the template.",
-				"success": "Successfully saved a template file to %s."
-			},
 			"schematic": {
 				"missing-name": "No valid name has been given for the schematic.",
 				"success": "Successfully saved a schematic file to %s."
@@ -50,10 +46,6 @@
 			"copy": {
 				"no-copies": "No copy could be found to paste.",
 				"success": "Successfully pasted the copy on the location looked at."
-			},
-			"template": {
-				"nonexistent": "The template %s could not be found in the template directory.",
-				"success": "Successfully pasted the template %s on the location looked at."
 			},
 			"schematic": {
 				"nonexistent": "The schematic %s could not be found in the schematic directory.",

@@ -122,9 +122,6 @@ class Loader extends PluginBase{
 		if(!is_dir($this->getDataFolder())){
 			mkdir($this->getDataFolder());
 		}
-		if(!is_dir($this->getDataFolder() . "templates/")){
-			mkdir($this->getDataFolder() . "templates/");
-		}
 		if(!is_dir($this->getDataFolder() . "schematics/")){
 			mkdir($this->getDataFolder() . "schematics/");
 		}

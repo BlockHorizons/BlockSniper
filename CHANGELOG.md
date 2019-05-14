@@ -36,6 +36,7 @@
 - The configuration menu no longer has a reload button. This is done automatically.
 - Presets were removed in favour of the bound brushes that were added.
 - The undo/redo stores are no longer automatically cleared after 3 minutes. This caused unexpected behaviour and is never expected behaviour.
+- Templates have been removed and are no longer supported. They were deprecated for a long time since schematics were more efficient.
 
 ### Fixed
 - Fixed cuboid and cylinder shapes not to be async/sync when they should be.

@@ -36,10 +36,6 @@
 			"copy": {
 				"success": "Copió con éxito la ubicación examinada."
 			},
-			"template": {
-				"missing-name": "No se ha dado un nombre válido para la plantilla.",
-				"success": "Se ha guardado correctamente un archivo de plantilla en %s."
-			},
 			"schematic": {
 				"missing-name": "No se ha dado un nombre válido para la schematic.",
 				"success": "Se he guardo correctamente un archivo de schematic en %s."
@@ -50,10 +46,6 @@
 			"copy": {
 				"no-copies": "No se encontró ninguna copia para pegar.",
 				"success": "Se ha pegado correctamente la copia examinada."
-			},
-			"template": {
-				"nonexistent": "La plantilla %s no fue encontrada en el directorio de plantillas.",
-				"success": "Se ha pegado correctamente la plantilla %s en la ubicación examinada."
 			},
 			"schematic": {
 				"nonexistent": "La schematic %s no pudo ser encontrada en el directorio de schematics.",

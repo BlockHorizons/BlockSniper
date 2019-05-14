@@ -36,10 +36,6 @@
 			"copy": {
 				"success": "成功複製你看向的位置。"
 			},
-			"template": {
-				"missing-name": "沒有為模板指定有效的名稱。",
-				"success": "成功存儲模板文件至 %s。"
-			},
 			"schematic": {
 				"missing-name": "沒有為概要指定有效的名稱。",
 				"success": "成功存儲概要文件至 %s."
@@ -50,10 +46,6 @@
 			"copy": {
 				"no-copies": "沒有可以被粘貼的複製樣本。",
 				"success": "成功粘貼複製樣本至你看向的位置。"
-			},
-			"template": {
-				"nonexistent": "無法在模板目錄中找到 %s 模板。",
-				"success": "成功複製模板 %s 至你看向的位置。"
 			},
 			"schematic": {
 				"nonexistent": "無法在概要目錄中找到 %s 概要。",

@@ -36,10 +36,6 @@
 			"copy": {
 				"success": "Copie avec succès de l'emplacement regardé."
 			},
-			"template": {
-				"missing-name": "Aucun nom valide n'a été donné pour le modèle.",
-				"success": "Enregistrement réussi d'un fichier modèle dans %s."
-			},
 			"schematic": {
 				"missing-name": "Aucun nom valide n'a été donné pour le schéma.",
 				"success": "Sauvegarde réussie d'un fichier schématique dans %s."
@@ -50,10 +46,6 @@
 			"copy": {
 				"no-copies": "Aucune copie n'a pu être trouvée pour coller.",
 				"success": "Collé avec succès la copie sur l'emplacement regardé."
-			},
-			"template": {
-				"nonexistent": "Le template %s n'a pas pu être trouvé dans le répertoire des modèles.",
-				"success": "Collé avec succès le modèle %s sur l'emplacement regardé."
 			},
 			"schematic": {
 				"nonexistent": "Le schéma %s n'a pas pu être trouvé dans le répertoire schématique.",

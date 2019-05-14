@@ -36,10 +36,6 @@
 			"copy": {
 				"success": "Kopiëren van de zone waar je naar kijkt geslaagd."
 			},
-			"template": {
-				"missing-name": "Er is geen geldige naam gegeven voor de template.",
-				"success": "Template bestand is opgeslagen naar %s."
-			},
 			"schematic": {
 				"missing-name": "Geen geldige naam is gegeven voor de schematic",
 				"success": "Schematic bestand is opgeslagen naar %s."
@@ -50,10 +46,6 @@
 			"copy": {
 				"no-copies": "Geen kopie kon worden gevonden om te plakken.",
 				"success": "Plakken van copie op de locatie waar je naar kijkt geslaagd."
-			},
-			"template": {
-				"nonexistent": "De template %s kon niet worden gevonden in de template folder.",
-				"success": "Plakken van de template %s op de locatie waar je naar kijkt geslaagd."
 			},
 			"schematic": {
 				"nonexistent": "De schematic %s kon niet worden gevonden in de schematic folder.",

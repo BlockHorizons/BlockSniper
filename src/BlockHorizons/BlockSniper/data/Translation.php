@@ -39,15 +39,11 @@ class Translation{
 	public const COMMANDS_UNDO_SUCCESS = "commands.undo.success";
 	public const COMMANDS_CLONE_DESCRIPTION = "commands.clone.description";
 	public const COMMANDS_CLONE_COPY_SUCCESS = "commands.clone.copy.success";
-	public const COMMANDS_CLONE_TEMPLATE_MISSING_NAME = "commands.clone.template.missing-name";
-	public const COMMANDS_CLONE_TEMPLATE_SUCCESS = "commands.clone.template.success";
 	public const COMMANDS_CLONE_SCHEMATIC_MISSING_NAME = "commands.clone.schematic.missing-name";
 	public const COMMANDS_CLONE_SCHEMATIC_SUCCESS = "commands.clone.schematic.success";
 	public const COMMANDS_PASTE_DESCRIPTION = "commands.paste.description";
 	public const COMMANDS_PASTE_COPY_NO_COPIES = "commands.paste.copy.no-copies";
 	public const COMMANDS_PASTE_COPY_SUCCESS = "commands.paste.copy.success";
-	public const COMMANDS_PASTE_TEMPLATE_NONEXISTENT = "commands.paste.template.nonexistent";
-	public const COMMANDS_PASTE_TEMPLATE_SUCCESS = "commands.paste.template.success";
 	public const COMMANDS_PASTE_SCHEMATIC_NONEXISTENT = "commands.paste.schematic.nonexistent";
 	public const COMMANDS_PASTE_SCHEMATIC_SUCCESS = "commands.paste.schematic.success";
 	public const UI_MAIN_MENU_TITLE = "ui.main-menu.title";
