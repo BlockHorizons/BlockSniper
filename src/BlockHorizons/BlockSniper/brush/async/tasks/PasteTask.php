@@ -11,12 +11,12 @@ use BlockHorizons\BlockSniper\revert\async\AsyncUndo;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use BlockHorizons\libschematic\Schematic;
 use pocketmine\block\Block;
-use pocketmine\level\format\Chunk;
-use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use pocketmine\scheduler\AsyncTask;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat;
+use pocketmine\world\format\Chunk;
+use pocketmine\world\World;
 
 class PasteTask extends AsyncTask{
 
@@ -68,7 +68,7 @@ class PasteTask extends AsyncTask{
 			$tempX = $baseWidth + $block->x;
 			$tempY = $center->y + $block->y;
 			$tempZ = $baseLength + $block->z;
-			$index = Level::chunkHash($tempX >> 4, $tempZ >> 4);
+			$index = World::chunkHash($tempX >> 4, $tempZ >> 4);
 
 			if(isset($chunks[$index])){
 				$manager->setBlockAt($tempX, $tempY, $tempZ, $block);
@@ -94,18 +94,18 @@ class PasteTask extends AsyncTask{
 			$undoChunk = Chunk::fastDeserialize($undoChunk);
 		}
 
-		$level = $player->getLevel();
+		$world = $player->getWorld();
 		/** @var Chunk[] $chunks */
 		$chunks = $this->getResult();
 
-		if($level instanceof Level){
+		if($world instanceof World){
 			foreach($chunks as $hash => $chunk){
-				$level->setChunk($chunk->getX(), $chunk->getZ(), $chunk, false);
+				$world->setChunk($chunk->getX(), $chunk->getZ(), $chunk, false);
 			}
 		}
 
 		$duration = round(microtime(true) - $startTime, 2);
 		$player->sendPopup(TextFormat::GREEN . Translation::get(Translation::BRUSH_STATE_DONE) . " ($duration seconds)");
-		SessionManager::getPlayerSession($player)->getRevertStore()->saveRevert(new AsyncUndo($chunks, $undoChunks, $this->playerName, $player->getLevel()->getId()));
+		SessionManager::getPlayerSession($player)->getRevertStore()->saveRevert(new AsyncUndo($chunks, $undoChunks, $this->playerName, $player->getWorld()->getId()));
 	}
 }

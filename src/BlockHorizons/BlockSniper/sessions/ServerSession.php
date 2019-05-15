@@ -7,7 +7,7 @@ namespace BlockHorizons\BlockSniper\sessions;
 use BlockHorizons\BlockSniper\brush\Brush;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\owners\ServerSessionOwner;
-use pocketmine\level\Position;
+use pocketmine\world\Position;
 use function file_get_contents;
 use function file_put_contents;
 use function json_decode;
@@ -18,7 +18,7 @@ class ServerSession extends Session implements \JsonSerializable{
 	/** @var Position */
 	private $targetBlock = null;
 	/** @var string */
-	private $levelName = "";
+	private $worldName = "";
 	/** @var string */
 	private $name = "";
 
@@ -52,7 +52,7 @@ class ServerSession extends Session implements \JsonSerializable{
 	 * @param Position $position
 	 */
 	public function setTargetBlock(Position $position) : void{
-		$this->levelName = $position->getLevel()->getFolderName();
+		$this->worldName = $position->getWorld()->getFolderName();
 		$this->targetBlock = $position;
 	}
 
@@ -68,7 +68,7 @@ class ServerSession extends Session implements \JsonSerializable{
 	public function jsonSerialize() : array{
 		return [
 			"targetBlock" => [
-				"level" => $this->levelName,
+				"world" => $this->worldName,
 				"x" => $this->targetBlock->x,
 				"y" => $this->targetBlock->y,
 				"z" => $this->targetBlock->z

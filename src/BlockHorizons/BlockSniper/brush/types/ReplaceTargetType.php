@@ -18,7 +18,7 @@ class ReplaceTargetType extends Type{
 
 	public function __construct(BrushProperties $properties, Target $target, \Generator $blocks = null){
 		parent::__construct($properties, $target, $blocks);
-		$this->targetBlock = $this->getBlock($this->target)->setLevel(null);
+		$this->targetBlock = $this->getBlock($this->target)->setWorld(null);
 	}
 
 	/**

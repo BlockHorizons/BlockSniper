@@ -12,9 +12,9 @@ use BlockHorizons\BlockSniper\revert\sync\SyncUndo;
 use BlockHorizons\BlockSniper\sessions\PlayerSession;
 use BlockHorizons\BlockSniper\sessions\Selection;
 use BlockHorizons\BlockSniper\sessions\Session;
-use pocketmine\level\Position;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\Server;
+use pocketmine\world\Position;
 use function count;
 
 /**
@@ -60,8 +60,8 @@ class Brush extends BrushProperties{
 
 		$shape = $this->getShape($selection !== null ? $selection->box() : null, $target);
 		$type = ($this->type !== TreeType::class
-			? $this->getType($shape->getBlocks($target->getLevel()), $target, $session)
-			: new TreeType($this, new Target($target, $target->getLevel())));
+			? $this->getType($shape->getBlocks($target->getWorld()), $target, $session)
+			: new TreeType($this, new Target($target, $target->getWorld())));
 
 		if($session instanceof PlayerSession){
 			$player = $session->getSessionOwner()->getPlayer();
@@ -84,7 +84,7 @@ class Brush extends BrushProperties{
 
 		if($type->canBeExecutedAsynchronously() && $asyncSize){
 			$type->setBlocksInside(null);
-			Server::getInstance()->getAsyncPool()->submitTask(new BrushTask($this, $session, $shape, $type, $target->getLevel(), $plotPoints));
+			Server::getInstance()->getAsyncPool()->submitTask(new BrushTask($this, $session, $shape, $type, $target->getWorld(), $plotPoints));
 
 			return false;
 		}
@@ -114,7 +114,7 @@ class Brush extends BrushProperties{
 			$target = new Position();
 		}
 
-		return new $this->shape($this, new Target($target, $target->getLevel()), $bb);
+		return new $this->shape($this, new Target($target, $target->getWorld()), $bb);
 	}
 
 	/**
@@ -132,7 +132,7 @@ class Brush extends BrushProperties{
 			$target = new Position();
 		}
 
-		return new $this->type($this, new Target($target, $target->getLevel()), $blocks, $session);
+		return new $this->type($this, new Target($target, $target->getWorld()), $blocks, $session);
 	}
 
 	/**

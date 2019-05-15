@@ -21,7 +21,7 @@ abstract class SyncRevert extends Revert{
 	public function restore() : void{
 		$startTime = microtime(true);
 		foreach($this->blocks as $block){
-			$block->getLevel()->setBlock($block, $block, false);
+			$block->getWorld()->setBlock($block, $block, false);
 		}
 		$duration = round(microtime(true) - $startTime, 2);
 		Server::getInstance()->getPlayer($this->playerName)->sendPopup(TextFormat::GREEN . Translation::get(Translation::BRUSH_STATE_DONE) . " ($duration seconds)");
@@ -58,7 +58,7 @@ abstract class SyncRevert extends Revert{
 	public function getDetached() : Revert{
 		$blocks = [];
 		foreach($this->blocks as $block){
-			$blocks[] = $block->getLevel()->getBlock($block);
+			$blocks[] = $block->getWorld()->getBlock($block);
 		}
 
 		return $this->getDetachedClass($blocks, $this->playerName);

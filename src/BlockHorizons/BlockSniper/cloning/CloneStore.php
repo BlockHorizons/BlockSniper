@@ -8,16 +8,17 @@ use BlockHorizons\BlockSniper\brush\async\tasks\PasteTask;
 use BlockHorizons\BlockSniper\brush\Shape;
 use BlockHorizons\BlockSniper\revert\sync\SyncUndo;
 use BlockHorizons\BlockSniper\sessions\Session;
-use pocketmine\level\Position;
+use pocketmine\block\Air;
 use pocketmine\math\Vector3;
 use pocketmine\Server;
+use pocketmine\world\Position;
 
 class CloneStore{
 
 	/** @var Shape */
 	private $copy = null;
 	/** @var Vector3 */
-	private $originalCenter = null;
+	private $offsetPosition = null;
 	/** @var string */
 	private $path = "";
 	/** @var Session */
@@ -29,26 +30,12 @@ class CloneStore{
 	}
 
 	/**
-	 * @param Shape   $generator
-	 * @param Vector3 $center
+	 * @param Shape   $shape
+	 * @param Vector3 $offsetPosition
 	 */
-	public function saveCopy(Shape $generator, Vector3 $center) : void{
-		$this->copy = $generator;
-		$this->originalCenter = $center;
-	}
-
-	/**
-	 * @return Vector3
-	 */
-	public function getOriginalCenter() : Vector3{
-		return $this->originalCenter;
-	}
-
-	/**
-	 * @param Vector3 $center
-	 */
-	public function setOriginalCenter(Vector3 $center) : void{
-		$this->originalCenter = $center;
+	public function saveCopy(Shape $shape, Vector3 $offsetPosition) : void{
+		$this->copy = $shape;
+		$this->offsetPosition = $offsetPosition;
 	}
 
 	/**
@@ -57,18 +44,16 @@ class CloneStore{
 	public function pasteCopy(Position $targetBlock) : void{
 		$undoBlocks = [];
 
-		foreach($this->copy->getVectors() as $block){
-			$v3 = $block->subtract($this->getOriginalCenter());
+		foreach($this->copy->getBlocks($targetBlock->getWorld()) as $block){
+			if($block instanceof Air){
+				continue;
+			}
+			$v3 = $block->subtract($this->offsetPosition);
 
-			$undoBlocks[] = $targetBlock->level->getBlock($targetBlock->add($v3));
-			$targetBlock->level->setBlock($targetBlock->add($v3), clone $targetBlock->level->getBlock($block), false);
+			$undoBlocks[] = $targetBlock->world->getBlock($targetBlock->add($v3));
+			$targetBlock->world->setBlock($targetBlock->add($v3), clone $block, false);
 		}
 		$this->session->getRevertStore()->saveRevert(new SyncUndo($undoBlocks, $this->session->getSessionOwner()->getPlayerName()));
-	}
-
-	public function resetCopyStorage() : void{
-		$this->copy = null;
-		$this->originalCenter = null;
 	}
 
 	/**

@@ -15,12 +15,12 @@ use BlockHorizons\BlockSniper\sessions\Session;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use BlockHorizons\BlockSniper\tasks\CooldownBarTask;
 use pocketmine\block\Block;
-use pocketmine\level\format\Chunk;
-use pocketmine\level\Level;
 use pocketmine\math\Vector2;
 use pocketmine\scheduler\AsyncTask;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat;
+use pocketmine\world\format\Chunk;
+use pocketmine\world\World;
 use function round;
 use function str_repeat;
 
@@ -37,9 +37,9 @@ class BrushTask extends AsyncTask{
 	/** @var float */
 	private $startTime;
 
-	public function __construct(Brush $brush, Session $session, Shape $shape, Type $type, Level $level, array $plotPoints = []){
-		$chunks = $shape->getTouchedChunks($level);
-		$this->storeLocal("", [$level, $session, $chunks, $brush]);
+	public function __construct(Brush $brush, Session $session, Shape $shape, Type $type, World $world, array $plotPoints = []){
+		$chunks = $shape->getTouchedChunks($world);
+		$this->storeLocal("", [$world, $session, $chunks, $brush]);
 		$this->shape = $shape;
 		$this->type = $type;
 		$this->chunks = $chunks;
@@ -82,7 +82,7 @@ class BrushTask extends AsyncTask{
 
 		$i = 0;
 		foreach($shape->getVectors() as $vector3){
-			$index = Level::chunkHash($vector3->x >> 4, $vector3->z >> 4);
+			$index = World::chunkHash($vector3->x >> 4, $vector3->z >> 4);
 			if(!isset($chunks[$index])){
 				throw new \InvalidArgumentException("chunk not found for block");
 			}
@@ -123,22 +123,22 @@ class BrushTask extends AsyncTask{
 		/** @var Chunk[] $chunks */
 		$chunks = $this->getResult();
 		/**
-		 * @var Level   $level
+		 * @var World   $world
 		 * @var Session $session
 		 */
-		[$level, $session, $undoChunks, $brush] = $this->fetchLocal("");
+		[$world, $session, $undoChunks, $brush] = $this->fetchLocal("");
 
 		foreach($undoChunks as &$undoChunk){
 			$undoChunk = Chunk::fastDeserialize($undoChunk);
 		}
 
 		foreach($chunks as $hash => $chunk){
-			$level->setChunk($chunk->getX(), $chunk->getZ(), $chunk, false);
+			$world->setChunk($chunk->getX(), $chunk->getZ(), $chunk, false);
 		}
 
 		if(($player = Server::getInstance()->getPlayer($session->getSessionOwner()->getName())) !== null){
 			$loader->getScheduler()->scheduleDelayedRepeatingTask(new CooldownBarTask($loader, $brush, $player), 1, 3);
 		}
-		SessionManager::getPlayerSession($player)->getRevertStore()->saveRevert(new AsyncUndo($chunks, $undoChunks, $session->getSessionOwner()->getName(), $level->getId()));
+		SessionManager::getPlayerSession($player)->getRevertStore()->saveRevert(new AsyncUndo($chunks, $undoChunks, $session->getSessionOwner()->getName(), $world->getId()));
 	}
 }

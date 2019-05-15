@@ -3,8 +3,8 @@
 namespace BlockHorizons\BlockSniper\brush\async;
 
 use pocketmine\block\Block;
-use pocketmine\level\SimpleChunkManager;
 use pocketmine\math\Facing;
+use pocketmine\world\SimpleChunkManager;
 
 class BlockSniperChunkManager extends SimpleChunkManager{
 

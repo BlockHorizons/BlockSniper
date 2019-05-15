@@ -9,8 +9,8 @@ use BlockHorizons\BlockSniper\brush\types\FillType;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\parser\Parser;
 use pocketmine\block\Block;
-use pocketmine\level\biome\Biome;
 use pocketmine\Server;
+use pocketmine\world\biome\Biome;
 
 /**
  * Class BrushProperties holds all properties used by BrushTypes and BrushShapes. They may be applied using the Brush

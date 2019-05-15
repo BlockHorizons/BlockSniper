@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush;
 
 use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
-use pocketmine\level\ChunkManager;
-use pocketmine\level\Level;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
+use pocketmine\world\ChunkManager;
+use pocketmine\world\World;
 
 /**
  * Class Shape implements the basic behaviour of shapes. It holds a couple of convenience methods which may be used to
@@ -149,7 +149,7 @@ abstract class Shape extends AxisAlignedBB{
 				if($chunk === null){
 					continue;
 				}
-				$touchedChunks[Level::chunkHash($x >> 4, $z >> 4)] = $chunk->fastSerialize();
+				$touchedChunks[World::chunkHash($x >> 4, $z >> 4)] = $chunk->fastSerialize();
 			}
 		}
 

@@ -177,7 +177,7 @@ class BrushListener implements Listener{
 			return [];
 		}
 		$plotPoints = [];
-		$settings = $this->loader->getMyPlot()->getLevelSettings($player->getLevel()->getFolderName());
+		$settings = $this->loader->getMyPlot()->getLevelSettings($player->getWorld()->getFolderName());
 		if($settings === null){
 			if($player->hasPermission("blocksniper-myplot.allow-outside")){
 				return [];
@@ -186,7 +186,7 @@ class BrushListener implements Listener{
 			return [[new Vector2(), new Vector2()]];
 		}
 		$plotSize = $settings->plotSize;
-		foreach($this->loader->getMyPlot()->getPlotsOfPlayer($player->getName(), $player->getLevel()->getFolderName()) as $plot){
+		foreach($this->loader->getMyPlot()->getPlotsOfPlayer($player->getName(), $player->getWorld()->getFolderName()) as $plot){
 			$minVec = new Vector2($this->calcActual($plot->X, $settings) - $plotSize, $this->calcActual($plot->Z, $settings) - $plotSize);
 			$maxVec = new Vector2($this->calcActual($plot->X, $settings) - 1, $this->calcActual($plot->Z, $settings) - 1);
 			$plotPoints[] = [$minVec, $maxVec];

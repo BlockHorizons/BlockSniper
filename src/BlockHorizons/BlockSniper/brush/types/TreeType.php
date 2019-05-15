@@ -7,7 +7,7 @@ namespace BlockHorizons\BlockSniper\brush\types;
 use BlockHorizons\BlockSniper\brush\BrushProperties;
 use BlockHorizons\BlockSniper\brush\Target;
 use BlockHorizons\BlockSniper\brush\Type;
-use pocketmine\level\Position;
+use pocketmine\world\Position;
 
 /*
  * Grows a custom tree on the target block.

@@ -12,6 +12,6 @@ class AsyncRedo extends AsyncRevert implements IRedo{
 	 * @return AsyncRevert
 	 */
 	public function getDetachedClass() : AsyncRevert{
-		return new AsyncUndo($this->getOldChunks(), $this->getModifiedChunks(), $this->getPlayerName(), $this->getLevelId());
+		return new AsyncUndo($this->getOldChunks(), $this->getModifiedChunks(), $this->getPlayerName(), $this->getWorldId());
 	}
 }

@@ -9,7 +9,7 @@ use BlockHorizons\BlockSniper\brush\Target;
 use BlockHorizons\BlockSniper\brush\Type;
 use BlockHorizons\BlockSniper\revert\async\AsyncUndo;
 use BlockHorizons\BlockSniper\sessions\Session;
-use pocketmine\level\format\Chunk;
+use pocketmine\world\format\Chunk;
 
 /*
  * Regenerates the chunk looked at.
@@ -43,7 +43,7 @@ class RegenerateType extends Type{
 
 		$this->chunkManager->populateChunk($x, $z, true);
 
-		$this->session->getRevertStore()->saveRevert(new AsyncUndo([$c], [$oldChunk], $this->session->getSessionOwner()->getName(), $this->level));
+		$this->session->getRevertStore()->saveRevert(new AsyncUndo([$c], [$oldChunk], $this->session->getSessionOwner()->getName(), $this->chunkManager->getId()));
 
 		if(false){
 			// Make PHP recognize this is a generator.

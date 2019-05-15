@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\tasks;
 
 use BlockHorizons\BlockSniper\iterator\BlockEdgeIterator;
-use pocketmine\level\particle\FlameParticle;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
+use pocketmine\world\particle\FlameParticle;
 
 class TargetHighlightTask extends BlockSniperTask{
 
@@ -31,14 +31,14 @@ class TargetHighlightTask extends BlockSniperTask{
 	 * @param Player $player
 	 */
 	public function highlightTarget(Player $player) : void{
-		$level = $player->getLevel();
+		$world = $player->getWorld();
 		$iterator = new BlockEdgeIterator($player->getTargetBlock(16 * $player->getViewDistance()));
 
 		foreach($iterator->getEdges() as $edge){
 			/** @var Vector3 $position */
 			foreach($edge->walk(0.2) as $position){
 				if(mt_rand(0, 5) === 0){
-					$level->addParticle($position, new FlameParticle());
+					$world->addParticle($position, new FlameParticle());
 				}
 			}
 		}

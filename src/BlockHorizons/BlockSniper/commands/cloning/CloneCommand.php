@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\commands\cloning;
 
-use BlockHorizons\BlockSniper\cloning\Copy;
 use BlockHorizons\BlockSniper\commands\BaseCommand;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\exceptions\InvalidItemException;
@@ -46,7 +45,6 @@ class CloneCommand extends BaseCommand{
 
 			return;
 		}
-
 		$shape = $session->getBrush()->getShape($session->getSelection()->box());
 
 		switch(strtolower($args[0])){
@@ -55,8 +53,7 @@ class CloneCommand extends BaseCommand{
 				if(!$sender->hasPermission("blocksniper.clone.copy")){
 					return;
 				}
-				$cloneType = new Copy($sender, $shape);
-				$cloneType->save();
+				$session->getCloneStore()->saveCopy($shape, $session->getSelection()->getBottomCentre());
 				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_CLONE_COPY_SUCCESS));
 
 				return;
@@ -72,7 +69,7 @@ class CloneCommand extends BaseCommand{
 				$path = $this->loader->getDataFolder() . "schematics/" . $args[1] . ".schematic";
 
 				$schematic = new Schematic();
-				$schematic->setBlocks($session->getSelection()->box(), $shape->getBlocks($sender->getLevel()));
+				$schematic->setBlocks($session->getSelection()->box(), $shape->getBlocks($sender->getWorld()));
 				$schematic->save($path);
 
 				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_CLONE_SCHEMATIC_SUCCESS, $path));

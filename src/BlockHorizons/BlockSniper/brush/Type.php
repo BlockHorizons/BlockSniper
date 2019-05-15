@@ -8,10 +8,10 @@ use BlockHorizons\BlockSniper\brush\async\BlockSniperChunkManager;
 use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
 use BlockHorizons\BlockSniper\exceptions\InvalidItemException;
 use pocketmine\block\Block;
-use pocketmine\level\ChunkManager;
-use pocketmine\level\Level;
 use pocketmine\math\Vector2;
 use pocketmine\math\Vector3;
+use pocketmine\world\ChunkManager;
+use pocketmine\world\World;
 use function array_rand;
 use function strtolower;
 
@@ -55,7 +55,7 @@ abstract class Type{
 	/** @var Vector3 */
 	protected $target;
 
-	/** @var BlockSniperChunkManager|Level */
+	/** @var BlockSniperChunkManager|World */
 	protected $chunkManager = null;
 	/** @var bool */
 	protected $myPlotChecked = false;
@@ -169,8 +169,8 @@ abstract class Type{
 		if(!empty($plotPoints)){
 			$this->myPlotChecked = true;
 		}
-		$isLevel = $this->chunkManager instanceof Level;
-		if((!$isLevel && $this->canBeExecutedAsynchronously()) || $isLevel){
+		$isWorld = $this->chunkManager instanceof World;
+		if((!$isWorld && $this->canBeExecutedAsynchronously()) || $isWorld){
 			return $this->fill();
 		}
 
@@ -209,7 +209,7 @@ abstract class Type{
 	 * @return Block
 	 */
 	public function side(Vector3 $block, int $side) : Block{
-		if($this->chunkManager instanceof Level && $block instanceof Block){
+		if($this->chunkManager instanceof World && $block instanceof Block){
 			return $block->getSide($side);
 		}
 
@@ -249,7 +249,7 @@ abstract class Type{
 	 */
 	public function putBlock(Vector3 $pos, Block $block) : void{
 		$valid = !$this->myPlotChecked;
-		if($pos->y < 0 || $pos->y >= Level::Y_MAX){
+		if($pos->y < 0 || $pos->y >= World::Y_MAX){
 			return;
 		}
 		if($this->myPlotChecked){
@@ -281,7 +281,7 @@ abstract class Type{
 	 * getChunkManager returns the ChunkManager of the Type. If not set, or if passed onto an AsyncTask before, the
 	 * ChunkManager returned is null.
 	 *
-	 * @return BlockSniperChunkManager|Level
+	 * @return BlockSniperChunkManager|World
 	 */
 	public function getChunkManager() : ?ChunkManager{
 		return $this->chunkManager;

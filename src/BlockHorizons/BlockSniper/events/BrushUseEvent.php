@@ -8,8 +8,8 @@ use BlockHorizons\BlockSniper\brush\Shape;
 use BlockHorizons\BlockSniper\brush\Type;
 use pocketmine\event\Cancellable;
 use pocketmine\event\CancellableTrait;
-use pocketmine\level\Level;
 use pocketmine\Player;
+use pocketmine\world\World;
 
 class BrushUseEvent extends BlockSniperEvent implements Cancellable{
 	use CancellableTrait;
@@ -31,10 +31,10 @@ class BrushUseEvent extends BlockSniperEvent implements Cancellable{
 	}
 
 	/**
-	 * @return Level
+	 * @return World
 	 */
-	public function getLevel() : Level{
-		return $this->getPlayer()->getLevel();
+	public function getWorld() : World{
+		return $this->getPlayer()->getWorld();
 	}
 
 	/**

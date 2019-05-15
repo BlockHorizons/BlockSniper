@@ -13,9 +13,9 @@ use BlockHorizons\BlockSniper\brush\types\TreeType;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\exceptions\InvalidItemException;
 use BlockHorizons\BlockSniper\Loader;
-use pocketmine\level\biome\Biome;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
+use pocketmine\world\biome\Biome;
 
 class BrushPropertiesWindow extends CustomWindow{
 
@@ -86,12 +86,14 @@ class BrushPropertiesWindow extends CustomWindow{
 
 					if(is_numeric($value)){
 						$b->biomeId = (int) $value;
+
 						return;
 					}
 					$biomes = new \ReflectionClass(Biome::class);
 					$const = strtoupper(str_replace(" ", "_", $value));
 					if($biomes->hasConstant($const)){
 						$b->biomeId = $biomes->getConstant($const);
+
 						return;
 					}
 					$player->sendMessage(TextFormat::RED . "Unknown biome type " . $value);

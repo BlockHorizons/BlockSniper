@@ -11,9 +11,9 @@ use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use BlockHorizons\libschematic\Schematic;
 use pocketmine\command\CommandSender;
-use pocketmine\level\Level;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
+use pocketmine\world\World;
 use function strtolower;
 
 class PasteCommand extends BaseCommand{
@@ -74,11 +74,11 @@ class PasteCommand extends BaseCommand{
 				$touchedChunks = [];
 				for($x = $center->x - $width / 2; $x <= $center->x + $width / 2 + 16; $x += 16){
 					for($z = $center->z - $length / 2; $z <= $center->z + $length / 2 + 16; $z += 16){
-						$chunk = $sender->getLevel()->getChunk($x >> 4, $z >> 4, true);
+						$chunk = $sender->getWorld()->getChunk($x >> 4, $z >> 4, true);
 						if($chunk === null){
 							continue;
 						}
-						$touchedChunks[Level::chunkHash($x >> 4, $z >> 4)] = $chunk->fastSerialize();
+						$touchedChunks[World::chunkHash($x >> 4, $z >> 4)] = $chunk->fastSerialize();
 					}
 				}
 				$session->getCloneStore()->pasteSchematic($file, $center->asVector3(), $touchedChunks);

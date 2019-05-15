@@ -7,10 +7,10 @@ namespace BlockHorizons\BlockSniper\brush\types;
 use BlockHorizons\BlockSniper\brush\BrushProperties;
 use BlockHorizons\BlockSniper\exceptions\InvalidItemException;
 use pocketmine\block\Block;
-use pocketmine\level\Level;
-use pocketmine\level\Position;
 use pocketmine\math\Vector3;
 use pocketmine\utils\Random;
+use pocketmine\world\Position;
+use pocketmine\world\World;
 
 class Tree{
 
@@ -120,14 +120,14 @@ class Tree{
 					continue;
 				}
 				[$xInt, $yInt, $zInt] = [(int) floor($x), (int) floor($this->position->y), (int) floor($z)];
-				$bHash = Level::blockHash($xInt, $yInt, $zInt);
+				$bHash = World::blockHash($xInt, $yInt, $zInt);
 				if(array_key_exists($bHash, $this->set)){
 					continue;
 				}
 				$this->set[$bHash] = null;
 
 				[$this->tempVec->x, $this->tempVec->y, $this->tempVec->z] = [$x, $this->position->y, $z];
-				yield $this->position->level->getBlock($this->tempVec);
+				yield $this->position->world->getBlock($this->tempVec);
 				$bl = clone $this->trunkBlocks[array_rand($this->trunkBlocks)];
 				$this->type->putBlock($this->tempVec->floor(), $bl);
 			}
@@ -169,14 +169,14 @@ class Tree{
 								break;
 							}
 							[$xInt, $yInt, $zInt] = [(int) floor($x), (int) floor($y), (int) floor($z)];
-							$bHash = Level::blockHash($xInt, $yInt, $zInt);
+							$bHash = World::blockHash($xInt, $yInt, $zInt);
 							if(array_key_exists($bHash, $this->set)){
 								continue;
 							}
 							$this->set[$bHash] = null;
 
 							[$this->tempVec->x, $this->tempVec->y, $this->tempVec->z] = [$x, $y, $z];
-							yield $this->position->level->getBlock($this->tempVec);
+							yield $this->position->world->getBlock($this->tempVec);
 
 							$bl = clone $this->trunkBlocks[array_rand($this->trunkBlocks)];
 							$this->type->putBlock($this->tempVec->floor(), $bl);
@@ -205,7 +205,7 @@ class Tree{
 					$zs = ($branchEnd->z - $z) ** 2;
 					if($xs + $ys + $zs - 0.5 < $radiusSquared){
 						[$this->tempVec->x, $this->tempVec->y, $this->tempVec->z] = [$x, $y, $z];
-						$block = $this->position->level->getBlock($this->tempVec);
+						$block = $this->position->world->getBlock($this->tempVec);
 						if($block->getId() !== Block::AIR){
 							continue;
 						}

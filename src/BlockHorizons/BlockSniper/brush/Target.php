@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush;
 
-use pocketmine\level\ChunkManager;
-use pocketmine\level\Position;
 use pocketmine\math\Vector3;
+use pocketmine\world\ChunkManager;
+use pocketmine\world\Position;
 
 /**
- * Class Target is a wrapper around a Vector3, providing roughly the same functionality as a pocketmine\level\Position,
- * but allowing a generic ChunkManager instead of a Level instance.
+ * Class Target is a wrapper around a Vector3, providing roughly the same functionality as a pocketmine\world\Position,
+ * but allowing a generic ChunkManager instead of a World instance.
  *
  * @package BlockHorizons\BlockSniper\brush
  */
@@ -40,7 +40,7 @@ class Target extends Vector3{
 	 *
 	 * @return Target
 	 */
-	public static function fromPosition(Position $position) : Target {
-		return new Target($position->asVector3(), $position->getLevel());
+	public static function fromPosition(Position $position) : Target{
+		return new Target($position->asVector3(), $position->getWorld());
 	}
 }

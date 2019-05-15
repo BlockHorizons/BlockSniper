@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\revert\async;
 
 use BlockHorizons\BlockSniper\brush\async\BlockSniperChunkManager;
-use BlockHorizons\BlockSniper\brush\async\tasks\RevertTask;
 use BlockHorizons\BlockSniper\revert\Revert;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
-use pocketmine\level\format\Chunk;
 use pocketmine\Server;
+use pocketmine\world\format\Chunk;
 
 abstract class AsyncRevert extends Revert{
 
@@ -18,22 +17,22 @@ abstract class AsyncRevert extends Revert{
 	/** @var string[] */
 	protected $modifiedChunks = [];
 	/** @var int */
-	protected $levelId = 0;
+	protected $worldId = 0;
 	/** @var string[] */
 	protected $oldChunks = [];
 
-	public function __construct(array $actualChunks, array $previousChunks, string $playerName, int $levelId){
+	public function __construct(array $actualChunks, array $previousChunks, string $playerName, int $worldId){
 		parent::__construct($playerName);
 		$this->setModifiedChunks($actualChunks);
 		$this->setModifiedChunks($previousChunks, true);
-		$this->levelId = $levelId;
+		$this->worldId = $worldId;
 	}
 
 	/**
 	 * @return int
 	 */
-	public function getLevelId() : int{
-		return $this->levelId;
+	public function getWorldId() : int{
+		return $this->worldId;
 	}
 
 	/**
@@ -105,7 +104,7 @@ abstract class AsyncRevert extends Revert{
 			return;
 		}
 		foreach($this->getOldChunks() as $hash => $chunk){
-			$player->getLevel()->setChunk($chunk->getX(), $chunk->getZ(), $chunk, false);
+			$player->getWorld()->setChunk($chunk->getX(), $chunk->getZ(), $chunk, false);
 		}
 		SessionManager::getPlayerSession($player)->getRevertStore()->saveRevert($this->getDetached());
 	}

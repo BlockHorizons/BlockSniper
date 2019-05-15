@@ -61,4 +61,18 @@ class Selection{
 
 		return (int) ceil(($box->maxX - $box->minX) * ($box->maxY - $box->minY) * ($box->maxZ - $box->minZ));
 	}
+
+	/**
+	 * getBottomCentre returns the centre block at the bottom of the selection.
+	 *
+	 * @return Vector3
+	 */
+	public function getBottomCentre() : Vector3{
+		if(!$this->ready()){
+			throw new \InvalidStateException("selection must be set before retrieving the centre");
+		}
+		$bb = $this->box();
+
+		return new Vector3($bb->minX + ($bb->maxX - $bb->minX) / 2, $bb->minY, $bb->minZ + ($bb->maxZ - $bb->minZ) / 2);
+	}
 }
