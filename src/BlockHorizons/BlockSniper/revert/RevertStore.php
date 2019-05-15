@@ -4,145 +4,92 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\revert;
 
-use BlockHorizons\BlockSniper\revert\async\AsyncRevert;
-use BlockHorizons\BlockSniper\revert\sync\SyncRevert;
 use function array_keys;
 use function count;
 use function max;
 use function min;
-use function time;
-
 
 class RevertStore{
 
-	/** @var IUndo[] */
+	/** @var Revert[] */
 	private $undoStack = [];
-	/** @var int */
-	private $maxRevertStores = 15;
-	/** @var IRedo[][] */
+	/** @var Revert[] */
 	private $redoStack = [];
 
 	/** @var int */
-	private $lastUndo = 0;
-	/** @var int */
-	private $lastRedo = 0;
+	private $maxRevertStores;
 
 	public function __construct(int $maxRevertStores){
 		$this->maxRevertStores = $maxRevertStores;
 	}
 
 	/**
-	 * @param int $type
 	 * @param int $amount
 	 */
-	public function restoreLatestRevert(int $type, int $amount) : void{
+	public function restoreLatestUndo(int $amount = 1) : void{
 		for($i = 0; $i < $amount; $i++){
-			if($type === Revert::TYPE_UNDO){
-				if(empty($this->undoStack)){
-					return;
-				}
-				$revert = $this->undoStack[max(array_keys($this->undoStack))];
-			}else{
-				if(empty($this->redoStack)){
-					return;
-				}
-				$revert = $this->redoStack[max(array_keys($this->redoStack))];
+			if(empty($this->undoStack)){
+				return;
 			}
-			$detached = $revert->getDetached();
-			$this->saveRevert($detached);
-			$revert->restore();
-			$this->unsetLatestRevert($type);
+			$key = max(array_keys($this->undoStack));
+			$revert = $this->undoStack[$key];
+			$this->saveRedo($revert->restore());
+
+			unset($this->undoStack[$key]);
 		}
 	}
 
 	/**
-	 * @param AsyncRevert|SyncRevert $revert
+	 * @param int $amount
 	 */
-	public function saveRevert(Revert $revert) : void{
-		$type = $revert instanceof IUndo ? Revert::TYPE_UNDO : Revert::TYPE_REDO;
-		if($this->getTotalStores($type) === $this->maxRevertStores){
-			$this->unsetOldestRevert($type);
-		}
-		if($type === Revert::TYPE_UNDO){
-			$this->undoStack[] = $revert;
-			$this->lastUndo = time();
+	public function restoreLatestRedo(int $amount = 1) : void{
+		for($i = 0; $i < $amount; $i++){
+			if(empty($this->redoStack)){
+				return;
+			}
+			$key = max(array_keys($this->redoStack));
+			$revert = $this->redoStack[$key];
+			$this->saveUndo($revert->restore());
 
-			return;
+			unset($this->redoStack[$key]);
+		}
+	}
+
+	/**
+	 * @param Revert $revert
+	 */
+	public function saveRedo(Revert $revert) : void{
+		if(count($this->redoStack) === $this->maxRevertStores){
+			if(!empty($this->redoStack)){
+				unset($this->redoStack[min(array_keys($this->redoStack))]);
+			}
 		}
 		$this->redoStack[] = $revert;
-		$this->lastRedo = time();
 	}
 
 	/**
-	 * @param int $type
-	 *
-	 * @return int
+	 * @param Revert $revert
 	 */
-	public function getTotalStores(int $type) : int{
-		if($type === Revert::TYPE_UNDO){
-			return count($this->undoStack);
-		}
-
-		return count($this->redoStack);
-	}
-
-	/**
-	 * @param int $type
-	 */
-	public function unsetOldestRevert(int $type) : void{
-		if($type === Revert::TYPE_UNDO){
+	public function saveUndo(Revert $revert) : void{
+		if(count($this->undoStack) === $this->maxRevertStores){
 			if(!empty($this->undoStack)){
 				unset($this->undoStack[min(array_keys($this->undoStack))]);
 			}
-
-			return;
 		}
-		if(!empty($this->redoStack)){
-			unset($this->redoStack[min(array_keys($this->redoStack))]);
-		}
-	}
-
-	/**
-	 * @param int $type
-	 */
-	public function unsetLatestRevert(int $type) : void{
-		if($type === Revert::TYPE_UNDO){
-			if(!empty($this->undoStack)){
-				unset($this->undoStack[max(array_keys($this->undoStack))]);
-			}
-
-			return;
-		}
-		if(!empty($this->redoStack)){
-			unset($this->redoStack[max(array_keys($this->redoStack))]);
-		}
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function undoStorageExists() : bool{
-		return !empty($this->undoStack);
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function redoStorageExists() : bool{
-		return !empty($this->redoStack);
+		$this->undoStack[] = $revert;
 	}
 
 	/**
 	 * @return int
 	 */
-	public function getLastUndoActivity() : int{
-		return (time() - $this->lastUndo);
+	public function getUndoCount() : int{
+		return count($this->undoStack);
 	}
 
 	/**
 	 * @return int
 	 */
-	public function getLastRedoActivity() : int{
-		return (time() - $this->lastRedo);
+	public function getRedoCount() : int{
+		return count($this->redoStack);
 	}
 }

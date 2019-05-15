@@ -8,7 +8,7 @@ use BlockHorizons\BlockSniper\brush\async\tasks\BrushTask;
 use BlockHorizons\BlockSniper\brush\types\TreeType;
 use BlockHorizons\BlockSniper\events\BrushUseEvent;
 use BlockHorizons\BlockSniper\Loader;
-use BlockHorizons\BlockSniper\revert\sync\SyncUndo;
+use BlockHorizons\BlockSniper\revert\SyncRevert;
 use BlockHorizons\BlockSniper\sessions\PlayerSession;
 use BlockHorizons\BlockSniper\sessions\Selection;
 use BlockHorizons\BlockSniper\sessions\Session;
@@ -94,7 +94,7 @@ class Brush extends BrushProperties{
 			$undoBlocks[] = $undoBlock;
 		}
 		if(count($undoBlocks) !== 0){
-			$session->getRevertStore()->saveRevert(new SyncUndo($undoBlocks, $session->getSessionOwner()->getName()));
+			$session->getRevertStore()->saveUndo(new SyncRevert($undoBlocks, $target->getWorld()));
 		}
 
 		return true;

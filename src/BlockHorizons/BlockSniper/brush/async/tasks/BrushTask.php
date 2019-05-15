@@ -10,7 +10,7 @@ use BlockHorizons\BlockSniper\brush\Shape;
 use BlockHorizons\BlockSniper\brush\Type;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
-use BlockHorizons\BlockSniper\revert\async\AsyncUndo;
+use BlockHorizons\BlockSniper\revert\AsyncRevert;
 use BlockHorizons\BlockSniper\sessions\Session;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use BlockHorizons\BlockSniper\tasks\CooldownBarTask;
@@ -139,6 +139,6 @@ class BrushTask extends AsyncTask{
 		if(($player = Server::getInstance()->getPlayer($session->getSessionOwner()->getName())) !== null){
 			$loader->getScheduler()->scheduleDelayedRepeatingTask(new CooldownBarTask($loader, $brush, $player), 1, 3);
 		}
-		SessionManager::getPlayerSession($player)->getRevertStore()->saveRevert(new AsyncUndo($chunks, $undoChunks, $session->getSessionOwner()->getName(), $world->getId()));
+		SessionManager::getPlayerSession($player)->getRevertStore()->saveUndo(new AsyncRevert($chunks, $undoChunks, $world));
 	}
 }

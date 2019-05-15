@@ -7,7 +7,7 @@ namespace BlockHorizons\BlockSniper\brush\async\tasks;
 use BlockHorizons\BlockSniper\brush\async\BlockSniperChunkManager;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
-use BlockHorizons\BlockSniper\revert\async\AsyncUndo;
+use BlockHorizons\BlockSniper\revert\AsyncRevert;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use BlockHorizons\libschematic\Schematic;
 use pocketmine\block\Block;
@@ -106,6 +106,6 @@ class PasteTask extends AsyncTask{
 
 		$duration = round(microtime(true) - $startTime, 2);
 		$player->sendPopup(TextFormat::GREEN . Translation::get(Translation::BRUSH_STATE_DONE) . " ($duration seconds)");
-		SessionManager::getPlayerSession($player)->getRevertStore()->saveRevert(new AsyncUndo($chunks, $undoChunks, $this->playerName, $player->getWorld()->getId()));
+		SessionManager::getPlayerSession($player)->getRevertStore()->saveUndo(new AsyncRevert($chunks, $undoChunks, $player->getWorld()));
 	}
 }

@@ -6,7 +6,7 @@ namespace BlockHorizons\BlockSniper\cloning;
 
 use BlockHorizons\BlockSniper\brush\async\tasks\PasteTask;
 use BlockHorizons\BlockSniper\brush\Shape;
-use BlockHorizons\BlockSniper\revert\sync\SyncUndo;
+use BlockHorizons\BlockSniper\revert\SyncRevert;
 use BlockHorizons\BlockSniper\sessions\Session;
 use pocketmine\block\Air;
 use pocketmine\math\Vector3;
@@ -53,7 +53,7 @@ class CloneStore{
 			$undoBlocks[] = $targetBlock->world->getBlock($targetBlock->add($v3));
 			$targetBlock->world->setBlock($targetBlock->add($v3), clone $block, false);
 		}
-		$this->session->getRevertStore()->saveRevert(new SyncUndo($undoBlocks, $this->session->getSessionOwner()->getPlayerName()));
+		$this->session->getRevertStore()->saveUndo(new SyncRevert($undoBlocks, $targetBlock->getWorld()));
 	}
 
 	/**
