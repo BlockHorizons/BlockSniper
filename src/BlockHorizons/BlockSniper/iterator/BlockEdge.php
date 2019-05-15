@@ -21,12 +21,12 @@ class BlockEdge{
 	 *
 	 * @param float $interval
 	 *
-	 * @return \Generator
+	 * @return \Generator|Vector3[]
 	 */
 	public function walk(float $interval = 0.1) : \Generator{
 		$sub = $this->end->subtract($this->start)->multiply($interval);
 		$iterCount = 1 / $interval;
-		for($i = 0; $i < $iterCount; $i++){
+		for($i = 0; $i < $iterCount + 0.0001; $i++){
 			yield $this->start->add($sub->multiply($i));
 		}
 	}
