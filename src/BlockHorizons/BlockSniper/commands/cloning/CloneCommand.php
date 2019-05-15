@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\commands\cloning;
 
+use BlockHorizons\BlockSniper\brush\shapes\CuboidShape;
+use BlockHorizons\BlockSniper\brush\Target;
 use BlockHorizons\BlockSniper\commands\BaseCommand;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\exceptions\InvalidItemException;
@@ -11,6 +13,7 @@ use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use BlockHorizons\libschematic\Schematic;
 use pocketmine\command\CommandSender;
+use pocketmine\math\Vector3;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
 use pocketmine\utils\TextFormat as TF;
@@ -45,7 +48,7 @@ class CloneCommand extends BaseCommand{
 
 			return;
 		}
-		$shape = $session->getBrush()->getShape($session->getSelection()->box());
+		$shape = new CuboidShape($session->getBrush(), new Target(new Vector3(), $sender->getWorld()), $session->getSelection()->box());
 
 		switch(strtolower($args[0])){
 			default:
