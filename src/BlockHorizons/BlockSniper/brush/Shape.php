@@ -111,15 +111,6 @@ abstract class Shape extends AxisAlignedBB{
 	}
 
 	/**
-	 * isHollow defines if the Shape is hollow, as set in the BrushProperties passed into the constructor.
-	 *
-	 * @return bool
-	 */
-	public function isHollow() : bool{
-		return $this->hollow;
-	}
-
-	/**
 	 * getBlocks returns a generator that holds blocks rather than Vector3 instances, by looking up the blocks that are
 	 * found in the ChunkManager passed.
 	 *

@@ -134,13 +134,6 @@ class Loader extends PluginBase{
 	}
 
 	/**
-	 * @return TranslationData
-	 */
-	public function getTranslationData() : TranslationData{
-		return $this->language;
-	}
-
-	/**
 	 * @return MyPlot|null
 	 */
 	public function getMyPlot() : ?MyPlot{

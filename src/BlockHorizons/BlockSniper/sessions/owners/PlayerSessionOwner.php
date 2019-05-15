@@ -24,13 +24,6 @@ class PlayerSessionOwner implements ISessionOwner{
 	/**
 	 * @return string
 	 */
-	public function getPlayerName() : string{
-		return $this->playerName;
-	}
-
-	/**
-	 * @return string
-	 */
 	public function getName() : string{
 		return $this->playerName;
 	}

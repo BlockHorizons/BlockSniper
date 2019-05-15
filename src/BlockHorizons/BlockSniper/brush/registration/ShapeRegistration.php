@@ -83,15 +83,6 @@ class ShapeRegistration{
 	}
 
 	/**
-	 * Returns an array containing the class string of all shapes.
-	 *
-	 * @return string[]
-	 */
-	public static function getShapes() : array{
-		return self::$shapes;
-	}
-
-	/**
 	 * Returns an array containing the ID => Name of all shapes.
 	 *
 	 * @return string[]

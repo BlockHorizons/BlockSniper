@@ -278,16 +278,6 @@ abstract class Type{
 	}
 
 	/**
-	 * getChunkManager returns the ChunkManager of the Type. If not set, or if passed onto an AsyncTask before, the
-	 * ChunkManager returned is null.
-	 *
-	 * @return BlockSniperChunkManager|World
-	 */
-	public function getChunkManager() : ?ChunkManager{
-		return $this->chunkManager;
-	}
-
-	/**
 	 * setChunkManager sets the ChunkManager of the Type, and returns itself for fluency. A Type loses its
 	 * ChunkManager when passed onto an AsyncTask, so it must be reset.
 	 *

@@ -121,15 +121,6 @@ class TypeRegistration{
 	}
 
 	/**
-	 * Returns an array containing the class string of all types.
-	 *
-	 * @return string[]
-	 */
-	public static function getTypes() : array{
-		return self::$types;
-	}
-
-	/**
 	 * Returns an array containing the ID => Name of all types.
 	 *
 	 * @return string[]

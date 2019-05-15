@@ -49,10 +49,7 @@ class Translation{
 	public const UI_MAIN_MENU_TITLE = "ui.main-menu.title";
 	public const UI_MAIN_MENU_SUBTITLE = "ui.main-menu.subtitle";
 	public const UI_MAIN_MENU_BRUSH = "ui.main-menu.brush";
-	public const UI_MAIN_MENU_TREE = "ui.main-menu.tree";
 	public const UI_MAIN_MENU_CONFIG = "ui.main-menu.config";
-	public const UI_MAIN_MENU_GLOBAL_BRUSH = "ui.main-menu.global-brush";
-	public const UI_MAIN_MENU_EXIT = "ui.main-menu.exit";
 	public const UI_BRUSH_MENU_TITLE = "ui.brush-menu.title";
 	public const UI_BRUSH_MENU_SIZE = "ui.brush-menu.size";
 	public const UI_BRUSH_MENU_SHAPE = "ui.brush-menu.shape";
@@ -68,7 +65,6 @@ class Translation{
 	public const UI_BRUSH_MENU_BLOCKS = "ui.brush-menu.blocks";
 	public const UI_BRUSH_MENU_OBSOLETE = "ui.brush-menu.obsolete";
 	public const UI_BRUSH_MENU_BIOME = "ui.brush-menu.biome";
-	public const UI_BRUSH_MENU_TREE = "ui.brush-menu.tree";
 	public const UI_BRUSH_MENU_LAYER_WIDTH = "ui.brush-menu.layer-width";
 	public const UI_BRUSH_MENU_NAME = "ui.brush-menu.name";
 	public const UI_BRUSH_MENU_SOIL = "ui.brush-menu.soil";
@@ -86,7 +82,6 @@ class Translation{
 	public const UI_CONFIGURATION_MENU_AUTO_GUI = "ui.configuration-menu.auto-gui";
 	public const UI_CONFIGURATION_MENU_COOLDOWN = "ui.configuration-menu.cooldown";
 	public const UI_CONFIGURATION_MENU_MYPLOT_SUPPORT = "ui.configuration-menu.myplot-support";
-	public const UI_TREE_MENU_TITLE = "ui.tree-menu.title";
 	public const UI_TREE_MENU_TRUNK_HEIGHT = "ui.tree-menu.trunk-height";
 	public const UI_TREE_MENU_TRUNK_WIDTH = "ui.tree-menu.trunk-width";
 	public const UI_TREE_MENU_MAX_BRANCH_LENGTH = "ui.tree-menu.max-branch-length";
@@ -102,9 +97,6 @@ class Translation{
 	public const LOG_LANGUAGE_USAGE = "log.language.usage";
 	public const LOG_LANGUAGE_SELECTED = "log.language.selected";
 	public const LOG_BRUSH_RESTORED = "log.brush.restored";
-	public const LOG_BRUSH_ALL_RESTORED = "log.brush.all-restored";
-	public const LOG_RELOAD_START = "log.reload.start";
-	public const LOG_RELOAD_FINISH = "log.reload.finish";
 	public const BRUSH_STATE_READY = "brush.state.ready";
 	public const BRUSH_STATE_DONE = "brush.state.done";
 	public const BRUSH_SELECTION_FIRST = "brush.selection.first";

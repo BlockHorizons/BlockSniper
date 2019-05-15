@@ -54,13 +54,6 @@ class TranslationData{
 	}
 
 	/**
-	 * @return Loader
-	 */
-	public function getLoader() : Loader{
-		return $this->loader;
-	}
-
-	/**
 	 * @return array
 	 */
 	public function getMessages() : array{
