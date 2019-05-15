@@ -40,7 +40,7 @@ class TargetHighlight extends Human{
 			"",
 			self::GEOMETRY_NAME,
 			$this->generateGeometry(),
-			);
+		);
 
 		$nbt = new CompoundTag();
 		$nbt->setTag("Pos", new ListTag([
@@ -95,7 +95,6 @@ class TargetHighlight extends Human{
 					"cubes" => $cubes,
 				]
 			]
-		]
-		]);
+		]]);
 	}
 }
