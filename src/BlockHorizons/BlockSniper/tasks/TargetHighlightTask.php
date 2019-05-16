@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\tasks;
 
 use BlockHorizons\BlockSniper\brush\TargetHighlight;
+use BlockHorizons\BlockSniper\listeners\BrushListener;
+use pocketmine\nbt\tag\StringTag;
 use pocketmine\Player;
 use pocketmine\world\Location;
 
@@ -22,7 +24,8 @@ class TargetHighlightTask extends BlockSniperTask{
 				continue;
 			}
 			$name = $player->getName();
-			if(!$player->getInventory()->getItemInHand()->equals($brushItem)){
+			$hand = $player->getInventory()->getItemInHand();
+			if(!$hand->equals($brushItem) && !$hand->getNamedTag()->hasTag(BrushListener::KEY_BRUSH_UUID, StringTag::class)){
 				if(isset($this->entities[$name])){
 					// The player still had a target highlight entity active, so we need to remove that as the player
 					// is no longer holding the brush item.
