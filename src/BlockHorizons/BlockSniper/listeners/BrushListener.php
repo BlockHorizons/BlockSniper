@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\listeners;
 
 use BlockHorizons\BlockSniper\brush\Brush;
+use BlockHorizons\BlockSniper\brush\TargetHighlight;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\PlayerSession;
@@ -19,11 +20,13 @@ use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerItemHeldEvent;
 use pocketmine\event\player\PlayerItemUseEvent;
+use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\math\Vector2;
 use pocketmine\nbt\tag\StringTag;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
+use pocketmine\world\Location;
 use Sandertv\Marshal\Unmarshal;
 
 class BrushListener implements Listener{
@@ -35,6 +38,8 @@ class BrushListener implements Listener{
 
 	/** @var Loader */
 	private $loader = null;
+	/** @var TargetHighlight[] */
+	private $targetHighlights = [];
 
 	public function __construct(Loader $loader){
 		$this->loader = $loader;
@@ -227,12 +232,64 @@ class BrushListener implements Listener{
 	 * @param PlayerQuitEvent $event
 	 */
 	public function onQuit(PlayerQuitEvent $event) : void{
-		if(!SessionManager::playerSessionExists($event->getPlayer()->getName())){
+		$player = $event->getPlayer();
+		if(!SessionManager::playerSessionExists($player->getName())){
 			return;
 		}
+		if(isset($this->targetHighlights[$player->getName()])){
+			$entity = $this->targetHighlights[$player->getName()];
+			$entity->close();
+			unset($this->targetHighlights[$player->getName()]);
+		}
+
 		$this->loader->getScheduler()->scheduleDelayedTask(
-			new SessionDeletionTask($this->loader, SessionManager::getPlayerSession($event->getPlayer())),
+			new SessionDeletionTask($this->loader, SessionManager::getPlayerSession($player)),
 			$this->loader->config->sessionTimeoutTime * 20 * 60
 		);
+	}
+
+	public function onMove(PlayerMoveEvent $event) : void{
+		$player = $event->getPlayer();
+		if(!$player->hasPermission("blocksniper.command.brush")){
+			// The player does not have permission to brush, so we don't need to highlight the target block of the
+			// player.
+			return;
+		}
+
+		$brushItem = $this->loader->config->brushItem->parse();
+		$name = $player->getName();
+		$hand = $player->getInventory()->getItemInHand();
+		if(!$hand->equals($brushItem) && !$hand->getNamedTag()->hasTag(BrushListener::KEY_BRUSH_UUID, StringTag::class)){
+			if(isset($this->targetHighlights[$name])){
+				// The player still had a target highlight entity active, so we need to remove that as the player
+				// is no longer holding the brush item.
+				$entity = $this->targetHighlights[$name];
+				$entity->close();
+				unset($this->targetHighlights[$name]);
+			}
+
+			// The player isn't holding the brush item, so no need to highlight either.
+			return;
+		}
+		$this->highlightTarget($player);
+	}
+
+	/**
+	 * @param Player $player
+	 */
+	public function highlightTarget(Player $player) : void{
+		$name = $player->getName();
+		if(isset($this->targetHighlights[$name])){
+			// The player still had a target highlight entity active, so we need to remove that as the player
+			// is no longer holding the brush item.
+			$entity = $this->targetHighlights[$name];
+			$entity->close();
+			unset($this->targetHighlights[$name]);
+		}
+		$this->targetHighlights[$name] = new TargetHighlight($player->getPosition());
+		$this->targetHighlights[$name]->spawnToAll();
+
+		$pos = $player->getTargetBlock(16 * $player->getViewDistance())->add(0.0, 0, 1.0)->subtract(0.04, 0.04, -0.04);
+		$this->targetHighlights[$player->getName()]->teleport(Location::fromObject($pos, $player->getWorld()));
 	}
 }
