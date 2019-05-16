@@ -39,18 +39,18 @@ class TargetHighlight extends Human{
 			str_repeat(chr(0) . chr(0) . chr(0) . chr(255), 32 * 64),
 			"",
 			self::GEOMETRY_NAME,
-			$this->generateGeometry(),
+			$this->generateGeometry()
 		);
 
 		$nbt = new CompoundTag();
 		$nbt->setTag("Pos", new ListTag([
 			new FloatTag($position->x),
 			new FloatTag($position->y),
-			new FloatTag($position->z),
+			new FloatTag($position->z)
 		]));
 		$nbt->setTag("Rotation", new ListTag([
 			new FloatTag(0),
-			new FloatTag(0),
+			new FloatTag(0)
 		]));
 		parent::__construct($position->getWorld(), $nbt);
 
@@ -80,7 +80,7 @@ class TargetHighlight extends Human{
 				$cubes[] = [
 					"origin" => [(int) round($pos->x * 16), (int) round($pos->y * 16), (int) round($pos->z * 16)],
 					"size" => [1, 1, 1],
-					"uv" => [0, 0],
+					"uv" => [0, 0]
 				];
 			}
 		}
@@ -92,7 +92,7 @@ class TargetHighlight extends Human{
 					// client-side when inside of a block.
 					"name" => "head",
 					"pivot" => [0, 0, 0],
-					"cubes" => $cubes,
+					"cubes" => $cubes
 				]
 			]
 		]]);
