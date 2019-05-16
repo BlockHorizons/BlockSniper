@@ -27,6 +27,7 @@ use pocketmine\nbt\tag\StringTag;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
 use pocketmine\world\Location;
+use pocketmine\world\Position;
 use Sandertv\Marshal\Unmarshal;
 
 class BrushListener implements Listener{
@@ -286,10 +287,16 @@ class BrushListener implements Listener{
 			$entity->close();
 			unset($this->targetHighlights[$name]);
 		}
-		$this->targetHighlights[$name] = new TargetHighlight($player->getPosition());
-		$this->targetHighlights[$name]->spawnToAll();
-
 		$pos = $player->getTargetBlock(16 * $player->getViewDistance())->add(0.0, 0, 1.0)->subtract(0.04, 0.04, -0.04);
-		$this->targetHighlights[$player->getName()]->teleport(Location::fromObject($pos, $player->getWorld()));
+		if(!$player->getWorld()->isChunkLoaded($pos->x >> 4, $pos->z >> 4)){
+			// This is a rare race condition that occurs when the player spawns while looking to the air in the
+			// distance, with a render distance in which not all chunks have yet been loaded.
+			return;
+		}
+
+		$loc = Location::fromObject($pos, $player->getWorld());
+		$this->targetHighlights[$name] = new TargetHighlight(new Position($player->x, 0, $player->z, $loc->getWorld()));
+		$this->targetHighlights[$name]->spawnToAll();
+		$this->targetHighlights[$player->getName()]->teleport($loc);
 	}
 }
