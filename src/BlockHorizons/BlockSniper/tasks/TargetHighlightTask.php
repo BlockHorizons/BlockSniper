@@ -21,26 +21,28 @@ class TargetHighlightTask extends BlockSniperTask{
 				// player.
 				continue;
 			}
+			$name = $player->getName();
 			if(!$player->getInventory()->getItemInHand()->equals($brushItem)){
-				if(isset($this->entities[$player->getName()])){
+				if(isset($this->entities[$name])){
 					// The player still had a target highlight entity active, so we need to remove that as the player
 					// is no longer holding the brush item.
-					$entity = $this->entities[$player->getName()];
-					$entity->flagForDespawn();
-					unset($this->entities[$player->getName()]);
+					$entity = $this->entities[$name];
+					$entity->close();
+					unset($this->entities[$name]);
 				}
 
 				// The player isn't holding the brush item, so no need to highlight either.
 				continue;
 			}
-			if(!isset($this->entities[$player->getName()])){
-				$this->entities[$player->getName()] = new TargetHighlight($player->getPosition());
+			if(!isset($this->entities[$name])){
+				$this->entities[$name] = new TargetHighlight($player->getPosition());
+				$this->entities[$name]->spawnToAll();
 			}
 			$this->highlightTarget($player);
 		}
 		foreach($this->entities as $playerName => $entity){
 			if($this->loader->getServer()->getPlayerExact($playerName) === null){
-				$entity->flagForDespawn();
+				$entity->close();
 				unset($this->entities[$playerName]);
 			}
 		}
