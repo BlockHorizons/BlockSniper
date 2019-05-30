@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\Type;
-use pocketmine\block\BlockIds;
+use pocketmine\block\BlockLegacyIds;
 
 /*
  * Removes all non-natural blocks within the brush radius.
@@ -16,12 +16,12 @@ class CleanType extends Type{
 	public const ID = self::TYPE_CLEAN;
 
 	private const NATURAL_BLOCKS = [
-		BlockIds::STONE => 0,
-		BlockIds::GRASS => 0,
-		BlockIds::DIRT => 0,
-		BlockIds::GRAVEL => 0,
-		BlockIds::SAND => 0,
-		BlockIds::SANDSTONE => 0
+		BlockLegacyIds::STONE => 0,
+		BlockLegacyIds::GRASS => 0,
+		BlockLegacyIds::DIRT => 0,
+		BlockLegacyIds::GRAVEL => 0,
+		BlockLegacyIds::SAND => 0,
+		BlockLegacyIds::SANDSTONE => 0
 	];
 
 	/**

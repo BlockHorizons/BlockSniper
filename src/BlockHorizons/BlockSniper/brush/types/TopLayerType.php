@@ -7,8 +7,7 @@ namespace BlockHorizons\BlockSniper\brush\types;
 use BlockHorizons\BlockSniper\brush\BrushProperties;
 use BlockHorizons\BlockSniper\brush\Target;
 use BlockHorizons\BlockSniper\brush\Type;
-use pocketmine\block\Block;
-use pocketmine\block\BlockIds;
+use pocketmine\block\Air;
 use pocketmine\block\Flowable;
 use pocketmine\math\Facing;
 
@@ -33,14 +32,14 @@ class TopLayerType extends Type{
 	 */
 	public function fill() : \Generator{
 		foreach($this->blocks as $block){
-			if($block instanceof Flowable || $block->getId() === Block::AIR){
+			if($block instanceof Flowable || $block instanceof Air){
 				continue;
 			}
 
 			$higherBlock = $block;
 			for($y = $block->y; $y <= $block->y + $this->layerWidth; $y++){
 				$higherBlock = $this->side($higherBlock, Facing::UP);
-				if($higherBlock instanceof Flowable || $higherBlock->getId() === BlockIds::AIR){
+				if($higherBlock instanceof Flowable || $higherBlock instanceof Air){
 					yield $block;
 					$this->putBlock($block, $this->randomBrushBlock());
 					break;
