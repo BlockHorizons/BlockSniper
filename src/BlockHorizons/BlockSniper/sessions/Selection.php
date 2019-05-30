@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\sessions;
 
+use InvalidStateException;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
 use function ceil;
@@ -40,7 +41,7 @@ class Selection{
 	 */
 	public function box() : AxisAlignedBB{
 		if(!$this->ready()){
-			throw new \InvalidStateException();
+			throw new InvalidStateException();
 		}
 
 		return new AxisAlignedBB(
@@ -69,7 +70,7 @@ class Selection{
 	 */
 	public function getBottomCentre() : Vector3{
 		if(!$this->ready()){
-			throw new \InvalidStateException("selection must be set before retrieving the centre");
+			throw new InvalidStateException("selection must be set before retrieving the centre");
 		}
 		$bb = $this->box();
 

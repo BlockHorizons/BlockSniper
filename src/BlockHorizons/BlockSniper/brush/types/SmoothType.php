@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\Type;
+use Generator;
 use pocketmine\block\Block;
 use pocketmine\math\Facing;
 
@@ -13,9 +14,9 @@ class SmoothType extends Type{
 	public const ID = self::TYPE_SMOOTH;
 
 	/**
-	 * @return \Generator
+	 * @return Generator
 	 */
-	protected function fill() : \Generator{
+	protected function fill() : Generator{
 		$meltBlocks = [];
 		$expandBlocks = [];
 		foreach($this->blocks as $block){

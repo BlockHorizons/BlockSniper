@@ -7,6 +7,7 @@ namespace BlockHorizons\BlockSniper\brush\types;
 use BlockHorizons\BlockSniper\brush\BrushProperties;
 use BlockHorizons\BlockSniper\brush\Target;
 use BlockHorizons\BlockSniper\brush\Type;
+use Generator;
 use pocketmine\world\Position;
 
 /*
@@ -20,15 +21,15 @@ class TreeType extends Type{
 	/** @var Tree */
 	private $tree;
 
-	public function __construct(BrushProperties $properties, Target $target, \Generator $blocks = null){
+	public function __construct(BrushProperties $properties, Target $target, Generator $blocks = null){
 		parent::__construct($properties, $target, $blocks);
 		$this->tree = new Tree(Position::fromObject($target->asVector3(), $target->getChunkManager()), $properties, $this);
 	}
 
 	/**
-	 * @return \Generator
+	 * @return Generator
 	 */
-	public function fill() : \Generator{
+	public function fill() : Generator{
 		foreach($this->tree->build() as $block){
 			yield $block;
 		}

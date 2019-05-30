@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\Type;
+use Generator;
 use pocketmine\block\Block;
 use pocketmine\math\Facing;
 
@@ -17,9 +18,9 @@ class OverlayType extends Type{
 	public const ID = self::TYPE_OVERLAY;
 
 	/**
-	 * @return \Generator
+	 * @return Generator
 	 */
-	public function fill() : \Generator{
+	public function fill() : Generator{
 		foreach($this->blocks as $block){
 			if($block->getId() !== Block::AIR){
 				$valid = true;

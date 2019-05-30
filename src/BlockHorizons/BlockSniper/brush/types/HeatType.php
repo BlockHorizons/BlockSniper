@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\Type;
+use Exception;
+use Generator;
 use pocketmine\block\Block;
-use pocketmine\block\Dandelion;
 use pocketmine\block\DoublePlant;
 use pocketmine\block\Flower;
 use pocketmine\block\Leaves;
@@ -17,10 +18,10 @@ class HeatType extends Type{
 	public const ID = self::TYPE_HEAT;
 
 	/**
-	 * @return \Generator
-	 * @throws \Exception
+	 * @return Generator
+	 * @throws Exception
 	 */
-	public function fill() : \Generator{
+	public function fill() : Generator{
 		foreach($this->blocks as $block){
 			switch($block->getId()){
 				case Block::PACKED_ICE:
@@ -51,7 +52,7 @@ class HeatType extends Type{
 						$this->putBlock($block, Block::get(Block::DIRT, 1));
 					}
 					break;
-				case $block instanceof Flower || $block instanceof DoublePlant || $block instanceof TallGrass || $block instanceof Dandelion:
+				case $block instanceof Flower || $block instanceof DoublePlant || $block instanceof TallGrass:
 					yield $block;
 					$this->putBlock($block, Block::get(Block::DEAD_BUSH));
 			}

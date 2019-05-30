@@ -6,6 +6,7 @@ namespace BlockHorizons\BlockSniper\brush\shapes;
 
 use BlockHorizons\BlockSniper\brush\BrushProperties;
 use BlockHorizons\BlockSniper\brush\Shape;
+use Generator;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
 
@@ -14,9 +15,9 @@ class CuboidShape extends Shape{
 	public const ID = self::SHAPE_CUBOID;
 
 	/**
-	 * @return \Generator
+	 * @return Generator
 	 */
-	public function getVectors() : \Generator{
+	public function getVectors() : Generator{
 		for($x = $this->minX; $x <= $this->maxX; $x++){
 			for($y = $this->minY; $y <= $this->maxY; $y++){
 				if($y > 255 || $y < 0){

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\Type;
+use Generator;
 use pocketmine\block\Block;
 use pocketmine\block\Flowable;
 use pocketmine\math\Facing;
@@ -18,9 +19,9 @@ class SnowConeType extends Type{
 	public const ID = self::TYPE_SNOW_CONE;
 
 	/**
-	 * @return \Generator
+	 * @return Generator
 	 */
-	public function fill() : \Generator{
+	public function fill() : Generator{
 		foreach($this->blocks as $block){
 			if(!($block instanceof Flowable) && ($id = $block->getId()) !== Block::AIR && $id !== Block::SNOW_LAYER){
 				$topBlock = $this->side($block, Facing::UP);

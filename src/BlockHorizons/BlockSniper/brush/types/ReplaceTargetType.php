@@ -7,6 +7,7 @@ namespace BlockHorizons\BlockSniper\brush\types;
 use BlockHorizons\BlockSniper\brush\BrushProperties;
 use BlockHorizons\BlockSniper\brush\Target;
 use BlockHorizons\BlockSniper\brush\Type;
+use Generator;
 use pocketmine\block\Block;
 
 class ReplaceTargetType extends Type{
@@ -16,15 +17,15 @@ class ReplaceTargetType extends Type{
 	/** @var Block */
 	private $targetBlock;
 
-	public function __construct(BrushProperties $properties, Target $target, \Generator $blocks = null){
+	public function __construct(BrushProperties $properties, Target $target, Generator $blocks = null){
 		parent::__construct($properties, $target, $blocks);
 		$this->targetBlock = $this->getBlock($this->target)->setWorld(null);
 	}
 
 	/**
-	 * @return \Generator
+	 * @return Generator
 	 */
-	public function fill() : \Generator{
+	public function fill() : Generator{
 		/** @var Block $block */
 		foreach($this->blocks as $block){
 			if($block->getId() === $this->targetBlock->getId() && $block->getMeta() === $this->targetBlock->getMeta()){

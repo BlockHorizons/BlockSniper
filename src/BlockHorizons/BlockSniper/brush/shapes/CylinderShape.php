@@ -6,6 +6,7 @@ namespace BlockHorizons\BlockSniper\brush\shapes;
 
 use BlockHorizons\BlockSniper\brush\BrushProperties;
 use BlockHorizons\BlockSniper\brush\Shape;
+use Generator;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
 
@@ -14,9 +15,9 @@ class CylinderShape extends Shape{
 	public const ID = self::SHAPE_CYLINDER;
 
 	/**
-	 * @return \Generator
+	 * @return Generator
 	 */
-	public function getVectors() : \Generator{
+	public function getVectors() : Generator{
 		$radiusX = ($this->maxX - $this->minX) / 2;
 		$radiusXS = (int) $radiusX === 0 ? 10 : $radiusX ** 2;
 		$radiusZ = ($this->maxZ - $this->minZ) / 2;

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush;
 
 use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
+use Generator;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
 use pocketmine\world\ChunkManager;
@@ -60,9 +61,9 @@ abstract class Shape extends AxisAlignedBB{
 	/**
 	 * getBlocksInside creates a generator that yields all Vector3s that are found within the shape.
 	 *
-	 * @return \Generator
+	 * @return Generator
 	 */
-	public abstract function getVectors() : \Generator;
+	public abstract function getVectors() : Generator;
 
 	/**
 	 * buildSelection builds a selection if the brush mode is Brush::MODE_BRUSH. $center is the target block, and $bb
@@ -116,9 +117,9 @@ abstract class Shape extends AxisAlignedBB{
 	 *
 	 * @param ChunkManager $manager
 	 *
-	 * @return \Generator
+	 * @return Generator
 	 */
-	public function getBlocks(ChunkManager $manager) : \Generator{
+	public function getBlocks(ChunkManager $manager) : Generator{
 		foreach($this->getVectors() as $vector){
 			yield $manager->getBlockAt($vector->x, $vector->y, $vector->z);
 		}

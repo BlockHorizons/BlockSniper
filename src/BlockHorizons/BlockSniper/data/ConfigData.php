@@ -7,6 +7,7 @@ namespace BlockHorizons\BlockSniper\data;
 use BlockHorizons\BlockSniper\exceptions\InvalidItemException;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\parser\Parser;
+use ErrorException;
 use pocketmine\item\Item;
 use Sandertv\Marshal\DecodeException;
 use Sandertv\Marshal\FileNotFoundException;
@@ -101,7 +102,7 @@ class ConfigData{
 			// Make sure to set the right version right off the bat.
 			$this->configurationVersion = Loader::CONFIGURATION_VERSION;
 			Marshal::yamlFile($this->filePath, $this);
-		}catch(\ErrorException $exception){
+		}catch(ErrorException $exception){
 			// PM's error handler will create this error exception, causing the DecodeException not to be thrown at all.
 			$loader->getLogger()->error("Configuration corrupted. config.yml has been renamed to config_corrupted.yml and a new config.yml has been generated.");
 			rename($this->filePath, $loader->getDataFolder() . "config_corrupted.yml");

@@ -8,6 +8,7 @@ use BlockHorizons\BlockSniper\brush\shapes\SphereShape;
 use BlockHorizons\BlockSniper\brush\types\FillType;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\parser\Parser;
+use JsonSerializable;
 use pocketmine\block\Block;
 use pocketmine\Server;
 use pocketmine\world\biome\Biome;
@@ -17,7 +18,7 @@ use pocketmine\world\biome\Biome;
  * instance, which extends it, in order to directly brush. Alternatively, a BrushProperties instance may be directly
  * passed into BrushTypes and BrushShapes to use their functionality.
  */
-class BrushProperties implements \JsonSerializable{
+class BrushProperties implements JsonSerializable{
 
 	/**
 	 * type is the brush type. It must be a '::class' string of a class that extends Type.

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\data;
 
+use ReflectionClass;
 use function count;
 use function explode;
 use function is_array;
@@ -142,7 +143,7 @@ class Translation{
 	public function __construct(TranslationData $data){
 		self::$translationData = $data;
 		$this->messageData = $data->getMessages();
-		$reflection = new \ReflectionClass(self::class);
+		$reflection = new ReflectionClass(self::class);
 		foreach($reflection->getConstants() as $constant => $value){
 			if(($msg = $this->putMessage($value)) !== null){
 				self::$translations[$value] = $msg;

@@ -12,6 +12,7 @@ use BlockHorizons\BlockSniper\revert\SyncRevert;
 use BlockHorizons\BlockSniper\sessions\PlayerSession;
 use BlockHorizons\BlockSniper\sessions\Selection;
 use BlockHorizons\BlockSniper\sessions\Session;
+use Generator;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\Server;
 use pocketmine\world\Position;
@@ -121,13 +122,13 @@ class Brush extends BrushProperties{
 	 * getType gets a Type using a block generator, target position and session passed. Each of these may be null to
 	 * create a Type that has no functionality but allows calling methods specific to a Type.
 	 *
-	 * @param \Generator|null $blocks
-	 * @param Position|null   $target
-	 * @param Session|null    $session
+	 * @param Generator|null $blocks
+	 * @param Position|null  $target
+	 * @param Session|null   $session
 	 *
 	 * @return Type
 	 */
-	public function getType(\Generator $blocks = null, Position $target = null, Session $session = null) : Type{
+	public function getType(Generator $blocks = null, Position $target = null, Session $session = null) : Type{
 		if($target === null){
 			$target = new Position();
 		}

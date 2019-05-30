@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\parser;
 
 use BlockHorizons\BlockSniper\exceptions\InvalidItemException;
+use InvalidArgumentException;
 use pocketmine\item\Item;
 use function preg_match;
 use function preg_replace;
@@ -129,7 +130,7 @@ class StringConsumer{
 		}
 		try{
 			return Item::fromString($name);
-		}catch(\InvalidArgumentException $exception){
+		}catch(InvalidArgumentException $exception){
 			throw new InvalidItemException(sprintf("cannot parse %s as block: block not found", $name));
 		}
 	}

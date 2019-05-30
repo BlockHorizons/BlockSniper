@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\Type;
+use Generator;
 use pocketmine\block\Block;
 use pocketmine\math\Facing;
 
@@ -17,9 +18,9 @@ class ExpandType extends Type{
 	public const ID = self::TYPE_EXPAND;
 
 	/**
-	 * @return \Generator
+	 * @return Generator
 	 */
-	public function fill() : \Generator{
+	public function fill() : Generator{
 		$undoBlocks = [];
 		foreach($this->blocks as $block){
 			/** @var Block $block */

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\Type;
+use Generator;
 use pocketmine\math\Vector3;
 
 /*
@@ -16,9 +17,9 @@ class LayerType extends Type{
 	public const ID = self::TYPE_LAYER;
 
 	/**
-	 * @return \Generator
+	 * @return Generator
 	 */
-	public function fill() : \Generator{
+	public function fill() : Generator{
 		foreach($this->blocks as $block){
 			if($block->y !== $this->target->y + 1){
 				continue;

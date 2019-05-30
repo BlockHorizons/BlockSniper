@@ -16,6 +16,7 @@ use BlockHorizons\BlockSniper\Loader;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
 use pocketmine\world\biome\Biome;
+use ReflectionClass;
 
 class BrushPropertiesWindow extends CustomWindow{
 
@@ -87,7 +88,7 @@ class BrushPropertiesWindow extends CustomWindow{
 
 						return;
 					}
-					$biomes = new \ReflectionClass(Biome::class);
+					$biomes = new ReflectionClass(Biome::class);
 					$const = strtoupper(str_replace(" ", "_", $value));
 					if($biomes->hasConstant($const)){
 						$b->biomeId = $biomes->getConstant($const);

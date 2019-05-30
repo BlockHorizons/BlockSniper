@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\ui\forms;
 
 use BlockHorizons\BlockSniper\data\Translation;
+use JsonSerializable;
 use pocketmine\form\Form as FormInterface;
 use pocketmine\Player;
 
-abstract class Form implements \JsonSerializable{
+abstract class Form implements JsonSerializable{
 
 	/** @var FormInterface|null */
 	protected $responseForm;

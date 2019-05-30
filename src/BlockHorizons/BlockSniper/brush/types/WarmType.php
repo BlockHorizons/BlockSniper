@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\Type;
+use Generator;
 use pocketmine\block\Block;
 
 class WarmType extends Type{
@@ -12,9 +13,9 @@ class WarmType extends Type{
 	public const ID = self::TYPE_WARM;
 
 	/**
-	 * @return \Generator
+	 * @return Generator
 	 */
-	public function fill() : \Generator{
+	public function fill() : Generator{
 		foreach($this->blocks as $block){
 			switch($block->getId()){
 				case Block::ICE:

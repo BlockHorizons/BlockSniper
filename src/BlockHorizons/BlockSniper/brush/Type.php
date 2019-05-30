@@ -7,6 +7,7 @@ namespace BlockHorizons\BlockSniper\brush;
 use BlockHorizons\BlockSniper\brush\async\BlockSniperChunkManager;
 use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
 use BlockHorizons\BlockSniper\exceptions\InvalidItemException;
+use Generator;
 use pocketmine\block\Block;
 use pocketmine\math\Vector2;
 use pocketmine\math\Vector3;
@@ -48,7 +49,7 @@ abstract class Type{
 	public const TYPE_REPLACE_TARGET = 22;
 	public const TYPE_PLANT = 23;
 
-	/** @var \Generator */
+	/** @var Generator */
 	protected $blocks = [];
 	/** @var Block[] */
 	protected $brushBlocks = [];
@@ -69,9 +70,9 @@ abstract class Type{
 	 *
 	 * @param BrushProperties $properties
 	 * @param Target          $target
-	 * @param \Generator|null $blocks
+	 * @param Generator|null  $blocks
 	 */
-	public function __construct(BrushProperties $properties, Target $target, \Generator $blocks = null){
+	public function __construct(BrushProperties $properties, Target $target, Generator $blocks = null){
 		$this->blocks = $blocks;
 		$this->chunkManager = $target->getChunkManager();
 		$this->target = $target->asVector3();
@@ -151,9 +152,9 @@ abstract class Type{
 	 * fill fills the blocks set in the generator of the Type, and in turn returns a generator yielding the undo
 	 * blocks of the Type.
 	 *
-	 * @return \Generator
+	 * @return Generator
 	 */
-	protected abstract function fill() : \Generator;
+	protected abstract function fill() : Generator;
 
 	/**
 	 * fillShape fills the shape previously set in the constructor or using setBlocksInside() and edits the blocks
@@ -162,9 +163,9 @@ abstract class Type{
 	 *
 	 * @param Vector2[][] $plotPoints
 	 *
-	 * @return \Generator|null
+	 * @return Generator|null
 	 */
-	public final function fillShape(array $plotPoints = []) : ?\Generator{
+	public final function fillShape(array $plotPoints = []) : ?Generator{
 		$this->plotPoints = $plotPoints;
 		if(!empty($plotPoints)){
 			$this->myPlotChecked = true;
@@ -294,11 +295,11 @@ abstract class Type{
 	/**
 	 * setBlocksInside sets the generator used to supply blocks to the Type to edit.
 	 *
-	 * @param \Generator|null $blocks
+	 * @param Generator|null $blocks
 	 *
 	 * @return Type
 	 */
-	public function setBlocksInside(?\Generator $blocks) : self{
+	public function setBlocksInside(?Generator $blocks) : self{
 		$this->blocks = $blocks;
 
 		return $this;

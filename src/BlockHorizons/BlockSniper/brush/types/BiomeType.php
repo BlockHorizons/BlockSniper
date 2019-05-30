@@ -7,6 +7,7 @@ namespace BlockHorizons\BlockSniper\brush\types;
 use BlockHorizons\BlockSniper\brush\BrushProperties;
 use BlockHorizons\BlockSniper\brush\Target;
 use BlockHorizons\BlockSniper\brush\Type;
+use Generator;
 
 /*
  * Changes the biome within the brush radius.
@@ -19,15 +20,15 @@ class BiomeType extends Type{
 	/** @var int */
 	private $biome;
 
-	public function __construct(BrushProperties $properties, Target $target, \Generator $blocks = null){
+	public function __construct(BrushProperties $properties, Target $target, Generator $blocks = null){
 		parent::__construct($properties, $target, $blocks);
 		$this->biome = $properties->biomeId;
 	}
 
 	/**
-	 * @return \Generator
+	 * @return Generator
 	 */
-	protected function fill() : \Generator{
+	protected function fill() : Generator{
 		foreach($this->blocks as $block){
 			$this->putBiome($block, $this->biome);
 		}
@@ -49,14 +50,5 @@ class BiomeType extends Type{
 	 */
 	public function usesBrushBlocks() : bool{
 		return false;
-	}
-
-	/**
-	 * Returns the biome of this type.
-	 *
-	 * @return int
-	 */
-	public function getBiome() : int{
-		return $this->biome;
 	}
 }

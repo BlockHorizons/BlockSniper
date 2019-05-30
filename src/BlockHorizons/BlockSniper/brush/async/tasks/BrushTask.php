@@ -14,6 +14,8 @@ use BlockHorizons\BlockSniper\revert\AsyncRevert;
 use BlockHorizons\BlockSniper\sessions\Session;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use BlockHorizons\BlockSniper\tasks\CooldownBarTask;
+use Generator;
+use InvalidArgumentException;
 use pocketmine\block\Block;
 use pocketmine\math\Vector2;
 use pocketmine\scheduler\AsyncTask;
@@ -75,7 +77,7 @@ class BrushTask extends AsyncTask{
 		$this->setResult($chunks);
 	}
 
-	private function blocks(Shape $shape, array $chunks) : \Generator{
+	private function blocks(Shape $shape, array $chunks) : Generator{
 		$blockCount = $shape->getBlockCount();
 		$blocksPerPercentage = (int) round($blockCount / 100);
 		$percentageBlocks = $blocksPerPercentage;
@@ -84,7 +86,7 @@ class BrushTask extends AsyncTask{
 		foreach($shape->getVectors() as $vector3){
 			$index = World::chunkHash($vector3->x >> 4, $vector3->z >> 4);
 			if(!isset($chunks[$index])){
-				throw new \InvalidArgumentException("chunk not found for block");
+				throw new InvalidArgumentException("chunk not found for block");
 			}
 			/** @var Chunk $chunk */
 			$chunk = $chunks[$index];

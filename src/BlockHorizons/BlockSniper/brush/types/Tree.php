@@ -6,6 +6,7 @@ namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\BrushProperties;
 use BlockHorizons\BlockSniper\exceptions\InvalidItemException;
+use Generator;
 use pocketmine\block\Block;
 use pocketmine\math\Vector3;
 use pocketmine\utils\Random;
@@ -64,7 +65,7 @@ class Tree{
 		$this->startY = $position->y;
 	}
 
-	public function build() : \Generator{
+	public function build() : Generator{
 		for($i = 0; $i < $this->trunkHeight; $i++){
 			foreach($this->buildTrunkDisk() as $block){
 				yield $block;
@@ -81,7 +82,7 @@ class Tree{
 		}
 	}
 
-	private function buildTrunkDisk() : \Generator{
+	private function buildTrunkDisk() : Generator{
 		if(mt_rand(0, 1) === 0){
 			if($this->lastAddX !== 0 && $this->lastAddZ !== 0){
 				$this->lastAddX = $this->lastAddZ = 0;
@@ -135,7 +136,7 @@ class Tree{
 		$this->position->y++;
 	}
 
-	private function buildBranch() : \Generator{
+	private function buildBranch() : Generator{
 		$addX = $this->random->nextRange(-$this->maxBranchLength, $this->maxBranchLength);
 		$addY = $this->random->nextRange((int) (-$this->maxBranchLength), (int) (-$this->maxBranchLength * 0.2));
 		$addZ = $this->random->nextRange(-$this->maxBranchLength, $this->maxBranchLength);
@@ -188,7 +189,7 @@ class Tree{
 		$this->leavesCentres[] = $branchPos;
 	}
 
-	private function buildLeaves(Vector3 $branchEnd) : \Generator{
+	private function buildLeaves(Vector3 $branchEnd) : Generator{
 		$minX = $branchEnd->x - $this->leavesClusterSize / 2;
 		$minZ = $branchEnd->z - $this->leavesClusterSize / 2;
 		$maxX = $branchEnd->x + $this->leavesClusterSize / 2;

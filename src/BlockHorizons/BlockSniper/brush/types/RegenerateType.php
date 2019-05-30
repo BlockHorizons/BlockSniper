@@ -9,6 +9,7 @@ use BlockHorizons\BlockSniper\brush\Target;
 use BlockHorizons\BlockSniper\brush\Type;
 use BlockHorizons\BlockSniper\revert\AsyncRevert;
 use BlockHorizons\BlockSniper\sessions\Session;
+use Generator;
 use pocketmine\world\format\Chunk;
 
 /*
@@ -22,15 +23,15 @@ class RegenerateType extends Type{
 	/** @var Session */
 	private $session;
 
-	public function __construct(BrushProperties $properties, Target $target, \Generator $blocks = null, Session $session = null){
+	public function __construct(BrushProperties $properties, Target $target, Generator $blocks = null, Session $session = null){
 		parent::__construct($properties, $target, $blocks);
 		$this->session = $session;
 	}
 
 	/**
-	 * @return \Generator
+	 * @return Generator
 	 */
-	public function fill() : \Generator{
+	public function fill() : Generator{
 		if($this->myPlotChecked){
 			return;
 		}

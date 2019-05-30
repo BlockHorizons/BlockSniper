@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\Type;
+use Generator;
 use pocketmine\block\BlockLegacyIds;
 
 /*
@@ -25,9 +26,9 @@ class CleanType extends Type{
 	];
 
 	/**
-	 * @return \Generator
+	 * @return Generator
 	 */
-	protected function fill() : \Generator{
+	protected function fill() : Generator{
 		foreach($this->blocks as $block){
 			if(!isset(self::NATURAL_BLOCKS[$block->getId()])){
 				yield $block;

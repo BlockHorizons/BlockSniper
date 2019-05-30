@@ -32,6 +32,7 @@ use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\exceptions\InvalidIdException;
 use pocketmine\permission\Permission;
 use pocketmine\permission\PermissionManager;
+use ReflectionClass;
 use function str_replace;
 use function strtolower;
 
@@ -80,9 +81,9 @@ class TypeRegistration{
 	 * @return bool
 	 */
 	public static function registerType(string $class, int $id, bool $overwrite = false) : bool{
-		$shortName = str_replace("Type", "", (new \ReflectionClass($class))->getShortName());
+		$shortName = str_replace("Type", "", (new ReflectionClass($class))->getShortName());
 
-		$reflectClass = new \ReflectionClass(Translation::class);
+		$reflectClass = new ReflectionClass(Translation::class);
 		$shortName = Translation::get($reflectClass->getConstant(strtoupper("brush_type_$shortName")));
 
 		if(!$overwrite && self::typeExists(strtolower($shortName), $id)){

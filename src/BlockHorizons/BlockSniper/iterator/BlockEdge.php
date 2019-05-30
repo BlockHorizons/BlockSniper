@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\iterator;
 
+use Generator;
 use pocketmine\math\Vector3;
 
 class BlockEdge{
@@ -21,9 +22,9 @@ class BlockEdge{
 	 *
 	 * @param float $interval
 	 *
-	 * @return \Generator|Vector3[]
+	 * @return Generator|Vector3[]
 	 */
-	public function walk(float $interval = 0.1) : \Generator{
+	public function walk(float $interval = 0.1) : Generator{
 		$sub = $this->end->subtract($this->start)->multiply($interval);
 		$iterCount = 1 / $interval;
 		for($i = 0; $i < $iterCount + 0.0001; $i++){

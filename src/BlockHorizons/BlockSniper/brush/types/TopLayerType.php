@@ -7,6 +7,7 @@ namespace BlockHorizons\BlockSniper\brush\types;
 use BlockHorizons\BlockSniper\brush\BrushProperties;
 use BlockHorizons\BlockSniper\brush\Target;
 use BlockHorizons\BlockSniper\brush\Type;
+use Generator;
 use pocketmine\block\Air;
 use pocketmine\block\Flowable;
 use pocketmine\math\Facing;
@@ -22,15 +23,15 @@ class TopLayerType extends Type{
 	/** @var int */
 	private $layerWidth;
 
-	public function __construct(BrushProperties $properties, Target $target, \Generator $blocks = null){
+	public function __construct(BrushProperties $properties, Target $target, Generator $blocks = null){
 		parent::__construct($properties, $target, $blocks);
 		$this->layerWidth = $properties->layerWidth;
 	}
 
 	/**
-	 * @return \Generator
+	 * @return Generator
 	 */
-	public function fill() : \Generator{
+	public function fill() : Generator{
 		foreach($this->blocks as $block){
 			if($block instanceof Flowable || $block instanceof Air){
 				continue;
@@ -53,14 +54,5 @@ class TopLayerType extends Type{
 	 */
 	public function getName() : string{
 		return "Top Layer";
-	}
-
-	/**
-	 * Returns the height/width of the top layer.
-	 *
-	 * @return int
-	 */
-	public function getHeight() : int{
-		return $this->height;
 	}
 }

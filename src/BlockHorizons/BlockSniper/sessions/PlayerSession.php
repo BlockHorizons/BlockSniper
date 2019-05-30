@@ -8,6 +8,7 @@ use BlockHorizons\BlockSniper\brush\Brush;
 use BlockHorizons\BlockSniper\changelog\Changelog;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\sessions\owners\PlayerSessionOwner;
+use JsonSerializable;
 use Sandertv\Marshal\DecodeException;
 use Sandertv\Marshal\Unmarshal;
 use function file_exists;
@@ -16,7 +17,7 @@ use function file_put_contents;
 use function json_encode;
 use function strtolower;
 
-class PlayerSession extends Session implements \JsonSerializable{
+class PlayerSession extends Session implements JsonSerializable{
 
 	private const KEY_LAST_USED_VERSION = "lastUsedVersion";
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\Type;
+use Generator;
 use pocketmine\block\Block;
 use pocketmine\math\Facing;
 
@@ -17,9 +18,9 @@ class MeltType extends Type{
 	public const ID = self::TYPE_MELT;
 
 	/**
-	 * @return \Generator
+	 * @return Generator
 	 */
-	public function fill() : \Generator{
+	public function fill() : Generator{
 		$blocks = [];
 		foreach($this->blocks as $block){
 			if($block->getId() !== Block::AIR){

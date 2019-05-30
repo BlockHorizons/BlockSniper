@@ -8,6 +8,7 @@ use BlockHorizons\BlockSniper\brush\BrushProperties;
 use BlockHorizons\BlockSniper\brush\Target;
 use BlockHorizons\BlockSniper\brush\Type;
 use BlockHorizons\BlockSniper\Loader;
+use Generator;
 use pocketmine\block\Flowable;
 use pocketmine\item\Item;
 use pocketmine\Server;
@@ -23,7 +24,7 @@ class LeafBlowerType extends Type{
 	/** @var bool */
 	private $dropPlants = false;
 
-	public function __construct(BrushProperties $properties, Target $target, \Generator $blocks = null){
+	public function __construct(BrushProperties $properties, Target $target, Generator $blocks = null){
 		parent::__construct($properties, $target, $blocks);
 		if(!$this->isAsynchronous()){
 			/** @var Loader $loader */
@@ -36,9 +37,9 @@ class LeafBlowerType extends Type{
 	}
 
 	/**
-	 * @return \Generator
+	 * @return Generator
 	 */
-	public function fill() : \Generator{
+	public function fill() : Generator{
 		foreach($this->blocks as $block){
 			if($block instanceof Flowable){
 				yield $block;

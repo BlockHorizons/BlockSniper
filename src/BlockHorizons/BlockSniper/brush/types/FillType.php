@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush\types;
 
 use BlockHorizons\BlockSniper\brush\Type;
+use Generator;
 
 /*
  * Places blocks on every location within the brush radius.
@@ -15,9 +16,9 @@ class FillType extends Type{
 	public const ID = self::TYPE_FILL;
 
 	/**
-	 * @return \Generator
+	 * @return Generator
 	 */
-	public function fill() : \Generator{
+	public function fill() : Generator{
 		foreach($this->blocks as $block){
 			yield $block;
 			$this->putBlock($block, $this->randomBrushBlock());
