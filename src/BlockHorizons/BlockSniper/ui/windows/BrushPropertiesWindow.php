@@ -82,8 +82,6 @@ class BrushPropertiesWindow extends CustomWindow{
 				break;
 			case BiomeType::ID:
 				$this->addInput($this->t(Translation::UI_BRUSH_MENU_BIOME), (string) $b->biomeId, "plains", function(Player $player, string $value) use ($b){
-					$b->biomeId = $b->parseBiomeId($value);
-
 					if(is_numeric($value)){
 						$b->biomeId = (int) $value;
 
