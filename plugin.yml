@@ -11,7 +11,6 @@
     "Chris-Prime (@PrimusLV)"
   ],
   "main": "BlockHorizons\\BlockSniper\\Loader",
-  "load": "POSTWORLD",
   "softdepend": [
     "MyPlot"
   ],
