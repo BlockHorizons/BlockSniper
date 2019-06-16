@@ -2,7 +2,9 @@
   "name": "BlockSniper",
   "version": "4.0.0",
   "description": "A brush world editing plugin for PocketMine-MP",
-  "api": ["4.0.0"],
+  "api": [
+    "4.0.0"
+  ],
   "author": "BlockHorizons",
   "authors": [
     "Sandertv (@Sandertv)",
@@ -13,7 +15,6 @@
   "softdepend": [
     "MyPlot"
   ],
-
   "permissions": {
     "blocksniper-myplot": {
       "default": false,
@@ -64,7 +65,7 @@
             "blocksniper.command.paste": {
               "default": "op",
               "description": "Allows access to the paste command."
-            },
+            }
           }
         },
         "blocksniper.type": {
