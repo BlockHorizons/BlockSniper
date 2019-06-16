@@ -57,7 +57,7 @@ class TargetHighlight extends Human{
 		$this->setCanSaveWithChunk(false);
 
 		// We set the scale slightly bigger than normal so that it extends out of the block just a little bit.
-		$this->setScale(1.04);
+		$this->setScale(1.03);
 	}
 
 	// Empty stubs to keep the entity from moving and being attacked.
