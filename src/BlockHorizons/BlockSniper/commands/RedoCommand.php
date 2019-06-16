@@ -10,6 +10,7 @@ use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
+use pocketmine\world\sound\FizzSound;
 
 class RedoCommand extends BaseCommand{
 
@@ -36,5 +37,6 @@ class RedoCommand extends BaseCommand{
 		}
 		SessionManager::getPlayerSession($sender)->getRevertStore()->restoreLatestRedo($redoAmount);
 		$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_REDO_SUCCESS) . TF::AQUA . " (" . $redoAmount . ")");
+		$sender->getWorld()->addSound($sender, new FizzSound(), [$sender]);
 	}
 }

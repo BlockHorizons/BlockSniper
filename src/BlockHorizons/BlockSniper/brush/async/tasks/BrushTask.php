@@ -11,6 +11,7 @@ use BlockHorizons\BlockSniper\brush\Type;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\revert\AsyncRevert;
+use BlockHorizons\BlockSniper\sessions\PlayerSession;
 use BlockHorizons\BlockSniper\sessions\Session;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
 use BlockHorizons\BlockSniper\tasks\CooldownBarTask;
@@ -22,6 +23,7 @@ use pocketmine\scheduler\AsyncTask;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat;
 use pocketmine\world\format\Chunk;
+use pocketmine\world\sound\ClickSound;
 use pocketmine\world\World;
 use function round;
 use function str_repeat;
@@ -41,7 +43,7 @@ class BrushTask extends AsyncTask{
 
 	public function __construct(Brush $brush, Session $session, Shape $shape, Type $type, World $world, array $plotPoints = []){
 		$chunks = $shape->getTouchedChunks($world);
-		$this->storeLocal("", [$world, $session, $chunks, $brush]);
+		$this->storeLocal("", [$world, $session, $chunks, $brush, 0]);
 		$this->shape = $shape;
 		$this->type = $type;
 		$this->chunks = $chunks;
@@ -106,8 +108,18 @@ class BrushTask extends AsyncTask{
 	}
 
 	public function onProgressUpdate($progress) : void{
-		/** @var Session $session */
-		[, $session] = $this->fetchLocal("");
+		/**
+		 * @var World   $world
+		 * @var Session $session
+		 */
+		[$world, $session, $chunks, $brush, $lastProgress] = $this->fetchLocal("");
+		if($lastProgress !== $progress){
+			if($session instanceof PlayerSession){
+				$player = $session->getSessionOwner()->getPlayer();
+				$world->addSound($player, new ClickSound(), [$player]);
+			}
+		}
+		$this->storeLocal("", [$world, $session, $chunks, $brush, $progress]);
 
 		if($progress >= 21){
 			$duration = round(microtime(true) - $this->startTime, 2);
@@ -127,6 +139,7 @@ class BrushTask extends AsyncTask{
 		/**
 		 * @var World   $world
 		 * @var Session $session
+		 * @var Brush   $brush
 		 */
 		[$world, $session, $undoChunks, $brush] = $this->fetchLocal("");
 
@@ -142,5 +155,6 @@ class BrushTask extends AsyncTask{
 			$loader->getScheduler()->scheduleDelayedRepeatingTask(new CooldownBarTask($loader, $brush, $player), 1, 3);
 		}
 		SessionManager::getPlayerSession($player)->getRevertStore()->saveUndo(new AsyncRevert($chunks, $undoChunks, $world));
+		$brush->emitSound($player);
 	}
 }

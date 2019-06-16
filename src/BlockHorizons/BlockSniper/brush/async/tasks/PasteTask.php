@@ -16,6 +16,7 @@ use pocketmine\scheduler\AsyncTask;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat;
 use pocketmine\world\format\Chunk;
+use pocketmine\world\sound\FizzSound;
 use pocketmine\world\World;
 
 class PasteTask extends AsyncTask{
@@ -106,6 +107,7 @@ class PasteTask extends AsyncTask{
 
 		$duration = round(microtime(true) - $startTime, 2);
 		$player->sendPopup(TextFormat::GREEN . Translation::get(Translation::BRUSH_STATE_DONE) . " ($duration seconds)");
+		$player->getWorld()->addSound($player, new FizzSound(), [$player]);
 		SessionManager::getPlayerSession($player)->getRevertStore()->saveUndo(new AsyncRevert($chunks, $undoChunks, $player->getWorld()));
 	}
 }

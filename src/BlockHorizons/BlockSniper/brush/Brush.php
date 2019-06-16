@@ -14,8 +14,10 @@ use BlockHorizons\BlockSniper\sessions\Selection;
 use BlockHorizons\BlockSniper\sessions\Session;
 use Generator;
 use pocketmine\math\AxisAlignedBB;
+use pocketmine\Player;
 use pocketmine\Server;
 use pocketmine\world\Position;
+use pocketmine\world\sound\FizzSound;
 use function count;
 
 /**
@@ -97,8 +99,20 @@ class Brush extends BrushProperties{
 		if(count($undoBlocks) !== 0){
 			$session->getRevertStore()->saveUndo(new SyncRevert($undoBlocks, $target->getWorld()));
 		}
+		if($session instanceof PlayerSession){
+			$this->emitSound($session->getSessionOwner()->getPlayer());
+		}
 
 		return true;
+	}
+
+	/**
+	 * emitSound emits a sound to the player when the brush finishes an operation.
+	 *
+	 * @param Player $player
+	 */
+	public function emitSound(Player $player) : void{
+		$player->getWorld()->addSound($player, new FizzSound(), [$player]);
 	}
 
 	/**

@@ -10,6 +10,7 @@ use BlockHorizons\BlockSniper\sessions\SessionManager;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
+use pocketmine\world\sound\FizzSound;
 
 class UndoCommand extends BaseCommand{
 
@@ -37,5 +38,6 @@ class UndoCommand extends BaseCommand{
 
 		$store->restoreLatestUndo($undoAmount);
 		$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_UNDO_SUCCESS) . TF::AQUA . " (" . $undoAmount . ")");
+		$sender->getWorld()->addSound($sender, new FizzSound(), [$sender]);
 	}
 }

@@ -18,6 +18,7 @@
 - Added an in-game changelog that shows up the first time you use a new version of BlockSniper. Note that it does not show up the first time a player starts using BlockSniper on a server.
 - Added a new Changelog menu that can be used to view past changelogs and changelogs of newer versions.
 - Added a custom entity that highlight the target block when holding the brush item.
+- Added sound effects during the usage of BlockSniper.
 
 ### Changed
 - The Brush UI no longer contains all available brush properties.
