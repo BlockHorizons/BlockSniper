@@ -19,7 +19,6 @@ use BlockHorizons\BlockSniper\data\TranslationData;
 use BlockHorizons\BlockSniper\listeners\BrushListener;
 use BlockHorizons\BlockSniper\parser\IdMap;
 use BlockHorizons\BlockSniper\sessions\SessionManager;
-use BlockHorizons\BlockSniper\tasks\TargetHighlightTask;
 use BlockHorizons\BlockSniper\tasks\UpdateNotifyTask;
 use MyPlot\MyPlot;
 use pocketmine\plugin\PluginBase;
