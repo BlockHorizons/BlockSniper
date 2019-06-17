@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\parser;
 
-use BlockHorizons\BlockSniper\exceptions\InvalidItemException;
+use BlockHorizons\BlockSniper\exception\InvalidItemException;
 use pocketmine\item\Item;
 
 class Parser{
@@ -15,11 +15,11 @@ class Parser{
 	 * separating them with a comma, multiple tags may also be specified by separating them with a comma.
 	 * parse strips all whitespace from the block string passed.
 	 *
-	 * @throws InvalidItemException
-	 *
 	 * @param string $itemString
 	 *
 	 * @return Item[]
+	 * @throws InvalidItemException
+	 *
 	 */
 	public static function parse(string $itemString) : array{
 		$blocks = [];

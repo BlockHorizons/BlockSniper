@@ -8,7 +8,7 @@ use BlockHorizons\BlockSniper\brush\async\BlockSniperChunkManager;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\revert\AsyncRevert;
-use BlockHorizons\BlockSniper\sessions\SessionManager;
+use BlockHorizons\BlockSniper\session\SessionManager;
 use BlockHorizons\libschematic\Schematic;
 use pocketmine\block\Block;
 use pocketmine\math\Vector3;

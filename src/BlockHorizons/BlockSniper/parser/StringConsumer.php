@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\parser;
 
-use BlockHorizons\BlockSniper\exceptions\InvalidItemException;
+use BlockHorizons\BlockSniper\exception\InvalidItemException;
 use InvalidArgumentException;
 use pocketmine\item\Item;
 use function preg_match;
@@ -99,7 +99,9 @@ class StringConsumer{
 				// comma, it means we have another block following.
 				if($char !== "[" && $char !== ","){
 					throw new InvalidItemException(sprintf("cannot parse %s as block: invalid character %s at offset %s",
-														   $this->itemString, $char, $i));
+							$this->itemString, $char, $i
+						)
+					);
 				}
 				break;
 			}elseif($match === false){
@@ -118,11 +120,11 @@ class StringConsumer{
 	 * parseItemName parses an item name and creates an item instance. The item name might also be an ID, in which
 	 * case it will be resolved too.
 	 *
-	 * @throws InvalidItemException
-	 *
 	 * @param string $name
 	 *
 	 * @return Item
+	 * @throws InvalidItemException
+	 *
 	 */
 	private function parseItemName(string $name) : Item{
 		if(($translation = IdMap::translate($name)) !== null){

@@ -47,11 +47,15 @@ class TargetHighlight extends Human{
 			new FloatTag($position->x),
 			new FloatTag($position->y),
 			new FloatTag($position->z)
-		]));
+				]
+			)
+		);
 		$nbt->setTag("Rotation", new ListTag([
 			new FloatTag(0),
 			new FloatTag(0)
-		]));
+				]
+			)
+		);
 		parent::__construct($position->getWorld(), $nbt);
 
 		$this->setCanSaveWithChunk(false);
@@ -95,6 +99,8 @@ class TargetHighlight extends Human{
 					"cubes" => $cubes
 				]
 			]
-		]]);
+			]
+			]
+		);
 	}
 }

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush;
 
-use BlockHorizons\BlockSniper\brush\shapes\SphereShape;
-use BlockHorizons\BlockSniper\brush\types\FillType;
+use BlockHorizons\BlockSniper\brush\shape\SphereShape;
+use BlockHorizons\BlockSniper\brush\type\FillType;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\parser\Parser;
 use JsonSerializable;

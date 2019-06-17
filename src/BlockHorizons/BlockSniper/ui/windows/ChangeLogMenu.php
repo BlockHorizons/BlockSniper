@@ -22,7 +22,8 @@ class ChangeLogMenu extends MenuForm{
 			}
 			$this->addOption($text, "", "", function(Player $player) use ($changeLog){
 				$this->setResponseForm($changeLog->toForm());
-			});
+			}
+			);
 		}
 	}
 }

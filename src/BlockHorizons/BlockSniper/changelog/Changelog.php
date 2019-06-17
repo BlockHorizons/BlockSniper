@@ -68,10 +68,12 @@ class Changelog{
 		}
 		$form = new ModalForm("BlockSniper $this->version ($this->date)", $text);
 		$form->setYes(function(Player $player){
-		}, Translation::get(Translation::UI_CHANGELOG_CLOSE));
+		}, Translation::get(Translation::UI_CHANGELOG_CLOSE)
+		);
 		$form->setNo(function(Player $player){
 			$player->sendForm(new ChangeLogMenu($player));
-		}, Translation::get(Translation::UI_CHANGELOG_SEE_OTHER));
+		}, Translation::get(Translation::UI_CHANGELOG_SEE_OTHER)
+		);
 
 		return $form;
 	}

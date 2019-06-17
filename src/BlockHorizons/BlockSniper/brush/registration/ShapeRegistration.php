@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\registration;
 
-use BlockHorizons\BlockSniper\brush\shapes\CubeShape;
-use BlockHorizons\BlockSniper\brush\shapes\CuboidShape;
-use BlockHorizons\BlockSniper\brush\shapes\CylinderShape;
-use BlockHorizons\BlockSniper\brush\shapes\EllipsoidShape;
-use BlockHorizons\BlockSniper\brush\shapes\SphereShape;
+use BlockHorizons\BlockSniper\brush\shape\CubeShape;
+use BlockHorizons\BlockSniper\brush\shape\CuboidShape;
+use BlockHorizons\BlockSniper\brush\shape\CylinderShape;
+use BlockHorizons\BlockSniper\brush\shape\EllipsoidShape;
+use BlockHorizons\BlockSniper\brush\shape\SphereShape;
 use BlockHorizons\BlockSniper\data\Translation;
-use BlockHorizons\BlockSniper\exceptions\InvalidIdException;
+use BlockHorizons\BlockSniper\exception\InvalidIdException;
 use pocketmine\permission\Permission;
 use pocketmine\permission\PermissionManager;
 use ReflectionClass;

@@ -7,7 +7,7 @@ namespace BlockHorizons\BlockSniper\cloning;
 use BlockHorizons\BlockSniper\brush\async\tasks\PasteTask;
 use BlockHorizons\BlockSniper\brush\Shape;
 use BlockHorizons\BlockSniper\revert\SyncRevert;
-use BlockHorizons\BlockSniper\sessions\Session;
+use BlockHorizons\BlockSniper\session\Session;
 use pocketmine\block\Air;
 use pocketmine\math\Vector3;
 use pocketmine\Server;

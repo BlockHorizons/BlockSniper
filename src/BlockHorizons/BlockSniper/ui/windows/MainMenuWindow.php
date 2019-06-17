@@ -6,7 +6,7 @@ namespace BlockHorizons\BlockSniper\ui\windows;
 
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
-use BlockHorizons\BlockSniper\sessions\SessionManager;
+use BlockHorizons\BlockSniper\session\SessionManager;
 use BlockHorizons\BlockSniper\ui\forms\MenuForm;
 use pocketmine\Player;
 
@@ -21,14 +21,17 @@ class MainMenuWindow extends MenuForm{
 
 		$this->addOption($this->t(Translation::UI_MAIN_MENU_BRUSH), self::BRUSH_ICON, "url", function(Player $player) use ($loader){
 			$this->setResponseForm(new BrushMenuWindow($loader, $player, SessionManager::getPlayerSession($player)->getBrush()));
-		});
+		}
+		);
 		$this->addOption($this->t(Translation::UI_CHANGELOG_NAME), self::CHANGELOG_ICON, "url", function(Player $player){
 			$this->setResponseForm(new ChangeLogMenu($player));
-		});
+		}
+		);
 		if($requester->hasPermission("blocksniper.configuration")){
 			$this->addOption($this->t(Translation::UI_MAIN_MENU_CONFIG), self::CONFIG_ICON, "url", function(Player $player) use ($loader){
 				$this->setResponseForm(new ConfigurationMenuWindow($loader, $player));
-			});
+			}
+			);
 		}
 	}
 }

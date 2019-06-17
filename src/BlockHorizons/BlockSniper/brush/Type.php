@@ -6,7 +6,7 @@ namespace BlockHorizons\BlockSniper\brush;
 
 use BlockHorizons\BlockSniper\brush\async\BlockSniperChunkManager;
 use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
-use BlockHorizons\BlockSniper\exceptions\InvalidItemException;
+use BlockHorizons\BlockSniper\exception\InvalidItemException;
 use Generator;
 use pocketmine\block\Block;
 use pocketmine\math\Vector2;

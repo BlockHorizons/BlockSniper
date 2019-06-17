@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\data;
 
-use BlockHorizons\BlockSniper\exceptions\InvalidItemException;
+use BlockHorizons\BlockSniper\exception\InvalidItemException;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\parser\Parser;
 use ErrorException;

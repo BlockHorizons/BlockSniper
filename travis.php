@@ -4,7 +4,8 @@ $server = proc_open(PHP_BINARY . " /home/travis/build/PocketMine-MP/PocketMine-M
 	0 => ['pipe', 'r'],
 	1 => ['pipe', 'w'],
 	2 => ['pipe', 'w'],
-], $pipes);
+], $pipes
+);
 
 fwrite($pipes[0], "blocksniper\nmakeplugin BlockSniper\nstop\n\n");
 while(!feof($pipes[1])){

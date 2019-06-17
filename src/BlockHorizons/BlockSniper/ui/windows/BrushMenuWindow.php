@@ -22,14 +22,17 @@ class BrushMenuWindow extends CustomWindow{
 				$item = $player->getInventory()->getItemInHand();
 				$item->setCustomName($value);
 				$player->getInventory()->setItemInHand($item);
-			});
+			}
+			);
 		}
 		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_MODE_DESCRIPTION), $this->processModes(), $b->mode, function(Player $player, int $value) use ($b){
 			$b->mode = $value;
-		});
+		}
+		);
 		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_SHAPE), $this->processShapes($requester), $b->getShape()::ID, function(Player $player, int $value) use ($b){
 			$b->shape = ShapeRegistration::getShapeById($value);
-		});
+		}
+		);
 		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_TYPE), $this->processTypes($requester), $b->getType()::ID, function(Player $player, int $value) use ($loader, $b){
 			$b->type = TypeRegistration::getTypeById($value);
 
@@ -45,6 +48,7 @@ class BrushMenuWindow extends CustomWindow{
 			if($form->elementCount() !== 0){
 				$this->setResponseForm($form);
 			}
-		});
+		}
+		);
 	}
 }

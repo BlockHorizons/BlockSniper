@@ -7,19 +7,19 @@ namespace BlockHorizons\BlockSniper;
 use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
 use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
 use BlockHorizons\BlockSniper\changelog\ChangelogTask;
-use BlockHorizons\BlockSniper\commands\BlockSniperCommand;
-use BlockHorizons\BlockSniper\commands\BrushCommand;
-use BlockHorizons\BlockSniper\commands\cloning\CloneCommand;
-use BlockHorizons\BlockSniper\commands\cloning\PasteCommand;
-use BlockHorizons\BlockSniper\commands\RedoCommand;
-use BlockHorizons\BlockSniper\commands\UndoCommand;
+use BlockHorizons\BlockSniper\command\BlockSniperCommand;
+use BlockHorizons\BlockSniper\command\BrushCommand;
+use BlockHorizons\BlockSniper\command\cloning\CloneCommand;
+use BlockHorizons\BlockSniper\command\cloning\PasteCommand;
+use BlockHorizons\BlockSniper\command\RedoCommand;
+use BlockHorizons\BlockSniper\command\UndoCommand;
 use BlockHorizons\BlockSniper\data\ConfigData;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\data\TranslationData;
-use BlockHorizons\BlockSniper\listeners\BrushListener;
+use BlockHorizons\BlockSniper\listener\BrushListener;
 use BlockHorizons\BlockSniper\parser\IdMap;
-use BlockHorizons\BlockSniper\sessions\SessionManager;
-use BlockHorizons\BlockSniper\tasks\UpdateNotifyTask;
+use BlockHorizons\BlockSniper\session\SessionManager;
+use BlockHorizons\BlockSniper\task\UpdateNotifyTask;
 use MyPlot\MyPlot;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat as TF;
@@ -153,7 +153,8 @@ class Loader extends PluginBase{
 			new RedoCommand($this),
 			new CloneCommand($this),
 			new PasteCommand($this)
-		]);
+			]
+		);
 	}
 
 	private function registerListeners() : void{

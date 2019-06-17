@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush;
 
 use BlockHorizons\BlockSniper\brush\async\tasks\BrushTask;
-use BlockHorizons\BlockSniper\brush\types\TreeType;
-use BlockHorizons\BlockSniper\events\BrushUseEvent;
+use BlockHorizons\BlockSniper\brush\shape\SphereShape;
+use BlockHorizons\BlockSniper\brush\type\FillType;
+use BlockHorizons\BlockSniper\brush\type\TreeType;
+use BlockHorizons\BlockSniper\event\BrushUseEvent;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\revert\SyncRevert;
-use BlockHorizons\BlockSniper\sessions\PlayerSession;
-use BlockHorizons\BlockSniper\sessions\Selection;
-use BlockHorizons\BlockSniper\sessions\Session;
+use BlockHorizons\BlockSniper\session\PlayerSession;
+use BlockHorizons\BlockSniper\session\Selection;
+use BlockHorizons\BlockSniper\session\Session;
 use Generator;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\Player;
@@ -129,7 +131,11 @@ class Brush extends BrushProperties{
 			$target = new Position();
 		}
 
-		return new $this->shape($this, new Target($target, $target->getWorld()), $bb);
+		try{
+			return new $this->shape($this, new Target($target, $target->getWorld()), $bb);
+		}catch(\Throwable $e){
+			return new SphereShape($this, new Target($target, $target->getWorld()), $bb);
+		}
 	}
 
 	/**
@@ -147,7 +153,11 @@ class Brush extends BrushProperties{
 			$target = new Position();
 		}
 
-		return new $this->type($this, new Target($target, $target->getWorld()), $blocks, $session);
+		try{
+			return new $this->type($this, new Target($target, $target->getWorld()), $blocks, $session);
+		}catch(\Throwable $e){
+			return new FillType($this, new Target($target, $target->getWorld()), $blocks, $session);
+		}
 	}
 
 	/**
