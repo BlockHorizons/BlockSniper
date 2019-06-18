@@ -9,6 +9,7 @@ use Generator;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
 use pocketmine\world\ChunkManager;
+use pocketmine\world\format\io\FastChunkSerializer;
 use pocketmine\world\World;
 
 /**
@@ -141,7 +142,7 @@ abstract class Shape extends AxisAlignedBB{
 				if($chunk === null){
 					continue;
 				}
-				$touchedChunks[World::chunkHash($x >> 4, $z >> 4)] = $chunk->fastSerialize();
+				$touchedChunks[World::chunkHash($x >> 4, $z >> 4)] = FastChunkSerializer::serialize($chunk);
 			}
 		}
 

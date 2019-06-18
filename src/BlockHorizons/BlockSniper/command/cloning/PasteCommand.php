@@ -13,6 +13,7 @@ use BlockHorizons\libschematic\Schematic;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
+use pocketmine\world\format\io\FastChunkSerializer;
 use pocketmine\world\World;
 use function strtolower;
 
@@ -78,7 +79,7 @@ class PasteCommand extends BaseCommand{
 						if($chunk === null){
 							continue;
 						}
-						$touchedChunks[World::chunkHash($x >> 4, $z >> 4)] = $chunk->fastSerialize();
+						$touchedChunks[World::chunkHash($x >> 4, $z >> 4)] = FastChunkSerializer::serialize($chunk);
 					}
 				}
 				$session->getCloneStore()->pasteSchematic($file, $center->asVector3(), $touchedChunks);

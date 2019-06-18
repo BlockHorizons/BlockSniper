@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\revert;
 
-use pocketmine\world\format\Chunk;
+use pocketmine\world\format\io\FastChunkSerializer;
 use pocketmine\world\World;
 
 class AsyncRevert extends Revert{
@@ -17,10 +17,10 @@ class AsyncRevert extends Revert{
 	public function __construct(array $currentlyPresentChunks, array $chunksToBePlacedBack, World $world){
 		parent::__construct($world);
 		foreach($currentlyPresentChunks as $index => $chunk){
-			$this->currentlyPresentChunks[] = $chunk->fastSerialize();
+			$this->currentlyPresentChunks[] = FastChunkSerializer::serialize($chunk);
 		}
 		foreach($chunksToBePlacedBack as $index => $chunk){
-			$this->chunksToBePlacedBack[] = $chunk->fastSerialize();
+			$this->chunksToBePlacedBack[] = FastChunkSerializer::serialize($chunk);
 		}
 	}
 
@@ -43,7 +43,7 @@ class AsyncRevert extends Revert{
 	private function decodeChunks(array $rawChunks) : array{
 		$chunks = [];
 		foreach($rawChunks as $index => $chunk){
-			$chunks[$index] = Chunk::fastDeserialize($chunk);
+			$chunks[$index] = FastChunkSerializer::deserialize($chunk);
 		}
 
 		return $chunks;

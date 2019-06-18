@@ -23,6 +23,7 @@ use pocketmine\scheduler\AsyncTask;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat;
 use pocketmine\world\format\Chunk;
+use pocketmine\world\format\io\FastChunkSerializer;
 use pocketmine\world\sound\ClickSound;
 use pocketmine\world\World;
 use function round;
@@ -61,7 +62,7 @@ class BrushTask extends AsyncTask{
 
 		$chunks = (array) $this->chunks;
 		foreach($chunks as $hash => $data){
-			$chunks[$hash] = Chunk::fastDeserialize($data);
+			$chunks[$hash] = FastChunkSerializer::deserialize($data);
 		}
 
 		/** @var Chunk[] $chunks */
@@ -144,7 +145,7 @@ class BrushTask extends AsyncTask{
 		[$world, $session, $undoChunks, $brush] = $this->fetchLocal("");
 
 		foreach($undoChunks as &$undoChunk){
-			$undoChunk = Chunk::fastDeserialize($undoChunk);
+			$undoChunk = FastChunkSerializer::deserialize($undoChunk);
 		}
 
 		foreach($chunks as $hash => $chunk){

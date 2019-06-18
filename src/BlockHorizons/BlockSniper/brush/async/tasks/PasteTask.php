@@ -16,6 +16,7 @@ use pocketmine\scheduler\AsyncTask;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat;
 use pocketmine\world\format\Chunk;
+use pocketmine\world\format\io\FastChunkSerializer;
 use pocketmine\world\sound\FizzSound;
 use pocketmine\world\World;
 
@@ -41,7 +42,7 @@ class PasteTask extends AsyncTask{
 	public function onRun() : void{
 		$chunks = (array) $this->chunks;
 		foreach($chunks as $hash => $data){
-			$chunks[$hash] = Chunk::fastDeserialize($data);
+			$chunks[$hash] = FastChunkSerializer::deserialize($data);
 		}
 
 		$center = $this->center;
@@ -92,7 +93,7 @@ class PasteTask extends AsyncTask{
 
 		[$undoChunks, $startTime] = $this->fetchLocal("");
 		foreach($undoChunks as &$undoChunk){
-			$undoChunk = Chunk::fastDeserialize($undoChunk);
+			$undoChunk = FastChunkSerializer::deserialize($undoChunk);
 		}
 
 		$world = $player->getWorld();
