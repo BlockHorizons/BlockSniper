@@ -43,7 +43,7 @@ class CylinderShape extends Shape{
 								continue;
 							}
 						}
-						new Vector3((int) $x, (int) $y, (int) $z);
+						yield new Vector3((int) $x, (int) $y, (int) $z);
 					}
 				}
 			}
