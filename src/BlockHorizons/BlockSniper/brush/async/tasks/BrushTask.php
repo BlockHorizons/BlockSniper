@@ -6,10 +6,12 @@ namespace BlockHorizons\BlockSniper\brush\async\tasks;
 
 use BlockHorizons\BlockSniper\brush\async\BlockSniperChunkManager;
 use BlockHorizons\BlockSniper\brush\Brush;
+use BlockHorizons\BlockSniper\brush\BrushProperties;
 use BlockHorizons\BlockSniper\brush\Shape;
 use BlockHorizons\BlockSniper\brush\Type;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\parser\IdMap;
 use BlockHorizons\BlockSniper\revert\AsyncRevert;
 use BlockHorizons\BlockSniper\session\PlayerSession;
 use BlockHorizons\BlockSniper\session\Session;
@@ -41,19 +43,27 @@ class BrushTask extends AsyncTask{
 	private $plotPoints;
 	/** @var float */
 	private $startTime;
+	/** @var BrushProperties */
+	private $brushProperties;
+	/** @var string[] */
+	private $idMap;
 
 	public function __construct(Brush $brush, Session $session, Shape $shape, Type $type, World $world, array $plotPoints = []){
 		$chunks = $shape->getTouchedChunks($world);
 		$this->storeLocal("", [$world, $session, $chunks, $brush, 0]);
 		$this->shape = $shape;
 		$this->type = $type;
+		$this->brushProperties = $brush;
 		$this->chunks = $chunks;
 		$this->plotPoints = $plotPoints;
 		$this->startTime = microtime(true);
+		$this->idMap = serialize(IdMap::$ids);
 	}
 
 	public function onRun() : void{
+		IdMap::$ids = unserialize($this->idMap);
 		$type = $this->type;
+		$type->setBrushBlocks($this->brushProperties->getBrushBlocks());
 		$shape = $this->shape;
 		$plotPoints = (array) $this->plotPoints;
 

@@ -189,6 +189,15 @@ abstract class Type{
 	}
 
 	/**
+	 * setBrushBlocks sets the brush blocks of the type.
+	 *
+	 * @param Block[] $blocks
+	 */
+	public function setBrushBlocks(array $blocks) : void{
+		$this->brushBlocks = $blocks;
+	}
+
+	/**
 	 * getBlock returns the block at a specific position, provided the chunk of that block is loaded into the
 	 * ChunkManager.
 	 *
@@ -311,6 +320,6 @@ abstract class Type{
 	 * @return string[]
 	 */
 	public function __sleep(){
-		return ["brushBlocks", "target", "myPlotChecked", "plotPoints"];
+		return ["target", "myPlotChecked", "plotPoints"];
 	}
 }

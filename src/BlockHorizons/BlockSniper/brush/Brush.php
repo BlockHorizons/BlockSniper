@@ -156,7 +156,7 @@ class Brush extends BrushProperties{
 		try{
 			return new $this->type($this, new Target($target, $target->getWorld()), $blocks, $session);
 		}catch(\Throwable $e){
-			return new FillType($this, new Target($target, $target->getWorld()), $blocks, $session);
+			return new FillType($this, new Target($target, $target->getWorld()), $blocks);
 		}
 	}
 
