@@ -48,15 +48,15 @@ class TargetHighlight extends Human{
 
 		$nbt = new CompoundTag();
 		$nbt->setTag("Pos", new ListTag([
-			new FloatTag($position->x),
-			new FloatTag($position->y),
-			new FloatTag($position->z)
+					new FloatTag($position->x),
+					new FloatTag($position->y),
+					new FloatTag($position->z)
 				]
 			)
 		);
 		$nbt->setTag("Rotation", new ListTag([
-			new FloatTag(0),
-			new FloatTag(0)
+					new FloatTag(0),
+					new FloatTag(0)
 				]
 			)
 		);
@@ -94,15 +94,15 @@ class TargetHighlight extends Human{
 		}
 
 		return json_encode([self::GEOMETRY_NAME => [
-			"bones" => [
-				[
-					// The 'head' name here is required. The head appears to be the only component that doesn't move
-					// client-side when inside of a block.
-					"name" => "head",
-					"pivot" => [0, 0, 0],
-					"cubes" => $cubes
+				"bones" => [
+					[
+						// The 'head' name here is required. The head appears to be the only component that doesn't move
+						// client-side when inside of a block.
+						"name" => "head",
+						"pivot" => [0, 0, 0],
+						"cubes" => $cubes
+					]
 				]
-			]
 			]
 			]
 		);

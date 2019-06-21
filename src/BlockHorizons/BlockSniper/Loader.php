@@ -147,12 +147,12 @@ class Loader extends PluginBase{
 
 	private function registerCommands() : void{
 		$this->getServer()->getCommandMap()->registerAll("blocksniper", [
-			new BlockSniperCommand($this),
-			new BrushCommand($this),
-			new UndoCommand($this),
-			new RedoCommand($this),
-			new CloneCommand($this),
-			new PasteCommand($this)
+				new BlockSniperCommand($this),
+				new BrushCommand($this),
+				new UndoCommand($this),
+				new RedoCommand($this),
+				new CloneCommand($this),
+				new PasteCommand($this)
 			]
 		);
 	}
