@@ -14,6 +14,10 @@ use pocketmine\nbt\tag\FloatTag;
 use pocketmine\nbt\tag\ListTag;
 use pocketmine\utils\UUID;
 use pocketmine\world\Position;
+use function chr;
+use function json_encode;
+use function round;
+use function str_repeat;
 
 /**
  * Class TargetHighlight is an entity extending Human to implement a highlight of a target block. It forms a frame
