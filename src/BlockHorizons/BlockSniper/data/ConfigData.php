@@ -64,11 +64,6 @@ class ConfigData{
 	 */
 	public $saveBrushProperties = true;
 	/**
-	 * @var bool
-	 * @marshal Drop Leaf Blower Plants
-	 */
-	public $dropLeafBlowerPlants = true;
-	/**
 	 * @var int
 	 * @marshal Session Timeout Time in minutes
 	 */

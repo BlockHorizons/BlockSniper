@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\type;
 
-use BlockHorizons\BlockSniper\brush\BrushProperties;
-use BlockHorizons\BlockSniper\brush\Target;
 use BlockHorizons\BlockSniper\brush\Type;
 use Generator;
 
@@ -17,20 +15,12 @@ class BiomeType extends Type{
 
 	public const ID = self::TYPE_BIOME;
 
-	/** @var int */
-	private $biome;
-
-	public function __construct(BrushProperties $properties, Target $target, Generator $blocks = null){
-		parent::__construct($properties, $target, $blocks);
-		$this->biome = $properties->biomeId;
-	}
-
 	/**
 	 * @return Generator
 	 */
 	protected function fill() : Generator{
 		foreach($this->blocks as $block){
-			$this->putBiome($block, $this->biome);
+			$this->putBiome($block, $this->properties->biomeId);
 		}
 		if(false){
 			// Make PHP recognize this is a generator.

@@ -49,6 +49,8 @@ abstract class Type{
 	public const TYPE_REPLACE_TARGET = 22;
 	public const TYPE_PLANT = 23;
 
+	/** @var BrushProperties */
+	protected $properties;
 	/** @var Generator */
 	protected $blocks = [];
 	/** @var Block[] */
@@ -73,14 +75,10 @@ abstract class Type{
 	 * @param Generator|null  $blocks
 	 */
 	public function __construct(BrushProperties $properties, Target $target, Generator $blocks = null){
+		$this->properties = $properties;
+		$this->target = $target->asVector3();
 		$this->blocks = $blocks;
 		$this->chunkManager = $target->getChunkManager();
-		$this->target = $target->asVector3();
-		try{
-			$this->brushBlocks = $properties->getBrushBlocks();
-		}catch(InvalidItemException $exception){
-			$this->brushBlocks = [Block::get(Block::AIR)];
-		}
 	}
 
 	/**
@@ -167,6 +165,12 @@ abstract class Type{
 	 */
 	public final function fillShape(array $plotPoints = []) : ?Generator{
 		$this->plotPoints = $plotPoints;
+		try{
+			$this->brushBlocks = $this->properties->getBrushBlocks();
+		}catch(InvalidItemException $exception){
+			$this->brushBlocks = [Block::get(Block::AIR)];
+		}
+
 		if(!empty($plotPoints)){
 			$this->myPlotChecked = true;
 		}
@@ -320,6 +324,6 @@ abstract class Type{
 	 * @return string[]
 	 */
 	public function __sleep(){
-		return ["target", "myPlotChecked", "plotPoints"];
+		return ["target", "myPlotChecked", "plotPoints", "properties"];
 	}
 }

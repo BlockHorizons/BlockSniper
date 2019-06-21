@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\type;
 
-use BlockHorizons\BlockSniper\brush\BrushProperties;
-use BlockHorizons\BlockSniper\brush\Target;
 use BlockHorizons\BlockSniper\brush\Type;
 use Generator;
 use pocketmine\block\Block;
@@ -21,15 +19,11 @@ class ReplaceType extends Type{
 	/** @var Block[] */
 	private $obsolete;
 
-	public function __construct(BrushProperties $properties, Target $target, Generator $blocks = null){
-		parent::__construct($properties, $target, $blocks);
-		$this->obsolete = $properties->getReplacedBlocks();
-	}
-
 	/**
 	 * @return Generator
 	 */
 	public function fill() : Generator{
+		$this->obsolete = $this->properties->getReplacedBlocks();
 		foreach($this->blocks as $block){
 			foreach($this->obsolete as $obsolete){
 				if($block->getId() === $obsolete->getId() && $block->getMeta() === $obsolete->getMeta()){
