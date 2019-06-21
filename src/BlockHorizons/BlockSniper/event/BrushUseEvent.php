@@ -8,7 +8,7 @@ use BlockHorizons\BlockSniper\brush\Shape;
 use BlockHorizons\BlockSniper\brush\Type;
 use pocketmine\event\Cancellable;
 use pocketmine\event\CancellableTrait;
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\world\World;
 
 class BrushUseEvent extends BlockSniperEvent implements Cancellable{

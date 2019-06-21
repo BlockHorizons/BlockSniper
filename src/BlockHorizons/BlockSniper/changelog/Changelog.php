@@ -7,7 +7,7 @@ namespace BlockHorizons\BlockSniper\changelog;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\ui\forms\ModalForm;
 use BlockHorizons\BlockSniper\ui\windows\ChangeLogMenu;
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\utils\TextFormat;
 
 class Changelog{

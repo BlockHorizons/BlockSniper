@@ -8,7 +8,7 @@ use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
 use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\ui\forms\CustomForm;
-use pocketmine\Player;
+use pocketmine\player\Player;
 use function array_values;
 use function str_replace;
 use function strtolower;

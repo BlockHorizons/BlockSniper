@@ -8,7 +8,7 @@ use BlockHorizons\BlockSniper\brush\Type;
 use Generator;
 use pocketmine\entity\Entity;
 use pocketmine\math\AxisAlignedBB;
-use pocketmine\Player;
+use pocketmine\player\Player;
 
 /*
  * Clears all entities within the brush radius. This brush can not undo.

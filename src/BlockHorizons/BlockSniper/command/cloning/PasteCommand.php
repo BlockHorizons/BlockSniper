@@ -11,7 +11,7 @@ use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\session\SessionManager;
 use BlockHorizons\libschematic\Schematic;
 use pocketmine\command\CommandSender;
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\utils\TextFormat as TF;
 use pocketmine\world\format\io\FastChunkSerializer;
 use pocketmine\world\World;

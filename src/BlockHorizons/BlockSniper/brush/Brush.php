@@ -16,7 +16,7 @@ use BlockHorizons\BlockSniper\session\Selection;
 use BlockHorizons\BlockSniper\session\Session;
 use Generator;
 use pocketmine\math\AxisAlignedBB;
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\Server;
 use pocketmine\world\Position;
 use pocketmine\world\sound\FizzSound;

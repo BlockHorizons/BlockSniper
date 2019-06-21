@@ -9,7 +9,7 @@ use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\ui\windows\ConfigurationMenuWindow;
 use BlockHorizons\BlockSniper\ui\windows\MainMenuWindow;
 use pocketmine\command\CommandSender;
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\utils\TextFormat as TF;
 use function strtolower;
 

@@ -2,7 +2,7 @@
 
 namespace BlockHorizons\BlockSniper\session\owner;
 
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\Server;
 
 class PlayerSessionOwner implements ISessionOwner{

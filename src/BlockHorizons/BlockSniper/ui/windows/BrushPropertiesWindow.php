@@ -13,7 +13,7 @@ use BlockHorizons\BlockSniper\brush\type\TreeType;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\exception\InvalidItemException;
 use BlockHorizons\BlockSniper\Loader;
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\utils\TextFormat;
 use pocketmine\world\biome\Biome;
 use ReflectionClass;

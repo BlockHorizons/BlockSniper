@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\ui\forms;
 
 use pocketmine\form\Form as FormInterface;
-use pocketmine\Player;
+use pocketmine\player\Player;
 
 class MenuForm extends Form implements FormInterface{
 

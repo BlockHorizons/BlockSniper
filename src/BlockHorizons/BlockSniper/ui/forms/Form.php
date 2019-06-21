@@ -7,7 +7,7 @@ namespace BlockHorizons\BlockSniper\ui\forms;
 use BlockHorizons\BlockSniper\data\Translation;
 use JsonSerializable;
 use pocketmine\form\Form as FormInterface;
-use pocketmine\Player;
+use pocketmine\player\Player;
 
 abstract class Form implements JsonSerializable{
 

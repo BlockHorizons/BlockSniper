@@ -6,7 +6,7 @@ namespace BlockHorizons\BlockSniper\session;
 
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\session\owner\PlayerSessionOwner;
-use pocketmine\Player;
+use pocketmine\player\Player;
 
 class SessionManager{
 

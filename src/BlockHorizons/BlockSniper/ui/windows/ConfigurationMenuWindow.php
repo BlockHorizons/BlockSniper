@@ -6,7 +6,7 @@ namespace BlockHorizons\BlockSniper\ui\windows;
 
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
-use pocketmine\Player;
+use pocketmine\player\Player;
 
 class ConfigurationMenuWindow extends CustomWindow{
 

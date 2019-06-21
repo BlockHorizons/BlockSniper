@@ -8,7 +8,7 @@ use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\session\SessionManager;
 use BlockHorizons\BlockSniper\ui\forms\MenuForm;
-use pocketmine\Player;
+use pocketmine\player\Player;
 
 class MainMenuWindow extends MenuForm{
 

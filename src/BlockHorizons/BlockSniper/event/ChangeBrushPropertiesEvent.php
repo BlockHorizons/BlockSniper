@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\event;
 
-use pocketmine\Player;
+use pocketmine\player\Player;
 
 class ChangeBrushPropertiesEvent extends BlockSniperEvent{
 

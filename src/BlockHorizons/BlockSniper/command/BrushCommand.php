@@ -13,7 +13,7 @@ use BlockHorizons\BlockSniper\ui\windows\MainMenuWindow;
 use pocketmine\command\CommandSender;
 use pocketmine\item\Item;
 use pocketmine\nbt\tag\StringTag;
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\utils\TextFormat as TF;
 use pocketmine\utils\UUID;
 

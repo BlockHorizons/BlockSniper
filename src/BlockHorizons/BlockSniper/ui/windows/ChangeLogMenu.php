@@ -8,7 +8,7 @@ use BlockHorizons\BlockSniper\changelog\Changelog;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\ui\forms\MenuForm;
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\utils\TextFormat;
 
 class ChangeLogMenu extends MenuForm{

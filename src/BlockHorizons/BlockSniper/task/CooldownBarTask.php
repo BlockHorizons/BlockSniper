@@ -7,7 +7,7 @@ namespace BlockHorizons\BlockSniper\task;
 use BlockHorizons\BlockSniper\brush\Brush;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\utils\TextFormat;
 use function ceil;
 use function microtime;

@@ -14,7 +14,7 @@ use BlockHorizons\BlockSniper\session\SessionManager;
 use BlockHorizons\libschematic\Schematic;
 use pocketmine\command\CommandSender;
 use pocketmine\math\Vector3;
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\utils\TextFormat;
 use pocketmine\utils\TextFormat as TF;
 use function strtolower;
