@@ -324,6 +324,12 @@ abstract class Type{
 	 * @return string[]
 	 */
 	public function __sleep(){
-		return ["target", "myPlotChecked", "plotPoints", "properties"];
+		$this->chunkManager = $this->blocks = $this->brushBlocks = null;
+		$arr = [];
+		foreach($this as $key => $value){
+			$arr[] = $key;
+		}
+
+		return $arr;
 	}
 }
