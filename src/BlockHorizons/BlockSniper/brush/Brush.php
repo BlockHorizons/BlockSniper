@@ -20,6 +20,7 @@ use pocketmine\player\Player;
 use pocketmine\Server;
 use pocketmine\world\Position;
 use pocketmine\world\sound\FizzSound;
+use Throwable;
 use function count;
 
 /**
@@ -133,7 +134,7 @@ class Brush extends BrushProperties{
 
 		try{
 			return new $this->shape($this, new Target($target, $target->getWorld()), $bb);
-		}catch(\Throwable $e){
+		}catch(Throwable $e){
 			return new SphereShape($this, new Target($target, $target->getWorld()), $bb);
 		}
 	}
@@ -155,7 +156,7 @@ class Brush extends BrushProperties{
 
 		try{
 			return new $this->type($this, new Target($target, $target->getWorld()), $blocks, $session);
-		}catch(\Throwable $e){
+		}catch(Throwable $e){
 			return new FillType($this, new Target($target, $target->getWorld()), $blocks);
 		}
 	}
