@@ -95,7 +95,6 @@
 			"max-reverts": "やり直しの保存の最大量。古いものは自動的に削除されます。",
 			"reset-decrement-brush": "デクリメントのブラシを初期開始サイズに自動的にリセットする",
 			"save-brush": "サーバーの再起動時にプレイヤーのブラシ設定を保存する。",
-			"drop-plants": "葉を吹き飛ばすタイプで破壊/吹き飛ばされた植物アイテムを落とす",
 			"session-timeout-time": "The time in minutes after which the session of a player is removed after leaving the server",
 			"auto-gui": "ホット・バー・スロットをブラシ項目を含むものに切り替えるときに、GUIを自動的に開きます。",
 			"cooldown": "The cooldown in seconds (can be decimal) until the brush can be re-used after using it",

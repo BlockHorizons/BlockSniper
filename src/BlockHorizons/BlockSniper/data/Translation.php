@@ -78,7 +78,6 @@ class Translation{
 	public const UI_CONFIGURATION_MENU_MAX_REVERTS = "ui.configuration-menu.max-reverts";
 	public const UI_CONFIGURATION_MENU_RESET_DECREMENT_BRUSH = "ui.configuration-menu.reset-decrement-brush";
 	public const UI_CONFIGURATION_MENU_SAVE_BRUSH = "ui.configuration-menu.save-brush";
-	public const UI_CONFIGURATION_MENU_DROP_PLANTS = "ui.configuration-menu.drop-plants";
 	public const UI_CONFIGURATION_MENU_SESSION_TIMEOUT_TIME = "ui.configuration-menu.session-timeout-time";
 	public const UI_CONFIGURATION_MENU_AUTO_GUI = "ui.configuration-menu.auto-gui";
 	public const UI_CONFIGURATION_MENU_COOLDOWN = "ui.configuration-menu.cooldown";

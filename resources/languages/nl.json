@@ -94,7 +94,6 @@
 			"max-reverts": "De maximale hoeveelheid van ongedaanmakingen. Oudere ongedaanmakingen worden vanzelf verwijderd",
 			"reset-decrement-brush": "Zet verkleinende verf automatisch terug naar de originele grootte",
 			"save-brush": "Sla verf instellingen op als de server herstart",
-			"drop-plants": "Laat planten voorwerpen vallen wanneer het blad blazer type wordt gebruikt",
 			"session-timeout-time": "De tijd waarna de sessie van een speler wordt opgeruimd na het verlaten van de server",
 			"auto-gui": "Open de GUI automatisch wanneer het hotbar vakje wordt verplaatst naar een vak met het brush voorwerp",
 			"cooldown": "De tijd in seconden (mag decimalen hebben) totdat de verf hergebruikt kan worden na gebruik",

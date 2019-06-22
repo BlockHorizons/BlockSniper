@@ -93,7 +93,6 @@
 			"max-reverts": "Máxima cantida de Deshacer/Rehacer para guardar. Los antiguos son limpiados automáticamente",
 			"reset-decrement-brush": "Resetear automáticamente la brocha decreciente al tamaño inicial.",
 			"save-brush": "Guardar las propiedades de las brochsa de los jugadores en el reinicio del servidor",
-			"drop-plants": "Tirar los objetos de la planta destruidos/explotados por el tipo LeafBlower",
 			"session-timeout-time": "El tiempo en minutos después del cual la sesión de un jugador es eliminada después de salir del servidor",
 			"auto-gui": "Abrir automáticamente la GUI cuando cambie a una ranura de la barra que contenga el objeto del broche",
 			"cooldown": "The cooldown in seconds (can be decimal) until the brush can be re-used after using it",

@@ -94,7 +94,6 @@
 			"max-reverts": "撤銷/恢復操作最大保存數量。更早的操作將被自動清理",
 			"reset-decrement-brush": "自動重置尺寸遞減至最初值",
 			"save-brush": "服務器重啟時保存用戶畫筆數據",
-			"drop-plants": "掉落清除植物類型操作移除的植物物品",
 			"session-timeout-time": "The time in minutes after which the session of a player is removed after leaving the server",
 			"auto-gui": "切換到畫筆物品欄時自動打開畫筆圖形界面",
 			"cooldown": "The cooldown in seconds (can be decimal) until the brush can be re-used after using it",
