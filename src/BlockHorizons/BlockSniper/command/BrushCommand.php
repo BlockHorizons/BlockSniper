@@ -43,7 +43,7 @@ class BrushCommand extends BaseCommand{
 
 					return;
 				}
-				$b = new Brush($sender->getName());
+				$b = new Brush();
 
 				$uuid = UUID::fromRandom()->toString();
 				BrushListener::$brushItems[$uuid] = $b;
