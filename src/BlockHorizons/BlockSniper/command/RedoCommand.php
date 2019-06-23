@@ -35,7 +35,7 @@ class RedoCommand extends BaseCommand{
 				$redoAmount = $totalRedo;
 			}
 		}
-		SessionManager::getPlayerSession($sender)->getRevertStore()->restoreLatestRedo($redoAmount);
+		$store->restoreLatestRedo($redoAmount);
 		$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_REDO_SUCCESS) . TF::AQUA . " (" . $redoAmount . ")");
 		$sender->getWorld()->addSound($sender, new FizzSound(), [$sender]);
 	}
