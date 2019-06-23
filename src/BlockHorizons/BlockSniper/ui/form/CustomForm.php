@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BlockHorizons\BlockSniper\ui\forms;
+namespace BlockHorizons\BlockSniper\ui\form;
 
 use pocketmine\form\Form as FormInterface;
 use pocketmine\player\Player;

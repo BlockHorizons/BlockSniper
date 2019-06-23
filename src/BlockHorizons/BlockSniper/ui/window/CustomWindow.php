@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace BlockHorizons\BlockSniper\ui\windows;
+namespace BlockHorizons\BlockSniper\ui\window;
 
 use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
 use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
 use BlockHorizons\BlockSniper\data\Translation;
-use BlockHorizons\BlockSniper\ui\forms\CustomForm;
+use BlockHorizons\BlockSniper\ui\form\CustomForm;
 use pocketmine\player\Player;
 use function array_values;
 use function str_replace;

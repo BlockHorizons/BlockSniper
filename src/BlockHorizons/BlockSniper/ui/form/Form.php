@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BlockHorizons\BlockSniper\ui\forms;
+namespace BlockHorizons\BlockSniper\ui\form;
 
 use BlockHorizons\BlockSniper\data\Translation;
 use JsonSerializable;

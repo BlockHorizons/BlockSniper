@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace BlockHorizons\BlockSniper\ui\windows;
+namespace BlockHorizons\BlockSniper\ui\window;
 
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\session\SessionManager;
-use BlockHorizons\BlockSniper\ui\forms\MenuForm;
+use BlockHorizons\BlockSniper\ui\form\MenuForm;
 use pocketmine\player\Player;
 
 class MainMenuWindow extends MenuForm{

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BlockHorizons\BlockSniper\ui\windows;
+namespace BlockHorizons\BlockSniper\ui\window;
 
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;

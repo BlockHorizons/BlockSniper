@@ -12,7 +12,7 @@ use BlockHorizons\BlockSniper\session\PlayerSession;
 use BlockHorizons\BlockSniper\session\SessionManager;
 use BlockHorizons\BlockSniper\task\CooldownBarTask;
 use BlockHorizons\BlockSniper\task\SessionDeletionTask;
-use BlockHorizons\BlockSniper\ui\windows\BrushMenuWindow;
+use BlockHorizons\BlockSniper\ui\window\BrushMenuWindow;
 use MyPlot\PlotLevelSettings;
 use pocketmine\block\Block;
 use pocketmine\event\block\BlockBreakEvent;

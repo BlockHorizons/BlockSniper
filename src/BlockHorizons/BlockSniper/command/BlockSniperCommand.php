@@ -6,8 +6,8 @@ namespace BlockHorizons\BlockSniper\command;
 
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
-use BlockHorizons\BlockSniper\ui\windows\ConfigurationMenuWindow;
-use BlockHorizons\BlockSniper\ui\windows\MainMenuWindow;
+use BlockHorizons\BlockSniper\ui\window\ConfigurationMenuWindow;
+use BlockHorizons\BlockSniper\ui\window\MainMenuWindow;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 use pocketmine\utils\TextFormat as TF;

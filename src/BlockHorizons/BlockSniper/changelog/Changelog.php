@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\changelog;
 
 use BlockHorizons\BlockSniper\data\Translation;
-use BlockHorizons\BlockSniper\ui\forms\ModalForm;
-use BlockHorizons\BlockSniper\ui\windows\ChangeLogMenu;
+use BlockHorizons\BlockSniper\ui\form\ModalForm;
+use BlockHorizons\BlockSniper\ui\window\ChangeLogMenu;
 use pocketmine\player\Player;
 use pocketmine\utils\TextFormat;
 
