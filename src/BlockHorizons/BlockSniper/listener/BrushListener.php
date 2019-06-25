@@ -47,6 +47,9 @@ class BrushListener implements Listener{
 
 		if(file_exists($loader->getDataFolder() . "bound_brushes.json")){
 			$data = json_decode(file_get_contents($loader->getDataFolder() . "bound_brushes.json"), true);
+			if($data === null){
+				return;
+			}
 			foreach($data as $uuid => $brushData){
 				$b = new Brush();
 				if(is_string($brushData)){

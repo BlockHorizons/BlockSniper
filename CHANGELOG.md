@@ -54,3 +54,4 @@
 - Fixed schematic pasting running out of memory quickly with bigger schematics.
 - Fixed [BlockSniper] being shown twice in console messages.
 - Fixed the schematic pasted successfully message showing up before the schematic was even done pasting.
+- Fixed a crash that would occur if the config file was empty.
