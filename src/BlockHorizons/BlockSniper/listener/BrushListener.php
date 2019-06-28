@@ -113,7 +113,7 @@ class BrushListener implements Listener{
 		$startTime = microtime(true);
 
 		$selection = $brush->mode === Brush::MODE_BRUSH ? null : $session->getSelection();
-		if($brush->execute($session, $player->getTargetBlock(16 * $player->getViewDistance())->asPosition(), $this->getPlotPoints($player), $selection)){
+		if($brush->execute($session, $session->getTargetBlock(), $this->getPlotPoints($player), $selection)){
 			// If the brush was executed synchronously, we send a cooldown bar task directly.
 			$duration = round(microtime(true) - $startTime, 2);
 			$player->sendPopup(TextFormat::GREEN . Translation::get(Translation::BRUSH_STATE_DONE) . " ($duration seconds)");
@@ -290,12 +290,7 @@ class BrushListener implements Listener{
 			$entity->close();
 			unset($this->targetHighlights[$name]);
 		}
-		$pos = $player->getTargetBlock(16 * $player->getViewDistance())->add(0.0, 0, 1.0)->subtract(0.04, 0.04, -0.04);
-		if(!$player->getWorld()->isChunkLoaded($pos->x >> 4, $pos->z >> 4)){
-			// This is a rare race condition that occurs when the player spawns while looking to the air in the
-			// distance, with a render distance in which not all chunks have yet been loaded.
-			return;
-		}
+		$pos = SessionManager::getPlayerSession($player)->getTargetBlock()->add(0.0, 0, 1.0)->subtract(0.04, 0.04, -0.04);
 
 		$loc = Location::fromObject($pos, $player->getWorld());
 		$this->targetHighlights[$name] = new TargetHighlight(new Position($player->x, 0, $player->z, $loc->getWorld()));

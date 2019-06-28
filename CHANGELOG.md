@@ -55,3 +55,4 @@
 - Fixed [BlockSniper] being shown twice in console messages.
 - Fixed the schematic pasted successfully message showing up before the schematic was even done pasting.
 - Fixed a crash that would occur if the config file was empty.
+- Fixed a bug where the range of brushing would be capped at a maximum of 120 blocks. It now grows as your view distance does.

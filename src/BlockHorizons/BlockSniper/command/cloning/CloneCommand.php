@@ -8,7 +8,6 @@ use BlockHorizons\BlockSniper\brush\shape\CuboidShape;
 use BlockHorizons\BlockSniper\brush\Target;
 use BlockHorizons\BlockSniper\command\BaseCommand;
 use BlockHorizons\BlockSniper\data\Translation;
-use BlockHorizons\BlockSniper\exception\InvalidItemException;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\session\SessionManager;
 use BlockHorizons\libschematic\Schematic;
@@ -32,12 +31,6 @@ class CloneCommand extends BaseCommand{
 
 			return;
 		}
-
-		$center = $sender->getTargetBlock($sender->getViewDistance() * 16);
-		if($center === null){
-			throw new InvalidItemException("No valid block could be found when attempting to clone.");
-		}
-
 		$session = SessionManager::getPlayerSession($sender);
 
 		if(!$session->getSelection()->ready()){

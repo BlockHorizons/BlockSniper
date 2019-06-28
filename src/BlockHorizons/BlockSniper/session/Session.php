@@ -12,6 +12,7 @@ use BlockHorizons\BlockSniper\revert\RevertStore;
 use BlockHorizons\BlockSniper\session\owner\ISessionOwner;
 use BlockHorizons\BlockSniper\session\owner\PlayerSessionOwner;
 use BlockHorizons\BlockSniper\session\owner\ServerSessionOwner;
+use pocketmine\world\Position;
 
 abstract class Session{
 
@@ -47,6 +48,11 @@ abstract class Session{
 	 * @return bool
 	 */
 	protected abstract function initializeBrush() : bool;
+
+	/**
+	 * @return Position
+	 */
+	public abstract function getTargetBlock() : Position;
 
 	/**
 	 * @return PlayerSessionOwner|ServerSessionOwner

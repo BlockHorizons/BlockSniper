@@ -9,6 +9,10 @@ use BlockHorizons\BlockSniper\changelog\Changelog;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\session\owner\PlayerSessionOwner;
 use JsonSerializable;
+use pocketmine\block\Air;
+use pocketmine\math\VoxelRayTrace;
+use pocketmine\world\Position;
+use pocketmine\world\World;
 use Sandertv\Marshal\DecodeException;
 use Sandertv\Marshal\Unmarshal;
 use function file_exists;
@@ -57,6 +61,31 @@ class PlayerSession extends Session implements JsonSerializable{
 		}
 
 		return false;
+	}
+
+	/**
+	 * @return Position
+	 */
+	public function getTargetBlock() : Position{
+		$player = $this->getSessionOwner()->getPlayer();
+		$start = $player->add(0, $player->getEyeHeight(), 0);
+		$end = $start->add($player->getDirectionVector()->multiply($player->getViewDistance() * 16));
+		$world = $player->world;
+		$lastVec3 = null;
+		foreach(VoxelRayTrace::betweenPoints($start, $end) as $vector3){
+			if($vector3->y >= World::Y_MAX or $vector3->y <= 0){
+				return Position::fromObject($lastVec3, $world);
+			}
+			if(!$world->isChunkLoaded($vector3->x >> 4, $vector3->z >> 4) or !$world->getChunk($vector3->x >> 4, $vector3->z >> 4)->isGenerated()){
+				return Position::fromObject($lastVec3, $world);
+			}
+			if(!($world->getBlockAt($vector3->x, $vector3->y, $vector3->z) instanceof Air)){
+				return Position::fromObject($vector3, $world);
+			}
+			$lastVec3 = $vector3;
+		}
+
+		return Position::fromObject($end, $world);
 	}
 
 	public function close() : void{
