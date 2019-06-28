@@ -294,7 +294,7 @@ class BrushListener implements Listener{
 
 		$loc = Location::fromObject($pos, $player->getWorld());
 		$this->targetHighlights[$name] = new TargetHighlight(new Position($player->x, 0, $player->z, $loc->getWorld()));
-		$this->targetHighlights[$name]->spawnToAll();
+		$this->targetHighlights[$name]->spawnTo($player);
 		$this->targetHighlights[$player->getName()]->teleport($loc);
 	}
 }

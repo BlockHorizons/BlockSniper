@@ -25,6 +25,9 @@ use function str_repeat;
  */
 class TargetHighlight extends Human{
 
+	/** @var string */
+	private static $geometry = "";
+
 	/**
 	 * GEOMETRY_NAME is the name of the geometry structure.
 	 */
@@ -82,6 +85,10 @@ class TargetHighlight extends Human{
 	 * @return string
 	 */
 	private function generateGeometry() : string{
+		if(self::$geometry !== ""){
+			return self::$geometry;
+		}
+
 		$cubes = [];
 		foreach((new BlockEdgeIterator(Block::get(Block::AIR)))->getEdges() as $edge){
 			foreach($edge->walk(1.0 / 16.0) as $pos){
@@ -93,7 +100,7 @@ class TargetHighlight extends Human{
 			}
 		}
 
-		return json_encode([self::GEOMETRY_NAME => [
+		self::$geometry = json_encode([self::GEOMETRY_NAME => [
 				"bones" => [
 					[
 						// The 'head' name here is required. The head appears to be the only component that doesn't move
@@ -106,5 +113,7 @@ class TargetHighlight extends Human{
 			]
 			]
 		);
+
+		return self::$geometry;
 	}
 }
