@@ -27,8 +27,8 @@
 - The maximum brush distance now depends on the view distance of a player.
 - The language files will now be automatically updated if it is found not to be up to date. It will no longer show a message prompting you to let the file regenerate.
 - The Expand type now uses brush blocks instead of the blocks below it to place new blocks, resulting in a much better effect.
-- The TopLayer type no longer uses the `Brush Height` property for the width of the layer. It now uses a new `Layer Width` property
-- Brush blocks can now be selected using a readable name instead of using metadata, for example `spruce_sapling` instead of `sapling:1`
+- The TopLayer type no longer uses the `Brush Height` property for the width of the layer. It now uses a new `Layer Width` property.
+- Brush blocks can now be selected using a readable name instead of using metadata, for example `spruce_sapling` instead of `sapling:1`.
 - The ReplaceAll type no longer ignores blocks such as torches, grass and other plants.
 - The Copy clone type now copies relative to the center of the selection instead of the target block upon copying.
 
