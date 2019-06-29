@@ -71,7 +71,7 @@ class PlayerSession extends Session implements JsonSerializable{
 		$start = $player->add(0, $player->getEyeHeight(), 0);
 		$end = $start->add($player->getDirectionVector()->multiply($player->getViewDistance() * 16));
 		$world = $player->world;
-		$lastVec3 = null;
+		$lastVec3 = $player->getPosition();
 		foreach(VoxelRayTrace::betweenPoints($start, $end) as $vector3){
 			if($vector3->y >= World::Y_MAX or $vector3->y <= 0){
 				return Position::fromObject($lastVec3, $world);
