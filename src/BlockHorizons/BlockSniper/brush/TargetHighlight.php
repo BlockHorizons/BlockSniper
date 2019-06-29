@@ -27,6 +27,8 @@ class TargetHighlight extends Human{
 
 	/** @var string */
 	private static $geometry = "";
+	/** @var string */
+	private static $emptySkin = "";
 
 	/**
 	 * GEOMETRY_NAME is the name of the geometry structure.
@@ -41,9 +43,12 @@ class TargetHighlight extends Human{
 	public $width = 0.0, $height = 0.0;
 
 	public function __construct(Position $position){
+		if(self::$emptySkin === ""){
+			self::$emptySkin = str_repeat(chr(0) . chr(0) . chr(0) . chr(255), 32 * 64);
+		}
 		$this->skin = new Skin(
 			UUID::fromRandom()->toString(),
-			str_repeat(chr(0) . chr(0) . chr(0) . chr(255), 32 * 64),
+			self::$emptySkin,
 			"",
 			self::GEOMETRY_NAME,
 			$this->generateGeometry()
