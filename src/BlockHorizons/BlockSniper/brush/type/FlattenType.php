@@ -6,7 +6,7 @@ namespace BlockHorizons\BlockSniper\brush\type;
 
 use BlockHorizons\BlockSniper\brush\Type;
 use Generator;
-use pocketmine\block\Block;
+use pocketmine\block\Air;
 use pocketmine\block\Flowable;
 
 /*
@@ -22,7 +22,7 @@ class FlattenType extends Type{
 	 */
 	public function fill() : Generator{
 		foreach($this->blocks as $block){
-			if($block->y <= $this->target->y && ($block->getId() === Block::AIR || $block instanceof Flowable)){
+			if($block->y <= $this->target->y && ($block instanceof Air || $block instanceof Flowable)){
 				yield $block;
 				$this->putBlock($block, $this->randomBrushBlock());
 			}

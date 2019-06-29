@@ -6,6 +6,7 @@ namespace BlockHorizons\BlockSniper\brush\type;
 
 use BlockHorizons\BlockSniper\brush\Type;
 use Generator;
+use pocketmine\block\Air;
 use pocketmine\block\Block;
 use pocketmine\math\Facing;
 
@@ -31,7 +32,7 @@ class OverlayType extends Type{
 				}
 				foreach(Facing::ALL as $direction){
 					$sideBlock = $this->side($block, $direction);
-					if($valid && $sideBlock->getId() === Block::AIR){
+					if($valid && $sideBlock instanceof Air){
 						$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 						if($block->getId() !== $randomBlock->getId() && $block->getMeta() !== $randomBlock->getMeta()){
 							yield $sideBlock;

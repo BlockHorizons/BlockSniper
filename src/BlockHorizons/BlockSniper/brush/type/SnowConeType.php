@@ -6,8 +6,10 @@ namespace BlockHorizons\BlockSniper\brush\type;
 
 use BlockHorizons\BlockSniper\brush\Type;
 use Generator;
+use pocketmine\block\Air;
 use pocketmine\block\Block;
 use pocketmine\block\Flowable;
+use pocketmine\block\SnowLayer;
 use pocketmine\math\Facing;
 
 /*
@@ -23,13 +25,13 @@ class SnowConeType extends Type{
 	 */
 	public function fill() : Generator{
 		foreach($this->blocks as $block){
-			if(!($block instanceof Flowable) && ($id = $block->getId()) !== Block::AIR && $id !== Block::SNOW_LAYER){
+			if(!($block instanceof Flowable) && !($block instanceof Air) && !($block instanceof SnowLayer)){
 				$topBlock = $this->side($block, Facing::UP);
-				if(($topId = $topBlock->getId()) === Block::AIR || $topId === Block::SNOW_LAYER){
+				if($topBlock instanceof Air || $topBlock instanceof SnowLayer){
 					if($topBlock->getMeta() < 7 && $topBlock->getId() === Block::SNOW_LAYER){
 						yield $topBlock;
 						$this->putBlock($topBlock, Block::get(Block::SNOW_LAYER, $topBlock->getMeta() + 1));
-					}elseif($topId !== Block::SNOW_LAYER){
+					}elseif(!($topBlock instanceof SnowLayer)){
 						yield $topBlock;
 						$this->putBlock($topBlock, Block::get(Block::SNOW_LAYER));
 					}

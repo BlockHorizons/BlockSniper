@@ -6,6 +6,7 @@ namespace BlockHorizons\BlockSniper\brush\type;
 
 use BlockHorizons\BlockSniper\brush\Type;
 use Generator;
+use pocketmine\block\Air;
 use pocketmine\block\Block;
 use pocketmine\math\Facing;
 
@@ -24,11 +25,11 @@ class ExpandType extends Type{
 		$undoBlocks = [];
 		foreach($this->blocks as $block){
 			/** @var Block $block */
-			if($block->getId() === Block::AIR){
+			if($block instanceof Air){
 				$closedSides = 0;
 				foreach(Facing::ALL as $direction){
 					$sideBlock = $this->side($block, $direction);
-					if($sideBlock->getId() !== Block::AIR){
+					if(!($sideBlock instanceof Air)){
 						$closedSides++;
 					}
 				}

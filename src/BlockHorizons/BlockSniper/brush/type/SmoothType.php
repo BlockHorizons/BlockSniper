@@ -6,6 +6,7 @@ namespace BlockHorizons\BlockSniper\brush\type;
 
 use BlockHorizons\BlockSniper\brush\Type;
 use Generator;
+use pocketmine\block\Air;
 use pocketmine\block\Block;
 use pocketmine\math\Facing;
 
@@ -21,29 +22,27 @@ class SmoothType extends Type{
 		$expandBlocks = [];
 		foreach($this->blocks as $block){
 			/** @var Block $block */
-			switch($block->getId()){
-				case Block::AIR:
-					$closedSides = 0;
-					foreach(Facing::ALL as $direction){
-						$sideBlock = $this->side($block, $direction);
-						if($sideBlock->getId() !== Block::AIR){
-							$closedSides++;
-						}
+			if($block instanceof Air){
+				$closedSides = 0;
+				foreach(Facing::ALL as $direction){
+					$sideBlock = $this->side($block, $direction);
+					if(!($sideBlock instanceof Air)){
+						$closedSides++;
 					}
-					if($closedSides > 3){
-						$expandBlocks[] = $block;
-					}
-					break;
-				default:
-					$openSides = 0;
-					foreach(Facing::ALL as $direction){
-						if($this->side($block, $direction)->getId() === Block::AIR){
-							$openSides++;
-						}
-					}
-					if($openSides > 3){
-						$meltBlocks[] = $block;
-					}
+				}
+				if($closedSides > 3){
+					$expandBlocks[] = $block;
+				}
+				continue;
+			}
+			$openSides = 0;
+			foreach(Facing::ALL as $direction){
+				if($this->side($block, $direction) instanceof Air){
+					$openSides++;
+				}
+			}
+			if($openSides > 3){
+				$meltBlocks[] = $block;
 			}
 		}
 		foreach($meltBlocks as $block){
