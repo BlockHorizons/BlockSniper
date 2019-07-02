@@ -10,7 +10,7 @@ class BlockSniperChunkManager extends SimpleChunkManager{
 
 	public function getBlockAt(int $x, int $y, int $z) : Block{
 		$block = parent::getBlockAt($x, $y, $z);
-		$block->setComponents($x, $y, $z);
+		[$block->x, $block->y, $block->z] = [$x, $y, $z];
 
 		return $block;
 	}
