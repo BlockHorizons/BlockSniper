@@ -57,7 +57,7 @@ class BlockSniperChunkManager extends SimpleChunkManager{
 					[$x, $y, $z] = [$x + 1, $y, $z];
 			}
 			$block = $this->getBlockAt($x, $y, $z);
-			$block->setComponents($x, $y, $z);
+			[$block->x, $block->y, $block->z] = [$x, $y, $z];
 
 			return $block;
 		}
