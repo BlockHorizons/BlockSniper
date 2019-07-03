@@ -33,6 +33,12 @@ use function str_repeat;
 
 class BrushTask extends AsyncTask{
 
+	private const KEY_WORLD = "world";
+	private const KEY_SESSION = "session";
+	private const KEY_CHUNKS = "chunks";
+	private const KEY_BRUSH = "brush";
+	private const KEY_PROGRESS = "progress";
+
 	/** @var Shape */
 	private $shape;
 	/** @var string[] */
@@ -50,7 +56,11 @@ class BrushTask extends AsyncTask{
 
 	public function __construct(Brush $brush, Session $session, Shape $shape, Type $type, World $world, array $plotPoints = []){
 		$chunks = $shape->getTouchedChunks($world);
-		$this->storeLocal("", [$world, $session, $chunks, $brush, 0]);
+		$this->storeLocal(self::KEY_WORLD, $world);
+		$this->storeLocal(self::KEY_SESSION, $session);
+		$this->storeLocal(self::KEY_CHUNKS, $chunks);
+		$this->storeLocal(self::KEY_BRUSH, $brush);
+		$this->storeLocal(self::KEY_PROGRESS, 0);
 		$this->shape = $shape;
 		$this->type = $type;
 		$this->brushProperties = $brush;
@@ -104,7 +114,7 @@ class BrushTask extends AsyncTask{
 			/** @var Chunk $chunk */
 			$chunk = $chunks[$index];
 
-			[$posX, $posY, $posZ] = [(int) $vector3->x & 0x0f, (int) $vector3->y, (int) $vector3->z & 0x0f];
+			[$posX, $posY, $posZ] = [$vector3->x & 0x0f, $vector3->y, $vector3->z & 0x0f];
 			$combinedValue = $chunk->getFullBlock($posX, $posY, $posZ);
 			$block = Block::get($combinedValue >> 4, $combinedValue & 0xf);
 			$block->setComponents($vector3->x, $vector3->y, $vector3->z);
@@ -119,18 +129,16 @@ class BrushTask extends AsyncTask{
 	}
 
 	public function onProgressUpdate($progress) : void{
-		/**
-		 * @var World   $world
-		 * @var Session $session
-		 */
-		[$world, $session, $chunks, $brush, $lastProgress] = $this->fetchLocal("");
+		$lastProgress = $this->fetchLocal(self::KEY_PROGRESS);
+		$world = $this->fetchLocal(self::KEY_WORLD);
+		$session = $this->fetchLocal(self::KEY_SESSION);
 		if($lastProgress !== $progress){
 			if($session instanceof PlayerSession){
 				$player = $session->getSessionOwner()->getPlayer();
 				$world->addSound($player, new ClickSound(), [$player]);
 			}
 		}
-		$this->storeLocal("", [$world, $session, $chunks, $brush, $progress]);
+		$this->storeLocal(self::KEY_PROGRESS, $progress);
 
 		if($progress >= 21){
 			$duration = round(microtime(true) - $this->startTime, 2);
@@ -152,7 +160,10 @@ class BrushTask extends AsyncTask{
 		 * @var Session $session
 		 * @var Brush   $brush
 		 */
-		[$world, $session, $undoChunks, $brush] = $this->fetchLocal("");
+		$world = $this->fetchLocal(self::KEY_WORLD);
+		$session = $this->fetchLocal(self::KEY_SESSION);
+		$undoChunks = $this->fetchLocal(self::KEY_CHUNKS);
+		$brush = $this->fetchLocal(self::KEY_BRUSH);
 
 		foreach($undoChunks as &$undoChunk){
 			$undoChunk = FastChunkSerializer::deserialize($undoChunk);

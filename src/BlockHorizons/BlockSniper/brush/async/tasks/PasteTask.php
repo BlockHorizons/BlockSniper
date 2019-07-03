@@ -19,8 +19,11 @@ use pocketmine\world\format\Chunk;
 use pocketmine\world\format\io\FastChunkSerializer;
 use pocketmine\world\sound\FizzSound;
 use pocketmine\world\World;
+use function microtime;
 
 class PasteTask extends AsyncTask{
+
+	private const KEY_CHUNKS = "chunks";
 
 	/** @var string */
 	private $file;
@@ -30,13 +33,16 @@ class PasteTask extends AsyncTask{
 	private $chunks;
 	/** @var string */
 	private $playerName;
+	/** @var float */
+	private $startTime;
 
 	public function __construct(string $file, Vector3 $center, array $chunks, string $playerName){
-		$this->storeLocal("", [$chunks, microtime(true)]);
+		$this->storeLocal(self::KEY_CHUNKS, $chunks);
 		$this->file = $file;
 		$this->center = $center;
 		$this->chunks = $chunks;
 		$this->playerName = $playerName;
+		$this->startTime = microtime(true);
 	}
 
 	public function onRun() : void{
@@ -91,7 +97,7 @@ class PasteTask extends AsyncTask{
 			return;
 		}
 
-		[$undoChunks, $startTime] = $this->fetchLocal("");
+		$undoChunks = $this->fetchLocal(self::KEY_CHUNKS);
 		foreach($undoChunks as &$undoChunk){
 			$undoChunk = FastChunkSerializer::deserialize($undoChunk);
 		}
@@ -106,7 +112,7 @@ class PasteTask extends AsyncTask{
 			}
 		}
 
-		$duration = round(microtime(true) - $startTime, 2);
+		$duration = round(microtime(true) - $this->startTime, 2);
 		$player->sendPopup(TextFormat::GREEN . Translation::get(Translation::BRUSH_STATE_DONE) . " ($duration seconds)");
 		$player->getWorld()->addSound($player, new FizzSound(), [$player]);
 		SessionManager::getPlayerSession($player)->getRevertStore()->saveUndo(new AsyncRevert($chunks, $undoChunks, $player->getWorld()));
