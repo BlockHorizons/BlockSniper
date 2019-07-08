@@ -18,8 +18,6 @@ use pocketmine\world\format\Chunk;
 
 class RegenerateType extends Type{
 
-	public const ID = self::TYPE_REGENERATE;
-
 	/** @var Session */
 	private $session;
 

@@ -14,8 +14,6 @@ use pocketmine\block\BlockLegacyIds;
 
 class CleanType extends Type{
 
-	public const ID = self::TYPE_CLEAN;
-
 	private const NATURAL_BLOCKS = [
 		BlockLegacyIds::STONE => 0,
 		BlockLegacyIds::GRASS => 0,

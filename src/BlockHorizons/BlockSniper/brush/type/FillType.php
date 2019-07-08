@@ -13,8 +13,6 @@ use Generator;
 
 class FillType extends Type{
 
-	public const ID = self::TYPE_FILL;
-
 	/**
 	 * @return Generator
 	 */

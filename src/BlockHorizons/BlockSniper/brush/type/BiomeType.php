@@ -13,8 +13,6 @@ use Generator;
 
 class BiomeType extends Type{
 
-	public const ID = self::TYPE_BIOME;
-
 	/**
 	 * @return Generator
 	 */

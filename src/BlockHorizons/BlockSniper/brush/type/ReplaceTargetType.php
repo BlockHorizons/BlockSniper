@@ -12,8 +12,6 @@ use pocketmine\block\Block;
 
 class ReplaceTargetType extends Type{
 
-	public const ID = self::TYPE_REPLACE_TARGET;
-
 	/** @var int */
 	private $targetBlockId;
 	/** @var int */

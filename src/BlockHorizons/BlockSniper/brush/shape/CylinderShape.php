@@ -12,8 +12,6 @@ use pocketmine\math\Vector3;
 
 class CylinderShape extends Shape{
 
-	public const ID = self::SHAPE_CYLINDER;
-
 	/**
 	 * @return Generator
 	 */

@@ -48,7 +48,7 @@ class BrushPropertiesWindow extends CustomWindow{
 				$b->width = (int) $value;
 			}
 			);
-			if($b->getType()::ID !== BiomeType::ID){
+			if(!($b->getType() instanceof BiomeType)){
 				$this->addSlider($this->t(Translation::UI_BRUSH_MENU_HEIGHT), 0, $loader->config->maxSize, 1, $b->height, function(Player $player, float $value) use ($b){
 					$b->height = (int) $value;
 				}
@@ -72,14 +72,15 @@ class BrushPropertiesWindow extends CustomWindow{
 		}
 
 		// Type specific properties.
-		switch($b->getType()::ID){
-			case TopLayerType::ID:
+		$type = $b->getType();
+		switch(true){
+			case $type instanceof TopLayerType:
 				$this->addSlider($this->t(Translation::UI_BRUSH_MENU_LAYER_WIDTH), 0, $loader->config->maxSize, 1, $b->layerWidth, function(Player $player, float $value) use ($b){
 					$b->layerWidth = (int) $value;
 				}
 				);
 				break;
-			case ReplaceType::ID:
+			case $type instanceof ReplaceType:
 				$this->addInput($this->t(Translation::UI_BRUSH_MENU_OBSOLETE), $b->replacedBlocks, "stone,mossy_stone_brick,grass", function(Player $player, string $value) use ($b){
 					try{
 						$b->parseBlocks($value);
@@ -90,7 +91,7 @@ class BrushPropertiesWindow extends CustomWindow{
 				}
 				);
 				break;
-			case BiomeType::ID:
+			case $type instanceof BiomeType:
 				$this->addInput($this->t(Translation::UI_BRUSH_MENU_BIOME), (string) $b->biomeId, "plains", function(Player $player, string $value) use ($b){
 					if(is_numeric($value)){
 						$b->biomeId = (int) $value;
@@ -108,10 +109,10 @@ class BrushPropertiesWindow extends CustomWindow{
 				}
 				);
 				break;
-			case TreeType::ID:
+			case $type instanceof TreeType:
 				$this->addTreeProperties($b, $loader);
 				break;
-			case PlantType::ID:
+			case $type instanceof PlantType:
 				$this->addInput($this->t(Translation::UI_BRUSH_MENU_SOIL), $b->soilBlocks, "grass", function(Player $player, string $value) use ($b){
 					try{
 						$b->parseBlocks($value);

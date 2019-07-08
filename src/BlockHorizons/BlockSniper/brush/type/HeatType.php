@@ -15,8 +15,6 @@ use pocketmine\block\TallGrass;
 
 class HeatType extends Type{
 
-	public const ID = self::TYPE_HEAT;
-
 	/**
 	 * @return Generator
 	 * @throws Exception

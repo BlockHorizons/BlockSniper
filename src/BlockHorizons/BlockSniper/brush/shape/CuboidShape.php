@@ -12,8 +12,6 @@ use pocketmine\math\Vector3;
 
 class CuboidShape extends Shape{
 
-	public const ID = self::SHAPE_CUBOID;
-
 	/**
 	 * @return Generator
 	 */

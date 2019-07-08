@@ -15,8 +15,6 @@ use pocketmine\block\Flowable;
 
 class FlattenType extends Type{
 
-	public const ID = self::TYPE_FLATTEN;
-
 	/**
 	 * @return Generator
 	 */

@@ -14,8 +14,6 @@ use pocketmine\math\Vector3;
 
 class LayerType extends Type{
 
-	public const ID = self::TYPE_LAYER;
-
 	/**
 	 * @return Generator
 	 */

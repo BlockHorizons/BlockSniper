@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush;
 
-use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
 use Generator;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
@@ -17,14 +16,6 @@ use pocketmine\world\World;
  * make processing them easier.
  */
 abstract class Shape extends AxisAlignedBB{
-
-	public const ID = -1;
-
-	public const SHAPE_SPHERE = 0;
-	public const SHAPE_CUBE = 1;
-	public const SHAPE_CUBOID = 2;
-	public const SHAPE_CYLINDER = 3;
-	public const SHAPE_ELLIPSOID = 4;
 
 	/** @var Vector3 */
 	protected $centre;
@@ -82,15 +73,6 @@ abstract class Shape extends AxisAlignedBB{
 	 * @return int
 	 */
 	public abstract function getBlockCount() : int;
-
-	/**
-	 * getPermission returns the permission required to use this shape.
-	 *
-	 * @return string
-	 */
-	public function getPermission() : string{
-		return "blocksniper.shape." . strtolower(ShapeRegistration::getShapeById(self::ID, true));
-	}
 
 	/**
 	 * usesThreeLengths defines if the Shape uses three different lengths (width, length, height) to define the

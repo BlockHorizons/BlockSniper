@@ -14,8 +14,6 @@ use pocketmine\block\Block;
 
 class ReplaceAllType extends Type{
 
-	public const ID = self::TYPE_REPLACE_ALL;
-
 	/**
 	 * @return Generator
 	 */

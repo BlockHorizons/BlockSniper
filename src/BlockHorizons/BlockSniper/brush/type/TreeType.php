@@ -16,8 +16,6 @@ use pocketmine\world\Position;
 
 class TreeType extends Type{
 
-	public const ID = self::TYPE_TREE;
-
 	/** @var Tree */
 	private $tree;
 

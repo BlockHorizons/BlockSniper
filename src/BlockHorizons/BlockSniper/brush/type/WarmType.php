@@ -10,8 +10,6 @@ use pocketmine\block\Block;
 
 class WarmType extends Type{
 
-	public const ID = self::TYPE_WARM;
-
 	/**
 	 * @return Generator
 	 */

@@ -14,8 +14,6 @@ use pocketmine\block\Flowable;
 
 class LeafBlowerType extends Type{
 
-	public const ID = self::TYPE_LEAF_BLOWER;
-
 	/**
 	 * @return Generator
 	 */

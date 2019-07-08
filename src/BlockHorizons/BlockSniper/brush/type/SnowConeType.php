@@ -18,8 +18,6 @@ use pocketmine\math\Facing;
 
 class SnowConeType extends Type{
 
-	public const ID = self::TYPE_SNOW_CONE;
-
 	/**
 	 * @return Generator
 	 */

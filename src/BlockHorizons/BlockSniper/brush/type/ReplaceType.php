@@ -14,8 +14,6 @@ use pocketmine\block\Block;
 
 class ReplaceType extends Type{
 
-	public const ID = self::TYPE_REPLACE;
-
 	/** @var Block[] */
 	private $obsolete;
 

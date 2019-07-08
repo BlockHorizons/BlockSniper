@@ -14,8 +14,6 @@ use pocketmine\block\Block;
 
 class DrainType extends Type{
 
-	public const ID = self::TYPE_DRAIN;
-
 	private const LIQUID_BLOCKS = [
 		Block::FLOWING_WATER => 0,
 		Block::WATER => 0,

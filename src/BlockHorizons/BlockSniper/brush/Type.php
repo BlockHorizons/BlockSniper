@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush;
 
 use BlockHorizons\BlockSniper\brush\async\BlockSniperChunkManager;
-use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
 use BlockHorizons\BlockSniper\exception\InvalidItemException;
 use Generator;
 use pocketmine\block\Block;
@@ -14,40 +13,12 @@ use pocketmine\math\Vector3;
 use pocketmine\world\ChunkManager;
 use pocketmine\world\World;
 use function array_rand;
-use function strtolower;
 
 /**
  * Class Type implements the basic behaviour of a brush type. It holds methods which are primarily used within classes
  * extending Type. Type implements the behaviour of filling an area depending on the area a user is allowed to brush in.
  */
 abstract class Type{
-
-	public const ID = -1;
-
-	public const TYPE_BIOME = 0;
-	public const TYPE_CLEAN_ENTITIES = 1;
-	public const TYPE_CLEAN = 2;
-	public const TYPE_DRAIN = 3;
-	public const TYPE_EXPAND = 4;
-	public const TYPE_FILL = 5;
-	public const TYPE_FLATTEN_ALL = 6;
-	public const TYPE_FLATTEN = 7;
-	public const TYPE_LAYER = 8;
-	public const TYPE_LEAF_BLOWER = 9;
-	public const TYPE_MELT = 10;
-	public const TYPE_OVERLAY = 11;
-	public const TYPE_REPLACE_ALL = 12;
-	public const TYPE_REPLACE = 13;
-	public const TYPE_SNOW_CONE = 14;
-	public const TYPE_TOP_LAYER = 15;
-	public const TYPE_TREE = 16;
-	public const TYPE_REGENERATE = 17;
-	public const TYPE_FREEZE = 18;
-	public const TYPE_WARM = 19;
-	public const TYPE_HEAT = 20;
-	public const TYPE_SMOOTH = 21;
-	public const TYPE_REPLACE_TARGET = 22;
-	public const TYPE_PLANT = 23;
 
 	/** @var BrushProperties */
 	protected $properties;
@@ -128,15 +99,6 @@ abstract class Type{
 	 */
 	public function canBeExecutedAsynchronously() : bool{
 		return true;
-	}
-
-	/**
-	 * getPermission returns the permission required to use the Type.
-	 *
-	 * @return string
-	 */
-	public function getPermission() : string{
-		return "blocksniper.type." . strtolower(TypeRegistration::getTypeById(self::ID, true));
 	}
 
 	/**

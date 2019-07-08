@@ -16,8 +16,6 @@ use pocketmine\player\Player;
 
 class CleanEntitiesType extends Type{
 
-	public const ID = self::TYPE_CLEAN_ENTITIES;
-
 	/**
 	 * @return Generator
 	 */

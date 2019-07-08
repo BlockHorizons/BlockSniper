@@ -11,7 +11,6 @@ use pocketmine\block\Block;
 use pocketmine\math\Facing;
 
 class PlantType extends Type{
-	public const ID = self::TYPE_PLANT;
 
 	/** @var Block[] */
 	private $soilBlocks;

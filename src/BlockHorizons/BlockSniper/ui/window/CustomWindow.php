@@ -12,6 +12,7 @@ use pocketmine\player\Player;
 use function array_values;
 use function str_replace;
 use function strtolower;
+use function ucwords;
 
 abstract class CustomWindow extends CustomForm{
 
@@ -25,11 +26,13 @@ abstract class CustomWindow extends CustomForm{
 	 * @return string[]
 	 */
 	public function processShapes(Player $player) : array{
-		$shapes = ShapeRegistration::getShapeIds();
+		$shapes = ShapeRegistration::getShapes();
 		foreach($shapes as $id => $name){
 			if(!$player->hasPermission("blocksniper.shape." . str_replace(" ", "", strtolower($name)))){
 				unset($shapes[$id]);
+				continue;
 			}
+			$shapes[$id] = ucwords($name);
 		}
 
 		return array_values($shapes);
@@ -41,11 +44,13 @@ abstract class CustomWindow extends CustomForm{
 	 * @return string[]
 	 */
 	public function processTypes(Player $player) : array{
-		$types = TypeRegistration::getTypeIds();
+		$types = TypeRegistration::getTypes();
 		foreach($types as $id => $name){
 			if(!$player->hasPermission("blocksniper.type." . str_replace(" ", "", strtolower($name)))){
 				unset($types[$id]);
+				continue;
 			}
+			$types[$id] = ucwords($name);
 		}
 
 		return array_values($types);

@@ -16,8 +16,6 @@ use pocketmine\math\Facing;
 
 class TopLayerType extends Type{
 
-	public const ID = self::TYPE_TOP_LAYER;
-
 	/**
 	 * @return Generator
 	 */

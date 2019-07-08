@@ -12,8 +12,6 @@ use pocketmine\math\Vector3;
 
 class SphereShape extends Shape{
 
-	public const ID = self::SHAPE_SPHERE;
-
 	/**
 	 * @return Generator
 	 */

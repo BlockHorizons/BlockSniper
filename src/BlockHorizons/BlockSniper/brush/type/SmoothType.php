@@ -12,8 +12,6 @@ use pocketmine\math\Facing;
 
 class SmoothType extends Type{
 
-	public const ID = self::TYPE_SMOOTH;
-
 	/**
 	 * @return Generator
 	 */

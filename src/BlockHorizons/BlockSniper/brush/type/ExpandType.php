@@ -16,8 +16,6 @@ use pocketmine\math\Facing;
 
 class ExpandType extends Type{
 
-	public const ID = self::TYPE_EXPAND;
-
 	/**
 	 * @return Generator
 	 */

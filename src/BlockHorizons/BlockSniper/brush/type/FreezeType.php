@@ -14,8 +14,6 @@ use pocketmine\block\Block;
 
 class FreezeType extends Type{
 
-	public const ID = self::TYPE_FREEZE;
-
 	/**
 	 * @return Generator
 	 */

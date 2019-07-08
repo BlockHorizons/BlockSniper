@@ -10,8 +10,6 @@ use pocketmine\math\Vector3;
 
 class EllipsoidShape extends SphereShape{
 
-	public const ID = self::SHAPE_ELLIPSOID;
-
 	/**
 	 * @return string
 	 */

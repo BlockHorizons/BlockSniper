@@ -11,6 +11,7 @@ use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\player\Player;
 use pocketmine\utils\TextFormat as TF;
+use function array_search;
 
 class BrushMenuWindow extends CustomWindow{
 
@@ -29,12 +30,24 @@ class BrushMenuWindow extends CustomWindow{
 			$b->mode = $value;
 		}
 		);
-		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_SHAPE), $this->processShapes($requester), $b->getShape()::ID, function(Player $player, int $value) use ($b){
-			$b->shape = ShapeRegistration::getShapeById($value);
+		$shortName = array_search($b->shape, ShapeRegistration::$shapes);
+		$key = array_search($shortName, ShapeRegistration::getShapes());
+		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_SHAPE), $this->processShapes($requester), $key, function(Player $player, int $value) use ($b){
+			$shapes = ShapeRegistration::getShapes();
+			if(!isset($shapes[$value])){
+				return;
+			}
+			$b->shape = ShapeRegistration::getShape($shapes[$value]);
 		}
 		);
-		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_TYPE), $this->processTypes($requester), $b->getType()::ID, function(Player $player, int $value) use ($loader, $b){
-			$b->type = TypeRegistration::getTypeById($value);
+		$shortName = array_search($b->type, TypeRegistration::$types);
+		$key = array_search($shortName, TypeRegistration::getTypes());
+		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_TYPE), $this->processTypes($requester), $key, function(Player $player, int $value) use ($loader, $b){
+			$types = TypeRegistration::getTypes();
+			if(!isset($types[$value])){
+				return;
+			}
+			$b->type = TypeRegistration::getType($types[$value]);
 
 			$item = $player->getInventory()->getItemInHand();
 			if($item->getName() !== $item->getVanillaName()){
