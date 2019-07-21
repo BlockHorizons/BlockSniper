@@ -6,7 +6,8 @@ namespace BlockHorizons\BlockSniper\brush\type;
 
 use BlockHorizons\BlockSniper\brush\Type;
 use Generator;
-use pocketmine\block\Block;
+use pocketmine\block\BlockFactory;
+use pocketmine\block\BlockLegacyIds;
 
 /*
  * Freezes the terrain, causing water to become ice, lava to become obsidian and extinguishes fire.
@@ -20,23 +21,23 @@ class FreezeType extends Type{
 	public function fill() : Generator{
 		foreach($this->blocks as $block){
 			switch($block->getId()){
-				case Block::WATER:
-				case Block::FLOWING_WATER:
+				case BlockLegacyIds::WATER:
+				case BlockLegacyIds::FLOWING_WATER:
 					yield $block;
-					$this->putBlock($block, Block::get(Block::ICE));
+					$this->putBlock($block, BlockFactory::get(BlockLegacyIds::ICE));
 					break;
-				case Block::LAVA:
-				case Block::FLOWING_LAVA:
+				case BlockLegacyIds::LAVA:
+				case BlockLegacyIds::FLOWING_LAVA:
 					yield $block;
-					$this->putBlock($block, Block::get(Block::OBSIDIAN));
+					$this->putBlock($block, BlockFactory::get(BlockLegacyIds::OBSIDIAN));
 					break;
-				case Block::FIRE:
+				case BlockLegacyIds::FIRE:
 					yield $block;
 					$this->delete($block);
 					break;
-				case Block::ICE:
+				case BlockLegacyIds::ICE:
 					yield $block;
-					$this->putBlock($block, Block::get(Block::PACKED_ICE));
+					$this->putBlock($block, BlockFactory::get(BlockLegacyIds::PACKED_ICE));
 			}
 		}
 	}

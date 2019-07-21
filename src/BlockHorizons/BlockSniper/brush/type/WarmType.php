@@ -6,7 +6,8 @@ namespace BlockHorizons\BlockSniper\brush\type;
 
 use BlockHorizons\BlockSniper\brush\Type;
 use Generator;
-use pocketmine\block\Block;
+use pocketmine\block\BlockFactory;
+use pocketmine\block\BlockLegacyIds;
 
 class WarmType extends Type{
 
@@ -16,17 +17,17 @@ class WarmType extends Type{
 	public function fill() : Generator{
 		foreach($this->blocks as $block){
 			switch($block->getId()){
-				case Block::ICE:
+				case BlockLegacyIds::ICE:
 					yield $block;
-					$this->putBlock($block, Block::get(Block::WATER));
+					$this->putBlock($block, BlockFactory::get(BlockLegacyIds::WATER));
 					break;
-				case Block::SNOW_LAYER:
+				case BlockLegacyIds::SNOW_LAYER:
 					yield $block;
 					$this->delete($block);
 					break;
-				case Block::PACKED_ICE:
+				case BlockLegacyIds::PACKED_ICE:
 					yield $block;
-					$this->putBlock($block, Block::get(Block::ICE));
+					$this->putBlock($block, BlockFactory::get(BlockLegacyIds::ICE));
 			}
 		}
 	}

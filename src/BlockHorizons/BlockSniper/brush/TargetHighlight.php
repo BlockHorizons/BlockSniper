@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush;
 
 use BlockHorizons\BlockSniper\iterator\BlockEdgeIterator;
-use pocketmine\block\Block;
+use pocketmine\block\BlockFactory;
+use pocketmine\block\BlockLegacyIds;
 use pocketmine\entity\Human;
 use pocketmine\entity\Skin;
 use pocketmine\event\entity\EntityDamageEvent;
@@ -95,7 +96,7 @@ class TargetHighlight extends Human{
 		}
 
 		$cubes = [];
-		foreach((new BlockEdgeIterator(Block::get(Block::AIR)))->getEdges() as $edge){
+		foreach((new BlockEdgeIterator(BlockFactory::get(BlockLegacyIds::AIR)))->getEdges() as $edge){
 			foreach($edge->walk(1.0 / 16.0) as $pos){
 				$cubes[] = [
 					"origin" => [(int) round($pos->x * 16), (int) round($pos->y * 16), (int) round($pos->z * 16)],

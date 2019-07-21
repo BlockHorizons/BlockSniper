@@ -7,7 +7,8 @@ namespace BlockHorizons\BlockSniper\brush\type;
 use BlockHorizons\BlockSniper\brush\Type;
 use Generator;
 use pocketmine\block\Air;
-use pocketmine\block\Block;
+use pocketmine\block\BlockFactory;
+use pocketmine\block\BlockLegacyIds;
 use pocketmine\block\Flowable;
 use pocketmine\block\SnowLayer;
 use pocketmine\math\Facing;
@@ -26,12 +27,12 @@ class SnowConeType extends Type{
 			if(!($block instanceof Flowable) && !($block instanceof Air) && !($block instanceof SnowLayer)){
 				$topBlock = $this->side($block, Facing::UP);
 				if($topBlock instanceof Air || $topBlock instanceof SnowLayer){
-					if($topBlock->getMeta() < 7 && $topBlock->getId() === Block::SNOW_LAYER){
+					if($topBlock->getMeta() < 7 && $topBlock->getId() === BlockLegacyIds::SNOW_LAYER){
 						yield $topBlock;
-						$this->putBlock($topBlock, Block::get(Block::SNOW_LAYER, $topBlock->getMeta() + 1));
+						$this->putBlock($topBlock, BlockFactory::get(BlockLegacyIds::SNOW_LAYER, $topBlock->getMeta() + 1));
 					}elseif(!($topBlock instanceof SnowLayer)){
 						yield $topBlock;
-						$this->putBlock($topBlock, Block::get(Block::SNOW_LAYER));
+						$this->putBlock($topBlock, BlockFactory::get(BlockLegacyIds::SNOW_LAYER));
 					}
 				}
 			}

@@ -10,6 +10,8 @@ use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\parser\Parser;
 use JsonSerializable;
 use pocketmine\block\Block;
+use pocketmine\block\BlockFactory;
+use pocketmine\block\BlockLegacyIds;
 use pocketmine\Server;
 use pocketmine\world\biome\Biome;
 
@@ -156,7 +158,7 @@ class BrushProperties implements JsonSerializable{
 	public function parseBlocks(string $data) : array{
 		$blocks = Parser::parse($data);
 		if(empty($blocks)){
-			return [Block::get(Block::AIR)];
+			return [BlockFactory::get(BlockLegacyIds::AIR)];
 		}
 		foreach($blocks as $key => $item){
 			$blocks[$key] = $item->getBlock();
