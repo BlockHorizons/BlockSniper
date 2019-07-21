@@ -7,6 +7,7 @@ namespace BlockHorizons\BlockSniper\parser;
 use BlockHorizons\BlockSniper\exception\InvalidItemException;
 use InvalidArgumentException;
 use pocketmine\item\Item;
+use pocketmine\item\ItemFactory;
 use function preg_match;
 use function preg_replace;
 use function sprintf;
@@ -131,7 +132,7 @@ class StringConsumer{
 			$name = $translation;
 		}
 		try{
-			return Item::fromString($name);
+			return ItemFactory::fromString($name);
 		}catch(InvalidArgumentException $exception){
 			throw new InvalidItemException(sprintf("cannot parse %s as block: block not found", $name));
 		}
