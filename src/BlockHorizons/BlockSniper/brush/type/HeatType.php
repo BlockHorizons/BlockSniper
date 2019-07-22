@@ -49,7 +49,7 @@ class HeatType extends Type{
 						$this->putBlock($block, VanillaBlocks::DIRT());
 					}elseif($random === 1){
 						yield $block;
-						$this->putBlock($block, BlockFactory::get(BlockLegacyIds::DIRT, 1));
+						$this->putBlock($block, VanillaBlocks::COARSE_DIRT());
 					}
 					break;
 				case $block instanceof Flower || $block instanceof DoublePlant || $block instanceof TallGrass:

@@ -116,7 +116,7 @@ class BrushTask extends AsyncTask{
 
 			[$posX, $posY, $posZ] = [$vector3->x & 0x0f, $vector3->y, $vector3->z & 0x0f];
 			$combinedValue = $chunk->getFullBlock($posX, $posY, $posZ);
-			$block = BlockFactory::get($combinedValue >> 4, $combinedValue & 0xf);
+			$block = BlockFactory::fromFullBlock($combinedValue);
 			$block->setComponents($vector3->x, $vector3->y, $vector3->z);
 
 			++$i;
