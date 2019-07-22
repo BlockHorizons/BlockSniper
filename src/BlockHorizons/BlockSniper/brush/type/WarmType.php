@@ -8,6 +8,7 @@ use BlockHorizons\BlockSniper\brush\Type;
 use Generator;
 use pocketmine\block\BlockFactory;
 use pocketmine\block\BlockLegacyIds;
+use pocketmine\block\VanillaBlocks;
 
 class WarmType extends Type{
 
@@ -19,7 +20,7 @@ class WarmType extends Type{
 			switch($block->getId()){
 				case BlockLegacyIds::ICE:
 					yield $block;
-					$this->putBlock($block, BlockFactory::get(BlockLegacyIds::WATER));
+					$this->putBlock($block, VanillaBlocks::WATER());
 					break;
 				case BlockLegacyIds::SNOW_LAYER:
 					yield $block;
@@ -27,7 +28,7 @@ class WarmType extends Type{
 					break;
 				case BlockLegacyIds::PACKED_ICE:
 					yield $block;
-					$this->putBlock($block, BlockFactory::get(BlockLegacyIds::ICE));
+					$this->putBlock($block, VanillaBlocks::ICE());
 			}
 		}
 	}

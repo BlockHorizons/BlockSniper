@@ -13,6 +13,7 @@ use pocketmine\block\DoublePlant;
 use pocketmine\block\Flower;
 use pocketmine\block\Leaves;
 use pocketmine\block\TallGrass;
+use pocketmine\block\VanillaBlocks;
 
 class HeatType extends Type{
 
@@ -26,7 +27,7 @@ class HeatType extends Type{
 				case BlockLegacyIds::PACKED_ICE:
 				case BlockLegacyIds::ICE:
 					yield $block;
-					$this->putBlock($block, BlockFactory::get(BlockLegacyIds::WATER));
+					$this->putBlock($block, VanillaBlocks::WATER());
 					break;
 				case BlockLegacyIds::SNOW_LAYER:
 				case BlockLegacyIds::SNOW:
@@ -45,7 +46,7 @@ class HeatType extends Type{
 					$random = random_int(0, 8);
 					if($random === 0){
 						yield $block;
-						$this->putBlock($block, BlockFactory::get(BlockLegacyIds::DIRT));
+						$this->putBlock($block, VanillaBlocks::DIRT());
 					}elseif($random === 1){
 						yield $block;
 						$this->putBlock($block, BlockFactory::get(BlockLegacyIds::DIRT, 1));
@@ -53,7 +54,7 @@ class HeatType extends Type{
 					break;
 				case $block instanceof Flower || $block instanceof DoublePlant || $block instanceof TallGrass:
 					yield $block;
-					$this->putBlock($block, BlockFactory::get(BlockLegacyIds::DEAD_BUSH));
+					$this->putBlock($block, VanillaBlocks::DEAD_BUSH());
 			}
 		}
 	}

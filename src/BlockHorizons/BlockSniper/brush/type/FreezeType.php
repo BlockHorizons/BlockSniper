@@ -8,6 +8,7 @@ use BlockHorizons\BlockSniper\brush\Type;
 use Generator;
 use pocketmine\block\BlockFactory;
 use pocketmine\block\BlockLegacyIds;
+use pocketmine\block\VanillaBlocks;
 
 /*
  * Freezes the terrain, causing water to become ice, lava to become obsidian and extinguishes fire.
@@ -24,12 +25,12 @@ class FreezeType extends Type{
 				case BlockLegacyIds::WATER:
 				case BlockLegacyIds::FLOWING_WATER:
 					yield $block;
-					$this->putBlock($block, BlockFactory::get(BlockLegacyIds::ICE));
+					$this->putBlock($block, VanillaBlocks::ICE());
 					break;
 				case BlockLegacyIds::LAVA:
 				case BlockLegacyIds::FLOWING_LAVA:
 					yield $block;
-					$this->putBlock($block, BlockFactory::get(BlockLegacyIds::OBSIDIAN));
+					$this->putBlock($block, VanillaBlocks::OBSIDIAN());
 					break;
 				case BlockLegacyIds::FIRE:
 					yield $block;
@@ -37,7 +38,7 @@ class FreezeType extends Type{
 					break;
 				case BlockLegacyIds::ICE:
 					yield $block;
-					$this->putBlock($block, BlockFactory::get(BlockLegacyIds::PACKED_ICE));
+					$this->putBlock($block, VanillaBlocks::PACKED_ICE());
 			}
 		}
 	}

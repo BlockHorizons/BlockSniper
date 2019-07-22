@@ -11,6 +11,7 @@ use pocketmine\block\BlockFactory;
 use pocketmine\block\BlockLegacyIds;
 use pocketmine\block\Flowable;
 use pocketmine\block\SnowLayer;
+use pocketmine\block\VanillaBlocks;
 use pocketmine\math\Facing;
 
 /*
@@ -32,7 +33,7 @@ class SnowConeType extends Type{
 						$this->putBlock($topBlock, BlockFactory::get(BlockLegacyIds::SNOW_LAYER, $topBlock->getMeta() + 1));
 					}elseif(!($topBlock instanceof SnowLayer)){
 						yield $topBlock;
-						$this->putBlock($topBlock, BlockFactory::get(BlockLegacyIds::SNOW_LAYER));
+						$this->putBlock($topBlock, VanillaBlocks::SNOW_LAYER());
 					}
 				}
 			}
