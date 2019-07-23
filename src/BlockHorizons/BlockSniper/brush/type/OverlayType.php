@@ -7,7 +7,7 @@ namespace BlockHorizons\BlockSniper\brush\type;
 use BlockHorizons\BlockSniper\brush\Type;
 use Generator;
 use pocketmine\block\Air;
-use pocketmine\block\Block;
+use pocketmine\block\BlockLegacyIds;
 use pocketmine\math\Facing;
 
 /*
@@ -21,7 +21,7 @@ class OverlayType extends Type{
 	 */
 	public function fill() : Generator{
 		foreach($this->blocks as $block){
-			if($block->getId() !== Block::AIR){
+			if($block->getId() !== BlockLegacyIds::AIR){
 				$valid = true;
 				foreach($this->brushBlocks as $possibleBlock){
 					if($block->getId() === $possibleBlock->getId() && $block->getMeta() === $possibleBlock->getMeta()){

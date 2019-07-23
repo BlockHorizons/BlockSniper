@@ -8,6 +8,9 @@ use BlockHorizons\BlockSniper\brush\async\BlockSniperChunkManager;
 use BlockHorizons\BlockSniper\exception\InvalidItemException;
 use Generator;
 use pocketmine\block\Block;
+use pocketmine\block\BlockFactory;
+use pocketmine\block\BlockLegacyIds;
+use pocketmine\block\VanillaBlocks;
 use pocketmine\math\Vector2;
 use pocketmine\math\Vector3;
 use pocketmine\world\ChunkManager;
@@ -130,7 +133,7 @@ abstract class Type{
 		try{
 			$this->brushBlocks = $this->properties->getBrushBlocks();
 		}catch(InvalidItemException $exception){
-			$this->brushBlocks = [Block::get(Block::AIR)];
+			$this->brushBlocks = [VanillaBlocks::AIR()];
 		}
 
 		if(!empty($plotPoints)){
@@ -250,7 +253,7 @@ abstract class Type{
 	 * @param Vector3 $pos
 	 */
 	public function delete(Vector3 $pos) : void{
-		$this->putBlock($pos, Block::get(Block::AIR));
+		$this->putBlock($pos, VanillaBlocks::AIR());
 	}
 
 	/**

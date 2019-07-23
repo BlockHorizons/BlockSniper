@@ -9,6 +9,7 @@ use BlockHorizons\BlockSniper\brush\Target;
 use BlockHorizons\BlockSniper\brush\Type;
 use Generator;
 use pocketmine\block\Block;
+use pocketmine\block\BlockFactory;
 
 class ReplaceTargetType extends Type{
 
@@ -28,7 +29,7 @@ class ReplaceTargetType extends Type{
 	 */
 	public function fill() : Generator{
 		/** @var Block $block */
-		$targetBlock = Block::get($this->targetBlockId, $this->targetBlockMeta);
+		$targetBlock = BlockFactory::get($this->targetBlockId, $this->targetBlockMeta);
 		foreach($this->blocks as $block){
 			if($block->getId() === $targetBlock->getId() && $block->getMeta() === $targetBlock->getMeta()){
 				yield $block;

@@ -7,11 +7,13 @@ namespace BlockHorizons\BlockSniper\brush\type;
 use BlockHorizons\BlockSniper\brush\Type;
 use Exception;
 use Generator;
-use pocketmine\block\Block;
+use pocketmine\block\BlockFactory;
+use pocketmine\block\BlockLegacyIds;
 use pocketmine\block\DoublePlant;
 use pocketmine\block\Flower;
 use pocketmine\block\Leaves;
 use pocketmine\block\TallGrass;
+use pocketmine\block\VanillaBlocks;
 
 class HeatType extends Type{
 
@@ -22,37 +24,37 @@ class HeatType extends Type{
 	public function fill() : Generator{
 		foreach($this->blocks as $block){
 			switch($block->getId()){
-				case Block::PACKED_ICE:
-				case Block::ICE:
+				case BlockLegacyIds::PACKED_ICE:
+				case BlockLegacyIds::ICE:
 					yield $block;
-					$this->putBlock($block, Block::get(Block::WATER));
+					$this->putBlock($block, VanillaBlocks::WATER());
 					break;
-				case Block::SNOW_LAYER:
-				case Block::SNOW:
+				case BlockLegacyIds::SNOW_LAYER:
+				case BlockLegacyIds::SNOW:
 					yield $block;
 					$this->delete($block);
 					break;
-				case Block::WATER:
-				case Block::FLOWING_WATER:
+				case BlockLegacyIds::WATER:
+				case BlockLegacyIds::FLOWING_WATER:
 				case $block instanceof Leaves:
 					if(random_int(0, 4) === 0){
 						yield $block;
 						$this->delete($block);
 					}
 					break;
-				case Block::GRASS:
+				case BlockLegacyIds::GRASS:
 					$random = random_int(0, 8);
 					if($random === 0){
 						yield $block;
-						$this->putBlock($block, Block::get(Block::DIRT));
+						$this->putBlock($block, VanillaBlocks::DIRT());
 					}elseif($random === 1){
 						yield $block;
-						$this->putBlock($block, Block::get(Block::DIRT, 1));
+						$this->putBlock($block, VanillaBlocks::COARSE_DIRT());
 					}
 					break;
 				case $block instanceof Flower || $block instanceof DoublePlant || $block instanceof TallGrass:
 					yield $block;
-					$this->putBlock($block, Block::get(Block::DEAD_BUSH));
+					$this->putBlock($block, VanillaBlocks::DEAD_BUSH());
 			}
 		}
 	}
