@@ -3,6 +3,9 @@
 namespace BlockHorizons\BlockSniper\brush\async;
 
 use pocketmine\block\Block;
+use pocketmine\block\BlockFactory;
+use pocketmine\block\BlockLegacyIds;
+use pocketmine\block\VanillaBlocks;
 use pocketmine\math\Facing;
 use pocketmine\world\SimpleChunkManager;
 
@@ -62,6 +65,6 @@ class BlockSniperChunkManager extends SimpleChunkManager{
 			return $block;
 		}
 
-		return Block::get(Block::AIR);
+		return VanillaBlocks::AIR();
 	}
 }

@@ -7,7 +7,7 @@ namespace BlockHorizons\BlockSniper\brush\type;
 use BlockHorizons\BlockSniper\brush\BrushProperties;
 use BlockHorizons\BlockSniper\exception\InvalidItemException;
 use Generator;
-use pocketmine\block\Block;
+use pocketmine\block\BlockLegacyIds;
 use pocketmine\math\Vector3;
 use pocketmine\utils\Random;
 use pocketmine\world\Position;
@@ -207,7 +207,7 @@ class Tree{
 					if($xs + $ys + $zs - 0.5 < $radiusSquared){
 						[$this->tempVec->x, $this->tempVec->y, $this->tempVec->z] = [$x, $y, $z];
 						$block = $this->position->world->getBlock($this->tempVec);
-						if($block->getId() !== Block::AIR){
+						if($block->getId() !== BlockLegacyIds::AIR){
 							continue;
 						}
 						if(mt_rand(0, 4) === 0){

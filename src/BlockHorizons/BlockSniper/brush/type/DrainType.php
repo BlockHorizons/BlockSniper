@@ -6,7 +6,7 @@ namespace BlockHorizons\BlockSniper\brush\type;
 
 use BlockHorizons\BlockSniper\brush\Type;
 use Generator;
-use pocketmine\block\Block;
+use pocketmine\block\BlockLegacyIds;
 
 /*
  * Removes all liquid blocks within the brush radius.
@@ -15,10 +15,10 @@ use pocketmine\block\Block;
 class DrainType extends Type{
 
 	private const LIQUID_BLOCKS = [
-		Block::FLOWING_WATER => 0,
-		Block::WATER => 0,
-		Block::FLOWING_LAVA => 0,
-		Block::LAVA => 0
+		BlockLegacyIds::FLOWING_WATER => 0,
+		BlockLegacyIds::WATER => 0,
+		BlockLegacyIds::FLOWING_LAVA => 0,
+		BlockLegacyIds::LAVA => 0
 	];
 
 	/**

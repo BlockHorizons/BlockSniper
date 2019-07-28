@@ -6,7 +6,7 @@ namespace BlockHorizons\BlockSniper\brush\type;
 
 use BlockHorizons\BlockSniper\brush\Type;
 use Generator;
-use pocketmine\block\Block;
+use pocketmine\block\BlockLegacyIds;
 
 /*
  * Replaces every solid block within the brush radius.
@@ -19,7 +19,7 @@ class ReplaceAllType extends Type{
 	 */
 	public function fill() : Generator{
 		foreach($this->blocks as $block){
-			if($block->getId() !== Block::AIR){
+			if($block->getId() !== BlockLegacyIds::AIR){
 				yield $block;
 				$this->putBlock($block, $this->randomBrushBlock());
 			}

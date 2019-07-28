@@ -2,8 +2,8 @@
 
 namespace BlockHorizons\BlockSniper\session\owner;
 
+use GlobalLogger;
 use pocketmine\Server;
-use pocketmine\utils\MainLogger;
 
 class ServerSessionOwner implements ISessionOwner{
 
@@ -39,6 +39,6 @@ class ServerSessionOwner implements ISessionOwner{
 	 * @param string $message
 	 */
 	public function sendMessage(string $message) : void{
-		MainLogger::getLogger()->info($message);
+		GlobalLogger::get()->info($message);
 	}
 }
