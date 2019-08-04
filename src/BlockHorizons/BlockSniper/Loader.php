@@ -13,6 +13,7 @@ use BlockHorizons\BlockSniper\command\cloning\CloneCommand;
 use BlockHorizons\BlockSniper\command\cloning\PasteCommand;
 use BlockHorizons\BlockSniper\command\RedoCommand;
 use BlockHorizons\BlockSniper\command\UndoCommand;
+use BlockHorizons\BlockSniper\commands\DeselectCommand;
 use BlockHorizons\BlockSniper\data\ConfigData;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\data\TranslationData;
@@ -152,6 +153,7 @@ class Loader extends PluginBase{
 				new UndoCommand($this),
 				new RedoCommand($this),
 				new CloneCommand($this),
+				new DeselectCommand($this),
 				new PasteCommand($this)
 			]
 		);

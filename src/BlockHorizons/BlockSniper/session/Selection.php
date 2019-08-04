@@ -37,6 +37,17 @@ class Selection{
 	}
 
 	/**
+	 * It resets the positions of selection
+	 *
+	 * @return Selection
+	 */
+	public function clear() : self{
+		$this->pos1 = null;
+		$this->pos2 = null;
+		return $this;
+	}
+
+	/**
 	 * @return AxisAlignedBB
 	 */
 	public function box() : AxisAlignedBB{

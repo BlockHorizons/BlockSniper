@@ -51,6 +51,10 @@
 				"nonexistent": "Le schéma %s n'a pas pu être trouvé dans le répertoire schématique.",
 				"success": "Pasting the schematic %s on the location looked at."
 			}
+		},
+		"deselect": {
+			"description": "It deselect the current selection.",
+			"success": "Successfully deselected your selection."
 		}
 	},
 	"ui": {

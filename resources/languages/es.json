@@ -51,6 +51,10 @@
 				"nonexistent": "La schematic %s no pudo ser encontrada en el directorio de schematics.",
 				"success": "Pasting the schematic %s on the location looked at."
 			}
+		},
+		"deselect": {
+			"description": "It deselect the current selection.",
+			"success": "Successfully deselected your selection."
 		}
 	},
 	"ui": {
