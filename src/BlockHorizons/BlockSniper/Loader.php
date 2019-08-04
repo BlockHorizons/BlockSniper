@@ -10,6 +10,7 @@ use BlockHorizons\BlockSniper\commands\BlockSniperCommand;
 use BlockHorizons\BlockSniper\commands\BrushCommand;
 use BlockHorizons\BlockSniper\commands\cloning\CloneCommand;
 use BlockHorizons\BlockSniper\commands\cloning\PasteCommand;
+use BlockHorizons\BlockSniper\commands\DeselectCommand;
 use BlockHorizons\BlockSniper\commands\RedoCommand;
 use BlockHorizons\BlockSniper\commands\UndoCommand;
 use BlockHorizons\BlockSniper\data\ConfigData;
@@ -27,7 +28,7 @@ use pocketmine\utils\TextFormat as TF;
 
 class Loader extends PluginBase{
 
-	public const VERSION = "3.2.3";
+	public const VERSION = "3.2.4";
 	public const CONFIGURATION_VERSION = "4.2.0";
 	public const API_TARGET = "3.2.0";
 
@@ -171,7 +172,8 @@ class Loader extends PluginBase{
 			new UndoCommand($this),
 			new RedoCommand($this),
 			new CloneCommand($this),
-			new PasteCommand($this)
+			new PasteCommand($this),
+			new DeselectCommand($this)
 		]);
 	}
 

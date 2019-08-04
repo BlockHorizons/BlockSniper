@@ -57,7 +57,7 @@ abstract class BaseShape extends AxisAlignedBB{
 	/**
 	 * @return string
 	 */
-	public function getPlayerName() : string {
+	public function getPlayerName() : string{
 		return $this->playerName;
 	}
 

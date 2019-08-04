@@ -56,6 +56,10 @@
 				"success": "成功复制概要 %s 至你看向的位置。"
 			}
 		}
+		"deselect": {
+			"description": "It deselect the current selection.",
+			"success": "Successfully deselected your selection."
+		}
 	},
 	"ui": {
 		"preset-menu": {

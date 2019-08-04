@@ -49,7 +49,7 @@ class SphereShape extends BaseShape{
 	/**
 	 * @return int
 	 */
-	public function getBlockCount() : int {
+	public function getBlockCount() : int{
 		$i = 0;
 		$radiusX = ($this->maxX - $this->minX) / 2;
 		$radiusY = ($this->maxY - $this->minY) / 2;
@@ -76,6 +76,7 @@ class SphereShape extends BaseShape{
 				}
 			}
 		}
+
 		return $i;
 	}
 

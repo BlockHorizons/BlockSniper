@@ -41,6 +41,8 @@ class Translation{
 	const COMMANDS_PASTE_TEMPLATE_SUCCESS = "commands.paste.template.success";
 	const COMMANDS_PASTE_SCHEMATIC_NONEXISTENT = "commands.paste.schematic.nonexistent";
 	const COMMANDS_PASTE_SCHEMATIC_SUCCESS = "commands.paste.schematic.success";
+	const COMMANDS_DESELECT_DESCRIPTION = "commands.deselect.description";
+	const COMMANDS_DESELECT_SUCCESS = "commands.deselect.success";
 	const UI_PRESET_MENU_TITLE = "ui.preset-menu.title";
 	const UI_PRESET_MENU_SUBTITLE = "ui.preset-menu.subtitle";
 	const UI_PRESET_MENU_CREATE = "ui.preset-menu.create";

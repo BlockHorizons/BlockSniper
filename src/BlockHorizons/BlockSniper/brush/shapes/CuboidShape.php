@@ -36,7 +36,7 @@ class CuboidShape extends BaseShape{
 	/**
 	 * @return int
 	 */
-	public function getBlockCount() : int {
+	public function getBlockCount() : int{
 		$i = 0;
 		for($x = $this->minX; $x <= $this->maxX; $x++){
 			for($y = $this->minY; $y <= $this->maxY; $y++){
@@ -50,6 +50,7 @@ class CuboidShape extends BaseShape{
 				}
 			}
 		}
+
 		return $i;
 	}
 

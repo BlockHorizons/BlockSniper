@@ -56,6 +56,10 @@
 				"success": "Collé avec succès le schéma% s sur l'emplacement regardé."
 			}
 		}
+		"deselect": {
+			"description": "It deselect the current selection.",
+			"success": "Successfully deselected your selection."
+		}
 	},
 	"ui": {
 		"preset-menu": {
@@ -163,6 +167,10 @@
 			"trunk-blocks": "The blocks to use for the trunk of the tree",
 			"leaves-blocks": "The blocks to use for the leaves of the tree",
 			"leaves-cluster-size": "The size of the leaves cluster at the end of each branch"
+		}
+		"deselect": {
+			"description": "It deselect the current selection.",
+			"success": "Successfully deselected your selection"
 		}
 	},
 	"log": {

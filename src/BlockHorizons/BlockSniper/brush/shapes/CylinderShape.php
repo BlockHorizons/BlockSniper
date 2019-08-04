@@ -46,7 +46,7 @@ class CylinderShape extends BaseShape{
 	/**
 	 * @return int
 	 */
-	public function getBlockCount() : int {
+	public function getBlockCount() : int{
 		$i = 0;
 		$radiusX = ($this->maxX - $this->minX) / 2;
 		$radiusZ = ($this->maxZ - $this->minZ) / 2;
@@ -70,6 +70,7 @@ class CylinderShape extends BaseShape{
 				}
 			}
 		}
+
 		return $i;
 	}
 

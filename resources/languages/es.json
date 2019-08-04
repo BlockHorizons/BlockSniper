@@ -56,6 +56,10 @@
 				"success": "Se ha pegado correctamente la schematic %s en la ubicación examinada."
 			}
 		}
+		"deselect": {
+			"description": "It deselect the current selection.",
+			"success": "Successfully deselected your selection."
+		}
 	},
 	"ui": {
 		"preset-menu": {

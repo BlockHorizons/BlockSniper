@@ -65,7 +65,7 @@ class BrushTask extends AsyncTask{
 		$i = 0;
 		foreach($shape->getBlocksInside(true) as $vector3){
 			$index = Level::chunkHash($vector3->x >> 4, $vector3->z >> 4);
-			if(!isset($chunks[$index])) {
+			if(!isset($chunks[$index])){
 				continue;
 			}
 
@@ -74,7 +74,7 @@ class BrushTask extends AsyncTask{
 			$block->setComponents($vector3->x, $vector3->y, $vector3->z);
 
 			$i++;
-			if($i === $percentageBlocks) {
+			if($i === $percentageBlocks){
 				$this->publishProgress([$shape->getPlayerName(), (int) ceil($i / $blockCount * 20)]);
 				$percentageBlocks += $blocksPerPercentage;
 			}
@@ -84,7 +84,7 @@ class BrushTask extends AsyncTask{
 
 	public function onProgressUpdate(Server $server, $progress) : void{
 		[$playerName, $progress] = $progress;
-		if(($player = $server->getPlayer($playerName)) === null) {
+		if(($player = $server->getPlayer($playerName)) === null){
 			return;
 		}
 		$player->sendPopup(TextFormat::GREEN . str_repeat("|", $progress) . TextFormat::RED . str_repeat("|", 20 - $progress));

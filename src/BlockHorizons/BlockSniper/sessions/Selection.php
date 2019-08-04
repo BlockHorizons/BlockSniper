@@ -33,6 +33,18 @@ class Selection{
 	}
 
 	/**
+	 * It resets the positions of selection.
+	 *
+	 * @return Selection
+	 */
+	public function clear() : self{
+		$this->pos1 = null;
+		$this->pos2 = null;
+
+		return $this;
+	}
+
+	/**
 	 * @return AxisAlignedBB
 	 */
 	public function box() : AxisAlignedBB{
@@ -53,7 +65,7 @@ class Selection{
 	/**
 	 * @return int
 	 */
-	public function blockCount() : int {
+	public function blockCount() : int{
 		$box = $this->box();
 
 		return (int) ceil(($box->maxX - $box->minX) * ($box->maxY - $box->minY) * ($box->maxZ - $box->minZ));

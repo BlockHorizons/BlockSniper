@@ -74,11 +74,11 @@ class Brush extends BrushProperties{
 		}
 
 		$asyncSize = false;
-		if($selection !== null) {
-			if($selection->blockCount() ** 1/3 >= $loader->config->asyncOperationSize) {
+		if($selection !== null){
+			if($selection->blockCount() ** 1 / 3 >= $loader->config->asyncOperationSize){
 				$asyncSize = true;
 			}
-		} elseif($this->size >= $loader->config->asyncOperationSize) {
+		}elseif($this->size >= $loader->config->asyncOperationSize){
 			$asyncSize = true;
 		}
 
