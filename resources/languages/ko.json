@@ -55,7 +55,7 @@
 				"nonexistent": "개략도 디렉터리에서 %s 개략도를 찾을 수 없습니다.",
 				"success": "보았던 위치에 %s 개략도를 성공적으로 붙여넣었습니다."
 			}
-		}
+		},
 		"deselect": {
 			"description": "It deselect the current selection.",
 			"success": "Successfully deselected your selection."

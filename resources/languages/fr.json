@@ -55,7 +55,7 @@
 				"nonexistent": "Le schéma %s n'a pas pu être trouvé dans le répertoire schématique.",
 				"success": "Collé avec succès le schéma% s sur l'emplacement regardé."
 			}
-		}
+		},
 		"deselect": {
 			"description": "It deselect the current selection.",
 			"success": "Successfully deselected your selection."

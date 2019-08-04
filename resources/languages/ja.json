@@ -55,7 +55,7 @@
 				"nonexistent": "回路図ディレクトリ%sが回路図ディレクトリに見つかりませんでした。",
 				"success": "選択範囲に回路図%sを貼り付けました。"
 			}
-		}
+		},
 		"deselect": {
 			"description": "It deselect the current selection.",
 			"success": "Successfully deselected your selection."

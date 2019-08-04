@@ -55,7 +55,7 @@
 				"nonexistent": "無法在概要目錄中找到 %s 概要。",
 				"success": "成功複製概要 %s 至你看向的位置。"
 			}
-		}
+		},
 		"deselect": {
 			"description": "It deselect the current selection.",
 			"success": "Successfully deselected your selection."

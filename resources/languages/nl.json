@@ -55,7 +55,7 @@
 				"nonexistent": "De schematic %s kon niet worden gevonden in de schematic folder.",
 				"success": "Plakken van de schematic %s op de locatie waar je naar kijkt geslaagd."
 			}
-		}
+		},
 		"deselect": {
 			"description": "It deselect the current selection.",
 			"success": "Successfully deselected your selection."

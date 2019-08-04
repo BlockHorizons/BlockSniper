@@ -55,7 +55,7 @@
 				"nonexistent": "The schematic %s could not be found in the schematic directory.",
 				"success": "Successfully pasted the schematic %s on the location looked at."
 			}
-		}
+		},
 		"deselect": {
 			"description": "It deselect the current selection.",
 			"success": "Successfully deselected your selection."
