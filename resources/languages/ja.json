@@ -51,6 +51,10 @@
 				"nonexistent": "回路図ディレクトリ%sが回路図ディレクトリに見つかりませんでした。",
 				"success": "Pasting the schematic %s on the location looked at."
 			}
+		},
+		"deselect": {
+			"description": "It deselect the current selection.",
+			"success": "Successfully deselected your selection."
 		}
 	},
 	"ui": {

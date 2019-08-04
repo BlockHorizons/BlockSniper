@@ -51,6 +51,10 @@
 				"nonexistent": "无法在概要目录中找到 %s 概要。",
 				"success": "Pasting the schematic %s on the location looked at."
 			}
+		},
+		"deselect": {
+			"description": "It deselect the current selection.",
+			"success": "Successfully deselected your selection."
 		}
 	},
 	"ui": {

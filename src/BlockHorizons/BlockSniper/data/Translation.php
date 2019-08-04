@@ -47,6 +47,8 @@ class Translation{
 	public const COMMANDS_PASTE_COPY_SUCCESS = "commands.paste.copy.success";
 	public const COMMANDS_PASTE_SCHEMATIC_NONEXISTENT = "commands.paste.schematic.nonexistent";
 	public const COMMANDS_PASTE_SCHEMATIC_SUCCESS = "commands.paste.schematic.success";
+	public const COMMANDS_DESELECT_DESCRIPTION = "commands.paste.schematic.nonexistent";
+	public const COMMANDS_DESELECT_SUCCESS = "commands.paste.schematic.success";
 	public const UI_MAIN_MENU_TITLE = "ui.main-menu.title";
 	public const UI_MAIN_MENU_SUBTITLE = "ui.main-menu.subtitle";
 	public const UI_MAIN_MENU_BRUSH = "ui.main-menu.brush";
