@@ -19,6 +19,7 @@
 - Added a new Changelog menu that can be used to view past changelogs and changelogs of newer versions.
 - Added a custom entity that highlight the target block when holding the brush item.
 - Added sound effects during the usage of BlockSniper.
+- Added a /deselect command to clear the current selection.
 
 ### Changed
 - The Brush UI no longer contains all available brush properties.
