@@ -23,12 +23,12 @@
 		},
 		"redo": {
 			"description": "마지막으로 실행 취소한 BlockSniper 수정 사항을 다시 실행합니다.",
-			"no-redo": "다시 실행할 수정 사항을 찾을 수 없습니다.",
+			"no-redo": "다시 실행할 수정 사항이 없습니다.",
 			"success": "마지막으로 실행 취소한 수정 사항을 성공적으로 다시 실행했습니다."
 		},
 		"undo": {
 			"description": "마지막으로 실행한 BlockSniper 수정 사항의 실행을 취소합니다.",
-			"no-undo": "실행 취소할 수정 사항을 찾을 수 없습니다.",
+			"no-undo": "실행 취소할 수정 사항이 없습니다.",
 			"success": "마지막 수정 사항을 성공적으로 취소했습니다."
 		},
 		"clone": {
@@ -53,8 +53,8 @@
 			}
 		},
 		"deselect": {
-			"description": "It deselect the current selection.",
-			"success": "Successfully deselected your selection."
+			"description": "현재 선택 영역의 선택을 해제합니다.",
+			"success": "선택 영역의 선택을 성공적으로 해제했습니다."
 		}
 	},
 	"ui": {
@@ -83,7 +83,7 @@
 			"length": "브러시 길이",
 			"blocks": "브러시 블록",
 			"obsolete": "교체된 블록",
-			"biome": "브러시 생물군계",
+			"biome": "브러시 생물 군계",
 			"tree": "브러시 나무",
 			"layer-width": "레이어 너비",
 			"soil": "토양 블록"
@@ -99,8 +99,8 @@
 			"reset-decrement-brush": "감소 브러시를 초기 시작 크기로 자동으로 초기화하기",
 			"save-brush": "서버 다시 시작 시에 플레이어의 브러시 속성 저장",
 			"session-timeout-time": "플레이어가 서버를 떠난 후에 플레이어의 세션을 제거할 시간(분)",
-			"auto-gui": "브러시 아이템을 포함하고 있는 단축바 슬롯으로 전환할 때 자동으로 GUI 열기",
-			"cooldown": "브러시를 사용한 후 다시 사용 가능해지기까지의 쿨다운(초, 십진법 사용 가능)",
+			"auto-gui": "브러시 아이템이 있는 단축바 슬롯으로 전환할 때 자동으로 GUI 열기",
+			"cooldown": "브러시를 사용한 후 다시 사용할 수 있기까지의 쿨다운(초, 십진법 사용 가능)",
 			"myplot-support": "MyPlot 지원을 켤지 말지 여부"
 		},
 		"tree-menu": {
