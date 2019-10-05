@@ -21,7 +21,7 @@ class ReplaceAllType extends Type{
 		foreach($this->blocks as $block){
 			if($block->getId() !== BlockLegacyIds::AIR){
 				yield $block;
-				$this->putBlock($block, $this->randomBrushBlock());
+				$this->putBlock($block->getPos(), $this->randomBrushBlock());
 			}
 		}
 	}

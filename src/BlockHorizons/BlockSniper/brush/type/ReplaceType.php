@@ -26,7 +26,7 @@ class ReplaceType extends Type{
 			foreach($this->obsolete as $obsolete){
 				if($block->getId() === $obsolete->getId() && $block->getMeta() === $obsolete->getMeta()){
 					yield $block;
-					$this->putBlock($block, $this->randomBrushBlock());
+					$this->putBlock($block->getPos(), $this->randomBrushBlock());
 					break;
 				}
 			}

@@ -28,7 +28,7 @@ class DrainType extends Type{
 		foreach($this->blocks as $block){
 			if(isset(self::LIQUID_BLOCKS[$block->getId()])){
 				yield $block;
-				$this->delete($block);
+				$this->delete($block->getPos());
 			}
 		}
 	}

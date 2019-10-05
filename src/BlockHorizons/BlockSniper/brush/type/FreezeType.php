@@ -25,20 +25,20 @@ class FreezeType extends Type{
 				case BlockLegacyIds::WATER:
 				case BlockLegacyIds::FLOWING_WATER:
 					yield $block;
-					$this->putBlock($block, VanillaBlocks::ICE());
+					$this->putBlock($block->getPos(), VanillaBlocks::ICE());
 					break;
 				case BlockLegacyIds::LAVA:
 				case BlockLegacyIds::FLOWING_LAVA:
 					yield $block;
-					$this->putBlock($block, VanillaBlocks::OBSIDIAN());
+					$this->putBlock($block->getPos(), VanillaBlocks::OBSIDIAN());
 					break;
 				case BlockLegacyIds::FIRE:
 					yield $block;
-					$this->delete($block);
+					$this->delete($block->getPos());
 					break;
 				case BlockLegacyIds::ICE:
 					yield $block;
-					$this->putBlock($block, VanillaBlocks::PACKED_ICE());
+					$this->putBlock($block->getPos(), VanillaBlocks::PACKED_ICE());
 			}
 		}
 	}

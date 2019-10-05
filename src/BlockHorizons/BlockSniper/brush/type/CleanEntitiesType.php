@@ -6,6 +6,7 @@ namespace BlockHorizons\BlockSniper\brush\type;
 
 use BlockHorizons\BlockSniper\brush\Type;
 use Generator;
+use pocketmine\block\Block;
 use pocketmine\entity\Entity;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\player\Player;
@@ -22,7 +23,7 @@ class CleanEntitiesType extends Type{
 	protected function fill() : Generator{
 		foreach($this->blocks as $block){
 			/** @var Entity $entity */
-			foreach($block->getWorld()->getNearbyEntities(new AxisAlignedBB($block->x, $block->y, $block->z, $block->x + 1, $block->y + 1, $block->z + 1)) as $entity){
+			foreach($block->getPos()->getWorld()->getNearbyEntities(new AxisAlignedBB($block->getPos()->x, $block->getPos()->y, $block->getPos()->z, $block->getPos()->x + 1, $block->getPos()->y + 1, $block->getPos()->z + 1)) as $entity){
 				if(!($entity instanceof Player)){
 					$entity->flagForDespawn();
 				}

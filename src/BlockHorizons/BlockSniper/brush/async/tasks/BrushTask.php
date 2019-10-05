@@ -117,7 +117,7 @@ class BrushTask extends AsyncTask{
 			[$posX, $posY, $posZ] = [$vector3->x & 0x0f, $vector3->y, $vector3->z & 0x0f];
 			$combinedValue = $chunk->getFullBlock($posX, $posY, $posZ);
 			$block = BlockFactory::fromFullBlock($combinedValue);
-			$block->setComponents($vector3->x, $vector3->y, $vector3->z);
+			$block->getPos()->setComponents($vector3->x, $vector3->y, $vector3->z);
 
 			++$i;
 			if($i === $percentageBlocks){
@@ -135,7 +135,7 @@ class BrushTask extends AsyncTask{
 		if($lastProgress !== $progress){
 			if($session instanceof PlayerSession){
 				$player = $session->getSessionOwner()->getPlayer();
-				$world->addSound($player, new ClickSound(), [$player]);
+				$world->addSound($player->getPosition(), new ClickSound(), [$player]);
 			}
 		}
 		$this->storeLocal(self::KEY_PROGRESS, $progress);

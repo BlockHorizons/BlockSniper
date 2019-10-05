@@ -27,34 +27,34 @@ class HeatType extends Type{
 				case BlockLegacyIds::PACKED_ICE:
 				case BlockLegacyIds::ICE:
 					yield $block;
-					$this->putBlock($block, VanillaBlocks::WATER());
+					$this->putBlock($block->getPos(), VanillaBlocks::WATER());
 					break;
 				case BlockLegacyIds::SNOW_LAYER:
 				case BlockLegacyIds::SNOW:
 					yield $block;
-					$this->delete($block);
+					$this->delete($block->getPos());
 					break;
 				case BlockLegacyIds::WATER:
 				case BlockLegacyIds::FLOWING_WATER:
 				case $block instanceof Leaves:
 					if(random_int(0, 4) === 0){
 						yield $block;
-						$this->delete($block);
+						$this->delete($block->getPos());
 					}
 					break;
 				case BlockLegacyIds::GRASS:
 					$random = random_int(0, 8);
 					if($random === 0){
 						yield $block;
-						$this->putBlock($block, VanillaBlocks::DIRT());
+						$this->putBlock($block->getPos(), VanillaBlocks::DIRT());
 					}elseif($random === 1){
 						yield $block;
-						$this->putBlock($block, VanillaBlocks::COARSE_DIRT());
+						$this->putBlock($block->getPos(), VanillaBlocks::COARSE_DIRT());
 					}
 					break;
 				case $block instanceof Flower || $block instanceof DoublePlant || $block instanceof TallGrass:
 					yield $block;
-					$this->putBlock($block, VanillaBlocks::DEAD_BUSH());
+					$this->putBlock($block->getPos(), VanillaBlocks::DEAD_BUSH());
 			}
 		}
 	}

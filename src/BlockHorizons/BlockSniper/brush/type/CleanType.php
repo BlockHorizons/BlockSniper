@@ -30,7 +30,7 @@ class CleanType extends Type{
 		foreach($this->blocks as $block){
 			if(!isset(self::NATURAL_BLOCKS[$block->getId()])){
 				yield $block;
-				$this->delete($block);
+				$this->delete($block->getPos());
 			}
 		}
 	}

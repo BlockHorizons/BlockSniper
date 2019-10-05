@@ -29,12 +29,12 @@ class OverlayType extends Type{
 					}
 				}
 				foreach(Facing::ALL as $direction){
-					$sideBlock = $this->side($block, $direction);
+					$sideBlock = $this->side($block->getPos(), $direction);
 					if($valid && $sideBlock instanceof Air){
 						$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 						if($block->getId() !== $randomBlock->getId() && $block->getMeta() !== $randomBlock->getMeta()){
 							yield $sideBlock;
-							$this->putBlock($sideBlock, $randomBlock);
+							$this->putBlock($sideBlock->getPos(), $randomBlock);
 						}
 					}
 				}

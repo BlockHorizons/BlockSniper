@@ -33,7 +33,7 @@ class ReplaceTargetType extends Type{
 		foreach($this->blocks as $block){
 			if($block->getId() === $targetBlock->getId() && $block->getMeta() === $targetBlock->getMeta()){
 				yield $block;
-				$this->putBlock($block, $this->randomBrushBlock());
+				$this->putBlock($block->getPos(), $this->randomBrushBlock());
 			}
 		}
 	}

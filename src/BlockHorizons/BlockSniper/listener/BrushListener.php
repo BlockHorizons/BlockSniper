@@ -26,7 +26,7 @@ use pocketmine\math\Vector2;
 use pocketmine\nbt\tag\StringTag;
 use pocketmine\player\Player;
 use pocketmine\utils\TextFormat;
-use pocketmine\world\Location;
+use pocketmine\entity\Location;
 use pocketmine\world\Position;
 use Sandertv\Marshal\Unmarshal;
 
@@ -138,7 +138,7 @@ class BrushListener implements Listener{
 		}
 
 		$selection = ($session = SessionManager::getPlayerSession($player))->getSelection();
-		$vec = $block->asVector3();
+		$vec = $block->getPos()->asVector3();
 		[$x, $y, $z] = [$vec->x, $vec->y, $vec->z];
 		switch($action){
 			case PlayerInteractEvent::RIGHT_CLICK_BLOCK:
@@ -293,7 +293,7 @@ class BrushListener implements Listener{
 		$pos = SessionManager::getPlayerSession($player)->getTargetBlock()->add(0.0, 0, 1.0)->subtract(0.04, 0.04, -0.04);
 
 		$loc = Location::fromObject($pos, $player->getWorld());
-		$this->targetHighlights[$name] = new TargetHighlight(new Position($player->x, 0, $player->z, $loc->getWorld()));
+		$this->targetHighlights[$name] = new TargetHighlight(new Position($player->getPosition()->x, 0, $player->getPosition()->z, $loc->getWorld()));
 		$this->targetHighlights[$name]->spawnTo($player);
 		$this->targetHighlights[$player->getName()]->teleport($loc);
 	}

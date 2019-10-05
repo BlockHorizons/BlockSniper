@@ -25,7 +25,7 @@ class MeltType extends Type{
 			if($block->getId() !== BlockLegacyIds::AIR){
 				$openSides = 0;
 				foreach(Facing::ALL as $direction){
-					if($this->side($block, $direction) instanceof Air){
+					if($this->side($block->getPos(), $direction) instanceof Air){
 						$openSides++;
 					}
 				}
@@ -36,7 +36,7 @@ class MeltType extends Type{
 		}
 		foreach($blocks as $block){
 			yield $block;
-			$this->delete($block);
+			$this->delete($block->getPos());
 		}
 	}
 

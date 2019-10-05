@@ -38,6 +38,6 @@ class UndoCommand extends BaseCommand{
 
 		$store->restoreLatestUndo($undoAmount);
 		$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_UNDO_SUCCESS) . TF::AQUA . " (" . $undoAmount . ")");
-		$sender->getWorld()->addSound($sender, new FizzSound(), [$sender]);
+		$sender->getWorld()->addSound($sender->getPosition(), new FizzSound(), [$sender]);
 	}
 }
