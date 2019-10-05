@@ -21,7 +21,7 @@ class LeafBlowerType extends Type{
 		foreach($this->blocks as $block){
 			if($block instanceof Flowable){
 				yield $block;
-				$this->delete($block);
+				$this->delete($block->getPos());
 			}
 		}
 	}

@@ -18,7 +18,7 @@ class BiomeType extends Type{
 	 */
 	protected function fill() : Generator{
 		foreach($this->blocks as $block){
-			$this->putBiome($block, $this->properties->biomeId);
+			$this->putBiome($block->getPos(), $this->properties->biomeId);
 		}
 		if(false){
 			// Make PHP recognize this is a generator.

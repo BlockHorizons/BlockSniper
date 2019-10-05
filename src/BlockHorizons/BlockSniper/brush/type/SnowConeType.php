@@ -30,10 +30,10 @@ class SnowConeType extends Type{
 				if($topBlock instanceof Air || $topBlock instanceof SnowLayer){
 					if($topBlock->getMeta() < 7 && $topBlock->getId() === BlockLegacyIds::SNOW_LAYER){
 						yield $topBlock;
-						$this->putBlock($topBlock, BlockFactory::get(BlockLegacyIds::SNOW_LAYER, $topBlock->getMeta() + 1));
+						$this->putBlock($topBlock->getPos(), BlockFactory::get(BlockLegacyIds::SNOW_LAYER, $topBlock->getMeta() + 1));
 					}elseif(!($topBlock instanceof SnowLayer)){
 						yield $topBlock;
-						$this->putBlock($topBlock, VanillaBlocks::SNOW_LAYER());
+						$this->putBlock($topBlock->getPos(), VanillaBlocks::SNOW_LAYER());
 					}
 				}
 			}

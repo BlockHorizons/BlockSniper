@@ -115,7 +115,7 @@ class PasteTask extends AsyncTask{
 
 		$duration = round(microtime(true) - $this->startTime, 2);
 		$player->sendPopup(TextFormat::GREEN . Translation::get(Translation::BRUSH_STATE_DONE) . " ($duration seconds)");
-		$player->getWorld()->addSound($player, new FizzSound(), [$player]);
+		$player->getWorld()->addSound($player->getPosition(), new FizzSound(), [$player]);
 		SessionManager::getPlayerSession($player)->getRevertStore()->saveUndo(new AsyncRevert($chunks, $undoChunks, $player->getWorld()));
 	}
 }

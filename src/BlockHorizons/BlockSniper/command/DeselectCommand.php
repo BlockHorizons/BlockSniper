@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace BlockHorizons\BlockSniper\commands;
+namespace BlockHorizons\BlockSniper\command;
 
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
-use BlockHorizons\BlockSniper\sessions\SessionManager;
+use BlockHorizons\BlockSniper\session\SessionManager;
 use pocketmine\command\CommandSender;
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\utils\TextFormat as TF;
 
-class DeselectCommand extends BaseCommand{
+class DeselectCommand extends BaseCommand {
 
 	public function __construct(Loader $loader){
 		parent::__construct($loader, "deselect", Translation::COMMANDS_DESELECT_DESCRIPTION, "/deselect");

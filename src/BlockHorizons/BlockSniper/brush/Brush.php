@@ -115,7 +115,7 @@ class Brush extends BrushProperties{
 	 * @param Player $player
 	 */
 	public function emitSound(Player $player) : void{
-		$player->getWorld()->addSound($player, new FizzSound(), [$player]);
+		$player->getWorld()->addSound($player->getPosition(), new FizzSound(), [$player]);
 	}
 
 	/**

@@ -19,7 +19,7 @@ class FillType extends Type{
 	public function fill() : Generator{
 		foreach($this->blocks as $block){
 			yield $block;
-			$this->putBlock($block, $this->randomBrushBlock());
+			$this->putBlock($block->getPos(), $this->randomBrushBlock());
 		}
 	}
 

@@ -23,7 +23,7 @@ class LayerType extends Type{
 				continue;
 			}
 			yield $block;
-			$vec = new Vector3($block->x, $this->target->y + 1, $block->z);
+			$vec = new Vector3($block->getPos()->x, $this->target->y + 1, $block->getPos()->z);
 			$this->putBlock($vec, $this->randomBrushBlock());
 		}
 	}

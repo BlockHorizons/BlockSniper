@@ -25,10 +25,10 @@ class PlantType extends Type{
 				if($block->getId() !== $soil->getId() || $block->getMeta() !== $soil->getMeta()){
 					continue;
 				}
-				$blockUp = $this->side($block, Facing::UP);
+				$blockUp = $this->side($block->getPos(), Facing::UP);
 				if($blockUp instanceof Air){
 					yield $block;
-					$this->putBlock($blockUp, $this->randomBrushBlock());
+					$this->putBlock($blockUp->getPos(), $this->randomBrushBlock());
 					break;
 				}
 			}
