@@ -29,7 +29,7 @@ class ReplaceTargetType extends Type{
 	 */
 	public function fill() : Generator{
 		/** @var Block $block */
-		$targetBlock = BlockFactory::get($this->targetBlockId, $this->targetBlockMeta);
+		$targetBlock = BlockFactory::getInstance()->get($this->targetBlockId, $this->targetBlockMeta);
 		foreach($this->blocks as $block){
 			if($block->getId() === $targetBlock->getId() && $block->getMeta() === $targetBlock->getMeta()){
 				yield $block;
