@@ -30,7 +30,7 @@ class CooldownBarTask extends BlockSniperTask{
 		$this->useTime = microtime(true);
 	}
 
-	public function onRun(int $currentTick) : void{
+	public function onRun() : void{
 		if($this->player->isClosed()){
 			$this->getHandler()->cancel();
 

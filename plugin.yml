@@ -64,6 +64,10 @@
 						"blocksniper.command.paste": {
 							"default": "op",
 							"description": "Allows access to the paste command."
+						},
+						"blocksniper.command.deselect": {
+							"default": "op",
+							"description": "Allows access to the deselect command."
 						}
 					}
 				},

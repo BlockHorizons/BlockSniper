@@ -25,10 +25,10 @@ class BlockEdge{
 	 * @return Generator|Vector3[]
 	 */
 	public function walk(float $interval = 0.1) : Generator{
-		$sub = $this->end->subtract($this->start)->multiply($interval);
+		$sub = $this->end->subtractVector($this->start)->multiply($interval);
 		$iterCount = 1 / $interval;
 		for($i = 0; $i < $iterCount + 0.0001; $i++){
-			yield $this->start->add($sub->multiply($i));
+			yield $this->start->addVector($sub->multiply($i));
 		}
 	}
 

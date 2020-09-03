@@ -50,8 +50,8 @@ class CloneStore{
 			}
 			$v3 = $block->subtract($this->offsetPosition);
 
-			$undoBlocks[] = $targetBlock->world->getBlock($targetBlock->add($v3));
-			$targetBlock->world->setBlock($targetBlock->add($v3), clone $block, false);
+			$undoBlocks[] = $targetBlock->world->getBlock($targetBlock->addVector($v3));
+			$targetBlock->world->setBlock($targetBlock->addVector($v3), clone $block, false);
 		}
 		$this->session->getRevertStore()->saveUndo(new SyncRevert($undoBlocks, $targetBlock->getWorld()));
 	}

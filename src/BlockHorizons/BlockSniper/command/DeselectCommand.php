@@ -11,7 +11,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 use pocketmine\utils\TextFormat as TF;
 
-class DeselectCommand extends BaseCommand {
+class DeselectCommand extends BaseCommand{
 
 	public function __construct(Loader $loader){
 		parent::__construct($loader, "deselect", Translation::COMMANDS_DESELECT_DESCRIPTION, "/deselect");
