@@ -46,7 +46,7 @@ class Tree{
 
 	public function __construct(Position $position, BrushProperties $brush, TreeType $type){
 		$this->random = new Random(random_int(0, 1000000));
-		$this->tempVec = new Vector3();
+		$this->tempVec = new Vector3(0, 0, 0);
 
 		try{
 			$this->trunkBlocks = $brush->parseBlocks($brush->tree->trunkBlocks);

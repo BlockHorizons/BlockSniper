@@ -18,7 +18,7 @@ class SessionDeletionTask extends BlockSniperTask{
 		$this->session = $session;
 	}
 
-	public function onRun(int $currentTick) : void{
+	public function onRun() : void{
 		if(($player = $this->session->getSessionOwner()->getPlayer()) === null){
 			SessionManager::closeSession($this->session->getSessionOwner()->getName());
 		}

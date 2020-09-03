@@ -26,7 +26,6 @@ class PasteCommand extends BaseCommand{
 		/** @var Player $sender */
 		if(!isset($args[0])){
 			$sender->sendMessage($this->getUsage());
-
 			return;
 		}
 

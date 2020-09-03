@@ -41,7 +41,7 @@ class CloneCommand extends BaseCommand{
 
 			return;
 		}
-		$shape = new CuboidShape($session->getBrush(), new Target(new Vector3(), $sender->getWorld()), $session->getSelection()->box());
+		$shape = new CuboidShape($session->getBrush(), new Target(new Vector3(0, 0, 0), $sender->getWorld()), $session->getSelection()->box());
 
 		switch(strtolower($args[0])){
 			default:

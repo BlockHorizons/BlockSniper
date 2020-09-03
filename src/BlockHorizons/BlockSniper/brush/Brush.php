@@ -129,7 +129,7 @@ class Brush extends BrushProperties{
 	 */
 	public function getShape(AxisAlignedBB $bb = null, Position $target = null) : Shape{
 		if($target === null){
-			$target = new Position();
+			$target = new Position(0, 0, 0, null);
 		}
 
 		try{
@@ -151,7 +151,7 @@ class Brush extends BrushProperties{
 	 */
 	public function getType(Generator $blocks = null, Position $target = null, Session $session = null) : Type{
 		if($target === null){
-			$target = new Position();
+			$target = new Position(0, 0, 0, null);
 		}
 
 		try{
