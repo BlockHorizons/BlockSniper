@@ -69,7 +69,7 @@ class PlayerSession extends Session implements JsonSerializable{
 	public function getTargetBlock() : Position{
 		$player = $this->getSessionOwner()->getPlayer();
 		$start = $player->getPosition()->add(0, $player->getEyeHeight(), 0);
-		$end = $start->add($player->getDirectionVector()->multiply($player->getViewDistance() * 16));
+		$end = $start->addVector($player->getDirectionVector()->multiply($player->getViewDistance() * 16));
 		$world = $player->getWorld();
 		$lastVec3 = $player->getPosition();
 		foreach(VoxelRayTrace::betweenPoints($start, $end) as $vector3){

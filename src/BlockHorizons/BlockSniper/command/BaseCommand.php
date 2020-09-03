@@ -8,12 +8,13 @@ use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
-use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\player\Player;
-use pocketmine\plugin\Plugin;
+use pocketmine\plugin\PluginOwned;
+use pocketmine\plugin\PluginOwnedTrait;
 use pocketmine\utils\TextFormat as TF;
 
-abstract class BaseCommand extends Command implements PluginIdentifiableCommand{
+abstract class BaseCommand extends Command implements PluginOwned{
+	use PluginOwnedTrait;
 
 	/** @var Loader */
 	protected $loader = null;
@@ -25,6 +26,8 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand{
 		$this->loader = $loader;
 		$this->consoleUsable = $consoleUsable;
 		$this->setPermission("blocksniper.command." . $name);
+
+		$this->owningPlugin = $loader;
 	}
 
 	/**
@@ -39,13 +42,6 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand{
 	 */
 	public function getWarning() : string{
 		return TF::RED . Translation::get(Translation::COMMANDS_COMMON_WARNING_PREFIX);
-	}
-
-	/**
-	 * @return Plugin
-	 */
-	public function getPlugin() : Plugin{
-		return $this->loader;
 	}
 
 	/**

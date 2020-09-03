@@ -5,16 +5,15 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush;
 
 use BlockHorizons\BlockSniper\iterator\BlockEdgeIterator;
-use pocketmine\block\BlockFactory;
-use pocketmine\block\BlockLegacyIds;
 use pocketmine\block\VanillaBlocks;
 use pocketmine\entity\Human;
+use pocketmine\entity\Location;
 use pocketmine\entity\Skin;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\FloatTag;
 use pocketmine\nbt\tag\ListTag;
-use pocketmine\utils\UUID;
+use pocketmine\uuid\UUID;
 use pocketmine\world\Position;
 use function chr;
 use function json_encode;
@@ -70,7 +69,7 @@ class TargetHighlight extends Human{
 				]
 			)
 		);
-		parent::__construct($position->getWorld(), $nbt);
+		parent::__construct(Location::fromObject($position, $position->getWorld(), 0.0, 0.0), $this->skin, $nbt);
 
 		$this->setCanSaveWithChunk(false);
 
