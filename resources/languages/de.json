@@ -9,7 +9,7 @@
 			"description": "Öffnet das BlockSniper Menü."
 		},
 		"blocksniper": {
-			"description": "Zeigt Informationen über BlockSniper oder läd das Plugin neu",
+			"description": "Zeigt Informationen über BlockSniper oder läd das Plugin neu.",
 			"info": "Infos:",
 			"version": "Version: ",
 			"organisation": "Organisation: ",
@@ -69,18 +69,18 @@
 		},
 		"preset-edit": {
 			"title": "Preset Bearbeitungsmenü",
-			"name": "Preset Name",
-			"size": "Brush Größe",
-			"shape": "Brush Form",
-			"type": "Brush Typ",
-			"hollow": "Hohler Brush",
-			"decrement": "Dekrementierender Brush",
-			"height": "Brush Höhe",
-			"perfect": "Brush Form Perfektion",
-			"blocks": "Brush Blöcke",
-			"obsolete": "Obsolet Blöcke",
-			"biome": "Brush Biome",
-			"tree": "Brush Baum"
+			"name": "Preset Name:",
+			"size": "Brush Größe:",
+			"shape": "Brush Form:",
+			"type": "Brush Typ:",
+			"hollow": "Hohler Brush:",
+			"decrement": "Dekrementierender Brush:",
+			"height": "Brush Höhe:",
+			"perfect": "Brush Form Perfektion:",
+			"blocks": "Brush Blöcke:",
+			"obsolete": "Obsolet Blöcke:",
+			"biome": "Brush Biome:",
+			"tree": "Brush Baum:"
 		},
 		"preset-selection": {
 			"title": "Preset Auswahl Menü",
@@ -96,47 +96,47 @@
 		},
 		"preset-creation": {
 			"title": "Preset Erstellen Menü",
-			"name": "Preset Name",
-			"size": "Brush Größe",
-			"shape": "Brush Form",
-			"type": "Brush Typ",
-			"hollow": "Hohler Brush",
-			"decrement": "Dekrementierender Brush",
-			"height": "Brush Höhe",
-			"perfect": "Brush Form Perfektion",
-			"blocks": "Brush Blöcke",
-			"obsolete": "Obsolet Blöcke",
-			"biome": "Brush Biome",
-			"tree": "Brush Baum"
+			"name": "Preset Name:",
+			"size": "Brush Größe:",
+			"shape": "Brush Form:",
+			"type": "Brush Typ:",
+			"hollow": "Hohler Brush:",
+			"decrement": "Dekrementierender Brush:",
+			"height": "Brush Höhe:",
+			"perfect": "Brush Form Perfektion:",
+			"blocks": "Brush Blöcke:",
+			"obsolete": "Obsolet Blöcke:",
+			"biome": "Brush Biome:",
+			"tree": "Brush Baum:"
 		},
 		"main-menu": {
 			"title": "BlockSniper Menü",
 			"subtitle": "Klicken Sie auf eine Schaltfläche, um fortzufahren!",
-			"brush": "Brush",
-			"tree": "Baum",
-			"config": "Einstellungen",
-			"presets": "Presets",
-			"global-brush": "Globaler Brush",
+			"brush": "Brush:",
+			"tree": "Baum:",
+			"config": "Einstellungen:",
+			"presets": "Presets:",
+			"global-brush": "Globaler Brush:",
 			"exit": "Beenden"
 		},
 		"brush-menu": {
-			"title": "Brush Menü",
-			"size": "Brush Größe",
-			"shape": "Brush Form",
-			"type": "Brush Typ",
+			"title": "Brush Menü:",
+			"size": "Brush Größe:",
+			"shape": "Brush Form:",
+			"type": "Brush Typ:",
 			"mode": {
 				"description": "Brush Modus",
 				"brush": "Brush",
 				"selection": "Auswahl"
 			},
-			"hollow": "Hohler Brush",
-			"decrement": "Dekrementierender Brush",
-			"height": "Brush Höhe",
-			"perfect": "Brush Form Perfektion",
-			"blocks": "Brush Blöcke",
-			"obsolete": "Obsolet Blöcke",
-			"biome": "Brush Biome",
-			"tree": "Brush Baum"
+			"hollow": "Hohler Brush:",
+			"decrement": "Dekrementierender Brush:",
+			"height": "Brush Höhe:",
+			"perfect": "Brush Form Perfektion:",
+			"blocks": "Brush Blöcke:",
+			"obsolete": "Obsolet Blöcke:",
+			"biome": "Brush Biome:",
+			"tree": "Brush Baum:"
 		},
 		"configuration-menu": {
 			"title": "BlockSniper Einstellungen",
@@ -151,9 +151,9 @@
 			"save-brush": "Brusheigenschaften von Spielern beim Serverneustart speichern",
 			"drop-plants": "Die Items die vom Laubbläser Typ zerstört/weggeblasen wurden droppen?",
 			"session-timeout-time": "Die Zeit in Minuten, nach der die Sitzung eines Spielers nach Verlassen des Servers entfernt wird:",
-			"auto-gui": "Öffne das Brush Menü automatisch, wenn du den Hotbar-Slot zu einem mit dem Brushelement wechselst",
+			"auto-gui": "Öffne das Brush Menü automatisch, wenn du den Hotbar-Slot zu einem mit dem Brushelement wechselst.",
 			"myplot-support": "MyPlot Support:",
-			"auto-reload": "Durch Einschalten dieses Schalters wird die Einstellungsdatei beim Schließen dieses Fensters automatisch neu geladen"
+			"auto-reload": "Durch Einschalten dieses Schalters wird die Einstellungsdatei beim Schließen dieses Fensters automatisch neu geladen."
 		},
 		"tree-menu": {
 			"title": "Baum Menü",
@@ -161,8 +161,8 @@
 			"trunk-width": "Die Breite des Baumes unten; Die Breite nimmt nach oben allmählich ab:",
 			"max-branch-length": "Die maximale Länge, die einer der Äste des Baumes erreichen kann:",
 			"trunk-blocks": "Die Blöcke für den Baumstamm:",
-			"leaves-blocks": "Die Blöcke für die Blätter des Baumes",
-			"leaves-cluster-size": "Die Größe der Blattcluster am Ende jedes Zweiges"
+			"leaves-blocks": "Die Blöcke für die Blätter des Baumes:",
+			"leaves-cluster-size": "Die Größe der Blattcluster am Ende jedes Zweiges:"
 		}
 	},
 	"log": {
