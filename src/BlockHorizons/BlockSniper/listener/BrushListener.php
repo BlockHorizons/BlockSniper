@@ -283,18 +283,13 @@ class BrushListener implements Listener{
 	 */
 	public function highlightTarget(Player $player) : void{
 		$name = $player->getName();
-		if(isset($this->targetHighlights[$name])){
-			// The player still had a target highlight entity active, so we need to remove that as the player
-			// is no longer holding the brush item.
-			$entity = $this->targetHighlights[$name];
-			$entity->close();
-			unset($this->targetHighlights[$name]);
-		}
-		$pos = SessionManager::getPlayerSession($player)->getTargetBlock()->add(0.0, 0, 1.0)->subtract(0.04, 0.04, -0.04);
 
+		$pos = SessionManager::getPlayerSession($player)->getTargetBlock()->add(0.0, 0, 1.0)->subtract(0.04, 0.04, -0.04);
 		$loc = Location::fromObject($pos, $player->getWorld());
-		$this->targetHighlights[$name] = new TargetHighlight(new Position($player->getPosition()->x, 0, $player->getPosition()->z, $loc->getWorld()));
-		$this->targetHighlights[$name]->spawnTo($player);
+		if(!isset($this->targetHighlights[$name])){
+			$this->targetHighlights[$name] = new TargetHighlight(new Position($player->getPosition()->x, 0, $player->getPosition()->z, $loc->getWorld()));
+			$this->targetHighlights[$name]->spawnTo($player);
+		}
 		$this->targetHighlights[$player->getName()]->teleport($loc);
 	}
 }
