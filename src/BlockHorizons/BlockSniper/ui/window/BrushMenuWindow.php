@@ -12,7 +12,9 @@ use BlockHorizons\BlockSniper\Loader;
 use pocketmine\player\Player;
 use pocketmine\utils\AssumptionFailedError;
 use pocketmine\utils\TextFormat as TF;
+use function array_map;
 use function array_search;
+use function ucwords;
 
 class BrushMenuWindow extends CustomWindow{
 
@@ -37,12 +39,12 @@ class BrushMenuWindow extends CustomWindow{
 			//this should never happen; it's only written here
 			throw new AssumptionFailedError("Brush has unregistered shape set");
 		}
-		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_SHAPE), $this->processShapes($requester), $key, function(Player $player, int $value) use ($b){
-			$shapes = ShapeRegistration::getShapes();
-			if(!isset($shapes[$value])){
+		$shownBrushShapes = $this->getPermittedShapes($requester);
+		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_SHAPE), array_map(fn(string $shape) => ucwords($shape), $shownBrushShapes), $key, function(Player $player, int $value) use ($b, $shownBrushShapes){
+			if(!isset($shownBrushShapes[$value])){
 				return;
 			}
-			$b->shape = ShapeRegistration::getShape($shapes[$value]) ?? throw new AssumptionFailedError("Shape must exist");
+			$b->shape = ShapeRegistration::getShape($shownBrushShapes[$value]) ?? throw new AssumptionFailedError("Shape must exist");
 		}
 		);
 		$shortName = array_search($b->type, TypeRegistration::$types);
@@ -51,12 +53,12 @@ class BrushMenuWindow extends CustomWindow{
 			//this should never happen; it's only written here
 			throw new AssumptionFailedError("Brush has unregistered type set");
 		}
-		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_TYPE), $this->processTypes($requester), $key, function(Player $player, int $value) use ($loader, $b){
-			$types = TypeRegistration::getTypes();
-			if(!isset($types[$value])){
+		$shownBrushTypes = $this->getPermittedTypes($requester);
+		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_TYPE), array_map(fn(string $type) => ucwords($type), $shownBrushTypes), $key, function(Player $player, int $value) use ($loader, $b, $shownBrushTypes){
+			if(!isset($shownBrushTypes[$value])){
 				return;
 			}
-			$b->type = TypeRegistration::getType($types[$value]) ?? throw new AssumptionFailedError("Type must exist");
+			$b->type = TypeRegistration::getType($shownBrushTypes[$value]) ?? throw new AssumptionFailedError("Type must exist");
 
 			$item = $player->getInventory()->getItemInHand();
 			if($item->getName() !== $item->getVanillaName()){
