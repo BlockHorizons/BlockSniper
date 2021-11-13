@@ -195,7 +195,7 @@ abstract class Type{
 	 * @return Block
 	 */
 	public function side(Vector3 $block, int $side) : Block{
-		return $this->chunkManager->getSide($block->x, $block->y, $block->z, $side);
+		return $this->getBlock($block->getSide($side));
 	}
 
 	/**
