@@ -33,13 +33,13 @@ class BrushMenuWindow extends CustomWindow{
 			$b->mode = $value;
 		}
 		);
+		$shownBrushShapes = $this->getPermittedShapes($requester);
 		$shortName = array_search($b->shape, ShapeRegistration::$shapes);
-		$key = array_search($shortName, ShapeRegistration::getShapes());
+		$key = array_search($shortName, $shownBrushShapes);
 		if($key === false){
 			//this should never happen; it's only written here
 			throw new AssumptionFailedError("Brush has unregistered shape set");
 		}
-		$shownBrushShapes = $this->getPermittedShapes($requester);
 		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_SHAPE), array_map(fn(string $shape) => ucwords($shape), $shownBrushShapes), $key, function(Player $player, int $value) use ($b, $shownBrushShapes){
 			if(!isset($shownBrushShapes[$value])){
 				return;
@@ -47,13 +47,13 @@ class BrushMenuWindow extends CustomWindow{
 			$b->shape = ShapeRegistration::getShape($shownBrushShapes[$value]) ?? throw new AssumptionFailedError("Shape must exist");
 		}
 		);
-		$shortName = array_search($b->type, TypeRegistration::$types);
-		$key = array_search($shortName, TypeRegistration::getTypes());
-		if($key === false){
-			//this should never happen; it's only written here
-			throw new AssumptionFailedError("Brush has unregistered type set");
-		}
 		$shownBrushTypes = $this->getPermittedTypes($requester);
+		$shortName = array_search($b->type, TypeRegistration::$types);
+		$key = array_search($shortName, $shownBrushTypes);
+		if($key === false){
+			//player has a brush type that they were previously permitted to use, but no longer are
+			$key = 0;
+		}
 		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_TYPE), array_map(fn(string $type) => ucwords($type), $shownBrushTypes), $key, function(Player $player, int $value) use ($loader, $b, $shownBrushTypes){
 			if(!isset($shownBrushTypes[$value])){
 				return;
