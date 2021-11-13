@@ -138,9 +138,9 @@ class Brush extends BrushProperties{
 		}
 
 		try{
-			return new $this->shape($this, new Target($target, $target->getWorld()), $bb);
+			return new $this->shape($this, new Target($target, $target->isValid() ? $target->getWorld() : null), $bb);
 		}catch(Throwable $e){
-			return new SphereShape($this, new Target($target, $target->getWorld()), $bb);
+			return new SphereShape($this, new Target($target, $target->isValid() ? $target->getWorld() : null), $bb);
 		}
 	}
 
