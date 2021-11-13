@@ -162,9 +162,9 @@ class Brush extends BrushProperties{
 		}
 
 		try{
-			return new $this->type($this, new Target($target, $target->getWorld()), $blocks, $session);
+			return new $this->type($this, new Target($target, $target->isValid() ? $target->getWorld() : null), $blocks, $session);
 		}catch(Throwable $e){
-			return new FillType($this, new Target($target, $target->getWorld()), $blocks);
+			return new FillType($this, new Target($target, $target->isValid() ? $target->getWorld() : null), $blocks);
 		}
 	}
 
