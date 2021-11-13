@@ -9,6 +9,7 @@ use InvalidArgumentException;
 use pocketmine\item\Item;
 use pocketmine\item\LegacyStringToItemParser;
 use pocketmine\item\LegacyStringToItemParserException;
+use pocketmine\item\StringToItemParser;
 use function preg_match;
 use function preg_replace;
 use function sprintf;
@@ -129,8 +130,8 @@ class StringConsumer{
 	 *
 	 */
 	private function parseItemName(string $name) : Item{
-		if(($translation = IdMap::translate($name)) !== null){
-			$name = $translation;
+		if(($item = StringToItemParser::getInstance()->parse($name)) !== null){
+			return $item;
 		}
 		try{
 			return LegacyStringToItemParser::getInstance()->parse($name);

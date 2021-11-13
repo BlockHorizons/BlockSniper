@@ -18,7 +18,6 @@ use BlockHorizons\BlockSniper\data\ConfigData;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\data\TranslationData;
 use BlockHorizons\BlockSniper\listener\BrushListener;
-use BlockHorizons\BlockSniper\parser\IdMap;
 use BlockHorizons\BlockSniper\session\SessionManager;
 use BlockHorizons\BlockSniper\task\UpdateNotifyTask;
 use MyPlot\MyPlot;
@@ -78,8 +77,6 @@ class Loader extends PluginBase{
 
 		$this->getServer()->getAsyncPool()->submitTask(new UpdateNotifyTask());
 		$this->getServer()->getAsyncPool()->submitTask(new ChangelogTask());
-
-		new IdMap($this->getResource("id_mapping.json"));
 	}
 
 	public function onEnable() : void{

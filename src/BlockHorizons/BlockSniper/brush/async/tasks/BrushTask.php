@@ -11,7 +11,6 @@ use BlockHorizons\BlockSniper\brush\Shape;
 use BlockHorizons\BlockSniper\brush\Type;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
-use BlockHorizons\BlockSniper\parser\IdMap;
 use BlockHorizons\BlockSniper\revert\AsyncRevert;
 use BlockHorizons\BlockSniper\session\owner\ISessionOwner;
 use BlockHorizons\BlockSniper\session\PlayerSession;
@@ -73,11 +72,9 @@ class BrushTask extends AsyncTask{
 		$this->chunks = $chunks;
 		$this->plotPoints = $plotPoints;
 		$this->startTime = microtime(true);
-		$this->idMap = serialize(IdMap::$ids);
 	}
 
 	public function onRun() : void{
-		IdMap::$ids = unserialize($this->idMap);
 		$type = $this->type;
 		$type->setBrushBlocks($this->brushProperties->getBrushBlocks());
 		$shape = $this->shape;
