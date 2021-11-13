@@ -10,6 +10,7 @@ use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\player\Player;
+use pocketmine\utils\AssumptionFailedError;
 use pocketmine\utils\TextFormat as TF;
 use function array_search;
 
@@ -19,7 +20,7 @@ class BrushMenuWindow extends CustomWindow{
 		parent::__construct($this->t(Translation::UI_BRUSH_MENU_TITLE));
 
 		if($withName){
-			$this->addInput($this->t(Translation::UI_BRUSH_MENU_NAME), "Brush", "Brush", function(Player $player, string $value) use ($b){
+			$this->addInput($this->t(Translation::UI_BRUSH_MENU_NAME), "Brush", "Brush", function(Player $player, string $value){
 				$item = $player->getInventory()->getItemInHand();
 				$item->setCustomName($value);
 				$player->getInventory()->setItemInHand($item);
@@ -32,22 +33,30 @@ class BrushMenuWindow extends CustomWindow{
 		);
 		$shortName = array_search($b->shape, ShapeRegistration::$shapes);
 		$key = array_search($shortName, ShapeRegistration::getShapes());
+		if($key === false){
+			//this should never happen; it's only written here
+			throw new AssumptionFailedError("Brush has unregistered shape set");
+		}
 		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_SHAPE), $this->processShapes($requester), $key, function(Player $player, int $value) use ($b){
 			$shapes = ShapeRegistration::getShapes();
 			if(!isset($shapes[$value])){
 				return;
 			}
-			$b->shape = ShapeRegistration::getShape($shapes[$value]);
+			$b->shape = ShapeRegistration::getShape($shapes[$value]) ?? throw new AssumptionFailedError("Shape must exist");
 		}
 		);
 		$shortName = array_search($b->type, TypeRegistration::$types);
 		$key = array_search($shortName, TypeRegistration::getTypes());
+		if($key === false){
+			//this should never happen; it's only written here
+			throw new AssumptionFailedError("Brush has unregistered type set");
+		}
 		$this->addDropdown($this->t(Translation::UI_BRUSH_MENU_TYPE), $this->processTypes($requester), $key, function(Player $player, int $value) use ($loader, $b){
 			$types = TypeRegistration::getTypes();
 			if(!isset($types[$value])){
 				return;
 			}
-			$b->type = TypeRegistration::getType($types[$value]);
+			$b->type = TypeRegistration::getType($types[$value]) ?? throw new AssumptionFailedError("Type must exist");
 
 			$item = $player->getInventory()->getItemInHand();
 			if($item->getName() !== $item->getVanillaName()){

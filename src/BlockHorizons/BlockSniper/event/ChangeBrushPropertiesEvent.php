@@ -32,7 +32,7 @@ class ChangeBrushPropertiesEvent extends BlockSniperEvent{
 	/** @var mixed */
 	public $value = null;
 
-	public function __construct(Player $player, int $action, $value){
+	public function __construct(Player $player, int $action, mixed $value){
 		$this->player = $player;
 		$this->action = $action;
 		$this->value = $value;

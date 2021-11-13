@@ -13,7 +13,7 @@ class BlockSniperChunkManager extends SimpleChunkManager{
 
 	public function getBlockAt(int $x, int $y, int $z) : Block{
 		$block = parent::getBlockAt($x, $y, $z);
-		[$block->getPos()->x, $block->getPos()->y, $block->getPos()->z] = [$x, $y, $z];
+		[$block->getPosition()->x, $block->getPosition()->y, $block->getPosition()->z] = [$x, $y, $z];
 
 		return $block;
 	}
@@ -60,7 +60,7 @@ class BlockSniperChunkManager extends SimpleChunkManager{
 					[$x, $y, $z] = [$x + 1, $y, $z];
 			}
 			$block = $this->getBlockAt($x, $y, $z);
-			[$block->getPos()->x, $block->getPos()->y, $block->getPos()->z] = [$x, $y, $z];
+			[$block->getPosition()->x, $block->getPosition()->y, $block->getPosition()->z] = [$x, $y, $z];
 
 			return $block;
 		}

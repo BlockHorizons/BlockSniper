@@ -14,16 +14,13 @@ use pocketmine\math\Vector3;
 
 class LayerType extends Type{
 
-	/**
-	 * @return Generator
-	 */
 	public function fill() : Generator{
-		foreach($this->blocks as $block){
-			if($block->y !== $this->target->y + 1){
+		foreach($this->mustGetBlocks() as $block){
+			if($block->getPosition()->y !== $this->target->y + 1){
 				continue;
 			}
 			yield $block;
-			$vec = new Vector3($block->getPos()->x, $this->target->y + 1, $block->getPos()->z);
+			$vec = new Vector3($block->getPosition()->x, $this->target->y + 1, $block->getPosition()->z);
 			$this->putBlock($vec, $this->randomBrushBlock());
 		}
 	}

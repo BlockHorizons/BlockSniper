@@ -15,99 +15,57 @@
 		"MyPlot"
 	],
 	"permissions": {
-		"blocksniper": {
+		"blocksniper.myplot.bypass": {
 			"default": false,
-			"description": "Allows access to all BlockSniper features.",
-			"children": {
-				"blocksniper.myplot": {
-					"default": false,
-					"description": "Allows bypassing MyPlot plot borders with BlockSniper.",
-					"children": {
-						"blocksniper.myplot.bypass": {
-							"default": false,
-							"description": "Allows bypassing MyPlot plot protection."
-						},
-						"blocksniper.myplot.allow-outside": {
-							"default": "op",
-							"description": "Allows using BlockSniper outside of plot worlds limitlessly."
-						}
-					}
-				},
-				"blocksniper.configuration": {
-					"default": "op",
-					"description": "Allows modifying the configuration in-game."
-				},
-				"blocksniper.command": {
-					"default": false,
-					"description": "Allows access to all BlockSniper command features.",
-					"children": {
-						"blocksniper.command.brush": {
-							"default": "op",
-							"description": "Allows access to the brush wand command."
-						},
-						"blocksniper.command.undo": {
-							"default": "op",
-							"description": "Allows access to the undo command."
-						},
-						"blocksniper.command.redo": {
-							"default": "op",
-							"description": "Allows access to the redo command."
-						},
-						"blocksniper.command.blocksniper": {
-							"default": "op",
-							"description": "Allows access to the BlockSniper command."
-						},
-						"blocksniper.command.clone": {
-							"default": "op",
-							"description": "Allows access to the clone command."
-						},
-						"blocksniper.command.paste": {
-							"default": "op",
-							"description": "Allows access to the paste command."
-						},
-						"blocksniper.command.deselect": {
-							"default": "op",
-							"description": "Allows access to the deselect command."
-						}
-					}
-				},
-				"blocksniper.type": {
-					"default": false,
-					"description": "Allows access to all BlockSniper types."
-				},
-				"blocksniper.shape": {
-					"default": false,
-					"description": "Allows access to all BlockSniper shapes."
-				},
-				"blocksniper.clone": {
-					"default": false,
-					"description": "Allows access to all BlockSniper clone types.",
-					"children": {
-						"blocksniper.clone.copy": {
-							"default": "op",
-							"description": "Allows access to the copy clone type."
-						},
-						"blocksniper.clone.schematic": {
-							"default": "op",
-							"description": "Allows access to the schematic clone type."
-						}
-					}
-				},
-				"blocksniper.paste": {
-					"default": false,
-					"description": "Allows access to all BlockSniper paste types.",
-					"children": {
-						"blocksniper.paste.copy": {
-							"default": "op",
-							"description": "Allows access to the copy paste type."
-						},
-						"blocksniper.paste.schematic": {
-							"default": "op",
-							"description": "Allows access to the schematic paste type."
-						}
-					}
-				}
-			}
+			"description": "Allows bypassing MyPlot plot protection."
+		},
+		"blocksniper.myplot.allow-outside": {
+			"default": "op",
+			"description": "Allows using BlockSniper outside of plot worlds limitlessly."
+		},
+		"blocksniper.command.brush": {
+			"default": "op",
+			"description": "Allows access to the brush wand command."
+		},
+		"blocksniper.command.undo": {
+			"default": "op",
+			"description": "Allows access to the undo command."
+		},
+		"blocksniper.command.redo": {
+			"default": "op",
+			"description": "Allows access to the redo command."
+		},
+		"blocksniper.command.blocksniper": {
+			"default": "op",
+			"description": "Allows access to the BlockSniper command."
+		},
+		"blocksniper.command.clone": {
+			"default": "op",
+			"description": "Allows access to the clone command."
+		},
+		"blocksniper.command.paste": {
+			"default": "op",
+			"description": "Allows access to the paste command."
+		},
+		"blocksniper.command.deselect": {
+			"default": "op",
+			"description": "Allows access to the deselect command."
+		},
+		"blocksniper.clone.copy": {
+			"default": "op",
+			"description": "Allows access to the copy clone type."
+		},
+		"blocksniper.clone.schematic": {
+			"default": "op",
+			"description": "Allows access to the schematic clone type."
+		},
+		"blocksniper.paste.copy": {
+			"default": "op",
+			"description": "Allows access to the copy paste type."
+		},
+		"blocksniper.paste.schematic": {
+			"default": "op",
+			"description": "Allows access to the schematic paste type."
 		}
 	}
 }

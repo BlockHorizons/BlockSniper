@@ -16,11 +16,8 @@ use pocketmine\math\Facing;
 
 class OverlayType extends Type{
 
-	/**
-	 * @return Generator
-	 */
 	public function fill() : Generator{
-		foreach($this->blocks as $block){
+		foreach($this->mustGetBlocks() as $block){
 			if($block->getId() !== BlockLegacyIds::AIR){
 				$valid = true;
 				foreach($this->brushBlocks as $possibleBlock){
@@ -29,12 +26,12 @@ class OverlayType extends Type{
 					}
 				}
 				foreach(Facing::ALL as $direction){
-					$sideBlock = $this->side($block->getPos(), $direction);
+					$sideBlock = $this->side($block->getPosition(), $direction);
 					if($valid && $sideBlock instanceof Air){
 						$randomBlock = $this->brushBlocks[array_rand($this->brushBlocks)];
 						if($block->getId() !== $randomBlock->getId() && $block->getMeta() !== $randomBlock->getMeta()){
 							yield $sideBlock;
-							$this->putBlock($sideBlock->getPos(), $randomBlock);
+							$this->putBlock($sideBlock->getPosition(), $randomBlock);
 						}
 					}
 				}

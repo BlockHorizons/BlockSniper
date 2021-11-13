@@ -37,6 +37,9 @@ class PasteTask extends AsyncTask{
 	/** @var float */
 	private $startTime;
 
+	/**
+	 * @param string[] $chunks
+	 */
 	public function __construct(string $file, Vector3 $center, array $chunks, string $playerName){
 		$this->storeLocal(self::KEY_CHUNKS, $chunks);
 		$this->file = $file;
@@ -47,9 +50,9 @@ class PasteTask extends AsyncTask{
 	}
 
 	public function onRun() : void{
-		$chunks = (array) $this->chunks;
-		foreach($chunks as $hash => $data){
-			$chunks[$hash] = FastChunkSerializer::deserialize($data);
+		$chunks = [];
+		foreach((array) $this->chunks as $hash => $data){
+			$chunks[$hash] = FastChunkSerializer::deserializeTerrain($data);
 		}
 
 		$center = $this->center;
@@ -63,20 +66,20 @@ class PasteTask extends AsyncTask{
 		$baseLength = $center->z - (int) ($length / 2);
 
 		/** @var Chunk[] $chunks */
-		$manager = new BlockSniperChunkManager();
-		foreach($chunks as $chunk){
-			$manager->setChunk($chunk->getX(), $chunk->getZ(), $chunk);
+		$manager = new BlockSniperChunkManager(World::Y_MIN, World::Y_MAX);
+		foreach($chunks as $hash => $chunk){
+			World::getXZ($hash, $chunkX, $chunkZ);
+			$manager->setChunk($chunkX, $chunkZ, $chunk);
 		}
 
 		$processedBlocks = 0;
-		/** @var Block[] $blocksInside */
 		foreach($schematic->blocks() as $block){
 			if($block->getId() === BlockLegacyIds::AIR){
 				continue;
 			}
-			$tempX = $baseWidth + $block->x;
-			$tempY = $center->y + $block->y;
-			$tempZ = $baseLength + $block->z;
+			$tempX = $baseWidth + $block->getPosition()->x;
+			$tempY = $center->y + $block->getPosition()->y;
+			$tempZ = $baseLength + $block->getPosition()->z;
 			$index = World::chunkHash($tempX >> 4, $tempZ >> 4);
 
 			if(isset($chunks[$index])){
@@ -94,13 +97,13 @@ class PasteTask extends AsyncTask{
 		if(!$loader->isEnabled()){
 			return;
 		}
-		if(!($player = Server::getInstance()->getPlayer($this->playerName))){
+		if(!($player = Server::getInstance()->getPlayerExact($this->playerName))){
 			return;
 		}
 
 		$undoChunks = $this->fetchLocal(self::KEY_CHUNKS);
 		foreach($undoChunks as &$undoChunk){
-			$undoChunk = FastChunkSerializer::deserialize($undoChunk);
+			$undoChunk = FastChunkSerializer::deserializeTerrain($undoChunk);
 		}
 
 		$world = $player->getWorld();
@@ -109,7 +112,8 @@ class PasteTask extends AsyncTask{
 
 		if($world instanceof World){
 			foreach($chunks as $hash => $chunk){
-				$world->setChunk($chunk->getX(), $chunk->getZ(), $chunk, false);
+				World::getXZ($hash, $chunkX, $chunkZ);
+				$world->setChunk($chunkX, $chunkZ, $chunk);
 			}
 		}
 

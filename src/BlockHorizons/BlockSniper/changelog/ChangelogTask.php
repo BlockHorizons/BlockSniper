@@ -13,10 +13,10 @@ class ChangelogTask extends AsyncTask{
 	private const CHANGELOG_URL = "https://raw.githubusercontent.com/BlockHorizons/BlockSniper/API-4.0.0/CHANGELOG.md";
 
 	public function onRun() : void{
-		$text = Internet::getURL(self::CHANGELOG_URL, 10, [], $err);
+		$result = Internet::getURL(self::CHANGELOG_URL, 10, [], $err);
 		$changeLogs = [];
-		if(is_string($text)){
-			$reader = new StringReader($text);
+		if($result !== null){
+			$reader = new StringReader($result->getBody());
 			while(true){
 				if(!$reader->canReadUntil("## [")){
 					// We've processed all versions in the file.

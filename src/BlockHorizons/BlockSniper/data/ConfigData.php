@@ -16,7 +16,7 @@ use Sandertv\Marshal\Unmarshal;
 use function rename;
 
 class ConfigData{
-	private $filePath = "";
+	private string $filePath = "";
 
 	/**
 	 * @var string

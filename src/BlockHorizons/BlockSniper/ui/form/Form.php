@@ -13,7 +13,7 @@ abstract class Form implements JsonSerializable{
 
 	/** @var FormInterface|null */
 	protected $responseForm;
-	/** @var array */
+	/** @var mixed[] */
 	protected $data = [];
 
 	public function t(string $key) : string{
@@ -24,6 +24,9 @@ abstract class Form implements JsonSerializable{
 		$this->responseForm = $form;
 	}
 
+	/**
+	 * @return mixed[]
+	 */
 	public function jsonSerialize() : array{
 		return $this->data;
 	}

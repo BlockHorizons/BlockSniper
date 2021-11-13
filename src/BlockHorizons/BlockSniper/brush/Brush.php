@@ -11,11 +11,14 @@ use BlockHorizons\BlockSniper\brush\type\TreeType;
 use BlockHorizons\BlockSniper\event\BrushUseEvent;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\revert\SyncRevert;
+use BlockHorizons\BlockSniper\session\owner\ISessionOwner;
 use BlockHorizons\BlockSniper\session\PlayerSession;
 use BlockHorizons\BlockSniper\session\Selection;
 use BlockHorizons\BlockSniper\session\Session;
 use Generator;
+use pocketmine\block\Block;
 use pocketmine\math\AxisAlignedBB;
+use pocketmine\math\Vector2;
 use pocketmine\player\Player;
 use pocketmine\Server;
 use pocketmine\world\Position;
@@ -52,8 +55,10 @@ class Brush extends BrushProperties{
 	 *
 	 * @param Session        $session
 	 * @param Position       $target
-	 * @param array          $plotPoints
+	 * @param Vector2[][]    $plotPoints
 	 * @param Selection|null $selection
+	 *
+	 * @phpstan-param Session<ISessionOwner> $session
 	 *
 	 * @return bool
 	 */
@@ -147,6 +152,8 @@ class Brush extends BrushProperties{
 	 * @param Position|null  $target
 	 * @param Session|null   $session
 	 *
+	 * @phpstan-param Session<ISessionOwner> $session
+	 * @phpstan-param Generator<int, Block, void, void>|null $blocks
 	 * @return Type
 	 */
 	public function getType(Generator $blocks = null, Position $target = null, Session $session = null) : Type{

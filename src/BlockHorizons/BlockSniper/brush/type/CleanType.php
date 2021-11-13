@@ -23,14 +23,11 @@ class CleanType extends Type{
 		BlockLegacyIds::SANDSTONE => 0
 	];
 
-	/**
-	 * @return Generator
-	 */
 	protected function fill() : Generator{
-		foreach($this->blocks as $block){
+		foreach($this->mustGetBlocks() as $block){
 			if(!isset(self::NATURAL_BLOCKS[$block->getId()])){
 				yield $block;
-				$this->delete($block->getPos());
+				$this->delete($block->getPosition());
 			}
 		}
 	}

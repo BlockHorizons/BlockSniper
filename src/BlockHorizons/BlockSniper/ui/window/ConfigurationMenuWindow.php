@@ -7,14 +7,20 @@ namespace BlockHorizons\BlockSniper\ui\window;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\player\Player;
+use pocketmine\utils\AssumptionFailedError;
+use function array_search;
 
 class ConfigurationMenuWindow extends CustomWindow{
 
-	public function __construct(Loader $loader, Player $requester){
+	public function __construct(Loader $loader){
 		parent::__construct($this->t(Translation::UI_CONFIGURATION_MENU_TITLE));
 		$c = $loader->config;
 
-		$this->addDropdown($this->t(Translation::UI_CONFIGURATION_MENU_LANGUAGE), Loader::getAvailableLanguages(), array_search($c->messageLanguage, Loader::getAvailableLanguages()), function(Player $player, int $value) use ($c){
+		$selected = array_search($c->messageLanguage, Loader::getAvailableLanguages());
+		if($selected === false){
+			$selected = 0;
+		}
+		$this->addDropdown($this->t(Translation::UI_CONFIGURATION_MENU_LANGUAGE), Loader::getAvailableLanguages(), $selected, function(Player $player, int $value) use ($c){
 			$c->messageLanguage = Loader::getAvailableLanguages()[$value];
 		}
 		);

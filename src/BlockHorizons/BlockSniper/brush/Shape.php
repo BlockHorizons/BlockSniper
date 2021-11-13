@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\brush;
 
 use Generator;
+use pocketmine\block\Block;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
 use pocketmine\world\ChunkManager;
@@ -15,8 +16,9 @@ use pocketmine\world\World;
  * Class Shape implements the basic behaviour of shapes. It holds a couple of convenience methods which may be used to
  * make processing them easier.
  */
-abstract class Shape extends AxisAlignedBB{
+abstract class Shape{
 
+	protected AxisAlignedBB $selection;
 	/** @var Vector3 */
 	protected $centre;
 	/** @var bool */
@@ -34,10 +36,10 @@ abstract class Shape extends AxisAlignedBB{
 	 */
 	public function __construct(BrushProperties $properties, Target $target, ?AxisAlignedBB $selection = null){
 		if($selection === null){
-			$selection = new AxisAlignedBB(0, 0, 0, 0, 0, 0);
-			$this->buildSelection($target, $properties, $selection);
+			$selection = $this->buildSelection($target, $properties);
 		}
-		parent::__construct($selection->minX, $selection->minY, $selection->minZ, $selection->maxX, $selection->maxY, $selection->maxZ);
+
+		$this->selection = $selection;
 
 		$this->centre = $target->asVector3();
 		$this->hollow = $properties->hollow;
@@ -53,7 +55,7 @@ abstract class Shape extends AxisAlignedBB{
 	/**
 	 * getBlocksInside creates a generator that yields all Vector3s that are found within the shape.
 	 *
-	 * @return Generator
+	 * @return Generator<int, Vector3, void, void>
 	 */
 	public abstract function getVectors() : Generator;
 
@@ -63,9 +65,8 @@ abstract class Shape extends AxisAlignedBB{
 	 *
 	 * @param Vector3         $center
 	 * @param BrushProperties $properties
-	 * @param AxisAlignedBB   $bb
 	 */
-	public abstract function buildSelection(Vector3 $center, BrushProperties $properties, AxisAlignedBB $bb) : void;
+	public abstract function buildSelection(Vector3 $center, BrushProperties $properties) : AxisAlignedBB;
 
 	/**
 	 * getBlockCount calculates the total amount of blocks in the selection of the shape.
@@ -100,7 +101,7 @@ abstract class Shape extends AxisAlignedBB{
 	 *
 	 * @param ChunkManager $manager
 	 *
-	 * @return Generator
+	 * @phpstan-return Generator<int, Block, void, void>
 	 */
 	public function getBlocks(ChunkManager $manager) : Generator{
 		foreach($this->getVectors() as $vector){
@@ -118,13 +119,13 @@ abstract class Shape extends AxisAlignedBB{
 	 */
 	public function getTouchedChunks(ChunkManager $chunkManager) : array{
 		$touchedChunks = [];
-		for($x = $this->minX; $x <= $this->maxX + 16; $x += 16){
-			for($z = $this->minZ; $z <= $this->maxZ + 16; $z += 16){
+		for($x = $this->selection->minX; $x <= $this->selection->maxX + 16; $x += 16){
+			for($z = $this->selection->minZ; $z <= $this->selection->maxZ + 16; $z += 16){
 				$chunk = $chunkManager->getChunk($x >> 4, $z >> 4);
 				if($chunk === null){
 					continue;
 				}
-				$touchedChunks[World::chunkHash($x >> 4, $z >> 4)] = FastChunkSerializer::serialize($chunk);
+				$touchedChunks[World::chunkHash($x >> 4, $z >> 4)] = FastChunkSerializer::serializeTerrain($chunk);
 			}
 		}
 

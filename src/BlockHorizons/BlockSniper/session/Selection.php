@@ -12,7 +12,7 @@ use function max;
 use function min;
 
 class Selection{
-	/** @var Vector3 */
+	/** @var Vector3|null */
 	private $pos1, $pos2;
 
 	/**
@@ -51,8 +51,8 @@ class Selection{
 	 * @return AxisAlignedBB
 	 */
 	public function box() : AxisAlignedBB{
-		if(!$this->ready()){
-			throw new InvalidStateException();
+		if($this->pos1 === null || $this->pos2 === null){
+			throw new \LogicException();
 		}
 
 		return new AxisAlignedBB(
@@ -81,7 +81,7 @@ class Selection{
 	 */
 	public function getBottomCentre() : Vector3{
 		if(!$this->ready()){
-			throw new InvalidStateException("selection must be set before retrieving the centre");
+			throw new \LogicException("selection must be set before retrieving the centre");
 		}
 		$bb = $this->box();
 

@@ -18,22 +18,22 @@ class ReplaceTargetType extends Type{
 	/** @var int */
 	private $targetBlockMeta;
 
+	/**
+	 * @phpstan-param Generator<int, Block, void, void>|null  $blocks
+	 */
 	public function __construct(BrushProperties $properties, Target $target, Generator $blocks = null){
 		parent::__construct($properties, $target, $blocks);
 		$this->targetBlockId = $this->getBlock($this->target)->getId();
 		$this->targetBlockMeta = $this->getBlock($this->target)->getMeta();
 	}
 
-	/**
-	 * @return Generator
-	 */
 	public function fill() : Generator{
-		/** @var Block $block */
 		$targetBlock = BlockFactory::getInstance()->get($this->targetBlockId, $this->targetBlockMeta);
-		foreach($this->blocks as $block){
+		/** @var Block $block */
+		foreach($this->mustGetBlocks() as $block){
 			if($block->getId() === $targetBlock->getId() && $block->getMeta() === $targetBlock->getMeta()){
 				yield $block;
-				$this->putBlock($block->getPos(), $this->randomBrushBlock());
+				$this->putBlock($block->getPosition(), $this->randomBrushBlock());
 			}
 		}
 	}

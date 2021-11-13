@@ -21,14 +21,11 @@ class DrainType extends Type{
 		BlockLegacyIds::LAVA => 0
 	];
 
-	/**
-	 * @return Generator
-	 */
 	public function fill() : Generator{
-		foreach($this->blocks as $block){
+		foreach($this->mustGetBlocks() as $block){
 			if(isset(self::LIQUID_BLOCKS[$block->getId()])){
 				yield $block;
-				$this->delete($block->getPos());
+				$this->delete($block->getPosition());
 			}
 		}
 	}

@@ -7,9 +7,15 @@ namespace BlockHorizons\BlockSniper\ui\form;
 use pocketmine\form\Form as FormInterface;
 use pocketmine\player\Player;
 
+/**
+ * @phpstan-type SubmitCallback callable(Player, int) : void
+ */
 class MenuForm extends Form implements FormInterface{
 
-	/** @var callable[] */
+	/**
+	 * @var callable[]
+	 * @phpstan-var array<int, SubmitCallback>
+	 */
 	private $buttons = [];
 
 	public function __construct(string $title, string $content){
@@ -21,7 +27,9 @@ class MenuForm extends Form implements FormInterface{
 		];
 	}
 
-	// callable: function(Player $player)
+	/**
+	 * @phpstan-param SubmitCallback|null $c
+	 */
 	public function addOption(string $text, string $iconPath = "", string $iconType = "url", callable $c = null) : void{
 		$d = ["text" => $text];
 		if($iconPath !== ""){

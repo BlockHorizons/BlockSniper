@@ -13,6 +13,7 @@ use pocketmine\block\Block;
 use pocketmine\block\BlockFactory;
 use pocketmine\block\BlockLegacyIds;
 use pocketmine\block\VanillaBlocks;
+use pocketmine\data\bedrock\BiomeIds;
 use pocketmine\Server;
 use pocketmine\world\biome\Biome;
 
@@ -27,12 +28,14 @@ class BrushProperties implements JsonSerializable{
 	 * type is the brush type. It must be a '::class' string of a class that extends Type.
 	 *
 	 * @var string
+	 * @phpstan-var class-string<Type>
 	 */
 	public $type = FillType::class;
 	/**
 	 * shape is the brush shape. It must be a '::class' string of a class that extends Shape.
 	 *
 	 * @var string
+	 * @phpstan-var class-string<Shape>
 	 */
 	public $shape = SphereShape::class;
 	/**
@@ -89,12 +92,12 @@ class BrushProperties implements JsonSerializable{
 	 */
 	public $replacedBlocks = "air";
 	/**
-	 * biomeId is the biome ID used to brush biomes with. The biome ID must be one of the constantsvfound in the Biome
+	 * biomeId is the biome ID used to brush biomes with. The biome ID must be one of the constantsvfound in the BiomeIds
 	 * class.
 	 *
 	 * @var int
 	 */
-	public $biomeId = Biome::PLAINS;
+	public $biomeId = BiomeIds::PLAINS;
 	/**
 	 * tree holds properties specifically used by the tree type brush.
 	 *
@@ -157,11 +160,12 @@ class BrushProperties implements JsonSerializable{
 	 * @return Block[]
 	 */
 	public function parseBlocks(string $data) : array{
-		$blocks = Parser::parse($data);
-		if(empty($blocks)){
+		$items = Parser::parse($data);
+		if(empty($items)){
 			return [VanillaBlocks::AIR()];
 		}
-		foreach($blocks as $key => $item){
+		$blocks = [];
+		foreach($items as $key => $item){
 			$blocks[$key] = $item->getBlock();
 		}
 
@@ -181,7 +185,7 @@ class BrushProperties implements JsonSerializable{
 
 			return;
 		}
-		/** @var Loader $loader */
+		/** @var Loader|null $loader */
 		$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
 		if($loader === null){
 			return;
@@ -192,7 +196,7 @@ class BrushProperties implements JsonSerializable{
 	}
 
 	/**
-	 * @return array
+	 * @return mixed[]
 	 */
 	public function jsonSerialize() : array{
 		return (array) $this;

@@ -38,7 +38,10 @@ class Loader extends PluginBase{
 		"schematic"
 	];
 
-	/** @var string[] */
+	/**
+	 * @var string[]
+	 * @phpstan-var list<string>
+	 */
 	private static $availableLanguages = [
 		"en",
 		"nl",
@@ -62,6 +65,7 @@ class Loader extends PluginBase{
 
 	/**
 	 * @return string[]
+	 * @phpstan-return list<string>
 	 */
 	public static function getAvailableLanguages() : array{
 		return self::$availableLanguages;
@@ -69,7 +73,7 @@ class Loader extends PluginBase{
 
 	public function onLoad() : void{
 		foreach(self::AUTOLOAD_LIBRARIES as $name){
-			$this->getServer()->getLoader()->addPath($this->getFile() . "src/$name/src");
+			$this->getServer()->getLoader()->addPath("", $this->getFile() . "src/$name/src");
 		}
 
 		$this->getServer()->getAsyncPool()->submitTask(new UpdateNotifyTask());
@@ -118,9 +122,6 @@ class Loader extends PluginBase{
 	}
 
 	public function initializeDirectories() : void{
-		if(!is_dir($this->getDataFolder())){
-			mkdir($this->getDataFolder());
-		}
 		if(!is_dir($this->getDataFolder() . "schematics/")){
 			mkdir($this->getDataFolder() . "schematics/");
 		}

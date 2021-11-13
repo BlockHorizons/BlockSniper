@@ -16,17 +16,14 @@ use pocketmine\math\Facing;
 
 class ExpandType extends Type{
 
-	/**
-	 * @return Generator
-	 */
 	public function fill() : Generator{
 		$undoBlocks = [];
-		foreach($this->blocks as $block){
+		foreach($this->mustGetBlocks() as $block){
 			/** @var Block $block */
 			if($block instanceof Air){
 				$closedSides = 0;
 				foreach(Facing::ALL as $direction){
-					$sideBlock = $this->side($block->getPos(), $direction);
+					$sideBlock = $this->side($block->getPosition(), $direction);
 					if(!($sideBlock instanceof Air)){
 						$closedSides++;
 					}
@@ -38,7 +35,7 @@ class ExpandType extends Type{
 		}
 		foreach($undoBlocks as $selectedBlock){
 			yield $selectedBlock;
-			$this->putBlock($selectedBlock->getPos(), $this->randomBrushBlock());
+			$this->putBlock($selectedBlock->getPosition(), $this->randomBrushBlock());
 		}
 	}
 

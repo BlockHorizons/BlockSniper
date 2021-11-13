@@ -7,9 +7,15 @@ namespace BlockHorizons\BlockSniper\ui\form;
 use pocketmine\form\Form as FormInterface;
 use pocketmine\player\Player;
 
+/**
+ * @phpstan-type SubmitCallback callable(Player) : void
+ */
 class ModalForm extends Form implements FormInterface{
 
-	/** @var callable */
+	/**
+	 * @var callable
+	 * @phpstan-var SubmitCallback
+	 */
 	private $yes, $no;
 
 	public function __construct(string $title, string $content){
@@ -27,8 +33,9 @@ class ModalForm extends Form implements FormInterface{
 	/**
 	 * @param callable $c
 	 * @param string   $text
+	 * @phpstan-param SubmitCallback $c
 	 */
-	public function setYes(callable $c, string $text = "gui.yes"){
+	public function setYes(callable $c, string $text = "gui.yes") : void{
 		$this->yes = $c;
 		$this->data["button1"] = $text;
 	}
@@ -36,8 +43,9 @@ class ModalForm extends Form implements FormInterface{
 	/**
 	 * @param callable $c
 	 * @param string   $text
+	 * @phpstan-param SubmitCallback $c
 	 */
-	public function setNo(callable $c, string $text = "gui.no"){
+	public function setNo(callable $c, string $text = "gui.no") : void{
 		$this->no = $c;
 		$this->data["button2"] = $text;
 	}

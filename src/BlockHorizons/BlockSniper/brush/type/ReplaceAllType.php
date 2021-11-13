@@ -14,14 +14,11 @@ use pocketmine\block\BlockLegacyIds;
 
 class ReplaceAllType extends Type{
 
-	/**
-	 * @return Generator
-	 */
 	public function fill() : Generator{
-		foreach($this->blocks as $block){
+		foreach($this->mustGetBlocks() as $block){
 			if($block->getId() !== BlockLegacyIds::AIR){
 				yield $block;
-				$this->putBlock($block->getPos(), $this->randomBrushBlock());
+				$this->putBlock($block->getPosition(), $this->randomBrushBlock());
 			}
 		}
 	}

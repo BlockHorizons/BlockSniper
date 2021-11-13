@@ -14,6 +14,9 @@ use function file_put_contents;
 use function json_decode;
 use function json_encode;
 
+/**
+ * @phpstan-extends Session<ServerSessionOwner>
+ */
 class ServerSession extends Session implements JsonSerializable{
 
 	/** @var Position */
@@ -64,7 +67,7 @@ class ServerSession extends Session implements JsonSerializable{
 	}
 
 	/**
-	 * @return array
+	 * @return mixed[]
 	 */
 	public function jsonSerialize() : array{
 		return [

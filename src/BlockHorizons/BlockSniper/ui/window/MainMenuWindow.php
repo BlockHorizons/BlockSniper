@@ -24,12 +24,12 @@ class MainMenuWindow extends MenuForm{
 		}
 		);
 		$this->addOption($this->t(Translation::UI_CHANGELOG_NAME), self::CHANGELOG_ICON, "url", function(Player $player){
-			$this->setResponseForm(new ChangeLogMenu($player));
+			$this->setResponseForm(new ChangeLogMenu());
 		}
 		);
 		if($requester->hasPermission("blocksniper.configuration")){
 			$this->addOption($this->t(Translation::UI_MAIN_MENU_CONFIG), self::CONFIG_ICON, "url", function(Player $player) use ($loader){
-				$this->setResponseForm(new ConfigurationMenuWindow($loader, $player));
+				$this->setResponseForm(new ConfigurationMenuWindow($loader));
 			}
 			);
 		}

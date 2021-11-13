@@ -15,7 +15,7 @@ use function strtolower;
 
 class BlockSniperCommand extends BaseCommand{
 
-	private $info = "";
+	private string $info;
 
 	public function __construct(Loader $loader){
 		parent::__construct($loader, "blocksniper", Translation::COMMANDS_BLOCKSNIPER_DESCRIPTION, "/blocksniper [menu|reload]", ["bs"], true);
@@ -55,7 +55,7 @@ class BlockSniperCommand extends BaseCommand{
 
 					return;
 				}
-				$sender->sendForm(new ConfigurationMenuWindow($this->loader, $sender));
+				$sender->sendForm(new ConfigurationMenuWindow($this->loader));
 
 				return;
 

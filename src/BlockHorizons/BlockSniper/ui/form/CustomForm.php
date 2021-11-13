@@ -22,6 +22,9 @@ class CustomForm extends Form implements FormInterface{
 
 	// Callables in the form function(Player $player, $value)
 
+	/**
+	 * @param string[] $options
+	 */
 	public function addDropdown(string $text, array $options, int $defaultIndex, callable $c = null) : void{
 		$this->data["content"][] = [
 			"type" => "dropdown",
@@ -49,7 +52,7 @@ class CustomForm extends Form implements FormInterface{
 			"type" => "label",
 			"text" => $text
 		];
-		$this->elements[] = $c ?? function(){
+		$this->elements[] = function(){
 			};
 	}
 
@@ -66,6 +69,9 @@ class CustomForm extends Form implements FormInterface{
 			};
 	}
 
+	/**
+	 * @param string[] $steps
+	 */
 	public function addStepSlider(string $text, array $steps, int $defaultIndex, callable $c = null) : void{
 		$this->data["content"][] = [
 			"type" => "step_slider",

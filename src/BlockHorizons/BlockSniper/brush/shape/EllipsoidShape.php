@@ -19,14 +19,14 @@ class EllipsoidShape extends SphereShape{
 
 	/**
 	 * @param Vector3         $center
-	 * @param BrushProperties $brush
-	 * @param AxisAlignedBB   $bb
+	 * @param BrushProperties $properties
 	 */
-	public function buildSelection(Vector3 $center, BrushProperties $brush, AxisAlignedBB $bb) : void{
-		[$bb->maxX, $bb->maxY, $bb->maxZ, $bb->minX, $bb->minY, $bb->minZ] = [
-			$center->x + $brush->width, $center->y + $brush->height, $center->z + $brush->length,
-			$center->x - $brush->width, $center->y - $brush->height, $center->z - $brush->length
+	public function buildSelection(Vector3 $center, BrushProperties $properties) : AxisAlignedBB{
+		[$maxX, $maxY, $maxZ, $minX, $minY, $minZ] = [
+			$center->x + $properties->width, $center->y + $properties->height, $center->z + $properties->length,
+			$center->x - $properties->width, $center->y - $properties->height, $center->z - $properties->length
 		];
+		return new AxisAlignedBB($minX, $minY, $minZ, $maxX, $maxY, $maxZ);
 	}
 
 	/**
