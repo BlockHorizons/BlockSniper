@@ -11,11 +11,14 @@ use BlockHorizons\BlockSniper\brush\type\TreeType;
 use BlockHorizons\BlockSniper\event\BrushUseEvent;
 use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\revert\SyncRevert;
+use BlockHorizons\BlockSniper\session\owner\ISessionOwner;
 use BlockHorizons\BlockSniper\session\PlayerSession;
 use BlockHorizons\BlockSniper\session\Selection;
 use BlockHorizons\BlockSniper\session\Session;
 use Generator;
+use pocketmine\block\Block;
 use pocketmine\math\AxisAlignedBB;
+use pocketmine\math\Vector2;
 use pocketmine\player\Player;
 use pocketmine\Server;
 use pocketmine\world\Position;
@@ -52,8 +55,10 @@ class Brush extends BrushProperties{
 	 *
 	 * @param Session        $session
 	 * @param Position       $target
-	 * @param array          $plotPoints
+	 * @param Vector2[][]    $plotPoints
 	 * @param Selection|null $selection
+	 *
+	 * @phpstan-param Session<ISessionOwner> $session
 	 *
 	 * @return bool
 	 */
@@ -133,9 +138,9 @@ class Brush extends BrushProperties{
 		}
 
 		try{
-			return new $this->shape($this, new Target($target, $target->getWorld()), $bb);
+			return new $this->shape($this, new Target($target, $target->isValid() ? $target->getWorld() : null), $bb);
 		}catch(Throwable $e){
-			return new SphereShape($this, new Target($target, $target->getWorld()), $bb);
+			return new SphereShape($this, new Target($target, $target->isValid() ? $target->getWorld() : null), $bb);
 		}
 	}
 
@@ -147,6 +152,8 @@ class Brush extends BrushProperties{
 	 * @param Position|null  $target
 	 * @param Session|null   $session
 	 *
+	 * @phpstan-param Session<ISessionOwner> $session
+	 * @phpstan-param Generator<int, Block, void, void>|null $blocks
 	 * @return Type
 	 */
 	public function getType(Generator $blocks = null, Position $target = null, Session $session = null) : Type{
@@ -155,9 +162,9 @@ class Brush extends BrushProperties{
 		}
 
 		try{
-			return new $this->type($this, new Target($target, $target->getWorld()), $blocks, $session);
+			return new $this->type($this, new Target($target, $target->isValid() ? $target->getWorld() : null), $blocks, $session);
 		}catch(Throwable $e){
-			return new FillType($this, new Target($target, $target->getWorld()), $blocks);
+			return new FillType($this, new Target($target, $target->isValid() ? $target->getWorld() : null), $blocks);
 		}
 	}
 

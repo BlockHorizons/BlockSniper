@@ -14,14 +14,11 @@ use pocketmine\block\Flowable;
 
 class LeafBlowerType extends Type{
 
-	/**
-	 * @return Generator
-	 */
 	public function fill() : Generator{
-		foreach($this->blocks as $block){
+		foreach($this->mustGetBlocks() as $block){
 			if($block instanceof Flowable){
 				yield $block;
-				$this->delete($block->getPos());
+				$this->delete($block->getPosition());
 			}
 		}
 	}

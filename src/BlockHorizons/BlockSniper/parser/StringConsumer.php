@@ -8,6 +8,8 @@ use BlockHorizons\BlockSniper\exception\InvalidItemException;
 use InvalidArgumentException;
 use pocketmine\item\Item;
 use pocketmine\item\LegacyStringToItemParser;
+use pocketmine\item\LegacyStringToItemParserException;
+use pocketmine\item\StringToItemParser;
 use function preg_match;
 use function preg_replace;
 use function sprintf;
@@ -44,7 +46,7 @@ class StringConsumer{
 	 *
 	 * @throws InvalidItemException
 	 */
-	public function tryConsume(){
+	public function tryConsume() : void{
 		$this->blockLength = 0;
 		$this->tryConsumeItem();
 		$this->tryConsumeTags();
@@ -89,7 +91,7 @@ class StringConsumer{
 	 *
 	 * @throws InvalidItemException
 	 */
-	private function tryConsumeItem(){
+	private function tryConsumeItem() : void{
 		$blockName = "";
 		$length = strlen($this->itemString);
 		for($i = 0; $i < $length; $i++){
@@ -128,12 +130,12 @@ class StringConsumer{
 	 *
 	 */
 	private function parseItemName(string $name) : Item{
-		if(($translation = IdMap::translate($name)) !== null){
-			$name = $translation;
+		if(($item = StringToItemParser::getInstance()->parse($name)) !== null){
+			return $item;
 		}
 		try{
 			return LegacyStringToItemParser::getInstance()->parse($name);
-		}catch(InvalidArgumentException $exception){
+		}catch(LegacyStringToItemParserException $exception){
 			throw new InvalidItemException(sprintf("cannot parse %s as block: block not found", $name));
 		}
 	}
@@ -143,7 +145,7 @@ class StringConsumer{
 	 *
 	 * @throws InvalidItemException
 	 */
-	private function tryConsumeTags(){
+	private function tryConsumeTags() : void{
 		if(strlen($this->itemString) === 0 || $this->itemString[0] !== "["){
 			// There are no tags available. Don't do anything.
 			return;

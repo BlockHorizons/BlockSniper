@@ -69,11 +69,11 @@ class PasteCommand extends BaseCommand{
 				$touchedChunks = [];
 				for($x = $center->x - $width / 2; $x <= $center->x + $width / 2 + 16; $x += 16){
 					for($z = $center->z - $length / 2; $z <= $center->z + $length / 2 + 16; $z += 16){
-						$chunk = $sender->getWorld()->getChunk($x >> 4, $z >> 4, true);
+						$chunk = $sender->getWorld()->loadChunk($x >> 4, $z >> 4);
 						if($chunk === null){
 							continue;
 						}
-						$touchedChunks[World::chunkHash($x >> 4, $z >> 4)] = FastChunkSerializer::serialize($chunk);
+						$touchedChunks[World::chunkHash($x >> 4, $z >> 4)] = FastChunkSerializer::serializeTerrain($chunk);
 					}
 				}
 				$session->getCloneStore()->pasteSchematic($file, $center->asVector3(), $touchedChunks);

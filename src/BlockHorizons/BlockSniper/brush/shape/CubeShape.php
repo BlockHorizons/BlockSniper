@@ -19,14 +19,14 @@ class CubeShape extends CuboidShape{
 
 	/**
 	 * @param Vector3         $center
-	 * @param BrushProperties $brush
-	 * @param AxisAlignedBB   $bb
+	 * @param BrushProperties $properties
 	 */
-	public function buildSelection(Vector3 $center, BrushProperties $brush, AxisAlignedBB $bb) : void{
-		[$bb->maxX, $bb->maxY, $bb->maxZ, $bb->minX, $bb->minY, $bb->minZ] = [
-			$center->x + $brush->size, $center->y + $brush->size, $center->z + $brush->size,
-			$center->x - $brush->size, $center->y - $brush->size, $center->z - $brush->size
+	public function buildSelection(Vector3 $center, BrushProperties $properties) : AxisAlignedBB{
+		[$maxX, $maxY, $maxZ, $minX, $minY, $minZ] = [
+			$center->x + $properties->size, $center->y + $properties->size, $center->z + $properties->size,
+			$center->x - $properties->size, $center->y - $properties->size, $center->z - $properties->size
 		];
+		return new AxisAlignedBB($minX, $minY, $minZ, $maxX, $maxY, $maxZ);
 	}
 
 	/**

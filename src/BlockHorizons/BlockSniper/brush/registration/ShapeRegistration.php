@@ -4,21 +4,27 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\registration;
 
+use BlockHorizons\BlockSniper\brush\Shape;
 use BlockHorizons\BlockSniper\brush\shape\CubeShape;
 use BlockHorizons\BlockSniper\brush\shape\CuboidShape;
 use BlockHorizons\BlockSniper\brush\shape\CylinderShape;
 use BlockHorizons\BlockSniper\brush\shape\EllipsoidShape;
 use BlockHorizons\BlockSniper\brush\shape\SphereShape;
 use BlockHorizons\BlockSniper\data\Translation;
+use pocketmine\permission\DefaultPermissions;
 use pocketmine\permission\Permission;
 use pocketmine\permission\PermissionManager;
+use pocketmine\utils\AssumptionFailedError;
 use ReflectionClass;
 use function str_replace;
 use function strtolower;
 
 class ShapeRegistration{
 
-	/** @var string[] */
+	/**
+	 * @var string[]
+	 * @phpstan-var array<string, class-string<Shape>>
+	 */
 	public static $shapes = [];
 
 	public static function init() : void{
@@ -35,6 +41,7 @@ class ShapeRegistration{
 	 *
 	 * @param string $class
 	 * @param bool   $overwrite
+	 * @phpstan-param class-string<Shape> $class
 	 *
 	 * @return bool
 	 */
@@ -72,8 +79,10 @@ class ShapeRegistration{
 	 */
 	private static function registerPermission(string $shapeName) : void{
 		$shapeName = str_replace(" ", "_", $shapeName);
-		$permission = new Permission("blocksniper.shape." . $shapeName, "Allows permission to use the " . $shapeName . " shape.", Permission::DEFAULT_OP);
-		$permission->addParent("blocksniper.shape", true);
+
+		$operatorPermission = PermissionManager::getInstance()->getPermission(DefaultPermissions::ROOT_OPERATOR) ?? throw new AssumptionFailedError();
+		$permission = new Permission("blocksniper.shape." . $shapeName, "Allows permission to use the " . $shapeName . " shape.");
+		$operatorPermission->addChild($permission->getName(), true);
 		PermissionManager::getInstance()->addPermission($permission);
 	}
 
@@ -81,6 +90,7 @@ class ShapeRegistration{
 	 * Returns an array containing the names of all shapes.
 	 *
 	 * @return string[]
+	 * @phpstan-return list<string>
 	 */
 	public static function getShapes() : array{
 		$shapes = [];
@@ -97,6 +107,7 @@ class ShapeRegistration{
 	 * @param string $shortName
 	 *
 	 * @return null|string
+	 * @phpstan-return null|class-string<Shape>
 	 */
 	public static function getShape(string $shortName) : ?string{
 		return self::$shapes[strtolower($shortName)] ?? null;

@@ -23,6 +23,12 @@ class Changelog{
 	/** @var string[] */
 	private $added, $changed, $removed, $fixed;
 
+	/**
+	 * @param string[] $added
+	 * @param string[] $changed
+	 * @param string[] $removed
+	 * @param string[] $fixed
+	 */
 	public function __construct(string $version, string $date, array $added, array $changed, array $removed, array $fixed){
 		$this->date = $date;
 		$this->version = $version;
@@ -71,7 +77,7 @@ class Changelog{
 		}, Translation::get(Translation::UI_CHANGELOG_CLOSE)
 		);
 		$form->setNo(function(Player $player){
-			$player->sendForm(new ChangeLogMenu($player));
+			$player->sendForm(new ChangeLogMenu());
 		}, Translation::get(Translation::UI_CHANGELOG_SEE_OTHER)
 		);
 

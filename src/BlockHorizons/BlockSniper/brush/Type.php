@@ -13,9 +13,12 @@ use pocketmine\block\BlockLegacyIds;
 use pocketmine\block\VanillaBlocks;
 use pocketmine\math\Vector2;
 use pocketmine\math\Vector3;
+use pocketmine\utils\AssumptionFailedError;
 use pocketmine\world\ChunkManager;
 use pocketmine\world\World;
+use function array_keys;
 use function array_rand;
+use function str_ends_with;
 
 /**
  * Class Type implements the basic behaviour of a brush type. It holds methods which are primarily used within classes
@@ -25,8 +28,11 @@ abstract class Type{
 
 	/** @var BrushProperties */
 	protected $properties;
-	/** @var Generator */
-	protected $blocks = [];
+	/**
+	 * @var Generator|null
+	 * @phpstan-var Generator<int, Block, void, void>|null
+	 */
+	private $blocks;
 	/** @var Block[] */
 	protected $brushBlocks = [];
 	/** @var Vector3 */
@@ -47,6 +53,7 @@ abstract class Type{
 	 * @param BrushProperties $properties
 	 * @param Target          $target
 	 * @param Generator|null  $blocks
+	 * @phpstan-param \Generator<int, Block, void, void>|null $blocks
 	 */
 	public function __construct(BrushProperties $properties, Target $target, Generator $blocks = null){
 		$this->properties = $properties;
@@ -115,7 +122,7 @@ abstract class Type{
 	 * fill fills the blocks set in the generator of the Type, and in turn returns a generator yielding the undo
 	 * blocks of the Type.
 	 *
-	 * @return Generator
+	 * @phpstan-return Generator<int, Block, void, void>
 	 */
 	protected abstract function fill() : Generator;
 
@@ -126,7 +133,7 @@ abstract class Type{
 	 *
 	 * @param Vector2[][] $plotPoints
 	 *
-	 * @return Generator|null
+	 * @phpstan-return Generator<int, Block, void, void>|null
 	 */
 	public final function fillShape(array $plotPoints = []) : ?Generator{
 		$this->plotPoints = $plotPoints;
@@ -188,11 +195,7 @@ abstract class Type{
 	 * @return Block
 	 */
 	public function side(Vector3 $block, int $side) : Block{
-		if($this->chunkManager instanceof World && $block instanceof Block){
-			return $block->getSide($side);
-		}
-
-		return $this->chunkManager->getSide($block->x, $block->y, $block->z, $side);
+		return $this->getBlock($block->getSide($side));
 	}
 
 	/**
@@ -206,7 +209,7 @@ abstract class Type{
 		$valid = !$this->myPlotChecked;
 		if($this->myPlotChecked){
 			foreach($this->plotPoints as $plotCorners){
-				if($pos->x < $plotCorners[0]->x || $pos->z < $plotCorners[0]->z || $pos->x > $plotCorners[1]->x || $pos->z > $plotCorners[1]->z){
+				if($pos->x < $plotCorners[0]->x || $pos->z < $plotCorners[0]->y || $pos->x > $plotCorners[1]->x || $pos->z > $plotCorners[1]->y){
 					continue;
 				}
 				$valid = true;
@@ -228,7 +231,7 @@ abstract class Type{
 	 */
 	public function putBlock(Vector3 $pos, Block $block) : void{
 		$valid = !$this->myPlotChecked;
-		if($pos->y < 0 || $pos->y >= World::Y_MAX){
+		if($pos->y < World::Y_MIN || $pos->y >= World::Y_MAX){
 			return;
 		}
 		if($this->myPlotChecked){
@@ -243,7 +246,7 @@ abstract class Type{
 		if(!$valid){
 			return;
 		}
-		$this->chunkManager->setBlockAt($pos->x, $pos->y, $pos->z, $block, false);
+		$this->chunkManager->setBlockAt($pos->x, $pos->y, $pos->z, $block);
 	}
 
 	/**
@@ -273,7 +276,7 @@ abstract class Type{
 	/**
 	 * setBlocksInside sets the generator used to supply blocks to the Type to edit.
 	 *
-	 * @param Generator|null $blocks
+	 * @phpstan-param Generator<int, Block, void, void>|null $blocks
 	 *
 	 * @return Type
 	 */
@@ -284,17 +287,27 @@ abstract class Type{
 	}
 
 	/**
+	 * @phpstan-return Generator<int, Block, void, void>
+	 */
+	protected function mustGetBlocks() : Generator{
+		if($this->blocks === null){
+			throw new AssumptionFailedError("blocks generator not set");
+		}
+		return $this->blocks;
+	}
+
+	/**
 	 * __sleep returns only specific properties of Type that can be serialised when passed onto an AsyncTask.
 	 *
-	 * @return string[]
+	 * @return mixed[]
 	 */
 	public function __sleep(){
-		$this->chunkManager = $this->blocks = $this->brushBlocks = null;
-		$arr = [];
-		foreach($this as $key => $value){
-			$arr[] = $key;
+		$arr = array_keys((array) $this);
+		foreach($arr as $k => $v){
+			if(str_ends_with($v, "chunkManager") || str_ends_with($v, "blocks") || str_ends_with($v, "brushBlocks")){
+				unset($arr[$k]);
+			}
 		}
-
 		return $arr;
 	}
 }

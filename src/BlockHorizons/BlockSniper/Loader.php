@@ -18,7 +18,6 @@ use BlockHorizons\BlockSniper\data\ConfigData;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\data\TranslationData;
 use BlockHorizons\BlockSniper\listener\BrushListener;
-use BlockHorizons\BlockSniper\parser\IdMap;
 use BlockHorizons\BlockSniper\session\SessionManager;
 use BlockHorizons\BlockSniper\task\UpdateNotifyTask;
 use MyPlot\MyPlot;
@@ -38,7 +37,10 @@ class Loader extends PluginBase{
 		"schematic"
 	];
 
-	/** @var string[] */
+	/**
+	 * @var string[]
+	 * @phpstan-var list<string>
+	 */
 	private static $availableLanguages = [
 		"en",
 		"nl",
@@ -62,6 +64,7 @@ class Loader extends PluginBase{
 
 	/**
 	 * @return string[]
+	 * @phpstan-return list<string>
 	 */
 	public static function getAvailableLanguages() : array{
 		return self::$availableLanguages;
@@ -69,13 +72,11 @@ class Loader extends PluginBase{
 
 	public function onLoad() : void{
 		foreach(self::AUTOLOAD_LIBRARIES as $name){
-			$this->getServer()->getLoader()->addPath($this->getFile() . "src/$name/src");
+			$this->getServer()->getLoader()->addPath("", $this->getFile() . "src/$name/src");
 		}
 
 		$this->getServer()->getAsyncPool()->submitTask(new UpdateNotifyTask());
 		$this->getServer()->getAsyncPool()->submitTask(new ChangelogTask());
-
-		new IdMap($this->getResource("id_mapping.json"));
 	}
 
 	public function onEnable() : void{
@@ -118,9 +119,6 @@ class Loader extends PluginBase{
 	}
 
 	public function initializeDirectories() : void{
-		if(!is_dir($this->getDataFolder())){
-			mkdir($this->getDataFolder());
-		}
 		if(!is_dir($this->getDataFolder() . "schematics/")){
 			mkdir($this->getDataFolder() . "schematics/");
 		}

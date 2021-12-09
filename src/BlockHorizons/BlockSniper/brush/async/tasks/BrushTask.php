@@ -11,14 +11,15 @@ use BlockHorizons\BlockSniper\brush\Shape;
 use BlockHorizons\BlockSniper\brush\Type;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
-use BlockHorizons\BlockSniper\parser\IdMap;
 use BlockHorizons\BlockSniper\revert\AsyncRevert;
+use BlockHorizons\BlockSniper\session\owner\ISessionOwner;
 use BlockHorizons\BlockSniper\session\PlayerSession;
 use BlockHorizons\BlockSniper\session\Session;
 use BlockHorizons\BlockSniper\session\SessionManager;
 use BlockHorizons\BlockSniper\task\CooldownBarTask;
 use Generator;
 use InvalidArgumentException;
+use pocketmine\block\Block;
 use pocketmine\block\BlockFactory;
 use pocketmine\math\Vector2;
 use pocketmine\scheduler\AsyncTask;
@@ -45,15 +46,19 @@ class BrushTask extends AsyncTask{
 	private $chunks;
 	/** @var Type */
 	private $type;
-	/** @var Vector2[] */
+	/** @var Vector2[][] */
 	private $plotPoints;
 	/** @var float */
 	private $startTime;
 	/** @var BrushProperties */
 	private $brushProperties;
-	/** @var string[] */
+	/** @var string */
 	private $idMap;
 
+	/**
+	 * @param Vector2[][] $plotPoints
+	 * @phpstan-param Session<ISessionOwner> $session
+	 */
 	public function __construct(Brush $brush, Session $session, Shape $shape, Type $type, World $world, array $plotPoints = []){
 		$chunks = $shape->getTouchedChunks($world);
 		$this->storeLocal(self::KEY_WORLD, $world);
@@ -67,11 +72,9 @@ class BrushTask extends AsyncTask{
 		$this->chunks = $chunks;
 		$this->plotPoints = $plotPoints;
 		$this->startTime = microtime(true);
-		$this->idMap = serialize(IdMap::$ids);
 	}
 
 	public function onRun() : void{
-		IdMap::$ids = unserialize($this->idMap);
 		$type = $this->type;
 		$type->setBrushBlocks($this->brushProperties->getBrushBlocks());
 		$shape = $this->shape;
@@ -80,15 +83,15 @@ class BrushTask extends AsyncTask{
 		// Publish progress immediately so that there will be no delay until the progress indicator appears.
 		$this->publishProgress(0);
 
-		$chunks = (array) $this->chunks;
-		foreach($chunks as $hash => $data){
-			$chunks[$hash] = FastChunkSerializer::deserialize($data);
+		$chunks = [];
+		foreach((array) $this->chunks as $hash => $data){
+			$chunks[$hash] = FastChunkSerializer::deserializeTerrain($data);
 		}
 
-		/** @var Chunk[] $chunks */
-		$manager = new BlockSniperChunkManager();
-		foreach($chunks as $chunk){
-			$manager->setChunk($chunk->getX(), $chunk->getZ(), $chunk);
+		$manager = new BlockSniperChunkManager(World::Y_MIN, World::Y_MAX);
+		foreach($chunks as $chunkHash => $chunk){
+			World::getXZ($chunkHash, $chunkX, $chunkZ);
+			$manager->setChunk($chunkX, $chunkZ, $chunk);
 		}
 		$type->setBlocksInside($this->blocks($shape, $chunks))->setChunkManager($manager);
 
@@ -100,6 +103,11 @@ class BrushTask extends AsyncTask{
 		$this->setResult($chunks);
 	}
 
+	/**
+	 * @param Chunk[] $chunks
+	 *
+	 * @phpstan-return \Generator<int, Block, void, void>
+	 */
 	private function blocks(Shape $shape, array $chunks) : Generator{
 		$blockCount = $shape->getBlockCount();
 		$blocksPerPercentage = (int) round($blockCount / 100);
@@ -117,7 +125,9 @@ class BrushTask extends AsyncTask{
 			[$posX, $posY, $posZ] = [$vector3->x & 0x0f, $vector3->y, $vector3->z & 0x0f];
 			$combinedValue = $chunk->getFullBlock($posX, $posY, $posZ);
 			$block = BlockFactory::getInstance()->fromFullBlock($combinedValue);
-			$block->getPos()->setComponents($vector3->x, $vector3->y, $vector3->z);
+			$block->getPosition()->x = $vector3->x;
+			$block->getPosition()->y = $vector3->y;
+			$block->getPosition()->z = $vector3->z;
 
 			++$i;
 			if($i === $percentageBlocks){
@@ -155,25 +165,24 @@ class BrushTask extends AsyncTask{
 
 		/** @var Chunk[] $chunks */
 		$chunks = $this->getResult();
-		/**
-		 * @var World   $world
-		 * @var Session $session
-		 * @var Brush   $brush
-		 */
+		/** @var World $world */
 		$world = $this->fetchLocal(self::KEY_WORLD);
+		/** @var Session<ISessionOwner> $session */
 		$session = $this->fetchLocal(self::KEY_SESSION);
 		$undoChunks = $this->fetchLocal(self::KEY_CHUNKS);
+		/** @var Brush $brush */
 		$brush = $this->fetchLocal(self::KEY_BRUSH);
 
 		foreach($undoChunks as &$undoChunk){
-			$undoChunk = FastChunkSerializer::deserialize($undoChunk);
+			$undoChunk = FastChunkSerializer::deserializeTerrain($undoChunk);
 		}
 
 		foreach($chunks as $hash => $chunk){
-			$world->setChunk($chunk->getX(), $chunk->getZ(), $chunk, false);
+			World::getXZ($hash, $chunkX, $chunkZ);
+			$world->setChunk($chunkX, $chunkZ, $chunk);
 		}
 
-		if(($player = Server::getInstance()->getPlayer($session->getSessionOwner()->getName())) !== null){
+		if(($player = Server::getInstance()->getPlayerExact($session->getSessionOwner()->getName())) !== null){
 			$loader->getScheduler()->scheduleDelayedRepeatingTask(new CooldownBarTask($loader, $brush, $player), 1, 3);
 		}
 		SessionManager::getPlayerSession($player)->getRevertStore()->saveUndo(new AsyncRevert($chunks, $undoChunks, $world));

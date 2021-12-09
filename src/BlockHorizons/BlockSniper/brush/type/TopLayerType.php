@@ -16,21 +16,18 @@ use pocketmine\math\Facing;
 
 class TopLayerType extends Type{
 
-	/**
-	 * @return Generator
-	 */
 	public function fill() : Generator{
-		foreach($this->blocks as $block){
+		foreach($this->mustGetBlocks() as $block){
 			if($block instanceof Flowable || $block instanceof Air){
 				continue;
 			}
 
 			$higherBlock = $block;
-			for($y = $block->y; $y <= $block->y + $this->properties->layerWidth; $y++){
-				$higherBlock = $this->side($higherBlock->getPos(), Facing::UP);
+			for($y = $block->getPosition()->y, $maxY = $block->getPosition()->y + $this->properties->layerWidth; $y <= $maxY; $y++){
+				$higherBlock = $this->side($higherBlock->getPosition(), Facing::UP);
 				if($higherBlock instanceof Flowable || $higherBlock instanceof Air){
 					yield $block;
-					$this->putBlock($block->getPos(), $this->randomBrushBlock());
+					$this->putBlock($block->getPosition(), $this->randomBrushBlock());
 					break;
 				}
 			}

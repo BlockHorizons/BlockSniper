@@ -7,6 +7,7 @@ namespace BlockHorizons\BlockSniper\brush\type;
 use BlockHorizons\BlockSniper\brush\BrushProperties;
 use BlockHorizons\BlockSniper\exception\InvalidItemException;
 use Generator;
+use pocketmine\block\Block;
 use pocketmine\block\BlockLegacyIds;
 use pocketmine\math\Vector3;
 use pocketmine\utils\Random;
@@ -15,24 +16,31 @@ use pocketmine\world\World;
 
 class Tree{
 
-	/** @var []Block */
+	/** @var Block[] */
 	public $trunkBlocks;
-	/** @var []Block */
+	/** @var Block[] */
 	public $leavesBlocks;
 
+	/** @var int */
 	public $trunkHeight = 50;
+	/** @var int */
 	public $trunkWidth = 2;
+	/** @var int */
 	public $leavesClusterSize = 12;
+	/** @var int */
 	public $maxBranchLength = 15;
 
 
 	/** @var Position */
 	private $position;
+	/** @var float */
 	private $startY = 0;
 	/** @var Random */
 	private $random;
 
+	/** @var int */
 	private $lastAddX = 0;
+	/** @var int */
 	private $lastAddZ = 0;
 	/** @var Vector3 */
 	private $tempVec;
@@ -42,7 +50,8 @@ class Tree{
 	/** @var Vector3[] */
 	private $leavesCentres = [];
 
-	private $set = [];
+	/** @phpstan-var array<int, null> */
+	private array $set = [];
 
 	public function __construct(Position $position, BrushProperties $brush, TreeType $type){
 		$this->random = new Random(random_int(0, 1000000));
@@ -65,6 +74,9 @@ class Tree{
 		$this->startY = $position->y;
 	}
 
+	/**
+	 * @phpstan-return \Generator<int, Block, void, void>
+	 */
 	public function build() : Generator{
 		for($i = 0; $i < $this->trunkHeight; $i++){
 			foreach($this->buildTrunkDisk() as $block){
@@ -82,6 +94,9 @@ class Tree{
 		}
 	}
 
+	/**
+	 * @phpstan-return \Generator<int, Block, void, void>
+	 */
 	private function buildTrunkDisk() : Generator{
 		if(mt_rand(0, 1) === 0){
 			if($this->lastAddX !== 0 && $this->lastAddZ !== 0){
@@ -136,6 +151,9 @@ class Tree{
 		$this->position->y++;
 	}
 
+	/**
+	 * @phpstan-return \Generator<int, Block, void, void>
+	 */
 	private function buildBranch() : Generator{
 		$addX = $this->random->nextRange(-$this->maxBranchLength, $this->maxBranchLength);
 		$addY = $this->random->nextRange((int) (-$this->maxBranchLength), (int) (-$this->maxBranchLength * 0.2));
@@ -145,9 +163,9 @@ class Tree{
 
 		$branchWidth = $this->trunkWidth;
 
-		$direction = $branchPos->subtract($branchEnd)->normalize();
+		$direction = $branchPos->subtractVector($branchEnd)->normalize();
 		for($i = 0; $i < $this->maxBranchLength; $i++){
-			$branchPos = $branchPos->add($direction);
+			$branchPos = $branchPos->addVector($direction);
 
 			$minX = $branchPos->x - $branchWidth / 2;
 			$minZ = $branchPos->z - $branchWidth / 2;
@@ -189,6 +207,9 @@ class Tree{
 		$this->leavesCentres[] = $branchPos;
 	}
 
+	/**
+	 * @phpstan-return Generator<int, Block, void, void>
+	 */
 	private function buildLeaves(Vector3 $branchEnd) : Generator{
 		$minX = $branchEnd->x - $this->leavesClusterSize / 2;
 		$minZ = $branchEnd->z - $this->leavesClusterSize / 2;

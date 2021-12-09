@@ -16,16 +16,13 @@ use pocketmine\math\Facing;
 
 class MeltType extends Type{
 
-	/**
-	 * @return Generator
-	 */
 	public function fill() : Generator{
 		$blocks = [];
-		foreach($this->blocks as $block){
+		foreach($this->mustGetBlocks() as $block){
 			if($block->getId() !== BlockLegacyIds::AIR){
 				$openSides = 0;
 				foreach(Facing::ALL as $direction){
-					if($this->side($block->getPos(), $direction) instanceof Air){
+					if($this->side($block->getPosition(), $direction) instanceof Air){
 						$openSides++;
 					}
 				}
@@ -36,7 +33,7 @@ class MeltType extends Type{
 		}
 		foreach($blocks as $block){
 			yield $block;
-			$this->delete($block->getPos());
+			$this->delete($block->getPosition());
 		}
 	}
 

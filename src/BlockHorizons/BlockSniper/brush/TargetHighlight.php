@@ -13,12 +13,13 @@ use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\FloatTag;
 use pocketmine\nbt\tag\ListTag;
-use pocketmine\uuid\UUID;
 use pocketmine\world\Position;
+use Ramsey\Uuid\Uuid;
 use function chr;
 use function json_encode;
 use function round;
 use function str_repeat;
+use const JSON_THROW_ON_ERROR;
 
 /**
  * Class TargetHighlight is an entity extending Human to implement a highlight of a target block. It forms a frame
@@ -48,7 +49,7 @@ class TargetHighlight extends Human{
 			self::$emptySkin = str_repeat(chr(0) . chr(0) . chr(0) . chr(255), 32 * 64);
 		}
 		$this->skin = new Skin(
-			UUID::fromRandom()->toString(),
+			Uuid::uuid4()->toString(),
 			self::$emptySkin,
 			"",
 			self::GEOMETRY_NAME,
@@ -117,7 +118,7 @@ class TargetHighlight extends Human{
 					]
 				]
 			]
-			]
+			], JSON_THROW_ON_ERROR
 		);
 
 		return self::$geometry;

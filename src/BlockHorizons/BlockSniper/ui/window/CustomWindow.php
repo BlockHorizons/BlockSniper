@@ -25,14 +25,14 @@ abstract class CustomWindow extends CustomForm{
 	 *
 	 * @return string[]
 	 */
-	public function processShapes(Player $player) : array{
+	public function getPermittedShapes(Player $player) : array{
 		$shapes = ShapeRegistration::getShapes();
 		foreach($shapes as $id => $name){
 			if(!$player->hasPermission("blocksniper.shape." . str_replace(" ", "", strtolower($name)))){
 				unset($shapes[$id]);
 				continue;
 			}
-			$shapes[$id] = ucwords($name);
+			$shapes[$id] = $name;
 		}
 
 		return array_values($shapes);
@@ -43,14 +43,14 @@ abstract class CustomWindow extends CustomForm{
 	 *
 	 * @return string[]
 	 */
-	public function processTypes(Player $player) : array{
+	public function getPermittedTypes(Player $player) : array{
 		$types = TypeRegistration::getTypes();
 		foreach($types as $id => $name){
 			if(!$player->hasPermission("blocksniper.type." . str_replace(" ", "", strtolower($name)))){
 				unset($types[$id]);
 				continue;
 			}
-			$types[$id] = ucwords($name);
+			$types[$id] = $name;
 		}
 
 		return array_values($types);

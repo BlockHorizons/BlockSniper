@@ -138,7 +138,7 @@ class Translation{
 	private static $translations = [];
 	/** @var TranslationData */
 	private static $translationData;
-	/** @var array */
+	/** @var mixed[] */
 	private $messageData = [];
 
 	public function __construct(TranslationData $data){
@@ -175,12 +175,6 @@ class Translation{
 		return $message;
 	}
 
-	/**
-	 * @param string   $key
-	 * @param string[] $params
-	 *
-	 * @return string
-	 */
 	public static function get(string $key, string... $params) : string{
 		if(!isset(self::$translations[$key])){
 			// We tried getting a key that did not exist, which means our language file is outdated. We regenerate it

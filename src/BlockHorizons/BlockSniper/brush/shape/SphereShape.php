@@ -12,32 +12,29 @@ use pocketmine\math\Vector3;
 
 class SphereShape extends Shape{
 
-	/**
-	 * @return Generator
-	 */
 	public function getVectors() : Generator{
-		$radiusX = ($this->maxX - $this->minX) / 2;
+		$radiusX = ($this->selection->maxX - $this->selection->minX) / 2;
 		$radiusXS = (int) $radiusX === 0 ? 1 : $radiusX ** 2;
-		$radiusY = ($this->maxY - $this->minY) / 2;
+		$radiusY = ($this->selection->maxY - $this->selection->minY) / 2;
 		$radiusYS = (int) $radiusY === 0 ? 1 : $radiusY ** 2;
-		$radiusZ = ($this->maxZ - $this->minZ) / 2;
+		$radiusZ = ($this->selection->maxZ - $this->selection->minZ) / 2;
 		$radiusZS = (int) $radiusZ === 0 ? 1 : $radiusZ ** 2;
 
 		$avgRadius = ($radiusX + $radiusY + $radiusZ) / 3;
 		$rSquared = $avgRadius ** 2;
 
-		$centerX = $this->minX + $radiusX;
-		$centerY = $this->minY + $radiusY;
-		$centerZ = $this->minZ + $radiusZ;
+		$centerX = $this->selection->minX + $radiusX;
+		$centerY = $this->selection->minY + $radiusY;
+		$centerZ = $this->selection->minZ + $radiusZ;
 
-		for($x = $this->maxX; $x >= $this->minX; $x--){
+		for($x = $this->selection->maxX; $x >= $this->selection->minX; $x--){
 			$xs = ($x - $centerX) ** 2 / $radiusXS;
-			for($y = $this->maxY; $y >= $this->minY; $y--){
+			for($y = $this->selection->maxY; $y >= $this->selection->minY; $y--){
 				if($y > 255 || $y < 0){
 					continue;
 				}
 				$ys = ($y - $centerY) ** 2 / $radiusYS;
-				for($z = $this->maxZ; $z >= $this->minZ; $z--){
+				for($z = $this->selection->maxZ; $z >= $this->selection->minZ; $z--){
 					$zs = ($z - $centerZ) ** 2 / $radiusZS;
 					if($xs + $ys + $zs <= 1.0){
 						if($this->hollow){
@@ -57,22 +54,22 @@ class SphereShape extends Shape{
 	 */
 	public function getBlockCount() : int{
 		$i = 0;
-		$radiusX = ($this->maxX - $this->minX) / 2;
+		$radiusX = ($this->selection->maxX - $this->selection->minX) / 2;
 		$radiusXS = (int) $radiusX === 0 ? 1 : $radiusX ** 2;
-		$radiusY = ($this->maxY - $this->minY) / 2;
+		$radiusY = ($this->selection->maxY - $this->selection->minY) / 2;
 		$radiusYS = (int) $radiusY === 0 ? 1 : $radiusY ** 2;
-		$radiusZ = ($this->maxZ - $this->minZ) / 2;
+		$radiusZ = ($this->selection->maxZ - $this->selection->minZ) / 2;
 		$radiusZS = (int) $radiusZ === 0 ? 1 : $radiusZ ** 2;
 
-		$centerX = $this->minX + $radiusX;
-		$centerY = $this->minY + $radiusY;
-		$centerZ = $this->minZ + $radiusZ;
+		$centerX = $this->selection->minX + $radiusX;
+		$centerY = $this->selection->minY + $radiusY;
+		$centerZ = $this->selection->minZ + $radiusZ;
 
-		for($x = $this->maxX; $x >= $this->minX; $x--){
+		for($x = $this->selection->maxX; $x >= $this->selection->minX; $x--){
 			$xs = ($x - $centerX) ** 2 / $radiusXS;
-			for($y = $this->maxY; $y >= $this->minY; $y--){
+			for($y = $this->selection->maxY; $y >= $this->selection->minY; $y--){
 				$ys = ($y - $centerY) ** 2 / $radiusYS;
-				for($z = $this->maxZ; $z >= $this->minZ; $z--){
+				for($z = $this->selection->maxZ; $z >= $this->selection->minZ; $z--){
 					$zs = ($z - $centerZ) ** 2 / $radiusZS;
 					if($xs + $ys + $zs <= 1.0){
 						if($this->hollow){
@@ -98,13 +95,13 @@ class SphereShape extends Shape{
 
 	/**
 	 * @param Vector3         $center
-	 * @param BrushProperties $brush
-	 * @param AxisAlignedBB   $bb
+	 * @param BrushProperties $properties
 	 */
-	public function buildSelection(Vector3 $center, BrushProperties $brush, AxisAlignedBB $bb) : void{
-		[$bb->maxX, $bb->maxY, $bb->maxZ, $bb->minX, $bb->minY, $bb->minZ] = [
-			$center->x + $brush->size, $center->y + $brush->size, $center->z + $brush->size,
-			$center->x - $brush->size, $center->y - $brush->size, $center->z - $brush->size
+	public function buildSelection(Vector3 $center, BrushProperties $properties) : AxisAlignedBB{
+		[$maxX, $maxY, $maxZ, $minX, $minY, $minZ] = [
+			$center->x + $properties->size, $center->y + $properties->size, $center->z + $properties->size,
+			$center->x - $properties->size, $center->y - $properties->size, $center->z - $properties->size
 		];
+		return new AxisAlignedBB($minX, $minY, $minZ, $maxX, $maxY, $maxZ);
 	}
 }

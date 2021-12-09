@@ -22,7 +22,7 @@ class BlockEdgeIterator{
 	 */
 	public function getEdges() : array{
 		// A block has 12 edges: 4 at the top, 4 on the sides and 4 on the bottom.
-		$pos = $this->block->getPos()->asVector3();
+		$pos = $this->block->getPosition()->asVector3();
 
 		return [
 			// Edges on the bottom of the cube.

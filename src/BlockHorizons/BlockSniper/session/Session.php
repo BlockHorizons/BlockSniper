@@ -14,9 +14,15 @@ use BlockHorizons\BlockSniper\session\owner\PlayerSessionOwner;
 use BlockHorizons\BlockSniper\session\owner\ServerSessionOwner;
 use pocketmine\world\Position;
 
+/**
+ * @phpstan-template-covariant TSessionOwner of ISessionOwner
+ */
 abstract class Session{
 
-	/** @var ISessionOwner */
+	/**
+	 * @var ISessionOwner
+	 * @phpstan-var TSessionOwner
+	 */
 	protected $sessionOwner = null;
 	/** @var string */
 	protected $dataFile = "";
@@ -32,10 +38,13 @@ abstract class Session{
 	/** @var CloneStore */
 	protected $cloneStore = null;
 
+	/**
+	 * @phpstan-param TSessionOwner $sessionOwner
+	 */
 	public function __construct(ISessionOwner $sessionOwner, Loader $loader){
 		$this->sessionOwner = $sessionOwner;
 		$this->revertStore = new RevertStore($loader->config->maxRevertStores);
-		$this->cloneStore = new CloneStore($this, $loader->getDataFolder());
+		$this->cloneStore = new CloneStore($this);
 		$this->selection = new Selection();
 
 		$this->loader = $loader;
@@ -55,7 +64,7 @@ abstract class Session{
 	public abstract function getTargetBlock() : Position;
 
 	/**
-	 * @return PlayerSessionOwner|ServerSessionOwner
+	 * @phpstan-return TSessionOwner
 	 */
 	public function getSessionOwner() : ISessionOwner{
 		return $this->sessionOwner;

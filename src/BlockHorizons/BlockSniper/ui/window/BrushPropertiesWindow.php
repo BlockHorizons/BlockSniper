@@ -126,7 +126,7 @@ class BrushPropertiesWindow extends CustomWindow{
 		}
 	}
 
-	private function addTreeProperties(Brush $b, Loader $loader){
+	private function addTreeProperties(Brush $b, Loader $loader) : void{
 		$this->addInput($this->t(Translation::UI_TREE_MENU_TRUNK_BLOCKS), $b->tree->trunkBlocks, "oak_wood,dark_oak_wood", function(Player $player, string $value) use ($b){
 			try{
 				$b->parseBlocks($value);

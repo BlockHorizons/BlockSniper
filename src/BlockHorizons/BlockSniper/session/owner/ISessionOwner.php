@@ -4,6 +4,8 @@ namespace BlockHorizons\BlockSniper\session\owner;
 
 interface ISessionOwner{
 
+	public function getName() : string;
+
 	/**
 	 * @param string $message
 	 */

@@ -13,7 +13,7 @@ use pocketmine\utils\TextFormat;
 
 class ChangeLogMenu extends MenuForm{
 
-	public function __construct(Player $requester){
+	public function __construct(){
 		parent::__construct($this->t(Translation::UI_CHANGELOG_TITLE), $this->t(Translation::UI_CHANGELOG_SUBTITLE));
 		foreach(Changelog::$changeLogs as $version => $changeLog){
 			$text = "v$version";

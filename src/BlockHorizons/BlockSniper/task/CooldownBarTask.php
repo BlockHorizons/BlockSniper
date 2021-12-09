@@ -8,6 +8,7 @@ use BlockHorizons\BlockSniper\brush\Brush;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\Loader;
 use pocketmine\player\Player;
+use pocketmine\scheduler\CancelTaskException;
 use pocketmine\utils\TextFormat;
 use function ceil;
 use function microtime;
@@ -19,7 +20,7 @@ class CooldownBarTask extends BlockSniperTask{
 	private $player;
 	/** @var Brush */
 	private $brush;
-	/** @var int */
+	/** @var float */
 	private $useTime;
 
 	public function __construct(Loader $loader, Brush $brush, Player $player){
@@ -32,9 +33,7 @@ class CooldownBarTask extends BlockSniperTask{
 
 	public function onRun() : void{
 		if($this->player->isClosed()){
-			$this->getHandler()->cancel();
-
-			return;
+			throw new CancelTaskException();
 		}
 		do{
 			if($this->loader->config->cooldownSeconds === 0.0){
@@ -55,6 +54,6 @@ class CooldownBarTask extends BlockSniperTask{
 		}while(false);
 
 		$this->brush->unlock();
-		$this->getHandler()->cancel();
+		throw new CancelTaskException();
 	}
 }

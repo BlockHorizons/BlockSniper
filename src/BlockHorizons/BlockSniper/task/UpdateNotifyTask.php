@@ -17,12 +17,12 @@ class UpdateNotifyTask extends AsyncTask{
 	private const RELEASES_URL = "https://poggit.pmmp.io/releases.json?name=BlockSniper";
 
 	public function onRun() : void{
-		$json = Internet::getURL(self::RELEASES_URL, 10, [], $err);
+		$result = Internet::getURL(self::RELEASES_URL, 10, [], $err);
 		$highestVersion = Loader::VERSION;
 		$artifactUrl = "";
 		$api = "";
-		if($json !== false){
-			$releases = json_decode($json, true);
+		if($result !== null && $result->getCode() === 200){
+			$releases = json_decode($result->getBody(), true);
 			foreach($releases as $release){
 				if(version_compare($highestVersion, $release["version"], ">=")){
 					continue;

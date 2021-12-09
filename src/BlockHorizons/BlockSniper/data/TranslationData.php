@@ -10,7 +10,7 @@ use function json_decode;
 
 class TranslationData{
 
-	/** @var array */
+	/** @var mixed[] */
 	private $messages = [];
 	/** @var Loader */
 	private $loader = null;
@@ -54,7 +54,7 @@ class TranslationData{
 	}
 
 	/**
-	 * @return array
+	 * @return mixed[]
 	 */
 	public function getMessages() : array{
 		return $this->messages;

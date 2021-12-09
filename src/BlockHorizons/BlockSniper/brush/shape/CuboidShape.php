@@ -12,18 +12,15 @@ use pocketmine\math\Vector3;
 
 class CuboidShape extends Shape{
 
-	/**
-	 * @return Generator
-	 */
 	public function getVectors() : Generator{
-		for($x = $this->minX; $x <= $this->maxX; $x++){
-			for($y = $this->minY; $y <= $this->maxY; $y++){
+		for($x = $this->selection->minX; $x <= $this->selection->maxX; $x++){
+			for($y = $this->selection->minY; $y <= $this->selection->maxY; $y++){
 				if($y > 255 || $y < 0){
 					continue;
 				}
-				for($z = $this->minZ; $z <= $this->maxZ; $z++){
+				for($z = $this->selection->minZ; $z <= $this->selection->maxZ; $z++){
 					if($this->hollow){
-						if($x !== $this->maxX && $x !== $this->minX && $y !== $this->maxY && $y !== $this->minY && $z !== $this->maxZ && $z !== $this->minZ){
+						if($x !== $this->selection->maxX && $x !== $this->selection->minX && $y !== $this->selection->maxY && $y !== $this->selection->minY && $z !== $this->selection->maxZ && $z !== $this->selection->minZ){
 							continue;
 						}
 					}
@@ -38,14 +35,14 @@ class CuboidShape extends Shape{
 	 */
 	public function getBlockCount() : int{
 		$i = 0;
-		for($x = $this->minX; $x <= $this->maxX; $x++){
-			for($y = $this->minY; $y <= $this->maxY; $y++){
+		for($x = $this->selection->minX; $x <= $this->selection->maxX; $x++){
+			for($y = $this->selection->minY; $y <= $this->selection->maxY; $y++){
 				if($y >= 255 || $y <= 0){
 					continue;
 				}
-				for($z = $this->minZ; $z <= $this->maxZ; $z++){
+				for($z = $this->selection->minZ; $z <= $this->selection->maxZ; $z++){
 					if($this->hollow){
-						if($x !== $this->maxX && $x !== $this->minX && $y !== $this->maxY && $y !== $this->minY && $z !== $this->maxZ && $z !== $this->minZ){
+						if($x !== $this->selection->maxX && $x !== $this->selection->minX && $y !== $this->selection->maxY && $y !== $this->selection->minY && $z !== $this->selection->maxZ && $z !== $this->selection->minZ){
 							continue;
 						}
 					}
@@ -73,13 +70,13 @@ class CuboidShape extends Shape{
 
 	/**
 	 * @param Vector3         $center
-	 * @param BrushProperties $brush
-	 * @param AxisAlignedBB   $bb
+	 * @param BrushProperties $properties
 	 */
-	public function buildSelection(Vector3 $center, BrushProperties $brush, AxisAlignedBB $bb) : void{
-		[$bb->maxX, $bb->maxY, $bb->maxZ, $bb->minX, $bb->minY, $bb->minZ] = [
-			$center->x + $brush->width, $center->y + $brush->height, $center->z + $brush->length,
-			$center->x - $brush->width, $center->y - $brush->height, $center->z - $brush->length
+	public function buildSelection(Vector3 $center, BrushProperties $properties) : AxisAlignedBB{
+		[$maxX, $maxY, $maxZ, $minX, $minY, $minZ] = [
+			$center->x + $properties->width, $center->y + $properties->height, $center->z + $properties->length,
+			$center->x - $properties->width, $center->y - $properties->height, $center->z - $properties->length
 		];
+		return new AxisAlignedBB($minX, $minY, $minZ, $maxX, $maxY, $maxZ);
 	}
 }

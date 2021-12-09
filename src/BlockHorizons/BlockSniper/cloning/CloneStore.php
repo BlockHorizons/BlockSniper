@@ -7,6 +7,7 @@ namespace BlockHorizons\BlockSniper\cloning;
 use BlockHorizons\BlockSniper\brush\async\tasks\PasteTask;
 use BlockHorizons\BlockSniper\brush\Shape;
 use BlockHorizons\BlockSniper\revert\SyncRevert;
+use BlockHorizons\BlockSniper\session\owner\ISessionOwner;
 use BlockHorizons\BlockSniper\session\Session;
 use pocketmine\block\Air;
 use pocketmine\math\Vector3;
@@ -19,14 +20,14 @@ class CloneStore{
 	private $copy = null;
 	/** @var Vector3 */
 	private $offsetPosition = null;
-	/** @var string */
-	private $path = "";
-	/** @var Session */
+	/** @var Session<ISessionOwner> */
 	private $session;
 
-	public function __construct(Session $session, string $path){
+	/**
+	 * @phpstan-param Session<ISessionOwner> $session
+	 */
+	public function __construct(Session $session){
 		$this->session = $session;
-		$this->path = $path;
 	}
 
 	/**
@@ -48,7 +49,7 @@ class CloneStore{
 			if($block instanceof Air){
 				continue;
 			}
-			$v3 = $block->subtract($this->offsetPosition);
+			$v3 = $block->getPosition()->subtractVector($this->offsetPosition);
 
 			$undoBlocks[] = $targetBlock->world->getBlock($targetBlock->addVector($v3));
 			$targetBlock->world->setBlock($targetBlock->addVector($v3), clone $block, false);
@@ -64,9 +65,9 @@ class CloneStore{
 	}
 
 	/**
-	 * @param string  $file
-	 * @param Vector3 $center
-	 * @param array   $chunks
+	 * @param string   $file
+	 * @param Vector3  $center
+	 * @param string[] $chunks
 	 */
 	public function pasteSchematic(string $file, Vector3 $center, array $chunks) : void{
 		Server::getInstance()->getAsyncPool()->submitTask(new PasteTask($file, $center, $chunks, $this->session->getSessionOwner()->getName()));

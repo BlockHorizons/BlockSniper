@@ -51,11 +51,6 @@ abstract class BaseCommand extends Command implements PluginOwned{
 		$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_COMMON_NO_PERMISSION));
 	}
 
-	/**
-	 * @param CommandSender $sender
-	 * @param string        $commandLabel
-	 * @param array         $args
-	 */
 	public function execute(CommandSender $sender, string $commandLabel, array $args) : void{
 		if(!$this->testPermission($sender)){
 			$this->sendNoPermission($sender);
@@ -73,7 +68,7 @@ abstract class BaseCommand extends Command implements PluginOwned{
 	/**
 	 * @param CommandSender $sender
 	 * @param string        $commandLabel
-	 * @param array         $args
+	 * @param string[]      $args
 	 */
 	public abstract function onExecute(CommandSender $sender, string $commandLabel, array $args) : void;
 }

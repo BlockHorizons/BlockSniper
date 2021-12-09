@@ -45,7 +45,7 @@ class BrushCommand extends BaseCommand{
 				}
 				$b = new Brush();
 
-				$uuid = UUID::fromRandom()->toString();
+				$uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
 				BrushListener::$brushItems[$uuid] = $b;
 				$sender->sendForm(new BrushMenuWindow($this->loader, $sender, $b, true));
 
@@ -53,12 +53,13 @@ class BrushCommand extends BaseCommand{
 				$sender->getInventory()->setItemInHand($item);
 				break;
 			case $args[0] === "unbind":
-				if(!$item->getNamedTag()->hasTag(BrushListener::KEY_BRUSH_UUID, StringTag::class)){
+				$brushUuidTag = $item->getNamedTag()->getTag(BrushListener::KEY_BRUSH_UUID);
+				if(!$brushUuidTag instanceof StringTag){
 					$sender->sendMessage($this->getWarning() . Translation::get(Translation::COMMANDS_BRUSH_NOT_BOUND));
 
 					return;
 				}
-				$uuid = $item->getNamedTag()->getString(BrushListener::KEY_BRUSH_UUID);
+				$uuid = $brushUuidTag->getValue();
 				$item->getNamedTag()->removeTag(BrushListener::KEY_BRUSH_UUID);
 				unset(BrushListener::$brushItems[$uuid]);
 

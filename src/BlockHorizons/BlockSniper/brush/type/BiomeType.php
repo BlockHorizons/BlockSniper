@@ -13,17 +13,12 @@ use Generator;
 
 class BiomeType extends Type{
 
-	/**
-	 * @return Generator
-	 */
 	protected function fill() : Generator{
-		foreach($this->blocks as $block){
-			$this->putBiome($block->getPos(), $this->properties->biomeId);
+		foreach($this->mustGetBlocks() as $block){
+			$this->putBiome($block->getPosition(), $this->properties->biomeId);
 		}
-		if(false){
-			// Make PHP recognize this is a generator.
-			yield;
-		}
+		// Make PHP recognize this is a generator.
+		yield from [];
 	}
 
 	/**

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\registration;
 
+use BlockHorizons\BlockSniper\brush\Type;
 use BlockHorizons\BlockSniper\brush\type\BiomeType;
 use BlockHorizons\BlockSniper\brush\type\CleanEntitiesType;
 use BlockHorizons\BlockSniper\brush\type\CleanType;
@@ -29,15 +30,20 @@ use BlockHorizons\BlockSniper\brush\type\TopLayerType;
 use BlockHorizons\BlockSniper\brush\type\TreeType;
 use BlockHorizons\BlockSniper\brush\type\WarmType;
 use BlockHorizons\BlockSniper\data\Translation;
+use pocketmine\permission\DefaultPermissions;
 use pocketmine\permission\Permission;
 use pocketmine\permission\PermissionManager;
+use pocketmine\utils\AssumptionFailedError;
 use ReflectionClass;
 use function str_replace;
 use function strtolower;
 
 class TypeRegistration{
 
-	/** @var string[] */
+	/**
+	 * @var string[]
+	 * @phpstan-var array<string, class-string<Type>>
+	 */
 	public static $types = [];
 
 	public static function init() : void{
@@ -73,6 +79,7 @@ class TypeRegistration{
 	 *
 	 * @param string $class
 	 * @param bool   $overwrite
+	 * @phpstan-param class-string<Type> $class
 	 *
 	 * @return bool
 	 */
@@ -110,8 +117,9 @@ class TypeRegistration{
 	 */
 	private static function registerPermission(string $typeName) : void{
 		$typeName = str_replace(" ", "_", $typeName);
-		$permission = new Permission("blocksniper.type." . $typeName, "Allows permission to use the " . $typeName . " shape.", Permission::DEFAULT_OP);
-		$permission->addParent("blocksniper.type", true);
+		$operatorPermission = PermissionManager::getInstance()->getPermission(DefaultPermissions::ROOT_OPERATOR) ?? throw new AssumptionFailedError();
+		$permission = new Permission("blocksniper.type." . $typeName, "Allows permission to use the " . $typeName . " shape.");
+		$operatorPermission->addChild($permission->getName(), true);
 		PermissionManager::getInstance()->addPermission($permission);
 	}
 
@@ -119,6 +127,7 @@ class TypeRegistration{
 	 * Returns an array containing the names of all types.
 	 *
 	 * @return string[]
+	 * @phpstan-return list<string>
 	 */
 	public static function getTypes() : array{
 		$types = [];
@@ -135,6 +144,7 @@ class TypeRegistration{
 	 * @param string $shortName
 	 *
 	 * @return null|string
+	 * @phpstan-return null|class-string<Type>
 	 */
 	public static function getType(string $shortName) : ?string{
 		return self::$types[$shortName] ?? null;
