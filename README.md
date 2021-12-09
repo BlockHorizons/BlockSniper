@@ -1,4 +1,4 @@
-# BlockSniper<a href="https://github.com/BlockHorizons/BlockSniper"><img src="https://github.com/BlockHorizons/BlockSniper/blob/master/resources/BlockSniperLogo.png" width="60" height="60" align="right"></a>
+# BlockSniper<a href="https://github.com/BlockHorizons/BlockSniper"><img src="https://github.com/BlockHorizons/BlockSniper/blob/master/resources/block_sniper_logo.png" width="60" height="60" align="right"></a>
 
 An innovative brush world editing tool for PocketMine-MP: A Minecraft server software written in PHP.
 
