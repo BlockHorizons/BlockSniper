@@ -72,7 +72,7 @@ class RegenerateType extends Type{
 			$this->chunkManager->getId(),
 			$x,
 			$z,
-			$oldChunk,
+			null,
 			$this->chunkManager->getAdjacentChunks($x, $z),
 			function(Chunk $centerChunk, array $adjacentChunks) use ($x, $z, $chunkLockId, $oldChunk) : void{
 				$dirtyChunks = 0;
@@ -98,7 +98,8 @@ class RegenerateType extends Type{
 					}
 
 					//TODO: cooldown
-					$this->session->getRevertStore()->saveUndo(new AsyncRevert([$centerChunk], [$oldChunk], $this->chunkManager));
+					$centerChunkHash = World::chunkHash($x, $z);
+					$this->session->getRevertStore()->saveUndo(new AsyncRevert([$centerChunkHash => $centerChunk], [$centerChunkHash => $oldChunk], $this->chunkManager));
 				}
 			}
 		), $worker);
