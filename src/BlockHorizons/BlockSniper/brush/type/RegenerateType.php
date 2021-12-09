@@ -10,11 +10,8 @@ use BlockHorizons\BlockSniper\brush\Type;
 use BlockHorizons\BlockSniper\revert\AsyncRevert;
 use BlockHorizons\BlockSniper\session\owner\ISessionOwner;
 use BlockHorizons\BlockSniper\session\Session;
-use BlockHorizons\BlockSniper\session\SessionManager;
-use BlockHorizons\BlockSniper\task\CooldownBarTask;
 use Generator;
 use pocketmine\block\Block;
-use pocketmine\Server;
 use pocketmine\world\ChunkLockId;
 use pocketmine\world\format\Chunk;
 use pocketmine\world\generator\PopulationTask;
@@ -61,7 +58,17 @@ class RegenerateType extends Type{
 			}
 		}
 
-		$task = new PopulationTask(
+		//TODO: this is one big awful hack which is only necessary because 4.0 doesn't support any simple way to mark a
+		//chunk for regeneration :(
+
+		$asyncPool = $this->chunkManager->getServer()->getAsyncPool();
+		$worker = $asyncPool->selectWorker();
+
+		//this is costly, but we have no way to know if the worker has been primed for generation or not
+		//TODO: remove this hack when 4.x supports a simple way to regenerate chunks
+		$this->chunkManager->registerGeneratorToWorker($worker);
+
+		$asyncPool->submitTaskToWorker(new PopulationTask(
 			$this->chunkManager->getId(),
 			$x,
 			$z,
@@ -94,8 +101,7 @@ class RegenerateType extends Type{
 					$this->session->getRevertStore()->saveUndo(new AsyncRevert([$centerChunk], [$oldChunk], $this->chunkManager));
 				}
 			}
-		);
-		$this->chunkManager->getServer()->getAsyncPool()->submitTask($task);
+		), $worker);
 
 		// Make PHP recognize this is a generator.
 		yield from [];
