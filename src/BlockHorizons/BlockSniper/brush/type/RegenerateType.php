@@ -36,13 +36,14 @@ class RegenerateType extends Type{
 	}
 
 	public function fill() : Generator{
-		if($this->myPlotChecked){
+		if(!$this->chunkManager instanceof World || $this->myPlotChecked){
 			return;
 		}
+		$world = $this->chunkManager;
 		$x = $this->target->getFloorX() >> Chunk::COORD_BIT_SIZE;
 		$z = $this->target->getFloorZ() >> Chunk::COORD_BIT_SIZE;
 
-		$oldChunk = $this->chunkManager->getChunk($x, $z);
+		$oldChunk = $world->getChunk($x, $z);
 		if($oldChunk === null){
 			return;
 		}
@@ -51,34 +52,37 @@ class RegenerateType extends Type{
 		for($xOffset = -1; $xOffset <= 1; ++$xOffset){
 			for($zOffset = -1; $zOffset <= 1; ++$zOffset){
 				//Forcibly remove any existing lock. This tells any other running tasks that were using this chunk to get lost.
-				$this->chunkManager->unlockChunk($x + $xOffset, $z + $zOffset, null);
+				$world->unlockChunk($x + $xOffset, $z + $zOffset, null);
 
 				//Lock the chunk for our usage.
-				$this->chunkManager->lockChunk($x + $xOffset, $z + $zOffset, $chunkLockId);
+				$world->lockChunk($x + $xOffset, $z + $zOffset, $chunkLockId);
 			}
 		}
 
 		//TODO: this is one big awful hack which is only necessary because 4.0 doesn't support any simple way to mark a
 		//chunk for regeneration :(
 
-		$asyncPool = $this->chunkManager->getServer()->getAsyncPool();
+		$asyncPool = $world->getServer()->getAsyncPool();
 		$worker = $asyncPool->selectWorker();
 
 		//this is costly, but we have no way to know if the worker has been primed for generation or not
 		//TODO: remove this hack when 4.x supports a simple way to regenerate chunks
-		$this->chunkManager->registerGeneratorToWorker($worker);
+		$world->registerGeneratorToWorker($worker);
 
 		$asyncPool->submitTaskToWorker(new PopulationTask(
-			$this->chunkManager->getId(),
+			$world->getId(),
 			$x,
 			$z,
 			null,
-			$this->chunkManager->getAdjacentChunks($x, $z),
-			function(Chunk $centerChunk, array $adjacentChunks) use ($x, $z, $chunkLockId, $oldChunk) : void{
+			$world->getAdjacentChunks($x, $z),
+			function(Chunk $centerChunk, array $adjacentChunks) use ($world, $x, $z, $chunkLockId, $oldChunk) : void{
+				if(!$world->isLoaded()){
+					return;
+				}
 				$dirtyChunks = 0;
 				for($xOffset = -1; $xOffset <= 1; ++$xOffset){
 					for($zOffset = -1; $zOffset <= 1; ++$zOffset){
-						if(!$this->chunkManager->unlockChunk($x + $xOffset, $z + $zOffset, $chunkLockId)){
+						if(!$world->unlockChunk($x + $xOffset, $z + $zOffset, $chunkLockId)){
 							// Someone else modified this chunk in the meantime. This could be because of a player
 							// placing a block, or another plugin did something with the chunk.
 							$dirtyChunks++;
@@ -91,15 +95,15 @@ class RegenerateType extends Type{
 					// TODO: reschedule? Though I guess this should be quite a rare incident anyway ...
 
 				}else{
-					$this->chunkManager->setChunk($x, $z, $centerChunk);
+					$world->setChunk($x, $z, $centerChunk);
 					foreach($adjacentChunks as $hash => $chunk){
 						World::getXZ($hash, $xAdjacent, $zAdjacent);
-						$this->chunkManager->setChunk($xAdjacent, $zAdjacent, $chunk);
+						$world->setChunk($xAdjacent, $zAdjacent, $chunk);
 					}
 
 					//TODO: cooldown
 					$centerChunkHash = World::chunkHash($x, $z);
-					$this->session->getRevertStore()->saveUndo(new AsyncRevert([$centerChunkHash => $centerChunk], [$centerChunkHash => $oldChunk], $this->chunkManager));
+					$this->session->getRevertStore()->saveUndo(new AsyncRevert([$centerChunkHash => $centerChunk], [$centerChunkHash => $oldChunk], $world));
 				}
 			}
 		), $worker);
