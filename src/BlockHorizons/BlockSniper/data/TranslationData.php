@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace BlockHorizons\BlockSniper\data;
 
 use BlockHorizons\BlockSniper\Loader;
+use function file_get_contents;
+use function json_decode;
 
 class TranslationData{
 
-	/** @var array */
+	/** @var mixed[] */
 	private $messages = [];
 	/** @var Loader */
 	private $loader = null;
@@ -17,7 +19,6 @@ class TranslationData{
 		$this->loader = $loader;
 
 		$this->collectTranslations();
-		new Translation($this);
 	}
 
 	/**
@@ -40,18 +41,20 @@ class TranslationData{
 		}
 		$this->messages = json_decode($language, true);
 
+		new Translation($this);
+
 		return $languageSelected;
 	}
 
-	/**
-	 * @return Loader
-	 */
-	public function getLoader() : Loader{
-		return $this->loader;
+	public function regenerateLanguageFile() : void{
+		@unlink($this->loader->getDataFolder() . "languages/" . $this->loader->config->messageLanguage . ".json");
+		// Always unlink the default translations.
+		@unlink($this->loader->getDataFolder() . "languages/en.json");
+		$this->collectTranslations();
 	}
 
 	/**
-	 * @return array
+	 * @return mixed[]
 	 */
 	public function getMessages() : array{
 		return $this->messages;

@@ -6,7 +6,11 @@
 			"no-permission": "このコマンドを実行する権限がありません。"
 		},
 		"brush": {
-			"description": "BlockSniperのGUIを開きます。"
+			"description": "BlockSniperのGUIを開きます。",
+			"need-item": "You can only bind a brush to an item.",
+			"bind-brush-item": "You cannot bind the brush item",
+			"clear-success": "Successfully cleared all brushes from this item.",
+			"not-bound": "There was no brush bound to this item."
 		},
 		"blocksniper": {
 			"description": "BlockSniperに関する情報を表示するか、プラグインをリロードします。",
@@ -32,10 +36,6 @@
 			"copy": {
 				"success": "選択範囲を正常にコピーしました。"
 			},
-			"template": {
-				"missing-name": "テンプレートに有効な名前が指定されていません。",
-				"success": "テンプレートファイルを%sに保存しました。."
-			},
 			"schematic": {
 				"missing-name": "回路図には有効な名前はありません。",
 				"success": "%sに回路図のファイルを保存しました。"
@@ -47,75 +47,23 @@
 				"no-copies": "コピーが見つかりませんでした。",
 				"success": "選択範囲にコピーを貼り付けました。"
 			},
-			"template": {
-				"nonexistent": "テンプレート%sはテンプレートディレクトリに見つかりませんでした。",
-				"success": "テンプレート%sを選択範囲に貼り付けました。"
-			},
 			"schematic": {
 				"nonexistent": "回路図ディレクトリ%sが回路図ディレクトリに見つかりませんでした。",
-				"success": "選択範囲に回路図%sを貼り付けました。"
+				"success": "Pasting the schematic %s on the location looked at."
 			}
+		},
+		"deselect": {
+			"description": "It deselect the current selection.",
+			"success": "Successfully deselected your selection."
 		}
 	},
 	"ui": {
-		"preset-menu": {
-			"title": "プリセットメニュー",
-			"subtitle": "続行するにはボタンをクリックしてください",
-			"create": "作成",
-			"delete": "削除",
-			"select": "選択",
-			"list": "リスト",
-			"exit": "終了"
-		},
-		"preset-edit": {
-			"title": "プリセット編集メニュー",
-			"name": "プリセットの名前",
-			"size": "大きさ",
-			"shape": "形",
-			"type": "種類",
-			"hollow": "空洞",
-			"decrement": "デクリメント",
-			"height": "高さ",
-			"perfect": "形の完全性",
-			"blocks": "使用するブロック",
-			"obsolete": "使用しないブロック",
-			"biome": "バイオーム",
-			"tree": "木"
-		},
-		"preset-selection": {
-			"title": "プリセット選択メニュー",
-			"subtitle": "ボタンをクリックしてプリセットを適用。"
-		},
-		"preset-deletion": {
-			"title": "プリセット削除メニュー",
-			"subtitle": "ボタンをクリックしてプリセットを削除。"
-		},
-		"preset-list": {
-			"title": "プリセット一覧メニュー",
-			"subtitle": "ボタンをクリックすると、プリセットを編集/表示できます。"
-		},
-		"preset-creation": {
-			"title": "プリセット作成メニュー",
-			"name": "プリセットの名前",
-			"size": "大きさ",
-			"shape": "形",
-			"type": "種類",
-			"hollow": "空洞",
-			"decrement": "デクリメント",
-			"height": "高さ",
-			"perfect": "形の完全性",
-			"blocks": "使用するブロック",
-			"obsolete": "使用しないブロック",
-			"biome": "バイオーム",
-			"tree": "木"
-		},
 		"main-menu": {
 			"title": "BlockSniperメニュー",
 			"subtitle": "続行するにはボタンをクリックしてください",
 			"brush": "ブラシ",
 			"tree": "Tree",
 			"config": "設定",
-			"presets": "プリセット",
 			"exit": "終了"
 		},
 		"brush-menu": {
@@ -131,15 +79,18 @@
 			"hollow": "空洞",
 			"decrement": "デクリメント",
 			"height": "高さ",
-			"perfect": "形の完全性",
+			"width": "Brush Width",
+			"length": "Brush Length",
 			"blocks": "使用するブロック",
 			"obsolete": "使用しないブロック",
 			"biome": "バイオーム",
-			"tree": "木"
+			"tree": "木",
+			"layer-width": "Layer Width",
+			"name": "Brush Name",
+			"soil": "Soil Blocks"
 		},
 		"configuration-menu": {
 			"title": "BlockSniper 設定",
-			"auto-update": "新しいバージョンが見つかったときに設定ファイルを自動的に更新する",
 			"language": "BlockSniperのメッセージ送信に使用する言語",
 			"brush-item": "ブラシに使用するアイテムのID",
 			"selection-item": "Item ID of the item that is used to select",
@@ -148,11 +99,10 @@
 			"max-reverts": "やり直しの保存の最大量。古いものは自動的に削除されます。",
 			"reset-decrement-brush": "デクリメントのブラシを初期開始サイズに自動的にリセットする",
 			"save-brush": "サーバーの再起動時にプレイヤーのブラシ設定を保存する。",
-			"drop-plants": "葉を吹き飛ばすタイプで破壊/吹き飛ばされた植物アイテムを落とす",
 			"session-timeout-time": "The time in minutes after which the session of a player is removed after leaving the server",
 			"auto-gui": "ホット・バー・スロットをブラシ項目を含むものに切り替えるときに、GUIを自動的に開きます。",
-			"myplot-support": "Whether to turn on MyPlot support or not",
-			"auto-reload": "このチェックをオンにすると、このウィンドウを閉じるときに自動的に設定が再読み込みされます"
+			"cooldown": "The cooldown in seconds (can be decimal) until the brush can be re-used after using it",
+			"myplot-support": "Whether to turn on MyPlot support or not"
 		},
 		"tree-menu": {
 			"title": "Tree Menu",
@@ -162,28 +112,35 @@
 			"trunk-blocks": "The blocks to use for the trunk of the tree",
 			"leaves-blocks": "The blocks to use for the leaves of the tree",
 			"leaves-cluster-size": "The size of the leaves cluster at the end of each branch"
+		},
+		"changelog": {
+			"title": "Changelog Menu",
+			"name": "Changelog",
+			"subtitle": "Click a version to view its changelog.",
+			"close": "Close",
+			"see-other": "See other changelogs"
 		}
 	},
 	"log": {
 		"language": {
-			"auto-selected": "[BlockSniper]有効な言語が選択されていません。英語が自動的に選択されました。",
+			"auto-selected": "有効な言語が選択されていません。英語が自動的に選択されました。",
 			"usage": "/bを使用して、ゲーム内の設定タブに移動して言語を選択してください。",
-			"selected": "[BlockSniper]選択した言語："
+			"selected": "選択した言語："
 		},
 		"brush": {
 			"restored": "プレーヤー%sのブラシが復元されました。",
 			"all-restored": "すべてのブラシが復元されました。"
 		},
-		"presets": {
-			"loaded": "プリセット%sが読み込まれました",
-			"all-loaded": "すべてのプリセットがロードされています。"
-		},
 		"reload": {
-			"start": "[BlockSniper] 再読み込みしています...",
-			"finish": "[BlockSniper] 再読み込みが完了しました。"
+			"start": "再読み込みしています...",
+			"finish": "再読み込みが完了しました。"
 		}
 	},
 	"brush": {
+		"state": {
+			"ready": "Ready",
+			"done": "Done"
+		},
 		"selection": {
 			"first": "Position 1 set to:",
 			"second": "Position 2 set to:",
@@ -193,7 +150,8 @@
 			"cube": "立方体",
 			"cuboid": "直方体",
 			"sphere": "球体",
-			"cylinder": "円柱"
+			"cylinder": "円柱",
+			"ellipsoid": "Ellipsoid"
 		},
 		"type": {
 			"biome": "バイオーム",
@@ -216,7 +174,10 @@
 			"regenerate": "Regenerate",
 			"freeze": "Freeze",
 			"warm": "Warm",
-			"heat": "Heat"
+			"heat": "Heat",
+			"smooth": "Smooth",
+			"replacetarget": "Replace Target",
+			"plant": "Plant"
 		}
 	}
 }

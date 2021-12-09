@@ -4,22 +4,25 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\data;
 
+use BlockHorizons\BlockSniper\exception\InvalidItemException;
 use BlockHorizons\BlockSniper\Loader;
+use BlockHorizons\BlockSniper\parser\Parser;
+use ErrorException;
 use pocketmine\item\Item;
-use pocketmine\item\ItemIds;
 use Sandertv\Marshal\DecodeException;
 use Sandertv\Marshal\FileNotFoundException;
 use Sandertv\Marshal\Marshal;
 use Sandertv\Marshal\Unmarshal;
+use function rename;
 
 class ConfigData{
-	private $filePath = "";
+	private string $filePath = "";
 
 	/**
 	 * @var string
 	 * @marshal Configuration Version
 	 */
-	public $configurationVersion = ""; // Default to an outdated version, so we can properly detect outdated configs.
+	public $configurationVersion = ""; // Default to an empty version, so we can properly detect outdated configs.
 	/**
 	 * @var string
 	 * @marshal Message Language
@@ -61,15 +64,15 @@ class ConfigData{
 	 */
 	public $saveBrushProperties = true;
 	/**
-	 * @var bool
-	 * @marshal Drop Leaf Blower Plants
-	 */
-	public $dropLeafBlowerPlants = true;
-	/**
 	 * @var int
 	 * @marshal Session Timeout Time in minutes
 	 */
 	public $sessionTimeoutTime = 5;
+	/**
+	 * @var float
+	 * @marshal Brush cooldown in seconds
+	 */
+	public $cooldownSeconds = 0.0;
 	/**
 	 * @var bool
 	 * @marshal Open GUI Automatically
@@ -84,7 +87,7 @@ class ConfigData{
 	public function __construct(Loader $loader){
 		$this->brushItem = new BrushItem();
 		$this->selectionItem = new BrushItem();
-		$this->selectionItem->itemId = ItemIds::GLOWSTONE_DUST;
+		$this->selectionItem->item = "glowstone_dust";
 
 		$this->filePath = $loader->getDataFolder() . "config.yml";
 
@@ -94,7 +97,7 @@ class ConfigData{
 			// Make sure to set the right version right off the bat.
 			$this->configurationVersion = Loader::CONFIGURATION_VERSION;
 			Marshal::yamlFile($this->filePath, $this);
-		}catch(\ErrorException $exception){
+		}catch(ErrorException $exception){
 			// PM's error handler will create this error exception, causing the DecodeException not to be thrown at all.
 			$loader->getLogger()->error("Configuration corrupted. config.yml has been renamed to config_corrupted.yml and a new config.yml has been generated.");
 			rename($this->filePath, $loader->getDataFolder() . "config_corrupted.yml");
@@ -123,17 +126,17 @@ class ConfigData{
 
 class BrushItem{
 	/**
-	 * @var int
+	 * @var string
 	 * @marshal Item ID
 	 */
-	public $itemId = 396;
-	/**
-	 * @var int
-	 * @marshal Item Data
-	 */
-	public $itemData = 0;
+	public $item = "golden_carrot";
 
 	public function parse() : Item{
-		return Item::get($this->itemId, $this->itemData);
+		$items = Parser::parse($this->item);
+		if(count($items) === 0){
+			throw new InvalidItemException("invalid configuration brush item");
+		}
+
+		return $items[0];
 	}
 }

@@ -6,7 +6,11 @@
 			"no-permission": "No tienes permiso para ejecutar este comando."
 		},
 		"brush": {
-			"description": "Abre la GUI para BlockSniper."
+			"description": "Abre la GUI para BlockSniper.",
+			"need-item": "You can only bind a brush to an item.",
+			"bind-brush-item": "You cannot bind the brush item",
+			"clear-success": "Successfully cleared all brushes from this item.",
+			"not-bound": "There was no brush bound to this item."
 		},
 		"blocksniper": {
 			"description": "Muestra información sobre BlockSniper, o reinicia el plugin.",
@@ -32,10 +36,6 @@
 			"copy": {
 				"success": "Copió con éxito la ubicación examinada."
 			},
-			"template": {
-				"missing-name": "No se ha dado un nombre válido para la plantilla.",
-				"success": "Se ha guardado correctamente un archivo de plantilla en %s."
-			},
 			"schematic": {
 				"missing-name": "No se ha dado un nombre válido para la schematic.",
 				"success": "Se he guardo correctamente un archivo de schematic en %s."
@@ -47,76 +47,22 @@
 				"no-copies": "No se encontró ninguna copia para pegar.",
 				"success": "Se ha pegado correctamente la copia examinada."
 			},
-			"template": {
-				"nonexistent": "La plantilla %s no fue encontrada en el directorio de plantillas.",
-				"success": "Se ha pegado correctamente la plantilla %s en la ubicación examinada."
-			},
 			"schematic": {
 				"nonexistent": "La schematic %s no pudo ser encontrada en el directorio de schematics.",
-				"success": "Se ha pegado correctamente la schematic %s en la ubicación examinada."
+				"success": "Pasting the schematic %s on the location looked at."
 			}
+		},
+		"deselect": {
+			"description": "It deselect the current selection.",
+			"success": "Successfully deselected your selection."
 		}
 	},
 	"ui": {
-		"preset-menu": {
-			"title": "Menú de predefinidos",
-			"subtitle": "Clica un botón para continuar",
-			"create": "Crear",
-			"delete": "Eliminar",
-			"select": "Seleccionar",
-			"list": "Lista",
-			"exit": "Salir"
-		},
-		"preset-edit": {
-			"title": "Menú de Edición de Predefinidos",
-			"name": "Nombre de Predefinidos",
-			"size": "Tamaño de Brocha",
-			"shape": "Forma de Brocha",
-			"type": "Tipo de Brocha",
-			"hollow": "Brocha Hueca",
-			"decrement": "Decrementar Brocha",
-			"height": "Altura de Brocha",
-			"perfect": "Perfección de Forma de Brocha",
-			"blocks": "Bloques de la Brocha",
-			"obsolete": "Bloques Obsoletos",
-			"biome": "Bioma de Brocha",
-			"tree": "Árbol de Brocha"
-		},
-		"preset-selection": {
-			"title": "Menú de selección de Predefinidos",
-			"subtitle": "Pulsa un botón para aplicar el predefinido"
-		},
-		"preset-deletion": {
-			"title": "Menú de eleminación de Predefinidos",
-			"subtitle": "Pulsa un botón para eliminar el predefinido"
-		},
-		"preset-list": {
-			"title": "Menú de lista de Predefinidos",
-			"subtitle": "Pulsa un botón para editar/ver un predefinido"
-		},
-		"preset-creation": {
-			"title": "Menú de creación de Predefinidos",
-			"name": "Nombre del Predefinido",
-			"size": "Tamaño de Brocha",
-			"shape": "Forma de Brocha",
-			"type": "Tipo de Brocha",
-			"hollow": "Brocha Hueca",
-			"decrement": "Decrementar Brocha",
-			"height": "Altura de Brocha",
-			"perfect": "Perfección de Forma de Brocha",
-			"blocks": "Bloques de la Brocha",
-			"obsolete": "Bloques Obsoletos",
-			"biome": "Bioma de Brocha",
-			"tree": "Árbol de Brocha"
-		},
 		"main-menu": {
 			"title": "Menú de BlockSniper",
 			"subtitle": "Pulsa un botón para continuar",
 			"brush": "Brocha",
-			"tree": "Árbol",
 			"config": "Configuración",
-			"presets": "Predefinidos",
-			"global-brush": "Brocha Global",
 			"exit": "Salir"
 		},
 		"brush-menu": {
@@ -124,18 +70,26 @@
 			"size": "Tamaño de Brocha",
 			"shape": "Forma de Brocha",
 			"type": "Tipo de Brocha",
+			"mode": {
+				"description": "Brush Mode",
+				"brush": "Brush",
+				"selection": "Selection"
+			},
 			"hollow": "Brocha Hueca",
 			"decrement": "Decrementar Brocha",
 			"height": "Altura de Brocha",
-			"perfect": "Perfección de Forma de Brocha",
+			"width": "Brush Width",
+			"length": "Brush Length",
 			"blocks": "Bloques de la Brocha",
 			"obsolete": "Bloques Obsoletos",
 			"biome": "Bioma de Brocha",
-			"tree": "Árbol de Brocha"
+			"tree": "Árbol de Brocha",
+			"layer-width": "Layer Width",
+			"name": "Brush Name",
+			"soil": "Soil Blocks"
 		},
 		"configuration-menu": {
 			"title": "Configuración de BlockSniper",
-			"auto-update": "Actualizar automáticamente el archivo de configuración cuando se encuentre una nueva versión",
 			"language": "Idioma para enviar mensajes relacionados con BlockSniper",
 			"brush-item": "El ID del objeto usado para la brocha",
 			"max-brush-size": "El tamaño máximo de una brocha",
@@ -143,11 +97,10 @@
 			"max-reverts": "Máxima cantida de Deshacer/Rehacer para guardar. Los antiguos son limpiados automáticamente",
 			"reset-decrement-brush": "Resetear automáticamente la brocha decreciente al tamaño inicial.",
 			"save-brush": "Guardar las propiedades de las brochsa de los jugadores en el reinicio del servidor",
-			"drop-plants": "Tirar los objetos de la planta destruidos/explotados por el tipo LeafBlower",
 			"session-timeout-time": "El tiempo en minutos después del cual la sesión de un jugador es eliminada después de salir del servidor",
 			"auto-gui": "Abrir automáticamente la GUI cuando cambie a una ranura de la barra que contenga el objeto del broche",
-			"myplot-support": "Activar o no el soporte de MyPlot",
-			"auto-reload": "Girando esta palanca se recargará automáticamente la configuración al cerrar esta ventana."
+			"cooldown": "The cooldown in seconds (can be decimal) until the brush can be re-used after using it",
+			"myplot-support": "Activar o no el soporte de MyPlot"
 		},
 		"tree-menu": {
 			"title": "Menú de Árboles",
@@ -157,33 +110,41 @@
 			"trunk-blocks": "Los bloques a utilizar para el tronco del árbol",
 			"leaves-blocks": "Los bloques a utilizar para las hojas del árbol",
 			"leaves-cluster-size": "El tamaño de las hojas que agrupan al final de cada rama"
+		},
+		"changelog": {
+			"title": "Changelog Menu",
+			"name": "Changelog",
+			"subtitle": "Click a version to view its changelog.",
+			"close": "Close",
+			"see-other": "See other changelogs"
 		}
 	},
 	"log": {
 		"language": {
-			"auto-selected": "[BlockSniper] No se ha seleccionado un lenguaje válido. El Español ha sido seleccionado automáticamente.",
+			"auto-selected": "No se ha seleccionado un lenguaje válido. El Español ha sido seleccionado automáticamente.",
 			"usage": "Por favor, selecciona una lenguaje yendo a la venta de configuración en el juego, usando /b.",
-			"selected": "[BlockSniper] Idioma seleccionado: "
+			"selected": "Idioma seleccionado: "
 		},
 		"brush": {
 			"restored": "La brocha del jugador %s ha sido reestablecida.",
 			"all-restored": "Todas las brochas han sido reestablecidas."
 		},
-		"presets": {
-			"loaded": "El predefinido %s ha sido cargado.",
-			"all-loaded": "Todos los predefinidos han sido cargados."
-		},
 		"reload": {
-			"start": "[BlockSniper] Reiniciando...",
-			"finish": "[BlockSniper] Reinicio terminado."
+			"start": "Reiniciando...",
+			"finish": "Reinicio terminado."
 		}
 	},
 	"brush": {
+		"state": {
+			"ready": "Ready",
+			"done": "Done"
+		},
 		"shape": {
 			"cube": "Cubo",
 			"cuboid": "Cuboide",
 			"sphere": "Esfera",
-			"cylinder": "Cilíndro"
+			"cylinder": "Cilíndro",
+			"ellipsoid": "Ellipsoid"
 		},
 		"type": {
 			"biome": "Bioma",
@@ -206,7 +167,10 @@
 			"regenerate": "Regenerar",
 			"freeze": "Congelar",
 			"warm": "Calentar",
-			"heat": "Hervir"
+			"heat": "Hervir",
+			"smooth": "Smooth",
+			"replacetarget": "Replace Target",
+			"plant": "Plant"
 		}
 	}
 }

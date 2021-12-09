@@ -6,10 +6,14 @@
 			"no-permission": "이 명령어를 실행할 수 있는 권한이 없습니다."
 		},
 		"brush": {
-			"description": "BlockSniper의 GUI를 엽니다."
+			"description": "BlockSniper의 GUI를 엽니다.",
+			"need-item": "브러시는 아이템에만 바인딩할 수 있습니다.",
+			"bind-brush-item": "브러시 아이템을 바인딩할 수 없습니다",
+			"clear-success": "해당 아이템에서 모든 브러시를 삭제했습니다.",
+			"not-bound": "해당 아이템에 바인딩된 브러시가 없습니다."
 		},
 		"blocksniper": {
-			"description": "BlockSniper에 대한 정보를 표시하거나, 플러그인을 새로 고칩니다.",
+			"description": "BlockSniper에 대한 정보를 표시하거나 플러그인을 새로 고칩니다.",
 			"info": "정보",
 			"version": "버전: ",
 			"organisation": "조직: ",
@@ -19,25 +23,21 @@
 		},
 		"redo": {
 			"description": "마지막으로 실행 취소한 BlockSniper 수정 사항을 다시 실행합니다.",
-			"no-redo": "다시 실행할 수정 사항을 찾을 수 없습니다.",
+			"no-redo": "다시 실행할 수정 사항이 없습니다.",
 			"success": "마지막으로 실행 취소한 수정 사항을 성공적으로 다시 실행했습니다."
 		},
 		"undo": {
-			"description": "마지막으로 실행한 BlockSniper 수정 사항을 실행 취소합니다.",
-			"no-undo": "실행 취소할 수정 사항을 찾을 수 없습니다.",
+			"description": "마지막으로 실행한 BlockSniper 수정 사항의 실행을 취소합니다.",
+			"no-undo": "실행 취소할 수정 사항이 없습니다.",
 			"success": "마지막 수정 사항을 성공적으로 취소했습니다."
 		},
 		"clone": {
-			"description": "지정한 형식을 사용해서 영역을 복제합니다.",
+			"description": "지정한 형식을 사용해 영역을 복제합니다.",
 			"copy": {
 				"success": "보았던 위치를 성공적으로 복사했습니다."
 			},
-			"template": {
-				"missing-name": "견본에 올바른 이름이 입력되지 않았습니다.",
-				"success": "견본 파일을 %s에 성공적으로 저장했습니다."
-			},
 			"schematic": {
-				"missing-name": "개략도에 올바른 이름이 입력되지 않았습니다.",
+				"missing-name": "개략도에 올바른 이름이 지정되지 않았습니다.",
 				"success": "개략도 파일을 %s에 성공적으로 저장했습니다."
 			}
 		},
@@ -47,80 +47,27 @@
 				"no-copies": "붙여넣을 복사본을 찾을 수 없습니다.",
 				"success": "보았던 위치에 복사본을 성공적으로 붙여넣었습니다."
 			},
-			"template": {
-				"nonexistent": "견본 디렉터리에서 %s 견본을 찾을 수 없습니다.",
-				"success": "보았던 위치에 %s 견본을 성공적으로 붙여넣었습니다."
-			},
 			"schematic": {
 				"nonexistent": "개략도 디렉터리에서 %s 개략도를 찾을 수 없습니다.",
-				"success": "보았던 위치에 %s 개략도를 성공적으로 붙여넣었습니다."
+				"success": "보았던 위치에 %s 개략도를 붙여넣는 중입니다."
 			}
+		},
+		"deselect": {
+			"description": "현재 선택 영역의 선택을 해제합니다.",
+			"success": "선택 영역의 선택을 성공적으로 해제했습니다."
 		}
 	},
 	"ui": {
-		"preset-menu": {
-			"title": "사전 설정 메뉴",
-			"subtitle": "계속하려면 버튼을 클릭하세요",
-			"create": "만들기",
-			"delete": "삭제",
-			"select": "선택",
-			"list": "목록",
-			"exit": "나가기"
-		},
-		"preset-edit": {
-			"title": "사전 설정 편집 메뉴",
-			"name": "사전 설정 이름",
-			"size": "브러시 크기",
-			"shape": "브러시 도형",
-			"type": "브러시 종류",
-			"hollow": "빈 브러시",
-			"decrement": "감소 브러시",
-			"height": "브러시 높이",
-			"perfect": "브러시 도형 완벽",
-			"blocks": "브러시 블록",
-			"obsolete": "쓸모없는 블록",
-			"biome": "브러시 생물군계",
-			"tree": "브러시 나무"
-		},
-		"preset-selection": {
-			"title": "사전 설정 선택 메뉴",
-			"subtitle": "사전 설정을 적용하려면 버튼을 클릭하세요"
-		},
-		"preset-deletion": {
-			"title": "사전 설정 삭제 메뉴",
-			"subtitle": "사전 설정을 삭제하려면 버튼을 클릭하세요"
-		},
-		"preset-list": {
-			"title": "사전 설정 목록 메뉴",
-			"subtitle": "사전 설정을 편집/보려면 버튼을 클릭하세요"
-		},
-		"preset-creation": {
-			"title": "사전 설정 만들기 메뉴",
-			"name": "사전 설정 이름",
-			"size": "브러시 크기",
-			"shape": "브러시 도형",
-			"type": "브러시 종류",
-			"hollow": "빈 브러시",
-			"decrement": "감소 브러시",
-			"height": "브러시 높이",
-			"perfect": "브러시 도형 완벽",
-			"blocks": "브러시 블록",
-			"obsolete": "쓸모없는 블록",
-			"biome": "브러시 생물군계",
-			"tree": "브러시 나무"
-		},
 		"main-menu": {
 			"title": "BlockSniper 메뉴",
 			"subtitle": "계속하려면 버튼을 클릭하세요",
 			"brush": "브러시",
-			"tree": "나무",
 			"config": "구성",
-			"presets": "사전 설정",
-			"global-brush": "전역 브러시",
 			"exit": "나가기"
 		},
 		"brush-menu": {
 			"title": "브러시 메뉴",
+			"name": "브러시 이름",
 			"size": "브러시 크기",
 			"shape": "브러시 도형",
 			"type": "브러시 종류",
@@ -132,72 +79,81 @@
 			"hollow": "빈 브러시",
 			"decrement": "감소 브러시",
 			"height": "브러시 높이",
-			"perfect": "브러시 도형 완벽",
+			"width": "브러시 너비",
+			"length": "브러시 길이",
 			"blocks": "브러시 블록",
-			"obsolete": "쓸모없는 블록",
-			"biome": "브러시 생물군계",
-			"tree": "브러시 나무"
+			"obsolete": "교체된 블록",
+			"biome": "브러시 생물 군계",
+			"tree": "브러시 나무",
+			"layer-width": "레이어 너비",
+			"soil": "토양 블록"
 		},
 		"configuration-menu": {
 			"title": "BlockSniper 구성",
-			"auto-update": "새로운 버전을 찾았을 때 자동으로 구성 파일 업데이트",
 			"language": "BlockSniper 관련 메시지를 보내는 데 사용되는 언어",
 			"brush-item": "브러시에 사용되는 아이템의 ID",
 			"selection-item": "선택에 사용되는 아이템의 ID",
 			"max-brush-size": "브러시의 절대적 최대 크기",
-			"min-async-size": "비동기 브러시 크기 제한입니다. 브러시 크기가 이보다 크다면, 작업이 비동기적으로 실행됩니다",
-			"max-reverts": "저장할 실행 취소/다시 실행 보관의 최대량입니다. 이전 것들은 자동으로 비워집니다",
-			"reset-decrement-brush": "초기 실행 크기로 감소 브러시 자동으로 초기화",
+			"min-async-size": "비동기 브러시 크기 제한입니다. 브러시 크기가 이보다 크다면 작업이 비동기적으로 실행됩니다",
+			"max-reverts": "저장할 실행 취소/다시 실행 저장 항목의 최대량입니다. 이전 항목은 자동으로 비워집니다",
+			"reset-decrement-brush": "감소 브러시를 초기 시작 크기로 자동으로 초기화하기",
 			"save-brush": "서버 다시 시작 시에 플레이어의 브러시 속성 저장",
-			"drop-plants": "낙엽청소기 유형으로 파괴된/청소된 식물 아이템 떨어뜨리기",
-			"session-timeout-time": "서버를 떠난 후에 플레이어의 세션이 제거될 시간(분)",
-			"auto-gui": "브러시 아이템을 포함하고 있는 단축바 슬롯으로 전환할 때 자동으로 GUI 열기",
-			"myplot-support": "MyPlot 지원을 켤지 말지 여부",
-			"auto-reload": "이 토글을 켜면 이 창을 닫을 때 자동으로 구성을 새로 고칩니다"
+			"session-timeout-time": "플레이어가 서버를 떠난 후에 플레이어의 세션을 제거할 시간(분)",
+			"auto-gui": "브러시 아이템이 있는 단축바 슬롯으로 전환할 때 자동으로 GUI 열기",
+			"cooldown": "브러시를 사용한 후 다시 사용할 수 있기까지의 쿨다운(초, 십진법 사용 가능)",
+			"myplot-support": "MyPlot 지원을 켤지 말지 여부"
 		},
 		"tree-menu": {
 			"title": "나무 메뉴",
 			"trunk-height": "나무의 몸통 크기",
-			"trunk-width": "하단의 나무 폭입니다, 폭은 위로 갈수록 점차 감소합니다",
+			"trunk-width": "하단의 나무의 너비입니다. 폭은 위로 갈수록 점차 감소합니다",
 			"max-branch-length": "나무의 가지가 늘어날 수 있는 최대 길이",
 			"trunk-blocks": "나무의 몸통으로 사용할 블록",
 			"leaves-blocks": "나무의 잎으로 사용할 블록",
-			"leaves-cluster-size": "각 가지 끝의 잎 무리의 크기"
+			"leaves-cluster-size": "각 가지 끝에 달린 잎 무리의 크기"
+		},
+		"changelog": {
+			"title": "변경 사항 메뉴",
+			"name": "변경 사항",
+			"subtitle": "버전을 클릭하면 변경 사항을 확인할 수 있습니다.",
+			"close": "닫기",
+			"see-other": "다른 변경 사항 보기"
 		}
 	},
 	"log": {
 		"language": {
-			"auto-selected": "[BlockSniper] 올바른 언어가 선택되지 않았습니다. 영어가 자동 선택되었습니다.",
-			"usage": "게임 내에서 /b를 사용해서 구성 탭으로 이동해서 언어를 선택해주세요.",
-			"selected": "[BlockSniper] 선택한 언어: "
+			"auto-selected": "올바른 언어가 선택되지 않았습니다. 영어가 자동 선택되었습니다.",
+			"usage": "게임 내에서 /b를 사용해 구성 탭으로 이동한 다음 언어를 선택해주세요.",
+			"selected": "선택한 언어: "
 		},
 		"brush": {
 			"restored": "플레이어 %s의 브러시가 복원되었습니다.",
 			"all-restored": "모든 브러시가 복원되었습니다."
 		},
-		"presets": {
-			"loaded": "%s 사전 설정이 불러와졌습니다.",
-			"all-loaded": "모든 사전 설정이 불러와졌습니다."
-		},
 		"reload": {
-			"start": "[BlockSniper] 새로 고치는 중입니다...",
-			"finish": "[BlockSniper] 새로 고침을 완료했습니다."
+			"start": "새로 고치는 중입니다...",
+			"finish": "새로 고침을 완료했습니다."
 		}
 	},
 	"brush": {
+		"state": {
+			"ready": "준비",
+			"done": "완료"
+		},
 		"selection": {
-			"first": "위치 1을 다음으로 설정했습니다:",
-			"second": "위치 2를 다음으로 설정했습니다:",
-			"error": "이 작업을 실행하기 전에 선택 아이템을 사용해서 먼저 선택 영역을 설정하세요."
+			"first": "위치 1을 다음과 같이 설정했습니다:",
+			"second": "위치 2를 다음과 같이 설정했습니다:",
+			"error": "이 작업을 실행하기 전에 선택 아이템을 사용해 먼저 선택 영역을 설정하세요."
 		},
 		"shape": {
 			"cube": "정육면체",
 			"cuboid": "직육면체",
 			"sphere": "구",
-			"cylinder": "원기둥"
+			"cylinder": "원기둥",
+			"ellipsoid": "타원체"
 		},
 		"type": {
-			"biome": "생물군계",
+			"biome": "생물 군계",
 			"cleanentities": "개체 청소",
 			"clean": "청소",
 			"drain": "액체 빼기",
@@ -217,7 +173,10 @@
 			"regenerate": "다시 생성",
 			"freeze": "얼리기",
 			"warm": "따뜻하게 하기",
-			"heat": "뜨겁게 하기"
+			"heat": "뜨겁게 하기",
+			"smooth": "부드럽게 하기",
+			"replacetarget": "대상 교체",
+			"plant": "식물 심기"
 		}
 	}
 }

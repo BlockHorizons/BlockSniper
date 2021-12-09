@@ -6,37 +6,41 @@ namespace BlockHorizons\BlockSniper;
 
 use BlockHorizons\BlockSniper\brush\registration\ShapeRegistration;
 use BlockHorizons\BlockSniper\brush\registration\TypeRegistration;
-use BlockHorizons\BlockSniper\commands\BlockSniperCommand;
-use BlockHorizons\BlockSniper\commands\BrushCommand;
-use BlockHorizons\BlockSniper\commands\cloning\CloneCommand;
-use BlockHorizons\BlockSniper\commands\cloning\PasteCommand;
-use BlockHorizons\BlockSniper\commands\RedoCommand;
-use BlockHorizons\BlockSniper\commands\UndoCommand;
+use BlockHorizons\BlockSniper\changelog\ChangelogTask;
+use BlockHorizons\BlockSniper\command\BlockSniperCommand;
+use BlockHorizons\BlockSniper\command\BrushCommand;
+use BlockHorizons\BlockSniper\command\cloning\CloneCommand;
+use BlockHorizons\BlockSniper\command\cloning\PasteCommand;
+use BlockHorizons\BlockSniper\command\RedoCommand;
+use BlockHorizons\BlockSniper\command\UndoCommand;
+use BlockHorizons\BlockSniper\command\DeselectCommand;
 use BlockHorizons\BlockSniper\data\ConfigData;
 use BlockHorizons\BlockSniper\data\Translation;
 use BlockHorizons\BlockSniper\data\TranslationData;
-use BlockHorizons\BlockSniper\listeners\BrushListener;
-use BlockHorizons\BlockSniper\presets\PresetManager;
-use BlockHorizons\BlockSniper\sessions\SessionManager;
-use BlockHorizons\BlockSniper\tasks\RedoDiminishTask;
-use BlockHorizons\BlockSniper\tasks\UndoDiminishTask;
-use BlockHorizons\BlockSniper\tasks\UpdateNotifyTask;
+use BlockHorizons\BlockSniper\listener\BrushListener;
+use BlockHorizons\BlockSniper\session\SessionManager;
+use BlockHorizons\BlockSniper\task\UpdateNotifyTask;
 use MyPlot\MyPlot;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat as TF;
+use function is_dir;
+use function mkdir;
 
 class Loader extends PluginBase{
 
-	public const VERSION = "3.2.3";
-	public const CONFIGURATION_VERSION = "4.2.0";
-	public const API_TARGET = "3.2.0";
+	public const VERSION = "4.0.0";
+	public const CONFIGURATION_VERSION = "4.3.1";
+	public const API_TARGET = "4.0.0";
 
 	private const AUTOLOAD_LIBRARIES = [
 		"marshal",
 		"schematic"
 	];
 
-	/** @var string[] */
+	/**
+	 * @var string[]
+	 * @phpstan-var list<string>
+	 */
 	private static $availableLanguages = [
 		"en",
 		"nl",
@@ -49,16 +53,18 @@ class Loader extends PluginBase{
 	];
 	/** @var TranslationData */
 	private $language = null;
-	/** @var PresetManager */
-	private $presetManager = null;
 	/** @var ConfigData */
 	public $config = null;
 
 	/** @var null|MyPlot */
 	private $myPlot = null;
 
+	/** @var BrushListener */
+	private $listener;
+
 	/**
 	 * @return string[]
+	 * @phpstan-return list<string>
 	 */
 	public static function getAvailableLanguages() : array{
 		return self::$availableLanguages;
@@ -66,10 +72,11 @@ class Loader extends PluginBase{
 
 	public function onLoad() : void{
 		foreach(self::AUTOLOAD_LIBRARIES as $name){
-			$this->getServer()->getLoader()->addPath($this->getFile() . "src/$name/src");
+			$this->getServer()->getLoader()->addPath("", $this->getFile() . "src/$name/src");
 		}
 
 		$this->getServer()->getAsyncPool()->submitTask(new UpdateNotifyTask());
+		$this->getServer()->getAsyncPool()->submitTask(new ChangelogTask());
 	}
 
 	public function onEnable() : void{
@@ -77,15 +84,12 @@ class Loader extends PluginBase{
 
 		$this->registerCommands();
 		$this->registerListeners();
-
-		$this->getScheduler()->scheduleRepeatingTask(new UndoDiminishTask($this), 400);
-		$this->getScheduler()->scheduleRepeatingTask(new RedoDiminishTask($this), 400);
 	}
 
 	public function onDisable() : void{
-		$this->getPresetManager()->storePresetsToFile();
 		SessionManager::close();
 		$this->config->close();
+		$this->listener->saveBrushes();
 	}
 
 	public function reload() : void{
@@ -93,19 +97,11 @@ class Loader extends PluginBase{
 		$this->load();
 	}
 
-	/**
-	 * @return PresetManager
-	 */
-	public function getPresetManager() : PresetManager{
-		return $this->presetManager;
-	}
-
 	private function load() : void{
 		$this->initializeDirectories();
 
 		$this->config = new ConfigData($this);
 		$this->language = new TranslationData($this);
-		$this->presetManager = new PresetManager($this);
 
 		if(!$this->language->collectTranslations()){
 			$this->getLogger()->info(Translation::get(Translation::LOG_LANGUAGE_AUTO_SELECTED));
@@ -123,12 +119,6 @@ class Loader extends PluginBase{
 	}
 
 	public function initializeDirectories() : void{
-		if(!is_dir($this->getDataFolder())){
-			mkdir($this->getDataFolder());
-		}
-		if(!is_dir($this->getDataFolder() . "templates/")){
-			mkdir($this->getDataFolder() . "templates/");
-		}
 		if(!is_dir($this->getDataFolder() . "schematics/")){
 			mkdir($this->getDataFolder() . "schematics/");
 		}
@@ -138,16 +128,6 @@ class Loader extends PluginBase{
 		if(!is_dir($this->getDataFolder() . "sessions/")){
 			mkdir($this->getDataFolder() . "sessions/");
 		}
-		if(!is_dir($this->getDataFolder() . "presets/")){
-			mkdir($this->getDataFolder() . "presets/");
-		}
-	}
-
-	/**
-	 * @return TranslationData
-	 */
-	public function getTranslationData() : TranslationData{
-		return $this->language;
 	}
 
 	/**
@@ -166,18 +146,20 @@ class Loader extends PluginBase{
 
 	private function registerCommands() : void{
 		$this->getServer()->getCommandMap()->registerAll("blocksniper", [
-			new BlockSniperCommand($this),
-			new BrushCommand($this),
-			new UndoCommand($this),
-			new RedoCommand($this),
-			new CloneCommand($this),
-			new PasteCommand($this)
-		]);
+				new BlockSniperCommand($this),
+				new BrushCommand($this),
+				new UndoCommand($this),
+				new RedoCommand($this),
+				new CloneCommand($this),
+				new DeselectCommand($this),
+				new PasteCommand($this)
+			]
+		);
 	}
 
 	private function registerListeners() : void{
 		$listeners = [
-			new BrushListener($this),
+			$this->listener = new BrushListener($this),
 		];
 		foreach($listeners as $listener){
 			$this->getServer()->getPluginManager()->registerEvents($listener, $this);

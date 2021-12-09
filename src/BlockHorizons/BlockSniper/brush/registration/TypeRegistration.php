@@ -4,60 +4,73 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush\registration;
 
-use BlockHorizons\BlockSniper\brush\types\BiomeType;
-use BlockHorizons\BlockSniper\brush\types\CleanEntitiesType;
-use BlockHorizons\BlockSniper\brush\types\CleanType;
-use BlockHorizons\BlockSniper\brush\types\DrainType;
-use BlockHorizons\BlockSniper\brush\types\ExpandType;
-use BlockHorizons\BlockSniper\brush\types\FillType;
-use BlockHorizons\BlockSniper\brush\types\FlattenAllType;
-use BlockHorizons\BlockSniper\brush\types\FlattenType;
-use BlockHorizons\BlockSniper\brush\types\FreezeType;
-use BlockHorizons\BlockSniper\brush\types\HeatType;
-use BlockHorizons\BlockSniper\brush\types\LayerType;
-use BlockHorizons\BlockSniper\brush\types\LeafBlowerType;
-use BlockHorizons\BlockSniper\brush\types\MeltType;
-use BlockHorizons\BlockSniper\brush\types\OverlayType;
-use BlockHorizons\BlockSniper\brush\types\RegenerateType;
-use BlockHorizons\BlockSniper\brush\types\ReplaceAllType;
-use BlockHorizons\BlockSniper\brush\types\ReplaceType;
-use BlockHorizons\BlockSniper\brush\types\SnowConeType;
-use BlockHorizons\BlockSniper\brush\types\TopLayerType;
-use BlockHorizons\BlockSniper\brush\types\TreeType;
-use BlockHorizons\BlockSniper\brush\types\WarmType;
-use BlockHorizons\BlockSniper\exceptions\InvalidIdException;
+use BlockHorizons\BlockSniper\brush\Type;
+use BlockHorizons\BlockSniper\brush\type\BiomeType;
+use BlockHorizons\BlockSniper\brush\type\CleanEntitiesType;
+use BlockHorizons\BlockSniper\brush\type\CleanType;
+use BlockHorizons\BlockSniper\brush\type\DrainType;
+use BlockHorizons\BlockSniper\brush\type\ExpandType;
+use BlockHorizons\BlockSniper\brush\type\FillType;
+use BlockHorizons\BlockSniper\brush\type\FlattenAllType;
+use BlockHorizons\BlockSniper\brush\type\FlattenType;
+use BlockHorizons\BlockSniper\brush\type\FreezeType;
+use BlockHorizons\BlockSniper\brush\type\HeatType;
+use BlockHorizons\BlockSniper\brush\type\LayerType;
+use BlockHorizons\BlockSniper\brush\type\LeafBlowerType;
+use BlockHorizons\BlockSniper\brush\type\MeltType;
+use BlockHorizons\BlockSniper\brush\type\OverlayType;
+use BlockHorizons\BlockSniper\brush\type\PlantType;
+use BlockHorizons\BlockSniper\brush\type\RegenerateType;
+use BlockHorizons\BlockSniper\brush\type\ReplaceAllType;
+use BlockHorizons\BlockSniper\brush\type\ReplaceTargetType;
+use BlockHorizons\BlockSniper\brush\type\ReplaceType;
+use BlockHorizons\BlockSniper\brush\type\SmoothType;
+use BlockHorizons\BlockSniper\brush\type\SnowConeType;
+use BlockHorizons\BlockSniper\brush\type\TopLayerType;
+use BlockHorizons\BlockSniper\brush\type\TreeType;
+use BlockHorizons\BlockSniper\brush\type\WarmType;
+use BlockHorizons\BlockSniper\data\Translation;
+use pocketmine\permission\DefaultPermissions;
 use pocketmine\permission\Permission;
 use pocketmine\permission\PermissionManager;
+use pocketmine\utils\AssumptionFailedError;
+use ReflectionClass;
+use function str_replace;
+use function strtolower;
 
 class TypeRegistration{
 
-	/** @var string[] */
-	private static $types = [];
-	/** @var string[] */
-	private static $typesIds = [];
+	/**
+	 * @var string[]
+	 * @phpstan-var array<string, class-string<Type>>
+	 */
+	public static $types = [];
 
 	public static function init() : void{
-		self::registerType(BiomeType::class, BiomeType::ID);
-		self::registerType(CleanEntitiesType::class, CleanEntitiesType::ID);
-		self::registerType(CleanType::class, CleanType::ID);
-		self::registerType(DrainType::class, DrainType::ID);
-		self::registerType(ExpandType::class, ExpandType::ID);
-		self::registerType(FillType::class, FillType::ID);
-		self::registerType(FlattenAllType::class, FlattenAllType::ID);
-		self::registerType(FlattenType::class, FlattenType::ID);
-		self::registerType(LayerType::class, LayerType::ID);
-		self::registerType(LeafBlowerType::class, LeafBlowerType::ID);
-		self::registerType(MeltType::class, MeltType::ID);
-		self::registerType(OverlayType::class, OverlayType::ID);
-		self::registerType(ReplaceAllType::class, ReplaceAllType::ID);
-		self::registerType(ReplaceType::class, ReplaceType::ID);
-		self::registerType(SnowConeType::class, SnowConeType::ID);
-		self::registerType(TopLayerType::class, TopLayerType::ID);
-		self::registerType(TreeType::class, TreeType::ID);
-		self::registerType(RegenerateType::class, RegenerateType::ID);
-		self::registerType(FreezeType::class, FreezeType::ID);
-		self::registerType(WarmType::class, WarmType::ID);
-		self::registerType(HeatType::class, HeatType::ID);
+		self::registerType(BiomeType::class);
+		self::registerType(CleanEntitiesType::class);
+		self::registerType(CleanType::class);
+		self::registerType(DrainType::class);
+		self::registerType(ExpandType::class);
+		self::registerType(FillType::class);
+		self::registerType(FlattenAllType::class);
+		self::registerType(FlattenType::class);
+		self::registerType(LayerType::class);
+		self::registerType(LeafBlowerType::class);
+		self::registerType(MeltType::class);
+		self::registerType(OverlayType::class);
+		self::registerType(ReplaceAllType::class);
+		self::registerType(ReplaceType::class);
+		self::registerType(SnowConeType::class);
+		self::registerType(TopLayerType::class);
+		self::registerType(TreeType::class);
+		self::registerType(RegenerateType::class);
+		self::registerType(FreezeType::class);
+		self::registerType(WarmType::class);
+		self::registerType(HeatType::class);
+		self::registerType(SmoothType::class);
+		self::registerType(ReplaceTargetType::class);
+		self::registerType(PlantType::class);
 	}
 
 	/**
@@ -65,21 +78,23 @@ class TypeRegistration{
 	 * Use $overwrite = true if you'd like to overwrite an existing type.
 	 *
 	 * @param string $class
-	 * @param int    $id
 	 * @param bool   $overwrite
+	 * @phpstan-param class-string<Type> $class
 	 *
 	 * @return bool
 	 */
-	public static function registerType(string $class, int $id, bool $overwrite = false) : bool{
-		$shortName = str_replace("Type", "", (new \ReflectionClass($class))->getShortName());
+	public static function registerType(string $class, bool $overwrite = false) : bool{
+		$shortName = str_replace("Type", "", (new ReflectionClass($class))->getShortName());
 
-		if(!$overwrite && self::typeExists(strtolower($shortName), $id)){
+		$reflectClass = new ReflectionClass(Translation::class);
+		$key = $reflectClass->getConstant(strtoupper("brush_type_$shortName"));
+		if($key !== false){
+			$shortName = Translation::get($key);
+		}
+
+		if(!$overwrite && self::typeExists(strtolower($shortName))){
 			return false;
 		}
-		if($id < 0){
-			throw new InvalidIdException("A shape ID should be positive.");
-		}
-		self::$typesIds[$id] = $shortName;
 		self::$types[strtolower($shortName)] = $class;
 		self::registerPermission(strtolower($shortName));
 
@@ -90,55 +105,37 @@ class TypeRegistration{
 	 * Returns whether a type with the given name exists or not.
 	 *
 	 * @param string $typeName
-	 * @param int    $id
 	 *
 	 * @return bool
 	 */
-	public static function typeExists(string $typeName, int $id = -1) : bool{
-		return isset(self::$types[$typeName]) || isset(self::$typesIds[$id]);
+	public static function typeExists(string $typeName) : bool{
+		return isset(self::$types[$typeName]);
 	}
 
 	/**
 	 * @param string $typeName
 	 */
 	private static function registerPermission(string $typeName) : void{
-		$permission = new Permission("blocksniper.type." . $typeName, "Allows permission to use the " . $typeName . " shape.", Permission::DEFAULT_OP);
-		$permission->addParent("blocksniper.type", true);
+		$typeName = str_replace(" ", "_", $typeName);
+		$operatorPermission = PermissionManager::getInstance()->getPermission(DefaultPermissions::ROOT_OPERATOR) ?? throw new AssumptionFailedError();
+		$permission = new Permission("blocksniper.type." . $typeName, "Allows permission to use the " . $typeName . " shape.");
+		$operatorPermission->addChild($permission->getName(), true);
 		PermissionManager::getInstance()->addPermission($permission);
 	}
 
 	/**
-	 * Returns an array containing the class string of all types.
+	 * Returns an array containing the names of all types.
 	 *
 	 * @return string[]
+	 * @phpstan-return list<string>
 	 */
 	public static function getTypes() : array{
-		return self::$types;
-	}
-
-	/**
-	 * Returns an array containing the ID => Name of all types.
-	 *
-	 * @return string[]
-	 */
-	public static function getTypeIds() : array{
-		return self::$typesIds;
-	}
-
-	/**
-	 * Returns a type class name by ID.
-	 *
-	 * @param int  $id
-	 * @param bool $name
-	 *
-	 * @return null|string
-	 */
-	public static function getTypeById(int $id, bool $name = false) : ?string{
-		if(!isset(self::$typesIds[$id])){
-			return null;
+		$types = [];
+		foreach(self::$types as $shortName => $class){
+			$types[] = $shortName;
 		}
 
-		return $name ? self::$typesIds[$id] : self::getType(strtolower(self::$typesIds[$id]));
+		return $types;
 	}
 
 	/**
@@ -147,6 +144,7 @@ class TypeRegistration{
 	 * @param string $shortName
 	 *
 	 * @return null|string
+	 * @phpstan-return null|class-string<Type>
 	 */
 	public static function getType(string $shortName) : ?string{
 		return self::$types[$shortName] ?? null;

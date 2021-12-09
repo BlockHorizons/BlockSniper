@@ -6,7 +6,11 @@
 			"no-permission": "你没有权限执行这条指令。"
 		},
 		"brush": {
-			"description": "打开 BlockSniper 图形界面。"
+			"description": "打开 BlockSniper 图形界面。",
+			"need-item": "You can only bind a brush to an item.",
+			"bind-brush-item": "You cannot bind the brush item",
+			"clear-success": "Successfully cleared all brushes from this item.",
+			"not-bound": "There was no brush bound to this item."
 		},
 		"blocksniper": {
 			"description": "显示 BlockSniper 的相关信息，或重新加载插件。",
@@ -32,10 +36,6 @@
 			"copy": {
 				"success": "成功复制你看向的位置。"
 			},
-			"template": {
-				"missing-name": "没有为模板指定有效的名称。",
-				"success": "成功存储模板文件至 %s。"
-			},
 			"schematic": {
 				"missing-name": "没有为概要指定有效的名称。",
 				"success": "成功存储概要文件至 %s."
@@ -47,76 +47,22 @@
 				"no-copies": "没有可以被粘贴的复制样本。",
 				"success": "成功粘贴复制样本至你看向的位置。"
 			},
-			"template": {
-				"nonexistent": "无法在模板目录中找到 %s 模板。",
-				"success": "成功复制模板 %s 至你看向的位置。"
-			},
 			"schematic": {
 				"nonexistent": "无法在概要目录中找到 %s 概要。",
-				"success": "成功复制概要 %s 至你看向的位置。"
+				"success": "Pasting the schematic %s on the location looked at."
 			}
+		},
+		"deselect": {
+			"description": "It deselect the current selection.",
+			"success": "Successfully deselected your selection."
 		}
 	},
 	"ui": {
-		"preset-menu": {
-			"title": "预设选项",
-			"subtitle": "点击一个按钮以继续。",
-			"create": "新建",
-			"delete": "删除",
-			"select": "选择",
-			"list": "列表",
-			"exit": "退出"
-		},
-		"preset-edit": {
-			"title": "编辑预设选项",
-			"name": "预设选项名称",
-			"size": "大小",
-			"shape": "形状",
-			"type": "操作类型",
-			"hollow": "不填充内部",
-			"decrement": "尺寸递减",
-			"height": "高度",
-			"perfect": "完善形状",
-			"blocks": "目标方块",
-			"obsolete": "替换方块",
-			"biome": "生物群落",
-			"tree": "树木类型"
-		},
-		"preset-selection": {
-			"title": "选择预设选项",
-			"subtitle": "点击一个按钮以应用预设选项。"
-		},
-		"preset-deletion": {
-			"title": "删除预设选项",
-			"subtitle": "点击一个按钮以删除预设选项。"
-		},
-		"preset-list": {
-			"title": "预设选项列表",
-			"subtitle": "点击一个按钮以编辑/查看预设选项。"
-		},
-		"preset-creation": {
-			"title": "新建预设选项",
-			"name": "预设选项名称",
-			"size": "大小",
-			"shape": "形状",
-			"type": "操作类型",
-			"hollow": "不填充内部",
-			"decrement": "尺寸递减",
-			"height": "高度",
-			"perfect": "完善形状",
-			"blocks": "目标方块",
-			"obsolete": "替换方块",
-			"biome": "生物群落",
-			"tree": "树木类型"
-		},
 		"main-menu": {
 			"title": "BlockSniper 菜单",
 			"subtitle": "点击一个按钮以继续",
 			"brush": "画笔选项",
-			"tree": "Tree",
 			"config": "设置",
-			"presets": "预设选项",
-			"global-brush": "全局画笔",
 			"exit": "退出"
 		},
 		"brush-menu": {
@@ -132,15 +78,18 @@
 			"hollow": "不填充内部",
 			"decrement": "尺寸递减",
 			"height": "高度",
-			"perfect": "完善形状",
+			"width": "Brush Width",
+			"length": "Brush Length",
 			"blocks": "目标方块",
 			"obsolete": "替换方块",
 			"biome": "生物群落",
-			"tree": "树木类型"
+			"tree": "树木类型",
+			"layer-width": "Layer Width",
+			"name": "Brush Name",
+			"soil": "Soil Blocks"
 		},
 		"configuration-menu": {
 			"title": "BlockSniper 设置",
-			"auto-update": "新版本自动更新配置文件",
 			"language": "BlockSniper 相关信息使用的语言",
 			"brush-item": "画笔物品 ID",
 			"selection-item": "Item ID of the item that is used to select",
@@ -149,11 +98,10 @@
 			"max-reverts": "撤销/恢复操作最大保存数量。更早的操作将被自动清理",
 			"reset-decrement-brush": "自动重置尺寸递减至最初值",
 			"save-brush": "服务器重启时保存用户画笔数据",
-			"drop-plants": "掉落清除植物类型操作移除的植物物品",
 			"session-timeout-time": "The time in minutes after which the session of a player is removed after leaving the server",
 			"auto-gui": "切换到画笔物品栏时自动打开画笔图形界面",
-			"myplot-support": "是否启用 MyPlot 支持",
-			"auto-reload": "打开此开关后将在这个窗口关闭时重新加载配置"
+			"cooldown": "The cooldown in seconds (can be decimal) until the brush can be re-used after using it",
+			"myplot-support": "是否启用 MyPlot 支持"
 		},
 		"tree-menu": {
 			"title": "Tree Menu",
@@ -163,28 +111,35 @@
 			"trunk-blocks": "The blocks to use for the trunk of the tree",
 			"leaves-blocks": "The blocks to use for the leaves of the tree",
 			"leaves-cluster-size": "The size of the leaves cluster at the end of each branch"
+		},
+		"changelog": {
+			"title": "Changelog Menu",
+			"name": "Changelog",
+			"subtitle": "Click a version to view its changelog.",
+			"close": "Close",
+			"see-other": "See other changelogs"
 		}
 	},
 	"log": {
 		"language": {
-			"auto-selected": "[BlockSniper] No valid language has been selected. English has been auto selected.",
+			"auto-selected": "No valid language has been selected. English has been auto selected.",
 			"usage": "请到游戏中设置页面使用 /b 选择语言。",
-			"selected": "[BlockSniper] 已选择语言: "
+			"selected": "已选择语言: "
 		},
 		"brush": {
 			"restored": "玩家 %s 的画笔已被恢复。",
 			"all-restored": "所有的画笔已被恢复。"
 		},
-		"presets": {
-			"loaded": "预设选项 %s 已被加载。",
-			"all-loaded": "所有预设选项已被加载。"
-		},
 		"reload": {
-			"start": "[BlockSniper] 重新加载中...",
-			"finish": "[BlockSniper] 已重新加载。"
+			"start": "重新加载中...",
+			"finish": "已重新加载。"
 		}
 	},
 	"brush": {
+		"state": {
+			"ready": "Ready",
+			"done": "Done"
+		},
 		"selection": {
 			"first": "Position 1 set to:",
 			"second": "Position 2 set to:",
@@ -194,7 +149,8 @@
 			"cube": "立方体",
 			"cuboid": "长方体",
 			"sphere": "球体",
-			"cylinder": "圆柱体"
+			"cylinder": "圆柱体",
+			"ellipsoid": "Ellipsoid"
 		},
 		"type": {
 			"biome": "生物群落",
@@ -217,7 +173,10 @@
 			"regenerate": "Regenerate",
 			"freeze": "Freeze",
 			"warm": "Warm",
-			"heat": "Heat"
+			"heat": "Heat",
+			"smooth": "Smooth",
+			"replacetarget": "Replace Target",
+			"plant": "Plant"
 		}
 	}
 }

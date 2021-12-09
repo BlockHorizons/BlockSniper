@@ -4,134 +4,182 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\brush;
 
-use BlockHorizons\BlockSniper\brush\types\TreeType;
-use BlockHorizons\BlockSniper\events\BrushUseEvent;
+use BlockHorizons\BlockSniper\brush\async\tasks\BrushTask;
+use BlockHorizons\BlockSniper\brush\shape\SphereShape;
+use BlockHorizons\BlockSniper\brush\type\FillType;
+use BlockHorizons\BlockSniper\brush\type\TreeType;
+use BlockHorizons\BlockSniper\event\BrushUseEvent;
 use BlockHorizons\BlockSniper\Loader;
-use BlockHorizons\BlockSniper\revert\sync\SyncUndo;
-use BlockHorizons\BlockSniper\sessions\PlayerSession;
-use BlockHorizons\BlockSniper\sessions\Selection;
-use BlockHorizons\BlockSniper\sessions\Session;
+use BlockHorizons\BlockSniper\revert\SyncRevert;
+use BlockHorizons\BlockSniper\session\owner\ISessionOwner;
+use BlockHorizons\BlockSniper\session\PlayerSession;
+use BlockHorizons\BlockSniper\session\Selection;
+use BlockHorizons\BlockSniper\session\Session;
+use Generator;
+use pocketmine\block\Block;
 use pocketmine\math\AxisAlignedBB;
-use pocketmine\Player;
+use pocketmine\math\Vector2;
+use pocketmine\player\Player;
 use pocketmine\Server;
+use pocketmine\world\Position;
+use pocketmine\world\sound\FizzSound;
+use Throwable;
+use function count;
 
+/**
+ * Class Brush implements the main brushing logic of BlockSniper. It handles the selection of the brush shape and type
+ * and fills the selection made using the type selected. It also decides if a shape is filled asynchronously or
+ * synchronously, depending on its size.
+ */
 class Brush extends BrushProperties{
 
+	/**
+	 * MODE_BRUSH is the brush mode for classic brushing, meaning actually brushing from a long distance.
+	 */
 	public const MODE_BRUSH = 0;
+	/**
+	 * MODE_SELECTION is the brush mode for selection based world edit, much like classic WorldEdit. Selections must be
+	 * made using the selection item.
+	 */
 	public const MODE_SELECTION = 1;
 
-	/** @var int */
-	public $resetSize = 0;
-	/** @var string */
-	public $player = "";
-
-	public function __construct(string $player){
-		parent::__construct();
-		$this->player = $player;
-	}
+	/** @var bool */
+	private $lock = false;
 
 	/**
-	 * @return string
-	 */
-	public function getPlayerName() : string{
-		return $this->player;
-	}
-
-	/**
-	 * @return null|Player
-	 */
-	public function getPlayer() : ?Player{
-		return Server::getInstance()->getPlayer($this->player);
-	}
-
-	/**
+	 * execute executes the brush, using $session as the user of the brush. $target is assumed to be the target of the
+	 * brush, which will form the centre of the brush Shape if the brush mode is set to MODE_BRUSH. If $plotPoints is
+	 * not empty, blocks will only ever be placed within the points passed.
+	 * If the brush mode of the brush is MODE_SELECTION, the selection $selection must be passed, defining the bounds of
+	 * the selection.
+	 *
 	 * @param Session        $session
+	 * @param Position       $target
+	 * @param Vector2[][]    $plotPoints
 	 * @param Selection|null $selection
-	 * @param array          $plotPoints
+	 *
+	 * @phpstan-param Session<ISessionOwner> $session
+	 *
+	 * @return bool
 	 */
-	public function execute(Session $session, ?Selection $selection, array $plotPoints = []) : void{
-		$shape = $this->getShape($selection !== null ? $selection->box() : null);
-		if($this->type !== TreeType::class){
-			$type = $this->getType($shape->getBlocksInside());
-		}else{
-			$type = new TreeType($this->getPlayer(), $this->getPlayer()->getLevel());
+	public function execute(Session $session, Position $target, array $plotPoints = [], ?Selection $selection = null) : bool{
+		if($this->lock){
+			// Brush is locked. Return immediately without doing anything.
+			return false;
 		}
+		$this->lock();
+
+		$shape = $this->getShape($selection !== null ? $selection->box() : null, $target);
+		$type = ($this->type !== TreeType::class
+			? $this->getType($shape->getBlocks($target->getWorld()), $target, $session)
+			: new TreeType($this, new Target($target, $target->getWorld())));
 
 		if($session instanceof PlayerSession){
 			$player = $session->getSessionOwner()->getPlayer();
 
-			Server::getInstance()->getPluginManager()->callEvent($event = new BrushUseEvent($player, $shape, $type));
+			$event = new BrushUseEvent($player, $shape, $type);
+			$event->call();
 			if($event->isCancelled()){
-				return;
+				return false;
 			}
 		}
 		$this->decrement();
 
 		/** @var Loader $loader */
 		$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
-		if($loader === null){
-			return;
-		}
 
 		$asyncSize = false;
-		if($selection !== null) {
-			if($selection->blockCount() ** 1/3 >= $loader->config->asyncOperationSize) {
-				$asyncSize = true;
-			}
-		} elseif($this->size >= $loader->config->asyncOperationSize) {
+		if(($shape->getBlockCount() ** (1 / 3)) / 2 >= $loader->config->asyncOperationSize){
 			$asyncSize = true;
 		}
 
 		if($type->canBeExecutedAsynchronously() && $asyncSize){
 			$type->setBlocksInside(null);
-			$shape->editAsynchronously($type, $plotPoints);
-		}else{
-			$undoBlocks = [];
-			foreach($type->fillShape($plotPoints) as $undoBlock){
-				$undoBlocks[] = $undoBlock;
-			}
-			if(count($undoBlocks) === 0){
-				return;
-			}
-			$session->getRevertStore()->saveRevert(new SyncUndo($undoBlocks, $session->getSessionOwner()->getName()));
+			Server::getInstance()->getAsyncPool()->submitTask(new BrushTask($this, $session, $shape, $type, $target->getWorld(), $plotPoints));
+
+			return false;
+		}
+
+		$undoBlocks = [];
+		foreach($type->fillShape($plotPoints) as $undoBlock){
+			$undoBlocks[] = $undoBlock;
+		}
+		if(count($undoBlocks) !== 0){
+			$session->getRevertStore()->saveUndo(new SyncRevert($undoBlocks, $target->getWorld()));
+		}
+		if($session instanceof PlayerSession){
+			$this->emitSound($session->getSessionOwner()->getPlayer());
+		}
+
+		return true;
+	}
+
+	/**
+	 * emitSound emits a sound to the player when the brush finishes an operation.
+	 *
+	 * @param Player $player
+	 */
+	public function emitSound(Player $player) : void{
+		$player->getWorld()->addSound($player->getPosition(), new FizzSound(), [$player]);
+	}
+
+	/**
+	 * getShape gets a Shape using a selection and a target position. Each of these may be null to create a Shape
+	 * that has no functionality but allows calling methods specific to a Shape.
+	 *
+	 * @param AxisAlignedBB|null $bb
+	 * @param Position|null      $target
+	 *
+	 * @return Shape
+	 */
+	public function getShape(AxisAlignedBB $bb = null, Position $target = null) : Shape{
+		if($target === null){
+			$target = new Position(0, 0, 0, null);
+		}
+
+		try{
+			return new $this->shape($this, new Target($target, $target->isValid() ? $target->getWorld() : null), $bb);
+		}catch(Throwable $e){
+			return new SphereShape($this, new Target($target, $target->isValid() ? $target->getWorld() : null), $bb);
 		}
 	}
 
 	/**
-	 * @param null|AxisAlignedBB $bb
+	 * getType gets a Type using a block generator, target position and session passed. Each of these may be null to
+	 * create a Type that has no functionality but allows calling methods specific to a Type.
 	 *
-	 * @return BaseShape
+	 * @param Generator|null $blocks
+	 * @param Position|null  $target
+	 * @param Session|null   $session
+	 *
+	 * @phpstan-param Session<ISessionOwner> $session
+	 * @phpstan-param Generator<int, Block, void, void>|null $blocks
+	 * @return Type
 	 */
-	public function getShape(?AxisAlignedBB $bb) : BaseShape{
-		$player = $this->getPlayer();
+	public function getType(Generator $blocks = null, Position $target = null, Session $session = null) : Type{
+		if($target === null){
+			$target = new Position(0, 0, 0, null);
+		}
 
-		return new $this->shape($player, $player->getLevel(), $player->getTargetBlock(100)->asPosition(), $bb, $this);
+		try{
+			return new $this->type($this, new Target($target, $target->isValid() ? $target->getWorld() : null), $blocks, $session);
+		}catch(Throwable $e){
+			return new FillType($this, new Target($target, $target->isValid() ? $target->getWorld() : null), $blocks);
+		}
 	}
 
 	/**
-	 * @param \Generator $blocks
-	 *
-	 * @return BaseType
+	 * lock locks the Brush, making it unusable until it is unlocked using unlock(). Attempts to brush using this Brush
+	 * instance will be ignored while locked.
 	 */
-	public function getType(\Generator $blocks) : BaseType{
-		return new $this->type($this->getPlayer(), $this->getPlayer()->getLevel(), $blocks);
+	public function lock() : void{
+		$this->lock = true;
 	}
 
-	public function decrement() : void{
-		if($this->decrementing){
-			if($this->size <= 1){
-				/** @var Loader $loader */
-				$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
-				if($loader === null){
-					return;
-				}
-				if($loader->config->resetDecrementBrush){
-					$this->size = $this->resetSize;
-				}
-
-				return;
-			}
-			$this->size = $this->size - 1;
-		}
+	/**
+	 * unlock unlocks the Brush, making it usable again after being locked using lock().
+	 */
+	public function unlock() : void{
+		$this->lock = false;
 	}
 }

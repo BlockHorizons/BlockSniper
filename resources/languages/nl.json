@@ -6,7 +6,11 @@
 			"no-permission": "Je hebt geen permissie om dit commando uit te voeren."
 		},
 		"brush": {
-			"description": "Opent de GUI van BlockSniper."
+			"description": "Opent de GUI van BlockSniper.",
+			"need-item": "Je kan alleen maar verf binden aan een voorwerp.",
+			"bind-brush-item": "Je kan niet binden aan een verf voorwerp",
+			"clear-success": "Verwijderen van alle verf van dit voorwerp geslaagd.",
+			"not-bound": "Er was geen verf gebonden aan dit voorwerp."
 		},
 		"blocksniper": {
 			"description": "Geeft informatie over BlockSniper, of herlaadt de plugin.",
@@ -32,10 +36,6 @@
 			"copy": {
 				"success": "Kopiëren van de zone waar je naar kijkt geslaagd."
 			},
-			"template": {
-				"missing-name": "Er is geen geldige naam gegeven voor de template.",
-				"success": "Template bestand is opgeslagen naar %s."
-			},
 			"schematic": {
 				"missing-name": "Geen geldige naam is gegeven voor de schematic",
 				"success": "Schematic bestand is opgeslagen naar %s."
@@ -47,76 +47,22 @@
 				"no-copies": "Geen kopie kon worden gevonden om te plakken.",
 				"success": "Plakken van copie op de locatie waar je naar kijkt geslaagd."
 			},
-			"template": {
-				"nonexistent": "De template %s kon niet worden gevonden in de template folder.",
-				"success": "Plakken van de template %s op de locatie waar je naar kijkt geslaagd."
-			},
 			"schematic": {
 				"nonexistent": "De schematic %s kon niet worden gevonden in de schematic folder.",
-				"success": "Plakken van de schematic %s op de locatie waar je naar kijkt geslaagd."
+				"success": "Schematic %s wordt geplaatst op het doelwit blok."
 			}
+		},
+		"deselect": {
+			"description": "It deselect the current selection.",
+			"success": "Successfully deselected your selection."
 		}
 	},
 	"ui": {
-		"preset-menu": {
-			"title": "Voorinstellingen Menu",
-			"subtitle": "Klik een knop om door te gaan",
-			"create": "Maak",
-			"delete": "Verwijder",
-			"select": "Kies",
-			"list": "Lijst",
-			"exit": "Verlaat"
-		},
-		"preset-edit": {
-			"title": "Voorinstellingen Maak Menu",
-			"name": "Voorinstellingen Naam",
-			"size": "Verf Grootte",
-			"shape": "Verf Vorm",
-			"type": "Verf Type",
-			"hollow": "Holle Verf",
-			"decrement": "Verkleinende Verf",
-			"height": "Verf Hoogte",
-			"perfect": "Verf Vorm Perfectie",
-			"blocks": "Verf Blokken",
-			"obsolete": "Herplaats Blokken",
-			"biome": "Verf Biome",
-			"tree": "Verf Boom"
-		},
-		"preset-selection": {
-			"title": "Voorinstellingen Selectie Menu",
-			"subtitle": "Klik een knop om de voorinstellingen toe te passen"
-		},
-		"preset-deletion": {
-			"title": "Voorinstellingen Verwijder Menu",
-			"subtitle": "Klik een knop om de voorinstellingen te verwijderen"
-		},
-		"preset-list": {
-			"title": "Voorinstellingen Lijst Menu",
-			"subtitle": "Klik een knop om de voorinstellingen te bekijken/bewerken"
-		},
-		"preset-creation": {
-			"title": "Voorinstellingen Maak Menu",
-			"name": "Voorinstellingen Naam",
-			"size": "Verf Grootte",
-			"shape": "Verf Vorm",
-			"type": "Verf Type",
-			"hollow": "Holle Verf",
-			"decrement": "Verkleinende Verf",
-			"height": "Verf Hoogte",
-			"perfect": "Verf Vorm Perfectie",
-			"blocks": "Verf Blokken",
-			"obsolete": "Herplaats Blokken",
-			"biome": "Verf Biome",
-			"tree": "Verf Boom"
-		},
 		"main-menu": {
 			"title": "BlockSniper Menu",
 			"subtitle": "Klik een knop om door te gaan",
 			"brush": "Verf",
-			"tree": "Boom",
 			"config": "Configuratie",
-			"presets": "Voorinstellingen",
-			"global-brush": "Globale Verf",
 			"exit": "Verlaat"
 		},
 		"brush-menu": {
@@ -125,22 +71,25 @@
 			"shape": "Verf Vorm",
 			"type": "Verf Type",
 			"mode": {
-				"description": "Brush Mode",
-				"brush": "Brush",
-				"selection": "Selection"
+				"description": "Verf Modus",
+				"brush": "Verf",
+				"selection": "Selectie"
 			},
 			"hollow": "Holle Verf",
 			"decrement": "Verkleinende Verf",
 			"height": "Verf Hoogte",
-			"perfect": "Verf Vorm Perfectie",
+			"width": "Verf Breedte",
+			"length": "Verf Lengte",
 			"blocks": "Verf Blokken",
-			"obsolete": "Herplaats Blokken",
+			"obsolete": "Vervangen Blokken",
 			"biome": "Verf Biome",
-			"tree": "Verf Boom"
+			"tree": "Verf Boom",
+			"layer-width": "Laagdikte",
+			"name": "Verf naam",
+			"soil": "Grond Blokken"
 		},
 		"configuration-menu": {
 			"title": "BlockSniper Configuratie",
-			"auto-update": "Update automatisch als een nieuwe update wordt gevonden",
 			"language": "Taal waarin BlockSniper berichten worden weergeven",
 			"brush-item": "ID van het voorwerp waarmee er wordt geverft",
 			"selection-item": "ID van het voorwerp waarmee een selectie wordt gemaakt",
@@ -149,11 +98,10 @@
 			"max-reverts": "De maximale hoeveelheid van ongedaanmakingen. Oudere ongedaanmakingen worden vanzelf verwijderd",
 			"reset-decrement-brush": "Zet verkleinende verf automatisch terug naar de originele grootte",
 			"save-brush": "Sla verf instellingen op als de server herstart",
-			"drop-plants": "Laat planten voorwerpen vallen wanneer het blad blazer type wordt gebruikt",
 			"session-timeout-time": "De tijd waarna de sessie van een speler wordt opgeruimd na het verlaten van de server",
 			"auto-gui": "Open de GUI automatisch wanneer het hotbar vakje wordt verplaatst naar een vak met het brush voorwerp",
-			"myplot-support": "MyPlot ondersteuning aanzetten of niet",
-			"auto-reload": "Omzetten van deze knop zal de plugin automatisch herladen wanneer je dit scherm sluit"
+			"cooldown": "De tijd in seconden (mag decimalen hebben) totdat de verf hergebruikt kan worden na gebruik",
+			"myplot-support": "MyPlot ondersteuning aanzetten of niet"
 		},
 		"tree-menu": {
 			"title": "Boom Menu",
@@ -163,28 +111,35 @@
 			"trunk-blocks": "De blokken te gebruiken voor de stam van de boom",
 			"leaves-blocks": "De blokken te gebruiken voor de bladeren van de boom",
 			"leaves-cluster-size": "De grootte van de bladerengroepen aan het einde van takken"
+		},
+		"changelog": {
+			"title": "Changelog Menu",
+			"name": "Changelog",
+			"subtitle": "Klik een versie om de changelog van die versie te zien.",
+			"close": "Sluit",
+			"see-other": "Bekijk andere changelogs"
 		}
 	},
 	"log": {
 		"language": {
-			"auto-selected": "[BlockSniper] Geen geldige taal is geselecteerd. Engels is automatisch geselecteerd.",
+			"auto-selected": "Geen geldige taal is geselecteerd. Engels is automatisch geselecteerd.",
 			"usage": "Kies alstublieft een taal door in-game naar het configuratie scherm te gaan, door /b te gebruiken.",
-			"selected": "[BlockSniper] Language selected: "
+			"selected": "Language selected: "
 		},
 		"brush": {
 			"restored": "Verf van speler %s is hersteld.",
 			"all-restored": "Alle verven zijn hersteld."
 		},
-		"presets": {
-			"loaded": "Voorinstellingen %s zijn geladen.",
-			"all-loaded": "Alle voorinstellingen zijn geladen."
-		},
 		"reload": {
-			"start": "[BlockSniper] Herladen...",
-			"finish": "[BlockSniper] Herladen klaar."
+			"start": "Herladen...",
+			"finish": "Herladen klaar."
 		}
 	},
 	"brush": {
+		"state": {
+			"ready": "Klaar",
+			"done": "Gedaan"
+		},
 		"selection": {
 			"first": "Positie 1 gezet naar:",
 			"second": "Positie 2 gezet naar:",
@@ -194,19 +149,20 @@
 			"cube": "Kubus",
 			"cuboid": "Balk",
 			"sphere": "Bol",
-			"cylinder": "Cilinder"
+			"cylinder": "Cilinder",
+			"ellipsoid": "Ellipsoïde"
 		},
 		"type": {
-			"biome": "Klimaat",
+			"biome": "Biome",
 			"cleanentities": "Wis Entiteiten",
-			"clean": "Schoon Maken",
+			"clean": "Schoonmaken",
 			"drain": "Aftappen",
 			"expand": "Uitbreiden",
 			"fill": "Vullen",
 			"flattenall": "Alles Vlak Maken",
 			"flatten": "Vlak Maken",
 			"layer": "Laag",
-			"leafblower": "Blad Blazer",
+			"leafblower": "Bladblazer",
 			"melt": "Smelten",
 			"overlay": "Bedekken",
 			"replaceall": "Alles Vervangen",
@@ -214,10 +170,13 @@
 			"snowcone": "Sneeuw Laag",
 			"toplayer": "Bovenlaag",
 			"tree": "Boom",
-			"regenerate": "Vernieuwen",
+			"regenerate": "Regenereren",
 			"freeze": "Bevriezen",
 			"warm": "Verwarmen",
-			"heat": "Verhitten"
+			"heat": "Verhitten",
+			"smooth": "Afvlakken",
+			"replacetarget": "Vervang doelwit",
+			"plant": "Planten"
 		}
 	}
 }

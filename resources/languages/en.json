@@ -6,7 +6,11 @@
 			"no-permission": "You do not have permission to execute this command."
 		},
 		"brush": {
-			"description": "Opens the GUI for BlockSniper."
+			"description": "Opens the GUI for BlockSniper.",
+			"need-item": "You can only bind a brush to an item.",
+			"bind-brush-item": "You cannot bind the brush item",
+			"clear-success": "Successfully cleared all brushes from this item.",
+			"not-bound": "There was no brush bound to this item."
 		},
 		"blocksniper": {
 			"description": "Displays information about BlockSniper, or reloads the plugin.",
@@ -32,10 +36,6 @@
 			"copy": {
 				"success": "Successfully copied the location looked at."
 			},
-			"template": {
-				"missing-name": "No valid name has been given for the template.",
-				"success": "Successfully saved a template file to %s."
-			},
 			"schematic": {
 				"missing-name": "No valid name has been given for the schematic.",
 				"success": "Successfully saved a schematic file to %s."
@@ -47,80 +47,27 @@
 				"no-copies": "No copy could be found to paste.",
 				"success": "Successfully pasted the copy on the location looked at."
 			},
-			"template": {
-				"nonexistent": "The template %s could not be found in the template directory.",
-				"success": "Successfully pasted the template %s on the location looked at."
-			},
 			"schematic": {
 				"nonexistent": "The schematic %s could not be found in the schematic directory.",
-				"success": "Successfully pasted the schematic %s on the location looked at."
+				"success": "Pasting the schematic %s on the location looked at."
 			}
+		},
+		"deselect": {
+			"description": "It deselect the current selection.",
+			"success": "Successfully deselected your selection."
 		}
 	},
 	"ui": {
-		"preset-menu": {
-			"title": "Preset Menu",
-			"subtitle": "Click a button to continue",
-			"create": "Create",
-			"delete": "Delete",
-			"select": "Select",
-			"list": "List",
-			"exit": "Exit"
-		},
-		"preset-edit": {
-			"title": "Preset Edit Menu",
-			"name": "Preset Name",
-			"size": "Brush Size",
-			"shape": "Brush Shape",
-			"type": "Brush Type",
-			"hollow": "Hollow Brush",
-			"decrement": "Decrementing Brush",
-			"height": "Brush Height",
-			"perfect": "Brush Shape Perfection",
-			"blocks": "Brush Blocks",
-			"obsolete": "Obsolete Blocks",
-			"biome": "Brush Biome",
-			"tree": "Brush Tree"
-		},
-		"preset-selection": {
-			"title": "Preset Selection Menu",
-			"subtitle": "Click a button to apply the preset"
-		},
-		"preset-deletion": {
-			"title": "Preset Deletion Menu",
-			"subtitle": "Click a button to delete a preset"
-		},
-		"preset-list": {
-			"title": "Preset List Menu",
-			"subtitle": "Click a button to edit/view a preset"
-		},
-		"preset-creation": {
-			"title": "Preset Creation Menu",
-			"name": "Preset Name",
-			"size": "Brush Size",
-			"shape": "Brush Shape",
-			"type": "Brush Type",
-			"hollow": "Hollow Brush",
-			"decrement": "Decrementing Brush",
-			"height": "Brush Height",
-			"perfect": "Brush Shape Perfection",
-			"blocks": "Brush Blocks",
-			"obsolete": "Obsolete Blocks",
-			"biome": "Brush Biome",
-			"tree": "Brush Tree"
-		},
 		"main-menu": {
 			"title": "BlockSniper Menu",
 			"subtitle": "Click a button to continue",
 			"brush": "Brush",
-			"tree": "Tree",
 			"config": "Configuration",
-			"presets": "Presets",
-			"global-brush": "Global Brush",
 			"exit": "Exit"
 		},
 		"brush-menu": {
 			"title": "Brush Menu",
+			"name": "Brush Name",
 			"size": "Brush Size",
 			"shape": "Brush Shape",
 			"type": "Brush Type",
@@ -132,15 +79,17 @@
 			"hollow": "Hollow Brush",
 			"decrement": "Decrementing Brush",
 			"height": "Brush Height",
-			"perfect": "Brush Shape Perfection",
+			"width": "Brush Width",
+			"length": "Brush Length",
 			"blocks": "Brush Blocks",
-			"obsolete": "Obsolete Blocks",
+			"obsolete": "Replaced Blocks",
 			"biome": "Brush Biome",
-			"tree": "Brush Tree"
+			"tree": "Brush Tree",
+			"layer-width": "Layer Width",
+			"soil": "Soil Blocks"
 		},
 		"configuration-menu": {
 			"title": "BlockSniper Configuration",
-			"auto-update": "Automatically update the configuration file when a new version is found",
 			"language": "Language used for sending BlockSniper related messages",
 			"brush-item": "Item ID of the item that is used to brush",
 			"selection-item": "Item ID of the item that is used to select",
@@ -149,11 +98,10 @@
 			"max-reverts": "Maximum amount of Undo/Redo stores to save. Older ones get cleaned automatically",
 			"reset-decrement-brush": "Automatically reset decrementing brush to the initial starting size",
 			"save-brush": "Save brush properties of players on server restart",
-			"drop-plants": "Drop plant items destroyed/blown away by the LeafBlower type",
 			"session-timeout-time": "The time in minutes after which the session of a player is removed after leaving the server",
 			"auto-gui": "Automatically open the GUI when switching hotbar slot to one containing the brush item",
-			"myplot-support": "Whether to turn on MyPlot support or not",
-			"auto-reload": "Turning this toggle will automatically reload the configuration when closing this window"
+			"cooldown": "The cooldown in seconds (can be decimal) until the brush can be re-used after using it",
+			"myplot-support": "Whether to turn on MyPlot support or not"
 		},
 		"tree-menu": {
 			"title": "Tree Menu",
@@ -163,28 +111,35 @@
 			"trunk-blocks": "The blocks to use for the trunk of the tree",
 			"leaves-blocks": "The blocks to use for the leaves of the tree",
 			"leaves-cluster-size": "The size of the leaves cluster at the end of each branch"
+		},
+		"changelog": {
+			"title": "Changelog Menu",
+			"name": "Changelog",
+			"subtitle": "Click a version to view its changelog.",
+			"close": "Close",
+			"see-other": "See other changelogs"
 		}
 	},
 	"log": {
 		"language": {
-			"auto-selected": "[BlockSniper] No valid language has been selected. English has been auto selected.",
+			"auto-selected": "No valid language has been selected. English has been auto selected.",
 			"usage": "Please select a language by going to the configuration tab in-game, using /b.",
-			"selected": "[BlockSniper] Language selected: "
+			"selected": "Language selected: "
 		},
 		"brush": {
 			"restored": "Brush of player %s has been restored.",
 			"all-restored": "All brushes have been restored."
 		},
-		"presets": {
-			"loaded": "Preset %s has been loaded.",
-			"all-loaded": "All presets have been loaded."
-		},
 		"reload": {
-			"start": "[BlockSniper] Reloading...",
-			"finish": "[BlockSniper] Reload finished."
+			"start": "Reloading...",
+			"finish": "Reload finished."
 		}
 	},
 	"brush": {
+		"state": {
+			"ready": "Ready",
+			"done": "Done"
+		},
 		"selection": {
 			"first": "Position 1 set to:",
 			"second": "Position 2 set to:",
@@ -194,7 +149,8 @@
 			"cube": "Cube",
 			"cuboid": "Cuboid",
 			"sphere": "Sphere",
-			"cylinder": "Cylinder"
+			"cylinder": "Cylinder",
+			"ellipsoid": "Ellipsoid"
 		},
 		"type": {
 			"biome": "Biome",
@@ -209,15 +165,18 @@
 			"leafblower": "Leaf Blower",
 			"melt": "Melt",
 			"overlay": "Overlay",
+			"regenerate": "Regenerate",
 			"replaceall": "Replace All",
 			"replace": "Replace",
 			"snowcone": "Snowcone",
 			"toplayer": "Top Layer",
 			"tree": "Tree",
-			"regenerate": "Regenerate",
 			"freeze": "Freeze",
 			"warm": "Warm",
-			"heat": "Heat"
+			"heat": "Heat",
+			"smooth": "Smooth",
+			"replacetarget": "Replace Target",
+			"plant": "Plant"
 		}
 	}
 }
