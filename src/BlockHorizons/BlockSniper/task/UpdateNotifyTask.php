@@ -21,7 +21,7 @@ class UpdateNotifyTask extends AsyncTask{
 		$highestVersion = Loader::VERSION;
 		$artifactUrl = "";
 		$api = "";
-		if($result !== null){
+		if($result !== null && $result->getCode() === 200){
 			$releases = json_decode($result->getBody(), true);
 			foreach($releases as $release){
 				if(version_compare($highestVersion, $release["version"], ">=")){
