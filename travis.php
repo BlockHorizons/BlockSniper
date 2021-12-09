@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 $server = proc_open(PHP_BINARY . " /home/travis/build/PocketMine-MP/PocketMine-MP.phar --no-wizard --disable-readline", [
 	0 => ['pipe', 'r'],
 	1 => ['pipe', 'w'],

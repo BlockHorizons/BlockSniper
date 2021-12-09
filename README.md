@@ -4,6 +4,10 @@ An innovative brush world editing tool for PocketMine-MP: A Minecraft server sof
 
 ---
 
+
+[![Chat](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/YynM57V) 
+[![](https://poggit.pmmp.io/shield.dl.total/BlockSniper)](https://poggit.pmmp.io/p/BlockSniper)  
+
 ### Overview
 BlockSniper is an advanced world editing tool, based on the idea of VoxelSniper from Minecraft PC software.
 BlockSniper allows you to edit your world from a long distance, with several different types and shapes. Shapes are the shapes types are being executed in. This means that every type can be executed in any shape.
@@ -44,13 +48,5 @@ Some permissions are also registered dynamically. The permissions of shapes cons
 ### Reviews
 BlockSniper can be reviewed at the Poggit release page [here](https://poggit.pmmp.io/p/BlockSniper/).
 Any feedback given is very welcome and appreciated. Don't hesitate to share what you think about this plugin.
-
-### Contact
-BlockHorizons can be contacted in the Discord server below.
-<br><br>
-
-[![Chat](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/YynM57V)
-
-<br>
 
 ###### Please note that third party modified versions of PocketMine-MP are not supported. Issues caused by them are closed immediately.
