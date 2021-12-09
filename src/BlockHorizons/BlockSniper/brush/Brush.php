@@ -138,6 +138,9 @@ class Brush extends BrushProperties{
 		}
 
 		try{
+			/**
+			 * @see Shape::__construct()
+			 */
 			return new $this->shape($this, new Target($target, $target->isValid() ? $target->getWorld() : null), $bb);
 		}catch(Throwable $e){
 			return new SphereShape($this, new Target($target, $target->isValid() ? $target->getWorld() : null), $bb);
@@ -162,6 +165,9 @@ class Brush extends BrushProperties{
 		}
 
 		try{
+			/**
+			 * @see Type::__construct()
+			 */
 			return new $this->type($this, new Target($target, $target->isValid() ? $target->getWorld() : null), $blocks, $session);
 		}catch(Throwable $e){
 			return new FillType($this, new Target($target, $target->isValid() ? $target->getWorld() : null), $blocks);
