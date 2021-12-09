@@ -4,11 +4,8 @@ declare(strict_types=1);
 
 namespace BlockHorizons\BlockSniper\data;
 
-use BlockHorizons\BlockSniper\exception\InvalidItemException;
 use BlockHorizons\BlockSniper\Loader;
-use BlockHorizons\BlockSniper\parser\Parser;
 use ErrorException;
-use pocketmine\item\Item;
 use Sandertv\Marshal\DecodeException;
 use Sandertv\Marshal\FileNotFoundException;
 use Sandertv\Marshal\Marshal;
@@ -121,22 +118,5 @@ class ConfigData{
 
 	public function close() : void{
 		Marshal::yamlFile($this->filePath, $this);
-	}
-}
-
-class BrushItem{
-	/**
-	 * @var string
-	 * @marshal Item ID
-	 */
-	public $item = "golden_carrot";
-
-	public function parse() : Item{
-		$items = Parser::parse($this->item);
-		if(count($items) === 0){
-			throw new InvalidItemException("invalid configuration brush item");
-		}
-
-		return $items[0];
 	}
 }
