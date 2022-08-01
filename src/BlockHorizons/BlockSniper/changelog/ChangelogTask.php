@@ -10,7 +10,7 @@ use pocketmine\utils\Internet;
 
 class ChangelogTask extends AsyncTask{
 
-	private const CHANGELOG_URL = "https://raw.githubusercontent.com/BlockHorizons/BlockSniper/API-4.0.0/CHANGELOG.md";
+	private const CHANGELOG_URL = "https://raw.githubusercontent.com/BlockHorizons/BlockSniper/master/CHANGELOG.md";
 
 	public function onRun() : void{
 		$result = Internet::getURL(self::CHANGELOG_URL, 10, [], $err);
