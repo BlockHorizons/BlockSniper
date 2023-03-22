@@ -1,0 +1,223 @@
+{
+	"commands": {
+		"common": {
+			"warning-prefix": "[Aviso] ",
+			"invalid-sender": "Você só pode executar este comando como um jogador.",
+			"no-permission": "Você não tem permissão para executar este comando."
+		},
+		"brush": {
+			"description": "Abre a GUI do BlockSniper."
+		},
+		"blocksniper": {
+			"description": "Exibe informações sobre BlockSniper ou recarrega o plugin.",
+			"info": "Informação",
+			"version": "Versão: ",
+			"organisation": "Organização: ",
+			"authors": "Autores: ",
+			"target-api": "API de destino: ",
+			"reload": "Recarregando BlockSniper..."
+		},
+		"redo": {
+			"description": "Refaz a última modificação desfeita do BlockSniper.",
+			"no-redo": "Nenhuma modificação foi encontrada para refazer.",
+			"success": "Refeito com sucesso a última modificação desfeita."
+		},
+		"undo": {
+			"description": "Desfaz a última modificação do BlockSniper.",
+			"no-undo": "Nenhuma modificação foi encontrada para desfazer.",
+			"success": "Desfez a última modificação com sucesso."
+		},
+		"clone": {
+			"description": "Clona uma área usando o formato especificado.",
+			"copy": {
+				"success": "O local examinado foi copiado com sucesso."
+			},
+			"template": {
+				"missing-name": "Nenhum nome válido foi fornecido para o modelo.",
+				"success": "Arquivo de modelo salvo com sucesso em %s."
+			},
+			"schematic": {
+				"missing-name": "Nenhum nome válido foi fornecido para o esquema.",
+				"success": "Arquivo esquemático salvo com sucesso em %s."
+			}
+		},
+		"paste": {
+			"description": "Cola uma área previamente clonada no mundo.",
+			"copy": {
+				"no-copies": "Nenhuma cópia foi encontrada para colar.",
+				"success": "Colou com sucesso a cópia no local visto."
+			},
+			"template": {
+				"nonexistent": "O modelo %s não foi encontrado no diretório de modelos.",
+				"success": "O template %s foi colado com sucesso no local visto."
+			},
+			"schematic": {
+				"nonexistent": "O squema %s não foi encontrado no diretório do esquema.",
+				"success": "O squema %s foi colado com sucesso no local examinado."
+			}
+		}
+	},
+	"ui": {
+		"preset-menu": {
+			"title": "Menu predefinido",
+			"subtitle": "Clique em um botão para continuar",
+			"create": "Criar",
+			"delete": "Deletar",
+			"select": "Selecionar",
+			"list": "Lista",
+			"exit": "Sair"
+		},
+		"preset-edit": {
+			"title": "Menu de edição predefinido",
+			"name": "Nome Predefinido",
+			"size": "Tamanho do Brush",
+			"shape": "Forma do Brush",
+			"type": "Tipo do Brush",
+			"hollow": "Brush oco",
+			"decrement": "Brush Decrementador",
+			"height": "Altura do Brush",
+			"perfect": "Perfeição da forma do Brush",
+			"blocks": "Blocos do Brush",
+			"obsolete": "Blocos Obsoletos",
+			"biome": "Bioma do Brush",
+			"tree": "Árvore do Brush"
+		},
+		"preset-selection": {
+			"title": "Menu de seleção predefinido",
+			"subtitle": "Clique em um botão para aplicar a predefinição"
+		},
+		"preset-deletion": {
+			"title": "Menu de exclusão predefinido",
+			"subtitle": "Clique em um botão para excluir uma predefinição"
+		},
+		"preset-list": {
+			"title": "Menu de lista predefinido",
+			"subtitle": "Clique em um botão para editar/visualizar uma predefinição"
+		},
+		"preset-creation": {
+			"title": "Menu de criação de predefinições",
+			"name": "Nome Predefinido",
+			"size": "Tamanho do Brush",
+			"shape": "Forma do Brush",
+			"type": "Tipo do Brush",
+			"hollow": "Brush oco",
+			"decrement": "Brush Decrementador",
+			"height": "Altura do Brush",
+			"perfect": "Perfeição da forma do Brush",
+			"blocks": "Blocos do Brush",
+			"obsolete": "Blocos Obsoletos",
+			"biome": "Bioma do Brush",
+			"tree": "Árvore do Brush"
+		},
+		"main-menu": {
+			"title": "Menu BlockSniper",
+			"subtitle": "Clique em um botão para continuar",
+			"brush": "Brush",
+			"tree": "Árvore",
+			"config": "Configuração",
+			"presets": "Predefinições",
+			"global-brush": "Brush Global",
+			"exit": "Sair"
+		},
+		"brush-menu": {
+			"title": "Menu Brush",
+			"size": "Altura do Brush",
+			"shape": "Forma do Brush",
+			"type": "Tipo do Brush",
+			"mode": {
+				"description": "Modo Brush",
+				"brush": "Brush",
+				"selection": "Seleção"
+			},
+			"hollow": "Brush Oco",
+			"decrement": "Brush Decrementador",
+			"height": "Altura do Brush",
+			"perfect": "Forma do Brush",
+			"blocks": "Blocos do Brush",
+			"obsolete": "Blocos Obsoletos",
+			"biome": "Bioma do Brush",
+			"tree": "Árvore do Brush"
+		},
+		"configuration-menu": {
+			"title": "Configuração BlockSniper",
+			"auto-update": "Atualizar automaticamente o arquivo de configuração quando uma nova versão for encontrada",
+			"language": "Idioma usado para enviar mensagens relacionadas ao BlockSniper",
+			"brush-item": "ID do item do item que é usado para o brush",
+			"selection-item": "ID do item que é usado para selecionar",
+			"max-brush-size": "O tamanho máximo absoluto do brush",
+			"min-async-size": "Limite de tamanho de brush assíncrono. Se o tamanho do brush for maior do que isso, as operações são executadas de forma assíncrona",
+			"max-reverts": "Quantidade máxima de Undo/Redo armazenados para salvar. Os mais antigos são limpos automaticamente",
+			"reset-decrement-brush": "Redefine automaticamente o brush decrescente para o tamanho inicial",
+			"save-brush": "Salve as propriedades do brush dos jogadores ao reiniciar o servidor",
+			"drop-plants": "Solte itens de plantas destruídos/explodidos pelo tipo LeafBlower",
+			"session-timeout-time": "O tempo em minutos após o qual a sessão de um jogador é removida após deixar o servidor",
+			"auto-gui": "Abra automaticamente a GUI ao alternar o slot hotbar para um que contém o item de brush",
+			"myplot-support": "Se deve ativar o suporte com MyPlot ou não",
+			"auto-reload": "Girar este botão irá recarregar automaticamente a configuração ao fechar esta janela"
+		},
+		"tree-menu": {
+			"title": "Menu Árvore",
+			"trunk-height": "A altura do tronco da árvore",
+			"trunk-width": "A largura da árvore na parte inferior; A largura diminui gradualmente para cima",
+			"max-branch-length": "O comprimento máximo que um dos ramos da árvore pode estender",
+			"trunk-blocks": "Os blocos para usar no tronco da árvore",
+			"leaves-blocks": "Os blocos para usar nas folhas da árvore",
+			"leaves-cluster-size": "O tamanho do aglomerado de folhas no final de cada galho"
+		}
+	},
+	"log": {
+		"language": {
+			"auto-selected": "[BlockSniper] Nenhum idioma válido foi selecionado. Inglês foi selecionado automaticamente.",
+			"usage": "Selecione um idioma acessando a guia de configuração do jogo, usando /b.",
+			"selected": "[BlockSniper] Idioma selecionado: "
+		},
+		"brush": {
+			"restored": "O brush do jogador %s foi restaurado.",
+			"all-restored": "Todos os brushs foram restaurados."
+		},
+		"presets": {
+			"loaded": "A predefinição %s foi carregada.",
+			"all-loaded": "Todas as predefinições foram carregadas."
+		},
+		"reload": {
+			"start": "[BlockSniper] Recarregando...",
+			"finish": "[BlockSniper] Recarregamento concluído."
+		}
+	},
+	"brush": {
+		"selection": {
+			"first": "Posição 1 definida para:",
+			"second": "Posição 2 definida para:",
+			"error": "Defina sua seleção usando o item de seleção antes de fazer esta ação."
+		},
+		"shape": {
+			"cube": "Cubo",
+			"cuboid": "Cubóide",
+			"sphere": "Esfera",
+			"cylinder": "Cilindro"
+		},
+		"type": {
+			"biome": "Bioma",
+			"cleanentities": "Limpar Entidades",
+			"clean": "Limpar",
+			"drain": "Drenar",
+			"expand": "Expandir",
+			"fill": "Preencher",
+			"flattenall": "Achatar tudo",
+			"flatten": "Achatar",
+			"layer": "Camada",
+			"leafblower": "Ventilar Folha",
+			"melt": "Fundição",
+			"overlay": "Sobreposição",
+			"replaceall": "Substitua tudo",
+			"replace": "Substituir",
+			"snowcone": "Cone de neve",
+			"toplayer": "Camada Superior",
+			"tree": "Árvore",
+			"regenerate": "Regenerar",
+			"freeze": "Congelar",
+			"warm": "Esquentar",
+			"heat": "Aquecer"
+		}
+	}
+}
