@@ -1,0 +1,9 @@
+{
+  "name": "blockhorizons/blocksniper",
+  "require": {
+    "pocketmine/pocketmine-mp": "^5.0.0"
+  },
+  "autoload": {
+    "classmap": ["src"]
+  }
+}

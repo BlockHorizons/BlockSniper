@@ -3,7 +3,6 @@
 namespace BlockHorizons\BlockSniper\brush\async;
 
 use pocketmine\block\Block;
-use pocketmine\block\BlockFactory;
 use pocketmine\block\BlockLegacyIds;
 use pocketmine\block\VanillaBlocks;
 use pocketmine\math\Facing;

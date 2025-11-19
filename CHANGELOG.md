@@ -1,5 +1,8 @@
 # Changelog
 
+## [4.1.0] (For API 5.30.0)
+- Updated to PM5
+
 ## [4.0.0] (For API 4.0.0)- Unreleased
 ### Added
 - Added a new UI that opens after setting the brush shape, type and mode. This new UI contains brush properties specifically available for the combination of shape, type and mode set.

@@ -10,17 +10,18 @@ use BlockHorizons\BlockSniper\Loader;
 use BlockHorizons\BlockSniper\revert\AsyncRevert;
 use BlockHorizons\BlockSniper\session\SessionManager;
 use BlockHorizons\libschematic\Schematic;
-use pocketmine\block\Block;
-use pocketmine\block\BlockLegacyIds;
+use pocketmine\block\VanillaBlocks;
+use pocketmine\block\RuntimeBlockStateRegistry;
 use pocketmine\math\Vector3;
 use pocketmine\scheduler\AsyncTask;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat;
+use pocketmine\world\sound\FizzSound;
 use pocketmine\world\format\Chunk;
 use pocketmine\world\format\io\FastChunkSerializer;
-use pocketmine\world\sound\FizzSound;
 use pocketmine\world\World;
 use function microtime;
+use function round;
 
 class PasteTask extends AsyncTask{
 
@@ -28,70 +29,55 @@ class PasteTask extends AsyncTask{
 
 	/** @var string */
 	private $file;
-	/** @var Vector3 */
-	private $center;
-	/** @var string[] */
-	private $chunks;
+	/** @var int */
+	private $centerX;
+	/** @var int */
+	private $centerY;
+	/** @var int */
+	private $centerZ;
 	/** @var string */
 	private $playerName;
 	/** @var float */
 	private $startTime;
 
-	/**
-	 * @param string[] $chunks
-	 */
 	public function __construct(string $file, Vector3 $center, array $chunks, string $playerName){
 		$this->storeLocal(self::KEY_CHUNKS, $chunks);
 		$this->file = $file;
-		$this->center = $center;
-		$this->chunks = $chunks;
+		$this->centerX = (int) $center->x;
+		$this->centerY = (int) $center->y;
+		$this->centerZ = (int) $center->z;
 		$this->playerName = $playerName;
 		$this->startTime = microtime(true);
 	}
 
-	public function onRun() : void{
-		$chunks = [];
-		foreach((array) $this->chunks as $hash => $data){
-			$chunks[$hash] = FastChunkSerializer::deserializeTerrain($data);
-		}
-
-		$center = $this->center;
-
+	public function onRun(): void {
 		$schematic = new Schematic();
 		$schematic->parse($this->file);
 
 		$width = $schematic->getWidth();
 		$length = $schematic->getLength();
-		$baseWidth = $center->x - (int) ($width / 2);
-		$baseLength = $center->z - (int) ($length / 2);
+		$baseX = $this->centerX - (int) ($width / 2);
+		$baseZ = $this->centerZ - (int) ($length / 2);
 
-		/** @var Chunk[] $chunks */
-		$manager = new BlockSniperChunkManager(World::Y_MIN, World::Y_MAX);
-		foreach($chunks as $hash => $chunk){
-			World::getXZ($hash, $chunkX, $chunkZ);
-			$manager->setChunk($chunkX, $chunkZ, $chunk);
-		}
+		/** @var array<int, array{id:int,x:int,y:int,z:int}> $blocksData */
+		$blocksData = [];
 
-		$processedBlocks = 0;
 		foreach($schematic->blocks() as $block){
-			if($block->getId() === BlockLegacyIds::AIR){
+			if($block->getIdInfo()->getBlockTypeId() === VanillaBlocks::AIR()->getIdInfo()->getBlockTypeId()){ 
 				continue;
 			}
-			$tempX = $baseWidth + $block->getPosition()->x;
-			$tempY = $center->y + $block->getPosition()->y;
-			$tempZ = $baseLength + $block->getPosition()->z;
-			$index = World::chunkHash($tempX >> 4, $tempZ >> 4);
-
-			if(isset($chunks[$index])){
-				$manager->setBlockAt($tempX, $tempY, $tempZ, $block);
-				$processedBlocks++;
-			}
+			$blocksData[] = [
+				"id" => $block->getStateId(),
+				"x" => $baseX + $block->getPosition()->x,
+				"y" => $this->centerY + $block->getPosition()->y,
+				"z" => $baseZ + $block->getPosition()->z
+			];
 		}
 
-		$this->setResult($chunks);
+		$this->setResult($blocksData);
 	}
 
-	public function onCompletion() : void{
+	public function onCompletion(): void {
 		/** @var Loader $loader */
 		$loader = Server::getInstance()->getPluginManager()->getPlugin("BlockSniper");
 		if(!$loader->isEnabled()){
@@ -101,25 +87,41 @@ class PasteTask extends AsyncTask{
 			return;
 		}
 
+		/** @var array<int, array{id:int,x:int,y:int,z:int}> $blocksData */
+		$blocksData = $this->getResult();
+
+		$world = $player->getWorld();
+		$manager = new BlockSniperChunkManager($world::Y_MIN, $world::Y_MAX);
+
+		foreach($blocksData as $data){
+			$block = RuntimeBlockStateRegistry::getInstance()->fromStateId($data["id"]);
+			$world->setBlockAt($data["x"], $data["y"], $data["z"], $block);
+		}
+
+		/** @var Chunk[] $chunks */
+		$chunks = [];
+
+		foreach ($blocksData as $data) {
+			$chunkX = $data["x"] >> 4;
+			$chunkZ = $data["z"] >> 4;
+			$chunk = $world->getChunk($chunkX, $chunkZ);
+			$hash = World::chunkHash($chunkX, $chunkZ);
+
+			if (!isset($chunks[$hash])) {
+				$chunks[$hash] = $chunk;
+			}
+		}
+
 		$undoChunks = $this->fetchLocal(self::KEY_CHUNKS);
 		foreach($undoChunks as &$undoChunk){
 			$undoChunk = FastChunkSerializer::deserializeTerrain($undoChunk);
 		}
 
-		$world = $player->getWorld();
-		/** @var Chunk[] $chunks */
-		$chunks = $this->getResult();
-
-		if($world instanceof World){
-			foreach($chunks as $hash => $chunk){
-				World::getXZ($hash, $chunkX, $chunkZ);
-				$world->setChunk($chunkX, $chunkZ, $chunk);
-			}
-		}
-
 		$duration = round(microtime(true) - $this->startTime, 2);
 		$player->sendPopup(TextFormat::GREEN . Translation::get(Translation::BRUSH_STATE_DONE) . " ($duration seconds)");
-		$player->getWorld()->addSound($player->getPosition(), new FizzSound(), [$player]);
-		SessionManager::getPlayerSession($player)->getRevertStore()->saveUndo(new AsyncRevert($chunks, $undoChunks, $player->getWorld()));
+		$world->addSound($player->getPosition(), new FizzSound(), [$player]);
+
+		SessionManager::getPlayerSession($player)->getRevertStore()->saveUndo(new AsyncRevert($chunks, $undoChunks, $world));
 	}
+
 }

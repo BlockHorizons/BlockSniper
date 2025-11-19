@@ -20,6 +20,11 @@ use BlockHorizons\BlockSniper\data\TranslationData;
 use BlockHorizons\BlockSniper\listener\BrushListener;
 use BlockHorizons\BlockSniper\session\SessionManager;
 use BlockHorizons\BlockSniper\task\UpdateNotifyTask;
+use BlockHorizons\BlockSniper\brush\TargetHighlight;
+use pocketmine\entity\EntityDataHelper;
+use pocketmine\entity\EntityFactory;
+use pocketmine\world\World;
+use pocketmine\nbt\tag\CompoundTag;
 use MyPlot\MyPlot;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat as TF;
@@ -84,6 +89,10 @@ class Loader extends PluginBase{
 
 		$this->registerCommands();
 		$this->registerListeners();
+
+		EntityFactory::getInstance()->register(TargetHighlight::class, function(World $world, CompoundTag $nbt) : TargetHighlight{
+			return new TargetHighlight(EntityDataHelper::parseLocation($nbt, $world), $nbt);
+		}, ["BSTargetHighlight"]);
 	}
 
 	public function onDisable() : void{

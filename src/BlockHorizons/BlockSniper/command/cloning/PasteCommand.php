@@ -67,15 +67,15 @@ class PasteCommand extends BaseCommand{
 				$width = $schematic->getWidth();
 				$length = $schematic->getLength();
 				$touchedChunks = [];
-				for($x = $center->x - $width / 2; $x <= $center->x + $width / 2 + 16; $x += 16){
-					for($z = $center->z - $length / 2; $z <= $center->z + $length / 2 + 16; $z += 16){
+
+				for ($x = (int) ($center->x - $width / 2); $x <= (int) ($center->x + $width / 2 + 16); $x += 16) {
+					for ($z = (int) ($center->z - $length / 2); $z <= (int) ($center->z + $length / 2 + 16); $z += 16) {
 						$chunk = $sender->getWorld()->loadChunk($x >> 4, $z >> 4);
-						if($chunk === null){
-							continue;
-						}
+						if ($chunk === null) continue;
 						$touchedChunks[World::chunkHash($x >> 4, $z >> 4)] = FastChunkSerializer::serializeTerrain($chunk);
 					}
 				}
+
 				$session->getCloneStore()->pasteSchematic($file, $center->asVector3(), $touchedChunks);
 				$sender->sendMessage(TF::GREEN . Translation::get(Translation::COMMANDS_PASTE_SCHEMATIC_SUCCESS, $args[1]));
 		}
