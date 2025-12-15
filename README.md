@@ -6,7 +6,8 @@ An innovative brush world editing tool for PocketMine-MP: A Minecraft server sof
 
 
 [![Chat](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/YynM57V) 
-[![](https://poggit.pmmp.io/shield.dl.total/BlockSniper)](https://poggit.pmmp.io/p/BlockSniper)  
+[![](https://poggit.pmmp.io/shield.dl.total/BlockSniper)](https://poggit.pmmp.io/p/BlockSniper)
+[![Hits](https://hitcount.dev/p/BlockHorizons/BlockSniper.svg)](https://hitcount.dev/p/BlockHorizons/BlockSniper)  
 
 ### Overview
 BlockSniper is an advanced world editing tool, based on the idea of VoxelSniper from Minecraft PC software.
